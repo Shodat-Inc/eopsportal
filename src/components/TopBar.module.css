@@ -1,0 +1,17 @@
+.searchbox {
+    height: 56px;
+    width: 489px;
+    border: 1px solid #D9D9D9;
+    border-radius: 10px;
+    color: #000000;
+    outline: none;
+}
+.searchbox::-webkit-input-placeholder {
+    color: #000000;
+}
+.searchbox:-ms-input-placeholder {
+    color: #000000;
+}
+.searchbox::placeholder {
+    color: #000000;
+}
