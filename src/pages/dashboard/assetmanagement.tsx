@@ -7,6 +7,7 @@ import { useRouter } from 'next/router'
 import Link from "next/link";
 import Image from "next/image";
 import Template from "./template";
+import axios from 'axios';
 
 export async function getServerSideProps() {
     const localData = await getAssetsData()
@@ -17,33 +18,39 @@ export async function getServerSideProps() {
     }
 }
 
-export default function AssetManagement(localData:any) {
+export default function AssetManagement(localData: any) {
     const [showModal, setShowModal] = useState(false);
     const [success, setSuccess] = useState(false);
-    const [filteredList, setFilteredList] = useState(localData.localData);
     const assetid = useRef("");
     const assetname = useRef("");
     const assetkey = useRef("");
     const [data, setData] = useState([]);
     const router = useRouter();
-    const refreshData = () => {
-        router.replace(router.asPath);
-    }
-
 
     // Get JSON data on page load
+    const fetchData = () => {
+        axios.get("/api/getAssets").then((response) => {
+            console.log("HERE", response.data);
+              if (response.data) {
+                setData(response.data);
+              }
+        });
+    };
+
     useEffect(() => {
-        refreshData();
-        fetch('/api/getAssets')
-            .then((res) => res.json())
-            .then((data) => {
-                setData(data);
-            });
-    }, [])
+        fetchData();
+        if (fetchData.length) return;
+        // refreshData();
+        // fetch('/api/getAssets')
+        //     .then((res) => res.json())
+        //     .then((data) => {
+        //         setData(data);
+        //     });
+    }, [localData.localData])
 
 
     // Store Data into JSON File
-    const handleSubmit = async (e:any) => {
+    const handleSubmit = async (e: any) => {
         e.preventDefault();
         var formData = new FormData(e.target);
         const form_values = Object.fromEntries(formData);
@@ -77,47 +84,8 @@ export default function AssetManagement(localData:any) {
     }
 
     // Delete Asset
-    const deleteAsset = (assetID:any) => {
-        console.log("assetID", assetID);
-        let listToDelete = [assetID];
-        let arr = localData.localData;
-        // const result = filteredList.filter(assetID !== assetID);
-        // if(result) {
-        //     console.log("Deleted Successfully!!");
-        // } else {
-        //     console.log("NOT Deleted Successfully!!");
-        // }
-        // const removeById = (arr:any, id:any) => {
-        //     const requiredIndex = arr.findIndex(el => {
-        //        return el.assetID === String(id);
-        //     });
-        //     if(requiredIndex === -1){
-        //        return false;
-        //     };
-        //     return !!arr.splice(requiredIndex, 1);
-        //  };
-        //  removeById(arr, assetID);
-        
-
-        var updatedList = [...localData.localData];
-
-        // updatedList = updatedList.filter((item) => {
-        //     return item.assetID.toLowerCase().indexOf(assetID) !== -1;
-        // })
-
-        // for (var i = 0; i < filteredList.length; i++) {
-        //     var obj = filteredList[i];
-
-        //     if (listToDelete.indexOf(obj.assetID) !== -1) {
-        //         updatedList = filteredList.splice(i, 1);
-        //     }
-        // }
-        // updatedList = filteredList.splice(_.indexOf(items, _.findWhere(items, { assetID : assetID})), 1);
-
-        setFilteredList(arr)
-
-        console.log("arr", arr)
-        console.log("listToDelete", listToDelete)
+    const deleteAsset = (assetID: any) => {
+        console.log("Delete ID", assetID)
     }
 
     return (
@@ -200,7 +168,7 @@ export default function AssetManagement(localData:any) {
                         {/* --- Alerts End--- */}
 
 
-                        {filteredList.length > 0 ?
+                        {data.length > 0 ?
                             <div className="h-96 flex justify-start items-start flex-wrap flex-col mt-8">
                                 <div className="overflow-hidden border rounded-md w-full">
                                     <table className={`table-auto min-w-full text-left ${styles.table}`}>
@@ -214,7 +182,7 @@ export default function AssetManagement(localData:any) {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {filteredList.map((item:any, index:any) => (
+                                            {data.map((item: any, index: any) => (
                                                 <tr className="hover:bg-yellow-950" key={index}>
                                                     <td>{index + 1}</td>
                                                     <td>
@@ -409,7 +377,7 @@ export default function AssetManagement(localData:any) {
     )
 }
 
-AssetManagement.getLayout = function getLayout(page:any) {
+AssetManagement.getLayout = function getLayout(page: any) {
     return (
         <Layout>{page}</Layout>
     )
