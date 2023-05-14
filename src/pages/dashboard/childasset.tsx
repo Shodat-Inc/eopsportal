@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import Layout from "../../components/Layout";
 import NoDataFound from "../../common/nodatafound";
 import styles from '../../styles/Common.module.css';
-import { getAssetsData } from "../../lib/getassets";
+import { getChildAssetsData } from "../../lib/getchildassets";
 import { useRouter } from 'next/router'
 import Link from "next/link";
 import Image from "next/image";
@@ -10,7 +10,7 @@ import Template from "./template";
 import axios from 'axios';
 
 export async function getServerSideProps() {
-    const localData = await getAssetsData()
+    const localData = await getChildAssetsData()
     return {
         props: {
             localData,
@@ -18,42 +18,40 @@ export async function getServerSideProps() {
     }
 }
 
-export default function AssetManagement(localData: any) {
+export default function ChildAsset(localData: any) {
+    const router = useRouter();
+    const parentAsset = router.query;
     const [showModal, setShowModal] = useState(false);
     const [success, setSuccess] = useState(false);
+    const filtered = localData.localData.filter((item: any) => {
+        return item.parentAssetName === parentAsset.assets;
+    });
+    const [filteredList, setFilteredList] = useState(filtered);
     const assetid = useRef("");
     const assetname = useRef("");
     const assetkey = useRef("");
     const [data, setData] = useState([]);
-    const router = useRouter();
 
     // Get JSON data on page load
     const fetchData = () => {
-        axios.get("/api/getAssets").then((response) => {
-              if (response.data) {
+        axios.get("/api/getChildAssets").then((response) => {
+            if (response.data) {
                 setData(response.data);
-              }
+            }
         });
     };
 
     useEffect(() => {
         fetchData();
         if (fetchData.length) return;
-        // refreshData();
-        // fetch('/api/getAssets')
-        //     .then((res) => res.json())
-        //     .then((data) => {
-        //         setData(data);
-        //     });
     }, [localData.localData])
 
-
-    // Store Data into JSON File
     const handleSubmit = async (e: any) => {
         e.preventDefault();
         var formData = new FormData(e.target);
         const form_values = Object.fromEntries(formData);
-        const response = await fetch('/api/assets', {
+        console.log("form_values", form_values)
+        const response = await fetch('/api/createSubAssets', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -63,14 +61,18 @@ export default function AssetManagement(localData: any) {
                     assetID: `${form_values.assetid}`,
                     assetName: `${form_values.assetname}`,
                     slug: `${form_values.assetname}`,
-                    assetkey: `${form_values.assetkey}`,
+                    parentAssetID: `${form_values.assetname}`,
+                    parentAssetName: `${form_values.assetname}`,
+                    tagsKeys: `${form_values.assetkey}`,
                     dateCreated: new Date().toLocaleString() + "",
                     dateModified: new Date().toLocaleString() + "",
+                    geoScopeLink: "http://localhost:3000/dashboard/subasset?assets=Car"
                 }
             )
         });
         const resdata = await response.json();
         if (resdata) {
+            console.log("SUCCESS")
             router.replace(router.asPath);
             setShowModal(false);
             setSuccess(true);
@@ -82,18 +84,13 @@ export default function AssetManagement(localData: any) {
         }
     }
 
-    // Delete Asset
-    const deleteAsset = (assetID: any) => {
-        console.log("Delete ID", assetID)
-    }
-
     return (
         <>
             <div className="flex">
 
                 <div className="w-[84%]">
                     <div className="columns-2 flex justify-between items-center">
-                        <p className="text-gray-700 text-lg mb-0 font-bold">Asset Management</p>
+                        <p className="text-gray-700 text-lg mb-0 font-bold">Sub Asset Management</p>
                         <div className="flex justify-end items-right">
                             <button
                                 className="rounded-lg bg-black text-white flex h-10 justify-center items-center pl-2 pr-2 hover:bg-yellow-950 hover:text-white transition-all duration-[400ms] mr-3"
@@ -106,7 +103,7 @@ export default function AssetManagement(localData: any) {
                                     height={24}
                                     width={24}
                                 />
-                                Create New Asset
+                                Create Sub Asset
                             </button>
                             <button
                                 className="rounded-lg bg-black text-white flex h-10 justify-center items-center pl-2 pr-2 hover:bg-yellow-950 hover:text-white transition-all duration-[400ms]"
@@ -118,17 +115,18 @@ export default function AssetManagement(localData: any) {
                                     height={24}
                                     width={24}
                                 />
-                                Import Assets
+                                Import Sub Assets
                             </button>
                         </div>
                     </div>
 
-                    <div className="border min-h-full rounded-md mt-3 px-4 py-4">
+                    <div className="border min-h-full-1 rounded-md mt-3 px-4 py-4">
                         <div className="flex justify-start items-start">
                             <nav className="flex" aria-label="Breadcrumb">
                                 <ol className="inline-flex items-center space-x-1 md:space-x-1">
                                     <li className="inline-flex items-center">
-                                        <a href="#" className="inline-flex items-center text-sm font-medium text-black hover:text-yellow-950">
+                                        <Link href="/dashboard/assetmanagement"
+                                            className="inline-flex items-center text-sm font-medium text-black hover:text-yellow-950">
                                             <Image
                                                 src="/img/home.svg"
                                                 alt="home"
@@ -143,7 +141,34 @@ export default function AssetManagement(localData: any) {
                                                 height={24}
                                                 width={24}
                                             />
-                                        </a>
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <div className="flex items-center">
+                                            <Link
+                                                href={{
+                                                    pathname: '/dashboard/subasset',
+                                                    query: {
+                                                        assets: parentAsset.asset
+                                                    }
+                                                }}
+                                                className="inline-flex items-center text-sm font-medium text-black hover:text-yellow-950"
+                                            >
+                                                <span className="ml-1 text-sm font-medium text-black hover:text-yellow-950 md:ml-1">{parentAsset.asset}</span>
+                                            </Link>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div className="flex items-center">
+                                            <Image
+                                                src="/img/arrow-right.svg"
+                                                alt="arrow-right"
+                                                className="h-6"
+                                                height={24}
+                                                width={24}
+                                            />
+                                            <span className="ml-1 text-sm font-medium text-black hover:text-yellow-950 md:ml-1">{parentAsset.subassets}</span>
+                                        </div>
                                     </li>
                                 </ol>
                             </nav>
@@ -167,6 +192,52 @@ export default function AssetManagement(localData: any) {
                         {/* --- Alerts End--- */}
 
 
+                        {/* Child Asset Form Fields */}
+                        <div className="mt-8">
+                            <form
+                            className="flex w-full flex-wrap flex-col justify-between items-center"
+                            >
+                                <div className="flex w-full mb-5">
+                                    <div className="w-[50%] pr-16">
+                                        <input 
+                                        type="text"
+                                        name="Mfg Date"
+                                        placeholder="Mfg Date"
+                                        className="block w-full border border-gray-951 rounded-md h-14 pl-4 pr-2"
+                                        />
+                                    </div>
+                                    <div className="w-[50%] pl-16">
+                                        <input 
+                                        type="text"
+                                        name="vin"
+                                        placeholder="VIN"
+                                        className="block w-full border border-gray-951 rounded-md h-14 pl-4 pr-2"
+                                        />
+                                    </div>
+                                </div>
+                                <div className="flex w-full mb-5">
+                                    <div className="w-[50%] pr-16">
+                                        <input 
+                                        type="text"
+                                        name="Color"
+                                        placeholder="Color"
+                                        className="block w-full border border-gray-951 rounded-md h-14 pl-4 pr-2"
+                                        />
+                                    </div>
+                                    <div className="w-[50%] pl-16">
+                                        <input 
+                                        type="text"
+                                        name="Piston"
+                                        placeholder="Piston"
+                                        className="block w-full border border-gray-951 rounded-md h-14 pl-4 pr-2"
+                                        />
+                                    </div>
+                                </div>                                
+                            </form>
+                        </div>
+                    
+
+
                         {data.length > 0 ?
                             <div className="h-96 flex justify-start items-start flex-wrap flex-col mt-8">
                                 <div className="overflow-hidden border rounded-md w-full">
@@ -175,40 +246,55 @@ export default function AssetManagement(localData: any) {
                                             <tr>
                                                 <th>S.No</th>
                                                 <th>Asset ID</th>
-                                                <th>Asset Name</th>
-                                                <th>Asset Tags/Key</th>
+                                                <th>Child Asset Name</th>
+                                                <th>Tags/Key</th>
+                                                <th>Geoscope</th>
                                                 <th>Actions</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             {data.map((item: any, index: any) => (
                                                 <tr className="hover:bg-yellow-950" key={index}>
-                                                    <td>{index + 1}</td>
-                                                    <td>
+                                                    <td className="w-[50px]">{index + 1}</td>
+                                                    <td className="w-[150px]">
                                                         <Link
                                                             href={{
                                                                 pathname: '/dashboard/subasset',
                                                                 query: {
-                                                                    assets: item.assetName
+                                                                    subassets: item.assetName
                                                                 }
                                                             }}
                                                         >
                                                             {item.assetID}
                                                         </Link>
                                                     </td>
-                                                    <td>
+                                                    <td className="w-[180px]">
                                                         <Link
                                                             href={{
-                                                                pathname: '/dashboard/subasset',
+                                                                pathname: '/dashboard/childasset',
                                                                 query: {
-                                                                    assets: item.assetName
+                                                                    asset: parentAsset.assets,
+                                                                    subassets: item.assetName
                                                                 }
                                                             }}
                                                         >
-                                                            {item.assetName}
+                                                            <span className="font-medium">{item.assetName}</span>
                                                         </Link>
                                                     </td>
-                                                    <td><span className="bg-gray-951 rounded-md py-1 px-2 inline-flex items-center justify-center mr-1 mb-1">{item.assetkey}</span></td>
+                                                    <td className="flex items-center justify-start flex-wrap w-[200px]">
+                                                        {
+                                                            Array.isArray(item.tagsKeys) && item.tagsKeys.length > 0 ? item.tagsKeys.map((items: any, index: any) => (
+                                                                <span
+                                                                    key={index}
+                                                                    className="bg-gray-951 rounded-md py-0 px-2 text-[12px] h-[22px] inline-flex items-center justify-center mr-1 mb-1">
+                                                                    {items}
+                                                                </span>
+                                                            ))
+                                                                : item.tagsKeys
+                                                        }
+
+                                                    </td>
+                                                    <td><span className="block w-[100px] whitespace-nowrap overflow-hidden text-ellipsis">{item.geoScopeLink}</span></td>
                                                     <td>
                                                         <button className="mr-8">
                                                             <Image
@@ -218,7 +304,7 @@ export default function AssetManagement(localData: any) {
                                                                 width={18}
                                                             />
                                                         </button>
-                                                        <button onClick={() => deleteAsset(item.assetID)}>
+                                                        <button>
                                                             <Image
                                                                 src="/img/trash.svg"
                                                                 alt="Trash"
@@ -235,9 +321,62 @@ export default function AssetManagement(localData: any) {
                             </div>
                             :
                             <div className="h-72 flex justify-center items-center flex-wrap flex-col mt-8">
-                                <NoDataFound createText="Create Asset" />
+                                <NoDataFound createText="Create Sub Asset" />
                             </div>
                         }
+
+                        
+                        {/* Links Box */}
+                        <div className="mt-0 flex  w-full">
+                            <div className="flex flex-wrap flex-row w-full justify-end">
+                                <div className="rounded-lg h-24 w-36 bg-red-951 flex justify-center items-center px-2 py-2 mr-4 flex-wrap flex-col">
+                                    <Image
+                                    src="/img/clockwhite.svg"
+                                    alt="eops watch"
+                                    height={24}
+                                    width={24}
+                                    className="mb-4"
+                                    />
+                                    <span className="text-white font-12">eOps Watch</span>
+                                </div>
+
+                                <div className="rounded-lg h-24 w-32 bg-green-952 flex justify-center items-center px-2 py-2 flex-wrap flex-col mr-4">
+                                    <Image
+                                    src="/img/airplaywhite.svg"
+                                    alt="eops watch"
+                                    height={24}
+                                    width={24}
+                                    className="mb-4"
+                                    />
+                                    <span className="text-white font-12">eOps Trace</span>
+                                </div>
+
+                                <div className="rounded-lg h-24 w-32 bg-blue-953 flex justify-center items-center px-2 py-2 flex-wrap flex-col mr-4">
+                                    <Image
+                                    src="/img/maximizewhite.svg"
+                                    alt="eops Prosense"
+                                    height={24}
+                                    width={24}
+                                    className="mb-4"
+                                    />
+                                    <span className="text-white font-12">eOps Trace</span>
+                                </div>
+
+                                <div className="rounded-lg h-24 w-44 bg-brown-951 flex justify-center items-center px-2 py-2 flex-wrap flex-col">
+                                    <Image
+                                    src="/img/bar-chart-white.svg"
+                                    alt="eops Prosense"
+                                    height={24}
+                                    width={24}
+                                    className="mb-4"
+                                    />
+                                    <span className="text-white font-12">eOps Insight/Reports</span>
+                                </div>
+
+                            </div>
+                        </div>
+                        {/* Links Box Ends */}
+
 
                     </div>
                 </div>
@@ -259,7 +398,7 @@ export default function AssetManagement(localData: any) {
                                     {/*header*/}
                                     <div className="flex items-start justify-between p-5">
                                         <h3 className="text-lg font-medium">
-                                            Add New Asset
+                                            Add Sub Asset
                                         </h3>
                                         <button
                                             className="p-1 ml-auto bg-transparent border-0 text-black float-right leading-none font-semibold outline-none focus:outline-none"
@@ -279,7 +418,7 @@ export default function AssetManagement(localData: any) {
                                         <form className="flex justify-start items-center flex-wrap flex-col" method='post' onSubmit={handleSubmit}>
                                             <div className="mb-5 relative column-2 flex justify-start items-center">
                                                 <div className="w-[160px]">
-                                                    <label className="font-semibold text-black">Asset ID</label>
+                                                    <label className="font-semibold text-black">Sub Asset ID</label>
                                                 </div>
                                                 <div className="w-3/4">
                                                     <input
@@ -305,8 +444,8 @@ export default function AssetManagement(localData: any) {
                                                                     src="/img/info.svg"
                                                                     alt="info"
                                                                     className="ml-2 h-4"
-                                                                    height={16}
-                                                                    width={16}
+                                                                    height={18}
+                                                                    width={18}
                                                                 />
                                                             </button>
                                                             <div id="tooltip-animation" role="tooltip" className="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
@@ -320,7 +459,7 @@ export default function AssetManagement(localData: any) {
                                             </div>
                                             <div className="mb-10 relative column-2 flex justify-start items-center">
                                                 <div className="w-[160px]">
-                                                    <label className="font-semibold text-black">Asset Name</label>
+                                                    <label className="font-semibold text-black">Sub Asset Name</label>
                                                 </div>
                                                 <div className="w-3/4">
                                                     <input
@@ -334,7 +473,7 @@ export default function AssetManagement(localData: any) {
                                             </div>
                                             <div className="mb-10 relative column-2 flex justify-start items-center">
                                                 <div className="w-[160px]">
-                                                    <label className="font-semibold text-black">Tags/Key</label>
+                                                    <label className="font-semibold text-black">Add Tags/Key</label>
                                                 </div>
                                                 <div className="w-3/4">
                                                     <input
@@ -376,7 +515,7 @@ export default function AssetManagement(localData: any) {
     )
 }
 
-AssetManagement.getLayout = function getLayout(page: any) {
+ChildAsset.getLayout = function getLayout(page: any) {
     return (
         <Layout>{page}</Layout>
     )

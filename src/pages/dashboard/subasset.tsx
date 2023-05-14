@@ -7,6 +7,7 @@ import { useRouter } from 'next/router'
 import Link from "next/link";
 import Image from "next/image";
 import Template from "./template";
+import axios from 'axios';
 
 export async function getServerSideProps() {
     const localData = await getSubAssetsData()
@@ -17,13 +18,13 @@ export async function getServerSideProps() {
     }
 }
 
-export default function SubAsset(localData:any) {
+export default function SubAsset(localData: any) {
     const [query, setQuery] = useState('');
     const router = useRouter();
     const parentAsset = router.query;
     const [showModal, setShowModal] = useState(false);
     const [success, setSuccess] = useState(false);
-    const filtered = localData.localData.filter((item:any) => {
+    const filtered = localData.localData.filter((item: any) => {
         return item.parentAssetName === parentAsset.assets;
     });
     const [filteredList, setFilteredList] = useState(filtered);
@@ -35,19 +36,34 @@ export default function SubAsset(localData:any) {
         router.replace(router.asPath);
     }
 
+    // Get JSON data on page load
+    const fetchData = () => {
+        axios.get("/api/getSubAssets").then((response) => {
+            console.log("HERE", response.data);
+            if (response.data) {
+                setData(response.data);
+            }
+        });
+    };
+
+    // useEffect(() => {
+    //     refreshData();
+    //     fetch('/api/getAssets')
+    //         .then((res) => res.json())
+    //         .then((data) => {
+    //             setData(data);
+    //         });
+    // }, [])
+
     useEffect(() => {
-        refreshData();
-        fetch('/api/getAssets')
-            .then((res) => res.json())
-            .then((data) => {
-                setData(data);
-            });
-    }, [])
+        fetchData();
+        if (fetchData.length) return;
+    }, [localData.localData])
 
     console.log("DATA", data);
     console.log("filteredList", filteredList);
 
-    const handleSubmit = async (e:any) => {
+    const handleSubmit = async (e: any) => {
         e.preventDefault();
         var formData = new FormData(e.target);
         const form_values = Object.fromEntries(formData);
@@ -171,7 +187,7 @@ export default function SubAsset(localData:any) {
                         {/* --- Alerts End--- */}
 
 
-                        {filteredList.length > 0 ?
+                        {data.length > 0 ?
                             <div className="h-96 flex justify-start items-start flex-wrap flex-col mt-8">
                                 <div className="overflow-hidden border rounded-md w-full">
                                     <table className={`table-auto min-w-full text-left ${styles.table}`}>
@@ -186,10 +202,10 @@ export default function SubAsset(localData:any) {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {filteredList.map((item:any, index:any) => (
+                                            {data.map((item: any, index: any) => (
                                                 <tr className="hover:bg-yellow-950" key={index}>
-                                                    <td>{index + 1}</td>
-                                                    <td>
+                                                    <td className="w-[50px]">{index + 1}</td>
+                                                    <td className="w-[150px]">
                                                         <Link
                                                             href={{
                                                                 pathname: '/dashboard/subasset',
@@ -201,21 +217,22 @@ export default function SubAsset(localData:any) {
                                                             {item.assetID}
                                                         </Link>
                                                     </td>
-                                                    <td>
+                                                    <td className="w-[180px]">
                                                         <Link
                                                             href={{
-                                                                pathname: '/dashboard/subasset',
+                                                                pathname: '/dashboard/childasset',
                                                                 query: {
+                                                                    asset: parentAsset.assets,
                                                                     subassets: item.assetName
                                                                 }
                                                             }}
                                                         >
-                                                            {item.assetName}
+                                                            <span className="font-medium">{item.assetName}</span>
                                                         </Link>
                                                     </td>
-                                                    <td className="flex items-center justify-start flex-wrap w-[250px]">
+                                                    <td className="flex items-center justify-start flex-wrap w-[200px]">
                                                         {
-                                                            Array.isArray(item.tagsKeys) && item.tagsKeys.length > 0 ? item.tagsKeys.map((items:any, index:any) => (
+                                                            Array.isArray(item.tagsKeys) && item.tagsKeys.length > 0 ? item.tagsKeys.map((items: any, index: any) => (
                                                                 <span
                                                                     key={index}
                                                                     className="bg-gray-951 rounded-md py-0 px-2 text-[12px] h-[22px] inline-flex items-center justify-center mr-1 mb-1">
@@ -226,7 +243,7 @@ export default function SubAsset(localData:any) {
                                                         }
 
                                                     </td>
-                                                    <td><span className="block w-[200px] whitespace-nowrap overflow-hidden text-ellipsis">{item.geoScopeLink}</span></td>
+                                                    <td><span className="block w-[100px] whitespace-nowrap overflow-hidden text-ellipsis">{item.geoScopeLink}</span></td>
                                                     <td>
                                                         <button className="mr-8">
                                                             <Image
@@ -394,7 +411,7 @@ export default function SubAsset(localData:any) {
     )
 }
 
-SubAsset.getLayout = function getLayout(page:any) {
+SubAsset.getLayout = function getLayout(page: any) {
     return (
         <Layout>{page}</Layout>
     )
