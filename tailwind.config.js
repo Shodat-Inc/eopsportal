@@ -9,11 +9,13 @@ module.exports = {
     extend: {
       colors: {
         yellow :{
-          950:'#fed136'
+          950:'#fed136', 
+          951:'#fed136'
         },
         gray: {
           950: '#B3B3B3',
-          951: '#A4ADBC'
+          951: '#A4ADBC',
+          952: '#7F7F7F'
         },
         blue: {
           951: '#B4BBD2',

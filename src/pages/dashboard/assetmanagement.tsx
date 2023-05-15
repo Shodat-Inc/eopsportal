@@ -8,6 +8,8 @@ import Link from "next/link";
 import Image from "next/image";
 import Template from "./template";
 import axios from 'axios';
+import AlertMessage from "@/common/alertMessage";
+import moment from "moment";
 
 export async function getServerSideProps() {
     const localData = await getAssetsData()
@@ -26,26 +28,35 @@ export default function AssetManagement(localData: any) {
     const assetkey = useRef("");
     const [data, setData] = useState([]);
     const router = useRouter();
+    const [allTags, setAllTags] = useState("Modal Type, VIN, Color, Serial Number");
+    const [newTag, setNewTag] = useState("");
+    const [showInput, setShowInput] = useState(false);
 
     // Get JSON data on page load
     const fetchData = () => {
         axios.get("/api/getAssets").then((response) => {
-              if (response.data) {
+            if (response.data) {
                 setData(response.data);
-              }
+            }
         });
     };
 
     useEffect(() => {
         fetchData();
         if (fetchData.length) return;
-        // refreshData();
-        // fetch('/api/getAssets')
-        //     .then((res) => res.json())
-        //     .then((data) => {
-        //         setData(data);
-        //     });
     }, [localData.localData])
+
+    // Adding New Tags
+    const addTags = () => {
+        const myArray = allTags.split(",");
+        console.log("myArray =>", myArray);
+        setShowInput(true);
+    }
+    // Save New Tag
+    const saveNewTag = () => {
+        console.log("Here")
+        setShowInput(false);
+    }
 
 
     // Store Data into JSON File
@@ -53,33 +64,34 @@ export default function AssetManagement(localData: any) {
         e.preventDefault();
         var formData = new FormData(e.target);
         const form_values = Object.fromEntries(formData);
-        const response = await fetch('/api/assets', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(
-                {
-                    assetID: `${form_values.assetid}`,
-                    assetName: `${form_values.assetname}`,
-                    slug: `${form_values.assetname}`,
-                    assetkey: `${form_values.assetkey}`,
-                    dateCreated: new Date().toLocaleString() + "",
-                    dateModified: new Date().toLocaleString() + "",
-                }
-            )
-        });
-        const resdata = await response.json();
-        if (resdata) {
-            router.replace(router.asPath);
-            setShowModal(false);
-            setSuccess(true);
-            setTimeout(() => {
-                setSuccess(false);
-            }, 5000);
-        } else {
-            console.log("FAILED")
-        }
+        console.log("form_values", form_values)
+        // const response = await fetch('/api/assets', {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json'
+        //     },
+        //     body: JSON.stringify(
+        //         {
+        //             assetID: `${form_values.assetid}`,
+        //             assetName: `${form_values.assetname}`,
+        //             slug: `${form_values.assetname}`,
+        //             assetkey: `${form_values.assetkey}`,
+        //             dateCreated: new Date().toLocaleString() + "",
+        //             dateModified: new Date().toLocaleString() + "",
+        //         }
+        //     )
+        // });
+        // const resdata = await response.json();
+        // if (resdata) {
+        //     router.replace(router.asPath);
+        //     setShowModal(false);
+        //     setSuccess(true);
+        //     setTimeout(() => {
+        //         setSuccess(false);
+        //     }, 5000);
+        // } else {
+        //     console.log("FAILED")
+        // }
     }
 
     // Delete Asset
@@ -96,7 +108,7 @@ export default function AssetManagement(localData: any) {
                         <p className="text-gray-700 text-lg mb-0 font-bold">Asset Management</p>
                         <div className="flex justify-end items-right">
                             <button
-                                className="rounded-lg bg-black text-white flex h-10 justify-center items-center pl-2 pr-2 hover:bg-yellow-950 hover:text-white transition-all duration-[400ms] mr-3"
+                                className="rounded-lg bg-black text-white flex h-12 justify-center items-center pl-2 pr-2 hover:bg-yellow-950 hover:text-white transition-all duration-[400ms] mr-3"
                                 onClick={() => setShowModal(true)}
                             >
                                 <Image
@@ -107,18 +119,6 @@ export default function AssetManagement(localData: any) {
                                     width={24}
                                 />
                                 Create New Asset
-                            </button>
-                            <button
-                                className="rounded-lg bg-black text-white flex h-10 justify-center items-center pl-2 pr-2 hover:bg-yellow-950 hover:text-white transition-all duration-[400ms]"
-                            >
-                                <Image
-                                    src="/img/download.svg"
-                                    alt="Import Assets"
-                                    className="mr-2"
-                                    height={24}
-                                    width={24}
-                                />
-                                Import Assets
                             </button>
                         </div>
                     </div>
@@ -136,13 +136,6 @@ export default function AssetManagement(localData: any) {
                                                 height={24}
                                                 width={24}
                                             />
-                                            <Image
-                                                src="/img/arrow-right.svg"
-                                                alt="arrow-right"
-                                                className="h-6"
-                                                height={24}
-                                                width={24}
-                                            />
                                         </a>
                                     </li>
                                 </ol>
@@ -150,20 +143,7 @@ export default function AssetManagement(localData: any) {
                         </div>
 
                         {/* --- Alerts Start--- */}
-                        {success ?
-                            <div id="alert-3" className="flex p-4 mb-4 text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400 mt-4" role="alert">
-                                <svg aria-hidden="true" className="flex-shrink-0 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd"></path></svg>
-                                <span className="sr-only">Info</span>
-                                <div className="ml-3 text-sm font-medium">
-                                    Your Data is been saved successfully! Cheers!!
-                                </div>
-                                <button type="button" className="ml-auto -mx-1.5 -my-1.5 bg-green-50 text-green-500 rounded-lg focus:ring-2 focus:ring-green-400 p-1.5 hover:bg-green-200 inline-flex h-8 w-8 dark:bg-gray-800 dark:text-green-400 dark:hover:bg-gray-700" data-dismiss-target="#alert-3" aria-label="Close">
-                                    <span className="sr-only">Close</span>
-                                    <svg aria-hidden="true" className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd"></path></svg>
-                                </button>
-                            </div>
-                            : null
-                        }
+                        {success ? <AlertMessage /> : null}
                         {/* --- Alerts End--- */}
 
 
@@ -176,15 +156,16 @@ export default function AssetManagement(localData: any) {
                                                 <th>S.No</th>
                                                 <th>Asset ID</th>
                                                 <th>Asset Name</th>
-                                                <th>Asset Tags/Key</th>
+                                                <th>Tags</th>
+                                                <th>Date Created</th>
                                                 <th>Actions</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             {data.map((item: any, index: any) => (
                                                 <tr className="hover:bg-yellow-950" key={index}>
-                                                    <td>{index + 1}</td>
-                                                    <td>
+                                                    <td className="w-[5%] min-h-[50px]">{index + 1}</td>
+                                                    <td className="w-[15%] min-h-[50px]">
                                                         <Link
                                                             href={{
                                                                 pathname: '/dashboard/subasset',
@@ -196,7 +177,7 @@ export default function AssetManagement(localData: any) {
                                                             {item.assetID}
                                                         </Link>
                                                     </td>
-                                                    <td>
+                                                    <td className="w-[20%] min-h-[50px]">
                                                         <Link
                                                             href={{
                                                                 pathname: '/dashboard/subasset',
@@ -205,12 +186,26 @@ export default function AssetManagement(localData: any) {
                                                                 }
                                                             }}
                                                         >
-                                                            {item.assetName}
+                                                            <span className="font-medium">{item.assetName}</span>
                                                         </Link>
                                                     </td>
-                                                    <td><span className="bg-gray-951 rounded-md py-1 px-2 inline-flex items-center justify-center mr-1 mb-1">{item.assetkey}</span></td>
-                                                    <td>
-                                                        <button className="mr-8">
+                                                    <td className="w-[30%] min-h-[50px]">
+                                                        <div className="flex">
+                                                            <Image
+                                                                src="/img/export.svg"
+                                                                height={18}
+                                                                width={18}
+                                                                alt="export"
+                                                                className="mr-2"
+                                                            />
+                                                            <span className=" whitespace-nowrap overflow-hidden text-ellipsis">
+                                                                {item.assetkey}
+                                                            </span>
+                                                        </div>
+                                                    </td>
+                                                    <td className="w-[15%] min-h-[50px]"><span>{moment(item.dateCreated).format('DD-MM-YYYY')}</span></td>
+                                                    <td className="w-[15%]">
+                                                        <button className="mr-5">
                                                             <Image
                                                                 src="/img/edit.svg"
                                                                 alt="Edit"
@@ -253,7 +248,7 @@ export default function AssetManagement(localData: any) {
                         <div
                             className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
                         >
-                            <div className="relative w-auto my-6 w-[677px]">
+                            <div className="relative my-6 w-[720px]">
 
                                 <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                                     {/*header*/}
@@ -276,88 +271,182 @@ export default function AssetManagement(localData: any) {
                                     </div>
                                     {/*body*/}
                                     <div className="relative p-6 flex-auto">
-                                        <form className="flex justify-start items-center flex-wrap flex-col" method='post' onSubmit={handleSubmit}>
-                                            <div className="mb-5 relative column-2 flex justify-start items-center">
-                                                <div className="w-[160px]">
-                                                    <label className="font-semibold text-black">Asset ID</label>
-                                                </div>
-                                                <div className="w-3/4">
-                                                    <input
-                                                        type="text"
-                                                        name="assetid"
-                                                        placeholder="Enter asset ID"
-                                                        className="rounded-lg border border-black h-[44px] pl-5 pr-5 w-[320px]"
-                                                        onChange={(e) => (assetid.current = e.target.value)}
-                                                    />
-                                                    <div className="relative mt-2 flex w-full">
+                                        <form
+                                            className="flex justify-center items-center flex-wrap flex-col w-full"
+                                            method='post'
+                                            onSubmit={handleSubmit}
+                                        >
+                                            <div className="mb-5 relative flex justify-center items-center flex-wrap flex-col">
+                                                <div className="mb-5 relative column-2 flex justify-center items-center">
+                                                    <div className="w-[160px]">
+                                                        <label className="font-semibold text-black">Asset ID</label>
+                                                    </div>
+                                                    <div className="w-3/4">
                                                         <input
-                                                            type="checkbox"
-                                                            className="checked:bg-black indeterminate:bg-gray-300"
-                                                            name="autogenerateid"
+                                                            type="text"
+                                                            name="assetid"
+                                                            placeholder="Enter asset ID"
+                                                            className="rounded-lg border border-gray-500 h-[44px] pl-5 pr-5 w-[320px]"
+                                                            onChange={(e) => (assetid.current = e.target.value)}
                                                         />
-                                                        <label
-                                                            className="ml-2 text-gray-951 block flex justify-start items-center">
-                                                            Auto generate ID
-                                                            <button
-                                                                data-tooltip-target="tooltip-animation" type="button"
-                                                            >
-                                                                <Image
-                                                                    src="/img/info.svg"
-                                                                    alt="info"
-                                                                    className="ml-2 h-4"
-                                                                    height={16}
-                                                                    width={16}
-                                                                />
-                                                            </button>
-                                                            <div id="tooltip-animation" role="tooltip" className="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-                                                                Tooltip content
-                                                                <div className="tooltip-arrow" data-popper-arrow></div>
-                                                            </div>
+                                                        <div className="relative mt-2 flex w-full">
+                                                            <input
+                                                                type="checkbox"
+                                                                className="checked:bg-black indeterminate:bg-black scale-125"
+                                                                name="autogenerateid"
+                                                            />
+                                                            <label
+                                                                className="ml-2 text-black block flex justify-start items-center">
+                                                                Auto generate ID
+                                                                <button
+                                                                    data-tooltip-target="tooltip-animation" type="button"
+                                                                >
+                                                                    <Image
+                                                                        src="/img/info.svg"
+                                                                        alt="info"
+                                                                        className="ml-2 h-4"
+                                                                        height={16}
+                                                                        width={16}
+                                                                    />
+                                                                </button>
+                                                                <div id="tooltip-animation" role="tooltip" className="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                                                                    Tooltip content
+                                                                    <div className="tooltip-arrow" data-popper-arrow></div>
+                                                                </div>
 
-                                                        </label>
+                                                            </label>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div className="mb-10 relative column-2 flex justify-start items-center">
-                                                <div className="w-[160px]">
-                                                    <label className="font-semibold text-black">Asset Name</label>
+                                                <div className="mb-10 relative column-2 flex justify-start items-center">
+                                                    <div className="w-[160px]">
+                                                        <label className="font-semibold text-black">Asset Name</label>
+                                                    </div>
+                                                    <div className="w-3/4">
+                                                        <input
+                                                            type="text"
+                                                            name="assetname"
+                                                            placeholder="Enter asset Name"
+                                                            className="rounded-lg border border-gray-500 h-[44px] pl-5 pr-5 w-[320px]"
+                                                            onChange={(e) => (assetname.current = e.target.value)}
+                                                        />
+                                                    </div>
                                                 </div>
-                                                <div className="w-3/4">
-                                                    <input
-                                                        type="text"
-                                                        name="assetname"
-                                                        placeholder="Enter asset Name"
-                                                        className="rounded-lg border border-black h-[44px] pl-5 pr-5 w-[320px]"
-                                                        onChange={(e) => (assetname.current = e.target.value)}
-                                                    />
+                                                <div className="mb-10 relative column-2 flex justify-start items-center">
+                                                    <div className="w-[160px]">
+                                                        <label className="font-semibold text-black">Asset Tags</label>
+                                                    </div>
+                                                    <div className="w-3/4">
+                                                        <div className="rounded-lg border border-gray-500 min-h-[64px] pl-2 pr-2 w-[320px] pt-2 pb-2 flex flex-wrap justify-start items-center">
+                                                            <span
+                                                                className="rounded-lg inline-flex justify-center items-center h-8 pl-2 pr-2 bg-black text-white text-[14px] mr-2 mb-2">
+                                                                Model Type
+                                                                <button className="rounded-full border-2 border-white h-[18px] w-[18px] inline-flex justify-center items-center ml-3">
+                                                                    <Image
+                                                                        src="/img/closewhite.svg"
+                                                                        alt="close"
+                                                                        height={14}
+                                                                        width={14}
+                                                                    />
+                                                                </button>
+                                                            </span>
+
+                                                            <span
+                                                                className="rounded-lg inline-flex justify-center items-center h-8 pl-2 pr-2 bg-black text-white text-[14px] mr-2 mb-2">
+                                                                VIN
+                                                                <button className="rounded-full border-2 border-white h-[18px] w-[18px] inline-flex justify-center items-center ml-3">
+                                                                    <Image
+                                                                        src="/img/closewhite.svg"
+                                                                        alt="close"
+                                                                        height={14}
+                                                                        width={14}
+                                                                    />
+                                                                </button>
+                                                            </span>
+
+                                                            <span
+                                                                className="rounded-lg inline-flex justify-center items-center h-8 pl-2 pr-2 bg-black text-white text-[14px] mr-2 mb-2">
+                                                                Color
+                                                                <button className="rounded-full border-2 border-white h-[18px] w-[18px] inline-flex justify-center items-center ml-3">
+                                                                    <Image
+                                                                        src="/img/closewhite.svg"
+                                                                        alt="close"
+                                                                        height={14}
+                                                                        width={14}
+                                                                    />
+                                                                </button>
+                                                            </span>
+
+                                                            <span
+                                                                className="rounded-lg inline-flex justify-center items-center h-8 pl-2 pr-2 bg-black text-white text-[14px] mr-2 mb-2">
+                                                                Serial No
+                                                                <button className="rounded-full border-2 border-white h-[18px] w-[18px] inline-flex justify-center items-center ml-3">
+                                                                    <Image
+                                                                        src="/img/closewhite.svg"
+                                                                        alt="close"
+                                                                        height={14}
+                                                                        width={14}
+                                                                    />
+                                                                </button>
+                                                            </span>
+
+                                                            {
+                                                                showInput ?
+                                                                    <span>
+                                                                        <input
+                                                                            type="text"
+                                                                            placeholder="Tag"
+                                                                            className="border border-gray-951 rounded py-[3px] px-[3px] w-[100px] mr-2"
+                                                                            value={newTag}
+                                                                        />
+                                                                        <button
+                                                                            className="text-black border border-black rounded inline-flex justify-center items-center text-lg px-2"
+                                                                            onClick={saveNewTag}
+                                                                        >
+                                                                            Save
+                                                                        </button>
+                                                                    </span>
+                                                                    : null
+                                                            }
+
+                                                            <button
+                                                                className="text-gray-952 inline-flex justify-center items-center text-lg"
+                                                                onClick={addTags}
+                                                            >
+                                                                <Image
+                                                                    src="/img/pluswhite.svg"
+                                                                    alt="close"
+                                                                    height={20}
+                                                                    width={20}
+                                                                />
+                                                                <span>Add Tag</span>
+                                                            </button>
+
+                                                            <input type="hidden" value={allTags} name="alltags" id="alltags" />
+
+                                                        </div>
+                                                        {/* <input
+                                                            type="text"
+                                                            name="assetkey"
+                                                            placeholder="Enter tags/key"
+                                                            className="rounded-lg border border-gray-500 h-[44px] pl-5 pr-5 w-[320px]"
+                                                            onChange={(e) => (assetkey.current = e.target.value)}
+                                                        /> */}
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div className="mb-10 relative column-2 flex justify-start items-center">
-                                                <div className="w-[160px]">
-                                                    <label className="font-semibold text-black">Tags/Key</label>
+                                                <div className="mb-5 relative flex justify-end items-center w-full pr-4">
+                                                    <button
+                                                        className="border border-black rounded-lg bg-black text-white font-lg w-20 h-12 mr-5 font-semibold hover:bg-yellow-951 hover:text-white hover:border-yellow-951 ease-in-out duration-300"
+                                                    >
+                                                        Save
+                                                    </button>
+                                                    <button
+                                                        className="border border-black rounded-lg bg-white font-semibold text-black font-lg w-24 h-12 hover:text-white hover:bg-yellow-951 hover:border-yellow-951 ease-in-out duration-300"
+                                                        onClick={() => setShowModal(false)}
+                                                    >
+                                                        Cancel
+                                                    </button>
                                                 </div>
-                                                <div className="w-3/4">
-                                                    <input
-                                                        type="text"
-                                                        name="assetkey"
-                                                        placeholder="Enter tags/key"
-                                                        className="rounded-lg border border-black h-[44px] pl-5 pr-5 w-[320px]"
-                                                        onChange={(e) => (assetkey.current = e.target.value)}
-                                                    />
-                                                </div>
-                                            </div>
-                                            <div className="mb-5 relative flex justify-end items-center w-full pr-12">
-                                                <button
-                                                    className="border border-black rounded-lg bg-black text-white font-lg w-20 h-12 mr-5"
-                                                >
-                                                    Save
-                                                </button>
-                                                <button
-                                                    className="border border-black rounded-lg bg-white text-black font-lg w-24 h-12"
-                                                    onClick={() => setShowModal(false)}
-                                                >
-                                                    Cancel
-                                                </button>
                                             </div>
                                         </form>
                                     </div>
