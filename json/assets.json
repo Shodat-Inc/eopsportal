@@ -1,1 +1,79 @@
-[{"assetID":"110111012001","assetName":"Cars","slug":"Cars","assetkey":"Model Type, VIN, Serial No, Color","dateModified":"5/8/2023, 11:44:35 PM","dateCreated":"5/8/2023, 11:44:35 PM"},{"assetID":"110111012002","assetName":"Truck","slug":"Truck","assetkey":"Model Type, VIN, Serial No, Color","dateModified":"5/8/2023, 11:44:51 PM","dateCreated":"5/8/2023, 11:44:51 PM"},{"assetID":"110111012003","assetName":"Moter Cycle","slug":"MoterCycle","assetkey":"Model Type, VIN, Serial No, Color","dateModified":"5/8/2023, 11:45:04 PM","dateCreated":"5/8/2023, 11:45:04 PM"},{"assetID":"110111012004","assetName":"Electric Bike","slug":"ElectricBike","assetkey":"Model Type, VIN, Serial No, Color","dateModified":"5/8/2023, 11:45:18 PM","dateCreated":"5/8/2023, 11:45:18 PM"},{"assetID":"110111012005","assetName":"Jeep","slug":"Jeep","assetkey":"Model Type, VIN, Serial No, Color","dateModified":"5/8/2023, 11:45:18 PM","dateCreated":"5/8/2023, 11:45:18 PM"}]
+[
+    {
+        "assetID": "110111012001",
+        "assetName": "Cars",
+        "slug": "Cars",
+        "assetkey": [            
+            "Model Type",
+            "VIN",
+            "Serial No",
+            "Color"
+        ],
+        "dateModified": "5/8/2023, 11:44:35 PM",
+        "dateCreated": "5/8/2023, 11:44:35 PM"
+    },
+    {
+        "assetID": "110111012002",
+        "assetName": "Truck",
+        "slug": "Truck",
+        "assetkey": [            
+            "Model Type",
+            "VIN",
+            "Serial No",
+            "Color"
+        ],
+        "dateModified": "5/8/2023, 11:44:51 PM",
+        "dateCreated": "5/8/2023, 11:44:51 PM"
+    },
+    {
+        "assetID": "110111012003",
+        "assetName": "Moter Cycle",
+        "slug": "MoterCycle",
+        "assetkey": [            
+            "Model Type",
+            "VIN",
+            "Serial No",
+            "Color"
+        ],
+        "dateModified": "5/8/2023, 11:45:04 PM",
+        "dateCreated": "5/8/2023, 11:45:04 PM"
+    },
+    {
+        "assetID": "110111012004",
+        "assetName": "Electric Bike",
+        "slug": "ElectricBike",
+        "assetkey": [            
+            "Model Type",
+            "VIN",
+            "Serial No",
+            "Color"
+        ],
+        "dateModified": "5/8/2023, 11:45:18 PM",
+        "dateCreated": "5/8/2023, 11:45:18 PM"
+    },
+    {
+        "assetID": "110111012005",
+        "assetName": "Jeep",
+        "slug": "Jeep",
+        "assetkey": [            
+            "Model Type",
+            "VIN",
+            "Serial No",
+            "Color"
+        ],
+        "dateModified": "5/8/2023, 11:45:18 PM",
+        "dateCreated": "5/8/2023, 11:45:18 PM"
+    },
+    {
+        "assetID": "110111012006",
+        "assetName": "Electric Cycle",
+        "slug": "Electric Cycle",
+        "assetkey": [
+            "VIN",
+            "Model Type",
+            "Color"
+        ],
+        "dateModified": "5/16/2023, 3:24:04 PM",
+        "dateCreated": "5/16/2023, 3:24:04 PM"
+    }
+]

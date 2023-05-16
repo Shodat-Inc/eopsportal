@@ -11,7 +11,7 @@
             "Mfd Date"
         ],
         "parentJoinKey":[
-            "Model Type"
+            "VIN"
         ],
         "dateCreated":"5/8/2023, 11:45:18 PM",
         "dateModified": "5/8/2023, 11:45:18 PM"

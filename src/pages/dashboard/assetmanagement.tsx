@@ -22,15 +22,14 @@ export async function getServerSideProps() {
 
 export default function AssetManagement(localData: any) {
     const [showModal, setShowModal] = useState(false);
-    const [success, setSuccess] = useState(false);
-    const assetid = useRef("");
+    const [success, setSuccess] = useState(false);    
     const assetname = useRef("");
-    const assetkey = useRef("");
-    const [data, setData] = useState([]);
-    const router = useRouter();
-    const [allTags, setAllTags] = useState("Modal Type, VIN, Color, Serial Number");
-    const [newTag, setNewTag] = useState("");
+    const [data, setData] = useState<any[]>([]);
+    const router = useRouter();    
+    const [allTags, setAllTags] = useState<any[]>([]);
+    const [newTag, setNewTag] = useState<string>("");
     const [showInput, setShowInput] = useState(false);
+    const [showHideAddTagButton, setShowHideAddTagButton] = useState(false);
 
     // Get JSON data on page load
     const fetchData = () => {
@@ -40,22 +39,47 @@ export default function AssetManagement(localData: any) {
             }
         });
     };
-
     useEffect(() => {
         fetchData();
         if (fetchData.length) return;
     }, [localData.localData])
 
+
+    // Get Last Asset ID
+    const getLastID = (data && data.length > 0) ? data.slice(-1)[0].assetID : '1000000001';
+
     // Adding New Tags
     const addTags = () => {
-        const myArray = allTags.split(",");
-        console.log("myArray =>", myArray);
         setShowInput(true);
+        setShowHideAddTagButton(true)
     }
+
     // Save New Tag
     const saveNewTag = () => {
-        console.log("Here")
+        if (newTag.trim().length !== 0) {
+            let updatedList = allTags.slice();
+            updatedList.push(newTag)
+            setAllTags(updatedList)
+            setShowInput(false);
+            setNewTag("");
+            setShowHideAddTagButton(false)
+        } else {
+            console.log("Input must not be empty")
+        }
+
+    }
+
+    // Cancel Adding new tags
+    const cancelAddingTag = () => {
         setShowInput(false);
+        setShowHideAddTagButton(false)
+    }
+
+    // Remove Elemnet from all Tag Array
+    const removeElement = (item: any) => {
+        let updatedList = allTags.slice();
+        var filteredArray = updatedList.filter(function (e) { return e !== item })
+        setAllTags(filteredArray)
     }
 
 
@@ -65,33 +89,33 @@ export default function AssetManagement(localData: any) {
         var formData = new FormData(e.target);
         const form_values = Object.fromEntries(formData);
         console.log("form_values", form_values)
-        // const response = await fetch('/api/assets', {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json'
-        //     },
-        //     body: JSON.stringify(
-        //         {
-        //             assetID: `${form_values.assetid}`,
-        //             assetName: `${form_values.assetname}`,
-        //             slug: `${form_values.assetname}`,
-        //             assetkey: `${form_values.assetkey}`,
-        //             dateCreated: new Date().toLocaleString() + "",
-        //             dateModified: new Date().toLocaleString() + "",
-        //         }
-        //     )
-        // });
-        // const resdata = await response.json();
-        // if (resdata) {
-        //     router.replace(router.asPath);
-        //     setShowModal(false);
-        //     setSuccess(true);
-        //     setTimeout(() => {
-        //         setSuccess(false);
-        //     }, 5000);
-        // } else {
-        //     console.log("FAILED")
-        // }
+        const response = await fetch('/api/assets', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(
+                {
+                    assetID: `${form_values.assetid}`,
+                    assetName: `${form_values.assetname}`,
+                    slug: `${form_values.assetname}`,
+                    assetkey: allTags,
+                    dateCreated: new Date().toLocaleString() + "",
+                    dateModified: new Date().toLocaleString() + "",
+                }
+            )
+        });
+        const resdata = await response.json();
+        if (resdata) {
+            router.replace(router.asPath);
+            setShowModal(false);
+            setSuccess(true);
+            setTimeout(() => {
+                setSuccess(false);
+            }, 5000);
+        } else {
+            console.log("FAILED")
+        }
     }
 
     // Delete Asset
@@ -154,7 +178,7 @@ export default function AssetManagement(localData: any) {
                                         <thead className="bg-gray-950 rounded-lg h-10 text-sm font-light">
                                             <tr>
                                                 <th>S.No</th>
-                                                <th>Asset ID</th>
+                                                {/* <th>Asset ID</th> */}
                                                 <th>Asset Name</th>
                                                 <th>Tags</th>
                                                 <th>Date Created</th>
@@ -164,8 +188,8 @@ export default function AssetManagement(localData: any) {
                                         <tbody>
                                             {data.map((item: any, index: any) => (
                                                 <tr className="hover:bg-yellow-950" key={index}>
-                                                    <td className="w-[5%] min-h-[50px]">{index + 1}</td>
-                                                    <td className="w-[15%] min-h-[50px]">
+                                                    <td className="w-[6%] min-h-[50px]">{index + 1}</td>
+                                                    {/* <td className="w-[15%] min-h-[50px]">
                                                         <Link
                                                             href={{
                                                                 pathname: '/dashboard/subasset',
@@ -176,8 +200,8 @@ export default function AssetManagement(localData: any) {
                                                         >
                                                             {item.assetID}
                                                         </Link>
-                                                    </td>
-                                                    <td className="w-[20%] min-h-[50px]">
+                                                    </td> */}
+                                                    <td className="w-[27%] min-h-[50px]">
                                                         <Link
                                                             href={{
                                                                 pathname: '/dashboard/subasset',
@@ -189,7 +213,7 @@ export default function AssetManagement(localData: any) {
                                                             <span className="font-medium">{item.assetName}</span>
                                                         </Link>
                                                     </td>
-                                                    <td className="w-[30%] min-h-[50px]">
+                                                    <td className="w-[37%] min-h-[50px]">
                                                         <div className="flex">
                                                             <Image
                                                                 src="/img/export.svg"
@@ -199,7 +223,7 @@ export default function AssetManagement(localData: any) {
                                                                 className="mr-2"
                                                             />
                                                             <span className=" whitespace-nowrap overflow-hidden text-ellipsis">
-                                                                {item.assetkey}
+                                                                {item.assetkey.toString().split(",").join(", ")}
                                                             </span>
                                                         </div>
                                                     </td>
@@ -254,7 +278,7 @@ export default function AssetManagement(localData: any) {
                                     {/*header*/}
                                     <div className="flex items-start justify-between p-5">
                                         <h3 className="text-lg font-medium">
-                                            Add New Asset
+                                            Add New Class
                                         </h3>
                                         <button
                                             className="p-1 ml-auto bg-transparent border-0 text-black float-right leading-none font-semibold outline-none focus:outline-none"
@@ -277,166 +301,108 @@ export default function AssetManagement(localData: any) {
                                             onSubmit={handleSubmit}
                                         >
                                             <div className="mb-5 relative flex justify-center items-center flex-wrap flex-col">
-                                                <div className="mb-5 relative column-2 flex justify-center items-center">
+
+                                                <div className="mb-10 relative column-2 flex justify-start items-center">
                                                     <div className="w-[160px]">
-                                                        <label className="font-semibold text-black">Asset ID</label>
+                                                        <label className="font-semibold text-black">Asset Name <span className="text-red-500">*</span></label>
                                                     </div>
                                                     <div className="w-3/4">
                                                         <input
-                                                            type="text"
+                                                            type="hidden"
                                                             name="assetid"
                                                             placeholder="Enter asset ID"
                                                             className="rounded-lg border border-gray-500 h-[44px] pl-5 pr-5 w-[320px]"
-                                                            onChange={(e) => (assetid.current = e.target.value)}
+                                                            value={parseInt(getLastID) + 1}
                                                         />
-                                                        <div className="relative mt-2 flex w-full">
-                                                            <input
-                                                                type="checkbox"
-                                                                className="checked:bg-black indeterminate:bg-black scale-125"
-                                                                name="autogenerateid"
-                                                            />
-                                                            <label
-                                                                className="ml-2 text-black block flex justify-start items-center">
-                                                                Auto generate ID
-                                                                <button
-                                                                    data-tooltip-target="tooltip-animation" type="button"
-                                                                >
-                                                                    <Image
-                                                                        src="/img/info.svg"
-                                                                        alt="info"
-                                                                        className="ml-2 h-4"
-                                                                        height={16}
-                                                                        width={16}
-                                                                    />
-                                                                </button>
-                                                                <div id="tooltip-animation" role="tooltip" className="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-                                                                    Tooltip content
-                                                                    <div className="tooltip-arrow" data-popper-arrow></div>
-                                                                </div>
-
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div className="mb-10 relative column-2 flex justify-start items-center">
-                                                    <div className="w-[160px]">
-                                                        <label className="font-semibold text-black">Asset Name</label>
-                                                    </div>
-                                                    <div className="w-3/4">
                                                         <input
                                                             type="text"
                                                             name="assetname"
                                                             placeholder="Enter asset Name"
                                                             className="rounded-lg border border-gray-500 h-[44px] pl-5 pr-5 w-[320px]"
                                                             onChange={(e) => (assetname.current = e.target.value)}
+                                                            required
                                                         />
                                                     </div>
                                                 </div>
+
                                                 <div className="mb-10 relative column-2 flex justify-start items-center">
                                                     <div className="w-[160px]">
-                                                        <label className="font-semibold text-black">Asset Tags</label>
+                                                        <label className="font-semibold text-black">Asset Tags <span className="text-red-500">*</span></label>
                                                     </div>
                                                     <div className="w-3/4">
                                                         <div className="rounded-lg border border-gray-500 min-h-[64px] pl-2 pr-2 w-[320px] pt-2 pb-2 flex flex-wrap justify-start items-center">
-                                                            <span
-                                                                className="rounded-lg inline-flex justify-center items-center h-8 pl-2 pr-2 bg-black text-white text-[14px] mr-2 mb-2">
-                                                                Model Type
-                                                                <button className="rounded-full border-2 border-white h-[18px] w-[18px] inline-flex justify-center items-center ml-3">
-                                                                    <Image
-                                                                        src="/img/closewhite.svg"
-                                                                        alt="close"
-                                                                        height={14}
-                                                                        width={14}
-                                                                    />
-                                                                </button>
-                                                            </span>
-
-                                                            <span
-                                                                className="rounded-lg inline-flex justify-center items-center h-8 pl-2 pr-2 bg-black text-white text-[14px] mr-2 mb-2">
-                                                                VIN
-                                                                <button className="rounded-full border-2 border-white h-[18px] w-[18px] inline-flex justify-center items-center ml-3">
-                                                                    <Image
-                                                                        src="/img/closewhite.svg"
-                                                                        alt="close"
-                                                                        height={14}
-                                                                        width={14}
-                                                                    />
-                                                                </button>
-                                                            </span>
-
-                                                            <span
-                                                                className="rounded-lg inline-flex justify-center items-center h-8 pl-2 pr-2 bg-black text-white text-[14px] mr-2 mb-2">
-                                                                Color
-                                                                <button className="rounded-full border-2 border-white h-[18px] w-[18px] inline-flex justify-center items-center ml-3">
-                                                                    <Image
-                                                                        src="/img/closewhite.svg"
-                                                                        alt="close"
-                                                                        height={14}
-                                                                        width={14}
-                                                                    />
-                                                                </button>
-                                                            </span>
-
-                                                            <span
-                                                                className="rounded-lg inline-flex justify-center items-center h-8 pl-2 pr-2 bg-black text-white text-[14px] mr-2 mb-2">
-                                                                Serial No
-                                                                <button className="rounded-full border-2 border-white h-[18px] w-[18px] inline-flex justify-center items-center ml-3">
-                                                                    <Image
-                                                                        src="/img/closewhite.svg"
-                                                                        alt="close"
-                                                                        height={14}
-                                                                        width={14}
-                                                                    />
-                                                                </button>
-                                                            </span>
+                                                            {
+                                                                allTags && allTags.length > 0 ?
+                                                                    allTags.map((items: any, index: any) => (
+                                                                        <span
+                                                                            key={index}
+                                                                            className="rounded-lg inline-flex justify-center items-center h-8 pl-2 pr-2 bg-black text-white text-[14px] mr-2 mb-2">
+                                                                            {items}
+                                                                            <button
+                                                                                className="rounded-full border-2 border-white h-[18px] w-[18px] inline-flex justify-center items-center ml-3"
+                                                                                onClick={() => removeElement(items)}
+                                                                            >
+                                                                                <Image
+                                                                                    src="/img/closewhite.svg"
+                                                                                    alt="close"
+                                                                                    height={14}
+                                                                                    width={14}
+                                                                                />
+                                                                            </button>
+                                                                        </span>
+                                                                    )) : null
+                                                            }
 
                                                             {
                                                                 showInput ?
-                                                                    <span>
+                                                                    <span className="flex justify-center items-center mb-2">
                                                                         <input
                                                                             type="text"
                                                                             placeholder="Tag"
-                                                                            className="border border-gray-951 rounded py-[3px] px-[3px] w-[100px] mr-2"
+                                                                            className="border border-gray-951 rounded py-[3px] px-[3px] w-[100px] mr-2 h-8 text-sm"
                                                                             value={newTag}
+                                                                            onChange={(e) => setNewTag(e.target.value)}
+                                                                            required
                                                                         />
                                                                         <button
-                                                                            className="text-black border border-black rounded inline-flex justify-center items-center text-lg px-2"
+                                                                            className="text-black border border-transparent rounded inline-flex justify-center items-center text-sm h-8 px-2 ml-1 bg-yellow-951"
                                                                             onClick={saveNewTag}
                                                                         >
-                                                                            Save
+                                                                            Add
+                                                                        </button>
+                                                                        <button
+                                                                            className="text-white border border-transparent rounded inline-flex justify-center items-center text-sm h-8 px-2 ml-1 bg-red-600"
+                                                                            onClick={cancelAddingTag}
+                                                                        >
+                                                                            Cancel
                                                                         </button>
                                                                     </span>
                                                                     : null
                                                             }
-
-                                                            <button
-                                                                className="text-gray-952 inline-flex justify-center items-center text-lg"
-                                                                onClick={addTags}
-                                                            >
-                                                                <Image
-                                                                    src="/img/pluswhite.svg"
-                                                                    alt="close"
-                                                                    height={20}
-                                                                    width={20}
-                                                                />
-                                                                <span>Add Tag</span>
-                                                            </button>
-
                                                             <input type="hidden" value={allTags} name="alltags" id="alltags" />
 
+                                                            {!showHideAddTagButton ?
+                                                                <button
+                                                                    className="text-gray-952 inline-flex justify-center items-center text-lg h-8 mb-2"
+                                                                    onClick={addTags}
+                                                                >
+                                                                    <Image
+                                                                        src="/img/pluswhite.svg"
+                                                                        alt="close"
+                                                                        height={20}
+                                                                        width={20}
+                                                                    />
+                                                                    <span>Add Tag</span>
+                                                                </button>
+                                                                : null}
                                                         </div>
-                                                        {/* <input
-                                                            type="text"
-                                                            name="assetkey"
-                                                            placeholder="Enter tags/key"
-                                                            className="rounded-lg border border-gray-500 h-[44px] pl-5 pr-5 w-[320px]"
-                                                            onChange={(e) => (assetkey.current = e.target.value)}
-                                                        /> */}
                                                     </div>
                                                 </div>
+
                                                 <div className="mb-5 relative flex justify-end items-center w-full pr-4">
                                                     <button
-                                                        className="border border-black rounded-lg bg-black text-white font-lg w-20 h-12 mr-5 font-semibold hover:bg-yellow-951 hover:text-white hover:border-yellow-951 ease-in-out duration-300"
+                                                        className="border border-black rounded-lg bg-black text-white font-lg w-20 h-12 mr-5 font-semibold hover:bg-yellow-951 hover:text-white hover:border-yellow-951 ease-in-out duration-300 disabled:bg-gray-951 disabled:hover:border-gray-951 disabled:border-gray-951"
+                                                        disabled={(allTags && allTags.length > 0) ? false : true}
                                                     >
                                                         Save
                                                     </button>
@@ -447,6 +413,7 @@ export default function AssetManagement(localData: any) {
                                                         Cancel
                                                     </button>
                                                 </div>
+
                                             </div>
                                         </form>
                                     </div>
