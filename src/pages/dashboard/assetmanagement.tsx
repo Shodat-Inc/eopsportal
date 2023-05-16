@@ -66,7 +66,6 @@ export default function AssetManagement(localData: any) {
         } else {
             console.log("Input must not be empty")
         }
-
     }
 
     // Cancel Adding new tags
@@ -178,7 +177,6 @@ export default function AssetManagement(localData: any) {
                                         <thead className="bg-gray-950 rounded-lg h-10 text-sm font-light">
                                             <tr>
                                                 <th>S.No</th>
-                                                {/* <th>Asset ID</th> */}
                                                 <th>Asset Name</th>
                                                 <th>Tags</th>
                                                 <th>Date Created</th>
@@ -189,18 +187,6 @@ export default function AssetManagement(localData: any) {
                                             {data.map((item: any, index: any) => (
                                                 <tr className="hover:bg-yellow-950" key={index}>
                                                     <td className="w-[6%] min-h-[50px]">{index + 1}</td>
-                                                    {/* <td className="w-[15%] min-h-[50px]">
-                                                        <Link
-                                                            href={{
-                                                                pathname: '/dashboard/subasset',
-                                                                query: {
-                                                                    assets: item.assetName
-                                                                }
-                                                            }}
-                                                        >
-                                                            {item.assetID}
-                                                        </Link>
-                                                    </td> */}
                                                     <td className="w-[27%] min-h-[50px]">
                                                         <Link
                                                             href={{

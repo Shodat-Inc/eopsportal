@@ -21,56 +21,104 @@ export async function getServerSideProps() {
 }
 
 export default function SubAsset(localData: any) {
-    const [query, setQuery] = useState('');
     const router = useRouter();
     const parentAsset = router.query;
     const [showModal, setShowModal] = useState(false);
     const [success, setSuccess] = useState(false);
+    const assetid = useRef("");
+    const [data, setData] = useState<any[]>([]);
+    const [allTags, setAllTags] = useState<any[]>([]);
+    const [parentJoinKey, setParentJoinKey] = useState<any[]>([]);
+    const [newTag, setNewTag] = useState("");
+    const [showInput, setShowInput] = useState(false);
+    const [hide, setHide] = useState(false);
+    const [showHideAddTagButton, setShowHideAddTagButton] = useState(false);
+
     const filtered = localData.localData.filter((item: any) => {
         return item.parentAssetName === parentAsset.assets;
     });
     const [filteredList, setFilteredList] = useState(filtered);
-    const assetid = useRef("");
-    const assetname = useRef("");
-    const assetkey = useRef("");
-    const [data, setData] = useState([]);
-    const [allTags, setAllTags] = useState("Battery Type, Size, Mfg Date")
-    const [parentJoinKey, setParentJoinKey] = useState("Battery Type, Size, Mfg Date");
-    const [newTag, setNewTag] = useState("");
-    const [showInput, setShowInput] = useState(false);
-    const [hide, setHide] = useState(false);
+
+
+    console.log("parentAsset", parentAsset.assets);
+
+    // Get JSON data on page load
+    const fetchDataForParent = () => {
+        axios.get("/api/getAssets").then((response) => {
+            if (response.data) {
+                const filtered = response.data.filter((item: any) => {
+                    return item.assetName === parentAsset.assets;
+                });
+                if (filtered && filtered.length > 0) {
+                    console.log("filtered", filtered[0].assetkey)
+                    setParentJoinKey(filtered[0].assetkey);
+                }
+            }
+        });
+    };
+    useEffect(() => {
+        fetchDataForParent();
+        if (fetchDataForParent.length) return;
+    }, [])
+
+    console.log("PARENT DATA", parentJoinKey)
+
 
     // Get JSON data on page load
     const fetchData = () => {
         axios.get("/api/getSubAssets").then((response) => {
-            console.log("HERE", response.data);
             if (response.data) {
-                setData(response.data);
+                const filtered = localData.localData.filter((item: any) => {
+                    return item.parentAssetName === parentAsset.assets;
+                });
+                if (filtered && filtered.length > 0) {
+                    setData(filtered);
+                }
             }
         });
     };
-
-
-    // Getting data on props refresh
     useEffect(() => {
         fetchData();
         if (fetchData.length) return;
     }, [localData.localData])
 
 
+    console.log("SUB CLASS DATA =>", data)
+
+
 
     // Adding New Tags
     const addTags = () => {
-        const myArray = allTags.split(",");
-        console.log("myArray =>", myArray);
         setShowInput(true);
         setHide(true)
     }
+
+    // Cancel Adding new tags
+    const cancelAddingTag = () => {
+        setShowInput(false);
+        setShowHideAddTagButton(false)
+    }
+
+    // Remove Elemnet from all Tag Array
+    const removeElement = (item: any) => {
+        let updatedList = allTags.slice();
+        var filteredArray = updatedList.filter(function (e) { return e !== item })
+        setAllTags(filteredArray)
+    }
+
+
     // Save New Tag
     const saveNewTag = () => {
-        console.log("Here")
-        setShowInput(false);
-        setHide(false)
+        if (newTag.trim().length !== 0) {
+            let updatedList = allTags.slice();
+            updatedList.push(newTag)
+            setAllTags(updatedList)
+            setShowInput(false);
+            setNewTag("");
+            setShowHideAddTagButton(false)
+        } else {
+            console.log("Input must not be empty")
+        }
     }
 
     // Refresh Function
@@ -117,6 +165,8 @@ export default function SubAsset(localData: any) {
         //     console.log("FAILED")
         // }
     }
+
+    console.log("Tags Array", allTags)
 
     return (
         <>
@@ -289,7 +339,7 @@ export default function SubAsset(localData: any) {
                                             <div className="mb-5 relative flex justify-center items-center flex-wrap flex-col">
                                                 <div className="mb-7 relative column-2 flex justify-center items-center">
                                                     <div className="w-[160px]">
-                                                        <label className="font-semibold text-black">Name</label>
+                                                        <label className="font-semibold text-black">Name <span className="text-red-500">*</span></label>
                                                     </div>
                                                     <div className="w-3/4">
                                                         <input
@@ -302,150 +352,117 @@ export default function SubAsset(localData: any) {
                                                     </div>
                                                 </div>
 
+
                                                 <div className="mb-10 relative column-2 flex justify-start items-center">
                                                     <div className="w-[160px]">
-                                                        <label className="font-semibold text-black">Tags</label>
+                                                        <label className="font-semibold text-black">Asset Tags <span className="text-red-500">*</span></label>
                                                     </div>
                                                     <div className="w-3/4">
                                                         <div className="rounded-lg border border-gray-500 min-h-[64px] pl-2 pr-2 w-[320px] pt-2 pb-2 flex flex-wrap justify-start items-center">
-                                                            <span
-                                                                className="rounded-lg inline-flex justify-center items-center h-8 pl-2 pr-2 bg-black text-white text-[14px] mr-2 mb-2">
-                                                                Battery Type
-                                                                <button className="rounded-full border-2 border-white h-[18px] w-[18px] inline-flex justify-center items-center ml-3">
-                                                                    <Image
-                                                                        src="/img/closewhite.svg"
-                                                                        alt="close"
-                                                                        height={14}
-                                                                        width={14}
-                                                                    />
-                                                                </button>
-                                                            </span>
-
-                                                            <span
-                                                                className="rounded-lg inline-flex justify-center items-center h-8 pl-2 pr-2 bg-black text-white text-[14px] mr-2 mb-2">
-                                                                Size
-                                                                <button className="rounded-full border-2 border-white h-[18px] w-[18px] inline-flex justify-center items-center ml-3">
-                                                                    <Image
-                                                                        src="/img/closewhite.svg"
-                                                                        alt="close"
-                                                                        height={14}
-                                                                        width={14}
-                                                                    />
-                                                                </button>
-                                                            </span>
-
-                                                            <span
-                                                                className="rounded-lg inline-flex justify-center items-center h-8 pl-2 pr-2 bg-black text-white text-[14px] mr-2 mb-2">
-                                                                Mfg Date
-                                                                <button className="rounded-full border-2 border-white h-[18px] w-[18px] inline-flex justify-center items-center ml-3">
-                                                                    <Image
-                                                                        src="/img/closewhite.svg"
-                                                                        alt="close"
-                                                                        height={14}
-                                                                        width={14}
-                                                                    />
-                                                                </button>
-                                                            </span>
-                                                            <input type="hidden" value={allTags} name="alltags" id="alltags" />
-
+                                                            {
+                                                                allTags && allTags.length > 0 ?
+                                                                    allTags.map((items: any, index: any) => (
+                                                                        <span
+                                                                            key={index}
+                                                                            className="rounded-lg inline-flex justify-center items-center h-8 pl-2 pr-2 bg-black text-white text-[14px] mr-2 mb-2">
+                                                                            {items}
+                                                                            <button
+                                                                                className="rounded-full border-2 border-white h-[18px] w-[18px] inline-flex justify-center items-center ml-3"
+                                                                                onClick={() => removeElement(items)}
+                                                                            >
+                                                                                <Image
+                                                                                    src="/img/closewhite.svg"
+                                                                                    alt="close"
+                                                                                    height={14}
+                                                                                    width={14}
+                                                                                />
+                                                                            </button>
+                                                                        </span>
+                                                                    )) : null
+                                                            }
 
                                                             {
                                                                 showInput ?
-                                                                    <span>
+                                                                    <span className="flex justify-center items-center mb-2">
                                                                         <input
                                                                             type="text"
                                                                             placeholder="Tag"
-                                                                            className="border border-gray-951 rounded py-[3px] px-[3px] w-[100px] mr-2"
+                                                                            className="border border-gray-951 rounded py-[3px] px-[3px] w-[100px] mr-2 h-8 text-sm"
                                                                             value={newTag}
+                                                                            onChange={(e) => setNewTag(e.target.value)}
+                                                                            required
                                                                         />
                                                                         <button
-                                                                            className="text-black border border-black rounded inline-flex justify-center items-center text-lg px-2"
+                                                                            className="text-black border border-transparent rounded inline-flex justify-center items-center text-sm h-8 px-2 ml-1 bg-yellow-951"
                                                                             onClick={saveNewTag}
                                                                         >
-                                                                            Save
+                                                                            Add
+                                                                        </button>
+                                                                        <button
+                                                                            className="text-white border border-transparent rounded inline-flex justify-center items-center text-sm h-8 px-2 ml-1 bg-red-600"
+                                                                            onClick={cancelAddingTag}
+                                                                        >
+                                                                            Cancel
                                                                         </button>
                                                                     </span>
                                                                     : null
                                                             }
+                                                            <input type="hidden" value={allTags} name="alltags" id="alltags" />
 
-
-                                                            <button
-                                                                className="text-gray-952 inline-flex justify-center items-center text-lg"
-                                                                onClick={addTags}
-                                                            >
-                                                                <Image
-                                                                    src="/img/pluswhite.svg"
-                                                                    alt="close"
-                                                                    height={20}
-                                                                    width={20}
-                                                                />
-                                                                <span>Add Tag</span>
-                                                            </button>
-
+                                                            {!showHideAddTagButton ?
+                                                                <button
+                                                                    className="text-gray-952 inline-flex justify-center items-center text-lg h-8 mb-2"
+                                                                    onClick={addTags}
+                                                                >
+                                                                    <Image
+                                                                        src="/img/pluswhite.svg"
+                                                                        alt="close"
+                                                                        height={20}
+                                                                        width={20}
+                                                                    />
+                                                                    <span>Add Tag</span>
+                                                                </button>
+                                                                : null}
                                                         </div>
                                                     </div>
                                                 </div>
 
+
                                                 <div className="mb-10 relative column-2 flex justify-start items-center">
                                                     <div className="w-[160px]">
-                                                        <label className="font-semibold text-black">Parent Join Key</label>
+                                                        <label className="font-semibold text-black">Parent Join Key <span className="text-red-500">*</span></label>
                                                     </div>
                                                     <div className="w-3/4">
                                                         <div className="rounded-lg border border-gray-500 min-h-[64px] pl-2 pr-2 w-[320px] pt-2 pb-2 flex flex-wrap justify-start items-center">
-                                                            <span
-                                                                className="rounded-lg inline-flex justify-center items-center h-8 pl-2 pr-2 bg-black text-white text-[14px] mr-2 mb-2">
-                                                                Model Type
-                                                                <button className="h-[18px] w-[18px] inline-flex justify-center items-center ml-3">
-                                                                    <Image
-                                                                        src="/img/box_check_icon_white.svg"
-                                                                        alt="close"
-                                                                        height={14}
-                                                                        width={14}
-                                                                    />
-                                                                </button>
-                                                            </span>
-
-                                                            <span
-                                                                className="rounded-lg inline-flex justify-center items-center h-8 pl-2 pr-2 bg-black text-white text-[14px] mr-2 mb-2">
-                                                                VIN
-                                                                <button className="h-[18px] w-[18px] inline-flex justify-center items-center ml-3">
-                                                                    <Image
-                                                                        src="/img/blank_check_box_icon_white.svg"
-                                                                        alt="close"
-                                                                        height={14}
-                                                                        width={14}
-                                                                    />
-                                                                </button>
-                                                            </span>
-
-                                                            <span
-                                                                className="rounded-lg inline-flex justify-center items-center h-8 pl-2 pr-2 bg-black text-white text-[14px] mr-2 mb-2">
-                                                                Color
-                                                                <button className="h-[18px] w-[18px] inline-flex justify-center items-center ml-3">
-                                                                    <Image
-                                                                        src="/img/blank_check_box_icon_white.svg"
-                                                                        alt="close"
-                                                                        height={14}
-                                                                        width={14}
-                                                                    />
-                                                                </button>
-                                                            </span>
-
-                                                            <span
-                                                                className="rounded-lg inline-flex justify-center items-center h-8 pl-2 pr-2 bg-black text-white text-[14px] mr-2 mb-2">
-                                                                Serial No
-                                                                <button className="h-[18px] w-[18px] inline-flex justify-center items-center ml-3">
-                                                                    <Image
-                                                                        src="/img/blank_check_box_icon_white.svg"
-                                                                        alt="close"
-                                                                        height={14}
-                                                                        width={14}
-                                                                    />
-                                                                </button>
-                                                            </span>
+                                                            {
+                                                                parentJoinKey && parentJoinKey.length > 0 ?
+                                                                    parentJoinKey.map((item: any, index: any) => (
+                                                                        <span
+                                                                            key={index}
+                                                                            className="rounded-lg inline-flex justify-center items-center h-8 pl-2 pr-2 bg-black text-white text-[14px] mr-2 mb-2">
+                                                                            {item}
+                                                                            <button className="h-[18px] w-[18px] inline-flex justify-center items-center ml-3">
+                                                                                <Image
+                                                                                    src="/img/blank_check_box_icon_white.svg"
+                                                                                    alt="close"
+                                                                                    height={14}
+                                                                                    width={14}
+                                                                                />
+                                                                                {/* <Image
+                                                                                    src="/img/box_check_icon_white.svg"
+                                                                                    alt="close"
+                                                                                    height={14}
+                                                                                    width={14}
+                                                                                /> */}
+                                                                            </button>
+                                                                        </span>
+                                                                    ))
+                                                                    :
+                                                                    null
+                                                            }
                                                             <input type="hidden" value={parentJoinKey} name="parentJoinKey" id="parentJoinKey" />
 
-                                                            <button
+                                                            {/* <button
                                                                 className="text-gray-952 inline-flex justify-center items-center text-lg"
                                                                 onClick={refreshFunction}
                                                             >
@@ -456,7 +473,7 @@ export default function SubAsset(localData: any) {
                                                                     width={20}
                                                                 />
                                                                 <span>Refresh</span>
-                                                            </button>
+                                                            </button> */}
 
                                                         </div>
                                                     </div>
@@ -464,7 +481,8 @@ export default function SubAsset(localData: any) {
 
                                                 <div className="mb-5 relative flex justify-end items-center w-full pr-4">
                                                     <button
-                                                        className="border border-black rounded-lg bg-black text-white font-lg w-20 h-12 mr-5 font-semibold hover:bg-yellow-951 hover:text-white hover:border-yellow-951 ease-in-out duration-300"
+                                                        className="border border-black rounded-lg bg-black text-white font-lg w-20 h-12 mr-5 font-semibold hover:bg-yellow-951 hover:text-white hover:border-yellow-951 ease-in-out duration-300 disabled:bg-gray-951 disabled:hover:border-gray-951 disabled:border-gray-951"
+                                                        disabled={(allTags && allTags.length > 0) ? false : true}
                                                     >
                                                         Save
                                                     </button>
