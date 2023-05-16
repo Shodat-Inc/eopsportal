@@ -33,14 +33,12 @@ export default function SubAsset(localData: any) {
     const [showInput, setShowInput] = useState(false);
     const [hide, setHide] = useState(false);
     const [showHideAddTagButton, setShowHideAddTagButton] = useState(false);
-
+    const [selParentTags, setSelParentTags] = useState<any[]>([]);
     const filtered = localData.localData.filter((item: any) => {
         return item.parentAssetName === parentAsset.assets;
     });
     const [filteredList, setFilteredList] = useState(filtered);
 
-
-    console.log("parentAsset", parentAsset.assets);
 
     // Get JSON data on page load
     const fetchDataForParent = () => {
@@ -50,7 +48,6 @@ export default function SubAsset(localData: any) {
                     return item.assetName === parentAsset.assets;
                 });
                 if (filtered && filtered.length > 0) {
-                    console.log("filtered", filtered[0].assetkey)
                     setParentJoinKey(filtered[0].assetkey);
                 }
             }
@@ -60,9 +57,6 @@ export default function SubAsset(localData: any) {
         fetchDataForParent();
         if (fetchDataForParent.length) return;
     }, [])
-
-    console.log("PARENT DATA", parentJoinKey)
-
 
     // Get JSON data on page load
     const fetchData = () => {
@@ -82,15 +76,11 @@ export default function SubAsset(localData: any) {
         if (fetchData.length) return;
     }, [localData.localData])
 
-
-    console.log("SUB CLASS DATA =>", data)
-
-
-
     // Adding New Tags
     const addTags = () => {
         setShowInput(true);
         setHide(true)
+        setShowHideAddTagButton(true)
     }
 
     // Cancel Adding new tags
@@ -121,52 +111,59 @@ export default function SubAsset(localData: any) {
         }
     }
 
-    // Refresh Function
-    const refreshFunction = () => {
-        console.log("Refresh")
+    // Selected parent join key
+    const selectedParentKey = (item:any) => {
+        let updatedList =  selParentTags.length  > 0 ? selParentTags.slice() : selParentTags;
+        updatedList.push(item)
+        setSelParentTags(updatedList)
     }
 
+
+    // Get Last Asset ID
+    const getLastID = (data && data.length > 0) ? data.slice(-1)[0].assetID : '2000000001';
 
     // Storing data in json for sub class
     const handleSubmit = async (e: any) => {
         e.preventDefault();
         var formData = new FormData(e.target);
         const form_values = Object.fromEntries(formData);
-        console.log("form_values", form_values)
-        // const response = await fetch('/api/createSubAssets', {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json'
-        //     },
-        //     body: JSON.stringify(
-        //         {
-        //             assetID: `${form_values.assetid}`,
-        //             assetName: `${form_values.assetname}`,
-        //             slug: `${form_values.assetname}`,
-        //             parentAssetID: `${form_values.assetname}`,
-        //             parentAssetName: `${form_values.assetname}`,
-        //             tagsKeys: `${form_values.assetkey}`,
-        //             dateCreated: new Date().toLocaleString() + "",
-        //             dateModified: new Date().toLocaleString() + "",
-        //             geoScopeLink: "https://dymmylink.com/"
-        //         }
-        //     )
-        // });
-        // const resdata = await response.json();
-        // if (resdata) {
-        //     console.log("SUCCESS")
-        //     router.replace(router.asPath);
-        //     setShowModal(false);
-        //     setSuccess(true);
-        //     setTimeout(() => {
-        //         setSuccess(false);
-        //     }, 5000);
-        // } else {
-        //     console.log("FAILED")
-        // }
+        const response = await fetch('/api/createSubAssets', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(
+                {
+                    assetID: getLastID+1,
+                    assetName: `${form_values.assetname}`,
+                    slug: `${form_values.assetname}`,
+                    parentAssetID: parentAsset.assets,
+                    parentAssetName: parentAsset.assets,
+                    tags: allTags,
+                    parentJoinKey:selParentTags,
+                    dateCreated: new Date().toLocaleString() + "",
+                    dateModified: new Date().toLocaleString() + "",
+                    geoScopeLink: "https://dymmylink.com/",
+                    tagsKeys:"",
+                }
+            )
+        });
+        const resdata = await response.json();
+        if (resdata) {
+            router.replace(router.asPath);
+            setShowModal(false);
+            setSuccess(true);
+            setTimeout(() => {
+                setSuccess(false);
+            }, 5000);
+        } else {
+            console.log("FAILED")
+        }
     }
 
-    console.log("Tags Array", allTags)
+    const isInArray = (value:any, array:any) => {
+        return array.indexOf(value) > -1;
+      }
 
     return (
         <>
@@ -261,8 +258,8 @@ export default function SubAsset(localData: any) {
                                                             <span className="font-medium">{item.assetName}</span>
                                                         </Link>
                                                     </td>
-                                                    <td><span>{item.tagsKeys}</span></td>
-                                                    <td><span>{item.parentJoinKey}</span></td>
+                                                    <td><span>{item.tags.toString().split(",").join(", ")}</span></td>
+                                                    <td><span>{item.parentJoinKey.toString().split(",").join(", ")}</span></td>
                                                     <td><span>{moment(item.dateCreated).format('DD-MM-YYYY')}</span></td>
                                                     <td>
                                                         <button className="mr-4">
@@ -441,40 +438,23 @@ export default function SubAsset(localData: any) {
                                                                             key={index}
                                                                             className="rounded-lg inline-flex justify-center items-center h-8 pl-2 pr-2 bg-black text-white text-[14px] mr-2 mb-2">
                                                                             {item}
-                                                                            <button className="h-[18px] w-[18px] inline-flex justify-center items-center ml-3">
+                                                                            <div 
+                                                                                className="h-[18px] w-[18px] inline-flex justify-center items-center ml-3 cursor-pointer"
+                                                                                onClick={()=>selectedParentKey(item)}
+                                                                            >
                                                                                 <Image
-                                                                                    src="/img/blank_check_box_icon_white.svg"
+                                                                                    src={isInArray(item, selParentTags) ? "/img/box_check_icon_white.svg" : "/img/blank_check_box_icon_white.svg"}
                                                                                     alt="close"
                                                                                     height={14}
                                                                                     width={14}
                                                                                 />
-                                                                                {/* <Image
-                                                                                    src="/img/box_check_icon_white.svg"
-                                                                                    alt="close"
-                                                                                    height={14}
-                                                                                    width={14}
-                                                                                /> */}
-                                                                            </button>
+                                                                            </div>
                                                                         </span>
                                                                     ))
                                                                     :
                                                                     null
                                                             }
                                                             <input type="hidden" value={parentJoinKey} name="parentJoinKey" id="parentJoinKey" />
-
-                                                            {/* <button
-                                                                className="text-gray-952 inline-flex justify-center items-center text-lg"
-                                                                onClick={refreshFunction}
-                                                            >
-                                                                <Image
-                                                                    src="/img/refresh_gray.svg"
-                                                                    alt="close"
-                                                                    height={20}
-                                                                    width={20}
-                                                                />
-                                                                <span>Refresh</span>
-                                                            </button> */}
-
                                                         </div>
                                                     </div>
                                                 </div>
