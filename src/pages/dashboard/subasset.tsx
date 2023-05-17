@@ -38,6 +38,7 @@ export default function SubAsset(localData: any) {
         return item.parentAssetName === parentAsset.assets;
     });
     const [filteredList, setFilteredList] = useState(filtered);
+    const [checkIcon, setCheckIcon] = useState("/img/blank_check_box_icon_white.svg")
 
 
     // Get JSON data on page load
@@ -112,10 +113,23 @@ export default function SubAsset(localData: any) {
     }
 
     // Selected parent join key
-    const selectedParentKey = (item:any) => {
-        let updatedList =  selParentTags.length  > 0 ? selParentTags.slice() : selParentTags;
+    const selectedParentKey = (item: any) => {
+        let updatedList = selParentTags;
+        // let updatedList =  selParentTags.length  > 0 ? selParentTags.slice() : selParentTags;
         updatedList.push(item)
         setSelParentTags(updatedList)
+        setCheckIcon("/img/box_check_icon_white.svg")
+    }
+
+    // Un Select Parent Join Key
+    const unSelectParentKey = (item: any) => {
+        var arr = selParentTags;
+        var index = arr.indexOf(item);
+        if (index >= 0) {
+            arr.splice(index, 1);
+        }
+        setSelParentTags(arr);
+        setCheckIcon("/img/blank_check_box_icon_white.svg")
     }
 
 
@@ -134,17 +148,17 @@ export default function SubAsset(localData: any) {
             },
             body: JSON.stringify(
                 {
-                    assetID: getLastID+1,
+                    assetID: getLastID + 1,
                     assetName: `${form_values.assetname}`,
                     slug: `${form_values.assetname}`,
                     parentAssetID: parentAsset.assets,
                     parentAssetName: parentAsset.assets,
                     tags: allTags,
-                    parentJoinKey:selParentTags,
+                    parentJoinKey: selParentTags,
                     dateCreated: new Date().toLocaleString() + "",
                     dateModified: new Date().toLocaleString() + "",
                     geoScopeLink: "https://dymmylink.com/",
-                    tagsKeys:"",
+                    tagsKeys: "",
                 }
             )
         });
@@ -161,9 +175,11 @@ export default function SubAsset(localData: any) {
         }
     }
 
-    const isInArray = (value:any, array:any) => {
+    const isInArray = (value: any, array: any) => {
         return array.indexOf(value) > -1;
-      }
+    }
+
+
 
     return (
         <>
@@ -434,21 +450,43 @@ export default function SubAsset(localData: any) {
                                                             {
                                                                 parentJoinKey && parentJoinKey.length > 0 ?
                                                                     parentJoinKey.map((item: any, index: any) => (
+
                                                                         <span
                                                                             key={index}
                                                                             className="rounded-lg inline-flex justify-center items-center h-8 pl-2 pr-2 bg-black text-white text-[14px] mr-2 mb-2">
                                                                             {item}
-                                                                            <div 
-                                                                                className="h-[18px] w-[18px] inline-flex justify-center items-center ml-3 cursor-pointer"
-                                                                                onClick={()=>selectedParentKey(item)}
-                                                                            >
-                                                                                <Image
-                                                                                    src={isInArray(item, selParentTags) ? "/img/box_check_icon_white.svg" : "/img/blank_check_box_icon_white.svg"}
-                                                                                    alt="close"
-                                                                                    height={14}
-                                                                                    width={14}
-                                                                                />
-                                                                            </div>
+
+                                                                            {
+                                                                                isInArray(item, selParentTags) ?
+
+                                                                                    <div
+                                                                                        className="h-[18px] w-[18px] inline-flex justify-center items-center ml-3 cursor-pointer"
+                                                                                        onClick={() => unSelectParentKey(item)}
+                                                                                    >
+                                                                                        <Image
+                                                                                            src="/img/box_check_icon_white.svg"
+                                                                                            alt="close"
+                                                                                            height={14}
+                                                                                            width={14}
+                                                                                        />
+                                                                                    </div>
+
+                                                                                    :
+
+                                                                                    <div
+                                                                                        className="h-[18px] w-[18px] inline-flex justify-center items-center ml-3 cursor-pointer"
+                                                                                        onClick={() => selectedParentKey(item)}
+                                                                                    >
+                                                                                        <Image
+                                                                                            src="/img/blank_check_box_icon_white.svg"
+                                                                                            alt="close"
+                                                                                            height={14}
+                                                                                            width={14}
+                                                                                        />
+                                                                                    </div>
+
+                                                                            }
+
                                                                         </span>
                                                                     ))
                                                                     :
