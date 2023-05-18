@@ -38,7 +38,8 @@ export default function SubAsset(localData: any) {
         return item.parentAssetName === parentAsset.assets;
     });
     const [filteredList, setFilteredList] = useState(filtered);
-    const [checkIcon, setCheckIcon] = useState("/img/blank_check_box_icon_white.svg")
+    const [checkIcon, setCheckIcon] = useState("/img/blank_check_box_icon_white.svg");
+    const [tag, setTag] = useState<any[]>([]);
 
 
     // Get JSON data on page load
@@ -59,6 +60,18 @@ export default function SubAsset(localData: any) {
         if (fetchDataForParent.length) return;
     }, [])
 
+
+    // Remove duplicate element from array
+    function removeDuplicates(arr:any) {
+        let unique = [];
+        for (let i = 0; i < arr.length; i++) {
+            if (unique.indexOf(arr[i]) === -1) {
+                unique.push(arr[i]);
+            }
+        }
+        return unique;
+    }
+
     // Get JSON data on page load
     const fetchData = () => {
         axios.get("/api/getSubAssets").then((response) => {
@@ -69,9 +82,24 @@ export default function SubAsset(localData: any) {
                 if (filtered && filtered.length > 0) {
                     setData(filtered);
                 }
+
+                let arr:any = [];
+                response.data.map((item:any, key:any) => {
+                    console.log(item.tags);
+                    arr.push(...item.tags);
+                    setTag(removeDuplicates(arr))
+                })
+                
             }
         });
     };
+    
+       
+    // console.log("HELLO", tag,parentJoinKey)
+    useEffect(()=>{
+        setParentJoinKey(parentJoinKey.concat(tag))
+    }, [tag])
+
     useEffect(() => {
         fetchData();
         if (fetchData.length) return;
@@ -178,7 +206,6 @@ export default function SubAsset(localData: any) {
     const isInArray = (value: any, array: any) => {
         return array.indexOf(value) > -1;
     }
-
 
 
     return (
@@ -447,7 +474,7 @@ export default function SubAsset(localData: any) {
                                                     </div>
                                                     <div className="w-3/4">
                                                         <div className="rounded-lg border border-gray-500 min-h-[64px] pl-2 pr-2 w-[320px] pt-2 pb-2 flex flex-wrap justify-start items-center">
-                                                            {
+                                                            {                                                                
                                                                 parentJoinKey && parentJoinKey.length > 0 ?
                                                                     parentJoinKey.map((item: any, index: any) => (
 
@@ -484,7 +511,6 @@ export default function SubAsset(localData: any) {
                                                                                             width={14}
                                                                                         />
                                                                                     </div>
-
                                                                             }
 
                                                                         </span>

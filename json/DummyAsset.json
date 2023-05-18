@@ -10,6 +10,24 @@
             "VIN", 
             "Color",
             "Serial No"
+        ],
+        "assetTypes": [
+            {
+                "name": "Model Type",
+                "type" : "string"
+            },
+            {
+                "name": "VIN",
+                "type" : "int"
+            },
+            {
+                "name": "Color",
+                "type" : "string"
+            },
+            {
+                "name": "Serial No",
+                "type": "int"
+            }
         ]
     },
     {

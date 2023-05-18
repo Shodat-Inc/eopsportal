@@ -22,14 +22,18 @@ export async function getServerSideProps() {
 
 export default function AssetManagement(localData: any) {
     const [showModal, setShowModal] = useState(false);
-    const [success, setSuccess] = useState(false);    
+    const [success, setSuccess] = useState(false);
     const assetname = useRef("");
     const [data, setData] = useState<any[]>([]);
-    const router = useRouter();    
+    const router = useRouter();
     const [allTags, setAllTags] = useState<any[]>([]);
     const [newTag, setNewTag] = useState<string>("");
     const [showInput, setShowInput] = useState(false);
     const [showHideAddTagButton, setShowHideAddTagButton] = useState(false);
+    const [toggleDT, setToggleDT] = useState(false);
+    const [dataType, setDataType] = useState("");
+    const [assetDataType, setAssetDataType] = useState<any[]>([]);
+
 
     // Get JSON data on page load
     const fetchData = () => {
@@ -51,7 +55,13 @@ export default function AssetManagement(localData: any) {
     // Adding New Tags
     const addTags = () => {
         setShowInput(true);
-        setShowHideAddTagButton(true)
+        setShowHideAddTagButton(true);
+        setToggleDT(true);
+    }
+
+    // Get Radio Button Value
+    const radioChange = (value:any) => {        
+        setDataType(value);
     }
 
     // Save New Tag
@@ -62,24 +72,44 @@ export default function AssetManagement(localData: any) {
             setAllTags(updatedList)
             setShowInput(false);
             setNewTag("");
-            setShowHideAddTagButton(false)
+            setShowHideAddTagButton(false);
+            setToggleDT(false);
+
+            console.log("HERE YOU GO=>", dataType)
+            let typeList = assetDataType;
+            typeList.push(dataType)
+            setAssetDataType(typeList);
+            console.log("HERE YOU GO=>", assetDataType)
+            setDataType("");
         } else {
             console.log("Input must not be empty")
         }
+    }
+
+
+     // Remove Elemnet from all Tag Array
+     const removeElement = (item: any) => {
+        let updatedList = allTags.slice();
+        var filteredArray = updatedList.filter(function (e) { return e !== item })
+        setAllTags(filteredArray)
+
+        let updatedListType = assetDataType;
+        var popped  = updatedListType.splice(-1);
+        setAssetDataType(popped);
+        console.log("HERE YOU POPED=>", assetDataType)
     }
 
     // Cancel Adding new tags
     const cancelAddingTag = () => {
         setShowInput(false);
         setShowHideAddTagButton(false)
+        setToggleDT(false);
+        setDataType("");
     }
 
-    // Remove Elemnet from all Tag Array
-    const removeElement = (item: any) => {
-        let updatedList = allTags.slice();
-        var filteredArray = updatedList.filter(function (e) { return e !== item })
-        setAllTags(filteredArray)
-    }
+   
+
+    
 
 
     // Store Data into JSON File
@@ -87,7 +117,7 @@ export default function AssetManagement(localData: any) {
         e.preventDefault();
         var formData = new FormData(e.target);
         const form_values = Object.fromEntries(formData);
-        console.log("form_values", form_values)
+        console.log("form_values", form_values);
         const response = await fetch('/api/assets', {
             method: 'POST',
             headers: {
@@ -101,6 +131,7 @@ export default function AssetManagement(localData: any) {
                     assetkey: allTags,
                     dateCreated: new Date().toLocaleString() + "",
                     dateModified: new Date().toLocaleString() + "",
+                    assetTypes: assetDataType,
                 }
             )
         });
@@ -120,7 +151,9 @@ export default function AssetManagement(localData: any) {
     // Delete Asset
     const deleteAsset = (assetID: any) => {
         console.log("Delete ID", assetID)
-    }
+    }    
+
+    // console.log("DT => ", dataType)
 
     return (
         <>
@@ -344,15 +377,16 @@ export default function AssetManagement(localData: any) {
                                                                     <span className="flex justify-center items-center mb-2">
                                                                         <input
                                                                             type="text"
-                                                                            placeholder="Tag"
+                                                                            placeholder="Tag Name"
                                                                             className="border border-gray-951 rounded py-[3px] px-[3px] w-[100px] mr-2 h-8 text-sm"
                                                                             value={newTag}
                                                                             onChange={(e) => setNewTag(e.target.value)}
                                                                             required
                                                                         />
                                                                         <button
-                                                                            className="text-black border border-transparent rounded inline-flex justify-center items-center text-sm h-8 px-2 ml-1 bg-yellow-951"
+                                                                            className={`text-black border border-transparent rounded inline-flex justify-center items-center text-sm h-8 px-2 ml-1 bg-yellow-951 ${dataType && (dataType!=null || dataType!="") ? 'okay' : 'disabled disabled:bg-gray-300'}`}
                                                                             onClick={saveNewTag}
+                                                                            disabled={dataType && (dataType!=null || dataType!="") ? false : true}
                                                                         >
                                                                             Add
                                                                         </button>
@@ -382,6 +416,95 @@ export default function AssetManagement(localData: any) {
                                                                 </button>
                                                                 : null}
                                                         </div>
+
+                                                        {toggleDT ?
+                                                            <div className="rounded rounded-lg border border-gray-500 min-h-[150px] mt-[1px] pl-2 pr-2 w-[320px] pt-2 pb-2">
+                                                                <div className="text-sm font-bold color-black mb-2 flex items-center justify-between">
+                                                                    <span>Select Data Type</span>
+                                                                    <span className="bg-black h-8 w-8 p-1 inline-flex rounded-full justify-center items-center">
+                                                                        <Image
+                                                                            src="/img/tick-white.svg"
+                                                                            alt="check"
+                                                                            height={20}
+                                                                            width={20}
+                                                                            className="inline-block"                          
+                                                                        />
+                                                                    </span>
+                                                                </div>
+                                                                <div className="flex pt-1 pb-1">
+                                                                    <div className={`${styles.customRadio} mr-2`}>
+                                                                        <input
+                                                                            type="radio"
+                                                                            name="datatype"
+                                                                            className="scale-150"
+                                                                            value="int"
+                                                                            checked={dataType==="int"}
+                                                                            onChange={()=>radioChange("int")}
+                                                                        />
+                                                                        <span></span>
+                                                                    </div>
+                                                                    <label className="text-black font-semibold">int <span className="text-gray-500 font-normal text-[14px]">(myNum=5)</span></label>
+                                                                </div>
+                                                                <div className="flex pt-1 pb-1">
+                                                                    <div className={`${styles.customRadio} mr-2`}>
+                                                                        <input
+                                                                            type="radio"
+                                                                            name="datatype"
+                                                                            className="scale-150"
+                                                                            value="float"
+                                                                            checked={dataType==="float"}
+                                                                            onChange={()=>radioChange("float")}
+                                                                        />
+                                                                        <span></span>
+                                                                    </div>
+                                                                    <label className="text-black font-semibold">float <span className="text-gray-500 font-normal text-[14px]">(myFloatNum=5.99f)</span></label>
+                                                                </div>
+                                                                <div className="flex pt-1 pb-1">
+                                                                    <div className={`${styles.customRadio} mr-2`}>
+                                                                        <input
+                                                                            type="radio"
+                                                                            name="datatype"
+                                                                            className="scale-150"
+                                                                            value="char"
+                                                                            checked={dataType==="char"}
+                                                                            onChange={()=>radioChange("char")}
+                                                                        />
+                                                                        <span></span>
+                                                                    </div>
+                                                                    <label className="text-black font-semibold">char <span className="text-gray-500 font-normal text-[14px]">(myLetter='D')</span></label>
+                                                                </div>
+                                                                <div className="flex pt-1 pb-1">
+                                                                    <div className={`${styles.customRadio} mr-2`}>
+                                                                        <input
+                                                                            type="radio"
+                                                                            name="datatype"
+                                                                            className="scale-150"
+                                                                            value="boolean"
+                                                                            checked={dataType==="boolean"}
+                                                                            onChange={()=>radioChange("boolean")}
+                                                                        />
+                                                                        <span></span>
+                                                                    </div>
+                                                                    <label className="text-black font-semibold">boolean <span className="text-gray-500 font-normal text-[14px]">(myBool=true/false)</span></label>
+                                                                </div>
+                                                                <div className="flex pt-1 pb-1">
+                                                                    <div className={`${styles.customRadio} mr-2`}>
+                                                                        <input
+                                                                            type="radio"
+                                                                            name="datatype"
+                                                                            className="scale-150"
+                                                                            value="string"
+                                                                            checked={dataType==="string"}
+                                                                            onChange={()=>radioChange("string")}
+                                                                        />
+                                                                        <span></span>
+                                                                    </div>
+                                                                    <label className="text-black font-semibold">string <span className="text-gray-500 font-normal text-[14px]">(myText="Hello")</span></label>
+                                                                </div>
+
+                                                            </div>
+                                                            : null
+                                                        }
                                                     </div>
                                                 </div>
 
