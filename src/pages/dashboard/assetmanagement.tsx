@@ -179,7 +179,7 @@ export default function AssetManagement(localData: any) {
                         </div>
                     </div>
 
-                    <div className="border min-h-full rounded-md mt-3 px-4 py-4">
+                    <div className="border min-h-full rounded-md mt-3 px-4 py-4 bg-gray-953">
                         <div className="flex justify-start items-start">
                             <nav className="flex" aria-label="Breadcrumb">
                                 <ol className="inline-flex items-center space-x-1 md:space-x-1">

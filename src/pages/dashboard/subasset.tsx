@@ -62,7 +62,7 @@ export default function SubAsset(localData: any) {
 
 
     // Remove duplicate element from array
-    function removeDuplicates(arr:any) {
+    function removeDuplicates(arr: any) {
         let unique = [];
         for (let i = 0; i < arr.length; i++) {
             if (unique.indexOf(arr[i]) === -1) {
@@ -83,20 +83,20 @@ export default function SubAsset(localData: any) {
                     setData(filtered);
                 }
 
-                let arr:any = [];
-                response.data.map((item:any, key:any) => {
+                let arr: any = [];
+                response.data.map((item: any, key: any) => {
                     console.log(item.tags);
                     arr.push(...item.tags);
                     setTag(removeDuplicates(arr))
                 })
-                
+
             }
         });
     };
-    
-       
+
+
     // console.log("HELLO", tag,parentJoinKey)
-    useEffect(()=>{
+    useEffect(() => {
         setParentJoinKey(parentJoinKey.concat(tag))
     }, [tag])
 
@@ -214,7 +214,7 @@ export default function SubAsset(localData: any) {
 
                 <div className="w-[84%]">
                     <div className="columns-2 flex justify-between items-center">
-                        <p className="text-gray-700 text-lg mb-0 font-bold">Asset Management</p>
+                        <p className="text-gray-700 text-lg mb-0 font-bold">Object Management</p>
                         <div className="flex justify-end items-right">
                             <button
                                 className="rounded-lg bg-black text-white flex h-10 justify-center items-center pl-2 pr-2 hover:bg-yellow-950 hover:text-white transition-all duration-[400ms] mr-3"
@@ -232,7 +232,7 @@ export default function SubAsset(localData: any) {
                         </div>
                     </div>
 
-                    <div className="border min-h-full rounded-md mt-3 px-4 py-4">
+                    <div className="border min-h-full rounded-md mt-3 px-4 py-4 bg-gray-953">
                         <div className="flex justify-start items-start">
                             <nav className="flex" aria-label="Breadcrumb">
                                 <ol className="inline-flex items-center space-x-1 md:space-x-1">
@@ -269,9 +269,150 @@ export default function SubAsset(localData: any) {
                         {/* --- Alerts End--- */}
 
 
+                        <div className="flex justify-start items-start flex-wrap flex-col mt-4">
+                            <div className="flex justify-between items-start w-full flex-wrap flex-row">
+                                <h4 className="font-bold text-lg color-black font-semibold">Create New Object</h4>
+                                <div className="relative flex">
+                                    <button className="flex justify-center items-center mr-10">
+                                        <Image
+                                            src="/img/close.svg"
+                                            alt="close"
+                                            height={14}
+                                            width={14}
+                                            className="mr-2"
+                                        />
+                                        <span>Clear All</span>
+                                    </button>
+                                    <button
+                                        className="flex justify-center items-center bg-yellow-950 text-black rounded-md w-[80px] h-[40px] font-semibold"
+                                    >
+                                        <Image
+                                            src="/img/tick.svg"
+                                            alt="close"
+                                            height={14}
+                                            width={14}
+                                            className="mr-2"
+                                        />
+                                        <span>Save</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div className="shadow-lg bg-white p-5 w-full rounded-lg min-h-[170px]">
+                                <div className="flex justify-between items-center mb-5">
+                                    <div className="relative w-[50%]">
+                                        <input
+                                            type="text"
+                                            placeholder="VIN"
+                                            name="VIN"
+                                            className="rounded-lg border border-gray-954 h-[44px] pl-5 pr-5 w-[320px]"
+                                        />
+                                    </div>
+                                    <div className="relative w-[50%]">
+                                        <input
+                                            type="text"
+                                            placeholder="Model Type"
+                                            name="modelType"
+                                            className="rounded-lg border border-gray-954 h-[44px] pl-5 pr-5 w-[320px]"
+                                        />
+                                    </div>
+                                </div>
+                                <div className="flex justify-between items-center mb-5">
+                                    <div className="relative w-[50%]">
+                                        <input
+                                            type="text"
+                                            placeholder="Color"
+                                            name="color"
+                                            className="rounded-lg border border-gray-954 h-[44px] pl-5 pr-5 w-[320px]"
+                                        />
+                                    </div>
+                                    <div className="relative w-[50%]">
+                                        <input
+                                            type="text"
+                                            placeholder="Mfd Date"
+                                            name="mfdDate"
+                                            className="rounded-lg border border-gray-954 h-[44px] pl-5 pr-5 w-[320px]"
+                                        />
+                                    </div>
+                                </div>
+                                <div className="flex justify-between items-center mb-5">
+                                    <div className="relative w-[50%]">
+                                        <input
+                                            type="text"
+                                            placeholder="Capacity In CC"
+                                            name="capacityInCC"
+                                            className="rounded-lg border border-gray-954 h-[44px] pl-5 pr-5 w-[320px]"
+                                        />
+                                    </div>
+                                    <div className="relative w-[50%]">
+                                        <input
+                                            type="text"
+                                            placeholder="Cylinders/Valves"
+                                            name="cylinders"
+                                            className="rounded-lg border border-gray-954 h-[44px] pl-5 pr-5 w-[320px] focus-visible:border-yellow-951 focus:border-yellow-951 active:border-yellow-951"
+                                        />
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+
+
+                        <div className="h-96 flex justify-start items-start flex-wrap flex-col mt-4">
+                            <h4 className="font-bold text-lg color-black mb-4 font-semibold">Objects</h4>
+                            <div className="overflow-x-auto border rounded-md w-full">
+                                <table className={`table-auto min-w-full w-full text-left ${styles.table}`}>
+                                    <thead className="bg-gray-950 rounded-lg h-10 text-sm font-light">
+                                        <tr>
+                                            <th>S.No</th>
+                                            <th>VIN</th>
+                                            <th>Model Type</th>
+                                            <th>Color</th>
+                                            <th>Mfd Date</th>
+                                            <th>Capacity In CC</th>
+                                            <th>Cylinders/Valves</th>
+                                            <th>Date Created</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr className="hover:bg-yellow-950">
+                                            <td>1</td>
+                                            <td>112233445566</td>
+                                            <td>BMW X6</td>
+                                            <td>White</td>
+                                            <td>12-11-2002</td>
+                                            <td>2998</td>
+                                            <td>Inline 6/4</td>
+                                            <td>12-04-2002</td>
+                                            <td>
+                                                <button className="mr-4">
+                                                    <Image
+                                                        src="/img/edit.svg"
+                                                        alt="Edit"
+                                                        height={18}
+                                                        width={18}
+                                                    />
+                                                </button>
+                                                <button>
+                                                    <Image
+                                                        src="/img/trash.svg"
+                                                        alt="Trash"
+                                                        height={18}
+                                                        width={18}
+                                                    />
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+
                         {data.length > 0 ?
-                            <div className="h-96 flex justify-start items-start flex-wrap flex-col mt-4">
-                                <h4 className="font-bold text-lg color-black mb-4 font-semibold">Sub Class</h4>
+                            <div className="h-96 flex justify-start items-start flex-wrap flex-col mt-4 hidden">
+                                <h4 className="font-bold text-lg color-black mb-4 font-semibold">Objects</h4>
                                 <div className="overflow-hidden border rounded-md w-full">
                                     <table className={`table-auto min-w-full text-left ${styles.table}`}>
                                         <thead className="bg-gray-950 rounded-lg h-10 text-sm font-light">
@@ -474,7 +615,7 @@ export default function SubAsset(localData: any) {
                                                     </div>
                                                     <div className="w-3/4">
                                                         <div className="rounded-lg border border-gray-500 min-h-[64px] pl-2 pr-2 w-[320px] pt-2 pb-2 flex flex-wrap justify-start items-center">
-                                                            {                                                                
+                                                            {
                                                                 parentJoinKey && parentJoinKey.length > 0 ?
                                                                     parentJoinKey.map((item: any, index: any) => (
 
