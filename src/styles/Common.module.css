@@ -98,3 +98,8 @@
 .tableBlack tbody tr:hover {
     background-color: #fed136;
 }
+
+/* Input */
+.inputText:focus-visible {
+    /* border: 1px solid rgba(254, 209 ,54, 1); */
+}

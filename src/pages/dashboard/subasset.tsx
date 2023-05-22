@@ -10,6 +10,9 @@ import Template from "./template";
 import axios from 'axios';
 import moment from "moment";
 import AlertMessage from "@/common/alertMessage";
+import { Input } from "@material-tailwind/react";
+import type { InputStylesType } from "@material-tailwind/react";
+
 
 export async function getServerSideProps() {
     const localData = await getSubAssetsData()
@@ -85,7 +88,6 @@ export default function SubAsset(localData: any) {
 
                 let arr: any = [];
                 response.data.map((item: any, key: any) => {
-                    console.log(item.tags);
                     arr.push(...item.tags);
                     setTag(removeDuplicates(arr))
                 })
@@ -143,7 +145,6 @@ export default function SubAsset(localData: any) {
     // Selected parent join key
     const selectedParentKey = (item: any) => {
         let updatedList = selParentTags;
-        // let updatedList =  selParentTags.length  > 0 ? selParentTags.slice() : selParentTags;
         updatedList.push(item)
         setSelParentTags(updatedList)
         setCheckIcon("/img/box_check_icon_white.svg")
@@ -273,7 +274,7 @@ export default function SubAsset(localData: any) {
                             <div className="flex justify-between items-start w-full flex-wrap flex-row">
                                 <h4 className="font-bold text-lg color-black font-semibold">Create New Object</h4>
                                 <div className="relative flex">
-                                    <button className="flex justify-center items-center mr-10">
+                                    <button className="flex justify-center items-center bg-white text-black rounded-t-md w-[110px] h-[40px] font-semibold">
                                         <Image
                                             src="/img/close.svg"
                                             alt="close"
@@ -284,7 +285,7 @@ export default function SubAsset(localData: any) {
                                         <span>Clear All</span>
                                     </button>
                                     <button
-                                        className="flex justify-center items-center bg-yellow-950 text-black rounded-md w-[80px] h-[40px] font-semibold"
+                                        className="flex justify-center items-center bg-yellow-950 text-black rounded-t-md w-[80px] h-[40px] font-semibold"
                                     >
                                         <Image
                                             src="/img/tick.svg"
@@ -297,14 +298,14 @@ export default function SubAsset(localData: any) {
                                     </button>
                                 </div>
                             </div>
-                            <div className="shadow-lg bg-white p-5 w-full rounded-lg min-h-[170px]">
+                            <div className="shadow-lg bg-white p-5 w-full rounded-lg rounded-tr-none min-h-[170px]">
                                 <div className="flex justify-between items-center mb-5">
                                     <div className="relative w-[50%]">
                                         <input
                                             type="text"
                                             placeholder="VIN"
-                                            name="VIN"
-                                            className="rounded-lg border border-gray-954 h-[44px] pl-5 pr-5 w-[320px]"
+                                            name="modelType"
+                                            className="rounded-lg border border-gray-954 h-[44px] pl-5 pr-5 w-[320px] focus:outline-none focus:border-yellow-951"
                                         />
                                     </div>
                                     <div className="relative w-[50%]">
@@ -312,7 +313,7 @@ export default function SubAsset(localData: any) {
                                             type="text"
                                             placeholder="Model Type"
                                             name="modelType"
-                                            className="rounded-lg border border-gray-954 h-[44px] pl-5 pr-5 w-[320px]"
+                                            className="rounded-lg border border-gray-954 h-[44px] pl-5 pr-5 w-[320px] focus:outline-none focus:border-yellow-951"
                                         />
                                     </div>
                                 </div>
@@ -322,7 +323,7 @@ export default function SubAsset(localData: any) {
                                             type="text"
                                             placeholder="Color"
                                             name="color"
-                                            className="rounded-lg border border-gray-954 h-[44px] pl-5 pr-5 w-[320px]"
+                                            className="rounded-lg border border-gray-954 h-[44px] pl-5 pr-5 w-[320px] focus:outline-none focus:border-yellow-951"
                                         />
                                     </div>
                                     <div className="relative w-[50%]">
@@ -330,7 +331,7 @@ export default function SubAsset(localData: any) {
                                             type="text"
                                             placeholder="Mfd Date"
                                             name="mfdDate"
-                                            className="rounded-lg border border-gray-954 h-[44px] pl-5 pr-5 w-[320px]"
+                                            className="rounded-lg border border-gray-954 h-[44px] pl-5 pr-5 w-[320px] focus:outline-none focus:border-yellow-951"
                                         />
                                     </div>
                                 </div>
@@ -340,7 +341,7 @@ export default function SubAsset(localData: any) {
                                             type="text"
                                             placeholder="Capacity In CC"
                                             name="capacityInCC"
-                                            className="rounded-lg border border-gray-954 h-[44px] pl-5 pr-5 w-[320px]"
+                                            className="rounded-lg border border-gray-954 h-[44px] pl-5 pr-5 w-[320px] focus:outline-none focus:border-yellow-951"
                                         />
                                     </div>
                                     <div className="relative w-[50%]">
@@ -348,7 +349,7 @@ export default function SubAsset(localData: any) {
                                             type="text"
                                             placeholder="Cylinders/Valves"
                                             name="cylinders"
-                                            className="rounded-lg border border-gray-954 h-[44px] pl-5 pr-5 w-[320px] focus-visible:border-yellow-951 focus:border-yellow-951 active:border-yellow-951"
+                                            className="rounded-lg border border-gray-954 h-[44px] pl-5 pr-5 w-[320px] focus:outline-none focus:border-yellow-951`"
                                         />
                                     </div>
                                 </div>

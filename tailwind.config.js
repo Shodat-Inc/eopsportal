@@ -1,13 +1,18 @@
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+
+const withMT = require("@material-tailwind/react/utils/withMT");
+
+module.exports = withMT({
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
+    "./node_modules/react-tailwindcss-datepicker/dist/index.esm.js",
   ],
   theme: {
     extend: {
       colors: {
+        themeYellow: '#fed136',
         yellow :{
           950:'#fed136', 
           951:'#fed136'
@@ -44,4 +49,4 @@ module.exports = {
     },
   },
   plugins: [],
-}
+})
