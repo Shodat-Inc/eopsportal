@@ -1,1 +1,1 @@
-[{"assetID":"1000000002","assetName":"Car","slug":"Car","assetkey":["Type","Color"],"dateModified":"5/22/2023, 1:06:43 PM","dateCreated":"5/22/2023, 1:06:43 PM","assetTypes":["int","string"]}]
+[{"assetID":"1000000002","assetName":"Car","slug":"Car","assetkey":["VIN","Modal Type", "Color", "Mfd Date", "Capacity In CC", "Cylinders"],"dateModified":"5/22/2023, 1:06:43 PM","dateCreated":"5/22/2023, 1:06:43 PM","assetTypes":["string","string", "string", "string", "string", "string"]}]

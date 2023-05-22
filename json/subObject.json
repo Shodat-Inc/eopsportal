@@ -1,0 +1,78 @@
+[
+    {
+        "assetID": "110111011001",
+        "assetName": "Engine",
+        "slug": "Engine",
+        "parentAssetID": "Cars",
+        "parentAssetName": "Cars",
+        "parentJoinKey": [
+            "Model Type"
+        ],
+        "tagsKeys": "Rubber, Connecting Rod, HP",
+        "dateCreated": "5/8/2023, 11:37:50 PM",
+        "dateModified": "5/8/2023, 11:37:50 PM",
+        "geoScopeLink": "",
+        "tags": [
+            "Rubber",
+            "Connecting Rod",
+            "HP"
+        ]
+    },
+    {
+        "assetID": "110111011002",
+        "assetName": "Door",
+        "slug": "Door",
+        "parentAssetID": "Cars",
+        "parentAssetName": "Cars",
+        "parentJoinKey": [
+            "VIN"
+        ],
+        "tagsKeys": "Left, Right",
+        "dateCreated": "5/14/2023, 11:39:48 PM",
+        "dateModified": "5/14/2023, 11:39:48 PM",
+        "geoScopeLink": "",
+        "tags": [
+            "Left",
+            "Right"
+        ]
+    },
+    {
+        "assetID": "1101110110021",
+        "assetName": "Battery",
+        "slug": "Battery",
+        "parentAssetID": "Cars",
+        "parentAssetName": "Cars",
+        "tags": [
+            "Type",
+            "Size"
+        ],
+        "parentJoinKey": [
+            "Model Type",
+            "VIN"
+        ],
+        "dateCreated": "5/16/2023, 11:38:02 PM",
+        "dateModified": "5/16/2023, 11:38:02 PM",
+        "geoScopeLink": "https://dymmylink.com/",
+        "tagsKeys": ""
+    },
+    {
+        "assetID": "20000000011",
+        "assetName": "Battery",
+        "slug": "Battery",
+        "parentAssetID": "Electric Truck",
+        "parentAssetName": "Electric Truck",
+        "tags": [
+            "Size",
+            "Model"
+        ],
+        "parentJoinKey": [
+            "VIN",
+            "Color",
+            "Color"
+        ],
+        "dateCreated": "5/17/2023, 10:17:43 AM",
+        "dateModified": "5/17/2023, 10:17:43 AM",
+        "geoScopeLink": "https://dymmylink.com/",
+        "tagsKeys": ""
+    }
+]
