@@ -8,7 +8,7 @@ const SideBar = forwardRef(({ showNav, setShowNav }, ref) => {
   const router = useRouter();
 
   return (
-    <div ref={ref} className={`fixed w-60 h-full bg-white shadow-sm ${styles.sidebar}`}>
+    <div ref={ref} className={`fixed w-60 h-full  shadow-sm bg-black ${styles.sidebar}`}>
       <div className="flex items-center justify-left pl-6 pt-6 pb-6 bg-white">
         <picture>
           <Image
@@ -31,18 +31,18 @@ const SideBar = forwardRef(({ showNav, setShowNav }, ref) => {
         </div>
       </div>
 
-      <div className="flex flex-col pt-2">
+      <div className="flex flex-col pt-2 font-OpenSans">
         <Link href="/dashboard">
           <div
-            className={`pl-6 py-3 mx-0 text-center cursor-pointer mb-3 flex items-center transition-colors ${router.pathname == "/"
-              ? "bg-gray-500 text-white"
-              : "text-white-500 hover:bg-gray-500 hover:text-white"
-              }`}
+            className={`pl-6 font-normal font-OpenSans font-light py-3 mx-0 text-center cursor-pointer mb-3 flex items-center transition-colors ${router.pathname == "/dashboard"
+            ? "bg-white text-black"
+            : "text-white hover:bg-yellow-951 hover:text-white"
+            }`}
           >
             <div className="mr-2">
               <Image
-                src="/img/dashboard.svg"
-                alt="company logo"
+                src={router.pathname == "/dashboard" ? '/img/grid.svg' : '/img/grid-white.svg'}
+                alt="grid"
                 className={`w-32 h-auto ${styles.sideicons}`}
                 height={25}
                 width={25}
@@ -55,15 +55,15 @@ const SideBar = forwardRef(({ showNav, setShowNav }, ref) => {
         </Link>
         <Link href="/dashboard/assetmanagement">
           <div
-            className={`pl-6 py-3 mx-0 text-center cursor-pointer mb-3 flex items-center transition-colors ${router.pathname == "/account"
-              ? "bg-orange-100 text-black-500"
-              : "text-white-500 hover:bg-gray-500 hover:text-white"
+            className={`pl-6 font-OpenSans font-light py-3 mx-0 text-center cursor-pointer mb-3 flex items-center transition-colors ${router.pathname == "/dashboard/assetmanagement"
+              ? "bg-white text-black"
+              : "text-white hover:bg-yellow-951 hover:text-white"
               }`}
           >
             <div className="mr-2">
               <Image
-                src="/img/clock.svg"
-                alt="company logo"
+                src={router.pathname == "/dashboard/assetmanagement" ? '/img/clock.svg' : '/img/clock-white.svg'}
+                alt="clock"
                 className={`w-32 h-auto ${styles.sideicons}`}
                 height={25}
                 width={25}
@@ -76,15 +76,15 @@ const SideBar = forwardRef(({ showNav, setShowNav }, ref) => {
         </Link>
         <Link href="/dashboard/eopswatch">
           <div
-            className={`pl-6 py-3 mx-0 text-center cursor-pointer mb-3 flex items-center transition-colors ${router.pathname == "/billing"
-              ? "bg-orange-100 text-black-500"
-              : "text-white-500 hover:bg-gray-500 hover:text-white"
-              }`}
+            className={`pl-6 font-OpenSans font-light py-3 mx-0 text-center cursor-pointer mb-3 flex items-center transition-colors ${router.pathname == "/dashboard/eopswatch"
+            ? "bg-white text-black"
+            : "text-white hover:bg-yellow-951 hover:text-white"
+            }`}
           >
             <div className="mr-2">
               <Image
-                src="/img/clock.svg"
-                alt="company logo"
+                src={router.pathname == "/dashboard/eopswatch" ? '/img/clock.svg' : '/img/clock-white.svg'}
+                alt="clock"
                 className={`w-32 h-auto ${styles.sideicons}`}
                 height={25}
                 width={25}
@@ -97,14 +97,14 @@ const SideBar = forwardRef(({ showNav, setShowNav }, ref) => {
         </Link>
         <Link href="/dashboard/eopstrace">
           <div
-            className={`pl-6 py-3 mx-0 text-center cursor-pointer mb-3 flex items-center  transition-colors ${router.pathname == "/billing"
-              ? "bg-orange-100 text-black-500"
-              : "text-white-500 hover:bg-gray-500 hover:text-white"
-              }`}
+            className={`pl-6 font-OpenSans font-light py-3 mx-0 text-center cursor-pointer mb-3 flex items-center  transition-colors ${router.pathname == "/dashboard/eopstrace"
+            ? "bg-white text-black"
+            : "text-white hover:bg-yellow-951 hover:text-white"
+            }`}
           >
             <div className="mr-2">
               <Image
-                src="/img/airplay.svg"
+                src={router.pathname == "/dashboard/eopstrace" ? '/img/airplay.svg' : '/img/airplay-white.svg'}
                 alt="company logo"
                 className={`w-32 h-auto ${styles.sideicons}`}
                 height={25}
@@ -118,14 +118,14 @@ const SideBar = forwardRef(({ showNav, setShowNav }, ref) => {
         </Link>
         <Link href="/dashboard/eopsprosense">
           <div
-            className={`pl-6 py-3 mx-0 text-center cursor-pointer mb-3 flex items-center transition-colors ${router.pathname == "/billing"
-              ? "bg-orange-100 text-black-500"
-              : "text-white-500 hover:bg-gray-500 hover:text-white"
-              }`}
+            className={`pl-6 font-OpenSans font-light py-3 mx-0 text-center cursor-pointer mb-3 flex items-center transition-colors ${router.pathname == "/dashboard/eopsprosense"
+            ? "bg-white text-black"
+            : "text-white hover:bg-yellow-951 hover:text-white"
+            }`}
           >
             <div className="mr-2">
               <Image
-                src="/img/maximize.svg"
+                src={router.pathname == "/dashboard/eopsprosense" ? '/img/maximize.svg' : '/img/maximize-white.svg'}
                 alt="company logo"
                 className={`w-32 h-auto ${styles.sideicons}`}
                 height={25}
@@ -139,14 +139,14 @@ const SideBar = forwardRef(({ showNav, setShowNav }, ref) => {
         </Link>
         <Link href="/dashboard/eopsinsight">
           <div
-            className={`pl-6 py-3 mx-0 text-center cursor-pointer mb-3 flex items-center  transition-colors ${router.pathname == "/billing"
-              ? "bg-orange-100 text-black-500"
-              : "text-white-500 hover:bg-gray-500 hover:text-white"
-              }`}
+            className={`pl-6 font-OpenSans font-light py-3 mx-0 text-center cursor-pointer mb-3 flex items-center  transition-colors ${router.pathname == "/dashboard/eopsinsight"
+            ? "bg-white text-black"
+            : "text-white hover:bg-yellow-951 hover:text-white"
+            }`}
           >
             <div className="mr-2">
               <Image
-                src="/img/bar-chart.svg"
+                src={router.pathname == "/dashboard/eopsinsight" ? '/img/bar-chart.svg' : '/img/bar-chart-white-2.svg'}
                 alt="company logo"
                 className={`w-32 h-auto ${styles.sideicons}`}
                 height={25}

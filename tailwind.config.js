@@ -11,6 +11,9 @@ module.exports = withMT({
   ],
   theme: {
     extend: {
+      fontFamily: {
+        OpenSans : ["'Open Sans'", "sans-serif"]
+      },
       colors: {
         themeYellow: '#fed136',
         yellow :{
