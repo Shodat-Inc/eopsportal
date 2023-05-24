@@ -135,3 +135,35 @@
     border-radius: 14px;
     border: 3px solid #000000;
 }
+
+
+/* Image */
+.imagewrap {
+    position: relative;
+    transition: all 0.4s ease-in-out;
+}
+.imagewrap .info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+    background-color: rgba(0,0,0,0.8);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    border-radius:  0 0 3px 3px;
+    display: none;
+    transition: all 0.4s ease-in-out;
+}
+.imagewrap:hover > .info {
+    display: block;
+    transition: all 0.4s ease-in-out;
+}
+.imagewrap .info > button,
+.imagewrap .info > a {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}

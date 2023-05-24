@@ -143,7 +143,7 @@ export default function EopsWatch() {
                     </div>
 
                     <div className="flex mt-10">
-                        <Link href="" className="relative mr-16">
+                        <Link href="/dashboard/trainingmodel" className="relative mr-16">
                             <Image
                                 src="/img/folder.svg"
                                 alt="folder"
