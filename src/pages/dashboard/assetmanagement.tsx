@@ -385,7 +385,7 @@ export default function AssetManagement(localData: any) {
                                                     <span className="text-lg text-black pl-2">{chooseAsset}</span>
                                                 </div>
                                                 {toggleAsset ?
-                                                    <div className={`h-52 border rounded-xl border-gray-500 h-[55px] w-[400px]  relative flex items-start justify-start mt-1 overflow-hidden overflow-y-scroll ${styles.scroll}`}>
+                                                    <div className={`h-52 border rounded-xl border-gray-500 h-[155px] w-[400px]  relative flex items-start justify-start mt-1 overflow-hidden overflow-y-scroll ${styles.scroll}`}>
                                                         {data && data.length > 0 ?
                                                             <ul className="p-0 m-0 w-full">
                                                                 {

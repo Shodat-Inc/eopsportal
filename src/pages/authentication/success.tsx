@@ -3,7 +3,7 @@ import Image from "next/image";
 export default function Success() {
     return (
         <>
-            <div className="column-2 flex">
+            <div className="column-2 flex font-OpenSans">
                 <div className="w-[50%] bg-[url('/img/architecture2.jpg')] bg-cover bg-no-repeat bg-center h-screen">
                     <div className="w-full h-full backdrop-brightness-25 px-16 py-16">
                         <div className="flex">
