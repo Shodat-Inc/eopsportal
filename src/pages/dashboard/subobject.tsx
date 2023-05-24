@@ -264,7 +264,13 @@ export default function SubObject(localData: any) {
                             </div>
 
                             <div className="relative flex">
-                                <button
+                                <Link
+                                    href={{
+                                        pathname: '/dashboard/childobject',
+                                        query: {
+                                            assets: "Battery"
+                                        }
+                                    }}
                                     className="bg-yellow-951 rounded-lg h-16 inline-flex justify-center items-center w-36 mr-8 hover:bg-black hover:text-white transition-all duration-[400ms]"
                                 >
                                     <span>Battery</span>
@@ -275,7 +281,7 @@ export default function SubObject(localData: any) {
                                         alt="plus"
                                         src="/img/plusblack.svg"
                                     />
-                                </button>
+                                </Link>
 
                                 <button
                                     className="bg-yellow-951 rounded-lg h-16 inline-flex justify-center items-center w-36 mr-8 hover:bg-black hover:text-white transition-all duration-[400ms]"
