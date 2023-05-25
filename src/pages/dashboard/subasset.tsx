@@ -214,7 +214,7 @@ export default function SubAsset(localData: any) {
 
                 <div className="w-[84%]">
                     <div className="columns-2 flex justify-between items-center">
-                        <p className="text-black text-lg mb-0 font-semibold">Asset Management</p>
+                        <p className="text-black text-lg mb-0 font-semibold">Class Management</p>
                         <div className="flex justify-end items-right">
                             <button
                                 className="rounded-xl bg-yellow-951 border-[2px] border-yellow-951 text-black flex h-12 justify-center items-center pl-2 pr-2 hover:bg-white hover:text-black hover:border-black transition-all duration-[400ms]"
@@ -222,12 +222,12 @@ export default function SubAsset(localData: any) {
                             >
                                 <Image
                                     src="/img/plus-black.svg"
-                                    alt="Create New Asset"
+                                    alt="Create New Class"
                                     className="mr-2"
                                     height={24}
                                     width={24}
                                 />
-                                Create Sub Asset
+                                Create Sub Class
                             </button>
                         </div>
                     </div>
@@ -385,7 +385,7 @@ export default function SubAsset(localData: any) {
                                                         <input
                                                             type="text"
                                                             name="assetname"
-                                                            placeholder="Enter asset Name"
+                                                            placeholder="Enter class Name"
                                                             className="rounded-lg border border-black h-[44px] pl-5 pr-5 w-[320px]"
                                                             onChange={(e) => (assetid.current = e.target.value)}
                                                         />
@@ -395,7 +395,7 @@ export default function SubAsset(localData: any) {
 
                                                 <div className="mb-10 relative column-2 flex justify-start items-center">
                                                     <div className="w-[160px]">
-                                                        <label className="font-semibold text-black">Asset Tags <span className="text-red-500">*</span></label>
+                                                        <label className="font-semibold text-black">Class Tags <span className="text-red-500">*</span></label>
                                                     </div>
                                                     <div className="w-3/4">
                                                         <div className="rounded-lg border border-gray-500 min-h-[64px] pl-2 pr-2 w-[320px] pt-2 pb-2 flex flex-wrap justify-start items-center">

@@ -164,7 +164,7 @@ export default function AssetManagement(localData: any) {
 
                 <div className="w-[84%]">
                     <div className="columns-2 flex justify-between items-center">
-                        <p className="text-black text-lg mb-0 font-semibold">Asset Management</p>
+                        <p className="text-black text-lg mb-0 font-semibold">Class Management</p>
                         <div className="flex justify-end items-right">
                             <button
                                 className="rounded-xl bg-yellow-951 border-[2px] border-yellow-951 text-black flex h-12 justify-center items-center pl-2 pr-2 hover:bg-white hover:text-black hover:border-black transition-all duration-[400ms] mr-3"
@@ -177,7 +177,7 @@ export default function AssetManagement(localData: any) {
                                     height={24}
                                     width={24}
                                 />
-                                Create New Asset
+                                Create New Class
                             </button>
 
                             <button
@@ -191,7 +191,7 @@ export default function AssetManagement(localData: any) {
                                     height={24}
                                     width={24}
                                 />
-                                Import Assets
+                                Import Class
                             </button>
 
                         </div>
@@ -221,7 +221,7 @@ export default function AssetManagement(localData: any) {
                         {/* --- Alerts End--- */}
 
                         <div className="w-full mt-10 flex">
-                            <div className="rounded rounded-xl border border-black bg-white h-32 w-56 p-3 shadow-lg mr-28 hover:bg-yellow-951 transition-all duration-[400ms]">
+                            <div className={`rounded rounded-xl border border-black bg-white h-32 w-56 p-3 shadow-lg mr-28 hover:bg-yellow-951 transition-all duration-[400ms] ${router.pathname == "/dashboard/assetmanagement" ? 'bg-yellow-951' : 'bg-white'}`}>
                                 <Link href="" className="flex justify-between items-start">
                                     <div className="text-black w-[75%] text-lg font-semibold pt-10">Class Management</div>
                                     <div className="w-[25%] text-right">
@@ -256,13 +256,13 @@ export default function AssetManagement(localData: any) {
 
                         {data.length > 0 ?
                             <div className="h-96 flex justify-start items-start flex-wrap flex-col mt-12">
-                                <p className="text-black text-md mb-6 font-semibold">My Asset</p>
+                                <p className="text-black text-md mb-6 font-semibold">My Class</p>
                                 <div className="overflow-hidden border rounded-xl w-full">
                                     <table className={`table-auto min-w-full text-left ${styles.table}`}>
                                         <thead className="bg-black text-white rounded-xl h-10 text-sm font-light">
                                             <tr>
                                                 <th>S.No</th>
-                                                <th>Asset ID</th>
+                                                {/* <th>Asset ID</th> */}
                                                 <th>Asset Name</th>
                                                 <th>Tags</th>
                                                 <th>Date Created</th>
@@ -273,7 +273,7 @@ export default function AssetManagement(localData: any) {
                                             {data.map((item: any, index: any) => (
                                                 <tr className="hover:bg-yellow-950" key={index}>
                                                     <td className="w-[6%] min-h-[50px]">{index + 1}</td>
-                                                    <td className="w-[14%] min-h-[50px]">{item.assetID}</td>
+                                                    {/* <td className="w-[14%] min-h-[50px]">{item.assetID}</td> */}
                                                     <td className="w-[20%] min-h-[50px]">
                                                         <Link
                                                             href={{
@@ -328,7 +328,7 @@ export default function AssetManagement(localData: any) {
                             </div>
                             :
                             <div className="h-72 flex justify-center items-center flex-wrap flex-col mt-8">
-                                <NoDataFound createText="Create Asset" />
+                                <NoDataFound createText="Create class" />
                             </div>
                         }
 
@@ -351,7 +351,7 @@ export default function AssetManagement(localData: any) {
                                     {/*header*/}
                                     <div className="flex items-start justify-between p-5">
                                         <h3 className="text-lg font-medium">
-                                            Choose your asset and continue
+                                            Choose your class and continue
                                         </h3>
                                         <button
                                             className="p-1 ml-auto bg-transparent border-0 text-black float-right leading-none font-semibold outline-none focus:outline-none"
@@ -374,7 +374,7 @@ export default function AssetManagement(localData: any) {
                                                     className="border rounded-xl border-gray-500 h-[55px] w-[400px] pl-2 pr-5 relative flex items-center justify-start"
                                                     onClick={showChooseAssetList}
                                                 >
-                                                    <label className="absolute text-sm top-[-10px] left-2 pl-2 pr-2 bg-white">Asset</label>
+                                                    <label className="absolute text-sm top-[-10px] left-2 pl-2 pr-2 bg-white">Class</label>
                                                     <Image
                                                         src="/img/arrow-down-black.svg"
                                                         alt="arrow-down"
@@ -440,7 +440,7 @@ export default function AssetManagement(localData: any) {
                                     {/*header*/}
                                     <div className="flex items-start justify-between p-5">
                                         <h3 className="text-lg font-medium">
-                                            Add New Asset
+                                            Add New Class
                                         </h3>
                                         <button
                                             className="p-1 ml-auto bg-transparent border-0 text-black float-right leading-none font-semibold outline-none focus:outline-none"
@@ -466,7 +466,7 @@ export default function AssetManagement(localData: any) {
 
                                                 <div className="mb-10 relative column-2 flex justify-start items-center">
                                                     <div className="w-[160px]">
-                                                        <label className="font-semibold text-black">Asset Name <span className="text-red-500">*</span></label>
+                                                        <label className="font-semibold text-black">Class Name <span className="text-red-500">*</span></label>
                                                     </div>
                                                     <div className="w-3/4">
                                                         <input
@@ -489,7 +489,7 @@ export default function AssetManagement(localData: any) {
 
                                                 <div className="mb-10 relative column-2 flex justify-start items-center">
                                                     <div className="w-[160px]">
-                                                        <label className="font-semibold text-black">Asset Tags <span className="text-red-500">*</span></label>
+                                                        <label className="font-semibold text-black">Class Tags <span className="text-red-500">*</span></label>
                                                     </div>
                                                     <div className="w-3/4">
                                                         <div className="rounded-lg border border-gray-500 min-h-[64px] pl-2 pr-2 w-[320px] pt-2 pb-2 flex flex-wrap justify-start items-center">

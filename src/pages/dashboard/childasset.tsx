@@ -90,7 +90,7 @@ export default function ChildAsset(localData: any) {
 
                 <div className="w-[84%]">
                     <div className="columns-2 flex justify-between items-center">
-                        <p className="text-gray-700 text-lg mb-0 font-bold">Sub Asset Management</p>
+                        <p className="text-gray-700 text-lg mb-0 font-bold">Sub Class Management</p>
                         <div className="flex justify-end items-right">
                             <button
                                 className="rounded-lg bg-black text-white flex h-10 justify-center items-center pl-2 pr-2 hover:bg-yellow-950 hover:text-white transition-all duration-[400ms] mr-3"
@@ -103,7 +103,7 @@ export default function ChildAsset(localData: any) {
                                     height={24}
                                     width={24}
                                 />
-                                Create Sub Asset
+                                Create Sub Class
                             </button>
                             <button
                                 className="rounded-lg bg-black text-white flex h-10 justify-center items-center pl-2 pr-2 hover:bg-yellow-950 hover:text-white transition-all duration-[400ms]"
@@ -115,7 +115,7 @@ export default function ChildAsset(localData: any) {
                                     height={24}
                                     width={24}
                                 />
-                                Import Sub Assets
+                                Import Sub Class
                             </button>
                         </div>
                     </div>
@@ -180,7 +180,7 @@ export default function ChildAsset(localData: any) {
                                 <svg aria-hidden="true" className="flex-shrink-0 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd"></path></svg>
                                 <span className="sr-only">Info</span>
                                 <div className="ml-3 text-sm font-medium">
-                                    Your Data is been saved successfully! Cheers!!
+                                    Your data is been saved successfully!
                                 </div>
                                 <button type="button" className="ml-auto -mx-1.5 -my-1.5 bg-green-50 text-green-500 rounded-lg focus:ring-2 focus:ring-green-400 p-1.5 hover:bg-green-200 inline-flex h-8 w-8 dark:bg-gray-800 dark:text-green-400 dark:hover:bg-gray-700" data-dismiss-target="#alert-3" aria-label="Close">
                                     <span className="sr-only">Close</span>
@@ -245,8 +245,8 @@ export default function ChildAsset(localData: any) {
                                         <thead className="bg-gray-950 rounded-lg h-10 text-sm font-light">
                                             <tr>
                                                 <th>S.No</th>
-                                                <th>Asset ID</th>
-                                                <th>Child Asset Name</th>
+                                                {/* <th>Asset ID</th> */}
+                                                <th>Child Class Name</th>
                                                 <th>Tags/Key</th>
                                                 <th>Geoscope</th>
                                                 <th>Actions</th>
@@ -256,7 +256,7 @@ export default function ChildAsset(localData: any) {
                                             {data.map((item: any, index: any) => (
                                                 <tr className="hover:bg-yellow-950" key={index}>
                                                     <td className="w-[50px]">{index + 1}</td>
-                                                    <td className="w-[150px]">
+                                                    {/* <td className="w-[150px]">
                                                         <Link
                                                             href={{
                                                                 pathname: '/dashboard/subasset',
@@ -267,7 +267,7 @@ export default function ChildAsset(localData: any) {
                                                         >
                                                             {item.assetID}
                                                         </Link>
-                                                    </td>
+                                                    </td> */}
                                                     <td className="w-[180px]">
                                                         <Link
                                                             href={{
@@ -398,7 +398,7 @@ export default function ChildAsset(localData: any) {
                                     {/*header*/}
                                     <div className="flex items-start justify-between p-5">
                                         <h3 className="text-lg font-medium">
-                                            Add Sub Asset
+                                            Add Sub Class
                                         </h3>
                                         <button
                                             className="p-1 ml-auto bg-transparent border-0 text-black float-right leading-none font-semibold outline-none focus:outline-none"
@@ -418,7 +418,7 @@ export default function ChildAsset(localData: any) {
                                         <form className="flex justify-start items-center flex-wrap flex-col" method='post' onSubmit={handleSubmit}>
                                             <div className="mb-5 relative column-2 flex justify-start items-center">
                                                 <div className="w-[160px]">
-                                                    <label className="font-semibold text-black">Sub Asset ID</label>
+                                                    <label className="font-semibold text-black">Sub Class ID</label>
                                                 </div>
                                                 <div className="w-3/4">
                                                     <input
@@ -459,13 +459,13 @@ export default function ChildAsset(localData: any) {
                                             </div>
                                             <div className="mb-10 relative column-2 flex justify-start items-center">
                                                 <div className="w-[160px]">
-                                                    <label className="font-semibold text-black">Sub Asset Name</label>
+                                                    <label className="font-semibold text-black">Sub Class Name</label>
                                                 </div>
                                                 <div className="w-3/4">
                                                     <input
                                                         type="text"
                                                         name="assetname"
-                                                        placeholder="Enter asset Name"
+                                                        placeholder="Enter class Name"
                                                         className="rounded-lg border border-black h-[44px] pl-5 pr-5 w-[320px]"
                                                         onChange={(e) => (assetname.current = e.target.value)}
                                                     />
