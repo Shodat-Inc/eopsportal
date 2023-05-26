@@ -28,7 +28,6 @@ export async function getServerSideProps() {
 export default function Objects(localData: any) {
     const router = useRouter();
     const parentAsset = router.query;
-    // console.log(parentAsset.assets,"AMIT")
     const [showModal, setShowModal] = useState(false);
     const [success, setSuccess] = useState(false);
     const [data, setData] = useState<any[]>([]);
@@ -312,7 +311,8 @@ export default function Objects(localData: any) {
                                                             href={{
                                                                 pathname: '/dashboard/subobject',
                                                                 query: {
-                                                                    assets:item.subObjects.VIN
+                                                                    object:item.subObjects.VIN,
+                                                                    parentObject:parentAsset.assets
                                                                 }
                                                             }}
                                                         >

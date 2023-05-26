@@ -1,0 +1,16 @@
+[
+    {
+        "object": "Battery",
+        "dateCreated": "5/26/2023, 7:28:57 PM",
+        "tags": {
+            "dateCreated": "5/26/2023, 7:28:26 PM",
+            "dateModified": "5/26/2023, 7:28:26 PM",
+            "class": "Cars",
+            "VIN": "112233445588",
+            "object": "Battery",
+            "mfdDate": "2023-05-26",
+            "BatteryType": "Silver Oxide",
+            "Size": "XL"
+        }
+    }
+]

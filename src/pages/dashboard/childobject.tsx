@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import Layout from "../../components/Layout";
 import NoDataFound from "../../common/nodatafound";
 import styles from '../../styles/Common.module.css';
-import { getObjectsData } from "../../lib/getobjects";
+import { getChildObjectsData } from "../../lib/getchildobjects";
 import { useRouter } from 'next/router'
 import Link from "next/link";
 import Image from "next/image";
@@ -17,7 +17,7 @@ import Datepicker from "react-tailwindcss-datepicker";
 
 
 export async function getServerSideProps() {
-    const localData = await getObjectsData()
+    const localData = await getChildObjectsData()
     return {
         props: {
             localData,
@@ -37,14 +37,11 @@ export default function ChildObject(localData: any) {
     const [hide, setHide] = useState(false);
     const [showHideAddTagButton, setShowHideAddTagButton] = useState(false);
     const [selParentTags, setSelParentTags] = useState<any[]>([]);
-    const filtered = localData.localData.filter((item: any) => {
-        return item.parentAssetName === parentAsset.assets;
-    });
-    const [filteredList, setFilteredList] = useState(filtered);
+
     const [checkIcon, setCheckIcon] = useState("/img/blank_check_box_icon_white.svg");
     const [tag, setTag] = useState<any[]>([]);
 
-    const [getParentData, setGetParentData] = useState<any[]>([]);
+
     const VIN = useRef("");
     const ModalType = useRef("");
     const Color = useRef("");
@@ -55,32 +52,17 @@ export default function ChildObject(localData: any) {
         endDate: null
     });
     const [mfdDate, setMfdDate] = useState();
+    const [subClassData, setSubClassData] = useState<any[]>([]);
+    const [childObject, setChildObject] = useState<any[]>([]);
 
 
-    // Get JSON data on page load
-    const fetchDataForParent = () => {
-        axios.get("/api/getAssets").then((response) => {
-            if (response.data) {
-                const filtered = response.data.filter((item: any) => {
-                    return item.assetName === parentAsset.assets;
-                });
-                if (filtered && filtered.length > 0) {
-                    setGetParentData(filtered[0].assetkey);
-                }
-            }
-        });
-    };
-    useEffect(() => {
-        fetchDataForParent();
-        if (fetchDataForParent.length) return;
-    }, [])
+
 
 
     // Get JSON data on page load
     const fetchData = () => {
         axios.get("/api/getObjects").then((response) => {
             if (response.data) {
-                console.log("response.data", response.data)
                 const filtered = response.data.filter((item: any) => {
                     return item.parentAssetID === parentAsset.assets;
                 });
@@ -96,6 +78,39 @@ export default function ChildObject(localData: any) {
     }, [localData.localData])
 
 
+    // Get JSON sub class data on page load
+    const fetchClassData = () => {
+        axios.get("/api/getSubAssets").then((response) => {
+            if (response.data) {
+                const filtered = response.data.filter((item: any) => {
+                    return item.assetName === parentAsset.subObject;
+                });
+                if (filtered && filtered.length > 0) {
+                    setSubClassData(filtered[0].tags);
+                }
+            }
+        });
+    };
+    useEffect(() => {
+        fetchClassData();
+        if (fetchClassData.length) return;
+    }, [parentAsset])
+
+
+    // Get Child Object data on page load
+    const fetchChildObjectData = () => {
+        axios.get("/api/getChildObject").then((response) => {
+            if (response.data) {
+                setChildObject(response.data)
+            }
+        });
+    };
+    useEffect(() => {
+        fetchChildObjectData();
+        if (fetchChildObjectData.length) return;
+    }, [parentAsset])
+
+
     // Check if array contains an item
     const isInArray = (value: any, array: any) => {
         return array.indexOf(value) > -1;
@@ -106,9 +121,6 @@ export default function ChildObject(localData: any) {
         setMfdDate(newValue.startDate)
     }
 
-    // Get Last Asset ID
-    console.log("Data", data)
-    const getLastID = (data && data.length > 0) ? data.slice(-1)[0].assetID : '2000000001';
 
     // Clear All Fields
     const clearAll = (e: any) => {
@@ -123,15 +135,18 @@ export default function ChildObject(localData: any) {
         e.preventDefault();
         var formData = new FormData(e.target);
         const form_values = Object.fromEntries(formData);
-        const response = await fetch('/api/createObjects', {
+        console.log("form_values", form_values)
+        const response = await fetch('/api/createChildObject', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(
                 {
-                    parentAssetID: parentAsset.assets,
-                    subObjects: form_values,
+                    class: parentAsset.class,
+                    object: parentAsset.subObject,
+                    VIN: parentAsset.object,
+                    tags: form_values,
                     dateCreated: new Date().toLocaleString() + ""
                 }
             )
@@ -156,7 +171,7 @@ export default function ChildObject(localData: any) {
 
                 <div className="w-[84%]">
                     <div className="columns-2 flex justify-between items-center">
-                        <p className="text-white text-lg mb-0 font-bold">Object Management</p>
+                        <p className="text-black text-lg mb-0 font-bold">Asset Management</p>
                     </div>
 
                     <div className="border min-h-full rounded-xl mt-3 px-4 py-4 bg-gray-953">
@@ -173,6 +188,11 @@ export default function ChildObject(localData: any) {
                                                 height={24}
                                                 width={24}
                                             />
+
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <div className="flex items-center">
                                             <Image
                                                 src="/img/arrow-right.svg"
                                                 alt="arrow-right"
@@ -180,11 +200,52 @@ export default function ChildObject(localData: any) {
                                                 height={24}
                                                 width={24}
                                             />
-                                        </Link>
+                                            <Link
+                                                href={{
+                                                    pathname: '/dashboard/objects',
+                                                    query: {
+                                                        assets: parentAsset.class
+                                                    }
+                                                }}
+                                                className="inline-flex items-center text-sm font-medium text-black hover:text-yellow-950"
+                                            >
+                                                <span className="ml-1 text-sm font-medium text-black hover:text-yellow-950 md:ml-1">{parentAsset.class}</span>
+                                            </Link>
+                                        </div>
                                     </li>
                                     <li>
                                         <div className="flex items-center">
-                                            <span className="ml-1 text-sm font-medium text-black hover:text-yellow-950 md:ml-1">{parentAsset.assets}</span>
+                                            <Image
+                                                src="/img/arrow-right.svg"
+                                                alt="arrow-right"
+                                                className="h-6"
+                                                height={24}
+                                                width={24}
+                                            />
+                                            <Link
+                                                href={{
+                                                    pathname: '/dashboard/subobject',
+                                                    query: {
+                                                        object: parentAsset.object,
+                                                        parentObject: parentAsset.class
+                                                    }
+                                                }}
+                                                className="inline-flex items-center text-sm font-medium text-black hover:text-yellow-950"
+                                            >
+                                                <span className="ml-1 text-sm font-medium text-black hover:text-yellow-950 md:ml-1">VIN {parentAsset.object}</span>
+                                            </Link>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div className="flex items-center">
+                                            <Image
+                                                src="/img/arrow-right.svg"
+                                                alt="arrow-right"
+                                                className="h-6"
+                                                height={24}
+                                                width={24}
+                                            />
+                                            <span className="ml-1 text-sm font-medium text-black hover:text-yellow-950 md:ml-1">{parentAsset.subObject}</span>
                                         </div>
                                     </li>
                                 </ol>
@@ -196,7 +257,7 @@ export default function ChildObject(localData: any) {
                         {/* --- Alerts End--- */}
 
                         <div className="flex justify-start items-start flex-wrap flex-col mt-4">
-                            {getParentData && getParentData.length > 0 ?
+                            {subClassData && subClassData.length > 0 ?
                                 <form
                                     className="flex justify-center items-center flex-wrap flex-col w-full"
                                     method='post'
@@ -204,9 +265,9 @@ export default function ChildObject(localData: any) {
                                 >
                                     <input type="hidden" name="dateCreated" value={new Date().toLocaleString() + ""} />
                                     <input type="hidden" name="dateModified" value={new Date().toLocaleString() + ""} />
-                                    <input type="hidden" name="assetID" value={getLastID + 1} />
-                                    <input type="hidden" name="parentAssetID" value={parentAsset.assets} />
-                                    <input type="hidden" name="parentAssetName" value={parentAsset.assets} />
+                                    <input type="hidden" name="class" value={parentAsset.class} />
+                                    <input type="hidden" name="VIN" value={parentAsset.object} />
+                                    <input type="hidden" name="object" value={parentAsset.subObject} />
                                     <input type="hidden" name="mfdDate" value={mfdDate ? mfdDate : new Date().toLocaleString() + ""} />
 
                                     <div className="flex justify-between items-start w-full flex-wrap flex-row">
@@ -242,7 +303,7 @@ export default function ChildObject(localData: any) {
                                     <div className="shadow-lg bg-white p-5 w-full rounded-lg rounded-tr-none min-h-[170px]">
                                         <div className="flex justify-start items-center flex-wrap flex-row">
                                             {
-                                                getParentData.map((item: any, key: any) => {
+                                                subClassData.map((item: any, key: any) => {
                                                     if (item == "Mfd Date") {
                                                         return (
                                                             <div className="relative w-[50%] mb-5" key={key}>
@@ -282,81 +343,62 @@ export default function ChildObject(localData: any) {
                         </div>
 
 
-                        {data && data.length > 0 ?
-                            <div className="h-96 flex justify-start items-start flex-wrap flex-col mt-4">
-                                <h4 className="font-bold text-lg color-black mb-4 font-semibold">Objects</h4>
-                                <div className="overflow-x-auto border rounded-md w-full">
-                                    <table className={`table-auto min-w-full w-full text-left ${styles.table}`}>
-                                        <thead className="bg-gray-950 rounded-lg h-10 text-sm font-light">
-                                            <tr>
-                                                <th>S.No</th>
-                                                <th>VIN</th>
-                                                <th>Model Type</th>
-                                                <th>Color</th>
-                                                <th>Mfd Date</th>
-                                                <th>Capacity In CC</th>
-                                                <th>Cylinders/Valves</th>
-                                                <th>Date Created</th>
-                                                <th>Actions</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {
-                                                data.map((item: any, index: any) => (
-                                                    <tr className="hover:bg-yellow-950" key={index}>
-                                                        <td>{index+1}</td>
-                                                        {/* <td>{item.subObjects.VIN}</td> */}
-                                                        <td>
-                                                        <Link
-                                                            href={{
-                                                                pathname: '/dashboard/subobject',
-                                                                query: {
-                                                                    assets:item.subObjects.VIN
-                                                                }
-                                                            }}
-                                                        >
-                                                            <span className="font-medium">{item.subObjects.VIN}</span>
-                                                        </Link>
-                                                        </td>
-                                                        <td>{item.subObjects.ModalType}</td>
-                                                        <td>{item.subObjects.Color}</td>
-                                                        <td>{item.subObjects.mfdDate}</td>
-                                                        <td>{item.subObjects.CapacityInCC}</td>
-                                                        <td>{item.subObjects.Cylinders}</td>
-                                                        <td><span>{moment(item.dateCreated).format('DD-MM-YYYY')}</span></td>
-                                                        <td>
-                                                            <button className="mr-4">
-                                                                <Image
-                                                                    src="/img/edit.svg"
-                                                                    alt="Edit"
-                                                                    height={18}
-                                                                    width={18}
-                                                                />
-                                                            </button>
-                                                            <button>
-                                                                <Image
-                                                                    src="/img/trash.svg"
-                                                                    alt="Trash"
-                                                                    height={18}
-                                                                    width={18}
-                                                                />
-                                                            </button>
-                                                        </td>
-                                                    </tr>
-                                                ))
-                                            }
+                        {
+                            childObject && childObject.length > 0 ?
 
-                                        </tbody>
-                                    </table>
+                                <div className="h-96 flex justify-start items-start flex-wrap flex-col mt-4">
+                                    <h4 className="font-bold text-lg color-black mb-4 font-semibold">Objects</h4>
+                                    <div className="overflow-x-auto border rounded-md w-full">
+                                        <table className={`table-auto min-w-full w-full text-left ${styles.table}`}>
+                                            <thead className="bg-gray-950 rounded-lg h-10 text-sm font-light">
+                                                <tr>
+                                                    <th>S.No</th>
+                                                    <th>Battery Type</th>
+                                                    <th>Size</th>
+                                                    <th>Mfd Date</th>
+                                                    <th>Date Created</th>
+                                                    <th>Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {
+                                                    childObject.map((item: any, index: any) => (
+                                                        <tr key={index}>
+                                                            <td>{index + 1}</td>
+                                                            <td>{item?.tags?.BatteryType}</td>
+                                                            <td>{item?.tags.Size}</td>
+                                                            <td>{item?.tags.mfdDate}</td>
+                                                            <td>{item?.dateCreated}</td>
+                                                            <td>
+                                                                <button className="mr-8">
+                                                                    <Image
+                                                                        src="/img/edit.svg"
+                                                                        alt="Edit"
+                                                                        height={18}
+                                                                        width={18}
+                                                                    />
+                                                                </button>
+                                                                <button>
+                                                                    <Image
+                                                                        src="/img/trash.svg"
+                                                                        alt="Trash"
+                                                                        height={18}
+                                                                        width={18}
+                                                                    />
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                    ))
+                                                }                                               
+
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
-                            </div>
-                            :
-
-
-
-                            <div className="h-72 flex justify-center items-center flex-wrap flex-col mt-8">
-                                <NoDataFound createText="Create Sub Asset" />
-                            </div>
+                                :
+                                <div className="h-72 flex justify-center items-center flex-wrap flex-col mt-8">
+                                    <NoDataFound createText="Create Sub Asset" />
+                                </div>
                         }
 
                     </div>

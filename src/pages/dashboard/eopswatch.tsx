@@ -106,7 +106,7 @@ export default function EopsWatch() {
                             className="border rounded-xl border-gray-500 h-[55px] w-[400px] pl-2 pr-5 relative flex items-center justify-start"
                             onClick={showChooseAssetList}
                         >
-                            <label className="absolute text-sm top-[-10px] left-2 pl-2 pr-2 bg-white">Asset</label>
+                            <label className="absolute text-sm top-[-10px] left-2 pl-2 pr-2 bg-white">Model</label>
                             <Image
                                 src="/img/arrow-down-black.svg"
                                 alt="arrow-down"

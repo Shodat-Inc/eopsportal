@@ -8,6 +8,7 @@ import Link from "next/link";
 import Image from "next/image";
 import Template from "./template";
 import axios from 'axios';
+import AlertMessage from "@/common/alertMessage";
 
 export async function getServerSideProps() {
     const localData = await getChildAssetsData()
@@ -72,7 +73,7 @@ export default function ChildAsset(localData: any) {
         });
         const resdata = await response.json();
         if (resdata) {
-            console.log("SUCCESS")
+            // console.log("SUCCESS")
             router.replace(router.asPath);
             setShowModal(false);
             setSuccess(true);
@@ -86,11 +87,11 @@ export default function ChildAsset(localData: any) {
 
     return (
         <>
-            <div className="flex">
+            <div className="flex font-OpenSans">
 
                 <div className="w-[84%]">
                     <div className="columns-2 flex justify-between items-center">
-                        <p className="text-gray-700 text-lg mb-0 font-bold">Sub Class Management</p>
+                        <p className="text-black text-lg mb-0 font-semibold">Sub Class Management</p>
                         <div className="flex justify-end items-right">
                             <button
                                 className="rounded-lg bg-black text-white flex h-10 justify-center items-center pl-2 pr-2 hover:bg-yellow-950 hover:text-white transition-all duration-[400ms] mr-3"
@@ -105,7 +106,7 @@ export default function ChildAsset(localData: any) {
                                 />
                                 Create Sub Class
                             </button>
-                            <button
+                            {/* <button
                                 className="rounded-lg bg-black text-white flex h-10 justify-center items-center pl-2 pr-2 hover:bg-yellow-950 hover:text-white transition-all duration-[400ms]"
                             >
                                 <Image
@@ -116,7 +117,7 @@ export default function ChildAsset(localData: any) {
                                     width={24}
                                 />
                                 Import Sub Class
-                            </button>
+                            </button> */}
                         </div>
                     </div>
 
@@ -175,67 +176,54 @@ export default function ChildAsset(localData: any) {
                         </div>
 
                         {/* --- Alerts Start--- */}
-                        {success ?
-                            <div id="alert-3" className="flex p-4 mb-4 text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400 mt-4" role="alert">
-                                <svg aria-hidden="true" className="flex-shrink-0 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd"></path></svg>
-                                <span className="sr-only">Info</span>
-                                <div className="ml-3 text-sm font-medium">
-                                    Your data is been saved successfully!
-                                </div>
-                                <button type="button" className="ml-auto -mx-1.5 -my-1.5 bg-green-50 text-green-500 rounded-lg focus:ring-2 focus:ring-green-400 p-1.5 hover:bg-green-200 inline-flex h-8 w-8 dark:bg-gray-800 dark:text-green-400 dark:hover:bg-gray-700" data-dismiss-target="#alert-3" aria-label="Close">
-                                    <span className="sr-only">Close</span>
-                                    <svg aria-hidden="true" className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd"></path></svg>
-                                </button>
-                            </div>
-                            : null
-                        }
+                        {success ? <AlertMessage /> : null}
                         {/* --- Alerts End--- */}
 
 
                         {/* Child Asset Form Fields */}
                         <div className="mt-8">
                             <form
-                            className="flex w-full flex-wrap flex-col justify-between items-center"
+                                className="flex w-full flex-wrap flex-col justify-between items-center"
                             >
                                 <div className="flex w-full mb-5">
                                     <div className="w-[50%] pr-16">
-                                        <input 
-                                        type="text"
-                                        name="Mfg Date"
-                                        placeholder="Mfg Date"
-                                        className="block w-full border border-gray-951 rounded-md h-14 pl-4 pr-2"
+                                        <input
+                                            type="text"
+                                            name="Mfg Date"
+                                            placeholder="Mfg Date"
+                                            className="block w-full border border-gray-951 rounded-md h-14 pl-4 pr-2"
                                         />
                                     </div>
                                     <div className="w-[50%] pl-16">
-                                        <input 
-                                        type="text"
-                                        name="vin"
-                                        placeholder="VIN"
-                                        className="block w-full border border-gray-951 rounded-md h-14 pl-4 pr-2"
+                                        <input
+                                            type="text"
+                                            name="vin"
+                                            placeholder="VIN"
+                                            className="block w-full border border-gray-951 rounded-md h-14 pl-4 pr-2"
                                         />
                                     </div>
                                 </div>
                                 <div className="flex w-full mb-5">
                                     <div className="w-[50%] pr-16">
-                                        <input 
-                                        type="text"
-                                        name="Color"
-                                        placeholder="Color"
-                                        className="block w-full border border-gray-951 rounded-md h-14 pl-4 pr-2"
+                                        <input
+                                            type="text"
+                                            name="Color"
+                                            placeholder="Color"
+                                            className="block w-full border border-gray-951 rounded-md h-14 pl-4 pr-2"
                                         />
                                     </div>
                                     <div className="w-[50%] pl-16">
-                                        <input 
-                                        type="text"
-                                        name="Piston"
-                                        placeholder="Piston"
-                                        className="block w-full border border-gray-951 rounded-md h-14 pl-4 pr-2"
+                                        <input
+                                            type="text"
+                                            name="Piston"
+                                            placeholder="Piston"
+                                            className="block w-full border border-gray-951 rounded-md h-14 pl-4 pr-2"
                                         />
                                     </div>
-                                </div>                                
+                                </div>
                             </form>
                         </div>
-                    
+
 
 
                         {data.length > 0 ?
@@ -325,50 +313,50 @@ export default function ChildAsset(localData: any) {
                             </div>
                         }
 
-                        
+
                         {/* Links Box */}
                         <div className="mt-0 flex  w-full">
                             <div className="flex flex-wrap flex-row w-full justify-end">
                                 <div className="rounded-lg h-24 w-36 bg-red-951 flex justify-center items-center px-2 py-2 mr-4 flex-wrap flex-col">
                                     <Image
-                                    src="/img/clockwhite.svg"
-                                    alt="eops watch"
-                                    height={24}
-                                    width={24}
-                                    className="mb-4"
+                                        src="/img/clockwhite.svg"
+                                        alt="eops watch"
+                                        height={24}
+                                        width={24}
+                                        className="mb-4"
                                     />
                                     <span className="text-white font-12">eOps Watch</span>
                                 </div>
 
                                 <div className="rounded-lg h-24 w-32 bg-green-952 flex justify-center items-center px-2 py-2 flex-wrap flex-col mr-4">
                                     <Image
-                                    src="/img/airplaywhite.svg"
-                                    alt="eops watch"
-                                    height={24}
-                                    width={24}
-                                    className="mb-4"
+                                        src="/img/airplaywhite.svg"
+                                        alt="eops watch"
+                                        height={24}
+                                        width={24}
+                                        className="mb-4"
                                     />
                                     <span className="text-white font-12">eOps Trace</span>
                                 </div>
 
                                 <div className="rounded-lg h-24 w-32 bg-blue-953 flex justify-center items-center px-2 py-2 flex-wrap flex-col mr-4">
                                     <Image
-                                    src="/img/maximizewhite.svg"
-                                    alt="eops Prosense"
-                                    height={24}
-                                    width={24}
-                                    className="mb-4"
+                                        src="/img/maximizewhite.svg"
+                                        alt="eops Prosense"
+                                        height={24}
+                                        width={24}
+                                        className="mb-4"
                                     />
                                     <span className="text-white font-12">eOps Trace</span>
                                 </div>
 
                                 <div className="rounded-lg h-24 w-44 bg-brown-951 flex justify-center items-center px-2 py-2 flex-wrap flex-col">
                                     <Image
-                                    src="/img/bar-chart-white.svg"
-                                    alt="eops Prosense"
-                                    height={24}
-                                    width={24}
-                                    className="mb-4"
+                                        src="/img/bar-chart-white.svg"
+                                        alt="eops Prosense"
+                                        height={24}
+                                        width={24}
+                                        className="mb-4"
                                     />
                                     <span className="text-white font-12">eOps Insight/Reports</span>
                                 </div>

@@ -25,7 +25,7 @@ export default function TrainingView() {
                 <div className="columns-2 flex justify-between items-center">
                     <p className="text-black text-lg mb-0 font-semibold">eOps Watch</p>                    
                 </div>
-                <div className="h-10 w-fill px-6 py-2 bg-gray-300 text-black rounded rounded-xl mt-2">This is a navigation of external image from management flow</div>
+                {/* <div className="h-10 w-fill px-6 py-2 bg-gray-300 text-black rounded rounded-xl mt-2">This is a navigation of external image from management flow</div> */}
 
                 <div className="border min-h-full rounded-xl mt-3 px-4 py-4">
                     <div className="flex justify-between items-center">
