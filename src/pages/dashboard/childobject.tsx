@@ -75,7 +75,7 @@ export default function ChildObject(localData: any) {
     useEffect(() => {
         fetchData();
         if (fetchData.length) return;
-    }, [localData.localData])
+    }, [parentAsset])
 
 
     // Get JSON sub class data on page load
