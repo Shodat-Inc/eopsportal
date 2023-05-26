@@ -1,1 +1,36 @@
-[{"parentAssetID":"Cars","dateCreated":"5/24/2023, 12:47:44 AM","subObjects":{"dateCreated":"5/24/2023, 12:47:40 AM","dateModified":"5/24/2023, 12:47:40 AM","assetID":"20000000011","parentAssetID":"Cars","parentAssetName":"Cars","mfdDate":"2023-05-03","VIN":"112233445566","ModalType":"BMW X6","Color":"Black","CapacityInCC":"2998","Cylinders":"Inline 6/4"}},{"parentAssetID":"Cars","dateCreated":"5/24/2023, 9:16:16 AM","subObjects":{"dateCreated":"5/24/2023, 9:16:06 AM","dateModified":"5/24/2023, 9:16:06 AM","assetID":"NaN","parentAssetID":"Cars","parentAssetName":"Cars","mfdDate":"2023-05-24","VIN":"112233445588","ModalType":"BMW X5","Color":"White","CapacityInCC":"3000","Cylinders":"Inline 6/6"}},{"dateCreated":"5/26/2023, 7:26:49 PM"}]
+[
+    {
+        "parentAssetID": "Cars",
+        "dateCreated": "5/24/2023, 12:47:44 AM",
+        "subObjects": {
+            "dateCreated": "5/24/2023, 12:47:40 AM",
+            "dateModified": "5/24/2023, 12:47:40 AM",
+            "assetID": "20000000011",
+            "parentAssetID": "Cars",
+            "parentAssetName": "Cars",
+            "mfdDate": "2023-05-03",
+            "VIN": "112233445566",
+            "ModalType": "BMW X6",
+            "Color": "Black",
+            "CapacityInCC": "2998",
+            "Cylinders": "Inline 6/4"
+        }
+    },
+    {
+        "parentAssetID": "Cars",
+        "dateCreated": "5/24/2023, 9:16:16 AM",
+        "subObjects": {
+            "dateCreated": "5/24/2023, 9:16:06 AM",
+            "dateModified": "5/24/2023, 9:16:06 AM",
+            "assetID": "NaN",
+            "parentAssetID": "Cars",
+            "parentAssetName": "Cars",
+            "mfdDate": "2023-05-24",
+            "VIN": "112233445588",
+            "ModalType": "BMW X5",
+            "Color": "White",
+            "CapacityInCC": "3000",
+            "Cylinders": "Inline 6/6"
+        }
+    }
+]

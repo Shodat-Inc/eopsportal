@@ -49,6 +49,7 @@ export default function SubObject(localData: any) {
         axios.get("/api/getObjects").then((response) => {
             if (response.data) {
                 const filtered = response.data.filter((item: any) => {
+                    console.log("item", item)
                     return item.subObjects.VIN === parentAsset.object;
                 });
                 if (filtered && filtered.length > 0) {
