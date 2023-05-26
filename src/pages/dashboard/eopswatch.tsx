@@ -121,21 +121,33 @@ export default function EopsWatch() {
                                 <ul className="p-0 m-0 w-full">
                                     <li
                                         className="px-5 py-4 bg-white cursor-pointer hover:bg-yellow-951 w-full font-normal"
-                                        onClick={() => selectAsset('Wear Deduction Model')}
+                                        onClick={() => selectAsset('Crack Detection')}
                                     >
-                                        <span>Wear Deduction Model</span>
+                                        <span>Crack Detection</span>
                                     </li>
                                     <li
                                         className="px-5 py-4 bg-white cursor-pointer hover:bg-yellow-951 w-full font-normal"
-                                        onClick={() => selectAsset('Wear Deduction Model')}
+                                        onClick={() => selectAsset('Tire Wear Detection')}
                                     >
-                                        <span>Wear Deduction Model</span>
+                                        <span>Tire Wear Detection</span>
                                     </li>
                                     <li
                                         className="px-5 py-4 bg-white cursor-pointer hover:bg-yellow-951 w-full font-normal"
-                                        onClick={() => selectAsset('Wear Deduction Model')}
+                                        onClick={() => selectAsset('Crystallization Detection')}
                                     >
-                                        <span>Wear Deduction Model</span>
+                                        <span>Crystallization Detection</span>
+                                    </li>
+                                    <li
+                                        className="px-5 py-4 bg-white cursor-pointer hover:bg-yellow-951 w-full font-normal"
+                                        onClick={() => selectAsset('Parts Detection')}
+                                    >
+                                        <span>Parts Detection</span>
+                                    </li>
+                                    <li
+                                        className="px-5 py-4 bg-white cursor-pointer hover:bg-yellow-951 w-full font-normal"
+                                        onClick={() => selectAsset('Battery Life Prediction')}
+                                    >
+                                        <span>Battery Life Prediction</span>
                                     </li>
                                 </ul>
                             </div>
