@@ -1,11 +1,14 @@
+import Image from "next/image";
 const NoDataFound = (props) => {
     return (
-        <div className="flex justify-center items-center flex-wrap flex-col">
+        <div className="flex justify-center items-center flex-wrap flex-col font-OpenSans">
             <div className="no-data-image">
-                <img
+                <Image
                     src="/img/not-found.svg"
                     alt="no data found!"
                     className="inline-block"
+                    height={72}
+                    width={72}
                 />
             </div>
             <p className="text-black text-2xl mt-8 font-medium">No asset data found!!</p>

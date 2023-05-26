@@ -42,7 +42,7 @@ export default function Home() {
 
             <div className="text-left w-[470px]">
               <p className="font-bold text-3xl text-black mb-4">Join Us!</p>
-              <p className="font-normal text-2xl text-gray-500 mb-10">To begin this journey, tell us what type of account you'd be opening?</p>
+              <p className="font-normal text-2xl text-gray-500 mb-10">To begin this journey, tell us what type of account you&apos;d be opening?</p>
 
               <Link href="authentication/register" className="rounded-lg border border-black px-4 py-6 bg-gray-100 flex justify-center items-center relative">
                 <span className="rounded-md bg-gray-400 text-black h-7 w-20 flex font-medium justify-center items-center absolute top-2 right-10">Free</span>

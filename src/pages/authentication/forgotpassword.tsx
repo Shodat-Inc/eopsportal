@@ -54,14 +54,14 @@ export default function ForgotPassword() {
                                 </Link>
                             </div>
 
-                            <div className="pr-2 text-right text-black text-xl font-medium ">
-                                <span className="text-gray-500 font-normal">Don't have an account? </span> <Link href="/authentication/register">Sign Up</Link>
+                            <div className="pr-2 text-right text-black text-xl font-medium">
+                                <span className="text-gray-500 font-normal">Don&apos;t have an account? </span> <Link href="/authentication/register">Sign Up</Link>
                             </div>
                         </div>
 
                         <div className="text-left w-[470px] mt-28">
                             <p className="font-bold text-3xl text-black mb-4 capitalize">Forgot Password</p>
-                            <p className="font-normal text-2xl text-gray-500">Dont worry about your password! you can reset that any time.</p>
+                            <p className="font-normal text-2xl text-gray-500">Don&apos;t worry about your password! you can reset that any time.</p>
                             <div className="mb-4 mt-5 border border-gray-100 w-full h-[1px]"></div>
                             <div className="signinform relative">
                                 <form>

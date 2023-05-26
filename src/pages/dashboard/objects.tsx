@@ -73,7 +73,7 @@ export default function Objects(localData: any) {
     useEffect(() => {
         fetchDataForParent();
         if (fetchDataForParent.length) return;
-    }, [])
+    }, [parentAsset])
 
 
     // Get JSON data on page load
@@ -107,7 +107,6 @@ export default function Objects(localData: any) {
     }
 
     // Get Last Asset ID
-    console.log("Data", data)
     const getLastID = (data && data.length > 0) ? data.slice(-1)[0].assetID : '2000000001';
 
     // Clear All Fields
@@ -115,7 +114,6 @@ export default function Objects(localData: any) {
         e.preventDefault();
         // var formData = new FormData(e.target);
         // const form_values = Object.fromEntries(formData);
-        console.log("HERE", e.target);
     }
 
     // Storing data in json for sub class

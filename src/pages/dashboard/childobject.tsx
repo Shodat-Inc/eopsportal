@@ -127,7 +127,6 @@ export default function ChildObject(localData: any) {
         e.preventDefault();
         // var formData = new FormData(e.target);
         // const form_values = Object.fromEntries(formData);
-        console.log("HERE", e.target);
     }
 
     // Storing data in json for sub class

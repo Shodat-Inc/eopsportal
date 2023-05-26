@@ -393,6 +393,7 @@ export default function AssetManagement(localData: any) {
                                                                         <li
                                                                             className="px-5 py-4 bg-white cursor-pointer hover:bg-yellow-951 w-full font-normal"
                                                                             onClick={() => selectAsset(item.assetName)}
+                                                                            key={index}
                                                                         >
                                                                             <span>{item.assetName}</span>
                                                                         </li>
@@ -415,7 +416,6 @@ export default function AssetManagement(localData: any) {
                                                 >
                                                     <span className="font-normal">Continue</span>
                                                 </Link>
-                                                {/* <button className="rounded-xl bg-black border-[2px] border-black text-white flex h-12 justify-center items-center pl-2 pr-2 hover:bg-yellow-951 hover:text-black hover:border-yellow-951 w-[120px] transition-all duration-[400ms]">Continue</button> */}
                                             </div>
                                         </div>
                                     </div>
@@ -614,7 +614,7 @@ export default function AssetManagement(localData: any) {
                                                                         />
                                                                         <span></span>
                                                                     </div>
-                                                                    <label className="text-black font-semibold">char <span className="text-gray-500 font-normal text-[14px]">(myLetter='D')</span></label>
+                                                                    <label className="text-black font-semibold">char <span className="text-gray-500 font-normal text-[14px]">(myLetter=&apos;D&apos;)</span></label>
                                                                 </div>
                                                                 <div className="flex pt-1 pb-1">
                                                                     <div className={`${styles.customRadio} mr-2`}>
@@ -642,7 +642,7 @@ export default function AssetManagement(localData: any) {
                                                                         />
                                                                         <span></span>
                                                                     </div>
-                                                                    <label className="text-black font-semibold">string <span className="text-gray-500 font-normal text-[14px]">(myText="Hello")</span></label>
+                                                                    <label className="text-black font-semibold">string <span className="text-gray-500 font-normal text-[14px]">(myText=&quotHello&quot)</span></label>
                                                                 </div>
 
                                                             </div>

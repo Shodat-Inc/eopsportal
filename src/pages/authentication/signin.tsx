@@ -37,7 +37,7 @@ export default function SignIn() {
                     <div className="flex justify-center items-center h-full">
 
                         <div className="pt-10 pr-2 text-right text-black text-xl font-medium absolute top-0 right-2">
-                            <span className="text-gray-500 font-normal">Don't have an account? </span> <Link href="/authentication/register">Sign Up</Link>
+                            <span className="text-gray-500 font-normal">Don&apos;t have an account? </span> <Link href="/authentication/register">Sign Up</Link>
                         </div>
 
                         <div className="text-left w-[470px]">
