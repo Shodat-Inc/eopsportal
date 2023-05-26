@@ -69,18 +69,24 @@ export default function SignIn() {
                                         <span className="absolute text-black font-normal font-8 right-4 bottom-[14px] cursor-pointer">Show</span>
                                     </div>
                                     <div className="relative">
-                                        <button className="rounded-lg h-16 bg-black w-full text-white text-lg">
+                                        {/* <button className="rounded-lg h-16 bg-black w-full text-white text-lg">
                                             Login
-                                        </button>
-                                    </div>
-                                </form>
+                                        </button>  */}
+                                        <Link
+                                            className="rounded-lg h-16 bg-black w-full text-white text-lg block flex justify-center items-center"
+                                            href="/dashboard/"
+                                        >
+                                        Login
+                                    </Link>
                             </div>
-                        </div>
-
+                        </form>
                     </div>
                 </div>
 
             </div>
+        </div >
+
+            </div >
         </>
     );
 }
