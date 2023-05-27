@@ -4,20 +4,63 @@ import Layout from "../../components/Layout";
 import Template from "./template";
 import Image from "next/image";
 import Link from "next/link";
+import axios from 'axios';
 
 export default function EopsWatch() {
+    const [value, setValue] = useState("");
+    const [data, setData] = useState([] as any);
+    const [subObj, setSebObj] = useState({} as any);
+    const onChange = (event: any) => {
+        setValue(event.target.value)
 
-    const [chooseAsset, setChooseAsset] = useState("Wear Deduction Model");
-    const [toggleAsset, setToggleAsset] = useState(false);
+        axios.get("/api/getChildObject").then((response) => {
+            if (response.data) {
 
-    // Show Choose Asset List
-    const showChooseAssetList = () => {
-        setToggleAsset(!toggleAsset)
+                if (event.target.value === "") {
+                    setData([]); return;
+                }
+                const filtered = response.data.filter((item: any) => {
+                    // console.log("ITEMS =>", item.tags.BatteryType)
+                    if (item.tags.BatteryType.toString().toLowerCase().includes(event.target.value.toString().toLowerCase())) {
+                        return item;
+                    }
+                });
+                if (filtered && filtered.length > 0) {
+                    setData(filtered);
+                }
+
+            }
+        });
     }
-    const selectAsset = (item: any) => {
-        setChooseAsset(item);
-        setToggleAsset(false)
+
+    const subObjectSelected = (obj: any) => {
+        console.log("Object", obj);
+        setData([]);
+        setValue("")
+
+        axios.get("/api/getChildObject").then((response) => {
+            if (response.data) {
+
+                if (obj === "") {
+                    return;
+                }
+                const filtered = response.data.filter((item: any) => {
+                    // console.log("ITEMS =>", item.tags.BatteryType)
+                    if (item.tags.BatteryType.toString().toLowerCase().includes(obj.toString().toLowerCase())) {
+                        return item;
+                    }
+                });
+                if (filtered && filtered.length > 0) {
+                    setSebObj(filtered[0]);
+                }
+
+            }
+        });
+
     }
+
+    // console.log("subObj", subObj);
+    // console.log(Object.keys(subObj?.tags));
     return (
         <div className="flex font-OpenSans">
 
@@ -42,138 +85,92 @@ export default function EopsWatch() {
                                         />
                                     </Link>
                                 </li>
-                                <li>
-                                    <div className="flex items-center">
-                                        <Image
-                                            src="/img/arrow-right.svg"
-                                            alt="arrow-right"
-                                            className="h-6"
-                                            height={24}
-                                            width={24}
-                                        />
-                                        <span className="ml-1 text-sm font-medium text-black hover:text-yellow-950 md:ml-1">Training Model</span>
-                                    </div>
-                                </li>
                             </ol>
                         </nav>
                     </div>
 
-
-                    <div className="flex items-end justify-end">
-                        <button
-                            className="flex justify-center items-center text-black bg-yellow-951 rounded rounded-xl h-12 px-4 transition-opacity duration-300 mr-5"
-                        >
-                            <Image
-                                src="/img/activity.svg"
-                                alt="activity"
-                                height={19}
-                                width={19}
-                                className="mr-2"
+                    {/* Search Bar */}
+                    <div className="flex w-full mt-10 justify-center items-center flex-wrap relative">
+                        <div className="flex relative w-[480px] flex-wrap">
+                            <input
+                                type="text"
+                                placeholder="Search"
+                                id="searchobjects"
+                                name="searchobjects"
+                                className="rounded rounded-lg border border-gray-500 pl-10 pr-2 w-[480px] h-12"
+                                onChange={onChange}
+                                value={value}
                             />
-                            <span>Model Performance</span>
-                        </button>
-
-                        <button
-                            className="flex justify-center items-center text-black bg-yellow-951 rounded rounded-xl h-12 px-4 transition-opacity duration-300 mr-5"
-                        >
                             <Image
-                                src="/img/message-square.svg"
-                                alt="activity"
-                                height={19}
-                                width={19}
-                                className="mr-2"
+                                src="/img/search.svg"
+                                alt="search"
+                                height={18}
+                                width={18}
+                                className="absolute left-3 top-[14px]"
                             />
-                            <span>Alerts</span>
-                        </button>
-
-                        <button
-                            className="flex justify-center items-center text-black bg-yellow-951 rounded rounded-xl h-12 px-4 transition-opacity duration-300"
-                        >
-                            <Image
-                                src="/img/download-black.svg"
-                                alt="activity"
-                                height={19}
-                                width={19}
-                                className="mr-2"
-                            />
-                            <span>Import Product Images</span>
-                        </button>
-
-                    </div>
-
-                    <div className="w-[400px] mt-10 relative">
-                        <div
-                            className="border rounded-xl border-gray-500 h-[55px] w-[400px] pl-2 pr-5 relative flex items-center justify-start"
-                            onClick={showChooseAssetList}
-                        >
-                            <label className="absolute text-sm top-[-10px] left-2 pl-2 pr-2 bg-white">Model</label>
-                            <Image
-                                src="/img/arrow-down-black.svg"
-                                alt="arrow-down"
-                                height={20}
-                                width={20}
-                                className="absolute right-3 top-4"
-                            />
-                            <span className="text-md text-black pl-2">{chooseAsset}</span>
                         </div>
-                        {toggleAsset ?
-                            <div className={`h-52 border rounded-xl border-gray-500 h-[155px] w-[400px]  flex items-start justify-start mt-1 overflow-hidden overflow-y-scroll absolute top-[100%] left-0 z-10 ${styles.scroll}`}>
-                                <ul className="p-0 m-0 w-full">
-                                    <li
-                                        className="px-5 py-4 bg-white cursor-pointer hover:bg-yellow-951 w-full font-normal"
-                                        onClick={() => selectAsset('Crack Detection')}
-                                    >
-                                        <span>Crack Detection</span>
-                                    </li>
-                                    <li
-                                        className="px-5 py-4 bg-white cursor-pointer hover:bg-yellow-951 w-full font-normal"
-                                        onClick={() => selectAsset('Tire Wear Detection')}
-                                    >
-                                        <span>Tire Wear Detection</span>
-                                    </li>
-                                    <li
-                                        className="px-5 py-4 bg-white cursor-pointer hover:bg-yellow-951 w-full font-normal"
-                                        onClick={() => selectAsset('Crystallization Detection')}
-                                    >
-                                        <span>Crystallization Detection</span>
-                                    </li>
-                                    <li
-                                        className="px-5 py-4 bg-white cursor-pointer hover:bg-yellow-951 w-full font-normal"
-                                        onClick={() => selectAsset('Parts Detection')}
-                                    >
-                                        <span>Parts Detection</span>
-                                    </li>
-                                    <li
-                                        className="px-5 py-4 bg-white cursor-pointer hover:bg-yellow-951 w-full font-normal"
-                                        onClick={() => selectAsset('Battery Life Prediction')}
-                                    >
-                                        <span>Battery Life Prediction</span>
-                                    </li>
-                                </ul>
-                            </div>
-                            : null}
+
+                        {
+                            data && data.length > 0
+                                ?
+                                <div className="bg-white shadow-lg rounded rounded-xl w-[480px] overflow-hidden overflow-y-auto h-[300px] absolute top-[100%]">
+                                    {
+                                        data.map((items: any, index: any) => (
+                                            <button
+                                                className="text-left px-4 py-3 hover:bg-yellow-951 w-full"
+                                                key={index}
+                                                onClick={() => subObjectSelected(items.tags.BatteryType)}
+                                            >
+                                                {items.tags.BatteryType}
+                                            </button>
+                                        ))
+                                    }
+                                </div>
+                                :
+                                null
+                        }
+
                     </div>
 
-                    <div className="flex mt-10">
-                        <Link href="/dashboard/trainingmodel" className="relative mr-16">
-                            <Image
-                                src="/img/folder.svg"
-                                alt="folder"
-                                height={130}
-                                width={130}
-                            />
-                            <span className="absolute top-[65px] left-[45px] text-lg font-semibold">Test</span>
-                        </Link>
 
-                        <Link href="" className="relative mr-16">
-                            <Image
-                                src="/img/folder.svg"
-                                alt="folder"
-                                height={130}
-                                width={130}
-                            />
-                            <span className="absolute top-[50%] left-[15%] text-lg font-semibold">Production</span>
-                        </Link>
+                    <div className="flex w-full flex-wrap mt-10">
+                        <div className="text-black font-semibold text-md mb-2">Objects</div>
+                        <div className="overflow-hidden border rounded-xl w-full">
+                            <table className={`table-auto min-w-full text-left ${styles.table}`}>
+                                <thead className="bg-black text-white rounded-xl h-10 text-sm font-light">
+                                    {
+                                        subObj && Object.keys(subObj).length != 0 ?
+                                            Object.keys(subObj?.tags).map((item: any, i: any) => (
+                                                <th>
+                                                    {
+                                                        item.split(/(?=[A-Z])/).join(" ").toUpperCase()
+                                                    }
+                                                </th>
+                                            ))
+                                            : null
+                                    }
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        {
+                                            subObj && Object.keys(subObj).length != 0 ?
+                                                Object.values(subObj?.tags).map((item: any, i: any) => (
+
+                                                    <td>
+                                                        <Link
+                                                            href="/dashboard/eopswatchmodel"
+                                                        >
+                                                            {item}
+                                                        </Link>
+                                                    </td>
+
+                                                ))
+                                                : null
+                                        }
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
 
                 </div>

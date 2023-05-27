@@ -5,7 +5,7 @@ import Template from "./template";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function TrainingModel() {
+export default function ProductionModel() {
 
     const [chooseAsset, setChooseAsset] = useState("Wear Deduction Model");
     const [toggleAsset, setToggleAsset] = useState(false);
@@ -53,6 +53,18 @@ export default function TrainingModel() {
                                             height={24}
                                             width={24}
                                         />
+                                        <span className="ml-1 text-sm text-black hover:text-yellow-950 md:ml-1 font-bold">Object ID</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div className="flex items-center">
+                                        <Image
+                                            src="/img/arrow-right.svg"
+                                            alt="arrow-right"
+                                            className="h-6"
+                                            height={24}
+                                            width={24}
+                                        />
                                         <span className="ml-1 text-sm text-black hover:text-yellow-950 md:ml-1 font-bold">Training Model</span>
                                     </div>
                                 </li>
@@ -72,19 +84,28 @@ export default function TrainingModel() {
                         </nav>
 
                         {/* Upload Button */}
-                        <div className="flex items-end justify-end">
+                        <div className="flex items-center justify-end">
+                            <div className="flex items-center justify-start mr-7">
+                            <p className="text-gray mr-4">Disable</p>
+                            <div className={`${styles.radioWrap}`}>
+                                <input
+                                    type="checkbox"
+                                />
+                                <span className={`${styles.radioFrame}`}></span>
+                            </div>
+                            </div>
                             <button
                                 className="flex justify-center items-center text-black bg-yellow-951 rounded rounded-xl h-12 px-4 transition-opacity duration-300"
                                 onClick={() => setShowModal(true)}
                             >
                                 <Image
-                                    src="/img/upload-black.svg"
+                                    src="/img/settings.svg"
                                     alt="activity"
                                     height={24}
                                     width={24}
                                     className="mr-2"
                                 />
-                                <span>Upload Images</span>
+                                <span>Configure Images</span>
                             </button>
                         </div>
                     </div>
@@ -146,7 +167,7 @@ export default function TrainingModel() {
                                 />
                                 <div className={`${styles.info} relative`}>
                                     <span className="text-white text-[13px] font-light absolute top-0 left-1">Uploaded Date: 05-11-2023</span>
-                                    <Link href="/dashboard/trainingview" className="bg-yellow-951 rounded rounded-md flex justify-center items-center texxt-black font-semibold text-xl p-2 w-24">
+                                    <Link href="/dashboard/productionview" className="bg-yellow-951 rounded rounded-md flex justify-center items-center texxt-black font-semibold text-sm p-2 w-[150px]">
                                         <Image
                                             src="/img/carIcon.svg"
                                             alt="car"
@@ -154,7 +175,7 @@ export default function TrainingModel() {
                                             width={30}
                                             className="mr-2"
                                         />
-                                        <span>Test</span>
+                                        <span>Show Result</span>
                                     </Link>
                                 </div>
                             </div>
@@ -185,7 +206,7 @@ export default function TrainingModel() {
                                 />
                                 <div className={`${styles.info} relative`}>
                                     <span className="text-white text-[13px] font-light absolute top-0 left-1">Uploaded Date: 05-11-2023</span>
-                                    <button className="bg-yellow-951 rounded rounded-md flex justify-center items-center texxt-black font-semibold text-xl p-2">
+                                    <Link href="/dashboard/productionview" className="bg-yellow-951 rounded rounded-md flex justify-center items-center texxt-black font-semibold text-sm p-2 w-[150px]">
                                         <Image
                                             src="/img/carIcon.svg"
                                             alt="car"
@@ -193,8 +214,8 @@ export default function TrainingModel() {
                                             width={30}
                                             className="mr-2"
                                         />
-                                        <span>Test</span>
-                                    </button>
+                                        <span>Show Result</span>
+                                    </Link>
                                 </div>
                             </div>
                             <div className="border border-gray-951 mt-2 rounded rounded-xl h-[65px] w-full p-1">
@@ -224,7 +245,7 @@ export default function TrainingModel() {
                                 />
                                 <div className={`${styles.info} relative`}>
                                     <span className="text-white text-[13px] font-light absolute top-0 left-1">Uploaded Date: 05-11-2023</span>
-                                    <button className="bg-yellow-951 rounded rounded-md flex justify-center items-center texxt-black font-semibold text-xl p-2">
+                                    <Link href="/dashboard/productionview" className="bg-yellow-951 rounded rounded-md flex justify-center items-center texxt-black font-semibold text-sm p-2 w-[150px]">
                                         <Image
                                             src="/img/carIcon.svg"
                                             alt="car"
@@ -232,8 +253,8 @@ export default function TrainingModel() {
                                             width={30}
                                             className="mr-2"
                                         />
-                                        <span>Test</span>
-                                    </button>
+                                        <span>Show Result</span>
+                                    </Link>
                                 </div>
                             </div>
                             <div className="border border-gray-951 mt-2 rounded rounded-xl h-[65px] w-full p-1">
@@ -263,7 +284,7 @@ export default function TrainingModel() {
                                 />
                                 <div className={`${styles.info} relative`}>
                                     <span className="text-white text-[13px] font-light absolute top-0 left-1">Uploaded Date: 05-11-2023</span>
-                                    <button className="bg-yellow-951 rounded rounded-md flex justify-center items-center texxt-black font-semibold text-xl p-2">
+                                    <Link href="/dashboard/productionview" className="bg-yellow-951 rounded rounded-md flex justify-center items-center texxt-black font-semibold text-sm p-2 w-[150px]">
                                         <Image
                                             src="/img/carIcon.svg"
                                             alt="car"
@@ -271,8 +292,8 @@ export default function TrainingModel() {
                                             width={30}
                                             className="mr-2"
                                         />
-                                        <span>Test</span>
-                                    </button>
+                                        <span>Show Result</span>
+                                    </Link>
                                 </div>
                             </div>
                             <div className="border border-gray-951 mt-2 rounded rounded-xl h-[65px] w-full p-1">
@@ -302,7 +323,7 @@ export default function TrainingModel() {
                                 />
                                 <div className={`${styles.info} relative`}>
                                     <span className="text-white text-[13px] font-light absolute top-0 left-1">Uploaded Date: 05-11-2023</span>
-                                    <button className="bg-yellow-951 rounded rounded-md flex justify-center items-center texxt-black font-semibold text-xl p-2">
+                                    <Link href="/dashboard/productionview" className="bg-yellow-951 rounded rounded-md flex justify-center items-center texxt-black font-semibold text-sm p-2 w-[150px]">
                                         <Image
                                             src="/img/carIcon.svg"
                                             alt="car"
@@ -310,8 +331,8 @@ export default function TrainingModel() {
                                             width={30}
                                             className="mr-2"
                                         />
-                                        <span>Test</span>
-                                    </button>
+                                        <span>Show Result</span>
+                                    </Link>
                                 </div>
                             </div>
                             <div className="border border-gray-951 mt-2 rounded rounded-xl h-[65px] w-full p-1">
@@ -341,7 +362,7 @@ export default function TrainingModel() {
                                 />
                                 <div className={`${styles.info} relative`}>
                                     <span className="text-white text-[13px] font-light absolute top-0 left-1">Uploaded Date: 05-11-2023</span>
-                                    <button className="bg-yellow-951 rounded rounded-md flex justify-center items-center texxt-black font-semibold text-xl p-2">
+                                    <Link href="/dashboard/productionview" className="bg-yellow-951 rounded rounded-md flex justify-center items-center texxt-black font-semibold text-sm p-2 w-[150px]">
                                         <Image
                                             src="/img/carIcon.svg"
                                             alt="car"
@@ -349,8 +370,8 @@ export default function TrainingModel() {
                                             width={30}
                                             className="mr-2"
                                         />
-                                        <span>Test</span>
-                                    </button>
+                                        <span>Show Result</span>
+                                    </Link>
                                 </div>
                             </div>
                             <div className="border border-gray-951 mt-2 rounded rounded-xl h-[65px] w-full p-1">
@@ -437,7 +458,7 @@ export default function TrainingModel() {
     )
 }
 
-TrainingModel.getLayout = function getLayout(page: any) {
+ProductionModel.getLayout = function getLayout(page: any) {
     return (
         <Layout>{page}</Layout>
     )

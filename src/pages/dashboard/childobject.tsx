@@ -146,7 +146,7 @@ export default function ChildObject(localData: any) {
                     object: parentAsset.subObject,
                     VIN: parentAsset.object,
                     tags: form_values,
-                    dateCreated: new Date().toLocaleString() + ""
+                    dateCreated: new Date().toLocaleString() + "",
                 }
             )
         });
