@@ -86,13 +86,13 @@ export default function ProductionModel() {
                         {/* Upload Button */}
                         <div className="flex items-center justify-end">
                             <div className="flex items-center justify-start mr-7">
-                            <p className="text-gray mr-4">Disable</p>
-                            <div className={`${styles.radioWrap}`}>
-                                <input
-                                    type="checkbox"
-                                />
-                                <span className={`${styles.radioFrame}`}></span>
-                            </div>
+                                <p className="text-gray mr-4">Disable</p>
+                                <div className={`${styles.radioWrap}`}>
+                                    <input
+                                        type="checkbox"
+                                    />
+                                    <span className={`${styles.radioFrame}`}></span>
+                                </div>
                             </div>
                             <button
                                 className="flex justify-center items-center text-black bg-yellow-951 rounded rounded-xl h-12 px-4 transition-opacity duration-300"
@@ -426,15 +426,18 @@ export default function ProductionModel() {
                                                     />
                                                     <div className="mt-8 mb-8 text-black text-center font-semibold">Or</div>
                                                     <p className="text-black text-lg font-semibold">Upload images from your local</p>
-                                                    <button className="text-white rounded rounded-xl shadow-xl flex justify-center items-center bg-gray-955 mb-10 w-full h-16 flex-wrap flex-col mt-2">
-                                                        <Image
-                                                            src="/img/upload-cloud.svg"
-                                                            alt="browse"
-                                                            height={24}
-                                                            width={24}
-                                                        />
-                                                        <span>Browse your files</span>
-                                                    </button>
+                                                    <div className="relative mt-10 w-[500px] items-center justify-center mb-10">
+                                                        <input type="file" name="uploadImages" id="uploadImages" className="scale-150 relative left-32 z-10 opacity-0" />
+                                                        <div className="text-white rounded rounded-xl shadow-xl flex justify-center items-center bg-gray-955  w-full h-16 flex-wrap flex-col absolute top-[-13px]">
+                                                            <Image
+                                                                src="/img/upload-cloud.svg"
+                                                                alt="browse"
+                                                                height={24}
+                                                                width={24}
+                                                            />
+                                                            <span>Browse your files</span>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
