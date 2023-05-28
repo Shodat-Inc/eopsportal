@@ -53,7 +53,7 @@ export default function ProductionView() {
                                             height={24}
                                             width={24}
                                         />
-                                        <span className="ml-1 text-sm text-black hover:text-yellow-950 md:ml-1 font-bold">Training Model</span>
+                                        <span className="ml-1 text-sm text-black hover:text-yellow-950 md:ml-1 font-bold">Object ID</span>
                                     </div>
                                 </li>
                                 <li>
@@ -65,7 +65,19 @@ export default function ProductionView() {
                                             height={24}
                                             width={24}
                                         />
-                                        <span className="ml-1 text-sm text-black hover:text-yellow-950 md:ml-1 font-bold">Wear Deduction Model</span>
+                                        <span className="ml-1 text-sm text-black hover:text-yellow-950 md:ml-1 font-bold">Default Training Model</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div className="flex items-center">
+                                        <Image
+                                            src="/img/arrow-right.svg"
+                                            alt="arrow-right"
+                                            className="h-6"
+                                            height={24}
+                                            width={24}
+                                        />
+                                        <span className="ml-1 text-sm text-black hover:text-yellow-950 md:ml-1 font-bold">Show Results</span>
                                     </div>
                                 </li>
                                 <li>
@@ -88,7 +100,7 @@ export default function ProductionView() {
                     {/* Images */}
                     <div className="relative mt-10 rounded overflow-hidden rounded-xl">
                         <Image
-                            src="/img/carBig.png"
+                            src="/img/productionResults.png"
                             alt="car"
                             height={600}
                             width={600}
