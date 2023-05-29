@@ -86,7 +86,8 @@ export default function TraceModel() {
                             <span>Model Performance</span>
                         </Link>
 
-                        <button
+                        <Link
+                            href="/dashboard/eopstrace/eopstracealerts"
                             className="flex justify-center items-center text-black bg-yellow-951 rounded rounded-xl h-12 px-4 transition-opacity duration-300"
                         >
                             <Image
@@ -97,20 +98,7 @@ export default function TraceModel() {
                                 className="mr-2"
                             />
                             <span>Alerts</span>
-                        </button>
-
-                        {/* <button
-                            className="flex justify-center items-center text-black bg-yellow-951 rounded rounded-xl h-12 px-4 transition-opacity duration-300"
-                        >
-                            <Image
-                                src="/img/download-black.svg"
-                                alt="activity"
-                                height={19}
-                                width={19}
-                                className="mr-2"
-                            />
-                            <span>Import Product Images</span>
-                        </button> */}
+                        </Link>
 
                     </div>
 
