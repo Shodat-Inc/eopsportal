@@ -50,9 +50,10 @@ export default function SignIn() {
                                         <label className="text-gray-500 text-lg font-medium mb-3 block">Company email address*</label>
                                         <input
                                             type="text"
-                                            className="border rounded-lg pl-10 pr-10 border-black h-12 w-full shadow-lg"
+                                            className="border rounded-lg pl-4 pr-10 border-black h-12 w-full shadow-lg"
                                             name="email"
                                             placeholder="Enter email address"
+                                            value="admin@gmail.com"
                                         />
                                     </div>
                                     <div className="mb-10 relative">
@@ -61,17 +62,15 @@ export default function SignIn() {
                                             <Link className="text-black text-lg font-medium mb-3 block" href="/authentication/forgotpassword">Forgot Password?</Link>
                                         </div>
                                         <input
-                                            type="text"
-                                            className="border rounded-lg pl-10 pr-14 border-black h-12 w-full shadow-lg"
-                                            name="email"
-                                            placeholder="Enter email address"
+                                            type="password"
+                                            className="border rounded-lg pl-4 pr-14 border-black h-12 w-full shadow-lg"
+                                            name="password"
+                                            placeholder="Enter password"
+                                            value="admin"
                                         />
                                         <span className="absolute text-black font-normal font-8 right-4 bottom-[14px] cursor-pointer">Show</span>
                                     </div>
                                     <div className="relative">
-                                        {/* <button className="rounded-lg h-16 bg-black w-full text-white text-lg">
-                                            Login
-                                        </button>  */}
                                         <Link
                                             className="rounded-lg h-16 bg-black w-full text-white text-lg block flex justify-center items-center"
                                             href="/dashboard/"
