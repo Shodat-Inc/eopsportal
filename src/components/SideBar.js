@@ -62,7 +62,7 @@ const SideBar = forwardRef(({ showNav, setShowNav }, ref) => {
           >
             <div className="mr-2">
               <Image
-                src={router.pathname == "/dashboard/assetmanagement" ? '/img/clock.svg' : '/img/clock-white.svg'}
+                src={router.pathname == "/dashboard/assetmanagement" ? '/img/box-black.svg' : '/img/box.svg'}
                 alt="clock"
                 className={`w-32 h-auto ${styles.sideicons}`}
                 height={25}

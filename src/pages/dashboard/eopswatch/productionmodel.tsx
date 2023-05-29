@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
-import styles from '../../styles/Common.module.css';
-import Layout from "../../components/Layout";
-import Template from "./template";
+import styles from '../../../styles/Common.module.css';
+import Layout from "../../../components/Layout";
+import Template from "../template";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -33,7 +33,7 @@ export default function ProductionModel() {
                         <nav className="flex" aria-label="Breadcrumb">
                             <ol className="inline-flex items-center space-x-1 md:space-x-1">
                                 <li className="inline-flex items-center">
-                                    <Link href="/dashboard/assetmanagement"
+                                    <Link href="/dashboard/eopswatch"
                                         className="inline-flex items-center text-sm font-medium text-black hover:text-yellow-950">
                                         <Image
                                             src="/img/home.svg"
@@ -167,7 +167,7 @@ export default function ProductionModel() {
                                 />
                                 <div className={`${styles.info} relative`}>
                                     <span className="text-white text-[13px] font-light absolute top-0 left-1">Uploaded Date: 05-11-2023</span>
-                                    <Link href="/dashboard/productionview" className="bg-yellow-951 rounded rounded-md flex justify-center items-center texxt-black font-semibold text-sm p-2 w-[150px]">
+                                    <Link href="/dashboard/eopswatch/productionview" className="bg-yellow-951 rounded rounded-md flex justify-center items-center texxt-black font-semibold text-sm p-2 w-[150px]">
                                         <Image
                                             src="/img/carIcon.svg"
                                             alt="car"
@@ -206,7 +206,7 @@ export default function ProductionModel() {
                                 />
                                 <div className={`${styles.info} relative`}>
                                     <span className="text-white text-[13px] font-light absolute top-0 left-1">Uploaded Date: 05-11-2023</span>
-                                    <Link href="/dashboard/productionview" className="bg-yellow-951 rounded rounded-md flex justify-center items-center texxt-black font-semibold text-sm p-2 w-[150px]">
+                                    <Link href="/dashboard/eopswatch/productionview" className="bg-yellow-951 rounded rounded-md flex justify-center items-center texxt-black font-semibold text-sm p-2 w-[150px]">
                                         <Image
                                             src="/img/carIcon.svg"
                                             alt="car"
@@ -245,7 +245,7 @@ export default function ProductionModel() {
                                 />
                                 <div className={`${styles.info} relative`}>
                                     <span className="text-white text-[13px] font-light absolute top-0 left-1">Uploaded Date: 05-11-2023</span>
-                                    <Link href="/dashboard/productionview" className="bg-yellow-951 rounded rounded-md flex justify-center items-center texxt-black font-semibold text-sm p-2 w-[150px]">
+                                    <Link href="/dashboard/eopswatch/productionview" className="bg-yellow-951 rounded rounded-md flex justify-center items-center texxt-black font-semibold text-sm p-2 w-[150px]">
                                         <Image
                                             src="/img/carIcon.svg"
                                             alt="car"
@@ -284,7 +284,7 @@ export default function ProductionModel() {
                                 />
                                 <div className={`${styles.info} relative`}>
                                     <span className="text-white text-[13px] font-light absolute top-0 left-1">Uploaded Date: 05-11-2023</span>
-                                    <Link href="/dashboard/productionview" className="bg-yellow-951 rounded rounded-md flex justify-center items-center texxt-black font-semibold text-sm p-2 w-[150px]">
+                                    <Link href="/dashboard/eopswatch/productionview" className="bg-yellow-951 rounded rounded-md flex justify-center items-center texxt-black font-semibold text-sm p-2 w-[150px]">
                                         <Image
                                             src="/img/carIcon.svg"
                                             alt="car"
@@ -323,7 +323,7 @@ export default function ProductionModel() {
                                 />
                                 <div className={`${styles.info} relative`}>
                                     <span className="text-white text-[13px] font-light absolute top-0 left-1">Uploaded Date: 05-11-2023</span>
-                                    <Link href="/dashboard/productionview" className="bg-yellow-951 rounded rounded-md flex justify-center items-center texxt-black font-semibold text-sm p-2 w-[150px]">
+                                    <Link href="/dashboard/eopswatch/productionview" className="bg-yellow-951 rounded rounded-md flex justify-center items-center texxt-black font-semibold text-sm p-2 w-[150px]">
                                         <Image
                                             src="/img/carIcon.svg"
                                             alt="car"
@@ -362,7 +362,7 @@ export default function ProductionModel() {
                                 />
                                 <div className={`${styles.info} relative`}>
                                     <span className="text-white text-[13px] font-light absolute top-0 left-1">Uploaded Date: 05-11-2023</span>
-                                    <Link href="/dashboard/productionview" className="bg-yellow-951 rounded rounded-md flex justify-center items-center texxt-black font-semibold text-sm p-2 w-[150px]">
+                                    <Link href="/dashboard/eopswatch/productionview" className="bg-yellow-951 rounded rounded-md flex justify-center items-center texxt-black font-semibold text-sm p-2 w-[150px]">
                                         <Image
                                             src="/img/carIcon.svg"
                                             alt="car"

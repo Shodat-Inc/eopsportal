@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
-import styles from '../../styles/Common.module.css';
-import Layout from "../../components/Layout";
-import Template from "./template";
+import styles from '../../../styles/Common.module.css';
+import Layout from "../../../components/Layout";
+import Template from "../template";
 import Image from "next/image";
 import Link from "next/link";
 import axios from 'axios';
@@ -74,7 +74,7 @@ export default function EopsWatch() {
                         <nav className="flex" aria-label="Breadcrumb">
                             <ol className="inline-flex items-center space-x-1 md:space-x-1">
                                 <li className="inline-flex items-center">
-                                    <Link href="/dashboard/assetmanagement"
+                                    <Link href="/dashboard/eopswatch"
                                         className="inline-flex items-center text-sm font-medium text-black hover:text-yellow-950">
                                         <Image
                                             src="/img/home.svg"
@@ -158,7 +158,7 @@ export default function EopsWatch() {
 
                                                     <td>
                                                         <Link
-                                                            href="/dashboard/eopswatchmodel"
+                                                            href="/dashboard/eopswatch/eopswatchmodel"
                                                         >
                                                             {item}
                                                         </Link>

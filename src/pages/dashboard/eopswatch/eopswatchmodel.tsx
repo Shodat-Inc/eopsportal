@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
-import styles from '../../styles/Common.module.css';
-import Layout from "../../components/Layout";
-import Template from "./template";
+import styles from '../../../styles/Common.module.css';
+import Layout from "../../../components/Layout";
+import Template from "../template";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -31,7 +31,7 @@ export default function EopsWatchModel() {
                         <nav className="flex" aria-label="Breadcrumb">
                             <ol className="inline-flex items-center space-x-1 md:space-x-1">
                                 <li className="inline-flex items-center">
-                                    <Link href="/dashboard/assetmanagement"
+                                    <Link href="/dashboard/eopswatch"
                                         className="inline-flex items-center text-sm font-medium text-black hover:text-yellow-950">
                                         <Image
                                             src="/img/home.svg"
@@ -74,7 +74,7 @@ export default function EopsWatchModel() {
                     <div className="flex items-end justify-end mt-[-32px]">
                         <Link
                             className="flex justify-center items-center text-black bg-yellow-951 rounded rounded-xl h-12 px-4 transition-opacity duration-300 mr-5"
-                            href="/dashboard/modelperformance"
+                            href="/dashboard/eopswatch/modelperformance"
                         >
                             <Image
                                 src="/img/activity.svg"
@@ -187,7 +187,7 @@ export default function EopsWatchModel() {
                             </div>
 
                             <div className="flex mt-10">
-                                <Link href="/dashboard/trainingmodel" className="relative mr-16">
+                                <Link href="/dashboard/eopswatch/trainingmodel" className="relative mr-16">
                                     <Image
                                         src="/img/folder.svg"
                                         alt="folder"
@@ -197,7 +197,7 @@ export default function EopsWatchModel() {
                                     <span className="absolute top-[65px] left-[45px] text-lg font-semibold">Test</span>
                                 </Link>
 
-                                <Link href="/dashboard/productionmodel" className="relative mr-16">
+                                <Link href="/dashboard/eopswatch/productionmodel" className="relative mr-16">
                                     <Image
                                         src="/img/folder.svg"
                                         alt="folder"

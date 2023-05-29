@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import styles from '../../styles/Common.module.css';
-import Layout from "../../components/Layout";
-import Template from "./template";
+import Layout from "../../../components/Layout";
+import Template from "../template";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -19,7 +19,7 @@ export default function ModelPerformance() {
                         <nav className="flex" aria-label="Breadcrumb">
                             <ol className="inline-flex items-center space-x-1 md:space-x-1">
                                 <li className="inline-flex items-center">
-                                    <Link href="/dashboard/eopswatchmodel"
+                                    <Link href="/dashboard/eopswatch/eopswatchmodel"
                                         className="inline-flex items-center text-sm font-medium text-black hover:text-yellow-950">
                                         <Image
                                             src="/img/arrow-left.svg"
