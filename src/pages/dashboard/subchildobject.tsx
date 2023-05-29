@@ -64,19 +64,15 @@ export default function SubChildObject(localData: any) {
     }, [parentAsset])
 
 
-    // Fetch the data for Sub Object with Conditions
-    const findKeys = (obj: any, val: any) =>
-        Object.keys(obj).filter(key => obj[key] === val);
-
     const fetchData = () => {
         axios.get("/api/getChildObject").then((response) => {
             if (response.data) {
 
                 const filtered = response.data.filter((item: any) => {
                     if (parentAsset.class === "Manufacturing Plants") {
-                        return item.tags.PlantID === parentAsset.id
+                        return item.tags.ID === parentAsset.id
                     } else if (parentAsset.class === "Vehicles") {
-                        return item.tags.VIN === parentAsset.id
+                        return item.tags.SerialID === parentAsset.id || item.tags.SerialNo === parentAsset.id
                     } else {
                         return item.tags.VIN === parentAsset.id
                     }
@@ -92,7 +88,7 @@ export default function SubChildObject(localData: any) {
         if (fetchData.length) return;
     }, [localData.localData])
 
-    console.log("AMIT => ", subObj)
+    console.log("AMIT SUBOBJ => ", subObj)
 
     return (
         <>
@@ -200,7 +196,7 @@ export default function SubChildObject(localData: any) {
                                                 height={24}
                                                 width={24}
                                             />
-                                            <span className="ml-1 text-sm font-medium md:ml-1">{parentAsset.class === 'Manufacturing Plants' ? "PlantID" : "VIN"}</span>
+                                            <span className="ml-1 text-sm font-medium md:ml-1">{parentAsset.class === 'Manufacturing Plants' ? "ID" : "SerialNo"}</span>
                                             <span className="ml-1 text-sm font-medium  md:ml-1">{parentAsset.id}</span>
                                         </div>
                                     </li>
@@ -287,7 +283,8 @@ export default function SubChildObject(localData: any) {
                                         pathname: '/dashboard/eopswatch/eopswatchmodel',
                                         query: {
                                             objectID: parentAsset.class,
-                                            key: parentAsset.object
+                                            key: parentAsset.id,
+                                            model:'Crack Detection',
                                         }
                                     }}
                                     className="rounded-lg h-20 w-auto bg-red-951 flex justify-center items-center px-2 py-2 mr-4 flex-wrap flex-col"
@@ -307,7 +304,8 @@ export default function SubChildObject(localData: any) {
                                         pathname: '/dashboard/eopswatch/eopswatchmodel',
                                         query: {
                                             objectID: parentAsset.class,
-                                            key: parentAsset.object
+                                            key: parentAsset.id, 
+                                            model:'Crack Detection',
                                         }
                                     }}
                                     className="rounded-lg h-20 w-auto bg-green-952 flex justify-center items-center px-2 py-2 mr-4 flex-wrap flex-col"

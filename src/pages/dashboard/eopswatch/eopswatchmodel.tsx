@@ -11,7 +11,7 @@ export default function EopsWatchModel() {
     const router = useRouter();
     const parentAsset = router.query;
 
-    const [chooseAsset, setChooseAsset] = useState("Wear Deduction Model");
+    const [chooseAsset, setChooseAsset] = useState(parentAsset.model);
     const [toggleAsset, setToggleAsset] = useState(false);
 
     // Show Choose Asset List
@@ -55,7 +55,7 @@ export default function EopsWatchModel() {
                                             height={24}
                                             width={24}
                                         />
-                                        <span className="ml-1 text-sm font-medium text-black hover:text-yellow-950 md:ml-1">{parentAsset.objectID}</span>
+                                        <span className="ml-1 text-sm font-medium text-black hover:text-yellow-950 md:ml-1">{parentAsset.key}</span>
                                     </div>
                                 </li>
                                 <li>
@@ -67,7 +67,7 @@ export default function EopsWatchModel() {
                                             height={24}
                                             width={24}
                                         />
-                                        <span className="ml-1 text-sm font-medium text-black hover:text-yellow-950 md:ml-1">Training Model</span>
+                                        <span className="ml-1 text-sm font-medium text-black hover:text-yellow-950 md:ml-1">Crack Detection</span>
                                     </div>
                                 </li>
                             </ol>
@@ -103,19 +103,6 @@ export default function EopsWatchModel() {
                             />
                             <span>Alerts</span>
                         </Link>
-
-                        {/* <button
-                            className="flex justify-center items-center text-black bg-yellow-951 rounded rounded-xl h-12 px-4 transition-opacity duration-300"
-                        >
-                            <Image
-                                src="/img/download-black.svg"
-                                alt="activity"
-                                height={19}
-                                width={19}
-                                className="mr-2"
-                            />
-                            <span>Import Product Images</span>
-                        </button> */}
 
                     </div>
 
@@ -155,36 +142,56 @@ export default function EopsWatchModel() {
                                 </div>
                                 {toggleAsset ?
                                     <div className={`h-52 border rounded-xl border-gray-500 h-[250px] w-[400px]  flex items-start justify-start mt-1 overflow-hidden overflow-y-scroll absolute top-[100%] left-0 z-10 ${styles.scroll}`}>
-                                        <ul className="p-0 m-0 w-full">
+                                        <ul className="p-0 m-0 w-full z-5">
+                                            <li className="bg-white"><span className="font-bold mb-2 pl-5 mt-4 w-full block">Vehicle Class</span></li>
                                             <li
                                                 className="px-5 py-4 bg-white cursor-pointer hover:bg-yellow-951 w-full font-normal"
-                                                onClick={() => selectAsset('Default Training Model')}
+                                                onClick={() => selectAsset('Crack Detection')}
                                             >
-                                                <span>Default Training Model</span>
+                                                <span>Crack Detection</span>
                                             </li>
                                             <li
                                                 className="px-5 py-4 bg-white cursor-pointer hover:bg-yellow-951 w-full font-normal"
-                                                onClick={() => selectAsset('Tire Tread Deduction')}
+                                                onClick={() => selectAsset('Tire Wear Detection')}
                                             >
-                                                <span>Tire Tread Deduction</span>
+                                                <span>Tire Wear Detection</span>
                                             </li>
                                             <li
                                                 className="px-5 py-4 bg-white cursor-pointer hover:bg-yellow-951 w-full font-normal"
-                                                onClick={() => selectAsset('Wear Detection Model')}
+                                                onClick={() => selectAsset('Crystallization Detection')}
                                             >
-                                                <span>Wear Detection Model</span>
+                                                <span>Crystallization Detection</span>
                                             </li>
                                             <li
                                                 className="px-5 py-4 bg-white cursor-pointer hover:bg-yellow-951 w-full font-normal"
-                                                onClick={() => selectAsset('Type Pressure Monitoring')}
+                                                onClick={() => selectAsset('Parts Detection')}
                                             >
-                                                <span>Type Pressure Monitoring</span>
+                                                <span>Parts Detection</span>
                                             </li>
                                             <li
                                                 className="px-5 py-4 bg-white cursor-pointer hover:bg-yellow-951 w-full font-normal"
-                                                onClick={() => selectAsset('Type Wear Prediction')}
+                                                onClick={() => selectAsset('Battery Life Prediction')}
                                             >
-                                                <span>Type Wear Prediction</span>
+                                                <span>Battery Life Prediction</span>
+                                            </li>
+                                            <li className="bg-white py-5"><span className="font-bold mb-2 pl-5 mt-4 w-full block">Manufacturing Plant Class</span></li>
+                                            <li
+                                                className="px-5 py-4 bg-white cursor-pointer hover:bg-yellow-951 w-full font-normal"
+                                                onClick={() => selectAsset('Crack Detection')}
+                                            >
+                                                <span>Crack Detection</span>
+                                            </li>
+                                            <li
+                                                className="px-5 py-4 bg-white cursor-pointer hover:bg-yellow-951 w-full font-normal"
+                                                onClick={() => selectAsset('Parts Detection')}
+                                            >
+                                                <span>Parts Detection</span>
+                                            </li>
+                                            <li
+                                                className="px-5 py-4 bg-white cursor-pointer hover:bg-yellow-951 w-full font-normal"
+                                                onClick={() => selectAsset('Workplace Safety Detection')}
+                                            >
+                                                <span>Workplace Safety Detection</span>
                                             </li>
                                         </ul>
                                     </div>
@@ -192,7 +199,17 @@ export default function EopsWatchModel() {
                             </div>
 
                             <div className="flex mt-10">
-                                <Link href="/dashboard/eopswatch/trainingmodel" className="relative mr-16">
+                                <Link
+                                    href={{
+                                        pathname: "/dashboard/eopswatch/trainingmodel",
+                                        query: {
+                                            objectID: parentAsset.objectID,
+                                            key: parentAsset.key,
+                                            model: 'Crack Detection'
+                                        }
+                                    }}
+                                    className="relative mr-16"
+                                >
                                     <Image
                                         src="/img/folder.svg"
                                         alt="folder"
@@ -202,7 +219,17 @@ export default function EopsWatchModel() {
                                     <span className="absolute top-[65px] left-[45px] text-lg font-semibold">Test</span>
                                 </Link>
 
-                                <Link href="/dashboard/eopswatch/productionmodel" className="relative mr-16">
+                                <Link
+                                    href={{
+                                        pathname: "/dashboard/eopswatch/productionmodel",
+                                        query: {
+                                            objectID: parentAsset.objectID,
+                                            key: parentAsset.key,
+                                            model: 'Crack Detection'
+                                        }
+                                    }}
+                                    className="relative mr-16"
+                                >
                                     <Image
                                         src="/img/folder.svg"
                                         alt="folder"

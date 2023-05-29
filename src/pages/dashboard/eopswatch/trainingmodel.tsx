@@ -4,10 +4,14 @@ import Layout from "../../../components/Layout";
 import Template from "../template";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from 'next/router'
 
 export default function TrainingModel() {
 
-    const [chooseAsset, setChooseAsset] = useState("Wear Deduction Model");
+    const router = useRouter();
+    const parentAsset = router.query;
+    
+    const [chooseAsset, setChooseAsset] = useState(parentAsset.model);
     const [toggleAsset, setToggleAsset] = useState(false);
     const [showModal, setShowModal] = useState(false);
 
@@ -53,7 +57,7 @@ export default function TrainingModel() {
                                             height={24}
                                             width={24}
                                         />
-                                        <span className="ml-1 text-sm text-black hover:text-yellow-950 md:ml-1 font-bold">Training Model</span>
+                                        <span className="ml-1 text-sm text-black hover:text-yellow-950 md:ml-1 font-bold">{parentAsset.key}</span>
                                     </div>
                                 </li>
                                 <li>
@@ -65,7 +69,7 @@ export default function TrainingModel() {
                                             height={24}
                                             width={24}
                                         />
-                                        <span className="ml-1 text-sm font-medium text-black hover:text-yellow-950 md:ml-1">Wear Deduction Model</span>
+                                        <span className="ml-1 text-sm font-medium text-black hover:text-yellow-950 md:ml-1">{parentAsset.model}</span>
                                     </div>
                                 </li>
                             </ol>
@@ -133,6 +137,55 @@ export default function TrainingModel() {
 
                     {/* Images Grid */}
                     <div className="relative grid grid-cols-3 gap-10 mt-8">
+
+                    <div className="col-span-3 sm:col-span-2 md:col-span-3 lg:col-span-1 xl:col-span-4...">
+                            <div className={`border border-gray-200 h-60 w-full rounded-md overflow-hidden1 relative ${styles.imagewrap}`}>
+                                <input type="checkbox" className="scale-125 absolute top-0 left-0" />
+                                <Image
+                                    src={`/img/${parentAsset.model}/${parentAsset.key}/Test/WallTest1.png`}
+                                    alt="car"
+                                    height={150}
+                                    width={150}
+                                    className="w-full h-full"
+                                />
+                                <div className={`${styles.info} relative`}>
+                                    <span className="text-white text-[13px] font-light absolute top-0 left-1">Uploaded Date: 05-11-2023</span>
+                                    <Link href="/dashboard/eopswatch/trainingview" className="bg-yellow-951 rounded rounded-md flex justify-center items-center texxt-black font-semibold text-xl p-2 w-24">
+                                        <Image
+                                            src="/img/carIcon.svg"
+                                            alt="car"
+                                            height={30}
+                                            width={30}
+                                            className="mr-2"
+                                        />
+                                        <span>Prev</span>
+                                    </Link>
+                                    <Link href="/dashboard/eopswatch/trainingview" className="bg-yellow-951 rounded rounded-md flex justify-center items-center texxt-black font-semibold text-xl p-2 w-24">
+                                        <Image
+                                            src="/img/carIcon.svg"
+                                            alt="car"
+                                            height={30}
+                                            width={30}
+                                            className="mr-2"
+                                        />
+                                        <span>Test</span>
+                                    </Link>
+                                </div>
+                            </div>
+                            <div className="border border-gray-951 mt-2 rounded rounded-xl h-[65px] w-full p-1">
+                                <button
+                                    className="text-gray-952 inline-flex justify-center items-center text-sm h-8 mb-2"
+                                >
+                                    <Image
+                                        src="/img/pluswhite.svg"
+                                        alt="close"
+                                        height={14}
+                                        width={14}
+                                    />
+                                    <span>Add Tag</span>
+                                </button>
+                            </div>
+                        </div>
 
                         <div className="col-span-3 sm:col-span-2 md:col-span-3 lg:col-span-1 xl:col-span-4...">
                             <div className={`border border-gray-200 h-60 w-full rounded-md overflow-hidden1 relative ${styles.imagewrap}`}>

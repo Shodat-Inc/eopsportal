@@ -398,7 +398,7 @@ export default function ChildObject(localData: any) {
                                                                                         class: parentAsset.class,
                                                                                         object: parentAsset.object,
                                                                                         subObject: parentAsset.subObject,
-                                                                                        id: parentAsset.class === "Manufacturing Plants" ? items.tags.PlantID : items.tags.VIN
+                                                                                        id: parentAsset.class === "Manufacturing Plants" ? items.tags.ID : (items.tags.SerialNo ? items.tags.SerialNo : items.tags.SerialID )
                                                                                     }
                                                                                 }}
                                                                             >
@@ -445,14 +445,14 @@ export default function ChildObject(localData: any) {
 
 
                         {/* Links Box */}
-                        <div className="mt-0 flex  w-full">
+                        <div className="mt-0 flex  w-full hidden">
                             <div className="flex flex-wrap flex-row w-full justify-end">
                                 <Link
                                     href={{
                                         pathname: '/dashboard/eopswatch/eopswatchmodel',
                                         query: {
                                             objectID: parentAsset.class,
-                                            key: parentAsset.object
+                                            key: parentAsset.id
                                         }
                                     }}
                                     className="rounded-lg h-20 w-auto bg-red-951 flex justify-center items-center px-2 py-2 mr-4 flex-wrap flex-col"
@@ -472,7 +472,7 @@ export default function ChildObject(localData: any) {
                                         pathname: '/dashboard/eopswatch/eopswatchmodel',
                                         query: {
                                             objectID: parentAsset.class,
-                                            key: parentAsset.object
+                                            key: parentAsset.id
                                         }
                                     }}
                                     className="rounded-lg h-20 w-auto bg-green-952 flex justify-center items-center px-2 py-2 mr-4 flex-wrap flex-col"
