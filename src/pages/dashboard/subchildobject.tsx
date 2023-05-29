@@ -33,7 +33,7 @@ interface Item {
     Cylinders: number;
 }
 
-export default function SubObject(localData: any) {
+export default function SubChildObject(localData: any) {
     const router = useRouter();
     const parentAsset = router.query;
     const [success, setSuccess] = useState(false);
@@ -69,16 +69,16 @@ export default function SubObject(localData: any) {
         Object.keys(obj).filter(key => obj[key] === val);
 
     const fetchData = () => {
-        axios.get("/api/getObjects").then((response) => {
+        axios.get("/api/getChildObject").then((response) => {
             if (response.data) {
 
                 const filtered = response.data.filter((item: any) => {
                     if (parentAsset.parentObject === "Manufacturing Plants") {
-                        return item.subObjects.PlantID === parentAsset.object
+                        return item.tags.PlantID === parentAsset.id
                     } else if (parentAsset.parentObject === "Vehicles") {
-                        return item.subObjects.VIN === parentAsset.object
+                        return item.tags.VIN === parentAsset.id
                     } else {
-                        return item.subObjects.VIN === parentAsset.object
+                        return item.tags.VIN === parentAsset.id
                     }
                 });
                 if (filtered && filtered.length > 0) {
@@ -91,6 +91,8 @@ export default function SubObject(localData: any) {
         fetchData();
         if (fetchData.length) return;
     }, [localData.localData])
+
+    console.log("AMIT => ", subObj)
 
     return (
         <>
@@ -115,6 +117,11 @@ export default function SubObject(localData: any) {
                                                 height={24}
                                                 width={24}
                                             />
+
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <div className="flex items-center">
                                             <Image
                                                 src="/img/arrow-right.svg"
                                                 alt="arrow-right"
@@ -122,20 +129,16 @@ export default function SubObject(localData: any) {
                                                 height={24}
                                                 width={24}
                                             />
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <div className="flex items-center">
                                             <Link
                                                 href={{
                                                     pathname: '/dashboard/objects',
                                                     query: {
-                                                        assets: parentAsset.parentObject
+                                                        assets: parentAsset.class
                                                     }
                                                 }}
                                                 className="inline-flex items-center text-sm font-medium text-black hover:text-yellow-950"
                                             >
-                                                <span className="ml-1 text-sm font-medium text-black hover:text-yellow-950 md:ml-1">{parentAsset.parentObject}</span>
+                                                <span className="ml-1 text-sm font-medium text-black hover:text-yellow-950 md:ml-1">{parentAsset.class}</span>
                                             </Link>
                                         </div>
                                     </li>
@@ -148,10 +151,57 @@ export default function SubObject(localData: any) {
                                                 height={24}
                                                 width={24}
                                             />
-                                            <span className="ml-1 text-sm font-medium text-black hover:text-yellow-950 md:ml-1">
-                                                <span>{parentAsset.parentObject === 'Manufacturing Plants' ? "PlantID" : "VIN"}</span>
+                                            <Link
+                                                href={{
+                                                    pathname: '/dashboard/subobject',
+                                                    query: {
+                                                        object: parentAsset.object,
+                                                        parentObject: parentAsset.class
+                                                    }
+                                                }}
+                                                className="inline-flex items-center text-sm font-medium text-black hover:text-yellow-950"
+                                            >
+                                                <span>{parentAsset.class === 'Manufacturing Plants' ? "PlantID" : "VIN"}</span>
                                                 <span className="ml-2">{parentAsset.object}</span>
-                                            </span>
+                                            </Link>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div className="flex items-center">
+                                            <Image
+                                                src="/img/arrow-right.svg"
+                                                alt="arrow-right"
+                                                className="h-6"
+                                                height={24}
+                                                width={24}
+                                            />
+                                            <Link
+                                                href={{
+                                                    pathname: '/dashboard/childobject',
+                                                    query: {
+                                                        class: parentAsset.class,
+                                                        object: parentAsset.object,
+                                                        subObject: parentAsset.subObject
+                                                    }
+                                                }}
+                                                className="inline-flex items-center text-sm font-medium text-black hover:text-yellow-950"
+                                            >
+                                                
+                                                <span className="ml-2">{parentAsset.subObject}</span>
+                                            </Link>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div className="flex items-center text-black hover:text-yellow-950">
+                                            <Image
+                                                src="/img/arrow-right.svg"
+                                                alt="arrow-right"
+                                                className="h-6"
+                                                height={24}
+                                                width={24}
+                                            />
+                                            <span className="ml-1 text-sm font-medium md:ml-1">{parentAsset.class === 'Manufacturing Plants' ? "PlantID" : "VIN"}</span>
+                                            <span className="ml-1 text-sm font-medium  md:ml-1">{parentAsset.id}</span>
                                         </div>
                                     </li>
                                 </ol>
@@ -166,7 +216,7 @@ export default function SubObject(localData: any) {
                                     <thead className="bg-black text-white rounded-xl h-10 text-sm font-light">
                                         {
                                             subObj && Object.keys(subObj).length != 0 ?
-                                                Object.keys(subObj?.subObjects).map((item: any, i: any) => (
+                                                Object.keys(subObj?.tags).map((item: any, i: any) => (
                                                     <th className="capitalize" key={i}>
                                                         {
                                                             item.split(/(?=[A-Z])/).join(" ")
@@ -180,7 +230,7 @@ export default function SubObject(localData: any) {
                                         <tr className={`text-sm`}>
                                             {
                                                 subObj && Object.keys(subObj).length != 0 ?
-                                                    Object.values(subObj?.subObjects).map((item: any, i: any) => (
+                                                    Object.values(subObj?.tags).map((item: any, i: any) => (
 
                                                         <td key={i}>
                                                             {item}
@@ -236,7 +286,7 @@ export default function SubObject(localData: any) {
                                     href={{
                                         pathname: '/dashboard/eopswatch/eopswatchmodel',
                                         query: {
-                                            objectID: parentAsset.parentObject,
+                                            objectID: parentAsset.class,
                                             key: parentAsset.object
                                         }
                                     }}
@@ -256,7 +306,7 @@ export default function SubObject(localData: any) {
                                     href={{
                                         pathname: '/dashboard/eopswatch/eopswatchmodel',
                                         query: {
-                                            objectID: parentAsset.parentObject,
+                                            objectID: parentAsset.class,
                                             key: parentAsset.object
                                         }
                                     }}
@@ -312,7 +362,7 @@ export default function SubObject(localData: any) {
     )
 }
 
-SubObject.getLayout = function getLayout(page: any) {
+SubChildObject.getLayout = function getLayout(page: any) {
     return (
         <Layout>{page}</Layout>
     )

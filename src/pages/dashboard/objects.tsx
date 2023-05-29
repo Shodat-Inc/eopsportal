@@ -88,9 +88,9 @@ export default function Objects(localData: any) {
                     // update state and store data
                     setData(filtered);
                     // Filter the array with subObject Items
-                    let modifiedData = filtered.map((item: any) => {
-                        return item.subObjects
-                    })
+                    // let modifiedData = filtered.map((item: any) => {
+                    //     return item.subObjects
+                    // })
                     setSebObj(filtered[0]);
                 }
             }
@@ -156,6 +156,22 @@ export default function Objects(localData: any) {
         }
     }
 
+    const joinKey = [
+        {
+            "objectName" : "Manufacturing Plants",
+            "key": "PlantID",
+        }, 
+        {
+            "objectName" : "Vehicles",
+            "key": "VIN",
+        },
+        {
+            "objectName" : "Gas Station",
+            "key": "ABC",
+        }
+    ]
+
+    var linkKey = joinKey.filter(function (items:any) { return items.objectName === parentAsset.assets; });
 
     return (
         <>
@@ -243,10 +259,10 @@ export default function Objects(localData: any) {
                                     <div className="shadow-lg bg-white p-5 w-full rounded-lg rounded-tr-none min-h-[170px]">
                                         <div className="flex justify-start items-center flex-wrap flex-row">
                                             {
-                                                getParentData.map((item: any, key: any) => {
+                                                getParentData.map((item: any, index: any) => {
                                                     if (item == "Mfd Date" || item === "mfdDate" || item === "MfgDate") {
                                                         return (
-                                                            <div className="relative w-[50%] mb-5" key={key}>
+                                                            <div className="relative w-[50%] mb-5" key={index}>
                                                                 <div className="rounded-lg border border-gray-954 h-[44px] w-[320px] focus:outline-none focus:border-yellow-951">
                                                                     <Datepicker
                                                                         toggleClassName="absolute bg-yellow-951 rounded-r-lg text-white right-0 h-[42px] px-3 text-gray-400 focus:outline-none disabled:opacity-40 disabled:cursor-not-allowed"
@@ -261,7 +277,7 @@ export default function Objects(localData: any) {
                                                         )
                                                     } else {
                                                         return (
-                                                            <div className="relative w-[50%] mb-5" key={key}>
+                                                            <div className="relative w-[50%] mb-5" key={index}>
                                                                 <input
                                                                     type="text"
                                                                     placeholder={item}
@@ -293,7 +309,7 @@ export default function Objects(localData: any) {
                                             {
                                                 subObj && Object.keys(subObj).length != 0 ?
                                                     Object.keys(subObj?.subObjects).map((item: any, i: any) => (
-                                                        <th className="capitalize">
+                                                        <th className="capitalize" key={i}>
                                                             {
                                                                 item.split(/(?=[A-Z])/).join(" ")
                                                             }
@@ -307,17 +323,18 @@ export default function Objects(localData: any) {
                                             {
                                                 data.map((items: any, index: any) => {
                                                     return (
-                                                        <tr key={items.PlantID} className={`text-sm`}>
+                                                        <tr key={index} className={`text-sm`}>
                                                             <td>{index + 1}</td>
                                                             {
                                                                 Object.values(items?.subObjects).map((item: any, i: any) => (
-                                                                    <td className="">
+                                                                    <td className="" key={i}>
                                                                         <Link
                                                                             href={{
                                                                                 pathname: '/dashboard/subobject',
                                                                                 query: {
                                                                                     object: items?.subObjects?.PlantID || items?.subObjects?.VIN,
-                                                                                    parentObject: parentAsset.assets
+                                                                                    parentObject: parentAsset.assets,
+                                                                                    key:linkKey[0].key
                                                                                 }
                                                                             }}
                                                                         >

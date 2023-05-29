@@ -4,8 +4,12 @@ import Layout from "../../../components/Layout";
 import Template from "../template";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from 'next/router'
 
 export default function EopsWatchModel() {
+
+    const router = useRouter();
+    const parentAsset = router.query;
 
     const [chooseAsset, setChooseAsset] = useState("Wear Deduction Model");
     const [toggleAsset, setToggleAsset] = useState(false);
@@ -51,7 +55,7 @@ export default function EopsWatchModel() {
                                             height={24}
                                             width={24}
                                         />
-                                        <span className="ml-1 text-sm font-medium text-black hover:text-yellow-950 md:ml-1">Object ID</span>
+                                        <span className="ml-1 text-sm font-medium text-black hover:text-yellow-950 md:ml-1">{parentAsset.objectID}</span>
                                     </div>
                                 </li>
                                 <li>

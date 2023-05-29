@@ -54,6 +54,7 @@ export default function ChildObject(localData: any) {
     const [mfdDate, setMfdDate] = useState();
     const [subClassData, setSubClassData] = useState<any[]>([]);
     const [childObject, setChildObject] = useState<any[]>([]);
+    const [subObj, setSebObj] = useState({} as any);
 
 
 
@@ -101,7 +102,13 @@ export default function ChildObject(localData: any) {
     const fetchChildObjectData = () => {
         axios.get("/api/getChildObject").then((response) => {
             if (response.data) {
-                setChildObject(response.data)
+                const filtered = response.data.filter((item: any) => {
+                    return item.object === parentAsset.subObject;
+                });
+                if (filtered && filtered.length > 0) {
+                    setChildObject(filtered);
+                    setSebObj(filtered[0]);
+                }
             }
         });
     };
@@ -125,14 +132,13 @@ export default function ChildObject(localData: any) {
     // Clear All Fields
     const clearAll = (e: any) => {
         e.preventDefault();
-        // var formData = new FormData(e.target);
-        // const form_values = Object.fromEntries(formData);
     }
 
     // Storing data in json for sub class
     const handleSubmit = async (e: any) => {
         e.preventDefault();
         var formData = new FormData(e.target);
+        let currentDate = new Date().toISOString().split('T')[0];
         const form_values = Object.fromEntries(formData);
         console.log("form_values", form_values)
         const response = await fetch('/api/createChildObject', {
@@ -142,11 +148,11 @@ export default function ChildObject(localData: any) {
             },
             body: JSON.stringify(
                 {
-                    class: parentAsset.class,
+                    className: parentAsset.class,
                     object: parentAsset.subObject,
-                    VIN: parentAsset.object,
+                    subObject: parentAsset.object,
+                    dateCreated: currentDate,
                     tags: form_values,
-                    dateCreated: new Date().toLocaleString() + "",
                 }
             )
         });
@@ -163,7 +169,23 @@ export default function ChildObject(localData: any) {
         }
     }
 
+    const joinKey = [
+        {
+            "objectName" : "Manufacturing Plants",
+            "key": "PlantID",
+        }, 
+        {
+            "objectName" : "Vehicles",
+            "key": "VIN",
+        },
+        {
+            "objectName" : "Gas Station",
+            "key": "ABC",
+        }
+    ]
 
+    var linkKey = joinKey.filter(function (items:any) { return items.objectName === parentAsset.class; });
+    
     return (
         <>
             <div className="flex font-OpenSans">
@@ -231,7 +253,8 @@ export default function ChildObject(localData: any) {
                                                 }}
                                                 className="inline-flex items-center text-sm font-medium text-black hover:text-yellow-950"
                                             >
-                                                <span className="ml-1 text-sm font-medium text-black hover:text-yellow-950 md:ml-1">VIN {parentAsset.object}</span>
+                                               <span>{parentAsset.class === 'Manufacturing Plants' ? "PlantID" : "VIN"}</span>
+                                                <span className="ml-2">{parentAsset.object}</span>
                                             </Link>
                                         </div>
                                     </li>
@@ -262,13 +285,6 @@ export default function ChildObject(localData: any) {
                                     method='post'
                                     onSubmit={handleSubmit}
                                 >
-                                    <input type="hidden" name="dateCreated" value={new Date().toLocaleString() + ""} />
-                                    <input type="hidden" name="dateModified" value={new Date().toLocaleString() + ""} />
-                                    <input type="hidden" name="class" value={parentAsset.class} />
-                                    <input type="hidden" name="VIN" value={parentAsset.object} />
-                                    <input type="hidden" name="object" value={parentAsset.subObject} />
-                                    <input type="hidden" name="mfdDate" value={mfdDate ? mfdDate : new Date().toLocaleString() + ""} />
-
                                     <div className="flex justify-between items-start w-full flex-wrap flex-row">
                                         <h4 className="font-bold text-lg color-black font-semibold">Create New Object</h4>
                                         <div className="relative flex">
@@ -303,7 +319,7 @@ export default function ChildObject(localData: any) {
                                         <div className="flex justify-start items-center flex-wrap flex-row">
                                             {
                                                 subClassData.map((item: any, key: any) => {
-                                                    if (item == "Mfd Date") {
+                                                    if (item == "Mfd Date" || item === "mfdDate" || item === "MfgDate") {
                                                         return (
                                                             <div className="relative w-[50%] mb-5" key={key}>
                                                                 <div className="rounded-lg border border-gray-954 h-[44px] w-[320px] focus:outline-none focus:border-yellow-951">
@@ -348,47 +364,74 @@ export default function ChildObject(localData: any) {
                                 <div className="h-96 flex justify-start items-start flex-wrap flex-col mt-4">
                                     <h4 className="font-bold text-lg color-black mb-4 font-semibold">Objects</h4>
                                     <div className="overflow-x-auto border rounded-md w-full">
-                                        <table className={`table-auto min-w-full w-full text-left ${styles.table}`}>
+                                        <table className={`table-auto min-w-full w-full text-left ${styles.table} ${styles.tableObject}`}>
                                             <thead className="bg-gray-950 rounded-lg h-10 text-sm font-light">
-                                                <tr>
-                                                    <th>S.No</th>
-                                                    <th>Battery Type</th>
-                                                    <th>Size</th>
-                                                    <th>Mfd Date</th>
-                                                    <th>Date Created</th>
-                                                    <th>Actions</th>
-                                                </tr>
+
+                                                <th>S.No</th>
+                                                {
+                                                    subObj && Object.keys(subObj).length != 0 ?
+                                                        Object.keys(subObj?.tags).map((item: any, i: any) => (
+                                                            <th className="capitalize" key={i}>
+                                                                {
+                                                                    item.split(/(?=[A-Z])/).join(" ")
+                                                                }
+                                                            </th>
+                                                        ))
+                                                        : null
+                                                }
+                                                <th>Actions</th>
                                             </thead>
                                             <tbody>
+
                                                 {
-                                                    childObject.map((item: any, index: any) => (
-                                                        <tr key={index}>
-                                                            <td>{index + 1}</td>
-                                                            <td>{item?.tags?.BatteryType}</td>
-                                                            <td>{item?.tags.Size}</td>
-                                                            <td>{item?.tags.mfdDate}</td>
-                                                            <td>{item?.dateCreated}</td>
-                                                            <td>
-                                                                <button className="mr-8">
-                                                                    <Image
-                                                                        src="/img/edit.svg"
-                                                                        alt="Edit"
-                                                                        height={18}
-                                                                        width={18}
-                                                                    />
-                                                                </button>
-                                                                <button>
-                                                                    <Image
-                                                                        src="/img/trash.svg"
-                                                                        alt="Trash"
-                                                                        height={18}
-                                                                        width={18}
-                                                                    />
-                                                                </button>
-                                                            </td>
-                                                        </tr>
-                                                    ))
-                                                }                                               
+                                                    childObject.map((items: any, index: any) => {
+                                                        return (
+                                                            <tr key={index} className={`text-sm`}>
+                                                                <td>{index + 1}</td>
+                                                                {
+                                                                    Object.values(items?.tags).map((item: any, i: any) => (
+                                                                        <td className="">
+                                                                            <Link
+                                                                                key={i}
+                                                                                href={{
+                                                                                    pathname: '/dashboard/subchildobject',
+                                                                                    query: {
+                                                                                        class: parentAsset.class,
+                                                                                        object: parentAsset.object,
+                                                                                        subObject: parentAsset.subObject,
+                                                                                        id: parentAsset.class === "Manufacturing Plants" ? items.tags.PlantID : items.tags.VIN
+                                                                                    }
+                                                                                }}
+                                                                            >
+                                                                                <span className="font-medium">{item}</span>
+                                                                            </Link>
+                                                                        </td>
+
+                                                                    ))
+                                                                }
+                                                                <td>
+                                                                    <button className="mr-2">
+                                                                        <Image
+                                                                            src="/img/edit.svg"
+                                                                            alt="Edit"
+                                                                            height={18}
+                                                                            width={18}
+                                                                        />
+                                                                    </button>
+                                                                    <button>
+                                                                        <Image
+                                                                            src="/img/trash.svg"
+                                                                            alt="Trash"
+                                                                            height={18}
+                                                                            width={18}
+                                                                        />
+                                                                    </button>
+                                                                </td>
+                                                            </tr>
+                                                        )
+
+                                                    })
+                                                }
 
                                             </tbody>
                                         </table>
@@ -396,9 +439,81 @@ export default function ChildObject(localData: any) {
                                 </div>
                                 :
                                 <div className="h-72 flex justify-center items-center flex-wrap flex-col mt-8">
-                                    <NoDataFound createText="Create Sub Asset" />
+                                    <NoDataFound createText="Create Sub Sub Class" />
                                 </div>
                         }
+
+
+
+                        {/* Links Box */}
+                        <div className="mt-0 flex  w-full">
+                            <div className="flex flex-wrap flex-row w-full justify-end">
+                                <Link
+                                    href={{
+                                        pathname: '/dashboard/eopswatch/eopswatchmodel',
+                                        query: {
+                                            objectID: parentAsset.class,
+                                            key: parentAsset.object
+                                        }
+                                    }}
+                                    className="rounded-lg h-20 w-auto bg-red-951 flex justify-center items-center px-2 py-2 mr-4 flex-wrap flex-col"
+                                >
+                                    <Image
+                                        src="/img/clockwhite.svg"
+                                        alt="eops watch"
+                                        height={24}
+                                        width={24}
+                                        className="mb-2"
+                                    />
+                                    <span className="text-white text-[14px]">eOps Watch</span>
+                                </Link>
+
+                                <Link
+                                    href={{
+                                        pathname: '/dashboard/eopswatch/eopswatchmodel',
+                                        query: {
+                                            objectID: parentAsset.class,
+                                            key: parentAsset.object
+                                        }
+                                    }}
+                                    className="rounded-lg h-20 w-auto bg-green-952 flex justify-center items-center px-2 py-2 mr-4 flex-wrap flex-col"
+                                >
+                                    <Image
+                                        src="/img/airplaywhite.svg"
+                                        alt="eops watch"
+                                        height={24}
+                                        width={24}
+                                        className="mb-2"
+                                    />
+                                    <span className="text-white text-[14px]">eOps Trace</span>
+                                </Link>
+
+                                <div className="rounded-lg h-20 w-auto bg-blue-953 flex justify-center items-center px-2 py-2 flex-wrap flex-col mr-4">
+                                    <Image
+                                        src="/img/maximizewhite.svg"
+                                        alt="eops Prosense"
+                                        height={24}
+                                        width={24}
+                                        className="mb-2"
+                                    />
+                                    <span className="text-white text-[14px]">eOps Prosense</span>
+                                </div>
+
+                                <div className="rounded-lg h-20 w-auto bg-brown-951 flex justify-center items-center px-2 py-2 flex-wrap flex-col">
+                                    <Image
+                                        src="/img/bar-chart-white.svg"
+                                        alt="eops Prosense"
+                                        height={24}
+                                        width={24}
+                                        className="mb-2"
+                                    />
+                                    <span className="text-white text-[14px]">eOps Insight/Reports</span>
+                                </div>
+
+                            </div>
+                        </div>
+                        {/* Links Box Ends */}
+                        
 
                     </div>
                 </div>

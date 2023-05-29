@@ -1,1 +1,107 @@
-[{"parentAssetID":"Manufacturing Plants","parentAssetName":"Manufacturing Plants","dateCreated":"2023-05-29","subObjectName":"Tepco Natural Gas","subObjectID":"TPC3305-01","assetID":"2000000001","subObjects":{"mfdDate":"2023-05-29","PlantID":"TPC3305-01","Street":"3861 Scenic Hwy","City":"Baton Rouge","State":"Louisana","Zipcode":"70805","Country":"United States","Name":"Tepco Natural Gas","Description":""}},{"assetID":"2000000002","parentAssetID":"Manufacturing Plants","parentAssetName":"Manufacturing Plants","dateCreated":"2023-05-29","subObjectName":"Tepco Petroleum","subObjectID":"TPC3305-02","subObjects":{"mfdDate":"2023-05-29","PlantID":"TPC3305-02","Street":"3861 Scenic Hwy","City":"Baton Rouge","State":"Louisana","Zipcode":"70805","Country":"United States","Name":"Tepco Petroleum","Description":""}},{"assetID":"2000000003","parentAssetID":"Manufacturing Plants","parentAssetName":"Manufacturing Plants","dateCreated":"2023-05-29","subObjectName":"Tepco Nuclear Energy","subObjectID":"TPC71810-01","subObjects":{"mfdDate":"2023-05-29","PlantID":"TPC71810-01","Street":"22712 206th Ave N","City":"Cordova","State":"Illinios","Zipcode":"61242","Country":"United States","Name":"Tepco Nuclear Energy","Description":""}},{"assetID":2000000002,"parentAssetID":"Vehicles","parentAssetName":"Vehicles","dateCreated":"2023-05-29","subObjects":{"VIN":"5PVBE7AJ8R5T50001","Model":"ES350","AssemblyPlant":"Mineral Wells","LotNo":"104CY5209","ModelYear":"2022","Type":"ICE"},"subObjectName":"","subObjectID":""},{"assetID":2000000003,"parentAssetID":"Vehicles","parentAssetName":"Vehicles","dateCreated":"2023-05-29","subObjects":{"VIN":"5PVBE7AJ8R5T50007","Model":"GS450","AssemblyPlant":"Mineral Wells","LotNo":"104CY2231","ModelYear":"2022","Type":"ICE"},"subObjectName":"","subObjectID":""},{"assetID":2000000004,"parentAssetID":"Vehicles","parentAssetName":"Vehicles","dateCreated":"2023-05-29","subObjects":{"VIN":"5PVBN3TK3R6Y67222","Model":"EX-F","AssemblyPlant":"Virginia","LotNo":"104FG2001","ModelYear":"2023","Type":"EV"},"subObjectName":"","subObjectID":""}]
+[
+    {
+        "assetID": 2000000001,
+        "parentAssetID": "Manufacturing Plants",
+        "parentAssetName": "Manufacturing Plants",
+        "dateCreated": "2023-05-29",
+        "subObjectName": "Tepco Natural Gas",
+        "subObjectID": "TPC3305-01",
+        "subObjects": {
+            "mfdDate": "2023-05-29",
+            "PlantID": "TPC3305-01",
+            "Street": "3861 Scenic Hwy",
+            "City": "Baton Rouge",
+            "State": "Louisana",
+            "Zipcode": "70805",
+            "Country": "United States",
+            "Name": "Tepco Natural Gas",
+            "Description": ""
+        }
+    },
+    {
+        "assetID": 2000000002,
+        "parentAssetID": "Manufacturing Plants",
+        "parentAssetName": "Manufacturing Plants",
+        "dateCreated": "2023-05-29",
+        "subObjectName": "Tepco Petroleum",
+        "subObjectID": "TPC3305-02",
+        "subObjects": {
+            "mfdDate": "2023-05-29",
+            "PlantID": "TPC3305-02",
+            "Street": "3861 Scenic Hwy",
+            "City": "Baton Rouge",
+            "State": "Louisana",
+            "Zipcode": "70805",
+            "Country": "United States",
+            "Name": "Tepco Petroleum",
+            "Description": ""
+        }
+    },
+    {
+        "assetID": 2000000003,
+        "parentAssetID": "Manufacturing Plants",
+        "parentAssetName": "Manufacturing Plants",
+        "dateCreated": "2023-05-29",
+        "subObjectName": "Tepco Nuclear Energy",
+        "subObjectID": "TPC71810-01",
+        "subObjects": {
+            "mfdDate": "2023-05-29",
+            "PlantID": "TPC71810-01",
+            "Street": "22712 206th Ave N",
+            "City": "Cordova",
+            "State": "Illinios",
+            "Zipcode": "61242",
+            "Country": "United States",
+            "Name": "Tepco Nuclear Energy",
+            "Description": ""
+        }
+    },
+    {
+        "assetID": 2000000004,
+        "parentAssetID": "Vehicles",
+        "parentAssetName": "Vehicles",
+        "dateCreated": "2023-05-29",
+        "subObjects": {
+            "VIN": "5PVBE7AJ8R5T50001",
+            "Model": "ES350",
+            "AssemblyPlant": "Mineral Wells",
+            "LotNo": "104CY5209",
+            "ModelYear": "2022",
+            "Type": "ICE"
+        },
+        "subObjectName": "",
+        "subObjectID": ""
+    },
+    {
+        "assetID": 2000000005,
+        "parentAssetID": "Vehicles",
+        "parentAssetName": "Vehicles",
+        "dateCreated": "2023-05-29",
+        "subObjects": {
+            "VIN": "5PVBE7AJ8R5T50007",
+            "Model": "GS450",
+            "AssemblyPlant": "Mineral Wells",
+            "LotNo": "104CY2231",
+            "ModelYear": "2022",
+            "Type": "ICE"
+        },
+        "subObjectName": "",
+        "subObjectID": ""
+    },
+    {
+        "assetID": 2000000006,
+        "parentAssetID": "Vehicles",
+        "parentAssetName": "Vehicles",
+        "dateCreated": "2023-05-29",
+        "subObjects": {
+            "VIN": "5PVBN3TK3R6Y67222",
+            "Model": "EX-F",
+            "AssemblyPlant": "Virginia",
+            "LotNo": "104FG2001",
+            "ModelYear": "2023",
+            "Type": "EV"
+        },
+        "subObjectName": "",
+        "subObjectID": ""
+    }
+]

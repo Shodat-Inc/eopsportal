@@ -20,9 +20,15 @@ export default function EopsWatch() {
                     setData([]); return;
                 }
                 const filtered = response.data.filter((item: any) => {
-                    // console.log("ITEMS =>", item.tags.BatteryType)
-                    if (item.tags.BatteryType.toString().toLowerCase().includes(event.target.value.toString().toLowerCase())) {
-                        return item;
+                    console.log("ITEMS =>", response.data.tags)
+                    if(item.tags.hasOwnProperty("VIN")) {
+                        if (item.tags.VIN.toString().toLowerCase().includes(event.target.value.toString().toLowerCase())) {
+                            return item;
+                        }
+                    } else {
+                        if (item.tags.PlantID.toString().toLowerCase().includes(event.target.value.toString().toLowerCase())) {
+                            return item;
+                        }
                     }
                 });
                 if (filtered && filtered.length > 0) {
@@ -45,9 +51,20 @@ export default function EopsWatch() {
                     return;
                 }
                 const filtered = response.data.filter((item: any) => {
-                    if (item.tags.BatteryType.toString().toLowerCase().includes(obj.toString().toLowerCase())) {
-                        return item;
+                    // if (item.tags.BatteryType.toString().toLowerCase().includes(obj.toString().toLowerCase())) {
+                    //     return item;
+                    // }
+
+                    if(item.tags.hasOwnProperty("VIN")) {
+                        if (item.tags.VIN.toString().toLowerCase().includes(obj.toString().toLowerCase())) {
+                            return item;
+                        }
+                    } else {
+                        if (item.tags.PlantID.toString().toLowerCase().includes(obj.toString().toLowerCase())) {
+                            return item;
+                        }
                     }
+
                 });
                 if (filtered && filtered.length > 0) {
                     setSebObj(filtered[0]);
@@ -58,7 +75,7 @@ export default function EopsWatch() {
 
     }
 
-    console.log("AMIT - subObj =>", subObj)
+    console.log("AMIT - subObj =>", data)
 
     return (
         <div className="flex font-OpenSans">
@@ -118,9 +135,12 @@ export default function EopsWatch() {
                                             <button
                                                 className="text-left px-4 py-3 hover:bg-yellow-951 w-full"
                                                 key={index}
-                                                onClick={() => subObjectSelected(items.tags.BatteryType)}
+                                                onClick={() => subObjectSelected(items.className==="Manufacturing Plants" ? items.tags.PlantID : items.tags.VIN)}
                                             >
-                                                {items.tags.BatteryType}
+                                                {
+                                                    items.className==="Manufacturing Plants" ? items.tags.PlantID : items.tags.VIN
+                                                }
+                                                
                                             </button>
                                         ))
                                     }
@@ -141,7 +161,7 @@ export default function EopsWatch() {
                                     {
                                         subObj && Object.keys(subObj).length != 0 ?
                                             Object.keys(subObj?.tags).map((item: any, i: any) => (
-                                                <th>
+                                                <th key={i}>
                                                     {
                                                         item.split(/(?=[A-Z])/).join(" ").toUpperCase()
                                                     }
@@ -156,9 +176,15 @@ export default function EopsWatch() {
                                             subObj && Object.keys(subObj).length != 0 ?
                                                 Object.values(subObj?.tags).map((item: any, i: any) => (
 
-                                                    <td>
+                                                    <td key={i}>
                                                         <Link
-                                                            href="/dashboard/eopswatch/eopswatchmodel"
+                                                            // href="/dashboard/eopswatch/eopswatchmodel"
+                                                            href={{
+                                                                pathname: '/dashboard/eopswatch/eopswatchmodel',
+                                                                query: {
+                                                                    objectID: item
+                                                                }
+                                                            }}
                                                         >
                                                             {item}
                                                         </Link>
