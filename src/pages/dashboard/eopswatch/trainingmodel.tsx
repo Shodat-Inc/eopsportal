@@ -22,7 +22,7 @@ export default function TrainingModel() {
     return (
         <div className="flex font-OpenSans">
 
-            <div className="w-[84%]">
+            <div className="w-[100%]">
                 <div className="columns-2 flex justify-between items-center">
                     <p className="text-black text-lg mb-0 font-semibold">eOps Watch</p>
                 </div>
@@ -432,7 +432,7 @@ export default function TrainingModel() {
                 </div>
             </div>
 
-            <div className="w-[16%] pl-5">
+            <div className="w-[16%] pl-5 hidden">
                 <Template />
             </div>
 

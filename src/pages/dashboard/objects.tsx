@@ -87,10 +87,7 @@ export default function Objects(localData: any) {
                 if (filtered && filtered.length > 0) {
                     // update state and store data
                     setData(filtered);
-                    // Filter the array with subObject Items
-                    // let modifiedData = filtered.map((item: any) => {
-                    //     return item.subObjects
-                    // })
+                    // Filter the array with subObject Items                   
                     setSebObj(filtered[0]);
                 }
             }
@@ -177,7 +174,7 @@ export default function Objects(localData: any) {
         <>
             <div className="flex font-OpenSans">
 
-                <div className="w-[84%]">
+                <div className="w-[100%]">
                     <div className="columns-2 flex justify-between items-center">
                         <p className="text-white text-lg mb-0 font-bold">Object Management</p>
                     </div>
@@ -382,7 +379,7 @@ export default function Objects(localData: any) {
                     </div>
                 </div>
 
-                <div className="w-[16%] pl-5">
+                <div className="w-[16%] pl-5 hidden">
                     <Template />
                 </div>
 

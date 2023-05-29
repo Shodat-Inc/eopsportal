@@ -9,7 +9,7 @@ export default function ModelPerformance() {
     return (
         <div className="flex font-OpenSans">
 
-            <div className="w-[84%]">
+            <div className="w-[100%]">
                 <div className="columns-2 flex justify-between items-center">
                     <p className="text-black text-lg mb-0 font-semibold">Model Performance</p>
                 </div>
@@ -49,7 +49,7 @@ export default function ModelPerformance() {
                 </div>
             </div>
 
-            <div className="w-[16%] pl-5">
+            <div className="w-[16%] pl-5 hidden">
                 <Template />
             </div>
 

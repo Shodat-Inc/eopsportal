@@ -73,9 +73,9 @@ export default function SubChildObject(localData: any) {
             if (response.data) {
 
                 const filtered = response.data.filter((item: any) => {
-                    if (parentAsset.parentObject === "Manufacturing Plants") {
+                    if (parentAsset.class === "Manufacturing Plants") {
                         return item.tags.PlantID === parentAsset.id
-                    } else if (parentAsset.parentObject === "Vehicles") {
+                    } else if (parentAsset.class === "Vehicles") {
                         return item.tags.VIN === parentAsset.id
                     } else {
                         return item.tags.VIN === parentAsset.id
@@ -98,7 +98,7 @@ export default function SubChildObject(localData: any) {
         <>
             <div className="flex font-OpenSans">
 
-                <div className="w-[84%]">
+                <div className="w-[100%]">
                     <div className="columns-2 flex justify-between items-center">
                         <p className="text-black text-lg mb-0 font-bold">Object Management</p>
                     </div>
@@ -352,7 +352,7 @@ export default function SubChildObject(localData: any) {
                     </div>
                 </div>
 
-                <div className="w-[16%] pl-5">
+                <div className="w-[16%] pl-5 hidden">
                     <Template />
                 </div>
 

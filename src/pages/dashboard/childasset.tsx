@@ -51,7 +51,6 @@ export default function ChildAsset(localData: any) {
         e.preventDefault();
         var formData = new FormData(e.target);
         const form_values = Object.fromEntries(formData);
-        console.log("form_values", form_values)
         const response = await fetch('/api/createSubAssets', {
             method: 'POST',
             headers: {
@@ -73,7 +72,6 @@ export default function ChildAsset(localData: any) {
         });
         const resdata = await response.json();
         if (resdata) {
-            // console.log("SUCCESS")
             router.replace(router.asPath);
             setShowModal(false);
             setSuccess(true);
@@ -89,7 +87,7 @@ export default function ChildAsset(localData: any) {
         <>
             <div className="flex font-OpenSans">
 
-                <div className="w-[84%]">
+                <div className="w-[100%]">
                     <div className="columns-2 flex justify-between items-center">
                         <p className="text-black text-lg mb-0 font-semibold">Sub Class Management</p>
                         <div className="flex justify-end items-right">
@@ -369,7 +367,7 @@ export default function ChildAsset(localData: any) {
                     </div>
                 </div>
 
-                <div className="w-[16%] pl-5">
+                <div className="w-[16%] pl-5 hidden">
                     <Template />
                 </div>
 
