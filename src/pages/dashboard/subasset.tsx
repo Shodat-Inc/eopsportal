@@ -26,24 +26,21 @@ export default function SubAsset(localData: any) {
     const [showModal, setShowModal] = useState(false);
     const [success, setSuccess] = useState(false);
     const assetid = useRef("");
+    const assetname = useRef("");
     const [data, setData] = useState<any[]>([]);
     const [allTags, setAllTags] = useState<any[]>([]);
     const [parentJoinKey, setParentJoinKey] = useState<any[]>([]);
     const [newTag, setNewTag] = useState("");
     const [showInput, setShowInput] = useState(false);
-    const [hide, setHide] = useState(false);
     const [showHideAddTagButton, setShowHideAddTagButton] = useState(false);
     const [selParentTags, setSelParentTags] = useState<any[]>([]);
-    const filtered = localData.localData.filter((item: any) => {
-        return item.parentAssetName === parentAsset.assets;
-    });
-    const [filteredList, setFilteredList] = useState(filtered);
     const [checkIcon, setCheckIcon] = useState("/img/blank_check_box_icon_white.svg");
     const [tag, setTag] = useState<any[]>([]);
 
     const [dataType, setDataType] = useState("");
     const [toggleDT, setToggleDT] = useState(false);
     const [assetDataType, setAssetDataType] = useState<any[]>([]);
+    const [dtObject, setDtObject] = useState<any[]>([]);
 
 
     // Get JSON data on page load
@@ -89,29 +86,29 @@ export default function SubAsset(localData: any) {
 
                 let arr: any = [];
                 response.data.map((item: any, key: any) => {
-                    arr.push(...item.tags);
-                    setTag(removeDuplicates(arr))
+                    if (item.parentAssetName === parentAsset.assets) {
+                        arr.push(...item.tags);
+                        setTag(removeDuplicates(arr))
+                    }
                 })
 
             }
         });
     };
-
-
     useEffect(() => {
-        let arr = parentJoinKey.concat(tag);        
+        let arr = parentJoinKey.concat(tag);
         setParentJoinKey(removeDuplicates(arr))
     }, [tag])
-
     useEffect(() => {
         fetchData();
         if (fetchData.length) return;
     }, [localData.localData])
 
+
     // Adding New Tags
     const addTags = () => {
         setShowInput(true);
-        setHide(true)
+        // setHide(true)
         setShowHideAddTagButton(true);
         setToggleDT(true);
     }
@@ -124,15 +121,22 @@ export default function SubAsset(localData: any) {
         setDataType("");
     }
 
-    // Remove Elemnet from all Tag Array
+    // Remove Element from all Tag Array
     const removeElement = (item: any) => {
+        // removing the item form all tags array        
         let updatedList = allTags.slice();
         var filteredArray = updatedList.filter(function (e) { return e !== item })
         setAllTags(removeDuplicates(filteredArray));
 
+        // removing the datatype from datatype array
         let updatedListType = assetDataType;
         var popped = updatedListType.splice(-1);
-        setAssetDataType(popped);
+        setAssetDataType(updatedListType);
+
+        // remove the json item from json item array
+        let updatedJSON = dtObject.slice();
+        var filteredJSON = updatedJSON.filter(function (e) { return e.tagName !== item })
+        setDtObject(filteredJSON)
     }
 
     // Get Radio Button Value
@@ -140,9 +144,22 @@ export default function SubAsset(localData: any) {
         setDataType(value);
     }
 
+
+    // Creating a JSON Object
+    function CreateJSON(tag: any, datatype: any) {
+        var myObject = {
+            "tagName": tag,
+            "dataType": datatype
+        };
+        return myObject;
+    }
+
+
     // Save New Tag
     const saveNewTag = () => {
         if (newTag.trim().length !== 0) {
+
+            // Creating the array of all tags
             let updatedList = allTags.slice();
             updatedList.push(newTag)
             setAllTags(updatedList)
@@ -150,11 +167,19 @@ export default function SubAsset(localData: any) {
             setNewTag("");
             setShowHideAddTagButton(false);
             setToggleDT(false);
-            
+
+            // Creating the array of data type
             let typeList = assetDataType;
             typeList.push(dataType)
             setAssetDataType(typeList);
             setDataType("");
+
+            // Creating json object for tag and datatype together
+            let json: any = CreateJSON(newTag, dataType);
+            let jsonList = dtObject.slice();
+            jsonList.push(json)
+            setDtObject(jsonList)
+
         } else {
             console.log("Input must not be empty")
         }
@@ -183,6 +208,7 @@ export default function SubAsset(localData: any) {
 
     // Get Last Asset ID
     const getLastID = (data && data.length > 0) ? data.slice(-1)[0].assetID : '2000000001';
+    console.log("getLastID", getLastID)
 
     // Storing data in json for sub class
     const handleSubmit = async (e: any) => {
@@ -196,7 +222,7 @@ export default function SubAsset(localData: any) {
             },
             body: JSON.stringify(
                 {
-                    assetID: getLastID + 1,
+                    assetID: `${form_values.assetid}`,
                     assetName: `${form_values.assetname}`,
                     slug: `${form_values.assetname}`,
                     parentAssetID: parentAsset.assets,
@@ -206,16 +232,22 @@ export default function SubAsset(localData: any) {
                     dateCreated: new Date().toLocaleString() + "",
                     dateModified: new Date().toLocaleString() + "",
                     geoScopeLink: "",
-                    tagsKeys: "",
+                    tagsWithDataType: dtObject,
                     assetTypes: assetDataType,
+
                 }
             )
         });
         const resdata = await response.json();
         if (resdata) {
             router.replace(router.asPath);
+             // Updated state to close the modal
             setShowModal(false);
+            // Update state to Show the success message
             setSuccess(true);
+            // Update state to empty all tags 
+            setAllTags([]);
+            // Update state to hide the success message after 5 seconds
             setTimeout(() => {
                 setSuccess(false);
             }, 5000);
@@ -267,6 +299,10 @@ export default function SubAsset(localData: any) {
                                                 height={24}
                                                 width={24}
                                             />
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <div className="flex items-center">
                                             <Image
                                                 src="/img/arrow-right.svg"
                                                 alt="arrow-right"
@@ -274,10 +310,6 @@ export default function SubAsset(localData: any) {
                                                 height={24}
                                                 width={24}
                                             />
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <div className="flex items-center">
                                             <span className="ml-1 text-sm font-semibold text-black hover:text-yellow-950 md:ml-1">{parentAsset.assets}</span>
                                         </div>
                                     </li>
@@ -319,9 +351,9 @@ export default function SubAsset(localData: any) {
                                                                 }
                                                             }}
                                                         >
-                                                            <span className="font-medium">{item.assetName}</span>
+                                                            <span className="font-semibold">{item.assetName}</span>
                                                         </Link> */}
-                                                        <span className="font-medium">{item.assetName}</span>
+                                                        <span className="font-bold">{item.assetName}</span>
                                                     </td>
                                                     <td><span>{item.tags.toString().split(",").join(", ")}</span></td>
                                                     <td><span>{item.parentJoinKey.toString().split(",").join(", ")}</span></td>
@@ -352,7 +384,7 @@ export default function SubAsset(localData: any) {
                             </div>
                             :
                             <div className="h-72 flex justify-center items-center flex-wrap flex-col mt-8">
-                                <NoDataFound createText="Create Sub Asset" />
+                                <NoDataFound createText="Create Sub Class" />
                             </div>
                         }
 
@@ -380,7 +412,7 @@ export default function SubAsset(localData: any) {
                                         </h3>
                                         <button
                                             className="p-1 ml-auto bg-transparent border-0 text-black float-right leading-none font-semibold outline-none focus:outline-none"
-                                            onClick={() => setShowModal(false)}
+                                            onClick={() => {setShowModal(false); setAllTags([])}}
                                         >
                                             <Image
                                                 src="/img/close.svg"
@@ -405,11 +437,18 @@ export default function SubAsset(localData: any) {
                                                     </div>
                                                     <div className="w-3/4">
                                                         <input
+                                                            type="hidden"
+                                                            name="assetid"
+                                                            placeholder="Enter asset ID"
+                                                            className="rounded-lg border border-gray-500 h-[44px] pl-5 pr-5 w-[320px]"
+                                                            value={parseInt(getLastID) + 1}
+                                                        />
+                                                        <input
                                                             type="text"
                                                             name="assetname"
                                                             placeholder="Enter class Name"
                                                             className="rounded-lg border border-black h-[44px] pl-5 pr-5 w-[320px]"
-                                                            onChange={(e) => (assetid.current = e.target.value)}
+                                                            onChange={(e) => (assetname.current = e.target.value)}
                                                         />
                                                     </div>
                                                 </div>
@@ -573,6 +612,20 @@ export default function SubAsset(localData: any) {
                                                                     </div>
                                                                     <label className="text-black font-semibold">string <span className="text-gray-500 font-normal text-[14px]">(myText="Hello")</span></label>
                                                                 </div>
+                                                                <div className="flex pt-1 pb-1">
+                                                                    <div className={`${styles.customRadio} mr-2`}>
+                                                                        <input
+                                                                            type="radio"
+                                                                            name="datatype"
+                                                                            className="scale-150"
+                                                                            value="date"
+                                                                            checked={dataType === "date"}
+                                                                            onChange={() => radioChange("date")}
+                                                                        />
+                                                                        <span></span>
+                                                                    </div>
+                                                                    <label className="text-black font-semibold">date <span className="text-gray-500 font-normal text-[14px]">(myDate=&quot;29-05-2023&quot;)</span></label>
+                                                                </div>
 
                                                             </div>
                                                             : null
@@ -646,7 +699,7 @@ export default function SubAsset(localData: any) {
                                                     </button>
                                                     <button
                                                         className="border border-black rounded-lg bg-white font-semibold text-black font-lg w-24 h-12 hover:text-white hover:bg-yellow-951 hover:border-yellow-951 ease-in-out duration-300"
-                                                        onClick={() => setShowModal(false)}
+                                                        onClick={() => {setShowModal(false); setAllTags([])}}
                                                     >
                                                         Cancel
                                                     </button>

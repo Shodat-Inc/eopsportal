@@ -55,6 +55,7 @@ export default function Objects(localData: any) {
         endDate: null
     });
     const [mfdDate, setMfdDate] = useState();
+    const [subObj, setSebObj] = useState({} as any);
 
 
     // Get JSON data on page load
@@ -80,12 +81,17 @@ export default function Objects(localData: any) {
     const fetchData = () => {
         axios.get("/api/getObjects").then((response) => {
             if (response.data) {
-                console.log("response.data", response.data)
                 const filtered = response.data.filter((item: any) => {
                     return item.parentAssetID === parentAsset.assets;
                 });
                 if (filtered && filtered.length > 0) {
+                    // update state and store data
                     setData(filtered);
+                    // Filter the array with subObject Items
+                    let modifiedData = filtered.map((item: any) => {
+                        return item.subObjects
+                    })
+                    setSebObj(filtered[0]);
                 }
             }
         });
@@ -112,14 +118,13 @@ export default function Objects(localData: any) {
     // Clear All Fields
     const clearAll = (e: any) => {
         e.preventDefault();
-        // var formData = new FormData(e.target);
-        // const form_values = Object.fromEntries(formData);
     }
 
     // Storing data in json for sub class
     const handleSubmit = async (e: any) => {
         e.preventDefault();
         var formData = new FormData(e.target);
+        let currentDate = new Date().toISOString().split('T')[0];
         const form_values = Object.fromEntries(formData);
         const response = await fetch('/api/createObjects', {
             method: 'POST',
@@ -129,8 +134,12 @@ export default function Objects(localData: any) {
             body: JSON.stringify(
                 {
                     parentAssetID: parentAsset.assets,
+                    parentAssetName: parentAsset.assets,
+                    subObjectName: `${form_values.Name ? form_values.Name : ''}`,
+                    subObjectID: `${form_values.PlantID ? form_values.PlantID : ''}`,
                     subObjects: form_values,
-                    dateCreated: new Date().toLocaleString() + ""
+                    dateCreated: currentDate,
+                    assetID: parseInt(getLastID) + 1
                 }
             )
         });
@@ -200,12 +209,6 @@ export default function Objects(localData: any) {
                                     method='post'
                                     onSubmit={handleSubmit}
                                 >
-                                    <input type="hidden" name="dateCreated" value={new Date().toLocaleString() + ""} />
-                                    <input type="hidden" name="dateModified" value={new Date().toLocaleString() + ""} />
-                                    <input type="hidden" name="assetID" value={getLastID + 1} />
-                                    <input type="hidden" name="parentAssetID" value={parentAsset.assets} />
-                                    <input type="hidden" name="parentAssetName" value={parentAsset.assets} />
-                                    <input type="hidden" name="mfdDate" value={mfdDate ? mfdDate : new Date().toLocaleString() + ""} />
 
                                     <div className="flex justify-between items-start w-full flex-wrap flex-row">
                                         <h4 className="font-bold text-lg color-black font-semibold">Create New Object</h4>
@@ -241,7 +244,7 @@ export default function Objects(localData: any) {
                                         <div className="flex justify-start items-center flex-wrap flex-row">
                                             {
                                                 getParentData.map((item: any, key: any) => {
-                                                    if (item == "Mfd Date") {
+                                                    if (item == "Mfd Date" || item === "mfdDate" || item === "MfgDate") {
                                                         return (
                                                             <div className="relative w-[50%] mb-5" key={key}>
                                                                 <div className="rounded-lg border border-gray-954 h-[44px] w-[320px] focus:outline-none focus:border-yellow-951">
@@ -284,65 +287,68 @@ export default function Objects(localData: any) {
                             <div className="h-96 flex justify-start items-start flex-wrap flex-col mt-4">
                                 <h4 className="font-bold text-lg color-black mb-4 font-semibold">Objects</h4>
                                 <div className="overflow-x-auto border rounded-md w-full">
-                                    <table className={`table-auto min-w-full w-full text-left ${styles.table}`}>
+                                    <table className={`table-auto min-w-full w-full text-left ${styles.table} ${styles.tableObject}`}>
                                         <thead className="bg-gray-950 rounded-lg h-10 text-sm font-light">
-                                            <tr>
-                                                <th>S.No</th>
-                                                <th>VIN</th>
-                                                <th>Model Type</th>
-                                                <th>Color</th>
-                                                <th>Mfd Date</th>
-                                                <th>Capacity In CC</th>
-                                                <th>Cylinders/Valves</th>
-                                                <th>Date Created</th>
-                                                <th>Actions</th>
-                                            </tr>
+                                            <th>S.No</th>
+                                            {
+                                                subObj && Object.keys(subObj).length != 0 ?
+                                                    Object.keys(subObj?.subObjects).map((item: any, i: any) => (
+                                                        <th className="capitalize">
+                                                            {
+                                                                item.split(/(?=[A-Z])/).join(" ")
+                                                            }
+                                                        </th>
+                                                    ))
+                                                    : null
+                                            }
+                                            <th>Actions</th>
                                         </thead>
                                         <tbody>
                                             {
-                                                data.map((item: any, index: any) => (
-                                                    <tr className="hover:bg-yellow-950" key={index}>
-                                                        <td>{index+1}</td>
-                                                        {/* <td>{item.subObjects.VIN}</td> */}
-                                                        <td>
-                                                        <Link
-                                                            href={{
-                                                                pathname: '/dashboard/subobject',
-                                                                query: {
-                                                                    object:item.subObjects.VIN,
-                                                                    parentObject:parentAsset.assets
-                                                                }
-                                                            }}
-                                                        >
-                                                            <span className="font-medium">{item.subObjects.VIN}</span>
-                                                        </Link>
-                                                        </td>
-                                                        <td>{item.subObjects.ModalType}</td>
-                                                        <td>{item.subObjects.Color}</td>
-                                                        <td>{item.subObjects.mfdDate}</td>
-                                                        <td>{item.subObjects.CapacityInCC}</td>
-                                                        <td>{item.subObjects.Cylinders}</td>
-                                                        <td><span>{moment(item.dateCreated).format('DD-MM-YYYY')}</span></td>
-                                                        <td>
-                                                            <button className="mr-4">
-                                                                <Image
-                                                                    src="/img/edit.svg"
-                                                                    alt="Edit"
-                                                                    height={18}
-                                                                    width={18}
-                                                                />
-                                                            </button>
-                                                            <button>
-                                                                <Image
-                                                                    src="/img/trash.svg"
-                                                                    alt="Trash"
-                                                                    height={18}
-                                                                    width={18}
-                                                                />
-                                                            </button>
-                                                        </td>
-                                                    </tr>
-                                                ))
+                                                data.map((items: any, index: any) => {
+                                                    return (
+                                                        <tr key={items.PlantID} className={`text-sm`}>
+                                                            <td>{index + 1}</td>
+                                                            {
+                                                                Object.values(items?.subObjects).map((item: any, i: any) => (
+                                                                    <td className="">
+                                                                        <Link
+                                                                            href={{
+                                                                                pathname: '/dashboard/subobject',
+                                                                                query: {
+                                                                                    object: items?.subObjects?.PlantID || items?.subObjects?.VIN,
+                                                                                    parentObject: parentAsset.assets
+                                                                                }
+                                                                            }}
+                                                                        >
+                                                                            <span className="font-medium">{item}</span>
+                                                                        </Link>
+                                                                    </td>
+
+                                                                ))
+                                                            }
+                                                            <td>
+                                                                <button className="mr-2">
+                                                                    <Image
+                                                                        src="/img/edit.svg"
+                                                                        alt="Edit"
+                                                                        height={18}
+                                                                        width={18}
+                                                                    />
+                                                                </button>
+                                                                <button>
+                                                                    <Image
+                                                                        src="/img/trash.svg"
+                                                                        alt="Trash"
+                                                                        height={18}
+                                                                        width={18}
+                                                                    />
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                    )
+
+                                                })
                                             }
 
                                         </tbody>
@@ -351,10 +357,8 @@ export default function Objects(localData: any) {
                             </div>
                             :
 
-
-
                             <div className="h-72 flex justify-center items-center flex-wrap flex-col mt-8">
-                                <NoDataFound createText="Create Sub Asset" />
+                                <NoDataFound createText="Create Sub Object" />
                             </div>
                         }
 

@@ -34,8 +34,10 @@ export default function AssetManagement(localData: any) {
     const [dataType, setDataType] = useState("");
     const [assetDataType, setAssetDataType] = useState<any[]>([]);
     const [showObjectModal, setShowObjectModal] = useState(false);
-    const [chooseAsset, setChooseAsset] = useState("Cars");
+    console.log(localData.localData[0].assetName)
+    const [chooseAsset, setChooseAsset] = useState(localData && localData.localData.length > 0 ? localData.localData[0].assetName : '');
     const [toggleAsset, setToggleAsset] = useState(false);
+    const [dtObject, setDtObject] = useState<any[]>([]);
 
 
     // Get JSON data on page load
@@ -67,9 +69,20 @@ export default function AssetManagement(localData: any) {
         setDataType(value);
     }
 
+    // Creating a JSON Object
+    function CreateJSON(tag: any, datatype: any) {
+        var myObject = {
+            "tagName": tag,
+            "dataType": datatype
+        };
+        return myObject;
+    }
+
     // Save New Tag
     const saveNewTag = () => {
         if (newTag.trim().length !== 0) {
+
+            // Creating the array of all tags
             let updatedList = allTags.slice();
             updatedList.push(newTag)
             setAllTags(updatedList)
@@ -77,25 +90,42 @@ export default function AssetManagement(localData: any) {
             setNewTag("");
             setShowHideAddTagButton(false);
             setToggleDT(false);
+
+            // Creating the array of data type
             let typeList = assetDataType;
             typeList.push(dataType)
             setAssetDataType(typeList);
             setDataType("");
+
+            // Creating json object for tag and datatype together
+            let json: any = CreateJSON(newTag, dataType);
+            let jsonList = dtObject.slice();
+            jsonList.push(json)
+            setDtObject(jsonList)
+
         } else {
             console.log("Input must not be empty")
         }
     }
 
 
-    // Remove Elemnet from all Tag Array
+    // Remove Element from all Tag Array
     const removeElement = (item: any) => {
+        // removing the item form all tags array
         let updatedList = allTags.slice();
         var filteredArray = updatedList.filter(function (e) { return e !== item })
         setAllTags(filteredArray)
 
+        // removing the datatype from datatype array
         let updatedListType = assetDataType;
         var popped = updatedListType.splice(-1);
-        setAssetDataType(popped);
+        setAssetDataType(updatedListType);
+
+        // remove the json item from json item array
+        let updatedJSON = dtObject.slice();
+        var filteredJSON = updatedJSON.filter(function (e) { return e.tagName !== item })
+        setDtObject(filteredJSON)
+
     }
 
     // Cancel Adding new tags
@@ -127,14 +157,20 @@ export default function AssetManagement(localData: any) {
                     dateCreated: new Date().toLocaleString() + "",
                     dateModified: new Date().toLocaleString() + "",
                     assetTypes: assetDataType,
+                    tags: dtObject
                 }
             )
         });
         const resdata = await response.json();
         if (resdata) {
             router.replace(router.asPath);
+            // Updated state to close the modal
             setShowModal(false);
+            // Update state to Show the success message
             setSuccess(true);
+            // Update state to empty all tags 
+            setAllTags([]);
+            // Update state to hide the success message after 5 seconds
             setTimeout(() => {
                 setSuccess(false);
             }, 5000);
@@ -182,11 +218,10 @@ export default function AssetManagement(localData: any) {
 
                             <button
                                 className="rounded-xl bg-yellow-951 border-[2px] border-yellow-951 text-black flex h-12 justify-center items-center pl-2 pr-2 hover:bg-white hover:text-black hover:border-black transition-all duration-[400ms]"
-                                onClick={() => setShowModal(true)}
                             >
                                 <Image
                                     src="/img/download-black.svg"
-                                    alt="Create New Asset"
+                                    alt="Import Class"
                                     className="mr-2"
                                     height={24}
                                     width={24}
@@ -262,19 +297,17 @@ export default function AssetManagement(localData: any) {
                                         <thead className="bg-black text-white rounded-xl h-10 text-sm font-light">
                                             <tr>
                                                 <th>S.No</th>
-                                                {/* <th>Asset ID</th> */}
-                                                <th>Asset Name</th>
+                                                <th>Class Name</th>
                                                 <th>Tags</th>
                                                 <th>Date Created</th>
                                                 <th>Actions</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
+                                        <tbody className="text-sm">
                                             {data.map((item: any, index: any) => (
                                                 <tr className="hover:bg-yellow-950" key={index}>
                                                     <td className="w-[6%] min-h-[50px]">{index + 1}</td>
-                                                    {/* <td className="w-[14%] min-h-[50px]">{item.assetID}</td> */}
-                                                    <td className="w-[20%] min-h-[50px]">
+                                                    <td className="w-[25%] min-h-[50px]">
                                                         <Link
                                                             href={{
                                                                 pathname: '/dashboard/subasset',
@@ -284,7 +317,7 @@ export default function AssetManagement(localData: any) {
                                                             }}
                                                             className="w-[25%]"
                                                         >
-                                                            <span className="font-medium">{item.assetName}</span>
+                                                            <span className="font-bold">{item.assetName}</span>
                                                         </Link>
                                                     </td>
                                                     <td className="w-[25%] min-h-[50px]">
@@ -301,7 +334,7 @@ export default function AssetManagement(localData: any) {
                                                             </span>
                                                         </div>
                                                     </td>
-                                                    <td className="w-[20%] min-h-[50px]"><span>{moment(item.dateCreated).format('DD-MM-YYYY')}</span></td>
+                                                    <td className="w-[15%] min-h-[50px]"><span>{moment(item.dateCreated).format('DD-MM-YYYY')}</span></td>
                                                     <td className="w-[15%]">
                                                         <button className="mr-5">
                                                             <Image
@@ -444,7 +477,7 @@ export default function AssetManagement(localData: any) {
                                         </h3>
                                         <button
                                             className="p-1 ml-auto bg-transparent border-0 text-black float-right leading-none font-semibold outline-none focus:outline-none"
-                                            onClick={() => setShowModal(false)}
+                                            onClick={() => {setShowModal(false); setAllTags([])}}
                                         >
                                             <Image
                                                 src="/img/close.svg"
@@ -642,7 +675,21 @@ export default function AssetManagement(localData: any) {
                                                                         />
                                                                         <span></span>
                                                                     </div>
-                                                                    <label className="text-black font-semibold">string <span className="text-gray-500 font-normal text-[14px]">(myText=&quotHello&quot)</span></label>
+                                                                    <label className="text-black font-semibold">string <span className="text-gray-500 font-normal text-[14px]">(myText=&quot;Hello&quot;)</span></label>
+                                                                </div>
+                                                                <div className="flex pt-1 pb-1">
+                                                                    <div className={`${styles.customRadio} mr-2`}>
+                                                                        <input
+                                                                            type="radio"
+                                                                            name="datatype"
+                                                                            className="scale-150"
+                                                                            value="date"
+                                                                            checked={dataType === "date"}
+                                                                            onChange={() => radioChange("date")}
+                                                                        />
+                                                                        <span></span>
+                                                                    </div>
+                                                                    <label className="text-black font-semibold">date <span className="text-gray-500 font-normal text-[14px]">(myDate=&quot;29-05-2023&quot;)</span></label>
                                                                 </div>
 
                                                             </div>
@@ -660,7 +707,7 @@ export default function AssetManagement(localData: any) {
                                                     </button>
                                                     <button
                                                         className="border border-black rounded-lg bg-white font-semibold text-black font-lg w-24 h-12 hover:text-white hover:bg-yellow-951 hover:border-yellow-951 ease-in-out duration-300"
-                                                        onClick={() => setShowModal(false)}
+                                                        onClick={() => {setShowModal(false); setAllTags([])}}
                                                     >
                                                         Cancel
                                                     </button>

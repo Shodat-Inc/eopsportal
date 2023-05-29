@@ -13,11 +13,11 @@ export default async function handler(req:any, res:any) {
         const objectData = JSON.parse(jsonData);
 
         // Get the data from the request body
-        const { assetID, assetName, slug, parentAssetID, parentAssetName, tags, parentJoinKey,  dateCreated, dateModified, geoScopeLink, tagsKeys, assetTypes   } = req.body;
+        const { assetID, assetName, slug, parentAssetID, parentAssetName, tags, parentJoinKey,  dateCreated, dateModified, geoScopeLink, tagsWithDataType, assetTypes   } = req.body;
 
         // Add the new data to the object
         const newData = {
-            assetID, assetName, slug, parentAssetID, parentAssetName, tags, parentJoinKey, dateCreated, dateModified, geoScopeLink, tagsKeys, assetTypes 
+            assetID, assetName, slug, parentAssetID, parentAssetName, tags, parentJoinKey, dateCreated, dateModified, geoScopeLink, tagsWithDataType, assetTypes 
         };
         objectData.push(newData);
 

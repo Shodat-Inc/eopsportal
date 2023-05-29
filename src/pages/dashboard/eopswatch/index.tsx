@@ -45,7 +45,6 @@ export default function EopsWatch() {
                     return;
                 }
                 const filtered = response.data.filter((item: any) => {
-                    // console.log("ITEMS =>", item.tags.BatteryType)
                     if (item.tags.BatteryType.toString().toLowerCase().includes(obj.toString().toLowerCase())) {
                         return item;
                     }
@@ -59,8 +58,8 @@ export default function EopsWatch() {
 
     }
 
-    // console.log("subObj", subObj);
-    // console.log(Object.keys(subObj?.tags));
+    console.log("AMIT - subObj =>", subObj)
+
     return (
         <div className="flex font-OpenSans">
 
@@ -132,7 +131,8 @@ export default function EopsWatch() {
 
                     </div>
 
-
+                    
+                    {subObj ? 
                     <div className="flex w-full flex-wrap mt-10">
                         <div className="text-black font-semibold text-md mb-2">Objects</div>
                         <div className="overflow-hidden border rounded-xl w-full">
@@ -172,6 +172,7 @@ export default function EopsWatch() {
                             </table>
                         </div>
                     </div>
+                    : null }
 
                 </div>
             </div>

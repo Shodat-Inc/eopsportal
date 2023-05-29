@@ -7,6 +7,7 @@
 .table tbody tr td {
     padding: 2px 0 2px 10px;
     height: 50px;
+    white-space: nowrap;
 }
 
 .table tbody tr:nth-child(even) {
@@ -20,6 +21,9 @@
 .table tbody tr td:last-child {
     text-align: right;
     padding-right: 30px;
+}
+.tableObject tbody tr td:last-child{
+    padding-right: 5px;
 }
 
 .table thead tr th:last-child {
