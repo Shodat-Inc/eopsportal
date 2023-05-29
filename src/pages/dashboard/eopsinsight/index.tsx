@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
-import styles from '../../styles/Common.module.css';
-import Layout from "../../components/Layout";
-import Template from "./template";
+import Layout from "../../../components/Layout";
+import Template from "../template";
 import Image from "next/image";
 import Link from "next/link";
 
