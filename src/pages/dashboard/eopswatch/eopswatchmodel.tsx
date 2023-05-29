@@ -86,7 +86,8 @@ export default function EopsWatchModel() {
                             <span>Model Performance</span>
                         </Link>
 
-                        <button
+                        <Link
+                            href="/dashboard/eopswatch/eopswatchalerts"
                             className="flex justify-center items-center text-black bg-yellow-951 rounded rounded-xl h-12 px-4 transition-opacity duration-300"
                         >
                             <Image
@@ -97,7 +98,7 @@ export default function EopsWatchModel() {
                                 className="mr-2"
                             />
                             <span>Alerts</span>
-                        </button>
+                        </Link>
 
                         {/* <button
                             className="flex justify-center items-center text-black bg-yellow-951 rounded rounded-xl h-12 px-4 transition-opacity duration-300"
