@@ -5,6 +5,7 @@ import Template from "../template";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from 'next/router'
+import axios from "axios";
 
 const ManufacturingPlantsClass = [
     "Crack Detection",
@@ -26,6 +27,7 @@ export default function EopsWatchModel() {
 
     const [chooseAsset, setChooseAsset] = useState(parentAsset.objectID ==="Manufacturing Plants" ? ManufacturingPlantsClass[0] : VehicleClass[0]);
     const [toggleAsset, setToggleAsset] = useState(false);
+    const [image, setImage] = useState("/img/no_image_icon.svg");
 
     // Show Choose Asset List
     const showChooseAssetList = () => {
@@ -35,6 +37,29 @@ export default function EopsWatchModel() {
         setChooseAsset(item);
         setToggleAsset(false)
     }
+
+    const fetchClassData = () => {
+        axios.get("/api/geteopsWatch").then((response) => {
+            if (response.data) {
+                const filtered = response.data.filter((item: any) => {
+                    if (item.class === parentAsset.objectID && item.ID === parentAsset.key) {
+                        return item;
+                    }
+                });
+                if (filtered && filtered.length > 0) {
+                    if (filtered[0].images) {
+                        setImage(filtered[0].images[0].path);
+                    }
+                }
+            }
+        });
+    };
+    useEffect(() => {
+        fetchClassData();
+        if (fetchClassData.length) return;
+    }, [parentAsset])
+
+    console.log("AMIT", image)
 
    
     return (
@@ -115,11 +140,11 @@ export default function EopsWatchModel() {
                             <div className="rounded rounded-xl bg-gray-956 border border-gray-951 h-[300px] w-full overflow-hidden">
                                 <div className="relative flex items-center justify-center h-full">
                                     <Image
-                                        src="/img/training-model.png"
+                                        src={image}
                                         alt="trainingModel"
                                         height={250}
                                         width={250}
-                                        className="display-inline"
+                                        className="display-inline h-full w-full object-cover"
                                     />
                                 </div>
 

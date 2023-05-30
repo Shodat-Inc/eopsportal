@@ -168,7 +168,7 @@ export default function EopsWatch() {
                                                                 href={{
                                                                     pathname: '/dashboard/eopswatch/eopswatchmodel',
                                                                     query: {
-                                                                        objectID: item
+                                                                        key: item
                                                                     }
                                                                 }}
                                                             >
