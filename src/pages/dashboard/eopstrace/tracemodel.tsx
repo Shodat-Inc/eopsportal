@@ -24,7 +24,7 @@ export default function TraceModel() {
     const router = useRouter();
     const parentAsset = router.query;
 
-    const [chooseAsset, setChooseAsset] = useState(parentAsset.objectID ==="Manufacturing Plants" ? ManufacturingPlantsClass[0] : VehicleClass[0]);
+    const [chooseAsset, setChooseAsset] = useState(parentAsset.objectID === "Manufacturing Plants" ? ManufacturingPlantsClass[0] : VehicleClass[0]);
     const [toggleAsset, setToggleAsset] = useState(false);
 
     // Show Choose Asset List
@@ -45,7 +45,7 @@ export default function TraceModel() {
 
                 <div className="border min-h-full rounded-xl mt-3 px-4 py-4">
                     <div className="flex justify-start items-start">
-                    <nav className="flex" aria-label="Breadcrumb">
+                        <nav className="flex" aria-label="Breadcrumb">
                             <ol className="inline-flex items-center space-x-1 md:space-x-1">
                                 <li className="inline-flex items-center">
                                     <Link href="/dashboard/eopswatch"
@@ -71,6 +71,22 @@ export default function TraceModel() {
                                         <span className="ml-1 text-sm font-medium text-black hover:text-yellow-950 md:ml-1">{parentAsset.key}</span>
                                     </div>
                                 </li>
+                                {
+                                    chooseAsset ?
+                                        <li>
+                                            <div className="flex items-center">
+                                                <Image
+                                                    src="/img/arrow-right.svg"
+                                                    alt="arrow-right"
+                                                    className="h-6"
+                                                    height={24}
+                                                    width={24}
+                                                />
+                                                <span className="ml-1 text-sm font-medium text-black hover:text-yellow-950 md:ml-1">{chooseAsset}</span>
+                                            </div>
+                                        </li>
+                                        : null
+                                }
                             </ol>
                         </nav>
                     </div>
@@ -107,25 +123,39 @@ export default function TraceModel() {
 
                     </div>
 
-                    <div className="flex items-center justify-between mt-10">
-                        {/* Image */}
-                        <div className="relative w-[46%]">
-                            <div className="rounded rounded-xl bg-gray-956 border border-gray-951 h-[300px] w-full overflow-hidden">
-                                <div className="relative flex items-center justify-center h-full">
-                                    <Image
-                                        src="/img/training-model.png"
-                                        alt="trainingModel"
-                                        height={250}
-                                        width={250}
-                                        className="display-inline"
-                                    />
-                                </div>
-
+                    <div className="flex items-center justify-center flex-wrap mt-10">
+                        {/* Table */}
+                        <div className="relative w-full mb-10">
+                            <div className="overflow-hidden border rounded-xl w-full">
+                                <table className={`table-auto min-w-full text-left ${styles.table}`}>
+                                    <thead className="bg-black text-white rounded-xl h-10 text-sm font-light">
+                                        <tr>
+                                            <th>Capacity</th>
+                                            <th>VoltageMeasured</th>
+                                            <th>CurrentMeasured</th>
+                                            <th>TemperatureMeasured</th>
+                                            <th>CurrentLoad</th>
+                                            <th>VoltageLoad</th>
+                                            <th>DateTime</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody className="text-sm">
+                                        <tr className="hover:bg-yellow-950">
+                                            <td>1.856</td>
+                                            <td>3.97</td>
+                                            <td>2.012528</td>
+                                            <td>24.39</td>
+                                            <td>1.99</td>
+                                            <td>3.06</td>
+                                            <td>2022-07-02 15:25:4</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
 
                         {/* Model */}
-                        <div className="relative w-[46%]">
+                        <div className="relative w-full items-center justify-start flex">
                             <div className="w-[400px] relative">
                                 <div
                                     className="border rounded-xl border-gray-500 h-[55px] w-[400px] pl-2 pr-5 relative flex items-center justify-start"
@@ -167,13 +197,13 @@ export default function TraceModel() {
                                                     ))
 
                                             }
-                                           
+
                                         </ul>
                                     </div>
                                     : null}
                             </div>
 
-                            <div className="flex mt-10">
+                            <div className="flex ml-20">
                                 <Link
                                     href={{
                                         pathname: "/dashboard/eopstrace/testmodel",

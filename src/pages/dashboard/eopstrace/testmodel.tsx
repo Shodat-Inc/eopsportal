@@ -182,143 +182,312 @@ export default function TestModel() {
                         </button>
                     </div>
 
+                    {/* Table Grid */}
+                    <div className="relative mt-8 h-[600px] overflow-y-scroll">
+                        <div className="overflow-hidden border rounded-xl w-full mb-12">
+                            <table className={`table-auto min-w-full text-left ${styles.table}`}>
+                                <thead className="bg-gray-952 text-white rounded-xl h-10 text-sm font-light">
+                                    <tr>
+                                        <th>Capacity</th>
+                                        <th>VoltageMeasured</th>
+                                        <th>CurrentMeasured</th>
+                                        <th>TemperatureMeasured</th>
+                                        <th>CurrentLoad</th>
+                                        <th>VoltageLoad</th>
+                                        <th>DateTime</th>
+                                    </tr>
+                                </thead>
+                                <tbody className="text-sm">
+                                    <tr className="hover:bg-white">
+                                        <td>1.856</td>
+                                        <td>3.97</td>
+                                        <td>2.012528</td>
+                                        <td>24.39</td>
+                                        <td>1.99</td>
+                                        <td>3.06</td>
+                                        <td>2022-07-02 15:25:4</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div className="overflow-hidden border rounded-xl w-full mb-12">
+                            <table className={`table-auto min-w-full text-left ${styles.table}`}>
+                                <thead className="bg-gray-952 text-white rounded-xl h-10 text-sm font-light">
+                                    <tr>
+                                        <th>Capacity</th>
+                                        <th>VoltageMeasured</th>
+                                        <th>CurrentMeasured</th>
+                                        <th>TemperatureMeasured</th>
+                                        <th>CurrentLoad</th>
+                                        <th>VoltageLoad</th>
+                                        <th>DateTime</th>
+                                    </tr>
+                                </thead>
+                                <tbody className="text-sm">
+                                    <tr className="hover:bg-white">
+                                        <td>1.856</td>
+                                        <td>3.97</td>
+                                        <td>2.012528</td>
+                                        <td>24.39</td>
+                                        <td>1.99</td>
+                                        <td>3.06</td>
+                                        <td>2022-07-02 15:25:4</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div className="overflow-hidden border rounded-xl w-full mb-12">
+                            <table className={`table-auto min-w-full text-left ${styles.table}`}>
+                                <thead className="bg-gray-952 text-white rounded-xl h-10 text-sm font-light">
+                                    <tr>
+                                        <th>Capacity</th>
+                                        <th>VoltageMeasured</th>
+                                        <th>CurrentMeasured</th>
+                                        <th>TemperatureMeasured</th>
+                                        <th>CurrentLoad</th>
+                                        <th>VoltageLoad</th>
+                                        <th>DateTime</th>
+                                    </tr>
+                                </thead>
+                                <tbody className="text-sm">
+                                    <tr className="hover:bg-white">
+                                        <td>1.856</td>
+                                        <td>3.97</td>
+                                        <td>2.012528</td>
+                                        <td>24.39</td>
+                                        <td>1.99</td>
+                                        <td>3.06</td>
+                                        <td>2022-07-02 15:25:4</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div className="overflow-hidden border rounded-xl w-full mb-12">
+                            <table className={`table-auto min-w-full text-left ${styles.table}`}>
+                                <thead className="bg-gray-952 text-white rounded-xl h-10 text-sm font-light">
+                                    <tr>
+                                        <th>Capacity</th>
+                                        <th>VoltageMeasured</th>
+                                        <th>CurrentMeasured</th>
+                                        <th>TemperatureMeasured</th>
+                                        <th>CurrentLoad</th>
+                                        <th>VoltageLoad</th>
+                                        <th>DateTime</th>
+                                    </tr>
+                                </thead>
+                                <tbody className="text-sm">
+                                    <tr className="hover:bg-white">
+                                        <td>1.856</td>
+                                        <td>3.97</td>
+                                        <td>2.012528</td>
+                                        <td>24.39</td>
+                                        <td>1.99</td>
+                                        <td>3.06</td>
+                                        <td>2022-07-02 15:25:4</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div className="overflow-hidden border rounded-xl w-full mb-12">
+                            <table className={`table-auto min-w-full text-left ${styles.table}`}>
+                                <thead className="bg-gray-952 text-white rounded-xl h-10 text-sm font-light">
+                                    <tr>
+                                        <th>Capacity</th>
+                                        <th>VoltageMeasured</th>
+                                        <th>CurrentMeasured</th>
+                                        <th>TemperatureMeasured</th>
+                                        <th>CurrentLoad</th>
+                                        <th>VoltageLoad</th>
+                                        <th>DateTime</th>
+                                    </tr>
+                                </thead>
+                                <tbody className="text-sm">
+                                    <tr className="hover:bg-white">
+                                        <td>1.856</td>
+                                        <td>3.97</td>
+                                        <td>2.012528</td>
+                                        <td>24.39</td>
+                                        <td>1.99</td>
+                                        <td>3.06</td>
+                                        <td>2022-07-02 15:25:4</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div className="overflow-hidden border rounded-xl w-full mb-12">
+                            <table className={`table-auto min-w-full text-left ${styles.table}`}>
+                                <thead className="bg-gray-952 text-white rounded-xl h-10 text-sm font-light">
+                                    <tr>
+                                        <th>Capacity</th>
+                                        <th>VoltageMeasured</th>
+                                        <th>CurrentMeasured</th>
+                                        <th>TemperatureMeasured</th>
+                                        <th>CurrentLoad</th>
+                                        <th>VoltageLoad</th>
+                                        <th>DateTime</th>
+                                    </tr>
+                                </thead>
+                                <tbody className="text-sm">
+                                    <tr className="hover:bg-white">
+                                        <td>1.856</td>
+                                        <td>3.97</td>
+                                        <td>2.012528</td>
+                                        <td>24.39</td>
+                                        <td>1.99</td>
+                                        <td>3.06</td>
+                                        <td>2022-07-02 15:25:4</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        
+                    </div>
+
                     {/* Images Grid */}
-                    {filterData && filterData.length > 0 ?
-                        <div className="relative grid grid-cols-3 gap-10 mt-8">
+                    <div className="hidden">
+                        {filterData && filterData.length > 0 ?
+                            <div className="relative grid grid-cols-3 gap-10 mt-8">
 
-                            {
+                                {
 
-                                filterData.map((item: any, index: any) => (
-                                    <>
-                                        <div className="col-span-3 sm:col-span-2 md:col-span-3 lg:col-span-1 xl:col-span-4..." key={index}>
-                                            <div className={`border border-gray-200 h-72 w-full rounded-md overflow-hidden relative ${styles.imagewrap}`}>
-                                                <input type="checkbox" className="scale-125 absolute top-1 left-1" />
-                                                <Image
-                                                    src={item.path}
-                                                    alt="car"
-                                                    height={150}
-                                                    width={150}
-                                                    className="w-full h-full"
-                                                />
-                                                <div className={`${styles.info} relative flex items-center justify-center`}>
-                                                    <span className="text-white text-[13px] font-light absolute top-0 left-1">Uploaded Date: 05-11-2023</span>
-                                                    <div className="relative flex flex-wrap items-center justify-between h-full px-5">
-
-                                                        <Link
-                                                            href={{
-                                                                pathname: "/dashboard/eopstrace/modelview",
-                                                                query: {
-                                                                    objectID: parentAsset.objectID,
-                                                                    key: parentAsset.key,
-                                                                    model: parentAsset.model,
-                                                                    result: item.resultImage ? item.resultImage : ''
-                                                                }
-                                                            }}
-                                                            className="bg-yellow-951 rounded rounded-md flex justify-center items-center texxt-black font-semibold text-sm p-2 w-24"
-                                                        >
-                                                            <Image
-                                                                src="/img/carIcon.svg"
-                                                                alt="car"
-                                                                height={21}
-                                                                width={21}
-                                                                className="mr-2"
-                                                            />
-                                                            <span>Test</span>
-                                                        </Link>
-                                                        <button
-                                                            // onClick={() => setShowImageModal(true)}
-                                                            onClick={() => imageModal(item.resultImage)}
-                                                            className="bg-yellow-951 rounded rounded-md flex justify-center items-center texxt-black font-semibold text-sm p-2 w-24 ml-3"
-                                                        >
-                                                            <Image
-                                                                src="/img/search.svg"
-                                                                alt="car"
-                                                                height={21}
-                                                                width={21}
-                                                                className="mr-2"
-                                                            />
-                                                            <span>Prev</span>
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="border border-gray-951 mt-2 rounded rounded-xl h-[65px] w-full p-1">
-                                                <button
-                                                    className="text-gray-952 inline-flex justify-center items-center text-sm h-8 mb-2"
-                                                >
+                                    filterData.map((item: any, index: any) => (
+                                        <>
+                                            <div className="col-span-3 sm:col-span-2 md:col-span-3 lg:col-span-1 xl:col-span-4..." key={index}>
+                                                <div className={`border border-gray-200 h-72 w-full rounded-md overflow-hidden relative ${styles.imagewrap}`}>
+                                                    <input type="checkbox" className="scale-125 absolute top-1 left-1" />
                                                     <Image
-                                                        src="/img/pluswhite.svg"
-                                                        alt="close"
-                                                        height={14}
-                                                        width={14}
+                                                        src={item.path}
+                                                        alt="car"
+                                                        height={150}
+                                                        width={150}
+                                                        className="w-full h-full"
                                                     />
-                                                    <span>Add Tag</span>
-                                                </button>
-                                            </div>
-                                        </div>
+                                                    <div className={`${styles.info} relative flex items-center justify-center`}>
+                                                        <span className="text-white text-[13px] font-light absolute top-0 left-1">Uploaded Date: 05-11-2023</span>
+                                                        <div className="relative flex flex-wrap items-center justify-between h-full px-5">
 
-                                        {showImageModal ? (
-                                            <>
-                                                <div
-                                                    className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
-                                                >
-                                                    <div className="relative my-6 w-[450px] ">
-                                                        <div className="border-0 rounded-xl shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none w-[450px] h-[420px] overflow-hidden-1 ">
-                                                            {/*header*/}
-                                                            <div className="flex items-start justify-between p-0">
-                                                                <button
-                                                                    className="bg-transparent border-0 text-black float-right leading-none font-semibold outline-none focus:outline-none bg-white absolute right-[-30px] top-[-30px] rounded rounded-full p-1 hover:bg-yellow-951"
-                                                                    onClick={() => setShowImageModal(false)}
-                                                                >
-                                                                    <Image
-                                                                        src="/img/close.svg"
-                                                                        alt="close"
-                                                                        className="h-6"
-                                                                        height={24}
-                                                                        width={24}
-                                                                    />
-                                                                </button>
-                                                            </div>
-                                                            {/*body*/}
-                                                            <div className="relative p-0 flex items-center jusifiy-center h-full w-full">
-                                                                {
-                                                                    resImage ?
-                                                                        <Image
-                                                                            src={resImage}
-                                                                            alt="result"
-                                                                            className="h-auto w-auto"
-                                                                            height={420}
-                                                                            width={450}
-                                                                        />
-                                                                        :
-                                                                        <div className="text-xl font-semibold w-full text-center flex flex-wrap flex-col items-center justify-center">
-                                                                            <Image
-                                                                                src="/img/no_image_icon.svg"
-                                                                                alt="no image"
-                                                                                height={100}
-                                                                                width={100}
-                                                                                className="inline-block"
-                                                                            />
-                                                                            <span className="mt-3">No Image Found!! </span>
-                                                                        </div>
-                                                                }
-                                                            </div>
+                                                            <Link
+                                                                href={{
+                                                                    pathname: "/dashboard/eopstrace/modelview",
+                                                                    query: {
+                                                                        objectID: parentAsset.objectID,
+                                                                        key: parentAsset.key,
+                                                                        model: parentAsset.model,
+                                                                        result: item.resultImage ? item.resultImage : ''
+                                                                    }
+                                                                }}
+                                                                className="bg-yellow-951 rounded rounded-md flex justify-center items-center texxt-black font-semibold text-sm p-2 w-24"
+                                                            >
+                                                                <Image
+                                                                    src="/img/carIcon.svg"
+                                                                    alt="car"
+                                                                    height={21}
+                                                                    width={21}
+                                                                    className="mr-2"
+                                                                />
+                                                                <span>Test</span>
+                                                            </Link>
+                                                            <button
+                                                                // onClick={() => setShowImageModal(true)}
+                                                                onClick={() => imageModal(item.resultImage)}
+                                                                className="bg-yellow-951 rounded rounded-md flex justify-center items-center texxt-black font-semibold text-sm p-2 w-24 ml-3"
+                                                            >
+                                                                <Image
+                                                                    src="/img/search.svg"
+                                                                    alt="car"
+                                                                    height={21}
+                                                                    width={21}
+                                                                    className="mr-2"
+                                                                />
+                                                                <span>Prev</span>
+                                                            </button>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
-                                            </>
-                                        ) : null}
+                                                <div className="border border-gray-951 mt-2 rounded rounded-xl h-[65px] w-full p-1">
+                                                    <button
+                                                        className="text-gray-952 inline-flex justify-center items-center text-sm h-8 mb-2"
+                                                    >
+                                                        <Image
+                                                            src="/img/pluswhite.svg"
+                                                            alt="close"
+                                                            height={14}
+                                                            width={14}
+                                                        />
+                                                        <span>Add Tag</span>
+                                                    </button>
+                                                </div>
+                                            </div>
 
-                                    </>
-                                ))
-                            }
-                        </div>
-                        :
-                        <div className="h-72 flex justify-center items-center flex-wrap flex-col mt-8 w-full">
-                            <NoDataFound createText="No image found!" />
-                        </div>
-                    }
+                                            {showImageModal ? (
+                                                <>
+                                                    <div
+                                                        className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
+                                                    >
+                                                        <div className="relative my-6 w-[450px] ">
+                                                            <div className="border-0 rounded-xl shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none w-[450px] h-[420px] overflow-hidden-1 ">
+                                                                {/*header*/}
+                                                                <div className="flex items-start justify-between p-0">
+                                                                    <button
+                                                                        className="bg-transparent border-0 text-black float-right leading-none font-semibold outline-none focus:outline-none bg-white absolute right-[-30px] top-[-30px] rounded rounded-full p-1 hover:bg-yellow-951"
+                                                                        onClick={() => setShowImageModal(false)}
+                                                                    >
+                                                                        <Image
+                                                                            src="/img/close.svg"
+                                                                            alt="close"
+                                                                            className="h-6"
+                                                                            height={24}
+                                                                            width={24}
+                                                                        />
+                                                                    </button>
+                                                                </div>
+                                                                {/*body*/}
+                                                                <div className="relative p-0 flex items-center jusifiy-center h-full w-full">
+                                                                    {
+                                                                        resImage ?
+                                                                            <Image
+                                                                                src={resImage}
+                                                                                alt="result"
+                                                                                className="h-auto w-auto"
+                                                                                height={420}
+                                                                                width={450}
+                                                                            />
+                                                                            :
+                                                                            <div className="text-xl font-semibold w-full text-center flex flex-wrap flex-col items-center justify-center">
+                                                                                <Image
+                                                                                    src="/img/no_image_icon.svg"
+                                                                                    alt="no image"
+                                                                                    height={100}
+                                                                                    width={100}
+                                                                                    className="inline-block"
+                                                                                />
+                                                                                <span className="mt-3">No Image Found!! </span>
+                                                                            </div>
+                                                                    }
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
+                                                </>
+                                            ) : null}
+
+                                        </>
+                                    ))
+                                }
+                            </div>
+                            :
+                            <div className="h-72 flex justify-center items-center flex-wrap flex-col mt-8 w-full">
+                                <NoDataFound createText="No image found!" />
+                            </div>
+                        }
+                    </div>
 
 
 

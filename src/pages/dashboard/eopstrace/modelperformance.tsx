@@ -37,7 +37,7 @@ export default function ModelPerformance() {
                     {/* Content Goes Here */} 
                     <div className="relative mt-10">
                         <Image
-                        src="/img/ModelPerformance.png"
+                        src="/img/eopstrace/ModelPerformanceImage1.png"
                         alt="Model Performance"
                         height={500}
                         width={500}
