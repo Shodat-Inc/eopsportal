@@ -26,7 +26,7 @@ export default function ModelView() {
                         <nav className="flex" aria-label="Breadcrumb">
                             <ol className="inline-flex items-center space-x-1 md:space-x-1">
                                 <li className="inline-flex items-center">
-                                    <Link href="/dashboard/eopswatch"
+                                    <Link href="/dashboard/eopstrace"
                                         className="inline-flex items-center text-sm font-medium text-black hover:text-yellow-950">
                                         <Image
                                             src="/img/home.svg"
