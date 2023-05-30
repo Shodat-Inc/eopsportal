@@ -28,7 +28,6 @@ export default function TrainingModel() {
                         return item;
                     }
                 });
-                console.log("AMIT - RES", filtered);
                 if (filtered && filtered.length > 0) {
                     if (filtered[0].images) {
                         setData(filtered[0].images);

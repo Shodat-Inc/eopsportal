@@ -3,28 +3,22 @@ import Layout from "../../../components/Layout";
 import Template from "../template";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from 'next/router'
+import axios from 'axios';
+import NoDataFound from "../../../common/nodatafound";
 
 export default function ProductionView() {
 
-    const [chooseAsset, setChooseAsset] = useState("Wear Deduction Model");
-    const [toggleAsset, setToggleAsset] = useState(false);
+    const router = useRouter();
+    const parentAsset = router.query;
 
-    // Show Choose Asset List
-    const showChooseAssetList = () => {
-        setToggleAsset(!toggleAsset)
-    }
-    const selectAsset = (item: any) => {
-        setChooseAsset(item);
-        setToggleAsset(false)
-    }
     return (
         <div className="flex font-OpenSans">
 
             <div className="w-[100%]">
                 <div className="columns-2 flex justify-between items-center">
-                    <p className="text-black text-lg mb-0 font-semibold">eOps Watch</p>                    
+                    <p className="text-black text-lg mb-0 font-semibold">eOps Trace</p>
                 </div>
-                {/* <div className="h-10 w-fill px-6 py-2 bg-gray-300 text-black rounded rounded-xl mt-2">This is a navigation of external image from management flow</div> */}
 
                 <div className="border min-h-full rounded-xl mt-3 px-4 py-4">
                     <div className="flex justify-between items-center">
@@ -32,7 +26,7 @@ export default function ProductionView() {
                         <nav className="flex" aria-label="Breadcrumb">
                             <ol className="inline-flex items-center space-x-1 md:space-x-1">
                                 <li className="inline-flex items-center">
-                                    <Link href="/dashboard/eopstrace"
+                                    <Link href="/dashboard/eopswatch"
                                         className="inline-flex items-center text-sm font-medium text-black hover:text-yellow-950">
                                         <Image
                                             src="/img/home.svg"
@@ -52,8 +46,51 @@ export default function ProductionView() {
                                             height={24}
                                             width={24}
                                         />
-                                        <span className="ml-1 text-sm text-black hover:text-yellow-950 md:ml-1 font-bold">Object ID</span>
+                                        <span className="ml-1 text-sm text-black hover:text-yellow-950 md:ml-1 font-bold">{parentAsset.key}</span>
                                     </div>
+                                </li>
+                                <li>
+                                    <Link
+                                        href={{
+                                            pathname: "/dashboard/eopstrace/tracemodel",
+                                            query: {
+                                                objectID: parentAsset.objectID,
+                                                key: parentAsset.key
+                                            }
+                                        }}
+                                        className="flex items-center"
+                                    >
+                                        <Image
+                                            src="/img/arrow-right.svg"
+                                            alt="arrow-right"
+                                            className="h-6"
+                                            height={24}
+                                            width={24}
+                                        />
+                                        <span className="ml-1 text-sm font-medium text-black hover:text-yellow-950 md:ml-1">{parentAsset.model}</span>
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link
+                                        href={{
+                                            pathname: "/dashboard/eopstrace/productionmodel",
+                                            query: {
+                                                objectID: parentAsset.objectID,
+                                                key: parentAsset.key,
+                                                model: parentAsset.model
+                                            }
+                                        }}
+                                        className="flex items-center"
+                                    >
+                                        <Image
+                                            src="/img/arrow-right.svg"
+                                            alt="arrow-right"
+                                            className="h-6"
+                                            height={24}
+                                            width={24}
+                                        />
+                                        <span className="ml-1 text-sm font-medium text-black hover:text-yellow-950 md:ml-1">Productions</span>
+                                    </Link>
                                 </li>
                                 <li>
                                     <div className="flex items-center">
@@ -64,31 +101,7 @@ export default function ProductionView() {
                                             height={24}
                                             width={24}
                                         />
-                                        <span className="ml-1 text-sm text-black hover:text-yellow-950 md:ml-1 font-bold">Default Training Model</span>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div className="flex items-center">
-                                        <Image
-                                            src="/img/arrow-right.svg"
-                                            alt="arrow-right"
-                                            className="h-6"
-                                            height={24}
-                                            width={24}
-                                        />
-                                        <span className="ml-1 text-sm text-black hover:text-yellow-950 md:ml-1 font-bold">Show Results</span>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div className="flex items-center">
-                                        <Image
-                                            src="/img/arrow-right.svg"
-                                            alt="arrow-right"
-                                            className="h-6"
-                                            height={24}
-                                            width={24}
-                                        />
-                                        <span className="ml-1 text-sm font-medium text-black hover:text-yellow-950 md:ml-1">Test View</span>
+                                        <span className="ml-1 text-sm font-medium text-black md:ml-1">Result</span>
                                     </div>
                                 </li>
                             </ol>
@@ -98,12 +111,26 @@ export default function ProductionView() {
 
                     {/* Images */}
                     <div className="relative mt-10 rounded overflow-hidden rounded-xl">
-                        <Image
-                            src="/img/productionResults.png"
-                            alt="car"
-                            height={600}
-                            width={600}
-                        />
+                        {parentAsset.result ?
+                            <Image
+                                src={parentAsset?.result?.toString()}
+                                alt="result image"
+                                height={600}
+                                width={600}
+                                className="h-full w-full"
+                            />
+                            :
+                            <div className="text-xl font-semibold w-full text-center flex flex-wrap flex-col items-center justify-center">
+                                <Image
+                                    src="/img/no_image_icon.svg"
+                                    alt="no image"
+                                    height={100}
+                                    width={100}
+                                    className="inline-block"
+                                />
+                                <span className="mt-3">No Image Found!! </span>
+                            </div>
+                        }
                     </div>
 
                 </div>

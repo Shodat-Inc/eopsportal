@@ -4,10 +4,27 @@ import Layout from "../../../components/Layout";
 import Template from "../template";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from 'next/router'
+
+const ManufacturingPlantsClass = [
+    "Crack Detection",
+    "Parts Detection",
+    "Workplace Safety Detection"
+]
+const VehicleClass = [
+    "Crack Detection",
+    "Tire Wear Detection",
+    "Crystallization Detection",
+    "Parts Detection",
+    "Battery Life Prediction"
+]
 
 export default function TraceModel() {
 
-    const [chooseAsset, setChooseAsset] = useState("Wear Deduction Model");
+    const router = useRouter();
+    const parentAsset = router.query;
+
+    const [chooseAsset, setChooseAsset] = useState(parentAsset.objectID ==="Manufacturing Plants" ? ManufacturingPlantsClass[0] : VehicleClass[0]);
     const [toggleAsset, setToggleAsset] = useState(false);
 
     // Show Choose Asset List
@@ -23,15 +40,15 @@ export default function TraceModel() {
 
             <div className="w-[100%]">
                 <div className="columns-2 flex justify-between items-center">
-                    <p className="text-black text-lg mb-0 font-semibold">eOps Watch</p>
+                    <p className="text-black text-lg mb-0 font-semibold">eOps Trace</p>
                 </div>
 
                 <div className="border min-h-full rounded-xl mt-3 px-4 py-4">
                     <div className="flex justify-start items-start">
-                        <nav className="flex" aria-label="Breadcrumb">
+                    <nav className="flex" aria-label="Breadcrumb">
                             <ol className="inline-flex items-center space-x-1 md:space-x-1">
                                 <li className="inline-flex items-center">
-                                    <Link href="/dashboard/eopstrace"
+                                    <Link href="/dashboard/eopswatch"
                                         className="inline-flex items-center text-sm font-medium text-black hover:text-yellow-950">
                                         <Image
                                             src="/img/home.svg"
@@ -51,19 +68,7 @@ export default function TraceModel() {
                                             height={24}
                                             width={24}
                                         />
-                                        <span className="ml-1 text-sm font-medium text-black hover:text-yellow-950 md:ml-1">Object ID</span>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div className="flex items-center">
-                                        <Image
-                                            src="/img/arrow-right.svg"
-                                            alt="arrow-right"
-                                            className="h-6"
-                                            height={24}
-                                            width={24}
-                                        />
-                                        <span className="ml-1 text-sm font-medium text-black hover:text-yellow-950 md:ml-1">Training Model</span>
+                                        <span className="ml-1 text-sm font-medium text-black hover:text-yellow-950 md:ml-1">{parentAsset.key}</span>
                                     </div>
                                 </li>
                             </ol>
@@ -138,44 +143,48 @@ export default function TraceModel() {
                                 </div>
                                 {toggleAsset ?
                                     <div className={`h-52 border rounded-xl border-gray-500 h-[250px] w-[400px]  flex items-start justify-start mt-1 overflow-hidden overflow-y-scroll absolute top-[100%] left-0 z-10 ${styles.scroll}`}>
-                                        <ul className="p-0 m-0 w-full">
-                                            <li
-                                                className="px-5 py-4 bg-white cursor-pointer hover:bg-yellow-951 w-full font-normal"
-                                                onClick={() => selectAsset('Default Training Model')}
-                                            >
-                                                <span>Default Training Model</span>
-                                            </li>
-                                            <li
-                                                className="px-5 py-4 bg-white cursor-pointer hover:bg-yellow-951 w-full font-normal"
-                                                onClick={() => selectAsset('Tire Tread Deduction')}
-                                            >
-                                                <span>Tire Tread Deduction</span>
-                                            </li>
-                                            <li
-                                                className="px-5 py-4 bg-white cursor-pointer hover:bg-yellow-951 w-full font-normal"
-                                                onClick={() => selectAsset('Wear Detection Model')}
-                                            >
-                                                <span>Wear Detection Model</span>
-                                            </li>
-                                            <li
-                                                className="px-5 py-4 bg-white cursor-pointer hover:bg-yellow-951 w-full font-normal"
-                                                onClick={() => selectAsset('Type Pressure Monitoring')}
-                                            >
-                                                <span>Type Pressure Monitoring</span>
-                                            </li>
-                                            <li
-                                                className="px-5 py-4 bg-white cursor-pointer hover:bg-yellow-951 w-full font-normal"
-                                                onClick={() => selectAsset('Type Wear Prediction')}
-                                            >
-                                                <span>Type Wear Prediction</span>
-                                            </li>
+                                        <ul className="p-0 m-0 w-full z-5">
+                                            {
+                                                parentAsset.objectID === 'Manufacturing Plants' ?
+                                                    ManufacturingPlantsClass.map((item: any, i: any) => (
+                                                        <li
+                                                            className="px-5 py-4 bg-white cursor-pointer hover:bg-yellow-951 w-full font-normal"
+                                                            onClick={() => selectAsset(item)}
+                                                            key={i}
+                                                        >
+                                                            <span>{item}</span>
+                                                        </li>
+                                                    ))
+                                                    :
+                                                    VehicleClass.map((item: any, i: any) => (
+                                                        <li
+                                                            className="px-5 py-4 bg-white cursor-pointer hover:bg-yellow-951 w-full font-normal"
+                                                            onClick={() => selectAsset(item)}
+                                                            key={i}
+                                                        >
+                                                            <span>{item}</span>
+                                                        </li>
+                                                    ))
+
+                                            }
+                                           
                                         </ul>
                                     </div>
                                     : null}
                             </div>
 
                             <div className="flex mt-10">
-                                <Link href="/dashboard/eopstrace/testmodel" className="relative mr-16">
+                                <Link
+                                    href={{
+                                        pathname: "/dashboard/eopstrace/testmodel",
+                                        query: {
+                                            objectID: parentAsset.objectID,
+                                            key: parentAsset.key,
+                                            model: chooseAsset
+                                        }
+                                    }}
+                                    className="relative mr-16"
+                                >
                                     <Image
                                         src="/img/folder.svg"
                                         alt="folder"
@@ -185,7 +194,17 @@ export default function TraceModel() {
                                     <span className="absolute top-[65px] left-[45px] text-lg font-semibold">Test</span>
                                 </Link>
 
-                                <Link href="/dashboard/eopstrace/productionmodel" className="relative mr-16">
+                                <Link
+                                    href={{
+                                        pathname: "/dashboard/eopstrace/productionmodel",
+                                        query: {
+                                            objectID: parentAsset.objectID,
+                                            key: parentAsset.key,
+                                            model: chooseAsset
+                                        }
+                                    }}
+                                    className="relative mr-16"
+                                >
                                     <Image
                                         src="/img/folder.svg"
                                         alt="folder"

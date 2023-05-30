@@ -10,7 +10,7 @@ export default function ModelPerformance() {
 
             <div className="w-[100%]">
                 <div className="columns-2 flex justify-between items-center">
-                    <p className="text-black text-lg mb-0 font-semibold">Dummy Page</p>
+                    <p className="text-black text-lg mb-0 font-semibold">eOps Trace</p>
                 </div>
 
                 <div className="border min-h-full rounded-xl mt-3 px-4 py-4">

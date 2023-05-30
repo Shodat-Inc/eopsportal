@@ -12,7 +12,6 @@ export default function EopsWatch() {
     const [subObj, setSebObj] = useState({} as any);
     const onChange = (event: any) => {
         setValue(event.target.value)
-
         axios.get("/api/getChildObject").then((response) => {
             if (response.data) {
 
@@ -20,8 +19,7 @@ export default function EopsWatch() {
                     setData([]); return;
                 }
                 const filtered = response.data.filter((item: any) => {
-                    console.log("ITEMS =>", response.data.tags)
-                    if(item.tags.hasOwnProperty("VIN")) {
+                    if (item.tags.hasOwnProperty("VIN")) {
                         if (item.tags.VIN.toString().toLowerCase().includes(event.target.value.toString().toLowerCase())) {
                             return item;
                         }
@@ -40,10 +38,8 @@ export default function EopsWatch() {
     }
 
     const subObjectSelected = (obj: any) => {
-        console.log("Object", obj);
         setData([]);
         setValue("")
-
         axios.get("/api/getChildObject").then((response) => {
             if (response.data) {
 
@@ -51,11 +47,7 @@ export default function EopsWatch() {
                     return;
                 }
                 const filtered = response.data.filter((item: any) => {
-                    // if (item.tags.BatteryType.toString().toLowerCase().includes(obj.toString().toLowerCase())) {
-                    //     return item;
-                    // }
-
-                    if(item.tags.hasOwnProperty("VIN")) {
+                    if (item.tags.hasOwnProperty("VIN")) {
                         if (item.tags.VIN.toString().toLowerCase().includes(obj.toString().toLowerCase())) {
                             return item;
                         }
@@ -64,18 +56,13 @@ export default function EopsWatch() {
                             return item;
                         }
                     }
-
                 });
                 if (filtered && filtered.length > 0) {
                     setSebObj(filtered[0]);
                 }
-
             }
         });
-
     }
-
-    console.log("AMIT - subObj =>", data)
 
     return (
         <div className="flex font-OpenSans">
@@ -135,12 +122,12 @@ export default function EopsWatch() {
                                             <button
                                                 className="text-left px-4 py-3 hover:bg-yellow-951 w-full"
                                                 key={index}
-                                                onClick={() => subObjectSelected(items.className==="Manufacturing Plants" ? items.tags.PlantID : items.tags.VIN)}
+                                                onClick={() => subObjectSelected(items.className === "Manufacturing Plants" ? items.tags.PlantID : items.tags.VIN)}
                                             >
                                                 {
-                                                    items.className==="Manufacturing Plants" ? items.tags.PlantID : items.tags.VIN
+                                                    items.className === "Manufacturing Plants" ? items.tags.PlantID : items.tags.VIN
                                                 }
-                                                
+
                                             </button>
                                         ))
                                     }
@@ -151,54 +138,53 @@ export default function EopsWatch() {
 
                     </div>
 
-                    
-                    {subObj ? 
-                    <div className="flex w-full flex-wrap mt-10">
-                        <div className="text-black font-semibold text-md mb-2">Objects</div>
-                        <div className="overflow-hidden border rounded-xl w-full">
-                            <table className={`table-auto min-w-full text-left ${styles.table}`}>
-                                <thead className="bg-black text-white rounded-xl h-10 text-sm font-light">
-                                    {
-                                        subObj && Object.keys(subObj).length != 0 ?
-                                            Object.keys(subObj?.tags).map((item: any, i: any) => (
-                                                <th key={i}>
-                                                    {
-                                                        item.split(/(?=[A-Z])/).join(" ").toUpperCase()
-                                                    }
-                                                </th>
-                                            ))
-                                            : null
-                                    }
-                                </thead>
-                                <tbody>
-                                    <tr>
+
+                    {subObj ?
+                        <div className="flex w-full flex-wrap mt-10">
+                            <div className="text-black font-semibold text-md mb-2">Objects</div>
+                            <div className="overflow-hidden border rounded-xl w-full">
+                                <table className={`table-auto min-w-full text-left ${styles.table}`}>
+                                    <thead className="bg-black text-white rounded-xl h-10 text-sm font-light">
                                         {
                                             subObj && Object.keys(subObj).length != 0 ?
-                                                Object.values(subObj?.tags).map((item: any, i: any) => (
-
-                                                    <td key={i}>
-                                                        <Link
-                                                            // href="/dashboard/eopswatch/eopswatchmodel"
-                                                            href={{
-                                                                pathname: '/dashboard/eopswatch/eopswatchmodel',
-                                                                query: {
-                                                                    objectID: item
-                                                                }
-                                                            }}
-                                                        >
-                                                            {item}
-                                                        </Link>
-                                                    </td>
-
+                                                Object.keys(subObj?.tags).map((item: any, i: any) => (
+                                                    <th key={i}>
+                                                        {
+                                                            item.split(/(?=[A-Z])/).join(" ").toUpperCase()
+                                                        }
+                                                    </th>
                                                 ))
                                                 : null
                                         }
-                                    </tr>
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            {
+                                                subObj && Object.keys(subObj).length != 0 ?
+                                                    Object.values(subObj?.tags).map((item: any, i: any) => (
+
+                                                        <td key={i}>
+                                                            <Link
+                                                                href={{
+                                                                    pathname: '/dashboard/eopswatch/eopswatchmodel',
+                                                                    query: {
+                                                                        objectID: item
+                                                                    }
+                                                                }}
+                                                            >
+                                                                {item}
+                                                            </Link>
+                                                        </td>
+
+                                                    ))
+                                                    : null
+                                            }
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
-                    </div>
-                    : null }
+                        : null}
 
                 </div>
             </div>

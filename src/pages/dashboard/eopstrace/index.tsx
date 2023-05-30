@@ -12,7 +12,6 @@ export default function EopsTrace() {
     const [subObj, setSebObj] = useState({} as any);
     const onChange = (event: any) => {
         setValue(event.target.value)
-
         axios.get("/api/getChildObject").then((response) => {
             if (response.data) {
 
@@ -20,9 +19,14 @@ export default function EopsTrace() {
                     setData([]); return;
                 }
                 const filtered = response.data.filter((item: any) => {
-                    // console.log("ITEMS =>", item.tags.BatteryType)
-                    if (item.tags.BatteryType.toString().toLowerCase().includes(event.target.value.toString().toLowerCase())) {
-                        return item;
+                    if (item.tags.hasOwnProperty("VIN")) {
+                        if (item.tags.VIN.toString().toLowerCase().includes(event.target.value.toString().toLowerCase())) {
+                            return item;
+                        }
+                    } else {
+                        if (item.tags.PlantID.toString().toLowerCase().includes(event.target.value.toString().toLowerCase())) {
+                            return item;
+                        }
                     }
                 });
                 if (filtered && filtered.length > 0) {
@@ -34,10 +38,8 @@ export default function EopsTrace() {
     }
 
     const subObjectSelected = (obj: any) => {
-        console.log("Object", obj);
         setData([]);
         setValue("")
-
         axios.get("/api/getChildObject").then((response) => {
             if (response.data) {
 
@@ -45,28 +47,29 @@ export default function EopsTrace() {
                     return;
                 }
                 const filtered = response.data.filter((item: any) => {
-                    // console.log("ITEMS =>", item.tags.BatteryType)
-                    if (item.tags.BatteryType.toString().toLowerCase().includes(obj.toString().toLowerCase())) {
-                        return item;
+                    if (item.tags.hasOwnProperty("VIN")) {
+                        if (item.tags.VIN.toString().toLowerCase().includes(obj.toString().toLowerCase())) {
+                            return item;
+                        }
+                    } else {
+                        if (item.tags.PlantID.toString().toLowerCase().includes(obj.toString().toLowerCase())) {
+                            return item;
+                        }
                     }
                 });
                 if (filtered && filtered.length > 0) {
                     setSebObj(filtered[0]);
                 }
-
             }
         });
-
     }
 
-    // console.log("subObj", subObj);
-    // console.log(Object.keys(subObj?.tags));
     return (
         <div className="flex font-OpenSans">
 
             <div className="w-[100%]">
                 <div className="columns-2 flex justify-between items-center">
-                    <p className="text-black text-lg mb-0 font-semibold">eOps Watch</p>
+                    <p className="text-black text-lg mb-0 font-semibold">eOps Trace</p>
                 </div>
 
                 <div className="border min-h-full rounded-xl mt-3 px-4 py-4">
@@ -74,7 +77,7 @@ export default function EopsTrace() {
                         <nav className="flex" aria-label="Breadcrumb">
                             <ol className="inline-flex items-center space-x-1 md:space-x-1">
                                 <li className="inline-flex items-center">
-                                    <Link href="/dashboard/eopstrace"
+                                    <Link href="/dashboard/eopswatch"
                                         className="inline-flex items-center text-sm font-medium text-black hover:text-yellow-950">
                                         <Image
                                             src="/img/home.svg"
@@ -119,9 +122,12 @@ export default function EopsTrace() {
                                             <button
                                                 className="text-left px-4 py-3 hover:bg-yellow-951 w-full"
                                                 key={index}
-                                                onClick={() => subObjectSelected(items.tags.BatteryType)}
+                                                onClick={() => subObjectSelected(items.className === "Manufacturing Plants" ? items.tags.PlantID : items.tags.VIN)}
                                             >
-                                                {items.tags.BatteryType}
+                                                {
+                                                    items.className === "Manufacturing Plants" ? items.tags.PlantID : items.tags.VIN
+                                                }
+
                                             </button>
                                         ))
                                     }
@@ -133,45 +139,52 @@ export default function EopsTrace() {
                     </div>
 
 
-                    <div className="flex w-full flex-wrap mt-10">
-                        <div className="text-black font-semibold text-md mb-2">Objects</div>
-                        <div className="overflow-hidden border rounded-xl w-full">
-                            <table className={`table-auto min-w-full text-left ${styles.table}`}>
-                                <thead className="bg-black text-white rounded-xl h-10 text-sm font-light">
-                                    {
-                                        subObj && Object.keys(subObj).length != 0 ?
-                                            Object.keys(subObj?.tags).map((item: any, i: any) => (
-                                                <th>
-                                                    {
-                                                        item.split(/(?=[A-Z])/).join(" ").toUpperCase()
-                                                    }
-                                                </th>
-                                            ))
-                                            : null
-                                    }
-                                </thead>
-                                <tbody>
-                                    <tr>
+                    {subObj ?
+                        <div className="flex w-full flex-wrap mt-10">
+                            <div className="text-black font-semibold text-md mb-2">Objects</div>
+                            <div className="overflow-hidden border rounded-xl w-full">
+                                <table className={`table-auto min-w-full text-left ${styles.table}`}>
+                                    <thead className="bg-black text-white rounded-xl h-10 text-sm font-light">
                                         {
                                             subObj && Object.keys(subObj).length != 0 ?
-                                                Object.values(subObj?.tags).map((item: any, i: any) => (
-
-                                                    <td>
-                                                        <Link
-                                                            href="/dashboard/eopstrace/tracemodel"
-                                                        >
-                                                            {item}
-                                                        </Link>
-                                                    </td>
-
+                                                Object.keys(subObj?.tags).map((item: any, i: any) => (
+                                                    <th key={i}>
+                                                        {
+                                                            item.split(/(?=[A-Z])/).join(" ").toUpperCase()
+                                                        }
+                                                    </th>
                                                 ))
                                                 : null
                                         }
-                                    </tr>
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            {
+                                                subObj && Object.keys(subObj).length != 0 ?
+                                                    Object.values(subObj?.tags).map((item: any, i: any) => (
+
+                                                        <td key={i}>
+                                                            <Link
+                                                                href={{
+                                                                    pathname: '/dashboard/eopstrace/tracemodel',
+                                                                    query: {
+                                                                        objectID: item
+                                                                    }
+                                                                }}
+                                                            >
+                                                                {item}
+                                                            </Link>
+                                                        </td>
+
+                                                    ))
+                                                    : null
+                                            }
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
-                    </div>
+                        : null}
 
                 </div>
             </div>

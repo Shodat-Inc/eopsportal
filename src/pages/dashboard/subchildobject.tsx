@@ -300,7 +300,7 @@ export default function SubChildObject(localData: any) {
 
                                 <Link
                                     href={{
-                                        pathname: '/dashboard/eopswatch/eopswatchmodel',
+                                        pathname: '/dashboard/eopstrace/tracemodel',
                                         query: {
                                             objectID: parentAsset.class,
                                             key: parentAsset.id
