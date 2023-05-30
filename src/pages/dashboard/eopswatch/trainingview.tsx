@@ -11,13 +11,13 @@ export default function TrainingView() {
 
     const router = useRouter();
     const parentAsset = router.query;
-  
+
     return (
         <div className="flex font-OpenSans">
 
             <div className="w-[100%]">
                 <div className="columns-2 flex justify-between items-center">
-                    <p className="text-black text-lg mb-0 font-semibold">eOps Watch</p>                    
+                    <p className="text-black text-lg mb-0 font-semibold">eOps Watch</p>
                 </div>
 
                 <div className="border min-h-full rounded-xl mt-3 px-4 py-4">
@@ -50,7 +50,16 @@ export default function TrainingView() {
                                     </div>
                                 </li>
                                 <li>
-                                    <div className="flex items-center">
+                                    <Link
+                                        href={{
+                                            pathname: "/dashboard/eopswatch/eopswatchmodel",
+                                            query: {
+                                                objectID: parentAsset.objectID,
+                                                key: parentAsset.key
+                                            }
+                                        }}
+                                        className="flex items-center"
+                                    >
                                         <Image
                                             src="/img/arrow-right.svg"
                                             alt="arrow-right"
@@ -59,10 +68,20 @@ export default function TrainingView() {
                                             width={24}
                                         />
                                         <span className="ml-1 text-sm font-medium text-black hover:text-yellow-950 md:ml-1">{parentAsset.model}</span>
-                                    </div>
+                                    </Link>
                                 </li>
                                 <li>
-                                    <div className="flex items-center">
+                                    <Link
+                                        href={{
+                                            pathname: "/dashboard/eopswatch/trainingmodel",
+                                            query: {
+                                                objectID: parentAsset.objectID,
+                                                key: parentAsset.key,
+                                                model: parentAsset.model
+                                            }
+                                        }}
+                                        className="flex items-center"
+                                    >
                                         <Image
                                             src="/img/arrow-right.svg"
                                             alt="arrow-right"
@@ -71,7 +90,7 @@ export default function TrainingView() {
                                             width={24}
                                         />
                                         <span className="ml-1 text-sm font-medium text-black hover:text-yellow-950 md:ml-1">Test</span>
-                                    </div>
+                                    </Link>
                                 </li>
                                 <li>
                                     <div className="flex items-center">
@@ -92,17 +111,26 @@ export default function TrainingView() {
 
                     {/* Images */}
                     <div className="relative mt-10 rounded overflow-hidden rounded-xl">
-                        {parentAsset.result ? 
-                        <Image
-                            src={parentAsset?.result?.toString()}
-                            alt="result image"
-                            height={600}
-                            width={600}
-                            className="h-full w-full"
-                        />
-                        :
-                        <h1>No Image Found!!</h1>
-}
+                        {parentAsset.result ?
+                            <Image
+                                src={parentAsset?.result?.toString()}
+                                alt="result image"
+                                height={600}
+                                width={600}
+                                className="h-full w-full"
+                            />
+                            :
+                            <div className="text-xl font-semibold w-full text-center flex flex-wrap flex-col items-center justify-center">
+                                <Image
+                                    src="/img/no_image_icon.svg"
+                                    alt="no image"
+                                    height={100}
+                                    width={100}
+                                    className="inline-block"
+                                />
+                                <span className="mt-3">No Image Found!! </span>
+                            </div>
+                        }
                     </div>
 
                 </div>
