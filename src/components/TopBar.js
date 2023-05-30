@@ -36,7 +36,7 @@ export default function TopBar({ showNav, setShowNav }) {
           <input
             type="text"
             className={`block w-full mt-2 pl-12 w-96 ${styles.searchbox}`}
-            placeholder="Search your asset by ID or key name"
+            placeholder="Search..."
             name="globalsearch"
           />
         </div>

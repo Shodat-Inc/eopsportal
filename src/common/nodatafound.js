@@ -11,7 +11,7 @@ const NoDataFound = (props) => {
                     width={72}
                 />
             </div>
-            <p className="text-black text-2xl mt-8 font-medium">No asset data found!!</p>
+            <p className="text-black text-2xl mt-8 font-medium">No data found!!</p>
             <p className="text-black text-xl mt-3 font-normal">Please create your sub asset by clicking on <span className="text-black font-bold">&#34;{props.createText}&#34;</span> button.</p>
         </div>
     )

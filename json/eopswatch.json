@@ -1,0 +1,163 @@
+[
+    {
+        "class":"Manufacturing Plants",
+        "ID": "TPC71810-01-012",
+        "modal": "Crack Detection",
+        "images": [
+            {
+                "folder": "Test",
+                "path": "/img/CrackDetection/TPC71810-01-012/Test/WallTest1.png",
+                "resultImage": "/img/CrackDetection/TPC71810-01-012/Test/WallTest1Result.png",
+                "dateUploaded": "05-11-2023"
+                
+            },
+            {
+                "folder": "Test",
+                "path": "/img/CrackDetection/TPC71810-01-012/Test/WallTest2.png",
+                "resultImage": "",
+                "dateUploaded": "05-11-2023"
+            },
+            {
+                "folder": "Test",
+                "path": "/img/CrackDetection/TPC71810-01-012/Test/WallTest3.png",
+                "resultImage": "/img/CrackDetection/TPC71810-01-012/Test/WallTest3Result.png",
+                "dateUploaded": "05-11-2023"
+            },
+            {
+                "folder": "Test",
+                "path": "/img/CrackDetection/TPC71810-01-012/Test/WallTest4.png",
+                "resultImage": "",
+                "dateUploaded": "05-11-2023"
+            },
+            {
+                "folder": "Production",
+                "path": "/img/CrackDetection/TPC71810-01-012/Test/WallProd1.png",
+                "resultImage": "/img/CrackDetection/TPC71810-01-012/Production/WallProd1Result.png",
+                "dateUploaded": "05-11-2023"
+            },
+            {
+                "folder": "Production",
+                "path": "/img/CrackDetection/TPC71810-01-012/Production/WallProd2.png",
+                "resultImage": "/img/CrackDetection/TPC71810-01-012/Production/WallProd1Result.png",
+                "dateUploaded": "05-11-2023"
+            }
+        ]
+    },
+    {
+        "class":"Manufacturing Plants",
+        "ID": "TPC3305-01-011",
+        "modal": "Crack Detection",
+        "images": [
+            {
+                "folder": "Test",
+                "path": "/img/CrackDetection/TPC3305-01-011/Test/PipeTest1.png",
+                "resultImage": "",
+                "dateUploaded": "05-11-2023"
+            },
+            {
+                "folder": "Test",
+                "path": "/img/CrackDetection/TPC3305-01-011/Test/PipeTest2.png",
+                "resultImage": "/img/CrackDetection/TPC3305-01-011/Test/PipeTest2Result.png",
+                "dateUploaded": "05-11-2023"
+            },
+            {
+                "folder": "Test",
+                "path": "/img/CrackDetection/TPC3305-01-011/Test/PipeTest3.png",
+                "resultImage":"",
+                "dateUploaded": "05-11-2023"
+            }
+           
+        ]
+    },
+    {
+        "class":"Vehicles",
+        "ID": "1S223",
+        "modal": "Crystallization Detection",
+        "images": [
+            {
+                "folder": "Test",
+                "path": "/img/CrystallizationDetection/1S223/Test/BatteryTest1.png",
+                "resultImage": "",
+                "dateUploaded": "05-11-2023"
+            },
+            {
+                "folder": "Test",
+                "path": "/img/CrystallizationDetection/1S223/Test/BatteryTest2.png",
+                "resultImage": "",
+                "dateUploaded": "05-11-2023"
+            },
+            {
+                "folder": "Test",
+                "path": "/img/CrystallizationDetection/1S223/Test/BatteryTest3.png",
+                "resultImage":"/img/CrystallizationDetection/1S223/Test/BatteryTest3Result.png",
+                "dateUploaded": "05-11-2023"
+            }
+           
+        ]
+    },
+    {
+        "class":"Vehicles",
+        "ID": "LI7481",
+        "modal": "Battery Life Prediction",
+        "images": [
+            {
+                "folder": "Test",
+                "path": "/img/BatteryLifePrediction/LI7481/Test/BatteryTraceTest1.png",
+                "resultImage": "",
+                "dateUploaded": "05-11-2023"
+            },
+            {
+                "folder": "Test",
+                "path": "/img/BatteryLifePrediction/LI7481/Test/BatteryTraceTest1.png",
+                "resultImage": "",
+                "dateUploaded": "05-11-2023"
+            },
+            {
+                "folder": "Test",
+                "path": "/img/BatteryLifePrediction/LI7481/Test/BatteryTraceTest1.png",
+                "resultImage":"/img/BatteryLifePrediction/LI7481/Test/BatteryTraceTest1.png", 
+                "dateUploaded": "05-11-2023"
+            }
+           
+        ]
+    },
+    {
+        "class":"Vehicles",
+        "ID": "NEC1TT01522",
+        "modal": "Tire Wear Detection",
+        "images": [
+            {
+                "folder": "Test",
+                "path": "/img/TireWearPrediction/NEC1TT01522/Test/TireTest1.png",
+                "resultImage": "",
+                "dateUploaded": "05-11-2023"
+            },
+            {
+                "folder": "Test",
+                "path": "/img/TireWearPrediction/NEC1TT01522/Test/TireTest2.png",
+                "resultImage": "",
+                "dateUploaded": "05-11-2023"
+            },
+            {
+                "folder": "Test",
+                "path": "/img/TireWearPrediction/NEC1TT01522/Test/TireTest3.png",
+                "resultImage":"",
+                "dateUploaded": "05-11-2023"
+            },
+            {
+                "folder": "Test",
+                "path": "/img/TireWearPrediction/NEC1TT01522/Test/TireTest4.png",
+                "resultImage":"",
+                "dateUploaded": "05-11-2023"
+            },
+            {
+                "folder": "Test",
+                "path": "/img/TireWearPrediction/NEC1TT01522/Test/TireTest5.png",
+                "resultImage":"", 
+                "dateUploaded": "05-11-2023"
+            }
+           
+        ]
+    }
+    
+]

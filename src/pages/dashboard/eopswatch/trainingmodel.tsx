@@ -5,24 +5,46 @@ import Template from "../template";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from 'next/router'
+import axios from 'axios';
+import NoDataFound from "../../../common/nodatafound";
+
 
 export default function TrainingModel() {
 
     const router = useRouter();
     const parentAsset = router.query;
-    
-    const [chooseAsset, setChooseAsset] = useState(parentAsset.model);
-    const [toggleAsset, setToggleAsset] = useState(false);
     const [showModal, setShowModal] = useState(false);
+    const [data, setData] = useState([] as any)
 
-    // Show Choose Asset List
-    const showChooseAssetList = () => {
-        setToggleAsset(!toggleAsset)
-    }
-    const selectAsset = (item: any) => {
-        setChooseAsset(item);
-        setToggleAsset(false)
-    }
+
+    // Fetch the JSON data of sub Asset
+    const fetchClassData = () => {
+        axios.get("/api/geteopsWatch").then((response) => {
+            if (response.data) {
+                const filtered = response.data.filter((item: any) => {
+                    if (item.class === parentAsset.objectID && item.ID === parentAsset.key && item.modal === parentAsset.model) {
+                        return item;
+                    }
+                });
+                console.log("AMIT - RES", filtered);
+                if (filtered && filtered.length > 0) {
+                    if (filtered[0].images) {
+                        setData(filtered[0].images);
+                    }
+                }
+            }
+        });
+    };
+    useEffect(() => {
+        fetchClassData();
+        if (fetchClassData.length) return;
+    }, [parentAsset])
+
+
+    const filterData = data.filter((item: any) => {
+        return item.folder === "Test"
+    })
+    console.log("AMIT - Data", filterData);
     return (
         <div className="flex font-OpenSans">
 
@@ -70,6 +92,18 @@ export default function TrainingModel() {
                                             width={24}
                                         />
                                         <span className="ml-1 text-sm font-medium text-black hover:text-yellow-950 md:ml-1">{parentAsset.model}</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div className="flex items-center">
+                                        <Image
+                                            src="/img/arrow-right.svg"
+                                            alt="arrow-right"
+                                            className="h-6"
+                                            height={24}
+                                            width={24}
+                                        />
+                                        <span className="ml-1 text-sm font-medium text-black hover:text-yellow-950 md:ml-1">Test</span>
                                     </div>
                                 </li>
                             </ol>
@@ -136,291 +170,86 @@ export default function TrainingModel() {
                     </div>
 
                     {/* Images Grid */}
-                    <div className="relative grid grid-cols-3 gap-10 mt-8">
+                    {filterData && filterData.length > 0 ?
+                        <div className="relative grid grid-cols-3 gap-10 mt-8">
 
-                    <div className="col-span-3 sm:col-span-2 md:col-span-3 lg:col-span-1 xl:col-span-4...">
-                            <div className={`border border-gray-200 h-60 w-full rounded-md overflow-hidden1 relative ${styles.imagewrap}`}>
-                                <input type="checkbox" className="scale-125 absolute top-0 left-0" />
-                                <Image
-                                    src={`/img/${parentAsset.model}/${parentAsset.key}/Test/WallTest1.png`}
-                                    alt="car"
-                                    height={150}
-                                    width={150}
-                                    className="w-full h-full"
-                                />
-                                <div className={`${styles.info} relative`}>
-                                    <span className="text-white text-[13px] font-light absolute top-0 left-1">Uploaded Date: 05-11-2023</span>
-                                    <Link href="/dashboard/eopswatch/trainingview" className="bg-yellow-951 rounded rounded-md flex justify-center items-center texxt-black font-semibold text-xl p-2 w-24">
-                                        <Image
-                                            src="/img/carIcon.svg"
-                                            alt="car"
-                                            height={30}
-                                            width={30}
-                                            className="mr-2"
-                                        />
-                                        <span>Prev</span>
-                                    </Link>
-                                    <Link href="/dashboard/eopswatch/trainingview" className="bg-yellow-951 rounded rounded-md flex justify-center items-center texxt-black font-semibold text-xl p-2 w-24">
-                                        <Image
-                                            src="/img/carIcon.svg"
-                                            alt="car"
-                                            height={30}
-                                            width={30}
-                                            className="mr-2"
-                                        />
-                                        <span>Test</span>
-                                    </Link>
-                                </div>
-                            </div>
-                            <div className="border border-gray-951 mt-2 rounded rounded-xl h-[65px] w-full p-1">
-                                <button
-                                    className="text-gray-952 inline-flex justify-center items-center text-sm h-8 mb-2"
-                                >
-                                    <Image
-                                        src="/img/pluswhite.svg"
-                                        alt="close"
-                                        height={14}
-                                        width={14}
-                                    />
-                                    <span>Add Tag</span>
-                                </button>
-                            </div>
-                        </div>
+                            {
 
-                        <div className="col-span-3 sm:col-span-2 md:col-span-3 lg:col-span-1 xl:col-span-4...">
-                            <div className={`border border-gray-200 h-60 w-full rounded-md overflow-hidden1 relative ${styles.imagewrap}`}>
-                                <input type="checkbox" className="scale-125 absolute top-0 left-0" />
-                                <Image
-                                    src="/img/car.png"
-                                    alt="car"
-                                    height={150}
-                                    width={150}
-                                    className="w-full h-full"
-                                />
-                                <div className={`${styles.info} relative`}>
-                                    <span className="text-white text-[13px] font-light absolute top-0 left-1">Uploaded Date: 05-11-2023</span>
-                                    <Link href="/dashboard/eopswatch/trainingview" className="bg-yellow-951 rounded rounded-md flex justify-center items-center texxt-black font-semibold text-xl p-2 w-24">
-                                        <Image
-                                            src="/img/carIcon.svg"
-                                            alt="car"
-                                            height={30}
-                                            width={30}
-                                            className="mr-2"
-                                        />
-                                        <span>Test</span>
-                                    </Link>
-                                </div>
-                            </div>
-                            <div className="border border-gray-951 mt-2 rounded rounded-xl h-[65px] w-full p-1">
-                                <button
-                                    className="text-gray-952 inline-flex justify-center items-center text-sm h-8 mb-2"
-                                >
-                                    <Image
-                                        src="/img/pluswhite.svg"
-                                        alt="close"
-                                        height={14}
-                                        width={14}
-                                    />
-                                    <span>Add Tag</span>
-                                </button>
-                            </div>
+                                filterData.map((item: any, index: any) => (
+                                    <div className="col-span-3 sm:col-span-2 md:col-span-3 lg:col-span-1 xl:col-span-4..." key={index}>
+                                        <div className={`border border-gray-200 h-60 w-full rounded-md overflow-hidden1 relative ${styles.imagewrap}`}>
+                                            <input type="checkbox" className="scale-125 absolute top-0 left-0" />
+                                            <Image
+                                                src={item.path}
+                                                alt="car"
+                                                height={150}
+                                                width={150}
+                                                className="w-full h-full"
+                                            />
+                                            <div className={`${styles.info} relative flex items-center justify-center`}>
+                                                <span className="text-white text-[13px] font-light absolute top-0 left-1">Uploaded Date: 05-11-2023</span>
+                                                <div className="relative flex flex-wrap items-center justify-center h-full">
+                                                    <Link
+                                                        href="/dashboard/eopswatch/trainingview"
+                                                        className="bg-yellow-951 rounded rounded-md flex justify-center items-center texxt-black font-semibold text-sm p-2 w-24 mr-3"
+                                                    >
+                                                        <Image
+                                                            src="/img/carIcon.svg"
+                                                            alt="car"
+                                                            height={21}
+                                                            width={21}
+                                                            className="mr-2"
+                                                        />
+                                                        <span>Prev</span>
+                                                    </Link>
+                                                    <Link
+                                                        // href="/dashboard/eopswatch/trainingview"
+                                                        href={{
+                                                            pathname: "/dashboard/eopswatch/trainingview",
+                                                            query: {
+                                                                objectID: parentAsset.objectID,
+                                                                key: parentAsset.key,
+                                                                model: parentAsset.model,
+                                                                result: item.resultImage ? item.resultImage : ''
+                                                            }
+                                                        }}
+                                                        className="bg-yellow-951 rounded rounded-md flex justify-center items-center texxt-black font-semibold text-sm p-2 w-24"
+                                                    >
+                                                        <Image
+                                                            src="/img/carIcon.svg"
+                                                            alt="car"
+                                                            height={21}
+                                                            width={21}
+                                                            className="mr-2"
+                                                        />
+                                                        <span>Test</span>
+                                                    </Link>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="border border-gray-951 mt-2 rounded rounded-xl h-[65px] w-full p-1">
+                                            <button
+                                                className="text-gray-952 inline-flex justify-center items-center text-sm h-8 mb-2"
+                                            >
+                                                <Image
+                                                    src="/img/pluswhite.svg"
+                                                    alt="close"
+                                                    height={14}
+                                                    width={14}
+                                                />
+                                                <span>Add Tag</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                ))
+                            }
                         </div>
+                        :
+                        <div className="h-72 flex justify-center items-center flex-wrap flex-col mt-8 w-full">
+                            <NoDataFound createText="No image found!" />
+                        </div>
+                    }
 
-                        <div className="col-span-3 sm:col-span-2 md:col-span-3 lg:col-span-1 xl:col-span-4...">
-                            <div className={`border border-gray-200 h-60 w-full rounded-md overflow-hidden1 relative ${styles.imagewrap}`}>
-                                <input type="checkbox" className="scale-125 absolute top-0 left-0" />
-                                <Image
-                                    src="/img/car.png"
-                                    alt="car"
-                                    height={150}
-                                    width={150}
-                                    className="w-full h-full"
-                                />
-                                <div className={`${styles.info} relative`}>
-                                    <span className="text-white text-[13px] font-light absolute top-0 left-1">Uploaded Date: 05-11-2023</span>
-                                    <button className="bg-yellow-951 rounded rounded-md flex justify-center items-center texxt-black font-semibold text-xl p-2">
-                                        <Image
-                                            src="/img/carIcon.svg"
-                                            alt="car"
-                                            height={30}
-                                            width={30}
-                                            className="mr-2"
-                                        />
-                                        <span>Test</span>
-                                    </button>
-                                </div>
-                            </div>
-                            <div className="border border-gray-951 mt-2 rounded rounded-xl h-[65px] w-full p-1">
-                                <button
-                                    className="text-gray-952 inline-flex justify-center items-center text-sm h-8 mb-2"
-                                >
-                                    <Image
-                                        src="/img/pluswhite.svg"
-                                        alt="close"
-                                        height={14}
-                                        width={14}
-                                    />
-                                    <span>Add Tag</span>
-                                </button>
-                            </div>
-                        </div>
-
-                        <div className="col-span-3 sm:col-span-2 md:col-span-3 lg:col-span-1 xl:col-span-4...">
-                            <div className={`border border-gray-200 h-60 w-full rounded-md overflow-hidden1 relative ${styles.imagewrap}`}>
-                                <input type="checkbox" className="scale-125 absolute top-0 left-0" />
-                                <Image
-                                    src="/img/car.png"
-                                    alt="car"
-                                    height={150}
-                                    width={150}
-                                    className="w-full h-full"
-                                />
-                                <div className={`${styles.info} relative`}>
-                                    <span className="text-white text-[13px] font-light absolute top-0 left-1">Uploaded Date: 05-11-2023</span>
-                                    <button className="bg-yellow-951 rounded rounded-md flex justify-center items-center texxt-black font-semibold text-xl p-2">
-                                        <Image
-                                            src="/img/carIcon.svg"
-                                            alt="car"
-                                            height={30}
-                                            width={30}
-                                            className="mr-2"
-                                        />
-                                        <span>Test</span>
-                                    </button>
-                                </div>
-                            </div>
-                            <div className="border border-gray-951 mt-2 rounded rounded-xl h-[65px] w-full p-1">
-                                <button
-                                    className="text-gray-952 inline-flex justify-center items-center text-sm h-8 mb-2"
-                                >
-                                    <Image
-                                        src="/img/pluswhite.svg"
-                                        alt="close"
-                                        height={14}
-                                        width={14}
-                                    />
-                                    <span>Add Tag</span>
-                                </button>
-                            </div>
-                        </div>
-
-                        <div className="col-span-3 sm:col-span-2 md:col-span-3 lg:col-span-1 xl:col-span-4...">
-                            <div className={`border border-gray-200 h-60 w-full rounded-md overflow-hidden1 relative ${styles.imagewrap}`}>
-                                <input type="checkbox" className="scale-125 absolute top-0 left-0" />
-                                <Image
-                                    src="/img/car.png"
-                                    alt="car"
-                                    height={150}
-                                    width={150}
-                                    className="w-full h-full"
-                                />
-                                <div className={`${styles.info} relative`}>
-                                    <span className="text-white text-[13px] font-light absolute top-0 left-1">Uploaded Date: 05-11-2023</span>
-                                    <button className="bg-yellow-951 rounded rounded-md flex justify-center items-center texxt-black font-semibold text-xl p-2">
-                                        <Image
-                                            src="/img/carIcon.svg"
-                                            alt="car"
-                                            height={30}
-                                            width={30}
-                                            className="mr-2"
-                                        />
-                                        <span>Test</span>
-                                    </button>
-                                </div>
-                            </div>
-                            <div className="border border-gray-951 mt-2 rounded rounded-xl h-[65px] w-full p-1">
-                                <button
-                                    className="text-gray-952 inline-flex justify-center items-center text-sm h-8 mb-2"
-                                >
-                                    <Image
-                                        src="/img/pluswhite.svg"
-                                        alt="close"
-                                        height={14}
-                                        width={14}
-                                    />
-                                    <span>Add Tag</span>
-                                </button>
-                            </div>
-                        </div>
-
-                        <div className="col-span-3 sm:col-span-2 md:col-span-3 lg:col-span-1 xl:col-span-4...">
-                            <div className={`border border-gray-200 h-60 w-full rounded-md overflow-hidden1 relative ${styles.imagewrap}`}>
-                                <input type="checkbox" className="scale-125 absolute top-0 left-0" />
-                                <Image
-                                    src="/img/car.png"
-                                    alt="car"
-                                    height={150}
-                                    width={150}
-                                    className="w-full h-full"
-                                />
-                                <div className={`${styles.info} relative`}>
-                                    <span className="text-white text-[13px] font-light absolute top-0 left-1">Uploaded Date: 05-11-2023</span>
-                                    <button className="bg-yellow-951 rounded rounded-md flex justify-center items-center texxt-black font-semibold text-xl p-2">
-                                        <Image
-                                            src="/img/carIcon.svg"
-                                            alt="car"
-                                            height={30}
-                                            width={30}
-                                            className="mr-2"
-                                        />
-                                        <span>Test</span>
-                                    </button>
-                                </div>
-                            </div>
-                            <div className="border border-gray-951 mt-2 rounded rounded-xl h-[65px] w-full p-1">
-                                <button
-                                    className="text-gray-952 inline-flex justify-center items-center text-sm h-8 mb-2"
-                                >
-                                    <Image
-                                        src="/img/pluswhite.svg"
-                                        alt="close"
-                                        height={14}
-                                        width={14}
-                                    />
-                                    <span>Add Tag</span>
-                                </button>
-                            </div>
-                        </div>
-
-                        <div className="col-span-3 sm:col-span-2 md:col-span-3 lg:col-span-1 xl:col-span-4...">
-                            <div className={`border border-gray-200 h-60 w-full rounded-md overflow-hidden1 relative ${styles.imagewrap}`}>
-                                <input type="checkbox" className="scale-125 absolute top-0 left-0" />
-                                <Image
-                                    src="/img/car.png"
-                                    alt="car"
-                                    height={150}
-                                    width={150}
-                                    className="w-full h-full"
-                                />
-                                <div className={`${styles.info} relative`}>
-                                    <span className="text-white text-[13px] font-light absolute top-0 left-1">Uploaded Date: 05-11-2023</span>
-                                    <button className="bg-yellow-951 rounded rounded-md flex justify-center items-center texxt-black font-semibold text-xl p-2">
-                                        <Image
-                                            src="/img/carIcon.svg"
-                                            alt="car"
-                                            height={30}
-                                            width={30}
-                                            className="mr-2"
-                                        />
-                                        <span>Test</span>
-                                    </button>
-                                </div>
-                            </div>
-                            <div className="border border-gray-951 mt-2 rounded rounded-xl h-[65px] w-full p-1">
-                                <button
-                                    className="text-gray-952 inline-flex justify-center items-center text-sm h-8 mb-2"
-                                >
-                                    <Image
-                                        src="/img/pluswhite.svg"
-                                        alt="close"
-                                        height={14}
-                                        width={14}
-                                    />
-                                    <span>Add Tag</span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
 
 
                     {/* ----- OBJECT MODAL STARTS ----- */}

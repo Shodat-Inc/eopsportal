@@ -283,8 +283,7 @@ export default function SubChildObject(localData: any) {
                                         pathname: '/dashboard/eopswatch/eopswatchmodel',
                                         query: {
                                             objectID: parentAsset.class,
-                                            key: parentAsset.id,
-                                            model:'Crack Detection',
+                                            key: parentAsset.id
                                         }
                                     }}
                                     className="rounded-lg h-20 w-auto bg-red-951 flex justify-center items-center px-2 py-2 mr-4 flex-wrap flex-col"
@@ -304,8 +303,7 @@ export default function SubChildObject(localData: any) {
                                         pathname: '/dashboard/eopswatch/eopswatchmodel',
                                         query: {
                                             objectID: parentAsset.class,
-                                            key: parentAsset.id, 
-                                            model:'Crack Detection',
+                                            key: parentAsset.id
                                         }
                                     }}
                                     className="rounded-lg h-20 w-auto bg-green-952 flex justify-center items-center px-2 py-2 mr-4 flex-wrap flex-col"

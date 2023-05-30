@@ -3,20 +3,15 @@ import Layout from "../../../components/Layout";
 import Template from "../template";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from 'next/router'
+import axios from 'axios';
+import NoDataFound from "../../../common/nodatafound";
 
 export default function TrainingView() {
 
-    const [chooseAsset, setChooseAsset] = useState("Wear Deduction Model");
-    const [toggleAsset, setToggleAsset] = useState(false);
-
-    // Show Choose Asset List
-    const showChooseAssetList = () => {
-        setToggleAsset(!toggleAsset)
-    }
-    const selectAsset = (item: any) => {
-        setChooseAsset(item);
-        setToggleAsset(false)
-    }
+    const router = useRouter();
+    const parentAsset = router.query;
+  
     return (
         <div className="flex font-OpenSans">
 
@@ -24,7 +19,6 @@ export default function TrainingView() {
                 <div className="columns-2 flex justify-between items-center">
                     <p className="text-black text-lg mb-0 font-semibold">eOps Watch</p>                    
                 </div>
-                {/* <div className="h-10 w-fill px-6 py-2 bg-gray-300 text-black rounded rounded-xl mt-2">This is a navigation of external image from management flow</div> */}
 
                 <div className="border min-h-full rounded-xl mt-3 px-4 py-4">
                     <div className="flex justify-between items-center">
@@ -52,7 +46,7 @@ export default function TrainingView() {
                                             height={24}
                                             width={24}
                                         />
-                                        <span className="ml-1 text-sm text-black hover:text-yellow-950 md:ml-1 font-bold">Training Model</span>
+                                        <span className="ml-1 text-sm text-black hover:text-yellow-950 md:ml-1 font-bold">{parentAsset.key}</span>
                                     </div>
                                 </li>
                                 <li>
@@ -64,7 +58,7 @@ export default function TrainingView() {
                                             height={24}
                                             width={24}
                                         />
-                                        <span className="ml-1 text-sm text-black hover:text-yellow-950 md:ml-1 font-bold">Wear Deduction Model</span>
+                                        <span className="ml-1 text-sm font-medium text-black hover:text-yellow-950 md:ml-1">{parentAsset.model}</span>
                                     </div>
                                 </li>
                                 <li>
@@ -76,7 +70,19 @@ export default function TrainingView() {
                                             height={24}
                                             width={24}
                                         />
-                                        <span className="ml-1 text-sm font-medium text-black hover:text-yellow-950 md:ml-1">Test View</span>
+                                        <span className="ml-1 text-sm font-medium text-black hover:text-yellow-950 md:ml-1">Test</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div className="flex items-center">
+                                        <Image
+                                            src="/img/arrow-right.svg"
+                                            alt="arrow-right"
+                                            className="h-6"
+                                            height={24}
+                                            width={24}
+                                        />
+                                        <span className="ml-1 text-sm font-medium text-black md:ml-1">Result</span>
                                     </div>
                                 </li>
                             </ol>
@@ -86,12 +92,17 @@ export default function TrainingView() {
 
                     {/* Images */}
                     <div className="relative mt-10 rounded overflow-hidden rounded-xl">
+                        {parentAsset.result ? 
                         <Image
-                            src="/img/carBig.png"
-                            alt="car"
+                            src={parentAsset?.result?.toString()}
+                            alt="result image"
                             height={600}
                             width={600}
+                            className="h-full w-full"
                         />
+                        :
+                        <h1>No Image Found!!</h1>
+}
                     </div>
 
                 </div>

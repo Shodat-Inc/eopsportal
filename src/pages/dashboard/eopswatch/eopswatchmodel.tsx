@@ -6,12 +6,25 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from 'next/router'
 
+const ManufacturingPlantsClass = [
+    "Crack Detection",
+    "Parts Detection",
+    "Workplace Safety Detection"
+]
+const VehicleClass = [
+    "Crack Detection",
+    "Tire Wear Detection",
+    "Crystallization Detection",
+    "Parts Detection",
+    "Battery Life Prediction"
+]
+
 export default function EopsWatchModel() {
 
     const router = useRouter();
     const parentAsset = router.query;
 
-    const [chooseAsset, setChooseAsset] = useState(parentAsset.model);
+    const [chooseAsset, setChooseAsset] = useState(parentAsset.objectID ==="Manufacturing Plants" ? ManufacturingPlantsClass[0] : VehicleClass[0]);
     const [toggleAsset, setToggleAsset] = useState(false);
 
     // Show Choose Asset List
@@ -22,6 +35,8 @@ export default function EopsWatchModel() {
         setChooseAsset(item);
         setToggleAsset(false)
     }
+
+   
     return (
         <div className="flex font-OpenSans">
 
@@ -56,18 +71,6 @@ export default function EopsWatchModel() {
                                             width={24}
                                         />
                                         <span className="ml-1 text-sm font-medium text-black hover:text-yellow-950 md:ml-1">{parentAsset.key}</span>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div className="flex items-center">
-                                        <Image
-                                            src="/img/arrow-right.svg"
-                                            alt="arrow-right"
-                                            className="h-6"
-                                            height={24}
-                                            width={24}
-                                        />
-                                        <span className="ml-1 text-sm font-medium text-black hover:text-yellow-950 md:ml-1">Crack Detection</span>
                                     </div>
                                 </li>
                             </ol>
@@ -143,56 +146,30 @@ export default function EopsWatchModel() {
                                 {toggleAsset ?
                                     <div className={`h-52 border rounded-xl border-gray-500 h-[250px] w-[400px]  flex items-start justify-start mt-1 overflow-hidden overflow-y-scroll absolute top-[100%] left-0 z-10 ${styles.scroll}`}>
                                         <ul className="p-0 m-0 w-full z-5">
-                                            <li className="bg-white"><span className="font-bold mb-2 pl-5 mt-4 w-full block">Vehicle Class</span></li>
-                                            <li
-                                                className="px-5 py-4 bg-white cursor-pointer hover:bg-yellow-951 w-full font-normal"
-                                                onClick={() => selectAsset('Crack Detection')}
-                                            >
-                                                <span>Crack Detection</span>
-                                            </li>
-                                            <li
-                                                className="px-5 py-4 bg-white cursor-pointer hover:bg-yellow-951 w-full font-normal"
-                                                onClick={() => selectAsset('Tire Wear Detection')}
-                                            >
-                                                <span>Tire Wear Detection</span>
-                                            </li>
-                                            <li
-                                                className="px-5 py-4 bg-white cursor-pointer hover:bg-yellow-951 w-full font-normal"
-                                                onClick={() => selectAsset('Crystallization Detection')}
-                                            >
-                                                <span>Crystallization Detection</span>
-                                            </li>
-                                            <li
-                                                className="px-5 py-4 bg-white cursor-pointer hover:bg-yellow-951 w-full font-normal"
-                                                onClick={() => selectAsset('Parts Detection')}
-                                            >
-                                                <span>Parts Detection</span>
-                                            </li>
-                                            <li
-                                                className="px-5 py-4 bg-white cursor-pointer hover:bg-yellow-951 w-full font-normal"
-                                                onClick={() => selectAsset('Battery Life Prediction')}
-                                            >
-                                                <span>Battery Life Prediction</span>
-                                            </li>
-                                            <li className="bg-white py-5"><span className="font-bold mb-2 pl-5 mt-4 w-full block">Manufacturing Plant Class</span></li>
-                                            <li
-                                                className="px-5 py-4 bg-white cursor-pointer hover:bg-yellow-951 w-full font-normal"
-                                                onClick={() => selectAsset('Crack Detection')}
-                                            >
-                                                <span>Crack Detection</span>
-                                            </li>
-                                            <li
-                                                className="px-5 py-4 bg-white cursor-pointer hover:bg-yellow-951 w-full font-normal"
-                                                onClick={() => selectAsset('Parts Detection')}
-                                            >
-                                                <span>Parts Detection</span>
-                                            </li>
-                                            <li
-                                                className="px-5 py-4 bg-white cursor-pointer hover:bg-yellow-951 w-full font-normal"
-                                                onClick={() => selectAsset('Workplace Safety Detection')}
-                                            >
-                                                <span>Workplace Safety Detection</span>
-                                            </li>
+                                            {
+                                                parentAsset.objectID === 'Manufacturing Plants' ?
+                                                    ManufacturingPlantsClass.map((item: any, i: any) => (
+                                                        <li
+                                                            className="px-5 py-4 bg-white cursor-pointer hover:bg-yellow-951 w-full font-normal"
+                                                            onClick={() => selectAsset(item)}
+                                                            key={i}
+                                                        >
+                                                            <span>{item}</span>
+                                                        </li>
+                                                    ))
+                                                    :
+                                                    VehicleClass.map((item: any, i: any) => (
+                                                        <li
+                                                            className="px-5 py-4 bg-white cursor-pointer hover:bg-yellow-951 w-full font-normal"
+                                                            onClick={() => selectAsset(item)}
+                                                            key={i}
+                                                        >
+                                                            <span>{item}</span>
+                                                        </li>
+                                                    ))
+
+                                            }
+                                           
                                         </ul>
                                     </div>
                                     : null}
@@ -205,7 +182,7 @@ export default function EopsWatchModel() {
                                         query: {
                                             objectID: parentAsset.objectID,
                                             key: parentAsset.key,
-                                            model: 'Crack Detection'
+                                            model: chooseAsset
                                         }
                                     }}
                                     className="relative mr-16"
@@ -225,7 +202,7 @@ export default function EopsWatchModel() {
                                         query: {
                                             objectID: parentAsset.objectID,
                                             key: parentAsset.key,
-                                            model: 'Crack Detection'
+                                            model: chooseAsset
                                         }
                                     }}
                                     className="relative mr-16"
