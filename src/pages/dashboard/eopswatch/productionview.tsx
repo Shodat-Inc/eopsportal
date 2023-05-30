@@ -90,7 +90,7 @@ export default function ProductionView() {
                                             height={24}
                                             width={24}
                                         />
-                                        <span className="ml-1 text-sm font-medium text-black hover:text-yellow-950 md:ml-1">Production</span>
+                                        <span className="ml-1 text-sm font-medium text-black hover:text-yellow-950 md:ml-1">Productions</span>
                                     </Link>
                                 </li>
                                 <li>
