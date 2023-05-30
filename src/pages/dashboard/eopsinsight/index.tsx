@@ -28,53 +28,53 @@ export default function EopsInsight() {
                                             width={24}
                                         />
                                     </Link>
-                                </li>                                
+                                </li>
                             </ol>
                         </nav>
                     </div>
 
                     {/* Content Goes Here */}
                     <div className="mt-12 flex justify-center items-center flex-wrap">
-                        <Link href=""  className="rounded rounded-xl p-5 bg-yellow-951 h-[150px] w-[340px] text-black font-semibold text-xl flex items-center justify-between mr-10">
-                            <span>Live <br/>Tracking</span>
-                            <Image 
-                            src="/img/LiveTracking.svg"
-                            alt="Live Tracking"
-                            height={60}
-                            width={60}
+                        <Link href="/dashboard/eopsinsight/livetracking" className="rounded rounded-xl p-5 bg-yellow-951 h-[150px] w-[340px] text-black font-semibold text-xl flex items-center justify-between mr-10">
+                            <span>Live <br />Tracking</span>
+                            <Image
+                                src="/img/LiveTracking.svg"
+                                alt="Live Tracking"
+                                height={60}
+                                width={60}
                             />
                         </Link>
-                        <Link href=""  className="rounded rounded-xl p-5 bg-yellow-951 h-[150px] w-[340px] text-black font-semibold text-xl flex items-center justify-between">
-                            <span>Problem <br/>Management</span>
-                            <Image 
-                            src="/img/ProblemManagement.svg"
-                            alt="Problem Management"
-                            height={60}
-                            width={60}
+                        <Link href="" className="rounded rounded-xl p-5 bg-yellow-951 h-[150px] w-[340px] text-black font-semibold text-xl flex items-center justify-between">
+                            <span>Problem <br />Management</span>
+                            <Image
+                                src="/img/ProblemManagement.svg"
+                                alt="Problem Management"
+                                height={60}
+                                width={60}
                             />
                         </Link>
-                    </div>   
+                    </div>
 
                     <div className="mt-10 flex justify-center items-center flex-wrap">
-                    <Link href=""  className="rounded rounded-xl p-5 bg-yellow-951 h-[150px] w-[340px] text-black font-semibold text-xl flex items-center justify-between mr-10">
-                            <span>Warranty <br/>Claims</span>
-                            <Image 
-                            src="/img/WarrantyClaims.svg"
-                            alt="Warranty Claims"
-                            height={60}
-                            width={60}
+                        <Link href="" className="rounded rounded-xl p-5 bg-yellow-951 h-[150px] w-[340px] text-black font-semibold text-xl flex items-center justify-between mr-10">
+                            <span>Warranty <br />Claims</span>
+                            <Image
+                                src="/img/WarrantyClaims.svg"
+                                alt="Warranty Claims"
+                                height={60}
+                                width={60}
                             />
                         </Link>
-                        <Link href=""  className="rounded rounded-xl p-5 bg-yellow-951 h-[150px] w-[340px] text-black font-semibold text-xl flex items-center justify-between">
-                            <span>Custom <br/>Reports</span>
-                            <Image 
-                            src="/img/CustomReports.svg"
-                            alt="Custom Reports"
-                            height={60}
-                            width={60}
+                        <Link href="/dashboard/eopsinsight/customreport" className="rounded rounded-xl p-5 bg-yellow-951 h-[150px] w-[340px] text-black font-semibold text-xl flex items-center justify-between">
+                            <span>Custom <br />Reports</span>
+                            <Image
+                                src="/img/CustomReports.svg"
+                                alt="Custom Reports"
+                                height={60}
+                                width={60}
                             />
                         </Link>
-                    </div>                   
+                    </div>
 
                 </div>
             </div>
