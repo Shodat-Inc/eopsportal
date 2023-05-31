@@ -3,8 +3,11 @@ import Layout from "../../../components/Layout";
 import Template from "../template";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from 'next/router'
 
 export default function EopsTraceAlert() {
+    const router = useRouter();
+    const parentAsset = router.query;
     return (
         <div className="flex font-OpenSans">
 
@@ -15,10 +18,21 @@ export default function EopsTraceAlert() {
 
                 <div className="border min-h-full rounded-xl mt-3 px-4 py-4">
                     <div className="flex justify-start items-start">
+
                         <nav className="flex" aria-label="Breadcrumb">
                             <ol className="inline-flex items-center space-x-1 md:space-x-1">
                                 <li className="inline-flex items-center">
-                                    <Link href="/dashboard/eopstrace/tracemodel"
+                                    <Link
+                                        href={{
+                                            pathname: "/dashboard/eopstrace/tracemodel",
+                                            query: {
+                                                objectID: parentAsset.objectID,
+                                                key: parentAsset.key,
+                                                id: parentAsset.id,
+                                                subObject: parentAsset.subObject,
+                                            }
+                                        }}
+
                                         className="inline-flex items-center text-sm font-medium text-black hover:text-yellow-950">
                                         <Image
                                             src="/img/arrow-left.svg"
@@ -35,7 +49,10 @@ export default function EopsTraceAlert() {
                     </div>
 
                     {/* Content Goes Here */}
-                    <div className="flex flex-wrap mt-5">
+                    <div className="flex h-96 w-full justify-center items-center">
+                        <p className="text-gray-951 font-semibold text-5xl">This page is under progress</p>
+                    </div> 
+                    <div className="flex flex-wrap mt-5 hidden">
                         <Image
                             src="/img/alerts/Alerts1.png"
                             alt="Alert 1"

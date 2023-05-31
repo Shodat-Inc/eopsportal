@@ -3,8 +3,11 @@ import Layout from "../../../components/Layout";
 import Template from "../template";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from 'next/router'
 
 export default function ModelPerformance() {
+    const router = useRouter();
+    const parentAsset = router.query;
     return (
         <div className="flex font-OpenSans">
 
@@ -18,7 +21,18 @@ export default function ModelPerformance() {
                         <nav className="flex" aria-label="Breadcrumb">
                             <ol className="inline-flex items-center space-x-1 md:space-x-1">
                                 <li className="inline-flex items-center">
-                                    <Link href="/dashboard/eopstrace/tracemodel"
+                                    <Link
+                                        // href="/dashboard/eopswatch/eopswatchmodel"
+                                        href={{
+                                            pathname: "/dashboard/eopstrace/tracemodel",
+                                            query: {
+                                                objectID: parentAsset.objectID,
+                                                key: parentAsset.key,
+                                                id: parentAsset.id,
+                                                subObject: parentAsset.subObject,
+                                            }
+                                        }}
+
                                         className="inline-flex items-center text-sm font-medium text-black hover:text-yellow-950">
                                         <Image
                                             src="/img/arrow-left.svg"
@@ -29,21 +43,21 @@ export default function ModelPerformance() {
                                         />
                                         <span className="text-black ml-2">Model Performance</span>
                                     </Link>
-                                </li>                                
+                                </li>
                             </ol>
                         </nav>
                     </div>
 
-                    {/* Content Goes Here */} 
+                    {/* Content Goes Here */}
                     <div className="relative mt-10">
                         <Image
-                        src="/img/eopstrace/ModelPerformanceImage1.png"
-                        alt="Model Performance"
-                        height={500}
-                        width={500}
-                        className="h-full w-full"
+                            src="/img/eopstrace/ModelPerformanceImage1.png"
+                            alt="Model Performance"
+                            height={500}
+                            width={500}
+                            className="h-full w-full"
                         />
-                    </div>                  
+                    </div>
 
                 </div>
             </div>

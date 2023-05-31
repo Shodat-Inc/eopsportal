@@ -4,7 +4,18 @@ import Layout from "../../../components/Layout";
 import Template from "../template";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/router';
+import axios from 'axios';
+import { getObjectsData } from "../../../lib/getobjects";
+
+export async function getServerSideProps() {
+    const localData = await getObjectsData()
+    return {
+        props: {
+            localData,
+        },
+    }
+}
 
 const ManufacturingPlantsClass = [
     "Crack Detection",
@@ -19,13 +30,17 @@ const VehicleClass = [
     "Battery Life Prediction"
 ]
 
-export default function TraceModel() {
+export default function TraceModel(localData: any) {
 
     const router = useRouter();
     const parentAsset = router.query;
 
     const [chooseAsset, setChooseAsset] = useState(parentAsset.objectID === "Manufacturing Plants" ? ManufacturingPlantsClass[0] : VehicleClass[0]);
     const [toggleAsset, setToggleAsset] = useState(false);
+
+    const [subObj, setSubObj] = useState({} as any);
+    const [subClassData, setSubClassData] = useState<any[]>([]);
+    const [joinKey, setJoinKey] = useState([] as any);
 
     // Show Choose Asset List
     const showChooseAssetList = () => {
@@ -35,6 +50,50 @@ export default function TraceModel() {
         setChooseAsset(item);
         setToggleAsset(false)
     }
+
+
+    // Fetch the JSON data of sub Asset
+    const fetchClassData = () => {
+        axios.get("/api/getSubAssets").then((response) => {
+            if (response.data) {
+                const filtered = response.data.filter((item: any) => {
+                    return item.parentAssetName === parentAsset.parentAsset;
+                });
+                if (filtered && filtered.length > 0) {
+                    setSubClassData(filtered);
+                }
+
+            }
+        });
+    };
+    useEffect(() => {
+        fetchClassData();
+        if (fetchClassData.length) return;
+    }, [parentAsset])
+
+    const fetchData = () => {
+        axios.get("/api/getChildObject").then((response) => {
+            if (response.data) {
+                const filtered = response.data.filter((item: any) => {
+                    if (parentAsset.objectID === "Manufacturing Plants") {
+                        return item.tags.ID === parentAsset.id
+                    } else if (parentAsset.objectID === "Vehicles") {
+                        return item.tags.SerialID === parentAsset.id || item.tags.SerialNo === parentAsset.key
+                    } else {
+                        return item.tags.VIN === parentAsset.id
+                    }
+                });
+                if (filtered && filtered.length > 0) {
+                    setSubObj(filtered[0]);
+                }
+            }
+        });
+    };
+    useEffect(() => {
+        fetchData();
+        if (fetchData.length) return;
+    }, [])
+
     return (
         <div className="flex font-OpenSans">
 
@@ -60,7 +119,17 @@ export default function TraceModel() {
                                     </Link>
                                 </li>
                                 <li>
-                                    <div className="flex items-center">
+                                    <Link
+                                        href={{
+                                            pathname: "/dashboard/subchildobject",
+                                            query: {
+                                                class: parentAsset.objectID,
+                                                object: parentAsset.id,
+                                                id: parentAsset.key,
+                                                subObject: parentAsset.subObject,
+                                            }
+                                        }}
+                                        className="flex items-center">
                                         <Image
                                             src="/img/arrow-right.svg"
                                             alt="arrow-right"
@@ -69,7 +138,7 @@ export default function TraceModel() {
                                             width={24}
                                         />
                                         <span className="ml-1 text-sm font-medium text-black hover:text-yellow-950 md:ml-1">{parentAsset.key}</span>
-                                    </div>
+                                    </Link>
                                 </li>
                                 {
                                     chooseAsset ?
@@ -95,7 +164,17 @@ export default function TraceModel() {
                     <div className="flex items-end justify-end mt-[-32px]">
                         <Link
                             className="flex justify-center items-center text-black bg-yellow-951 rounded rounded-xl h-12 px-4 transition-opacity duration-300 mr-5"
-                            href="/dashboard/eopstrace/modelperformance"
+                            // href="/dashboard/eopstrace/modelperformance"
+                            href={{
+                                pathname: "/dashboard/eopstrace/modelperformance",
+                                query: {
+                                    objectID: parentAsset.objectID,
+                                    key: parentAsset.key,
+                                    model: chooseAsset,
+                                    id: parentAsset.id,
+                                    subObject: parentAsset.subObject,
+                                }
+                            }}
                         >
                             <Image
                                 src="/img/activity.svg"
@@ -108,7 +187,17 @@ export default function TraceModel() {
                         </Link>
 
                         <Link
-                            href="/dashboard/eopstrace/eopstracealerts"
+                            // href="/dashboard/eopstrace/eopstracealerts"
+                            href={{
+                                pathname: "/dashboard/eopstrace/eopstracealerts",
+                                query: {
+                                    objectID: parentAsset.objectID,
+                                    key: parentAsset.key,
+                                    model: chooseAsset,
+                                    id: parentAsset.id,
+                                    subObject: parentAsset.subObject,
+                                }
+                            }}
                             className="flex justify-center items-center text-black bg-yellow-951 rounded rounded-xl h-12 px-4 transition-opacity duration-300"
                         >
                             <Image
@@ -127,7 +216,41 @@ export default function TraceModel() {
                         {/* Table */}
                         <div className="relative w-full mb-10">
                             <div className="overflow-hidden border rounded-xl w-full">
-                                <table className={`table-auto min-w-full text-left ${styles.table}`}>
+
+                                <table className={`table-auto min-w-full w-full text-left ${styles.table} ${styles.tableObject}`}>
+                                    <thead className="bg-black text-white rounded-xl h-10 text-sm font-light">
+                                        <tr>
+                                            {
+                                                subObj && Object.keys(subObj).length != 0 ?
+                                                    Object.keys(subObj?.tags).map((item: any, i: any) => (
+                                                        <th className="capitalize" key={i}>
+                                                            {
+                                                                item.split(/(?=[A-Z])/).join(" ")
+                                                            }
+                                                        </th>
+                                                    ))
+                                                    : null
+                                            }
+                                        </tr>
+                                    </thead>
+                                    <tbody className="cursor-pointer">
+                                        <tr className={`text-sm`}>
+                                            {
+                                                subObj && Object.keys(subObj).length != 0 ?
+                                                    Object.values(subObj?.tags).map((item: any, i: any) => (
+
+                                                        <td key={i}>
+                                                            {item}
+                                                        </td>
+
+                                                    ))
+                                                    : null
+                                            }
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <table className={`table-auto min-w-full text-left hidden ${styles.table}`}>
                                     <thead className="bg-black text-white rounded-xl h-10 text-sm font-light">
                                         <tr>
                                             <th>Capacity</th>
@@ -210,7 +333,9 @@ export default function TraceModel() {
                                         query: {
                                             objectID: parentAsset.objectID,
                                             key: parentAsset.key,
-                                            model: chooseAsset
+                                            model: chooseAsset,
+                                            id: parentAsset.id,
+                                            subObject: parentAsset.subObject,
                                         }
                                     }}
                                     className="relative mr-16"
@@ -230,7 +355,9 @@ export default function TraceModel() {
                                         query: {
                                             objectID: parentAsset.objectID,
                                             key: parentAsset.key,
-                                            model: chooseAsset
+                                            model: chooseAsset,
+                                            id: parentAsset.id,
+                                            subObject: parentAsset.subObject,
                                         }
                                     }}
                                     className="relative mr-16"

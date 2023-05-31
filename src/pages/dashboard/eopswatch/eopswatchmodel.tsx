@@ -139,7 +139,17 @@ export default function EopsWatchModel() {
                         </Link>
 
                         <Link
-                            href="/dashboard/eopswatch/eopswatchalerts"
+                            // href="/dashboard/eopswatch/eopswatchalerts"
+                            href={{
+                                pathname: "/dashboard/eopswatch/eopswatchalerts",
+                                query: {
+                                    objectID: parentAsset.objectID,
+                                    key: parentAsset.key,
+                                    model: chooseAsset,
+                                    id: parentAsset.id,
+                                    subObject: parentAsset.subObject,
+                                }
+                            }}
                             className="flex justify-center items-center text-black bg-yellow-951 rounded rounded-xl h-12 px-4 transition-opacity duration-300"
                         >
                             <Image

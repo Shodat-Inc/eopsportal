@@ -8,6 +8,48 @@ import { useRouter } from 'next/router'
 import axios from 'axios';
 import NoDataFound from "../../../common/nodatafound";
 
+const batteryJSON = [
+    {
+        "SerialNo": "LI7481",
+        "VIN": "5PVBN3TK3R6Y67222",
+        "ID": "5PVBE7AJ8R5T50001",
+        "object": "Battery",
+        "className": "Vehicles",
+        "Manufacturer": "Cummins",
+        "Capacity(AH)": "230",
+        "Voltage(V)": "600",
+        "subData": [
+            {
+                "Capacity": "1.856",
+                "VoltageMeasured": "3.97",
+                "CurrentMeasured": "2.012528",
+                "TemperatureMeasured": "24.39",
+                "CurrentLoad": "1.99",
+                "VoltageLoad": "3.06",
+                "DateTime": "2022-07-02 15:25:4"
+            },
+            {
+                "Capacity": "1.27",
+                "VoltageMeasured": "3.19",
+                "CurrentMeasured": "1.89",
+                "TemperatureMeasured": "35.48",
+                "CurrentLoad": "1.85",
+                "VoltageLoad": "22.25",
+                "DateTime": "2022-03-22 01:29:35"
+            },
+            {
+                "Capacity": "1.38",
+                "VoltageMeasured": "3.402",
+                "CurrentMeasured": "2",
+                "TemperatureMeasured": "33.02",
+                "CurrentLoad": "1.99",
+                "VoltageLoad": "2.493",
+                "DateTime": "2022-01-10 07:56:22"
+            }
+        ]
+    }
+]
+
 export default function TestModel() {
 
     const router = useRouter();
@@ -75,7 +117,17 @@ export default function TestModel() {
                                     </Link>
                                 </li>
                                 <li>
-                                    <div className="flex items-center">
+                                    <Link
+                                        href={{
+                                            pathname: "/dashboard/subchildobject",
+                                            query: {
+                                                class: parentAsset.objectID,
+                                                object: parentAsset.id,
+                                                id: parentAsset.key,
+                                                subObject: parentAsset.subObject,
+                                            }
+                                        }}
+                                        className="flex items-center">
                                         <Image
                                             src="/img/arrow-right.svg"
                                             alt="arrow-right"
@@ -84,7 +136,7 @@ export default function TestModel() {
                                             width={24}
                                         />
                                         <span className="ml-1 text-sm text-black hover:text-yellow-950 md:ml-1 font-bold">{parentAsset.key}</span>
-                                    </div>
+                                    </Link>
                                 </li>
                                 <li>
                                     <Link
@@ -92,7 +144,9 @@ export default function TestModel() {
                                             pathname: "/dashboard/eopstrace/tracemodel",
                                             query: {
                                                 objectID: parentAsset.objectID,
-                                                key: parentAsset.key
+                                                key: parentAsset.key, 
+                                                id: parentAsset.id,
+                                                subObject: parentAsset.subObject,
                                             }
                                         }}
                                         className="flex items-center"
@@ -185,168 +239,218 @@ export default function TestModel() {
                     {/* Table Grid */}
                     <div className="relative mt-8 h-[600px] overflow-y-scroll">
                         <div className="overflow-hidden border rounded-xl w-full mb-12">
-                            <table className={`table-auto min-w-full text-left ${styles.table}`}>
-                                <thead className="bg-gray-952 text-white rounded-xl h-10 text-sm font-light">
-                                    <tr>
-                                        <th>Capacity</th>
-                                        <th>VoltageMeasured</th>
-                                        <th>CurrentMeasured</th>
-                                        <th>TemperatureMeasured</th>
-                                        <th>CurrentLoad</th>
-                                        <th>VoltageLoad</th>
-                                        <th>DateTime</th>
-                                    </tr>
-                                </thead>
-                                <tbody className="text-sm cursor-pointer">
-                                    <tr className="hover:bg-white">
-                                        <td>1.856</td>
-                                        <td>3.97</td>
-                                        <td>2.012528</td>
-                                        <td>24.39</td>
-                                        <td>1.99</td>
-                                        <td>3.06</td>
-                                        <td>2022-07-02 15:25:4</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                            {
+                                batteryJSON.map((item: any, k: any) => (
+                                    <table className={`table-auto min-w-full text-left ${styles.table}`}>
+                                        <thead className="bg-gray-952 text-white rounded-xl h-10 text-sm font-light">
+                                            {
+                                                Object.keys(item?.subData[k]).map((items: any, i: any) => (
+
+                                                    <th className="capitalize" key={i}>
+                                                        {
+                                                            items.split(/(?=[A-Z])/).join(" ")
+                                                        }
+                                                    </th>
+                                                ))
+                                            }
+                                        </thead>
+                                        <tbody>
+                                        <tr className={`text-sm`}>
+                                            {
+                                                Object.values(item?.subData[k]).map((item: any, i: any) => (
+
+                                                    <td key={i}>
+                                                        <Link 
+                                                        href={{
+                                                            pathname: "/dashboard/eopstrace/modelview",
+                                                            query: {
+                                                                objectID: parentAsset.objectID,
+                                                                key: parentAsset.key,
+                                                                model: parentAsset.model,
+                                                                id: parentAsset.id,
+                                                                subObject: parentAsset.subObject,
+                                                                result: item.resultImage ? item.resultImage : ''
+                                                            }
+                                                        }}
+                                                        >
+                                                        {item}
+                                                        </Link>
+                                                    </td>
+
+                                                ))
+                                            }
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                ))
+                            }
                         </div>
 
-                        <div className="overflow-hidden border rounded-xl w-full mb-12">
-                            <table className={`table-auto min-w-full text-left ${styles.table}`}>
-                                <thead className="bg-gray-952 text-white rounded-xl h-10 text-sm font-light">
-                                    <tr>
-                                        <th>Capacity</th>
-                                        <th>VoltageMeasured</th>
-                                        <th>CurrentMeasured</th>
-                                        <th>TemperatureMeasured</th>
-                                        <th>CurrentLoad</th>
-                                        <th>VoltageLoad</th>
-                                        <th>DateTime</th>
-                                    </tr>
-                                </thead>
-                                <tbody className="text-sm cursor-pointer">
-                                    <tr className="hover:bg-white">
-                                        <td>1.856</td>
-                                        <td>3.97</td>
-                                        <td>2.012528</td>
-                                        <td>24.39</td>
-                                        <td>1.99</td>
-                                        <td>3.06</td>
-                                        <td>2022-07-02 15:25:4</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                        <div className="hidden">
+                            <div className="overflow-hidden border rounded-xl w-full mb-12 hidden">
+                                <table className={`table-auto min-w-full text-left ${styles.table}`}>
+                                    <thead className="bg-gray-952 text-white rounded-xl h-10 text-sm font-light">
+                                        <tr>
+                                            <th>Capacity</th>
+                                            <th>VoltageMeasured</th>
+                                            <th>CurrentMeasured</th>
+                                            <th>TemperatureMeasured</th>
+                                            <th>CurrentLoad</th>
+                                            <th>VoltageLoad</th>
+                                            <th>DateTime</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody className="text-sm cursor-pointer">
+                                        <tr className="hover:bg-white">
+                                            <td>1.856</td>
+                                            <td>3.97</td>
+                                            <td>2.012528</td>
+                                            <td>24.39</td>
+                                            <td>1.99</td>
+                                            <td>3.06</td>
+                                            <td>2022-07-02 15:25:4</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div className="overflow-hidden border rounded-xl w-full mb-12">
+                                <table className={`table-auto min-w-full text-left ${styles.table}`}>
+                                    <thead className="bg-gray-952 text-white rounded-xl h-10 text-sm font-light">
+                                        <tr>
+                                            <th>Capacity</th>
+                                            <th>VoltageMeasured</th>
+                                            <th>CurrentMeasured</th>
+                                            <th>TemperatureMeasured</th>
+                                            <th>CurrentLoad</th>
+                                            <th>VoltageLoad</th>
+                                            <th>DateTime</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody className="text-sm cursor-pointer">
+                                        <tr className="hover:bg-white">
+                                            <td>1.856</td>
+                                            <td>3.97</td>
+                                            <td>2.012528</td>
+                                            <td>24.39</td>
+                                            <td>1.99</td>
+                                            <td>3.06</td>
+                                            <td>2022-07-02 15:25:4</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div className="overflow-hidden border rounded-xl w-full mb-12">
+                                <table className={`table-auto min-w-full text-left ${styles.table}`}>
+                                    <thead className="bg-gray-952 text-white rounded-xl h-10 text-sm font-light">
+                                        <tr>
+                                            <th>Capacity</th>
+                                            <th>VoltageMeasured</th>
+                                            <th>CurrentMeasured</th>
+                                            <th>TemperatureMeasured</th>
+                                            <th>CurrentLoad</th>
+                                            <th>VoltageLoad</th>
+                                            <th>DateTime</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody className="text-sm cursor-pointer">
+                                        <tr className="hover:bg-white">
+                                            <td>1.856</td>
+                                            <td>3.97</td>
+                                            <td>2.012528</td>
+                                            <td>24.39</td>
+                                            <td>1.99</td>
+                                            <td>3.06</td>
+                                            <td>2022-07-02 15:25:4</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div className="overflow-hidden border rounded-xl w-full mb-12">
+                                <table className={`table-auto min-w-full text-left ${styles.table}`}>
+                                    <thead className="bg-gray-952 text-white rounded-xl h-10 text-sm font-light">
+                                        <tr>
+                                            <th>Capacity</th>
+                                            <th>VoltageMeasured</th>
+                                            <th>CurrentMeasured</th>
+                                            <th>TemperatureMeasured</th>
+                                            <th>CurrentLoad</th>
+                                            <th>VoltageLoad</th>
+                                            <th>DateTime</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody className="text-sm cursor-pointer">
+                                        <tr className="hover:bg-white">
+                                            <td>1.856</td>
+                                            <td>3.97</td>
+                                            <td>2.012528</td>
+                                            <td>24.39</td>
+                                            <td>1.99</td>
+                                            <td>3.06</td>
+                                            <td>2022-07-02 15:25:4</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div className="overflow-hidden border rounded-xl w-full mb-12">
+                                <table className={`table-auto min-w-full text-left ${styles.table}`}>
+                                    <thead className="bg-gray-952 text-white rounded-xl h-10 text-sm font-light">
+                                        <tr>
+                                            <th>Capacity</th>
+                                            <th>VoltageMeasured</th>
+                                            <th>CurrentMeasured</th>
+                                            <th>TemperatureMeasured</th>
+                                            <th>CurrentLoad</th>
+                                            <th>VoltageLoad</th>
+                                            <th>DateTime</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody className="text-sm cursor-pointer">
+                                        <tr className="hover:bg-white">
+                                            <td>1.856</td>
+                                            <td>3.97</td>
+                                            <td>2.012528</td>
+                                            <td>24.39</td>
+                                            <td>1.99</td>
+                                            <td>3.06</td>
+                                            <td>2022-07-02 15:25:4</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div className="overflow-hidden border rounded-xl w-full mb-12">
+                                <table className={`table-auto min-w-full text-left ${styles.table}`}>
+                                    <thead className="bg-gray-952 text-white rounded-xl h-10 text-sm font-light">
+                                        <tr>
+                                            <th>Capacity</th>
+                                            <th>VoltageMeasured</th>
+                                            <th>CurrentMeasured</th>
+                                            <th>TemperatureMeasured</th>
+                                            <th>CurrentLoad</th>
+                                            <th>VoltageLoad</th>
+                                            <th>DateTime</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody className="text-sm cursor-pointer">
+                                        <tr className="hover:bg-white">
+                                            <td>1.856</td>
+                                            <td>3.97</td>
+                                            <td>2.012528</td>
+                                            <td>24.39</td>
+                                            <td>1.99</td>
+                                            <td>3.06</td>
+                                            <td>2022-07-02 15:25:4</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
 
-                        <div className="overflow-hidden border rounded-xl w-full mb-12">
-                            <table className={`table-auto min-w-full text-left ${styles.table}`}>
-                                <thead className="bg-gray-952 text-white rounded-xl h-10 text-sm font-light">
-                                    <tr>
-                                        <th>Capacity</th>
-                                        <th>VoltageMeasured</th>
-                                        <th>CurrentMeasured</th>
-                                        <th>TemperatureMeasured</th>
-                                        <th>CurrentLoad</th>
-                                        <th>VoltageLoad</th>
-                                        <th>DateTime</th>
-                                    </tr>
-                                </thead>
-                                <tbody className="text-sm cursor-pointer">
-                                    <tr className="hover:bg-white">
-                                        <td>1.856</td>
-                                        <td>3.97</td>
-                                        <td>2.012528</td>
-                                        <td>24.39</td>
-                                        <td>1.99</td>
-                                        <td>3.06</td>
-                                        <td>2022-07-02 15:25:4</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
 
-                        <div className="overflow-hidden border rounded-xl w-full mb-12">
-                            <table className={`table-auto min-w-full text-left ${styles.table}`}>
-                                <thead className="bg-gray-952 text-white rounded-xl h-10 text-sm font-light">
-                                    <tr>
-                                        <th>Capacity</th>
-                                        <th>VoltageMeasured</th>
-                                        <th>CurrentMeasured</th>
-                                        <th>TemperatureMeasured</th>
-                                        <th>CurrentLoad</th>
-                                        <th>VoltageLoad</th>
-                                        <th>DateTime</th>
-                                    </tr>
-                                </thead>
-                                <tbody className="text-sm cursor-pointer">
-                                    <tr className="hover:bg-white">
-                                        <td>1.856</td>
-                                        <td>3.97</td>
-                                        <td>2.012528</td>
-                                        <td>24.39</td>
-                                        <td>1.99</td>
-                                        <td>3.06</td>
-                                        <td>2022-07-02 15:25:4</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <div className="overflow-hidden border rounded-xl w-full mb-12">
-                            <table className={`table-auto min-w-full text-left ${styles.table}`}>
-                                <thead className="bg-gray-952 text-white rounded-xl h-10 text-sm font-light">
-                                    <tr>
-                                        <th>Capacity</th>
-                                        <th>VoltageMeasured</th>
-                                        <th>CurrentMeasured</th>
-                                        <th>TemperatureMeasured</th>
-                                        <th>CurrentLoad</th>
-                                        <th>VoltageLoad</th>
-                                        <th>DateTime</th>
-                                    </tr>
-                                </thead>
-                                <tbody className="text-sm cursor-pointer">
-                                    <tr className="hover:bg-white">
-                                        <td>1.856</td>
-                                        <td>3.97</td>
-                                        <td>2.012528</td>
-                                        <td>24.39</td>
-                                        <td>1.99</td>
-                                        <td>3.06</td>
-                                        <td>2022-07-02 15:25:4</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <div className="overflow-hidden border rounded-xl w-full mb-12">
-                            <table className={`table-auto min-w-full text-left ${styles.table}`}>
-                                <thead className="bg-gray-952 text-white rounded-xl h-10 text-sm font-light">
-                                    <tr>
-                                        <th>Capacity</th>
-                                        <th>VoltageMeasured</th>
-                                        <th>CurrentMeasured</th>
-                                        <th>TemperatureMeasured</th>
-                                        <th>CurrentLoad</th>
-                                        <th>VoltageLoad</th>
-                                        <th>DateTime</th>
-                                    </tr>
-                                </thead>
-                                <tbody className="text-sm cursor-pointer">
-                                    <tr className="hover:bg-white">
-                                        <td>1.856</td>
-                                        <td>3.97</td>
-                                        <td>2.012528</td>
-                                        <td>24.39</td>
-                                        <td>1.99</td>
-                                        <td>3.06</td>
-                                        <td>2022-07-02 15:25:4</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-
-                        
                     </div>
 
                     {/* Images Grid */}

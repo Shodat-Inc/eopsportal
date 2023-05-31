@@ -32,7 +32,9 @@ export default function EopsProsense() {
                     </div>
 
                     {/* Content Goes Here */}
-                    <p>Content Goes Here!!</p>                    
+                    <div className="flex h-96 w-full justify-center items-center">
+                        <p className="text-gray-951 font-semibold text-5xl">Coming Soon</p>
+                    </div>                  
 
                 </div>
             </div>

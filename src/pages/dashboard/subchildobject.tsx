@@ -88,7 +88,6 @@ export default function SubChildObject(localData: any) {
         if (fetchData.length) return;
     }, [localData.localData])
 
-    console.log("AMIT SUBOBJ => ", subObj)
 
     return (
         <>

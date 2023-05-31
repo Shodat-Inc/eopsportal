@@ -38,7 +38,17 @@ export default function ModelView() {
                                     </Link>
                                 </li>
                                 <li>
-                                    <div className="flex items-center">
+                                    <Link
+                                        href={{
+                                            pathname: "/dashboard/subchildobject",
+                                            query: {
+                                                class: parentAsset.objectID,
+                                                object: parentAsset.id,
+                                                id: parentAsset.key,
+                                                subObject: parentAsset.subObject,
+                                            }
+                                        }}
+                                        className="flex items-center">
                                         <Image
                                             src="/img/arrow-right.svg"
                                             alt="arrow-right"
@@ -47,15 +57,17 @@ export default function ModelView() {
                                             width={24}
                                         />
                                         <span className="ml-1 text-sm text-black hover:text-yellow-950 md:ml-1 font-bold">{parentAsset.key}</span>
-                                    </div>
+                                    </Link>
                                 </li>
                                 <li>
                                     <Link
                                         href={{
-                                            pathname: "/dashboard/eopswatch/eopswatchmodel",
+                                            pathname: "/dashboard/eopstrace/tracemodel",
                                             query: {
                                                 objectID: parentAsset.objectID,
-                                                key: parentAsset.key
+                                                key: parentAsset.key,
+                                                id: parentAsset.id,
+                                                subObject: parentAsset.subObject,
                                             }
                                         }}
                                         className="flex items-center"
@@ -73,11 +85,12 @@ export default function ModelView() {
                                 <li>
                                     <Link
                                         href={{
-                                            pathname: "/dashboard/eopswatch/trainingmodel",
+                                            pathname: "/dashboard/eopstrace/testmodel",
                                             query: {
                                                 objectID: parentAsset.objectID,
                                                 key: parentAsset.key,
-                                                model: parentAsset.model
+                                                id: parentAsset.id,
+                                                subObject: parentAsset.subObject,
                                             }
                                         }}
                                         className="flex items-center"
@@ -110,8 +123,16 @@ export default function ModelView() {
 
 
                     {/* Images */}
-                    <div className="relative mt-10 rounded overflow-hidden rounded-xl">
-                        {parentAsset.result ?
+                    <div className="relative mt-10 rounded overflow-hidden rounded-xl text-center flex flex-wrap flex-col items-center justify-center">
+                        <Image
+                            src="/img/trace.png"
+                            alt="no image"
+                            height={170}
+                            width={740}
+                            className="h-auto w-auto inline-block"
+                        />
+
+                        {/* {parentAsset.result ?
                             <Image
                                 src={parentAsset?.result?.toString()}
                                 alt="result image"
@@ -122,7 +143,7 @@ export default function ModelView() {
                             :
                             <div className="text-xl font-semibold w-full text-center flex flex-wrap flex-col items-center justify-center">
                                 <Image
-                                    src="/img/no_image_icon.svg"
+                                    src="/img/trace.png"
                                     alt="no image"
                                     height={100}
                                     width={100}
@@ -130,7 +151,7 @@ export default function ModelView() {
                                 />
                                 <span className="mt-3">No Image Found!! </span>
                             </div>
-                        }
+                        } */}
                     </div>
 
                 </div>
