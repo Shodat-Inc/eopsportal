@@ -176,7 +176,7 @@ export default function SubObject(localData: any) {
                                                 : null
                                         }
                                     </thead>
-                                    <tbody>
+                                    <tbody className="cursor-pointer">
                                         <tr className={`text-sm`}>
                                             {
                                                 subObj && Object.keys(subObj).length != 0 ?

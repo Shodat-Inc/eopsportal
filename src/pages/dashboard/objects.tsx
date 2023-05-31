@@ -316,7 +316,7 @@ export default function Objects(localData: any) {
                                             }
                                             <th>Actions</th>
                                         </thead>
-                                        <tbody>
+                                        <tbody className="cursor-pointer">
                                             {
                                                 data.map((items: any, index: any) => {
                                                     return (

@@ -157,7 +157,7 @@ export default function EopsWatch() {
                                                 : null
                                         }
                                     </thead>
-                                    <tbody>
+                                    <tbody className="cursor-pointer">
                                         <tr>
                                             {
                                                 subObj && Object.keys(subObj).length != 0 ?

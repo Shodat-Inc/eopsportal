@@ -96,8 +96,9 @@ export default function SubAsset(localData: any) {
         });
     };
     useEffect(() => {
+        // Concat the parent and child tags together in one array
         let arr = parentJoinKey.concat(tag);
-        setParentJoinKey(removeDuplicates(arr))
+        // setParentJoinKey(removeDuplicates(arr))
     }, [tag])
     useEffect(() => {
         fetchData();
@@ -337,7 +338,7 @@ export default function SubAsset(localData: any) {
                                                 <th>Actions</th>
                                             </tr>
                                         </thead>
-                                        <tbody className="text-sm">
+                                        <tbody className="text-sm cursor-pointer">
                                             {data.map((item: any, index: any) => (
                                                 <tr className="hover:bg-yellow-950" key={index}>
                                                     <td className="w-[50px]">{index + 1}</td>

@@ -303,7 +303,7 @@ export default function AssetManagement(localData: any) {
                                                 <th>Actions</th>
                                             </tr>
                                         </thead>
-                                        <tbody className="text-sm">
+                                        <tbody className="text-sm cursor-pointer">
                                             {data.map((item: any, index: any) => (
                                                 <tr className="hover:bg-yellow-950" key={index}>
                                                     <td className="w-[6%] min-h-[50px]">{index + 1}</td>

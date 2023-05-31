@@ -380,8 +380,7 @@ export default function ChildObject(localData: any) {
                                                 }
                                                 <th>Actions</th>
                                             </thead>
-                                            <tbody>
-
+                                            <tbody className="cursor-pointer">
                                                 {
                                                     childObject.map((items: any, index: any) => {
                                                         return (

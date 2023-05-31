@@ -139,7 +139,7 @@ export default function TraceModel() {
                                             <th>DateTime</th>
                                         </tr>
                                     </thead>
-                                    <tbody className="text-sm">
+                                    <tbody className="text-sm cursor-pointer">
                                         <tr className="hover:bg-yellow-950">
                                             <td>1.856</td>
                                             <td>3.97</td>
