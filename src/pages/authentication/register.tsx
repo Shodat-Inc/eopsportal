@@ -1,11 +1,38 @@
+import React, { useState, useEffect } from 'react';
 import Link from "next/link";
 import Router from 'next/router';
 import Image from "next/image";
+import moment from 'moment';
 
 export default function Register() {
+
+    // const [firstName, setFirstName] = useState("");
+    // const [lastName, setLastName] = useState("");
+    // const [companyName, setCompanyName] = useState("");
+    const [formData, setFormData] = useState({
+        firstName: "Oliver",
+        lastName: "Queen",
+        companyName: "Shodat"
+    });
+
     const goToComplete = () => {
         Router.push('/authentication/complete')
     }
+
+    const handleInput = (evt: any) => {
+        evt.preventDefault()
+        let targetName = evt.target.name
+        let targetValue = evt.target.value
+        setFormData((state)=>({
+            ...state, 
+            [targetName]: targetValue
+        }));
+    };
+    const submitForm = (evt: any) => {
+        evt.preventDefault();
+        console.log(formData)
+    }
+    // console.log(formData)
     return (
         <>
             <div className="column-2 flex font-OpenSans">
@@ -58,7 +85,7 @@ export default function Register() {
                             <p className="font-normal text-2xl text-gray-500">For the purpose of industry regulation, your details are required.</p>
                             <div className="mb-4 mt-5 border border-gray-100 w-full h-[1px]"></div>
                             <div className="signinform relative">
-                                <form>
+                                <form method='post' onSubmit={submitForm} >
                                     <div className="mb-4">
                                         <label className="text-gray-500 text-lg font-medium mb-3 block">First name*</label>
                                         <input
@@ -66,6 +93,9 @@ export default function Register() {
                                             className="border rounded-lg pl-10 pr-10 border-black h-12 w-full shadow-lg"
                                             name="firstname"
                                             placeholder="First name"
+                                            value={formData.firstName}
+                                            // onChange={handleInput}
+                                            onChange = {(e) => handleInput(e)}
                                         />
                                     </div>
                                     <div className="mb-4">
@@ -75,6 +105,8 @@ export default function Register() {
                                             className="border rounded-lg pl-10 pr-10 border-black h-12 w-full shadow-lg"
                                             name="lastname"
                                             placeholder="Last name"
+                                            value={formData.lastName}
+                                            onChange={handleInput}
                                         />
                                     </div>
                                     <div className="mb-8 relative">
@@ -86,18 +118,20 @@ export default function Register() {
                                             className="border rounded-lg pl-10 pr-14 border-black h-12 w-full shadow-lg"
                                             name="companyname"
                                             placeholder="Company name"
+                                            value={formData.companyName}
+                                            onChange={handleInput}
                                         />
                                     </div>
                                     <div className="relative">
-                                        {/* <button 
-                                        className="rounded-lg h-16 bg-black w-full text-white text-lg"
-                                        onClick={goToComplete}
+                                        <button
+                                            className="rounded-lg h-16 bg-black w-full text-white text-lg"
+                                        // onClick={goToComplete}
                                         >
                                             Save & Continue
-                                        </button> */}
-                                        <Link
+                                        </button>
+                                        {/* <Link
                                             href="/authentication/complete"
-                                            className="rounded-lg h-16 bg-black w-full text-white text-lg flex justify-center items-center">Save & Continue</Link>
+                                            className="rounded-lg h-16 bg-black w-full text-white text-lg flex justify-center items-center">Save & Continue</Link> */}
                                     </div>
                                 </form>
                             </div>

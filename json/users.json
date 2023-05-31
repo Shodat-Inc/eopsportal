@@ -1,0 +1,26 @@
+[
+    {
+        "userID": 1,
+        "username":"admin@admin.com",
+        "password":"12345",
+        "role":"admin",
+        "fisrtname":"john",
+        "lastname":"doe",
+        "company":"shodat",
+        "phone":"9874563210",
+        "dateCreated":"5/8/2023, 11:45:18 PM",
+        "dateModified":"5/8/2023, 11:45:18 PM"
+    },
+    {
+        "userID": 2,
+        "username":"amitpandey@shodat.com",
+        "password":"12345",
+        "role":"admin",
+        "fisrtname":"Amit",
+        "lastname":"Pandey",
+        "company":"shodat",
+        "phone":"9571373757",
+        "dateCreated":"5/8/2023, 11:45:18 PM",
+        "dateModified":"5/8/2023, 11:45:18 PM"
+    }
+]
