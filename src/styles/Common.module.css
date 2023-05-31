@@ -157,7 +157,7 @@
     left: 0;
     width: 100%;
     border-radius:  0 0 3px 3px;
-    display: block;
+    display: none;
     transition: all 0.4s ease-in-out;
 }
 .imagewrap:hover > .info {
@@ -218,4 +218,43 @@
     background-color: #000000;   
     right: 4px;
     left: auto;
+}
+
+
+/* Table viewTable */
+.viewTable thead th {
+    padding-left:15px;
+    width: 50%;
+
+}
+.viewTable tbody tr {
+    padding-left: 15px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+} 
+.viewTable tbody tr td{
+    padding-left: 15px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    height: 45px;
+} 
+.viewTableWrap {
+    scrollbar-width: thin;
+    scrollbar-color: #000000;
+}
+
+/* Chrome, Edge, and Safari */
+.viewTableWrap::-webkit-scrollbar {
+    width: 8px;    
+}
+
+.viewTableWrap::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 5px;
+}
+
+.viewTableWrap::-webkit-scrollbar-thumb {
+    background-color:#BDBDBD;
+    border-radius: 14px;
+    border: 3px solid #BDBDBD;
 }

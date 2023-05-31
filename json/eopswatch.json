@@ -7,20 +7,20 @@
             {
                 "folder": "Test",
                 "path": "/img/CrackDetection/TPC71810-01-012/Test/WallTest1.png",
-                "resultImage": "/img/CrackDetection/TPC71810-01-012/Test/WallTest1Result.png",
+                "resultImage": "/img/CrackDetection/TPC71810-01-012/Test/WallTest1ResultNew.png",
                 "dateUploaded": "05-11-2023"
                 
             },
             {
                 "folder": "Test",
                 "path": "/img/CrackDetection/TPC71810-01-012/Test/WallTest2.png",
-                "resultImage": "",
+                "resultImage": "/img/CrackDetection/TPC71810-01-012/Test/WallTest2Result.png",
                 "dateUploaded": "05-11-2023"
             },
             {
                 "folder": "Test",
                 "path": "/img/CrackDetection/TPC71810-01-012/Test/WallTest3.png",
-                "resultImage": "/img/CrackDetection/TPC71810-01-012/Test/WallTest3Result.png",
+                "resultImage": "/img/CrackDetection/TPC71810-01-012/Test/WallTest3ResultNew.png",
                 "dateUploaded": "05-11-2023"
             },
             {
@@ -32,13 +32,13 @@
             {
                 "folder": "Production",
                 "path": "/img/CrackDetection/TPC71810-01-012/Production/WallProd1.png",
-                "resultImage": "/img/CrackDetection/TPC71810-01-012/Production/WallProd1Result.png",
+                "resultImage": "/img/CrackDetection/TPC71810-01-012/Production/WallProd1ResultNew.png",
                 "dateUploaded": "05-11-2023"
             },
             {
                 "folder": "Production",
                 "path": "/img/CrackDetection/TPC71810-01-012/Production/WallProd2.png",
-                "resultImage": "/img/CrackDetection/TPC71810-01-012/Production/WallProd1Result.png",
+                "resultImage": "/img/CrackDetection/TPC71810-01-012/Production/WallProd2ResultNew.png",
                 "dateUploaded": "05-11-2023"
             }
         ]
@@ -57,7 +57,7 @@
             {
                 "folder": "Test",
                 "path": "/img/CrackDetection/TPC3305-01-011/Test/PipeTest2.png",
-                "resultImage": "/img/CrackDetection/TPC3305-01-011/Test/PipeTest2Result.png",
+                "resultImage": "/img/CrackDetection/TPC3305-01-011/Test/PipeTest2ResultNew.png",
                 "dateUploaded": "05-11-2023"
             },
             {
@@ -89,7 +89,7 @@
             {
                 "folder": "Test",
                 "path": "/img/CrystallizationDetection/1S223/Test/BatteryTest3.png",
-                "resultImage":"/img/CrystallizationDetection/1S223/Test/BatteryTest3Result.png",
+                "resultImage":"/img/CrystallizationDetection/1S223/Test/BatteryTest3ResultNew.png",
                 "dateUploaded": "05-11-2023"
             }
            
@@ -129,25 +129,25 @@
             {
                 "folder": "Test",
                 "path": "/img/TireWearPrediction/NEC1TT01522/Test/TireTest1.png",
-                "resultImage": "",
+                "resultImage": "/img/TireWearPrediction/NEC1TT01522/Test/TireTest1.png",
                 "dateUploaded": "05-11-2023"
             },
             {
                 "folder": "Test",
                 "path": "/img/TireWearPrediction/NEC1TT01522/Test/TireTest2.png",
-                "resultImage": "",
+                "resultImage": "/img/TireWearPrediction/NEC1TT01522/Test/TireTest2.png",
                 "dateUploaded": "05-11-2023"
             },
             {
                 "folder": "Test",
                 "path": "/img/TireWearPrediction/NEC1TT01522/Test/TireTest3.png",
-                "resultImage":"",
+                "resultImage":"/img/TireWearPrediction/NEC1TT01522/Test/TireTest3.png",
                 "dateUploaded": "05-11-2023"
             },
             {
                 "folder": "Test",
                 "path": "/img/TireWearPrediction/NEC1TT01522/Test/TireTest4.png",
-                "resultImage":"",
+                "resultImage":"/img/TireWearPrediction/NEC1TT01522/Test/TireTest4.png",
                 "dateUploaded": "05-11-2023"
             },
             {

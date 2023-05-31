@@ -25,9 +25,9 @@ export default function EopsWatchModel() {
     const router = useRouter();
     const parentAsset = router.query;
 
-    const [chooseAsset, setChooseAsset] = useState(parentAsset.objectID ==="Manufacturing Plants" ? ManufacturingPlantsClass[0] : VehicleClass[0]);
+    const [chooseAsset, setChooseAsset] = useState(parentAsset.objectID === "Manufacturing Plants" ? ManufacturingPlantsClass[0] : VehicleClass[0]);
     const [toggleAsset, setToggleAsset] = useState(false);
-    const [image, setImage] = useState("/img/no_image_icon.svg");
+    const [image, setImage] = useState();
 
     // Show Choose Asset List
     const showChooseAssetList = () => {
@@ -61,7 +61,7 @@ export default function EopsWatchModel() {
 
     console.log("AMIT", image)
 
-   
+
     return (
         <div className="flex font-OpenSans">
 
@@ -87,7 +87,17 @@ export default function EopsWatchModel() {
                                     </Link>
                                 </li>
                                 <li>
-                                    <div className="flex items-center">
+                                    <Link
+                                        href={{
+                                            pathname: "/dashboard/subchildobject",
+                                            query: {
+                                                class: parentAsset.objectID,
+                                                object: parentAsset.id,
+                                                id: parentAsset.key,
+                                                subObject: parentAsset.subObject,
+                                            }
+                                        }}
+                                        className="flex items-center">
                                         <Image
                                             src="/img/arrow-right.svg"
                                             alt="arrow-right"
@@ -96,7 +106,7 @@ export default function EopsWatchModel() {
                                             width={24}
                                         />
                                         <span className="ml-1 text-sm font-medium text-black hover:text-yellow-950 md:ml-1">{parentAsset.key}</span>
-                                    </div>
+                                    </Link>
                                 </li>
                             </ol>
                         </nav>
@@ -106,7 +116,17 @@ export default function EopsWatchModel() {
                     <div className="flex items-end justify-end mt-[-32px]">
                         <Link
                             className="flex justify-center items-center text-black bg-yellow-951 rounded rounded-xl h-12 px-4 transition-opacity duration-300 mr-5"
-                            href="/dashboard/eopswatch/modelperformance"
+                            // href="/dashboard/eopswatch/modelperformance"
+                            href={{
+                                pathname: "/dashboard/eopswatch/modelperformance",
+                                query: {
+                                    objectID: parentAsset.objectID,
+                                    key: parentAsset.key,
+                                    model: chooseAsset,
+                                    id: parentAsset.id,
+                                    subObject: parentAsset.subObject,
+                                }
+                            }}
                         >
                             <Image
                                 src="/img/activity.svg"
@@ -134,25 +154,27 @@ export default function EopsWatchModel() {
 
                     </div>
 
-                    <div className="flex items-center justify-between mt-10">
+                    <div className="flex items-center justify-start mt-10">
                         {/* Image */}
-                        <div className="relative w-[46%]">
-                            <div className="rounded rounded-xl bg-gray-956 border border-gray-951 h-[300px] w-full overflow-hidden">
+                        <div className="relative w-[420px]">
+                            <div className="rounded rounded-xl bg-gray-956 border border-gray-951 h-[350px] w-[400px] overflow-hidden">
                                 <div className="relative flex items-center justify-center h-full">
-                                    <Image
-                                        src={image}
-                                        alt="trainingModel"
-                                        height={250}
-                                        width={250}
-                                        className="display-inline h-full w-full object-cover"
-                                    />
+                                    {image ?
+                                        <Image
+                                            src={image}
+                                            alt="trainingModel"
+                                            height={250}
+                                            width={250}
+                                            className="display-inline h-full w-full object-cover"
+                                        />
+                                        : null}
                                 </div>
 
                             </div>
                         </div>
 
                         {/* Model */}
-                        <div className="relative w-[46%]">
+                        <div className="relative pl-10">
                             <div className="w-[400px] relative">
                                 <div
                                     className="border rounded-xl border-gray-500 h-[55px] w-[400px] pl-2 pr-5 relative flex items-center justify-start"
@@ -194,7 +216,7 @@ export default function EopsWatchModel() {
                                                     ))
 
                                             }
-                                           
+
                                         </ul>
                                     </div>
                                     : null}
@@ -207,7 +229,9 @@ export default function EopsWatchModel() {
                                         query: {
                                             objectID: parentAsset.objectID,
                                             key: parentAsset.key,
-                                            model: chooseAsset
+                                            model: chooseAsset,
+                                            id: parentAsset.id,
+                                            subObject: parentAsset.subObject,
                                         }
                                     }}
                                     className="relative mr-16"
@@ -227,7 +251,9 @@ export default function EopsWatchModel() {
                                         query: {
                                             objectID: parentAsset.objectID,
                                             key: parentAsset.key,
-                                            model: chooseAsset
+                                            model: chooseAsset,
+                                            id: parentAsset.id,
+                                            subObject: parentAsset.subObject,
                                         }
                                     }}
                                     className="relative mr-16"

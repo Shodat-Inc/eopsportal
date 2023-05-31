@@ -48,7 +48,7 @@ export default function CustomReport() {
                     {/* Content Goes Here */}
                     <div className="mt-8">
                         <Image
-                            src="/img/eopsinsights/Customreport.png"
+                            src="/img/eopsinsights/CustomReport.png"
                             alt="Custom report"
                             height={500}
                             width={500}

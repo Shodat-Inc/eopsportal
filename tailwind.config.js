@@ -46,6 +46,9 @@ module.exports = withMT({
         },
         brown: {
           951: '#9A7122'
+        },
+        orange : {
+          951 : '#FFF2C6'
         }
       },
       backdropBrightness: {

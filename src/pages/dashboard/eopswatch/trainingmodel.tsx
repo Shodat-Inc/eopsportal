@@ -78,7 +78,17 @@ export default function TrainingModel() {
                                     </Link>
                                 </li>
                                 <li>
-                                    <div className="flex items-center">
+                                    <Link
+                                        href={{
+                                            pathname: "/dashboard/subchildobject",
+                                            query: {
+                                                class: parentAsset.objectID,
+                                                object: parentAsset.id,
+                                                id: parentAsset.key,
+                                                subObject: parentAsset.subObject,
+                                            }
+                                        }}
+                                        className="flex items-center">
                                         <Image
                                             src="/img/arrow-right.svg"
                                             alt="arrow-right"
@@ -87,7 +97,7 @@ export default function TrainingModel() {
                                             width={24}
                                         />
                                         <span className="ml-1 text-sm text-black hover:text-yellow-950 md:ml-1 font-bold">{parentAsset.key}</span>
-                                    </div>
+                                    </Link>
                                 </li>
                                 <li>
                                     <Link
@@ -95,7 +105,9 @@ export default function TrainingModel() {
                                             pathname: "/dashboard/eopswatch/eopswatchmodel",
                                             query: {
                                                 objectID: parentAsset.objectID,
-                                                key: parentAsset.key
+                                                key: parentAsset.key, 
+                                                id: parentAsset.id,
+                                                subObject: parentAsset.subObject,
                                             }
                                         }}
                                         className="flex items-center"
@@ -214,6 +226,8 @@ export default function TrainingModel() {
                                                                     objectID: parentAsset.objectID,
                                                                     key: parentAsset.key,
                                                                     model: parentAsset.model,
+                                                                    id: parentAsset.id,
+                                                                    subObject: parentAsset.subObject,
                                                                     result: item.resultImage ? item.resultImage : ''
                                                                 }
                                                             }}
@@ -230,7 +244,7 @@ export default function TrainingModel() {
                                                         </Link>
                                                         <button
                                                             // onClick={() => setShowImageModal(true)}
-                                                            onClick={() => imageModal(item.resultImage)}
+                                                            onClick={() => imageModal(item.path)}
                                                             className="bg-yellow-951 rounded rounded-md flex justify-center items-center texxt-black font-semibold text-sm p-2 w-24 ml-3"
                                                         >
                                                             <Image
@@ -265,12 +279,12 @@ export default function TrainingModel() {
                                                 <div
                                                     className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
                                                 >
-                                                    <div className="relative my-6 w-[450px] ">
-                                                        <div className="border-0 rounded-xl shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none w-[450px] h-[420px] overflow-hidden-1 ">
+                                                    <div className="relative my-0 w-[450px] bg-transparent border border-yellow-951 rounded rounded-xl">
+                                                        <div className="border-0 shadow-lg-1 relative flex flex-col w-full bg-white outline-none focus:outline-none w-[450px] h-[420px] overflow-hidden-1 bg-transparent rounded rounded-xl">
                                                             {/*header*/}
                                                             <div className="flex items-start justify-between p-0">
                                                                 <button
-                                                                    className="bg-transparent border-0 text-black float-right leading-none font-semibold outline-none focus:outline-none bg-white absolute right-[-30px] top-[-30px] rounded rounded-full p-1 hover:bg-yellow-951"
+                                                                    className="bg-transparent border border-white hover:border-yellow-951 text-black float-right leading-none font-semibold outline-none focus:outline-none bg-white absolute right-[-40px] top-[-40px] rounded rounded-full p-1 hover:bg-yellow-951"
                                                                     onClick={() => setShowImageModal(false)}
                                                                 >
                                                                     <Image
@@ -289,7 +303,7 @@ export default function TrainingModel() {
                                                                         <Image
                                                                             src={resImage}
                                                                             alt="result"
-                                                                            className="h-auto w-auto"
+                                                                            className="h-[100%] w-[100%] object-cover rounded rounded-xl"
                                                                             height={420}
                                                                             width={450}
                                                                         />
@@ -300,7 +314,7 @@ export default function TrainingModel() {
                                                                                 alt="no image"
                                                                                 height={100}
                                                                                 width={100}
-                                                                                className="inline-block"
+                                                                                className="h-[100%] w-[100%] object-cover rounded rounded-xl"
                                                                             />
                                                                             <span className="mt-3">No Image Found!! </span>
                                                                         </div>
