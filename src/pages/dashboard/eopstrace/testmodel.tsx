@@ -91,6 +91,7 @@ export default function TestModel() {
         setResImage(item);
     }
 
+    console.log("batteryJSON", batteryJSON[0].subData)
     return (
         <div className="flex font-OpenSans">
 
@@ -240,11 +241,11 @@ export default function TestModel() {
                     <div className="relative mt-8 h-[600px] overflow-y-scroll">
                         <div className="overflow-hidden border rounded-xl w-full mb-12">
                             {
-                                batteryJSON.map((item: any, k: any) => (
-                                    <table className={`table-auto min-w-full text-left ${styles.table}`}>
+                                batteryJSON[0].subData.map((item: any, k: any) => (
+                                    <table className={`table-auto min-w-full text-left mb-14 ${styles.table}`}>
                                         <thead className="bg-gray-952 text-white rounded-xl h-10 text-sm font-light">
                                             {
-                                                Object.keys(item?.subData[k]).map((items: any, i: any) => (
+                                                Object.keys(item).map((items: any, i: any) => (
 
                                                     <th className="capitalize" key={i}>
                                                         {
@@ -255,9 +256,9 @@ export default function TestModel() {
                                             }
                                         </thead>
                                         <tbody>
-                                        <tr className={`text-sm`}>
+                                        <tr className={`text-sm cursor-pointer`}>
                                             {
-                                                Object.values(item?.subData[k]).map((item: any, i: any) => (
+                                                Object.values(item).map((item: any, i: any) => (
 
                                                     <td key={i}>
                                                         <Link 
@@ -268,8 +269,7 @@ export default function TestModel() {
                                                                 key: parentAsset.key,
                                                                 model: parentAsset.model,
                                                                 id: parentAsset.id,
-                                                                subObject: parentAsset.subObject,
-                                                                result: item.resultImage ? item.resultImage : ''
+                                                                subObject: parentAsset.subObject
                                                             }
                                                         }}
                                                         >

@@ -11,6 +11,12 @@ export default function ModelView() {
 
     const router = useRouter();
     const parentAsset = router.query;
+    const [loader, setLoader] = useState(true);
+    useEffect(() => {
+        setTimeout(() => {
+            setLoader(false)
+        }, 3000)
+    }, [])
 
     return (
         <div className="flex font-OpenSans">
@@ -123,36 +129,58 @@ export default function ModelView() {
 
 
                     {/* Images */}
-                    <div className="relative mt-10 rounded overflow-hidden rounded-xl text-center flex flex-wrap flex-col items-center justify-center">
-                        <Image
-                            src="/img/trace.png"
-                            alt="no image"
-                            height={170}
-                            width={740}
-                            className="h-auto w-auto inline-block"
-                        />
-
-                        {/* {parentAsset.result ?
-                            <Image
-                                src={parentAsset?.result?.toString()}
-                                alt="result image"
-                                height={600}
-                                width={600}
-                                className="h-full w-full"
-                            />
-                            :
-                            <div className="text-xl font-semibold w-full text-center flex flex-wrap flex-col items-center justify-center">
+                    {
+                        loader ?
+                            <div className="relative w-full flex justify-center items-center h-96">
                                 <Image
-                                    src="/img/trace.png"
-                                    alt="no image"
-                                    height={100}
-                                    width={100}
-                                    className="inline-block"
+                                    src="/img/loading-gif.gif"
+                                    alt="loader"
+                                    height={124}
+                                    width={124}
+                                    className=""
                                 />
-                                <span className="mt-3">No Image Found!! </span>
                             </div>
-                        } */}
-                    </div>
+                            :
+
+                            <div className="relative mt-10 rounded overflow-hidden rounded-xl text-center flex flex-wrap flex-rpw items-center justify-around">
+
+                                <div className="border border-gray-951 rounded rounded-xl p-4 w-56 h-48 flex items-center justify-center flex-wrap flex-col">
+                                    <p className="text-black font-bold mb-2">30%</p>
+                                    <Image
+                                        src="/img/BatteryUtilization.svg"
+                                        alt="no image"
+                                        height={60}
+                                        width={75}
+                                        className="h-auto w-auto inline-block mb-2"
+                                    />
+                                    <p className="text-black font-semibold mb-10">Battery Utilization</p>
+                                </div>
+
+                                <div className="border border-gray-951 rounded rounded-xl p-4 w-56 h-48 flex items-center justify-center flex-wrap flex-col">
+                                    <p className="text-black font-bold mb-2">117</p>
+                                    <Image
+                                        src="/img/RemainingCycle.svg"
+                                        alt="no image"
+                                        height={60}
+                                        width={75}
+                                        className="h-auto w-auto inline-block mb-2"
+                                    />
+                                    <p className="text-black font-semibold mb-10">Remaining cycles left</p>
+                                </div>
+
+                                <div className="border border-gray-951 rounded rounded-xl p-4 w-56 h-48 flex items-center justify-center flex-wrap flex-col">
+                                    <p className="text-black font-bold mb-2">168</p>
+                                    <Image
+                                        src="/img/totalCycle.svg"
+                                        alt="no image"
+                                        height={75}
+                                        width={75}
+                                        className="h-auto w-auto inline-block mb-2"
+                                    />
+                                    <p className="text-black font-semibold mb-10">Est. total cycle</p>
+                                </div>
+                            </div>
+                    }
 
                 </div>
             </div>
