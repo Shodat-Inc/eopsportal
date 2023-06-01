@@ -13,12 +13,41 @@ export default function TrainingView() {
     const router = useRouter();
     const parentAsset = router.query;
     const [loader, setLoader] = useState(true);
+    const [data, setData] = useState([] as any);
     useEffect(() => {
         setTimeout(() => {
             setLoader(false)
         }, 4000)
     }, [])
     console.log("parentAsset", parentAsset)
+
+    const fetchObjectData = () => {
+        axios.get("/api/geteopsWatch").then((response) => {
+            if (response.data) {
+                const filtered = response.data.filter((item: any) => {
+                    if (item.class === parentAsset.objectID && item.ID === parentAsset.key && item.modal === parentAsset.model) {
+                        return item;
+                    }
+                });
+                if (filtered && filtered.length > 0) {
+                    if (filtered[0].images) {
+                        console.log("HERE", filtered[0].images)
+                        const filterArr = filtered[0].images.filter((item: any) => {
+                            return item.imageID.toString() === parentAsset.imageID
+                        })
+                        setData(filterArr);
+                    }
+                }
+            }
+        });
+    }
+    useEffect(() => {
+        fetchObjectData();
+        if (fetchObjectData.length) return;
+    }, [parentAsset])
+
+    console.log("DATA =>", data)
+
     return (
         <div className="flex font-OpenSans">
 
@@ -153,24 +182,30 @@ export default function TrainingView() {
                                                     <div className="relative mt-0 w-full flex flex-wrap justify-start items-start">
                                                         <div className="relative w-[45%]">
                                                             <div className="bg-gray-951 flex justify-center items-center rounded rounded-xl overflow-hidden">
-                                                            <Image
-                                                                src={parentAsset?.result?.toString()}
-                                                                alt="Result"
-                                                                height={700}
-                                                                width={500}
-                                                                className="h-auto w-auto"
-                                                            />
+                                                                <Image
+                                                                    src={data ? data[0].resultImage : parentAsset?.result?.toString()}
+                                                                    alt="Result"
+                                                                    height={700}
+                                                                    width={500}
+                                                                    className="h-auto w-auto"
+                                                                />
                                                             </div>
                                                         </div>
                                                         <div className="relative pl-10 w-[55%]">
-                                                            <p className="mb-10 p-0 text-black text-xl font-semibold">Predictions </p>
-                                                            <Image
-                                                                src="/img/Component.png"
-                                                                alt="Result"
-                                                                height={87}
-                                                                width={131}
-                                                                className="mb-2 h-auto w-auto"
-                                                            />
+                                                            <p className="mb-2 p-0 text-black text-xl font-semibold">Predictions </p>
+                                                            {
+                                                                data ?
+                                                                    <>
+                                                                        <Image
+                                                                            src={data[0].threshold}
+                                                                            alt="Result"
+                                                                            height={300}
+                                                                            width={300}
+                                                                            // className="mb-2 h-auto w-auto"
+                                                                        />
+                                                                    </>
+                                                                    : null
+                                                            }
                                                         </div>
                                                     </div>
 
@@ -179,7 +214,7 @@ export default function TrainingView() {
                                                         <div className="relative w-[45%]">
                                                             <Image
                                                                 // src="/img/CrackDetection/TPC3305-01-011/Test/PipeTest2ResultNew.png"
-                                                                src={parentAsset?.result?.toString()}
+                                                                src={data ? data[0].resultImage : parentAsset?.result?.toString()}
                                                                 alt="Result"
                                                                 height={700}
                                                                 width={500}
@@ -200,49 +235,48 @@ export default function TrainingView() {
                                                             <p className="mb-0 p-0 text-black text-xl font-semibold">Predictions </p>
                                                             <p className="mb-4 p-0 text-normal font-normal"><span className="text-gray-951">Predictions are shown in </span><span className="text-red-500">red</span></p>
 
-                                                            <p className="mb-2 p-0 text-black text-xl font-semibold">Threshold Value</p>
-                                                            <Image
-                                                                src="/img/thresholdValue.png"
-                                                                alt="Result"
-                                                                height={70}
-                                                                width={290}
-                                                                className="mb-2 h-auto w-auto"
-                                                            />
+                                                            {
+                                                                data ?
+                                                                    <>
+                                                                        <p className="mb-2 p-0 text-black text-xl font-semibold">Threshold Value</p>
+                                                                        <Image
+                                                                            src={data[0].threshold}
+                                                                            alt="Result"
+                                                                            height={70}
+                                                                            width={290}
+                                                                            className="mb-2 h-auto w-auto"
+                                                                        />
+                                                                    </>
+                                                                    : null
+                                                            }
 
                                                             <p className="mb-4 p-0 text-black text-normal font-normal">Only show suggested objects if the probability is above the selected threshold</p>
 
-                                                            <div className={`relative h-[160px] overflow-y-auto rounded rounded-xl ${styles.viewTableWrap}`}>
-                                                                <table className={`table-auto min-w-full text-left rounded rounded-xl ${styles.viewTable}`}>
-                                                                    <thead className="bg-orange-951 text-black rounded rounded-xl h-10 text-sm font-normal">
-                                                                        <tr className="">
-                                                                            <th>Tag</th>
-                                                                            <th>Probability</th>
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody className="cursor-pointer">
-                                                                        <tr>
-                                                                            <td className="text-black text-lg font-semibold">Crack</td>
-                                                                            <td><span className="text-black rounded rounded-xl bg-yellow-951 py-1 px-3">15.5%</span></td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td className="text-black text-lg font-semibold">Crack</td>
-                                                                            <td><span className="text-black rounded rounded-xl bg-yellow-951 py-1 px-3">3.7%</span></td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td className="text-black text-lg font-semibold">Crack</td>
-                                                                            <td><span className="text-black rounded rounded-xl bg-yellow-951 py-1 px-3">3.3%</span></td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td className="text-black text-lg font-semibold">Crack</td>
-                                                                            <td><span className="text-black rounded rounded-xl bg-yellow-951 py-1 px-3">12.7%</span></td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td className="text-black text-lg font-semibold">Crack</td>
-                                                                            <td><span className="text-black rounded rounded-xl bg-yellow-951 py-1 px-3">15.5%</span></td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
-                                                            </div>
+                                                            {
+                                                                data ?
+                                                                    <div className={`relative h-[160px] overflow-y-auto rounded rounded-xl ${styles.viewTableWrap}`}>
+                                                                        <table className={`table-auto min-w-full text-left rounded rounded-xl ${styles.viewTable}`}>
+                                                                            <thead className="bg-orange-951 text-black rounded rounded-xl h-10 text-sm font-normal">
+                                                                                <tr className="">
+                                                                                    <th>Tag</th>
+                                                                                    <th>Probability</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody className="cursor-pointer">
+                                                                                {
+                                                                                    data[0].thresholdTags.map((item: any, index: any) => (
+                                                                                        <tr>
+                                                                                            <td className="text-black text-lg font-semibold">Crack</td>
+                                                                                            <td><span className="text-black rounded rounded-xl bg-yellow-951 py-1 px-3">{item.Crack}%</span></td>
+                                                                                        </tr>
+                                                                                    ))
+                                                                                }
+                                                                                
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                    : null
+                                                            }
                                                         </div>
 
                                                     </div>

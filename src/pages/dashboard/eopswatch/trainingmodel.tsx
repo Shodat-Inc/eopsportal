@@ -228,7 +228,8 @@ export default function TrainingModel() {
                                                                     model: parentAsset.model,
                                                                     id: parentAsset.id,
                                                                     subObject: parentAsset.subObject,
-                                                                    result: item.resultImage ? item.resultImage : ''
+                                                                    result: item.resultImage ? item.resultImage : '',
+                                                                    imageID : item.imageID
                                                                 }
                                                             }}
                                                             className="bg-yellow-951 rounded rounded-md flex justify-center items-center texxt-black font-semibold text-sm p-2 w-24"
