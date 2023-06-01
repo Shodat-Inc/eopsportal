@@ -12,6 +12,7 @@ const batteryJSON = [
     {
         "SerialNo": "LI7481",
         "VIN": "5PVBN3TK3R6Y67222",
+        "modal": "Battery Life Prediction",
         "ID": "5PVBE7AJ8R5T50001",
         "object": "Battery",
         "className": "Vehicles",
@@ -20,32 +21,35 @@ const batteryJSON = [
         "Voltage(V)": "600",
         "subData": [
             {
+                "ID": 1,
                 "Capacity": "1.856",
                 "VoltageMeasured": "3.97",
                 "CurrentMeasured": "2.012528",
                 "TemperatureMeasured": "24.39",
                 "CurrentLoad": "1.99",
                 "VoltageLoad": "3.06",
-                "DateTime": "2022-07-02 15:25:4"
+                "DateTime": "2022-07-02 15:25:4",
             },
-           
+
             {
+                "ID": 2,
                 "Capacity": "1.38",
                 "VoltageMeasured": "3.402",
                 "CurrentMeasured": "2",
                 "TemperatureMeasured": "33.02",
                 "CurrentLoad": "1.99",
                 "VoltageLoad": "2.493",
-                "DateTime": "2023-01-10 07:56:22"
+                "DateTime": "2023-01-10 07:56:22",
             },
             {
+                "ID": 3,
                 "Capacity": "1.27",
                 "VoltageMeasured": "3.19",
                 "CurrentMeasured": "1.89",
                 "TemperatureMeasured": "35.48",
                 "CurrentLoad": "1.85",
                 "VoltageLoad": "2.25",
-                "DateTime": "2023-03-22 01:29:35"
+                "DateTime": "2023-03-22 01:29:35",
             }
         ]
     }
@@ -58,6 +62,7 @@ export default function TestModel() {
     const [showModal, setShowModal] = useState(false);
     const [showImageModal, setShowImageModal] = useState(false);
     const [data, setData] = useState([] as any);
+    const [objdata, setObjdata] = useState([] as any);
     const [resImage, setResImage] = useState("");
 
     // Fetch the JSON data of sub Asset
@@ -91,8 +96,29 @@ export default function TestModel() {
         setShowImageModal(true);
         setResImage(item);
     }
+    // Fetch Data from JSON
+    const fetchObjectData = () => {
+        axios.get("/api/getBattery").then((response) => {
+            if (response.data) {
+                const filtered = response.data.filter((item: any) => {
+                    if (item.className === parentAsset.objectID && item.SerialNo === parentAsset.key && item.modal === parentAsset.model) {
+                        return item;
+                    }
+                });
+                if (filtered && filtered.length > 0) {
+                    setObjdata(filtered);
+                }
+            }
+        });
+    }
+    useEffect(() => {
+        fetchObjectData();
+        if (fetchObjectData.length) return;
+    }, [parentAsset])
 
-    console.log("batteryJSON", batteryJSON[0].subData)
+    // console.log("DATA =>", objdata[0]?.subData[0]?.batteryInfo)
+
+
     return (
         <div className="flex font-OpenSans">
 
@@ -146,9 +172,10 @@ export default function TestModel() {
                                             pathname: "/dashboard/eopstrace/tracemodel",
                                             query: {
                                                 objectID: parentAsset.objectID,
-                                                key: parentAsset.key, 
+                                                key: parentAsset.key,
                                                 id: parentAsset.id,
                                                 subObject: parentAsset.subObject,
+                                                model: parentAsset.model
                                             }
                                         }}
                                         className="flex items-center"
@@ -239,244 +266,33 @@ export default function TestModel() {
                     </div>
 
                     {/* Table Grid */}
-                    <div className="relative mt-8 h-[600px] overflow-y-scroll">
-                        <div className="overflow-hidden border rounded-xl w-full mb-12">
-                            {
-                                batteryJSON[0].subData.map((item: any, k: any) => (
-                                    <table className={`table-auto min-w-full text-left mb-14 ${styles.table}`}>
-                                        <thead className="bg-gray-952 text-white rounded-xl h-10 text-sm font-light">
-                                            {
-                                                Object.keys(item).map((items: any, i: any) => (
+                    {objdata && objdata.length > 0 ?
+                        <div className={`relative mt-8 h-[400px] overflow-y-auto ${styles.scrollDes}`}>
 
-                                                    <th className="capitalize" key={i}>
-                                                        {
-                                                            items.split(/(?=[A-Z])/).join(" ")
-                                                        }
-                                                    </th>
-                                                ))
-                                            }
-                                        </thead>
-                                        <tbody>
-                                        <tr className={`text-sm cursor-pointer`}>
-                                            {
-                                                Object.values(item).map((item: any, i: any) => (
-
-                                                    <td key={i}>
-                                                        <Link 
-                                                        href={{
-                                                            pathname: "/dashboard/eopstrace/modelview",
-                                                            query: {
-                                                                objectID: parentAsset.objectID,
-                                                                key: parentAsset.key,
-                                                                model: parentAsset.model,
-                                                                id: parentAsset.id,
-                                                                subObject: parentAsset.subObject
-                                                            }
-                                                        }}
-                                                        >
-                                                        {item}
-                                                        </Link>
-                                                    </td>
-
-                                                ))
-                                            }
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                ))
-                            }
-                        </div>
-
-                        <div className="hidden">
-                            <div className="overflow-hidden border rounded-xl w-full mb-12 hidden">
-                                <table className={`table-auto min-w-full text-left ${styles.table}`}>
-                                    <thead className="bg-gray-952 text-white rounded-xl h-10 text-sm font-light">
-                                        <tr>
-                                            <th>Capacity</th>
-                                            <th>VoltageMeasured</th>
-                                            <th>CurrentMeasured</th>
-                                            <th>TemperatureMeasured</th>
-                                            <th>CurrentLoad</th>
-                                            <th>VoltageLoad</th>
-                                            <th>DateTime</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody className="text-sm cursor-pointer">
-                                        <tr className="hover:bg-white">
-                                            <td>1.856</td>
-                                            <td>3.97</td>
-                                            <td>2.012528</td>
-                                            <td>24.39</td>
-                                            <td>1.99</td>
-                                            <td>3.06</td>
-                                            <td>2022-07-02 15:25:4</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-
-                            <div className="overflow-hidden border rounded-xl w-full mb-12">
-                                <table className={`table-auto min-w-full text-left ${styles.table}`}>
-                                    <thead className="bg-gray-952 text-white rounded-xl h-10 text-sm font-light">
-                                        <tr>
-                                            <th>Capacity</th>
-                                            <th>VoltageMeasured</th>
-                                            <th>CurrentMeasured</th>
-                                            <th>TemperatureMeasured</th>
-                                            <th>CurrentLoad</th>
-                                            <th>VoltageLoad</th>
-                                            <th>DateTime</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody className="text-sm cursor-pointer">
-                                        <tr className="hover:bg-white">
-                                            <td>1.856</td>
-                                            <td>3.97</td>
-                                            <td>2.012528</td>
-                                            <td>24.39</td>
-                                            <td>1.99</td>
-                                            <td>3.06</td>
-                                            <td>2022-07-02 15:25:4</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-
-                            <div className="overflow-hidden border rounded-xl w-full mb-12">
-                                <table className={`table-auto min-w-full text-left ${styles.table}`}>
-                                    <thead className="bg-gray-952 text-white rounded-xl h-10 text-sm font-light">
-                                        <tr>
-                                            <th>Capacity</th>
-                                            <th>VoltageMeasured</th>
-                                            <th>CurrentMeasured</th>
-                                            <th>TemperatureMeasured</th>
-                                            <th>CurrentLoad</th>
-                                            <th>VoltageLoad</th>
-                                            <th>DateTime</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody className="text-sm cursor-pointer">
-                                        <tr className="hover:bg-white">
-                                            <td>1.856</td>
-                                            <td>3.97</td>
-                                            <td>2.012528</td>
-                                            <td>24.39</td>
-                                            <td>1.99</td>
-                                            <td>3.06</td>
-                                            <td>2022-07-02 15:25:4</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-
-                            <div className="overflow-hidden border rounded-xl w-full mb-12">
-                                <table className={`table-auto min-w-full text-left ${styles.table}`}>
-                                    <thead className="bg-gray-952 text-white rounded-xl h-10 text-sm font-light">
-                                        <tr>
-                                            <th>Capacity</th>
-                                            <th>VoltageMeasured</th>
-                                            <th>CurrentMeasured</th>
-                                            <th>TemperatureMeasured</th>
-                                            <th>CurrentLoad</th>
-                                            <th>VoltageLoad</th>
-                                            <th>DateTime</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody className="text-sm cursor-pointer">
-                                        <tr className="hover:bg-white">
-                                            <td>1.856</td>
-                                            <td>3.97</td>
-                                            <td>2.012528</td>
-                                            <td>24.39</td>
-                                            <td>1.99</td>
-                                            <td>3.06</td>
-                                            <td>2022-07-02 15:25:4</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-
-                            <div className="overflow-hidden border rounded-xl w-full mb-12">
-                                <table className={`table-auto min-w-full text-left ${styles.table}`}>
-                                    <thead className="bg-gray-952 text-white rounded-xl h-10 text-sm font-light">
-                                        <tr>
-                                            <th>Capacity</th>
-                                            <th>VoltageMeasured</th>
-                                            <th>CurrentMeasured</th>
-                                            <th>TemperatureMeasured</th>
-                                            <th>CurrentLoad</th>
-                                            <th>VoltageLoad</th>
-                                            <th>DateTime</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody className="text-sm cursor-pointer">
-                                        <tr className="hover:bg-white">
-                                            <td>1.856</td>
-                                            <td>3.97</td>
-                                            <td>2.012528</td>
-                                            <td>24.39</td>
-                                            <td>1.99</td>
-                                            <td>3.06</td>
-                                            <td>2022-07-02 15:25:4</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-
-                            <div className="overflow-hidden border rounded-xl w-full mb-12">
-                                <table className={`table-auto min-w-full text-left ${styles.table}`}>
-                                    <thead className="bg-gray-952 text-white rounded-xl h-10 text-sm font-light">
-                                        <tr>
-                                            <th>Capacity</th>
-                                            <th>VoltageMeasured</th>
-                                            <th>CurrentMeasured</th>
-                                            <th>TemperatureMeasured</th>
-                                            <th>CurrentLoad</th>
-                                            <th>VoltageLoad</th>
-                                            <th>DateTime</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody className="text-sm cursor-pointer">
-                                        <tr className="hover:bg-white">
-                                            <td>1.856</td>
-                                            <td>3.97</td>
-                                            <td>2.012528</td>
-                                            <td>24.39</td>
-                                            <td>1.99</td>
-                                            <td>3.06</td>
-                                            <td>2022-07-02 15:25:4</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-
-
-                    </div>
-
-                    {/* Images Grid */}
-                    <div className="hidden">
-                        {filterData && filterData.length > 0 ?
-                            <div className="relative grid grid-cols-3 gap-10 mt-8">
-
+                            <div className={`overflow-hidden rounded-xl w-full mb-12 pr-2 ${styles.scrollDes1}`}>
                                 {
+                                    objdata[0]?.subData.map((item: any, k: any) => (
 
-                                    filterData.map((item: any, index: any) => (
-                                        <>
-                                            <div className="col-span-3 sm:col-span-2 md:col-span-3 lg:col-span-1 xl:col-span-4..." key={index}>
-                                                <div className={`border border-gray-200 h-72 w-full rounded-md overflow-hidden relative ${styles.imagewrap}`}>
-                                                    <input type="checkbox" className="scale-125 absolute top-1 left-1" />
-                                                    <Image
-                                                        src={item.path}
-                                                        alt="car"
-                                                        height={150}
-                                                        width={150}
-                                                        className="w-full h-full"
-                                                    />
-                                                    <div className={`${styles.info} relative flex items-center justify-center`}>
-                                                        <span className="text-white text-[13px] font-light absolute top-0 left-1">Uploaded Date: 05-11-2023</span>
-                                                        <div className="relative flex flex-wrap items-center justify-between h-full px-5">
-
+                                        <table className={`table-auto min-w-full text-left ${styles.table} ${styles.table2} mb-10`}>
+                                            <thead className="bg-gray-952 text-white rounded-xl h-10 text-[13px] font-light">
+                                                <tr>
+                                                    {
+                                                        Object.keys(item?.batteryInfo[0]).map((items: any, i: any) => (
+                                                            <th>{items}</th>
+                                                        ))
+                                                    }
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody className="text-[13px] ">
+                                                <tr>
+                                                    {
+                                                        Object.values(item?.batteryInfo[0]).map((items: any, i: any) => (
+                                                            <td>{items}</td>
+                                                        ))
+                                                    }
+                                                    <td className="w-[200px] relative">
+                                                        <span className={`${styles.testbtn}`}>
                                                             <Link
                                                                 href={{
                                                                     pathname: "/dashboard/eopstrace/modelview",
@@ -484,7 +300,9 @@ export default function TestModel() {
                                                                         objectID: parentAsset.objectID,
                                                                         key: parentAsset.key,
                                                                         model: parentAsset.model,
-                                                                        result: item.resultImage ? item.resultImage : ''
+                                                                        id: parentAsset.id,
+                                                                        subObject: parentAsset.subObject,
+                                                                        pid: item.ID
                                                                     }
                                                                 }}
                                                                 className="bg-yellow-951 rounded rounded-md flex justify-center items-center texxt-black font-semibold text-sm p-2 w-24"
@@ -498,103 +316,72 @@ export default function TestModel() {
                                                                 />
                                                                 <span>Test</span>
                                                             </Link>
-                                                            <button
-                                                                // onClick={() => setShowImageModal(true)}
-                                                                onClick={() => imageModal(item.resultImage)}
-                                                                className="bg-yellow-951 rounded rounded-md flex justify-center items-center texxt-black font-semibold text-sm p-2 w-24 ml-3"
-                                                            >
-                                                                <Image
-                                                                    src="/img/search.svg"
-                                                                    alt="car"
-                                                                    height={21}
-                                                                    width={21}
-                                                                    className="mr-2"
-                                                                />
-                                                                <span>Prev</span>
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div className="border border-gray-951 mt-2 rounded rounded-xl h-[65px] w-full p-1">
-                                                    <button
-                                                        className="text-gray-952 inline-flex justify-center items-center text-sm h-8 mb-2"
-                                                    >
-                                                        <Image
-                                                            src="/img/pluswhite.svg"
-                                                            alt="close"
-                                                            height={14}
-                                                            width={14}
-                                                        />
-                                                        <span>Add Tag</span>
-                                                    </button>
-                                                </div>
-                                            </div>
-
-                                            {showImageModal ? (
-                                                <>
-                                                    <div
-                                                        className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
-                                                    >
-                                                        <div className="relative my-6 w-[450px] ">
-                                                            <div className="border-0 rounded-xl shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none w-[450px] h-[420px] overflow-hidden-1 ">
-                                                                {/*header*/}
-                                                                <div className="flex items-start justify-between p-0">
-                                                                    <button
-                                                                        className="bg-transparent border-0 text-black float-right leading-none font-semibold outline-none focus:outline-none bg-white absolute right-[-30px] top-[-30px] rounded rounded-full p-1 hover:bg-yellow-951"
-                                                                        onClick={() => setShowImageModal(false)}
-                                                                    >
-                                                                        <Image
-                                                                            src="/img/close.svg"
-                                                                            alt="close"
-                                                                            className="h-6"
-                                                                            height={24}
-                                                                            width={24}
-                                                                        />
-                                                                    </button>
-                                                                </div>
-                                                                {/*body*/}
-                                                                <div className="relative p-0 flex items-center jusifiy-center h-full w-full">
-                                                                    {
-                                                                        resImage ?
-                                                                            <Image
-                                                                                src={resImage}
-                                                                                alt="result"
-                                                                                className="h-auto w-auto"
-                                                                                height={420}
-                                                                                width={450}
-                                                                            />
-                                                                            :
-                                                                            <div className="text-xl font-semibold w-full text-center flex flex-wrap flex-col items-center justify-center">
-                                                                                <Image
-                                                                                    src="/img/no_image_icon.svg"
-                                                                                    alt="no image"
-                                                                                    height={100}
-                                                                                    width={100}
-                                                                                    className="inline-block"
-                                                                                />
-                                                                                <span className="mt-3">No Image Found!! </span>
-                                                                            </div>
-                                                                    }
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
-                                                </>
-                                            ) : null}
-
-                                        </>
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
                                     ))
                                 }
                             </div>
-                            :
-                            <div className="h-72 flex justify-center items-center flex-wrap flex-col mt-8 w-full">
-                                <NoDataFound createText="No image found!" />
+
+
+                            <div className="overflow-hidden border rounded-xl w-full mb-12 hidden">
+                                {
+                                    batteryJSON[0].subData.map((item: any, k: any) => (
+                                        <table className={`table-auto min-w-full text-left mb-14 ${styles.table}`}>
+                                            <thead className="bg-gray-952 text-white rounded-xl h-10 text-sm font-light">
+                                                <tr>
+                                                    {
+                                                        Object.keys(item).map((items: any, i: any) => (
+
+                                                            <th className="capitalize" key={i}>
+                                                                {
+                                                                    items.split(/(?=[A-Z])/).join(" ")
+                                                                }
+                                                            </th>
+                                                        ))
+                                                    }
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr className={`text-sm cursor-pointer`}>
+                                                    {
+                                                        Object.values(item).map((items: any, i: any) => (
+
+                                                            <td key={i}>
+                                                                <Link
+                                                                    href={{
+                                                                        pathname: "/dashboard/eopstrace/modelview",
+                                                                        query: {
+                                                                            objectID: parentAsset.objectID,
+                                                                            key: parentAsset.key,
+                                                                            model: parentAsset.model,
+                                                                            id: parentAsset.id,
+                                                                            subObject: parentAsset.subObject,
+                                                                            pid: item.ID
+                                                                        }
+                                                                    }}
+                                                                >
+                                                                    {items}
+                                                                </Link>
+                                                            </td>
+
+                                                        ))
+                                                    }
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    ))
+                                }
                             </div>
-                        }
-                    </div>
 
-
+                        </div>
+                        :
+                        <div className="h-72 flex justify-center items-center flex-wrap flex-col mt-8 w-full">
+                            <NoDataFound createText="No data found!" />
+                        </div>
+                    }
 
                     {/* ----- OBJECT MODAL STARTS ----- */}
                     {showModal ? (

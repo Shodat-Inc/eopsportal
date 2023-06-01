@@ -12,11 +12,38 @@ export default function ModelView() {
     const router = useRouter();
     const parentAsset = router.query;
     const [loader, setLoader] = useState(true);
+    const [data, setData] = useState([] as any);
     useEffect(() => {
         setTimeout(() => {
             setLoader(false)
         }, 3000)
     }, [])
+
+    const fetchObjectData = () => {
+        axios.get("/api/getBattery").then((response) => {
+            if (response.data) {
+                const filtered = response.data.filter((item: any) => {
+                    if (item.className === parentAsset.objectID && item.SerialNo === parentAsset.key) {
+                        return item;
+                    }
+                });
+                if (filtered && filtered.length > 0) {
+                    const arr = filtered[0].subData.filter((item: any) => {
+                        if (item.ID.toString() === parentAsset.pid) {
+                            return item
+                        }
+                    })
+                    setData(arr);
+                }
+            }
+        });
+    }
+    useEffect(() => {
+        fetchObjectData();
+        if (fetchObjectData.length) return;
+    }, [parentAsset])
+
+    // console.log("DATA =>", data[0])
 
     return (
         <div className="flex font-OpenSans">
@@ -74,6 +101,7 @@ export default function ModelView() {
                                                 key: parentAsset.key,
                                                 id: parentAsset.id,
                                                 subObject: parentAsset.subObject,
+                                                model: parentAsset.model
                                             }
                                         }}
                                         className="flex items-center"
@@ -97,6 +125,7 @@ export default function ModelView() {
                                                 key: parentAsset.key,
                                                 id: parentAsset.id,
                                                 subObject: parentAsset.subObject,
+                                                model: parentAsset.model
                                             }
                                         }}
                                         className="flex items-center"
@@ -141,45 +170,50 @@ export default function ModelView() {
                                 />
                             </div>
                             :
+                            <>
+                                {
+                                    data ?
+                                        <div className="relative mt-10 rounded overflow-hidden rounded-xl text-center flex flex-wrap flex-rpw items-center justify-around">
 
-                            <div className="relative mt-10 rounded overflow-hidden rounded-xl text-center flex flex-wrap flex-rpw items-center justify-around">
+                                            <div className="border border-gray-951 rounded rounded-xl p-4 w-56 h-48 flex items-center justify-center flex-wrap flex-col">
+                                                <p className="text-black font-bold mb-2">{data[0]?.result.batteryUtilization}</p>
+                                                <Image
+                                                    src="/img/BatteryUtilization.svg"
+                                                    alt="no image"
+                                                    height={60}
+                                                    width={75}
+                                                    className="h-auto w-auto inline-block mb-2"
+                                                />
+                                                <p className="text-black font-semibold mb-10">Battery Utilization</p>
+                                            </div>
 
-                                <div className="border border-gray-951 rounded rounded-xl p-4 w-56 h-48 flex items-center justify-center flex-wrap flex-col">
-                                    <p className="text-black font-bold mb-2">30%</p>
-                                    <Image
-                                        src="/img/BatteryUtilization.svg"
-                                        alt="no image"
-                                        height={60}
-                                        width={75}
-                                        className="h-auto w-auto inline-block mb-2"
-                                    />
-                                    <p className="text-black font-semibold mb-10">Battery Utilization</p>
-                                </div>
+                                            <div className="border border-gray-951 rounded rounded-xl p-4 w-56 h-48 flex items-center justify-center flex-wrap flex-col">
+                                                <p className="text-black font-bold mb-2">{data[0]?.result.remainingCyclesLeft}</p>
+                                                <Image
+                                                    src="/img/RemainingCycle.svg"
+                                                    alt="no image"
+                                                    height={60}
+                                                    width={75}
+                                                    className="h-auto w-auto inline-block mb-2"
+                                                />
+                                                <p className="text-black font-semibold mb-10">Remaining cycles left</p>
+                                            </div>
 
-                                <div className="border border-gray-951 rounded rounded-xl p-4 w-56 h-48 flex items-center justify-center flex-wrap flex-col">
-                                    <p className="text-black font-bold mb-2">117</p>
-                                    <Image
-                                        src="/img/RemainingCycle.svg"
-                                        alt="no image"
-                                        height={60}
-                                        width={75}
-                                        className="h-auto w-auto inline-block mb-2"
-                                    />
-                                    <p className="text-black font-semibold mb-10">Remaining cycles left</p>
-                                </div>
-
-                                <div className="border border-gray-951 rounded rounded-xl p-4 w-56 h-48 flex items-center justify-center flex-wrap flex-col">
-                                    <p className="text-black font-bold mb-2">168</p>
-                                    <Image
-                                        src="/img/totalCycle.svg"
-                                        alt="no image"
-                                        height={75}
-                                        width={75}
-                                        className="h-auto w-auto inline-block mb-2"
-                                    />
-                                    <p className="text-black font-semibold mb-10">Est. total cycle</p>
-                                </div>
-                            </div>
+                                            <div className="border border-gray-951 rounded rounded-xl p-4 w-56 h-48 flex items-center justify-center flex-wrap flex-col">
+                                                <p className="text-black font-bold mb-2">{data[0]?.result.estTotalCycle}</p>
+                                                <Image
+                                                    src="/img/totalCycle.svg"
+                                                    alt="no image"
+                                                    height={75}
+                                                    width={75}
+                                                    className="h-auto w-auto inline-block mb-2"
+                                                />
+                                                <p className="text-black font-semibold mb-10">Est. total cycle</p>
+                                            </div>
+                                        </div>
+                                        : null
+                                }
+                            </>
                     }
 
                 </div>

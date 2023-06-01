@@ -35,7 +35,7 @@ export default function TraceModel(localData: any) {
     const router = useRouter();
     const parentAsset = router.query;
 
-    const [chooseAsset, setChooseAsset] = useState(parentAsset.objectID === "Manufacturing Plants" ? ManufacturingPlantsClass[0] : VehicleClass[0]);
+    const [chooseAsset, setChooseAsset] = useState(parentAsset.model ? parentAsset.model : parentAsset.objectID === "Manufacturing Plants" ? ManufacturingPlantsClass[0] : VehicleClass[0]);
     const [toggleAsset, setToggleAsset] = useState(false);
 
     const [subObj, setSubObj] = useState({} as any);
