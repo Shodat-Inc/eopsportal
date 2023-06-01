@@ -53,7 +53,7 @@ export default function SignIn() {
                                             className="border rounded-lg pl-4 pr-10 border-black h-12 w-full shadow-lg"
                                             name="email"
                                             placeholder="Enter email address"
-                                            value="admin@gmail.com"
+                                            value="admin@shodat.com"
                                         />
                                     </div>
                                     <div className="mb-10 relative">
@@ -73,7 +73,7 @@ export default function SignIn() {
                                     <div className="relative">
                                         <Link
                                             className="rounded-lg h-16 bg-black w-full text-white text-lg block flex justify-center items-center"
-                                            href="/dashboard/"
+                                            href="/dashboard/assetmanagement"
                                         >
                                         Login
                                     </Link>

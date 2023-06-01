@@ -41,6 +41,18 @@ export default function LiveTracking() {
                                         <span className="ml-1 text-sm text-black hover:text-yellow-950 md:ml-1 font-bold">Live Tracking</span>
                                     </div>
                                 </li>
+                                <li>
+                                    <div className="flex items-center">
+                                        <Image
+                                            src="/img/arrow-right.svg"
+                                            alt="arrow-right"
+                                            className="h-6"
+                                            height={24}
+                                            width={24}
+                                        />
+                                        <span className="ml-1 text-sm text-black hover:text-yellow-950 md:ml-1 font-bold">VIN 5PVBE7AJ8R5T50001</span>
+                                    </div>
+                                </li>
                             </ol>
                         </nav>
                     </div>
@@ -48,7 +60,7 @@ export default function LiveTracking() {
                     {/* Content Goes Here */}
                     <div className="mt-8">
                         <Image
-                            src="/img/eopsinsights/LiveTrackingPicture.png"
+                            src="/img/eopsinsights/live_tracking_img.png"
                             alt="Live Tracking"
                             height={500}
                             width={500}

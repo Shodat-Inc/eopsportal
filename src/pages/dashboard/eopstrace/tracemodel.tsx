@@ -23,11 +23,11 @@ const ManufacturingPlantsClass = [
     "Workplace Safety Detection"
 ]
 const VehicleClass = [
+    "Battery Life Prediction",
     "Crack Detection",
     "Tire Wear Detection",
     "Crystallization Detection",
-    "Parts Detection",
-    "Battery Life Prediction"
+    "Parts Detection"
 ]
 
 export default function TraceModel(localData: any) {

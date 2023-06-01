@@ -39,7 +39,7 @@ const SideBar = forwardRef(({ showNav, setShowNav }, ref) => {
       </div>
 
       <div className="flex flex-col pt-2 font-OpenSans">
-        <Link href="/dashboard">
+        <Link href="/dashboard" className="hidden">
           <div
             className={`pl-6 font-normal font-OpenSans font-light py-3 mx-0 text-center cursor-pointer mb-3 flex items-center transition-colors ${router.pathname == "/dashboard"
               ? "bg-white text-black"

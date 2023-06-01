@@ -10,7 +10,7 @@ export default function CustomReport() {
 
             <div className="w-[100%]">
                 <div className="columns-2 flex justify-between items-center">
-                    <p className="text-black text-lg mb-0 font-semibold">Live Tracking</p>
+                    <p className="text-black text-lg mb-0 font-semibold">eOps Insights/Reports</p>
                 </div>
 
                 <div className="border min-h-full rounded-xl mt-3 px-4 py-4">
@@ -38,7 +38,7 @@ export default function CustomReport() {
                                             height={24}
                                             width={24}
                                         />
-                                        <span className="ml-1 text-sm text-black hover:text-yellow-950 md:ml-1 font-bold">Custom Report</span>
+                                        <span className="ml-1 text-sm text-black hover:text-yellow-950 md:ml-1 font-bold">Custom Reports</span>
                                     </div>
                                 </li>
                             </ol>

@@ -10,6 +10,17 @@ export default function EopsTrace() {
     const [value, setValue] = useState("");
     const [data, setData] = useState([] as any);
     const [subObj, setSebObj] = useState({} as any);
+
+    function removeDuplicates(arr: any) {
+        let unique = [];
+        for (let i = 0; i < arr.length; i++) {
+            if (unique.indexOf(arr[i]) === -1) {
+                unique.push(arr[i]);
+            }
+        }
+        return unique;
+    }
+
     const onChange = (event: any) => {
         setValue(event.target.value)
         axios.get("/api/getChildObject").then((response) => {
@@ -21,16 +32,16 @@ export default function EopsTrace() {
                 const filtered = response.data.filter((item: any) => {
                     if (item.tags.hasOwnProperty("VIN")) {
                         if (item.tags.VIN.toString().toLowerCase().includes(event.target.value.toString().toLowerCase())) {
-                            return item;
+                            return removeDuplicates(item);
                         }
                     } else {
                         if (item.tags.PlantID.toString().toLowerCase().includes(event.target.value.toString().toLowerCase())) {
-                            return item;
+                            return removeDuplicates(item);
                         }
                     }
                 });
                 if (filtered && filtered.length > 0) {
-                    setData(filtered);
+                    setData(removeDuplicates(filtered));
                 }
 
             }
@@ -63,6 +74,8 @@ export default function EopsTrace() {
             }
         });
     }
+
+    console.log("DTA", data)
 
     return (
         <div className="flex font-OpenSans">
@@ -145,17 +158,19 @@ export default function EopsTrace() {
                             <div className="overflow-hidden border rounded-xl w-full">
                                 <table className={`table-auto min-w-full text-left ${styles.table}`}>
                                     <thead className="bg-black text-white rounded-xl h-10 text-sm font-light">
-                                        {
-                                            subObj && Object.keys(subObj).length != 0 ?
-                                                Object.keys(subObj?.tags).map((item: any, i: any) => (
-                                                    <th key={i}>
-                                                        {
-                                                            item.split(/(?=[A-Z])/).join(" ").toUpperCase()
-                                                        }
-                                                    </th>
-                                                ))
-                                                : null
-                                        }
+                                        <tr>
+                                            {
+                                                subObj && Object.keys(subObj).length != 0 ?
+                                                    Object.keys(subObj?.tags).map((item: any, i: any) => (
+                                                        <th key={i}>
+                                                            {
+                                                                item.split(/(?=[A-Z])/).join(" ").toUpperCase()
+                                                            }
+                                                        </th>
+                                                    ))
+                                                    : null
+                                            }
+                                        </tr>
                                     </thead>
                                     <tbody className="cursor-pointer">
                                         <tr>

@@ -65,7 +65,7 @@ export default function ProductionModel() {
                         <nav className="flex" aria-label="Breadcrumb">
                             <ol className="inline-flex items-center space-x-1 md:space-x-1">
                                 <li className="inline-flex items-center">
-                                    <Link href="/dashboard/eopstrace"
+                                    <Link href="/dashboard/assetmanagement"
                                         className="inline-flex items-center text-sm font-medium text-black hover:text-yellow-950">
                                         <Image
                                             src="/img/home.svg"
@@ -77,7 +77,17 @@ export default function ProductionModel() {
                                     </Link>
                                 </li>
                                 <li>
-                                    <div className="flex items-center">
+                                    <Link
+                                        href={{
+                                            pathname: "/dashboard/subchildobject",
+                                            query: {
+                                                class: parentAsset.objectID,
+                                                object: parentAsset.id,
+                                                id: parentAsset.key,
+                                                subObject: parentAsset.subObject,
+                                            }
+                                        }}
+                                        className="flex items-center">
                                         <Image
                                             src="/img/arrow-right.svg"
                                             alt="arrow-right"
@@ -86,7 +96,7 @@ export default function ProductionModel() {
                                             width={24}
                                         />
                                         <span className="ml-1 text-sm text-black hover:text-yellow-950 md:ml-1 font-bold">{parentAsset.key}</span>
-                                    </div>
+                                    </Link>
                                 </li>
                                 <li>
                                     <Link
@@ -94,7 +104,10 @@ export default function ProductionModel() {
                                             pathname: "/dashboard/eopstrace/tracemodel",
                                             query: {
                                                 objectID: parentAsset.objectID,
-                                                key: parentAsset.key
+                                                key: parentAsset.key,
+                                                id: parentAsset.id,
+                                                subObject: parentAsset.subObject,
+                                                model: parentAsset.model
                                             }
                                         }}
                                         className="flex items-center"
