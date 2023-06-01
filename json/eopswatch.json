@@ -8,38 +8,88 @@
                 "folder": "Test",
                 "path": "/img/CrackDetection/TPC71810-01-012/Test/WallTest1.png",
                 "resultImage": "/img/CrackDetection/TPC71810-01-012/Test/WallTest1ResultNew.png",
-                "dateUploaded": "05-11-2023"
+                "dateUploaded": "05-11-2023",
+                "threshold":"/img/CrackDetection/TPC71810-01-012/Test/threshold-38-9.png",
+                "thresholdTags": [
+                    {
+                        "Crack": "14.9"
+                    }
+                ]
                 
             },
             {
                 "folder": "Test",
                 "path": "/img/CrackDetection/TPC71810-01-012/Test/WallTest2.png",
                 "resultImage": "/img/CrackDetection/TPC71810-01-012/Test/WallTest2Result.png",
-                "dateUploaded": "05-11-2023"
+                "dateUploaded": "05-11-2023",
+                "threshold":"/img/CrackDetection/TPC71810-01-012/Test/threshold-2.png",
+                "thresholdTags": [
+                    {
+                        "Crack": "14.9"
+                    }
+                ]
             },
             {
                 "folder": "Test",
                 "path": "/img/CrackDetection/TPC71810-01-012/Test/WallTest3.png",
                 "resultImage": "/img/CrackDetection/TPC71810-01-012/Test/WallTest3ResultNew.png",
-                "dateUploaded": "05-11-2023"
+                "dateUploaded": "05-11-2023",
+                "threshold":"/img/CrackDetection/TPC71810-01-012/Test/threshold-20.png",
+                "thresholdTags": [
+                    {
+                        "Crack": "90.2"
+                    },
+                    {
+                        "Crack": "70.2"
+                    },
+                    {
+                        "Crack": "45.7"
+                    }
+                ]
             },
             {
                 "folder": "Test",
                 "path": "/img/CrackDetection/TPC71810-01-012/Test/WallTest4.png",
                 "resultImage": "",
-                "dateUploaded": "05-11-2023"
+                "dateUploaded": "05-11-2023",
+                "threshold" : "",
+                "thresholdTags": []
             },
             {
                 "folder": "Production",
                 "path": "/img/CrackDetection/TPC71810-01-012/Production/WallProd1.png",
                 "resultImage": "/img/CrackDetection/TPC71810-01-012/Production/WallProd1ResultNew.png",
-                "dateUploaded": "05-11-2023"
+                "dateUploaded": "05-11-2023",
+                "threshold" : "/img/CrackDetection/TPC71810-01-012/Test/threshold-9.png",
+                "thresholdTags": [
+                    {
+                        "Crack" : "14.9"
+                    },
+                    {
+                        "Crack" : "9.6"
+                    },
+                    {
+                        "Crack" : "9.5"
+                    }
+                ]
             },
             {
                 "folder": "Production",
                 "path": "/img/CrackDetection/TPC71810-01-012/Production/WallProd2.png",
                 "resultImage": "/img/CrackDetection/TPC71810-01-012/Production/WallProd2ResultNew.png",
-                "dateUploaded": "05-11-2023"
+                "dateUploaded": "05-11-2023",
+                "threshold" : "/img/CrackDetection/TPC71810-01-012/Test/threshold-7.png",
+                "thresholdTags": [
+                    {
+                        "Crack" : "14.9"
+                    },
+                    {
+                        "Crack" : "9.6"
+                    },
+                    {
+                        "Crack" : "9.5"
+                    }
+                ]
             }
         ]
     },
@@ -52,19 +102,44 @@
                 "folder": "Test",
                 "path": "/img/CrackDetection/TPC3305-01-011/Test/PipeTest1.png",
                 "resultImage": "",
-                "dateUploaded": "05-11-2023"
+                "dateUploaded": "05-11-2023",
+                "threshold":"/img/CrackDetection/TPC3305-01-011/Test/threshold-2.png"
             },
             {
                 "folder": "Test",
                 "path": "/img/CrackDetection/TPC3305-01-011/Test/PipeTest2.png",
                 "resultImage": "/img/CrackDetection/TPC3305-01-011/Test/PipeTest2ResultNew.png",
-                "dateUploaded": "05-11-2023"
+                "dateUploaded": "05-11-2023",
+                "threshold":"/img/CrackDetection/TPC3305-01-011/Test/threshold-2.png",
+                "thresholdTags": [
+                    {
+                        "Crack" : "15.5"
+                    },
+                    {
+                        "Crack" : "3.7"
+                    },
+                    {
+                        "Crack" : "3.3"
+                    }
+                ]
             },
             {
                 "folder": "Test",
                 "path": "/img/CrackDetection/TPC3305-01-011/Test/PipeTest3.png",
                 "resultImage":"",
-                "dateUploaded": "05-11-2023"
+                "dateUploaded": "05-11-2023",
+                "threshold":"/img/CrackDetection/TPC3305-01-011/Test/threshold-20.png",
+                "thresholdTags": [
+                    {
+                        "Crack" : "90.2"
+                    },
+                    {
+                        "Crack" : "70.9"
+                    },
+                    {
+                        "Crack" : "45.7"
+                    }
+                ]
             }
            
         ]
@@ -90,7 +165,16 @@
                 "folder": "Test",
                 "path": "/img/CrystallizationDetection/1S223/Test/BatteryTest3.png",
                 "resultImage":"/img/CrystallizationDetection/1S223/Test/BatteryTest3ResultNew.png",
-                "dateUploaded": "05-11-2023"
+                "dateUploaded": "05-11-2023",
+                "threshold":"/img/CrystallizationDetection/1S223/Test/threshold-7.png",
+                "thresholdTags": [
+                    {
+                        "Crack" : "91.7"
+                    },
+                    {
+                        "Crack" : "77.6"
+                    }
+                ]
             }
            
         ]
@@ -130,31 +214,41 @@
                 "folder": "Test",
                 "path": "/img/TireWearPrediction/NEC1TT01522/Test/TireTest1.png",
                 "resultImage": "/img/TireWearPrediction/NEC1TT01522/Test/TireTest1.png",
-                "dateUploaded": "05-11-2023"
+                "dateUploaded": "05-11-2023",
+                "threshold":"/img/TireWearPrediction/NEC1TT01522/Test/16k-miles.png",
+                "thresholdTags": []
             },
             {
                 "folder": "Test",
                 "path": "/img/TireWearPrediction/NEC1TT01522/Test/TireTest2.png",
                 "resultImage": "/img/TireWearPrediction/NEC1TT01522/Test/TireTest2.png",
-                "dateUploaded": "05-11-2023"
+                "dateUploaded": "05-11-2023",
+                "threshold":"/img/TireWearPrediction/NEC1TT01522/Test/30k-miles.png",
+                "thresholdTags": []
             },
             {
                 "folder": "Test",
                 "path": "/img/TireWearPrediction/NEC1TT01522/Test/TireTest3.png",
                 "resultImage":"/img/TireWearPrediction/NEC1TT01522/Test/TireTest3.png",
-                "dateUploaded": "05-11-2023"
+                "dateUploaded": "05-11-2023",
+                "threshold":"/img/TireWearPrediction/NEC1TT01522/Test/9k-miles.png",
+                "thresholdTags": []
             },
             {
                 "folder": "Test",
                 "path": "/img/TireWearPrediction/NEC1TT01522/Test/TireTest4.png",
                 "resultImage":"/img/TireWearPrediction/NEC1TT01522/Test/TireTest4.png",
-                "dateUploaded": "05-11-2023"
+                "dateUploaded": "05-11-2023",
+                "threshold":"/img/TireWearPrediction/NEC1TT01522/Test/60k-miles.png",
+                "thresholdTags": []
             },
             {
                 "folder": "Test",
                 "path": "/img/TireWearPrediction/NEC1TT01522/Test/TireTest5.png",
                 "resultImage":"", 
-                "dateUploaded": "05-11-2023"
+                "dateUploaded": "05-11-2023",
+                "threshold":"/img/TireWearPrediction/NEC1TT01522/Test/0k-miles.png",
+                "thresholdTags": []
             }
            
         ]

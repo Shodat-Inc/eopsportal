@@ -28,15 +28,7 @@ const batteryJSON = [
                 "VoltageLoad": "3.06",
                 "DateTime": "2022-07-02 15:25:4"
             },
-            {
-                "Capacity": "1.27",
-                "VoltageMeasured": "3.19",
-                "CurrentMeasured": "1.89",
-                "TemperatureMeasured": "35.48",
-                "CurrentLoad": "1.85",
-                "VoltageLoad": "22.25",
-                "DateTime": "2022-03-22 01:29:35"
-            },
+           
             {
                 "Capacity": "1.38",
                 "VoltageMeasured": "3.402",
@@ -44,7 +36,16 @@ const batteryJSON = [
                 "TemperatureMeasured": "33.02",
                 "CurrentLoad": "1.99",
                 "VoltageLoad": "2.493",
-                "DateTime": "2022-01-10 07:56:22"
+                "DateTime": "2023-01-10 07:56:22"
+            },
+            {
+                "Capacity": "1.27",
+                "VoltageMeasured": "3.19",
+                "CurrentMeasured": "1.89",
+                "TemperatureMeasured": "35.48",
+                "CurrentLoad": "1.85",
+                "VoltageLoad": "2.25",
+                "DateTime": "2023-03-22 01:29:35"
             }
         ]
     }
