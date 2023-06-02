@@ -17,7 +17,9 @@ export default function Complete(props: any) {
         password: "",
         confirmPassword: ""
     })
+    const [agreement, setAgreement] = useState(false);
     const [formIsValid, setFormIsValid] = useState(true);
+    const [agreementError, setAgreementError] = useState("");
 
     // Show Hide Eye Icon
     const hideShow = () => {
@@ -58,10 +60,10 @@ export default function Complete(props: any) {
         if (!formData.phoneNumber) {
             formIsValid = false;
             newErrorsState.phoneNumber = "Phone number must not be empty!"
-        } else if(!PHONE_REGEX.test(formData.phoneNumber)) {
+        } else if (!PHONE_REGEX.test(formData.phoneNumber)) {
             formIsValid = false;
             newErrorsState.phoneNumber = "Please enter valid phone number!"
-        } else if (formData.phoneNumber.length !=10) {
+        } else if (formData.phoneNumber.length != 10) {
             formIsValid = false;
             newErrorsState.phoneNumber = "Please enter valid  phone number!"
         }
@@ -76,9 +78,15 @@ export default function Complete(props: any) {
         if (!formData.confirmPassword) {
             formIsValid = false;
             newErrorsState.confirmPassword = "Confirm password must not be empty!"
-        } else if(formData.confirmPassword !== formData.password) {
+        } else if (formData.confirmPassword !== formData.password) {
             formIsValid = false;
             newErrorsState.confirmPassword = "Password and Confirm Password does not match"
+        }
+
+        // Validation for Checkbox
+        if (!agreement) {
+            formIsValid = false;
+            setAgreementError("You must agree with terms and condition");
         }
 
         // if any field is invalid - then we need to update our state
@@ -100,7 +108,12 @@ export default function Complete(props: any) {
         }
     }
 
-    console.log("ERROR", errors)
+    const handleChange = (event: any) => {
+        setAgreement(event.target.checked);
+        if(event.target.checkbox) { setFormIsValid(false); }
+    }
+
+    console.log("formIsValid", formIsValid)
     console.log("FORM DATA", formData)
     return (
         <>
@@ -191,12 +204,20 @@ export default function Complete(props: any) {
                         </div>
                         <span className='text-red-500 text-sm'>{errors.confirmPassword}</span>
                     </div>
-                    <div className="mb-5 relative flex">
-                        <input type="checkbox" className="checked:bg-black indeterminate:bg-gray-300" />
-                        <label className="ml-5 text-gray-951 block">I agree to terms & conditions</label>
+                    <div className="mb-5 relative flex flex-wrap">
+                        <div className='flex'>
+                            <input
+                                className="checked:bg-black indeterminate:bg-gray-300"
+                                type="checkbox"
+                                name="agreement"
+                                onChange={handleChange}
+                            />
+                            <label className="ml-5 text-gray-951 block">I agree to terms & conditions</label>
+                        </div>
+                        <span className='text-red-500 text-sm'>{!agreement ? agreementError : null}</span>
                     </div>
                     <div className="relative">
-                        <button className="rounded-lg h-16 bg-black w-full text-white text-md">
+                        <button className={`rounded-lg h-16 bg-black1 w-full text-white text-md ${!formIsValid} ? bg-black : bg-black`}>
                             Register Account
                         </button>
                         <div className="mt-5 mb-5 flex items-center justify-center">

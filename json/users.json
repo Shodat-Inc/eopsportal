@@ -1,7 +1,7 @@
 [
     {
         "userID": 1,
-        "username":"admin@admin.com",
+        "username":"admin@shodat.com",
         "password":"12345",
         "role":"admin",
         "fisrtname":"john",
