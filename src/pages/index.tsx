@@ -26,7 +26,7 @@ export default function Home() {
                   height={32}
                 />
               </p>
-              <p className="text-2xl text-white font-light leading-10">
+              <p className="text-xl text-white font-light leading-10">
                 The eOps Fabric - Edge enabled data mesh with management, processing, & security features. Enabling agile development & secured dilivery of analytics applications and ML models to meet high paced business demands. The eOps  Chord-Blockchain framework ensuring highly compliant and audited edge operations.
               </p>
             </div>
@@ -41,8 +41,8 @@ export default function Home() {
             </div>
 
             <div className="text-left w-[470px]">
-              <p className="font-bold text-3xl text-black mb-4">Join Us!</p>
-              <p className="font-normal text-2xl text-gray-500 mb-10">To begin this journey, tell us what type of account you&apos;d be opening?</p>
+              <p className="font-bold text-2xl text-black mb-4">Join Us!</p>
+              <p className="font-normal text-xl text-gray-500 mb-10">To begin this journey, tell us what type of account you&apos;d be opening?</p>
 
               <Link href="authentication/register" className="rounded-lg border border-black px-4 py-6 bg-gray-100 flex justify-center items-center relative">
                 <span className="rounded-md bg-gray-400 text-black h-7 w-20 flex font-medium justify-center items-center absolute top-2 right-10">Free</span>
@@ -59,7 +59,7 @@ export default function Home() {
                   <p className="text-black font-medium text-xl w-[200px]">Business</p>
                   <p className="text-gray-600 font-normal text-lg w-[300px] leading-5">Own or belong to a company, this is for you.</p>
                 </div>
-                <div className="ml-0">
+                <div className="ml-2 mt-2">
                   <Image
                     src="/img/arrowRight.svg"
                     alt="business"

@@ -52,12 +52,20 @@ export default function Complete(props: any) {
 
 
     const handleValidation = () => {
+        const PHONE_REGEX = new RegExp(/^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/i);
         const newErrorsState = { ...errors };
         let formIsValid = true;
         if (!formData.phoneNumber) {
             formIsValid = false;
             newErrorsState.phoneNumber = "Phone number must not be empty!"
+        } else if(!PHONE_REGEX.test(formData.phoneNumber)) {
+            formIsValid = false;
+            newErrorsState.phoneNumber = "Please enter valid phone number!"
+        } else if (formData.phoneNumber.length !=10) {
+            formIsValid = false;
+            newErrorsState.phoneNumber = "Please enter valid  phone number!"
         }
+
         // Validate Last Name
         if (!formData.password) {
             formIsValid = false;
@@ -68,7 +76,9 @@ export default function Complete(props: any) {
         if (!formData.confirmPassword) {
             formIsValid = false;
             newErrorsState.confirmPassword = "Confirm password must not be empty!"
-
+        } else if(formData.confirmPassword !== formData.password) {
+            formIsValid = false;
+            newErrorsState.confirmPassword = "Password and Confirm Password does not match"
         }
 
         // if any field is invalid - then we need to update our state
@@ -98,9 +108,9 @@ export default function Complete(props: any) {
             <div className="signinform relative">
                 <form method='post' onSubmit={submitForm}>
                     <div className="mb-5">
-                        <label className="text-gray-500 text-md font-medium mb-1 block">Phone number*</label>
+                        <label className="text-gray-500 text-md font-medium mb-1 block">Phone number<span className='text-red-500'>*</span></label>
                         <input
-                            type="text"
+                            type="number"
                             className={`border rounded-lg pl-5 pr-10 border-black h-12 w-full shadow-sm ${errors.phoneNumber ? 'border-red-500' : 'border-black'}`}
                             name="phoneNumber"
                             placeholder="Phone number"
@@ -110,8 +120,8 @@ export default function Complete(props: any) {
                         <span className='text-red-500 text-sm'>{errors.phoneNumber}</span>
                     </div>
                     <div className="mb-5 relative">
-                        <label className="text-gray-500 text-md font-medium mb-1 block">Enter password*</label>
-                        <>
+                        <label className="text-gray-500 text-md font-medium mb-1 block">Enter password<span className='text-red-500'>*</span></label>
+                        <div className='relative'>
                             <input
                                 type={showPassword.pass ? "text" : "password"}
                                 className={`border rounded-lg pl-5 pr-10 border-black h-12 w-full shadow-sm ${errors.password ? 'border-red-500' : 'border-black'}`}
@@ -141,14 +151,14 @@ export default function Complete(props: any) {
                                         />
                                 }
                             </span>
-                        </>
+                        </div>
                         <span className='text-red-500 text-sm'>{errors.password}</span>
                     </div>
                     <div className="mb-5 relative">
                         <div className="column-2 flex items-center justify-between">
-                            <label className="text-gray-500 text-md font-medium mb-3 block">Confirm password*</label>
+                            <label className="text-gray-500 text-md font-medium mb-3 block">Confirm password<span className='text-red-500'>*</span></label>
                         </div>
-                        <>
+                        <div className='relative'>
                             <input
                                 type={showPassword.confirmPassword ? "text" : "password"}
                                 className={`border rounded-lg pl-5 pr-10 border-black h-12 w-full shadow-sm ${errors.confirmPassword ? 'border-red-500' : 'border-black'}`}
@@ -178,7 +188,7 @@ export default function Complete(props: any) {
                                         />
                                 }
                             </span>
-                        </>
+                        </div>
                         <span className='text-red-500 text-sm'>{errors.confirmPassword}</span>
                     </div>
                     <div className="mb-5 relative flex">
