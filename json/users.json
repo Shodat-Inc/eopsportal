@@ -1,1 +1,41 @@
-[{"userID":1,"username":"amitpandey0107@gmail.com","firstName":"Amit","lastName":"Pandey","companyName":"SHODAT","phoneNumber":"9571373757","password":"12345","terms":true,"dateCreated":"2023-06-05","dateModified":"2023-06-05","role":"admin"},{"userID":1,"username":"aartisharma2201@hotmail.com","firstName":"Aarti","lastName":"Sharma","companyName":"AGL","phoneNumber":"8005898194","password":"11111","terms":true,"dateCreated":"2023-06-05","dateModified":"2023-06-05","role":"admin"}]
+[
+    {
+        "userID": 1,
+        "username": "amitpandey0107@gmail.com",
+        "firstName": "Amit",
+        "lastName": "Pandey",
+        "companyName": "SHODAT",
+        "phoneNumber": "9571373757",
+        "password": "12345",
+        "terms": true,
+        "dateCreated": "2023-06-05",
+        "dateModified": "2023-06-05",
+        "role": "admin"
+    },
+    {
+        "userID": 2,
+        "username": "aartisharma2201@hotmail.com",
+        "firstName": "Aarti",
+        "lastName": "Sharma",
+        "companyName": "AGL",
+        "phoneNumber": "8005898194",
+        "password": "11111",
+        "terms": true,
+        "dateCreated": "2023-06-05",
+        "dateModified": "2023-06-05",
+        "role": "admin"
+    },
+    {
+        "userID": 3,
+        "username": "deepakpandey0410@gmail.com",
+        "firstName": "Deepak",
+        "lastName": "Pandey",
+        "companyName": "Enzine",
+        "phoneNumber": "9571373757",
+        "password": "12345",
+        "terms": true,
+        "dateCreated": "2023-06-05",
+        "dateModified": "2023-06-05",
+        "role": "admin"
+    }
+]

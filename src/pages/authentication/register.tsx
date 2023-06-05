@@ -4,23 +4,50 @@ import Router from 'next/router';
 import Image from "next/image";
 import moment from 'moment';
 import Complete from './complete';
+import axios from 'axios';
 
 export default function Register() {
     const [formData, setFormData] = useState({
         firstName: "",
         lastName: "",
         companyName: "",
-        email:""
+        email: ""
     });
     const [errors, setErrors] = useState({
         firstName: "",
         lastName: "",
         companyName: "",
-        email:""
+        email: ""
     });
     const [formIsValid, setFormIsValid] = useState(true);
     const [stepOne, setStepOne] = useState(true);
     const [stepTwo, setStepTwo] = useState(false);
+    const [userData, setUserData] = useState([] as any);
+
+    // Get User Data on Page Load
+    useEffect(() => {
+        const res = axios.get("/api/getUsers")
+            .then((response) => {
+                setUserData(response.data)
+            })
+    }, [])
+
+    // Get Last Asset ID
+    const getLastID = (userData && userData.length > 0) ? userData.slice(-1)[0].userID : '1';
+
+
+    // Return matching email address
+    const checkEmailAdress = (email:any) => {
+        const matched = userData.filter((item:any) =>{
+            return item.username === email
+        })
+        if(matched && matched.length > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
 
     const handleInput = (evt: any) => {
         evt.preventDefault()
@@ -37,7 +64,7 @@ export default function Register() {
         })
         setFormIsValid(false);
     };
-    
+
 
     const handleValidation = () => {
         const EMAIL_REGEX = new RegExp(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i);
@@ -63,9 +90,12 @@ export default function Register() {
         if (!formData.email) {
             formIsValid = false;
             newErrorsState.email = "Email must not be empty!"
-        } else if(!EMAIL_REGEX.test(formData.email)) {
+        } else if (!EMAIL_REGEX.test(formData.email)) {
             formIsValid = false;
             newErrorsState.email = "Please enter valid email address!"
+        } else if(checkEmailAdress(formData.email) === true) {
+            formIsValid = false;
+            newErrorsState.email = "Username already exists please enter unique user email!!"
         }
 
         // if any field is invalid - then we need to update our state
@@ -79,14 +109,14 @@ export default function Register() {
 
     const submitForm = (evt: any) => {
         evt.preventDefault()
-        if (handleValidation()) {          
+        if (handleValidation()) {
             setStepTwo(true)
             setStepOne(false)
         } else {
             console.log("SOMETHING WENT WRONG !")
         }
     }
-    
+
     return (
         <>
             <div className="column-2 flex font-OpenSans">
@@ -199,7 +229,7 @@ export default function Register() {
                                                 />
                                                 <span className='text-red-500 text-sm'>{errors.companyName}</span>
                                             </div>
-                                            
+
                                             <div className="relative">
                                                 <button
                                                     className="rounded-lg h-16 bg-black w-full text-white text-md"
@@ -209,14 +239,14 @@ export default function Register() {
                                             </div>
                                         </div>
                                         : null}
-                                    </form>
+                                </form>
 
-                                    {/* === STEP 2 STARTS === */}
-                                    {stepTwo ? <Complete registerData={formData} /> : null}
-                                    {/* == STEP 2 ENDS === */}
+                                {/* === STEP 2 STARTS === */}
+                                {stepTwo ? <Complete registerData={formData} /> : null}
+                                {/* == STEP 2 ENDS === */}
 
 
-                                
+
                             </div>
                         </div>
 

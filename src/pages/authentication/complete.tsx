@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from 'next/navigation';
+import axios from 'axios';
 
 export default function Complete(props: any) {
     const { push } = useRouter();
@@ -22,6 +23,15 @@ export default function Complete(props: any) {
     const [agreement, setAgreement] = useState(false);
     const [formIsValid, setFormIsValid] = useState(true);
     const [agreementError, setAgreementError] = useState("");
+    const [userData, setUserData] = useState([] as any);
+
+    // Get User Data on Page Load
+    useEffect(() => {
+        const res = axios.get("/api/getUsers")
+            .then((response) => {
+                setUserData(response)
+            })
+    }, [])
 
     // Show Hide Eye Icon
     const hideShow = () => {
@@ -54,6 +64,10 @@ export default function Complete(props: any) {
         setFormIsValid(false);
     };
 
+    console.log("AMIT - USERS", userData)
+    // Get Last Asset ID
+    const getLastID = (userData && userData.length > 0) ? userData.slice(-1)[0].userID : '1';
+    console.log("AMIT - getLastID", getLastID)
 
     const handleValidation = () => {
         const PHONE_REGEX = new RegExp(/^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/i);
@@ -108,38 +122,51 @@ export default function Complete(props: any) {
             // Storing data to Users JSON            
             let currentDate = new Date().toISOString().split('T')[0];
             let ID = 1
-            const response = await fetch('/api/createUsers', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(
-                    {
-                        userID:ID+1, 
-                        username:`${props.registerData.email}`, 
-                        firstName:`${props.registerData.firstName}`, 
-                        lastName:`${props.registerData.lastName}`, 
-                        companyName:`${props.registerData.companyName}`, 
-                        phoneNumber:`${formData.phoneNumber}`, 
-                        password:`${formData.password}`, 
-                        terms:agreement, 
-                        dateCreated:currentDate, 
-                        dateModified:currentDate,
-                        role:"admin"
+            // const response = await fetch('/api/createUsers', {
+            //     method: 'POST',
+            //     headers: {
+            //         'Content-Type': 'application/json'
+            //     },
+            //     body: JSON.stringify(
+            //         {
+            //             userID:ID+1, 
+            //             username:`${props.registerData.email}`, 
+            //             firstName:`${props.registerData.firstName}`, 
+            //             lastName:`${props.registerData.lastName}`, 
+            //             companyName:`${props.registerData.companyName}`, 
+            //             phoneNumber:`${formData.phoneNumber}`, 
+            //             password:`${formData.password}`, 
+            //             terms:agreement, 
+            //             dateCreated:currentDate, 
+            //             dateModified:currentDate,
+            //             role:"admin"
+            //         }
+            //     )
+            // });           
+
+
+            axios
+                .post('/api/createUsers', {
+                    userID: parseInt(getLastID) + 1,
+                    username: `${props.registerData.email}`,
+                    firstName: `${props.registerData.firstName}`,
+                    lastName: `${props.registerData.lastName}`,
+                    companyName: `${props.registerData.companyName}`,
+                    phoneNumber: `${formData.phoneNumber}`,
+                    password: `${formData.password}`,
+                    terms: agreement,
+                    dateCreated: currentDate,
+                    dateModified: currentDate,
+                    role: "admin"
+                }, {
+                    headers: {
+                        'Content-Type': 'application/json'
                     }
-                )
-            });
-            const resdata = await response.json();
-            if (resdata) {
-                console.log("SUCCESS")
-                setFormData((state) => ({
-                    ...state,
-                    [targetName]: ""
-                }));
-                push('/authentication/success');
-            } else {
-                console.log("FAILED")
-            }
+                }).then(res => {
+                    console.log('res', res.data);
+                }).catch(err => {
+                    console.log('error in request', err);
+                });
 
         } else {
             console.log("SOMETHING WENT WRONG !")
