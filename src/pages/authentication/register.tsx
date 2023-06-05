@@ -7,6 +7,7 @@ import Complete from './complete';
 import axios from 'axios';
 
 export default function Register() {
+    console.log(window.location.origin)
     const [formData, setFormData] = useState({
         firstName: "",
         lastName: "",
@@ -23,10 +24,11 @@ export default function Register() {
     const [stepOne, setStepOne] = useState(true);
     const [stepTwo, setStepTwo] = useState(false);
     const [userData, setUserData] = useState([] as any);
+    const [baseURL, setBaseURL] = useState(window.location.origin);
 
     // Get User Data on Page Load
     useEffect(() => {
-        const res = axios.get("/api/getUsers")
+        axios.get(baseURL+"/api/getUsers")
             .then((response) => {
                 setUserData(response.data)
             })
@@ -34,6 +36,7 @@ export default function Register() {
 
     // Get Last Asset ID
     const getLastID = (userData && userData.length > 0) ? userData.slice(-1)[0].userID : '1';
+    console.log("getLastID",getLastID)
 
 
     // Return matching email address
