@@ -24,11 +24,10 @@ export default function Complete(props: any) {
     const [formIsValid, setFormIsValid] = useState(true);
     const [agreementError, setAgreementError] = useState("");
     const [userData, setUserData] = useState([] as any);
-    const [baseURL, setBaseURL] = useState(window.location.origin);
 
     // Get User Data on Page Load
     useEffect(() => {
-        const res = axios.get(baseURL+"/api/getUsers")
+        const res = axios.get("/api/getUsers")
             .then((response) => {
                 setUserData(response)
             })
@@ -147,7 +146,7 @@ export default function Complete(props: any) {
 
 
             axios
-                .post(baseURL+'/api/createUsers', {
+                .post('/api/createUsers', {
                     userID: parseInt(getLastID) + 1,
                     username: `${props.registerData.email}`,
                     firstName: `${props.registerData.firstName}`,
