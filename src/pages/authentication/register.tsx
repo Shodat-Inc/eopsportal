@@ -5,20 +5,8 @@ import Image from "next/image";
 import moment from 'moment';
 import Complete from './complete';
 import axios from 'axios';
-import { useRouter } from 'next/router'
-// import absoluteUrl from 'next-absolute-url'
-
-
 
 export default function Register() {
-    // const router = useRouter();
-    // const { protocol, host } = absoluteUrl(req:any, 'localhost:3000');
-
-    // console.log({
-    //     // host: window.location.host
-    // })
-    console.log(origin); 
-
     const [formData, setFormData] = useState({
         firstName: "",
         lastName: "",
@@ -31,16 +19,14 @@ export default function Register() {
         companyName: "",
         email: ""
     });
-    // const path = window.location.origin;
     const [formIsValid, setFormIsValid] = useState(true);
     const [stepOne, setStepOne] = useState(true);
     const [stepTwo, setStepTwo] = useState(false);
     const [userData, setUserData] = useState([] as any);
-    const [baseURL, setBaseURL] = useState(origin);
 
     // Get User Data on Page Load
     useEffect(() => {
-        axios.get(baseURL+"/api/getUsers")
+        const res = axios.get("/api/getUsers")
             .then((response) => {
                 setUserData(response.data)
             })
@@ -48,7 +34,6 @@ export default function Register() {
 
     // Get Last Asset ID
     const getLastID = (userData && userData.length > 0) ? userData.slice(-1)[0].userID : '1';
-    console.log("getLastID",getLastID)
 
 
     // Return matching email address
