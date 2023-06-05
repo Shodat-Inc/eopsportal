@@ -9,12 +9,14 @@ export default function Register() {
     const [formData, setFormData] = useState({
         firstName: "",
         lastName: "",
-        companyName: ""
+        companyName: "",
+        email:""
     });
     const [errors, setErrors] = useState({
         firstName: "",
         lastName: "",
-        companyName: ""
+        companyName: "",
+        email:""
     });
     const [formIsValid, setFormIsValid] = useState(true);
     const [stepOne, setStepOne] = useState(true);
@@ -38,6 +40,7 @@ export default function Register() {
     
 
     const handleValidation = () => {
+        const EMAIL_REGEX = new RegExp(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i);
         const newErrorsState = { ...errors };
         let formIsValid = true;
         if (!formData.firstName) {
@@ -54,7 +57,15 @@ export default function Register() {
         if (!formData.companyName) {
             formIsValid = false;
             newErrorsState.companyName = "Company name must not be empty!"
+        }
 
+        // Validate Email Address
+        if (!formData.email) {
+            formIsValid = false;
+            newErrorsState.email = "Email must not be empty!"
+        } else if(!EMAIL_REGEX.test(formData.email)) {
+            formIsValid = false;
+            newErrorsState.email = "Please enter valid email address!"
         }
 
         // if any field is invalid - then we need to update our state
@@ -68,9 +79,7 @@ export default function Register() {
 
     const submitForm = (evt: any) => {
         evt.preventDefault()
-        console.log("handleValidation() =>", handleValidation())
-        if (handleValidation()) {
-            console.log("VERY NICE !")
+        if (handleValidation()) {          
             setStepTwo(true)
             setStepOne(false)
         } else {
@@ -148,7 +157,7 @@ export default function Register() {
                                                     value={formData.firstName}
                                                     onChange={(e) => handleInput(e)}
                                                 />
-                                                <span className='text-red-500'>{errors.firstName}</span>
+                                                <span className='text-red-500 text-sm'>{errors.firstName}</span>
                                             </div>
                                             <div className="mb-5">
                                                 <label className="text-gray-500 text-md font-medium mb-1 block">Last name<span className='text-red-500'>*</span></label>
@@ -161,6 +170,20 @@ export default function Register() {
                                                     onChange={(e) => handleInput(e)}
                                                 />
                                                 <span className='text-red-500 text-sm'>{errors.lastName}</span>
+                                            </div>
+                                            <div className="mb-5 relative">
+                                                <div className="column-2 flex items-center justify-between">
+                                                    <label className="text-gray-500 text-md font-medium mb-1 block">Email<span className='text-red-500 text-sm'>*</span></label>
+                                                </div>
+                                                <input
+                                                    type="text"
+                                                    className={`border rounded-lg pl-5 pr-10 border-black h-12 w-full shadow-sm ${errors.email ? 'border-red-500' : 'border-black'}`}
+                                                    name="email"
+                                                    placeholder="Company name"
+                                                    value={formData.email}
+                                                    onChange={(e) => handleInput(e)}
+                                                />
+                                                <span className='text-red-500 text-sm'>{errors.email}</span>
                                             </div>
                                             <div className="mb-8 relative">
                                                 <div className="column-2 flex items-center justify-between">
@@ -176,6 +199,7 @@ export default function Register() {
                                                 />
                                                 <span className='text-red-500 text-sm'>{errors.companyName}</span>
                                             </div>
+                                            
                                             <div className="relative">
                                                 <button
                                                     className="rounded-lg h-16 bg-black w-full text-white text-md"

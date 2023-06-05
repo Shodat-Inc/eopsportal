@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from 'next/navigation';
 
 export default function Complete(props: any) {
+    const { push } = useRouter();
     const [showPassword, setShowPassword] = useState({
         pass: false,
         confirmPassword: false
@@ -98,11 +100,47 @@ export default function Complete(props: any) {
         return formIsValid
     }
 
-    const submitForm = (evt: any) => {
+    const submitForm = async (evt: any) => {
         evt.preventDefault()
-        console.log("handleValidation() =>", handleValidation())
+        let targetName = evt.target.name;
+        let targetValue = evt.target.value;
         if (handleValidation()) {
-            console.log("VERY NICE !")
+            // Storing data to Users JSON            
+            let currentDate = new Date().toISOString().split('T')[0];
+            let ID = 1
+            const response = await fetch('/api/createUsers', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(
+                    {
+                        userID:ID+1, 
+                        username:`${props.registerData.email}`, 
+                        firstName:`${props.registerData.firstName}`, 
+                        lastName:`${props.registerData.lastName}`, 
+                        companyName:`${props.registerData.companyName}`, 
+                        phoneNumber:`${formData.phoneNumber}`, 
+                        password:`${formData.password}`, 
+                        terms:agreement, 
+                        dateCreated:currentDate, 
+                        dateModified:currentDate,
+                        role:"admin"
+                    }
+                )
+            });
+            const resdata = await response.json();
+            if (resdata) {
+                console.log("SUCCESS")
+                setFormData((state) => ({
+                    ...state,
+                    [targetName]: ""
+                }));
+                push('/authentication/success');
+            } else {
+                console.log("FAILED")
+            }
+
         } else {
             console.log("SOMETHING WENT WRONG !")
         }
@@ -110,11 +148,9 @@ export default function Complete(props: any) {
 
     const handleChange = (event: any) => {
         setAgreement(event.target.checked);
-        if(event.target.checkbox) { setFormIsValid(false); }
+        if (event.target.checkbox) { setFormIsValid(false); }
     }
 
-    console.log("formIsValid", formIsValid)
-    console.log("FORM DATA", formData)
     return (
         <>
 

@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Success() {
     return (
@@ -25,7 +26,7 @@ export default function Success() {
                                     height={32}
                                 />
                             </p>
-                            <p className="text-2xl text-white font-light leading-10">
+                            <p className="text-xl text-white font-light leading-10">
                                 The eOps Fabric - Edge enabled data mesh with management, processing, & security features. Enabling agile development & secured dilivery of analytics applications and ML models to meet high paced business demands. The eOps  Chord-Blockchain framework ensuring highly compliant and audited edge operations.
                             </p>
                         </div>
@@ -45,8 +46,9 @@ export default function Success() {
                                     width={96}
                                 />
                             </div>
-                            <p className="font-bold text-3xl text-black mb-4 capitalize">Your account has been created.</p>
+                            <p className="font-bold text-2xl text-black mb-4 capitalize">Your account has been created.</p>
                             <p className="text-xl text-gray-951">Please <span className="text-black">check your registered email account</span> and continue to your account activities.</p>
+                            <Link href="/authentication/signin" className="block mt-5 text-xl text-black font-semibold hover:text-yellow-951">Login to your account</Link>
                         </div>
 
                     </div>
