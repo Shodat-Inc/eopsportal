@@ -44,7 +44,7 @@ export default function Register() {
             //     })
             
             setUserData(data)
-    }, [])
+    }, [data, error])
 
     // Get Last Asset ID
     const getLastID = (userData && userData.length > 0) ? userData.slice(-1)[0].userID : '1';
