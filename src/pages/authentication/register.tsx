@@ -5,7 +5,10 @@ import Image from "next/image";
 import moment from 'moment';
 import Complete from './complete';
 import axios from 'axios';
+import useSWR from 'swr'
 
+
+const fetcher = (url:any) => axios.get(url).then(res => res.data)
 export default function Register() {
     const [formData, setFormData] = useState({
         firstName: "",
@@ -19,21 +22,37 @@ export default function Register() {
         companyName: "",
         email: ""
     });
+    const url = "/api/getUsers";
+    
+    // const { data, error } = useSWR('/api/getUsers', fetcher);
+    // console.log({
+    //     data:data, error:error
+    // })
+
+
     const [formIsValid, setFormIsValid] = useState(true);
     const [stepOne, setStepOne] = useState(true);
     const [stepTwo, setStepTwo] = useState(false);
     const [userData, setUserData] = useState([] as any);
-
+    const { data, error } = useSWR('/api/getUsers', fetcher);
+    
     // Get User Data on Page Load
     useEffect(() => {
-        const res = axios.get("/api/getUsers")
-            .then((response) => {
-                setUserData(response.data)
-            })
+        // const res = axios.get("/api/getUsers")
+        //     .then((response) => {
+            //         setUserData(response.data)
+            //     })
+            
+            setUserData(data)
     }, [])
 
     // Get Last Asset ID
     const getLastID = (userData && userData.length > 0) ? userData.slice(-1)[0].userID : '1';
+    console.log({
+        userData: userData, 
+        getLastID:getLastID,
+        error:error
+    });
 
 
     // Return matching email address

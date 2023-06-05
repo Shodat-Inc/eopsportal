@@ -122,6 +122,7 @@ export default function Complete(props: any) {
             // Storing data to Users JSON            
             let currentDate = new Date().toISOString().split('T')[0];
             let ID = 1
+
             // const response = await fetch('/api/createUsers', {
             //     method: 'POST',
             //     headers: {
@@ -145,8 +146,7 @@ export default function Complete(props: any) {
             // });           
 
 
-            axios
-                .post('/api/createUsers', {
+            axios.post('/api/createUsers', {
                     userID: parseInt(getLastID) + 1,
                     username: `${props.registerData.email}`,
                     firstName: `${props.registerData.firstName}`,
