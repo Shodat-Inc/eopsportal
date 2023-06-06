@@ -8,7 +8,7 @@ import axios from 'axios';
 import useSWR from 'swr'
 
 
-const fetcher = (url:any) => axios.get(url).then(res => res.data)
+const fetcher = (url: any) => axios.get(url).then(res => res.data)
 export default function Register() {
     const [formData, setFormData] = useState({
         firstName: "",
@@ -22,51 +22,38 @@ export default function Register() {
         companyName: "",
         email: ""
     });
-    const url = "/api/getUsers";
-    
-    // const { data, error } = useSWR('/api/getUsers', fetcher);
-    // console.log({
-    //     data:data, error:error
-    // })
-
 
     const [formIsValid, setFormIsValid] = useState(true);
     const [stepOne, setStepOne] = useState(true);
     const [stepTwo, setStepTwo] = useState(false);
     const [userData, setUserData] = useState([] as any);
     const { data, error } = useSWR('/api/getUsers', fetcher);
-    
+
     // Get User Data on Page Load
     useEffect(() => {
         // const res = axios.get("/api/getUsers")
         //     .then((response) => {
-            //         setUserData(response.data)
-            //     })
-            
-            setUserData(data)
+        //         setUserData(response.data)
+        //     })
+
+        setUserData(data)
     }, [data, error])
 
     // Get Last Asset ID
     const getLastID = (userData && userData.length > 0) ? userData.slice(-1)[0].userID : '1';
-    console.log({
-        userData: userData, 
-        getLastID:getLastID,
-        error:error
-    });
-
 
     // Return matching email address
-    const checkEmailAdress = (email:any) => {
-        const matched = userData.filter((item:any) =>{
+    const checkEmailAdress = (email: any) => {
+        const matched = userData.filter((item: any) => {
             return item.username === email
         })
-        if(matched && matched.length > 0) {
+        if (matched && matched.length > 0) {
             return true;
         } else {
             return false;
         }
     }
-    
+
 
     const handleInput = (evt: any) => {
         evt.preventDefault()
@@ -112,7 +99,7 @@ export default function Register() {
         } else if (!EMAIL_REGEX.test(formData.email)) {
             formIsValid = false;
             newErrorsState.email = "Please enter valid email address!"
-        } else if(checkEmailAdress(formData.email) === true) {
+        } else if (checkEmailAdress(formData.email) === true) {
             formIsValid = false;
             newErrorsState.email = "Username already exists please enter unique user email!!"
         }

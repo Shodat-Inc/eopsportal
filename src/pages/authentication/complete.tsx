@@ -64,10 +64,8 @@ export default function Complete(props: any) {
         setFormIsValid(false);
     };
 
-    console.log("AMIT - USERS", userData)
     // Get Last Asset ID
     const getLastID = (userData && userData.length > 0) ? userData.slice(-1)[0].userID : '1';
-    console.log("AMIT - getLastID", getLastID)
 
     const handleValidation = () => {
         const PHONE_REGEX = new RegExp(/^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/i);
