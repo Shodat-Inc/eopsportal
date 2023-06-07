@@ -22,7 +22,8 @@
     text-align: right;
     padding-right: 30px;
 }
-.tableObject tbody tr td:last-child{
+
+.tableObject tbody tr td:last-child {
     padding-right: 5px;
 }
 
@@ -146,26 +147,29 @@
     position: relative;
     transition: all 0.4s ease-in-out;
 }
+
 .imagewrap .info {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100px;
-    background-color: rgba(0,0,0,0.8);
+    background-color: rgba(0, 0, 0, 0.8);
     position: absolute;
     bottom: 0;
     left: 0;
     width: 100%;
-    border-radius:  0 0 3px 3px;
+    border-radius: 0 0 3px 3px;
     display: none;
     transition: all 0.4s ease-in-out;
 }
-.imagewrap:hover > .info {
+
+.imagewrap:hover>.info {
     display: block;
     transition: all 0.4s ease-in-out;
 }
-.imagewrap .info > button,
-.imagewrap .info > a {
+
+.imagewrap .info>button,
+.imagewrap .info>a {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -179,6 +183,7 @@
     display: inline-block;
     position: relative;
 }
+
 .radioWrap input[type="checkbox"] {
     position: relative;
     left: 2px;
@@ -191,6 +196,7 @@
     padding: 0;
     left: 18px;
 }
+
 .radioWrap .radioFrame {
     display: inline-block;
     height: 27px;
@@ -201,6 +207,7 @@
     top: 4px;
     background-color: gray;
 }
+
 .radioWrap .radioFrame:after {
     content: "";
     background-color: #000000;
@@ -211,11 +218,13 @@
     left: 4px;
     top: 4px;
 }
-.radioWrap input[type="checkbox"]:checked + .radioFrame {
+
+.radioWrap input[type="checkbox"]:checked+.radioFrame {
     background-color: #fed136;
 }
-.radioWrap input[type="checkbox"]:checked + .radioFrame:after {
-    background-color: #000000;   
+
+.radioWrap input[type="checkbox"]:checked+.radioFrame:after {
+    background-color: #000000;
     right: 4px;
     left: auto;
 }
@@ -223,21 +232,24 @@
 
 /* Table viewTable */
 .viewTable thead th {
-    padding-left:15px;
+    padding-left: 15px;
     width: 50%;
 
 }
+
 .viewTable tbody tr {
     padding-left: 15px;
     padding-top: 5px;
     padding-bottom: 5px;
-} 
-.viewTable tbody tr td{
+}
+
+.viewTable tbody tr td {
     padding-left: 15px;
     padding-top: 5px;
     padding-bottom: 5px;
     height: 45px;
-} 
+}
+
 .viewTableWrap {
     scrollbar-width: thin;
     scrollbar-color: #000000;
@@ -245,7 +257,7 @@
 
 /* Chrome, Edge, and Safari */
 .viewTableWrap::-webkit-scrollbar {
-    width: 8px;    
+    width: 8px;
 }
 
 .viewTableWrap::-webkit-scrollbar-track {
@@ -254,7 +266,7 @@
 }
 
 .viewTableWrap::-webkit-scrollbar-thumb {
-    background-color:#BDBDBD;
+    background-color: #BDBDBD;
     border-radius: 14px;
     border: 3px solid #BDBDBD;
 }
@@ -262,16 +274,25 @@
 .table2 {
     border-radius: 15px;
 }
-.table2, .table2 tr, .table2, .table2 tr td, .table2, .table2 th {
+
+.table2,
+.table2 tr,
+.table2,
+.table2 tr td,
+.table2,
+.table2 th {
     border: 1px solid #BDBDBD;
     border-collapse: collapse
-} 
+}
+
 .table2 tbody tr:hover {
     background-color: transparent !important;
 }
+
 .table2 tr td:last-child {
     border-left: 0;
 }
+
 .table2 .testbtn {
     position: absolute;
     top: -40px;
@@ -282,7 +303,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background: rgba(0,0,0,0.4);
+    background: rgba(0, 0, 0, 0.4);
 }
 
 
@@ -294,7 +315,7 @@
 
 /* Chrome, Edge, and Safari */
 .scrollDes::-webkit-scrollbar {
-    width: 8px;    
+    width: 8px;
 }
 
 .scrollDes::-webkit-scrollbar-track {
@@ -303,7 +324,66 @@
 }
 
 .scrollDes::-webkit-scrollbar-thumb {
-    background-color:#BDBDBD;
+    background-color: #BDBDBD;
     border-radius: 14px;
     border: 3px solid #BDBDBD;
+}
+
+/* Input */
+
+
+.form__group {
+    position: relative;
+    padding: 15px 0 0;
+}
+
+.form__field {
+    font-family: inherit;
+    width: 100%;
+    border: 1px solid #000000;
+    height: 50px;
+    border-radius: 10px;
+    outline: 0;
+    font-size: 16px;
+    color: #000000;
+    padding: 6px 15px;
+    background: transparent;
+    transition: border-color 0.2s;
+}
+
+.form__field::placeholder {
+    color: transparent;
+}
+
+.form__field:placeholder-shown~.form__label {
+    font-size: 16px;
+    cursor: text;
+    top: 25px;
+    left: 15px;
+}
+
+
+.form__wrap label,
+.form__field:focus~.form__label {
+    position: absolute;
+    top: 3px;
+    display: block;
+    transition: 0.2s;
+    font-size: 14px;
+    color: #B3B3B3;
+    left: 15px;
+    background-color: #ffffff;
+    padding: 0 3px;
+}
+
+.form__wrap label {
+    color: #000000;
+}
+
+.form__field:focus~.form__label {
+    color: #000000;
+}
+
+.form__field:focus {
+    padding-bottom: 6px;
 }

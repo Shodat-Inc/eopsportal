@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import axios from 'axios';
 import { useRouter } from 'next/router';
+import styles from '../../styles/Common.module.css';
 
 export default function SignIn() {
     const { push } = useRouter();
@@ -191,36 +192,61 @@ export default function SignIn() {
 
                             <div className="signinform relative">
                                 <form method='post' onSubmit={submitForm}>
-                                    <div className="mb-6">
-                                        <label className="text-gray-500 text-lg font-medium mb-3 block">Company email address*</label>
-                                        <input
-                                            type="text"
-                                            className="border rounded-lg pl-4 pr-10 border-black h-12 w-full shadow-lg"
-                                            name="username"
-                                            placeholder="Enter email address"
-                                            value={formData.username}
-                                            onChange={(e) => handleInput(e)}
-                                        />
+
+                                    <div className={`mb-5 ${styles.form__wrap}`}>
+                                        <div className={`relative ${styles.form__group} font-OpenSans`}>
+                                            <input
+                                                type="text"
+                                                id="username"
+                                                name="username"
+                                                className={`${styles.form__field}`}
+                                                placeholder="Your email address"
+                                                value={formData.username}
+                                                onChange={(e) => handleInput(e)}
+                                            />
+                                            <label htmlFor="username" className={`${styles.form__label}`}>Your email address</label>
+                                        </div>
                                         <span className='text-red-500 text-sm'>{errors.username}</span>
                                     </div>
-                                    <div className="mb-10 relative">
-                                        <div className="column-2 flex items-center justify-between">
-                                            <label className="text-gray-500 text-lg font-medium mb-3 block">Password*</label>
-                                            <Link className="text-black text-lg font-medium mb-3 block" href="/authentication/forgotpassword">Forgot Password?</Link>
-                                        </div>
-                                        < div className='relative'>
+
+                                    <div className={`mb-5 ${styles.form__wrap}`}>
+                                        <div className={`relative ${styles.form__group} font-OpenSans`}>
                                             <input
                                                 type={showPassword.password ? "text" : "password"}
-                                                className="border rounded-lg pl-4 pr-14 border-black h-12 w-full shadow-lg"
+                                                id="password"
                                                 name="password"
+                                                className={`${styles.form__field}`}
                                                 placeholder="Enter password"
                                                 value={formData.password}
                                                 onChange={(e) => handleInput(e)}
                                             />
-                                            <span className="absolute text-black font-normal font-8 right-4 bottom-[14px] cursor-pointer" onClick={hideShow}>{showPassword.password ? "Hide" : "Show"}</span>
+                                            <label htmlFor="password" className={`${styles.form__label}`}>Enter password</label>
+                                            <span className="absolute text-black font-normal font-8 right-4 bottom-[11px] cursor-pointer" onClick={hideShow}>
+                                                {
+                                                    showPassword.password ?
+                                                        <Image
+                                                            src="/img/eye_hide_off_see_view_icon.svg"
+                                                            alt='hide'
+                                                            height={32}
+                                                            width={32}
+                                                        />
+                                                        :
+                                                        <Image
+                                                            src="/img/eye_on_see_show_view_icon.svg"
+                                                            alt='hide'
+                                                            height={32}
+                                                            width={32}
+                                                        />
+                                                }
+                                            </span>
                                         </div>
-                                        <span className='text-red-500 text-sm'>{errors.password}</span>
+                                        <div className="column-2 flex items-center justify-between">
+                                            <span className='text-red-500 text-sm'>{errors.password}</span>
+                                            <Link className="text-black text-sm font-medium mb-0 block" href="/authentication/forgotpassword">Forgot Password?</Link>
+                                        </div>
+
                                     </div>
+
                                     <div className="relative">
                                         <button
                                             className={`flex rounded-lg h-16 bg-black1 w-full text-white text-lg block flex justify-center items-center ${success ? 'bg-gray-951' : 'bg-black'}`}

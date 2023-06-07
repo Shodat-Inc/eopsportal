@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
+import styles from '../../styles/Common.module.css';
 
 export default function Complete(props: any) {
     const { push } = useRouter();
@@ -119,52 +120,27 @@ export default function Complete(props: any) {
         if (handleValidation()) {
             // Storing data to Users JSON            
             let currentDate = new Date().toISOString().split('T')[0];
-            let ID = 1
-
-            // const response = await fetch('/api/createUsers', {
-            //     method: 'POST',
-            //     headers: {
-            //         'Content-Type': 'application/json'
-            //     },
-            //     body: JSON.stringify(
-            //         {
-            //             userID:ID+1, 
-            //             username:`${props.registerData.email}`, 
-            //             firstName:`${props.registerData.firstName}`, 
-            //             lastName:`${props.registerData.lastName}`, 
-            //             companyName:`${props.registerData.companyName}`, 
-            //             phoneNumber:`${formData.phoneNumber}`, 
-            //             password:`${formData.password}`, 
-            //             terms:agreement, 
-            //             dateCreated:currentDate, 
-            //             dateModified:currentDate,
-            //             role:"admin"
-            //         }
-            //     )
-            // });           
-
-
             axios.post('/api/createUsers', {
-                    userID: parseInt(getLastID) + 1,
-                    username: `${props.registerData.email}`,
-                    firstName: `${props.registerData.firstName}`,
-                    lastName: `${props.registerData.lastName}`,
-                    companyName: `${props.registerData.companyName}`,
-                    phoneNumber: `${formData.phoneNumber}`,
-                    password: `${formData.password}`,
-                    terms: agreement,
-                    dateCreated: currentDate,
-                    dateModified: currentDate,
-                    role: "admin"
-                }, {
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                }).then(res => {
-                    console.log('res', res.data);
-                }).catch(err => {
-                    console.log('error in request', err);
-                });
+                userID: parseInt(getLastID) + 1,
+                username: `${props.registerData.email}`,
+                firstName: `${props.registerData.firstName}`,
+                lastName: `${props.registerData.lastName}`,
+                companyName: `${props.registerData.companyName}`,
+                phoneNumber: `${formData.phoneNumber}`,
+                password: `${formData.password}`,
+                terms: agreement,
+                dateCreated: currentDate,
+                dateModified: currentDate,
+                role: "admin"
+            }, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(res => {
+                console.log('res', res.data);
+            }).catch(err => {
+                console.log('error in request', err);
+            });
 
         } else {
             console.log("SOMETHING WENT WRONG !")
@@ -181,29 +157,35 @@ export default function Complete(props: any) {
 
             <div className="signinform relative">
                 <form method='post' onSubmit={submitForm}>
-                    <div className="mb-5">
-                        <label className="text-gray-500 text-md font-medium mb-1 block">Phone number<span className='text-red-500'>*</span></label>
-                        <input
-                            type="number"
-                            className={`border rounded-lg pl-5 pr-10 border-black h-12 w-full shadow-sm ${errors.phoneNumber ? 'border-red-500' : 'border-black'}`}
-                            name="phoneNumber"
-                            placeholder="Phone number"
-                            value={formData.phoneNumber}
-                            onChange={(e) => handleInput(e)}
-                        />
+
+                    <div className={`mb-5 ${styles.form__wrap}`}>
+                        <div className={`relative ${styles.form__group} font-OpenSans`}>
+                            <input
+                                type="number"
+                                id="phoneNumber"
+                                name="phoneNumber"
+                                className={`${styles.form__field}`}
+                                placeholder="Phone number"
+                                value={formData.phoneNumber}
+                                onChange={(e) => handleInput(e)}
+                            />
+                            <label htmlFor="phoneNumber" className={`${styles.form__label}`}>Phone number</label>
+                        </div>
                         <span className='text-red-500 text-sm'>{errors.phoneNumber}</span>
                     </div>
-                    <div className="mb-5 relative">
-                        <label className="text-gray-500 text-md font-medium mb-1 block">Enter password<span className='text-red-500'>*</span></label>
-                        <div className='relative'>
+
+                    <div className={`mb-5 ${styles.form__wrap}`}>
+                        <div className={`relative ${styles.form__group} font-OpenSans`}>
                             <input
                                 type={showPassword.pass ? "text" : "password"}
-                                className={`border rounded-lg pl-5 pr-10 border-black h-12 w-full shadow-sm ${errors.password ? 'border-red-500' : 'border-black'}`}
+                                id="password"
                                 name="password"
+                                className={`${styles.form__field}`}
                                 placeholder="Enter password"
                                 value={formData.password}
                                 onChange={(e) => handleInput(e)}
                             />
+                            <label htmlFor="password" className={`${styles.form__label}`}>Enter password</label>
                             <span
                                 className="absolute text-black font-normal font-8 right-2 bottom-[8px] cursor-pointer"
                                 onClick={hideShow}
@@ -227,20 +209,20 @@ export default function Complete(props: any) {
                             </span>
                         </div>
                         <span className='text-red-500 text-sm'>{errors.password}</span>
-                    </div>
-                    <div className="mb-5 relative">
-                        <div className="column-2 flex items-center justify-between">
-                            <label className="text-gray-500 text-md font-medium mb-3 block">Confirm password<span className='text-red-500'>*</span></label>
-                        </div>
-                        <div className='relative'>
+                    </div>                    
+
+                    <div className={`mb-5 ${styles.form__wrap}`}>
+                        <div className={`relative ${styles.form__group} font-OpenSans`}>
                             <input
                                 type={showPassword.confirmPassword ? "text" : "password"}
-                                className={`border rounded-lg pl-5 pr-10 border-black h-12 w-full shadow-sm ${errors.confirmPassword ? 'border-red-500' : 'border-black'}`}
+                                id="confirmPassword"
                                 name="confirmPassword"
-                                placeholder="Confirm password"
+                                className={`${styles.form__field}`}
+                                placeholder="Enter confirm password"
                                 value={formData.confirmPassword}
                                 onChange={(e) => handleInput(e)}
                             />
+                            <label htmlFor="confirmPassword" className={`${styles.form__label}`}>Enter confirm password</label>
                             <span
                                 className="absolute text-black font-normal font-8 right-2 bottom-[8px] cursor-pointer"
                                 onClick={hideShowConfirm}
@@ -265,6 +247,7 @@ export default function Complete(props: any) {
                         </div>
                         <span className='text-red-500 text-sm'>{errors.confirmPassword}</span>
                     </div>
+
                     <div className="mb-5 relative flex flex-wrap">
                         <div className='flex'>
                             <input

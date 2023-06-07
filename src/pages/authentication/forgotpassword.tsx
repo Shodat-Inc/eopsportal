@@ -1,10 +1,63 @@
+import React, { useState, useEffect } from 'react';
 import Link from "next/link";
+import styles from '../../styles/Common.module.css';
 import Router from 'next/router';
 import Image from "next/image";
 
 export default function ForgotPassword() {
-    const goToComplete = () => {
-        Router.push('/authentication/complete')
+    // const goToComplete = () => {
+    //     Router.push('/authentication/complete')
+    // }
+    const [formData, setFormData] = useState({
+        companyEmail: "",
+    });
+    const [errors, setErrors] = useState({
+        companyEmail: "",
+    });
+    const handleInput = (evt: any) => {
+        evt.preventDefault()
+        let targetName = evt.target.name;
+        let targetValue = evt.target.value;
+        setFormData((state) => ({
+            ...state,
+            [targetName]: targetValue
+        }));
+        setErrors({
+            ...errors,
+            [targetName]: ""
+
+        })
+    };
+
+    const handleValidation = () => {
+        const EMAIL_REGEX = new RegExp(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i);
+        const newErrorsState = { ...errors };
+        let formIsValid = true;
+
+        // Validate Email Address
+        if (!formData.companyEmail) {
+            formIsValid = false;
+            newErrorsState.companyEmail = "Email must not be empty!"
+        } else if (!EMAIL_REGEX.test(formData.companyEmail)) {
+            formIsValid = false;
+            newErrorsState.companyEmail = "Please enter valid email address!"
+        }
+
+        // if any field is invalid - then we need to update our state
+        if (!formIsValid) {
+            setErrors(newErrorsState);
+        }
+
+        return formIsValid
+    }
+
+    const submitForm = (evt: any) => {
+        evt.preventDefault()
+        if (handleValidation()) {
+            console.log("GOOD TO GOOOooo !")
+        } else {
+            console.log("SOMETHING WENT WRONG !")
+        }
     }
     return (
         <>
@@ -64,8 +117,8 @@ export default function ForgotPassword() {
                             <p className="font-normal text-2xl text-gray-500">Don&apos;t worry about your password! you can reset that any time.</p>
                             <div className="mb-4 mt-5 border border-gray-100 w-full h-[1px]"></div>
                             <div className="signinform relative">
-                                <form>
-                                    <div className="mb-6">
+                                <form method='post' onSubmit={submitForm}>
+                                    {/* <div className="mb-6">
                                         <label className="text-gray-500 text-lg font-medium mb-3 block">Company email address*</label>
                                         <input
                                             type="text"
@@ -73,7 +126,24 @@ export default function ForgotPassword() {
                                             name="email"
                                             placeholder="Enter email address"
                                         />
+                                    </div> */}
+
+                                    <div className={`mb-7 ${styles.form__wrap}`}>
+                                        <div className={`relative ${styles.form__group} font-OpenSans`}>
+                                            <input
+                                                type="text"
+                                                id="companyEmail"
+                                                name="companyEmail"
+                                                className={`${styles.form__field}`}
+                                                placeholder="Enter email address"
+                                                value={formData.companyEmail}
+                                                onChange={(e) => handleInput(e)}
+                                            />
+                                            <label htmlFor="companyEmail" className={`${styles.form__label}`}>Enter email address</label>
+                                        </div>
+                                        <span className='text-red-500 text-sm'>{errors.companyEmail}</span>
                                     </div>
+
                                     <div className="relative">
                                         <button className="rounded-lg h-16 bg-black w-full text-white text-lg">
                                             Confirm

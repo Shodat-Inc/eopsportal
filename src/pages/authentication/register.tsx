@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import styles from '../../styles/Common.module.css';
 import Link from "next/link";
 import Router from 'next/router';
 import Image from "next/image";
 import moment from 'moment';
 import Complete from './complete';
 import axios from 'axios';
-import useSWR from 'swr'
+import useSWR from 'swr';
 
 
 const fetcher = (url: any) => axios.get(url).then(res => res.data)
@@ -31,11 +32,6 @@ export default function Register() {
 
     // Get User Data on Page Load
     useEffect(() => {
-        // const res = axios.get("/api/getUsers")
-        //     .then((response) => {
-        //         setUserData(response.data)
-        //     })
-
         setUserData(data)
     }, [data, error])
 
@@ -183,60 +179,72 @@ export default function Register() {
                                 <form method='post' onSubmit={submitForm}>
                                     {stepOne ?
                                         <div>
-                                            <div className="mb-5">
-                                                <label className="text-gray-500 text-md font-medium mb-1 block">First name<span className='text-red-500'>*</span></label>
-                                                <input
-                                                    type="text"
-                                                    className={`border rounded-lg pl-5 pr-10 border-black h-12 w-full shadow-sm ${errors.firstName ? 'border-red-500' : 'border-black'}`}
-                                                    name="firstName"
-                                                    placeholder="First name"
-                                                    value={formData.firstName}
-                                                    onChange={(e) => handleInput(e)}
-                                                />
+
+                                            <div className={`mb-2 ${styles.form__wrap}`}>
+                                                <div className={`relative ${styles.form__group} font-OpenSans`}>
+                                                    <input
+                                                        type="text"
+                                                        id="firstName"
+                                                        name="firstName"
+                                                        className={`${styles.form__field}`}
+                                                        placeholder="First name"
+                                                        value={formData.firstName}
+                                                        onChange={(e) => handleInput(e)}
+                                                    />
+                                                    <label htmlFor="firstName" className={`${styles.form__label}`}>First Name</label>
+                                                </div>
                                                 <span className='text-red-500 text-sm'>{errors.firstName}</span>
                                             </div>
-                                            <div className="mb-5">
-                                                <label className="text-gray-500 text-md font-medium mb-1 block">Last name<span className='text-red-500'>*</span></label>
-                                                <input
-                                                    type="text"
-                                                    className={`border rounded-lg pl-5 pr-10 border-black h-12 w-full shadow-sm ${errors.lastName ? 'border-red-500' : 'border-black'}`}
-                                                    name="lastName"
-                                                    placeholder="Last name"
-                                                    value={formData.lastName}
-                                                    onChange={(e) => handleInput(e)}
-                                                />
+
+                                            <div className={`mb-2 ${styles.form__wrap}`}>
+                                                <div className={`relative ${styles.form__group} font-OpenSans`}>
+                                                    <input
+                                                        type="text"
+                                                        id="lastName"
+                                                        name="lastName"
+                                                        className={`${styles.form__field}`}
+                                                        placeholder="Last name"
+                                                        value={formData.lastName}
+                                                        onChange={(e) => handleInput(e)}
+                                                    />
+                                                    <label htmlFor="lastName" className={`${styles.form__label}`}>Last Name</label>
+                                                </div>
                                                 <span className='text-red-500 text-sm'>{errors.lastName}</span>
                                             </div>
-                                            <div className="mb-5 relative">
-                                                <div className="column-2 flex items-center justify-between">
-                                                    <label className="text-gray-500 text-md font-medium mb-1 block">Email<span className='text-red-500 text-sm'>*</span></label>
+
+                                            <div className={`mb-2 ${styles.form__wrap}`}>
+                                                <div className={`relative ${styles.form__group} font-OpenSans`}>
+                                                    <input
+                                                        type="text"
+                                                        id="email"
+                                                        name="email"
+                                                        className={`${styles.form__field}`}
+                                                        placeholder="Company Email"
+                                                        value={formData.email}
+                                                        onChange={(e) => handleInput(e)}
+                                                    />
+                                                    <label htmlFor="email" className={`${styles.form__label}`}>Company Email</label>
                                                 </div>
-                                                <input
-                                                    type="text"
-                                                    className={`border rounded-lg pl-5 pr-10 border-black h-12 w-full shadow-sm ${errors.email ? 'border-red-500' : 'border-black'}`}
-                                                    name="email"
-                                                    placeholder="Company name"
-                                                    value={formData.email}
-                                                    onChange={(e) => handleInput(e)}
-                                                />
                                                 <span className='text-red-500 text-sm'>{errors.email}</span>
                                             </div>
-                                            <div className="mb-8 relative">
-                                                <div className="column-2 flex items-center justify-between">
-                                                    <label className="text-gray-500 text-md font-medium mb-1 block">Company name<span className='text-red-500 text-sm'>*</span></label>
+
+                                            <div className={`mb-5 ${styles.form__wrap}`}>
+                                                <div className={`relative ${styles.form__group} font-OpenSans`}>
+                                                    <input
+                                                        type="text"
+                                                        id="companyName"
+                                                        name="companyName"
+                                                        className={`${styles.form__field}`}
+                                                        placeholder="Company Name"
+                                                        value={formData.companyName}
+                                                        onChange={(e) => handleInput(e)}
+                                                    />
+                                                    <label htmlFor="companyName" className={`${styles.form__label}`}>Company Name</label>
                                                 </div>
-                                                <input
-                                                    type="text"
-                                                    className={`border rounded-lg pl-5 pr-10 border-black h-12 w-full shadow-sm ${errors.companyName ? 'border-red-500' : 'border-black'}`}
-                                                    name="companyName"
-                                                    placeholder="Company name"
-                                                    value={formData.companyName}
-                                                    onChange={(e) => handleInput(e)}
-                                                />
                                                 <span className='text-red-500 text-sm'>{errors.companyName}</span>
                                             </div>
 
-                                            <div className="relative">
+                                            <div className="relative pt-2">
                                                 <button
                                                     className="rounded-lg h-16 bg-black w-full text-white text-md"
                                                 >
