@@ -443,24 +443,31 @@ export default function SubAsset(localData: any) {
                                                             placeholder="Enter asset ID"
                                                             className="rounded-lg border border-gray-500 h-[44px] pl-5 pr-5 w-[320px]"
                                                             value={parseInt(getLastID) + 1}
-                                                        />
-                                                        <input
-                                                            type="text"
-                                                            name="assetname"
-                                                            placeholder="Enter class Name"
-                                                            className="rounded-lg border border-black h-[44px] pl-5 pr-5 w-[320px]"
-                                                            onChange={(e) => (assetname.current = e.target.value)}
-                                                        />
+                                                        />                                                        
+                                                        <div className={`w-[320px] ${styles.form__wrap}`}>
+                                                            <div className={`relative ${styles.form__group} font-OpenSans`}>
+                                                                <input
+                                                                    type="text"
+                                                                    id="assetname"
+                                                                    name="assetname"
+                                                                    className={`${styles.form__field}`}
+                                                                    placeholder="Enter class name"
+                                                                    required
+                                                                    onChange={(e) => (assetname.current = e.target.value)}
+                                                                />
+                                                                <label htmlFor="assetname" className={`${styles.form__label}`}>Enter class name</label>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
 
 
-                                                <div className="mb-10 relative column-2 flex justify-start items-center">
+                                                <div className="mb-8 relative column-2 flex justify-start items-center">
                                                     <div className="w-[160px]">
                                                         <label className="font-semibold text-black">Class Tags <span className="text-red-500">*</span></label>
                                                     </div>
                                                     <div className="w-3/4">
-                                                        <div className="rounded-lg border border-gray-500 min-h-[64px] pl-2 pr-2 w-[320px] pt-2 pb-2 flex flex-wrap justify-start items-center">
+                                                        <div className="rounded-lg border border-black min-h-[64px] pl-2 pr-2 w-[320px] pt-2 pb-2 flex flex-wrap justify-start items-center">
                                                             {
                                                                 allTags && allTags.length > 0 ?
                                                                     allTags.map((items: any, index: any) => (
@@ -530,7 +537,7 @@ export default function SubAsset(localData: any) {
 
 
                                                         {toggleDT ?
-                                                            <div className="rounded rounded-lg border border-gray-500 min-h-[150px] mt-[1px] pl-2 pr-2 w-[320px] pt-2 pb-2">
+                                                            <div className="rounded rounded-lg border border-black min-h-[150px] mt-[1px] pl-2 pr-2 w-[320px] pt-2 pb-2">
                                                                 <div className="text-sm font-bold color-black mb-2 flex items-center justify-between">
                                                                     <span>Select Data Type</span>
                                                                     <span className="bg-black h-8 w-8 p-1 inline-flex rounded-full justify-center items-center">
@@ -641,7 +648,7 @@ export default function SubAsset(localData: any) {
                                                         <label className="font-semibold text-black">Parent Join Key <span className="text-red-500">*</span></label>
                                                     </div>
                                                     <div className="w-3/4">
-                                                        <div className="rounded-lg border border-gray-500 min-h-[64px] pl-2 pr-2 w-[320px] pt-2 pb-2 flex flex-wrap justify-start items-center">
+                                                        <div className="rounded-lg border border-black min-h-[64px] pl-2 pr-2 w-[320px] pt-2 pb-2 flex flex-wrap justify-start items-center">
                                                             {
                                                                 parentJoinKey && parentJoinKey.length > 0 ?
                                                                     parentJoinKey.map((item: any, index: any) => (

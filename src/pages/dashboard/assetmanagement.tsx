@@ -181,7 +181,21 @@ export default function AssetManagement(localData: any) {
 
     // Delete Asset
     const deleteAsset = (assetID: any) => {
-        console.log("Delete ID", assetID)
+        console.log({
+            data:data,
+            deleteID:assetID
+        })
+        const updatedData = data.filter((item:any)=>{
+            if(parseInt(item.assetID) !== parseInt(assetID)) {
+                return data;
+            }
+        })
+
+        console.log({
+            data:updatedData,
+            deleteID:assetID
+        })
+
     }
 
 
@@ -477,7 +491,7 @@ export default function AssetManagement(localData: any) {
                                         </h3>
                                         <button
                                             className="p-1 ml-auto bg-transparent border-0 text-black float-right leading-none font-semibold outline-none focus:outline-none"
-                                            onClick={() => {setShowModal(false); setAllTags([])}}
+                                            onClick={() => { setShowModal(false); setAllTags([]) }}
                                         >
                                             <Image
                                                 src="/img/close.svg"
@@ -509,14 +523,22 @@ export default function AssetManagement(localData: any) {
                                                             className="rounded-lg border border-gray-500 h-[44px] pl-5 pr-5 w-[320px]"
                                                             value={parseInt(getLastID) + 1}
                                                         />
-                                                        <input
-                                                            type="text"
-                                                            name="assetname"
-                                                            placeholder="Enter asset Name"
-                                                            className="rounded-lg border border-gray-500 h-[44px] pl-5 pr-5 w-[320px]"
-                                                            onChange={(e) => (assetname.current = e.target.value)}
-                                                            required
-                                                        />
+                                                       
+                                                        <div className={`mb-5 w-[320px] ${styles.form__wrap}`}>
+                                                            <div className={`relative ${styles.form__group} font-OpenSans`}>
+                                                                <input
+                                                                    type="text"
+                                                                    id="assetname"
+                                                                    name="assetname"
+                                                                    className={`${styles.form__field}`}
+                                                                    placeholder="Enter class name"
+                                                                    required
+                                                                    onChange={(e) => (assetname.current = e.target.value)}
+                                                                />
+                                                                <label htmlFor="assetname" className={`${styles.form__label}`}>Enter class name</label>
+                                                            </div>
+                                                        </div>
+
                                                     </div>
                                                 </div>
 
@@ -525,7 +547,7 @@ export default function AssetManagement(localData: any) {
                                                         <label className="font-semibold text-black">Class Tags <span className="text-red-500">*</span></label>
                                                     </div>
                                                     <div className="w-3/4">
-                                                        <div className="rounded-lg border border-gray-500 min-h-[64px] pl-2 pr-2 w-[320px] pt-2 pb-2 flex flex-wrap justify-start items-center">
+                                                        <div className="rounded-lg border border-black min-h-[64px] pl-2 pr-2 w-[320px] pt-2 pb-2 flex flex-wrap justify-start items-center">
                                                             {
                                                                 allTags && allTags.length > 0 ?
                                                                     allTags.map((items: any, index: any) => (
@@ -707,7 +729,7 @@ export default function AssetManagement(localData: any) {
                                                     </button>
                                                     <button
                                                         className="border border-black rounded-lg bg-white font-semibold text-black font-lg w-24 h-12 hover:text-white hover:bg-yellow-951 hover:border-yellow-951 ease-in-out duration-300"
-                                                        onClick={() => {setShowModal(false); setAllTags([])}}
+                                                        onClick={() => { setShowModal(false); setAllTags([]) }}
                                                     >
                                                         Cancel
                                                     </button>

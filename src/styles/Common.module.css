@@ -358,7 +358,7 @@
 .form__field:placeholder-shown~.form__label {
     font-size: 16px;
     cursor: text;
-    top: 25px;
+    top: 27px;
     left: 15px;
 }
 
