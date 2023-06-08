@@ -1,12 +1,12 @@
 import React, { useState, useRef, useEffect } from "react";
-import Layout from "../../components/Layout";
-import NoDataFound from "../../common/nodatafound";
-import styles from '../../styles/Common.module.css';
-import { getObjectsData } from "../../lib/getobjects";
+import Layout from "../../../components/Layout";
+import NoDataFound from "../../../common/nodatafound";
+import styles from '../../../styles/Common.module.css';
+import { getObjectsData } from "../../../lib/getobjects";
 import { useRouter } from 'next/router'
 import Link from "next/link";
 import Image from "next/image";
-import Template from "./template";
+import Template from "../template";
 import axios from 'axios';
 import moment from "moment";
 import AlertMessage from "@/common/alertMessage";
@@ -327,7 +327,7 @@ export default function Objects(localData: any) {
                                                                     <td className="" key={i}>
                                                                         <Link
                                                                             href={{
-                                                                                pathname: '/dashboard/subobject',
+                                                                                pathname: '/dashboard/assetmanagement/subobject',
                                                                                 query: {
                                                                                     object: items?.subObjects?.PlantID || items?.subObjects?.VIN,
                                                                                     parentObject: parentAsset.assets,

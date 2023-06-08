@@ -1,18 +1,18 @@
 import React, { useState, useRef, useEffect } from "react";
-import Layout from "../../components/Layout";
-import NoDataFound from "../../common/nodatafound";
-import styles from '../../styles/Common.module.css';
-import { getAssetsData } from "../../lib/getassets";
+import Layout from "../../../components/Layout";
+import NoDataFound from "../../../common/nodatafound";
+import styles from '../../../styles/Common.module.css';
+import { getSubAssetsData } from "../../../lib/getsubassets";
 import { useRouter } from 'next/router'
 import Link from "next/link";
 import Image from "next/image";
-import Template from "./template";
+import Template from "../template";
 import axios from 'axios';
-import AlertMessage from "@/common/alertMessage";
 import moment from "moment";
+import AlertMessage from "@/common/alertMessage";
 
 export async function getServerSideProps() {
-    const localData = await getAssetsData()
+    const localData = await getSubAssetsData()
     return {
         props: {
             localData,
@@ -20,54 +20,131 @@ export async function getServerSideProps() {
     }
 }
 
-export default function AssetManagement(localData: any) {
+export default function SubAsset(localData: any) {
+    const router = useRouter();
+    const parentAsset = router.query;
     const [showModal, setShowModal] = useState(false);
     const [success, setSuccess] = useState(false);
+    const assetid = useRef("");
     const assetname = useRef("");
     const [data, setData] = useState<any[]>([]);
-    const router = useRouter();
     const [allTags, setAllTags] = useState<any[]>([]);
-    const [newTag, setNewTag] = useState<string>("");
+    const [parentJoinKey, setParentJoinKey] = useState<any[]>([]);
+    const [newTag, setNewTag] = useState("");
     const [showInput, setShowInput] = useState(false);
     const [showHideAddTagButton, setShowHideAddTagButton] = useState(false);
-    const [toggleDT, setToggleDT] = useState(false);
+    const [selParentTags, setSelParentTags] = useState<any[]>([]);
+    const [checkIcon, setCheckIcon] = useState("/img/blank_check_box_icon_white.svg");
+    const [tag, setTag] = useState<any[]>([]);
+
     const [dataType, setDataType] = useState("");
+    const [toggleDT, setToggleDT] = useState(false);
     const [assetDataType, setAssetDataType] = useState<any[]>([]);
-    const [showObjectModal, setShowObjectModal] = useState(false);
-    console.log(localData.localData[0].assetName)
-    const [chooseAsset, setChooseAsset] = useState(localData && localData.localData.length > 0 ? localData.localData[0].assetName : '');
-    const [toggleAsset, setToggleAsset] = useState(false);
     const [dtObject, setDtObject] = useState<any[]>([]);
 
 
     // Get JSON data on page load
-    const fetchData = () => {
+    const fetchDataForParent = () => {
         axios.get("/api/getAssets").then((response) => {
             if (response.data) {
-                setData(response.data);
+                const filtered = response.data.filter((item: any) => {
+                    return item.assetName === parentAsset.assets;
+                });
+                if (filtered && filtered.length > 0) {
+                    setParentJoinKey(filtered[0].assetkey);
+                }
             }
         });
     };
+    useEffect(() => {
+        fetchDataForParent();
+        if (fetchDataForParent.length) return;
+    }, [])
+
+
+    // Remove duplicate element from array
+    function removeDuplicates(arr: any) {
+        let unique = [];
+        for (let i = 0; i < arr.length; i++) {
+            if (unique.indexOf(arr[i]) === -1) {
+                unique.push(arr[i]);
+            }
+        }
+        return unique;
+    }
+
+    // Get JSON data on page load
+    const fetchData = () => {
+        axios.get("/api/getSubAssets").then((response) => {
+            if (response.data) {
+                const filtered = localData.localData.filter((item: any) => {
+                    return item.parentAssetName === parentAsset.assets;
+                });
+                if (filtered && filtered.length > 0) {
+                    setData(filtered);
+                }
+
+                let arr: any = [];
+                response.data.map((item: any, key: any) => {
+                    if (item.parentAssetName === parentAsset.assets) {
+                        arr.push(...item.tags);
+                        setTag(removeDuplicates(arr))
+                    }
+                })
+
+            }
+        });
+    };
+    useEffect(() => {
+        // Concat the parent and child tags together in one array
+        let arr = parentJoinKey.concat(tag);
+        // setParentJoinKey(removeDuplicates(arr))
+    }, [tag])
     useEffect(() => {
         fetchData();
         if (fetchData.length) return;
     }, [localData.localData])
 
 
-    // Get Last Asset ID
-    const getLastID = (data && data.length > 0) ? data.slice(-1)[0].assetID : '1000000001';
-
     // Adding New Tags
     const addTags = () => {
         setShowInput(true);
+        // setHide(true)
         setShowHideAddTagButton(true);
         setToggleDT(true);
+    }
+
+    // Cancel Adding new tags
+    const cancelAddingTag = () => {
+        setShowInput(false);
+        setShowHideAddTagButton(false);
+        setToggleDT(false);
+        setDataType("");
+    }
+
+    // Remove Element from all Tag Array
+    const removeElement = (item: any) => {
+        // removing the item form all tags array        
+        let updatedList = allTags.slice();
+        var filteredArray = updatedList.filter(function (e) { return e !== item })
+        setAllTags(removeDuplicates(filteredArray));
+
+        // removing the datatype from datatype array
+        let updatedListType = assetDataType;
+        var popped = updatedListType.splice(-1);
+        setAssetDataType(updatedListType);
+
+        // remove the json item from json item array
+        let updatedJSON = dtObject.slice();
+        var filteredJSON = updatedJSON.filter(function (e) { return e.tagName !== item })
+        setDtObject(filteredJSON)
     }
 
     // Get Radio Button Value
     const radioChange = (value: any) => {
         setDataType(value);
     }
+
 
     // Creating a JSON Object
     function CreateJSON(tag: any, datatype: any) {
@@ -77,6 +154,7 @@ export default function AssetManagement(localData: any) {
         };
         return myObject;
     }
+
 
     // Save New Tag
     const saveNewTag = () => {
@@ -109,41 +187,36 @@ export default function AssetManagement(localData: any) {
     }
 
 
-    // Remove Element from all Tag Array
-    const removeElement = (item: any) => {
-        // removing the item form all tags array
-        let updatedList = allTags.slice();
-        var filteredArray = updatedList.filter(function (e) { return e !== item })
-        setAllTags(filteredArray)
-
-        // removing the datatype from datatype array
-        let updatedListType = assetDataType;
-        var popped = updatedListType.splice(-1);
-        setAssetDataType(updatedListType);
-
-        // remove the json item from json item array
-        let updatedJSON = dtObject.slice();
-        var filteredJSON = updatedJSON.filter(function (e) { return e.tagName !== item })
-        setDtObject(filteredJSON)
-
+    // Selected parent join key
+    const selectedParentKey = (item: any) => {
+        let updatedList = selParentTags;
+        updatedList.push(item)
+        setSelParentTags(removeDuplicates(updatedList))
+        setCheckIcon("/img/box_check_icon_white.svg")
     }
 
-    // Cancel Adding new tags
-    const cancelAddingTag = () => {
-        setShowInput(false);
-        setShowHideAddTagButton(false)
-        setToggleDT(false);
-        setDataType("");
+    // Un Select Parent Join Key
+    const unSelectParentKey = (item: any) => {
+        var arr = selParentTags;
+        var index = arr.indexOf(item);
+        if (index >= 0) {
+            arr.splice(index, 1);
+        }
+        setSelParentTags(removeDuplicates(arr));
+        setCheckIcon("/img/blank_check_box_icon_white.svg");
     }
 
 
+    // Get Last Asset ID
+    const getLastID = (data && data.length > 0) ? data.slice(-1)[0].assetID : '2000000001';
+    console.log("getLastID", getLastID)
 
-    // Store Data into JSON File
+    // Storing data in json for sub class
     const handleSubmit = async (e: any) => {
         e.preventDefault();
         var formData = new FormData(e.target);
         const form_values = Object.fromEntries(formData);
-        const response = await fetch('/api/assets', {
+        const response = await fetch('/api/createSubAssets', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -153,18 +226,23 @@ export default function AssetManagement(localData: any) {
                     assetID: `${form_values.assetid}`,
                     assetName: `${form_values.assetname}`,
                     slug: `${form_values.assetname}`,
-                    assetkey: allTags,
+                    parentAssetID: parentAsset.assets,
+                    parentAssetName: parentAsset.assets,
+                    tags: allTags,
+                    parentJoinKey: selParentTags,
                     dateCreated: new Date().toLocaleString() + "",
                     dateModified: new Date().toLocaleString() + "",
+                    geoScopeLink: "",
+                    tagsWithDataType: dtObject,
                     assetTypes: assetDataType,
-                    tags: dtObject
+
                 }
             )
         });
         const resdata = await response.json();
         if (resdata) {
             router.replace(router.asPath);
-            // Updated state to close the modal
+             // Updated state to close the modal
             setShowModal(false);
             // Update state to Show the success message
             setSuccess(true);
@@ -179,70 +257,32 @@ export default function AssetManagement(localData: any) {
         }
     }
 
-    // Delete Asset
-    const deleteAsset = (assetID: any) => {
-        console.log({
-            data:data,
-            deleteID:assetID
-        })
-        const updatedData = data.filter((item:any)=>{
-            if(parseInt(item.assetID) !== parseInt(assetID)) {
-                return data;
-            }
-        })
-
-        console.log({
-            data:updatedData,
-            deleteID:assetID
-        })
-
+    const isInArray = (value: any, array: any) => {
+        return array.indexOf(value) > -1;
     }
 
-
-    // Show Choose Asset List
-    const showChooseAssetList = () => {
-        setToggleAsset(!toggleAsset)
-    }
-    const selectAsset = (item: any) => {
-        setChooseAsset(item);
-        setToggleAsset(false)
-    }
 
     return (
         <>
             <div className="flex font-OpenSans">
 
-                <div className="w-[84%]">
+                <div className="w-[100%]">
                     <div className="columns-2 flex justify-between items-center">
                         <p className="text-black text-lg mb-0 font-semibold">Class Management</p>
                         <div className="flex justify-end items-right">
                             <button
-                                className="rounded-xl bg-yellow-951 border-[2px] border-yellow-951 text-black flex h-12 justify-center items-center pl-2 pr-2 hover:bg-white hover:text-black hover:border-black transition-all duration-[400ms] mr-3"
+                                className="rounded-xl bg-yellow-951 border-[2px] border-yellow-951 text-black flex h-12 justify-center items-center pl-2 pr-2 hover:bg-white hover:text-black hover:border-black transition-all duration-[400ms]"
                                 onClick={() => setShowModal(true)}
                             >
                                 <Image
                                     src="/img/plus-black.svg"
-                                    alt="Create New Asset"
+                                    alt="Create New Class"
                                     className="mr-2"
                                     height={24}
                                     width={24}
                                 />
-                                Create New Class
+                                Create Sub Class
                             </button>
-
-                            <button
-                                className="rounded-xl bg-yellow-951 border-[2px] border-yellow-951 text-black flex h-12 justify-center items-center pl-2 pr-2 hover:bg-white hover:text-black hover:border-black transition-all duration-[400ms]"
-                            >
-                                <Image
-                                    src="/img/download-black.svg"
-                                    alt="Import Class"
-                                    className="mr-2"
-                                    height={24}
-                                    width={24}
-                                />
-                                Import Class
-                            </button>
-
                         </div>
                     </div>
 
@@ -251,7 +291,8 @@ export default function AssetManagement(localData: any) {
                             <nav className="flex" aria-label="Breadcrumb">
                                 <ol className="inline-flex items-center space-x-1 md:space-x-1">
                                     <li className="inline-flex items-center">
-                                        <a href="#" className="inline-flex items-center text-sm font-medium text-black hover:text-yellow-950">
+                                        <Link href="/dashboard/assetmanagement"
+                                            className="inline-flex items-center text-sm font-medium text-black hover:text-yellow-950">
                                             <Image
                                                 src="/img/home.svg"
                                                 alt="home"
@@ -259,7 +300,19 @@ export default function AssetManagement(localData: any) {
                                                 height={24}
                                                 width={24}
                                             />
-                                        </a>
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <div className="flex items-center">
+                                            <Image
+                                                src="/img/arrow-right.svg"
+                                                alt="arrow-right"
+                                                className="h-6"
+                                                height={24}
+                                                width={24}
+                                            />
+                                            <span className="ml-1 text-sm font-semibold text-black hover:text-yellow-950 md:ml-1">{parentAsset.assets}</span>
+                                        </div>
                                     </li>
                                 </ol>
                             </nav>
@@ -269,50 +322,18 @@ export default function AssetManagement(localData: any) {
                         {success ? <AlertMessage /> : null}
                         {/* --- Alerts End--- */}
 
-                        <div className="w-full mt-10 flex">
-                            <div className={`rounded rounded-xl border border-black bg-white h-32 w-56 p-3 shadow-lg mr-28 hover:bg-yellow-951 transition-all duration-[400ms] ${router.pathname == "/dashboard/assetmanagement" ? 'bg-yellow-951' : 'bg-white'}`}>
-                                <Link href="" className="flex justify-between items-start">
-                                    <div className="text-black w-[75%] text-lg font-semibold pt-10">Class Management</div>
-                                    <div className="w-[25%] text-right">
-                                        <Image
-                                            src="/img/asset-management.svg"
-                                            alt="asset management"
-                                            height={50}
-                                            width={50}
-                                            className="inline-block"
-                                        />
-                                    </div>
-                                </Link>
-                            </div>
-
-                            <div className="rounded rounded-xl border border-black bg-white h-32 w-56 p-3 shadow-lg hover:bg-yellow-951 transition-all duration-[400ms] hover:text-white">
-                                <Link href="" className="flex justify-between items-start" onClick={() => setShowObjectModal(true)}>
-                                    <div className="text-black w-[75%] text-lg font-semibold pt-10">Object Management</div>
-                                    <div className="w-[25%] text-right">
-                                        <Image
-                                            src="/img/object-management.svg"
-                                            alt="object management"
-                                            height={50}
-                                            width={50}
-                                            className="inline-block"
-                                        />
-                                    </div>
-                                </Link>
-                            </div>
-
-                        </div>
-
 
                         {data.length > 0 ?
-                            <div className="h-96 flex justify-start items-start flex-wrap flex-col mt-12">
-                                <p className="text-black text-md mb-6 font-semibold">My Class</p>
+                            <div className="h-96 flex justify-start items-start flex-wrap flex-col mt-4">
+                                <h4 className="font-bold text-md color-black mb-4 font-semibold">Sub Class</h4>
                                 <div className="overflow-hidden border rounded-xl w-full">
                                     <table className={`table-auto min-w-full text-left ${styles.table}`}>
                                         <thead className="bg-black text-white rounded-xl h-10 text-sm font-light">
                                             <tr>
                                                 <th>S.No</th>
-                                                <th>Class Name</th>
+                                                <th>Name</th>
                                                 <th>Tags</th>
+                                                <th>Parent Join Key</th>
                                                 <th>Date Created</th>
                                                 <th>Actions</th>
                                             </tr>
@@ -320,37 +341,15 @@ export default function AssetManagement(localData: any) {
                                         <tbody className="text-sm cursor-pointer">
                                             {data.map((item: any, index: any) => (
                                                 <tr className="hover:bg-yellow-950" key={index}>
-                                                    <td className="w-[6%] min-h-[50px]">{index + 1}</td>
-                                                    <td className="w-[25%] min-h-[50px]">
-                                                        <Link
-                                                            href={{
-                                                                pathname: '/dashboard/subasset',
-                                                                query: {
-                                                                    assets: item.assetName
-                                                                }
-                                                            }}
-                                                            className="w-[25%]"
-                                                        >
-                                                            <span className="font-bold">{item.assetName}</span>
-                                                        </Link>
+                                                    <td className="w-[50px]">{index + 1}</td>
+                                                    <td className="w-[180px]">
+                                                        <span className="font-bold">{item.assetName}</span>
                                                     </td>
-                                                    <td className="w-[25%] min-h-[50px]">
-                                                        <div className="flex w-[300px]">
-                                                            <Image
-                                                                src="/img/export.svg"
-                                                                height={18}
-                                                                width={18}
-                                                                alt="export"
-                                                                className="mr-2"
-                                                            />
-                                                            <span className="whitespace-nowrap overflow-hidden text-ellipsis">
-                                                                {item.assetkey.toString().split(",").join(", ")}
-                                                            </span>
-                                                        </div>
-                                                    </td>
-                                                    <td className="w-[15%] min-h-[50px]"><span>{moment(item.dateCreated).format('DD-MM-YYYY')}</span></td>
-                                                    <td className="w-[15%]">
-                                                        <button className="mr-5">
+                                                    <td><span>{item.tags.toString().split(",").join(", ")}</span></td>
+                                                    <td><span>{item.parentJoinKey.toString().split(",").join(", ")}</span></td>
+                                                    <td><span>{moment(item.dateCreated).format('DD-MM-YYYY')}</span></td>
+                                                    <td>
+                                                        <button className="mr-4">
                                                             <Image
                                                                 src="/img/edit.svg"
                                                                 alt="Edit"
@@ -358,7 +357,7 @@ export default function AssetManagement(localData: any) {
                                                                 width={18}
                                                             />
                                                         </button>
-                                                        <button onClick={() => deleteAsset(item.assetID)}>
+                                                        <button>
                                                             <Image
                                                                 src="/img/trash.svg"
                                                                 alt="Trash"
@@ -375,104 +374,16 @@ export default function AssetManagement(localData: any) {
                             </div>
                             :
                             <div className="h-72 flex justify-center items-center flex-wrap flex-col mt-8">
-                                <NoDataFound createText="Create class" />
+                                <NoDataFound createText="Create Sub Class" />
                             </div>
                         }
 
                     </div>
                 </div>
 
-                <div className="w-[16%] pl-5">
+                <div className="w-[16%] pl-5 hidden">
                     <Template />
                 </div>
-
-
-                {/* ----- OBJECT MODAL STARTS ----- */}
-                {showObjectModal ? (
-                    <>
-                        <div
-                            className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
-                        >
-                            <div className="relative my-6 w-[720px]">
-                                <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
-                                    {/*header*/}
-                                    <div className="flex items-start justify-between p-5">
-                                        <h3 className="text-lg font-medium">
-                                            Choose your class and continue
-                                        </h3>
-                                        <button
-                                            className="p-1 ml-auto bg-transparent border-0 text-black float-right leading-none font-semibold outline-none focus:outline-none"
-                                            onClick={() => setShowObjectModal(false)}
-                                        >
-                                            <Image
-                                                src="/img/close.svg"
-                                                alt="close"
-                                                className="h-6"
-                                                height={24}
-                                                width={24}
-                                            />
-                                        </button>
-                                    </div>
-                                    {/*body*/}
-                                    <div className="relative p-6 flex-auto">
-                                        <div className="flex justify-start items-center flex-wrap flex-col">
-                                            <div className="w-[400px]">
-                                                <div
-                                                    className="border rounded-xl border-gray-500 h-[55px] w-[400px] pl-2 pr-5 relative flex items-center justify-start"
-                                                    onClick={showChooseAssetList}
-                                                >
-                                                    <label className="absolute text-sm top-[-10px] left-2 pl-2 pr-2 bg-white">Class</label>
-                                                    <Image
-                                                        src="/img/arrow-down-black.svg"
-                                                        alt="arrow-down"
-                                                        height={20}
-                                                        width={20}
-                                                        className="absolute right-3 top-4"
-                                                    />
-                                                    <span className="text-lg text-black pl-2">{chooseAsset}</span>
-                                                </div>
-                                                {toggleAsset ?
-                                                    <div className={`h-52 border rounded-xl border-gray-500 h-[155px] w-[400px]  relative flex items-start justify-start mt-1 overflow-hidden overflow-y-scroll ${styles.scroll}`}>
-                                                        {data && data.length > 0 ?
-                                                            <ul className="p-0 m-0 w-full">
-                                                                {
-                                                                    data.map((item: any, index: any) => (
-                                                                        <li
-                                                                            className="px-5 py-4 bg-white cursor-pointer hover:bg-yellow-951 w-full font-normal"
-                                                                            onClick={() => selectAsset(item.assetName)}
-                                                                            key={index}
-                                                                        >
-                                                                            <span>{item.assetName}</span>
-                                                                        </li>
-                                                                    ))
-                                                                }
-                                                            </ul>
-                                                            : null}
-                                                    </div>
-                                                    : null}
-                                            </div>
-                                            <div className="w-[400px] mt-10 flex justify-end items-end">
-                                                <Link
-                                                    href={{
-                                                        pathname: '/dashboard/objects',
-                                                        query: {
-                                                            assets: chooseAsset
-                                                        }
-                                                    }}
-                                                    className="rounded-xl bg-black border-[2px] border-black text-white flex h-12 justify-center items-center pl-2 pr-2 hover:bg-yellow-951 hover:text-black hover:border-yellow-951 w-[120px] transition-all duration-[400ms]"
-                                                >
-                                                    <span className="font-normal">Continue</span>
-                                                </Link>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="opacity-75 fixed inset-0 z-40 bg-black"></div>
-                    </>
-                ) : null}
-                {/* ----- MODAL ENDS ----- */}
 
 
                 {/* --- Modal Start --- */}
@@ -487,11 +398,11 @@ export default function AssetManagement(localData: any) {
                                     {/*header*/}
                                     <div className="flex items-start justify-between p-5">
                                         <h3 className="text-lg font-medium">
-                                            Add New Class
+                                            Add Sub Class
                                         </h3>
                                         <button
                                             className="p-1 ml-auto bg-transparent border-0 text-black float-right leading-none font-semibold outline-none focus:outline-none"
-                                            onClick={() => { setShowModal(false); setAllTags([]) }}
+                                            onClick={() => {setShowModal(false); setAllTags([])}}
                                         >
                                             <Image
                                                 src="/img/close.svg"
@@ -503,17 +414,16 @@ export default function AssetManagement(localData: any) {
                                         </button>
                                     </div>
                                     {/*body*/}
-                                    <div className="relative p-6 flex-auto">
+                                    <div className="relative p-6 flex-auto h-[500px] overflow-y-auto">
                                         <form
                                             className="flex justify-center items-center flex-wrap flex-col w-full"
                                             method='post'
                                             onSubmit={handleSubmit}
                                         >
                                             <div className="mb-5 relative flex justify-center items-center flex-wrap flex-col">
-
-                                                <div className="mb-10 relative column-2 flex justify-start items-center">
+                                                <div className="mb-7 relative column-2 flex justify-center items-center">
                                                     <div className="w-[160px]">
-                                                        <label className="font-semibold text-black">Class Name <span className="text-red-500">*</span></label>
+                                                        <label className="font-semibold text-black">Name <span className="text-red-500">*</span></label>
                                                     </div>
                                                     <div className="w-3/4">
                                                         <input
@@ -522,9 +432,8 @@ export default function AssetManagement(localData: any) {
                                                             placeholder="Enter asset ID"
                                                             className="rounded-lg border border-gray-500 h-[44px] pl-5 pr-5 w-[320px]"
                                                             value={parseInt(getLastID) + 1}
-                                                        />
-                                                       
-                                                        <div className={`mb-5 w-[320px] ${styles.form__wrap}`}>
+                                                        />                                                        
+                                                        <div className={`w-[320px] ${styles.form__wrap}`}>
                                                             <div className={`relative ${styles.form__group} font-OpenSans`}>
                                                                 <input
                                                                     type="text"
@@ -538,11 +447,11 @@ export default function AssetManagement(localData: any) {
                                                                 <label htmlFor="assetname" className={`${styles.form__label}`}>Enter class name</label>
                                                             </div>
                                                         </div>
-
                                                     </div>
                                                 </div>
 
-                                                <div className="mb-10 relative column-2 flex justify-start items-center">
+
+                                                <div className="mb-8 relative column-2 flex justify-start items-center">
                                                     <div className="w-[160px]">
                                                         <label className="font-semibold text-black">Class Tags <span className="text-red-500">*</span></label>
                                                     </div>
@@ -575,7 +484,7 @@ export default function AssetManagement(localData: any) {
                                                                     <span className="flex justify-center items-center mb-2">
                                                                         <input
                                                                             type="text"
-                                                                            placeholder="Tag Name"
+                                                                            placeholder="Tag"
                                                                             className="border border-gray-951 rounded py-[3px] px-[3px] w-[100px] mr-2 h-8 text-sm"
                                                                             value={newTag}
                                                                             onChange={(e) => setNewTag(e.target.value)}
@@ -615,8 +524,9 @@ export default function AssetManagement(localData: any) {
                                                                 : null}
                                                         </div>
 
+
                                                         {toggleDT ?
-                                                            <div className="rounded rounded-lg border border-gray-500 min-h-[150px] mt-[1px] pl-2 pr-2 w-[320px] pt-2 pb-2">
+                                                            <div className="rounded rounded-lg border border-black min-h-[150px] mt-[1px] pl-2 pr-2 w-[320px] pt-2 pb-2">
                                                                 <div className="text-sm font-bold color-black mb-2 flex items-center justify-between">
                                                                     <span>Select Data Type</span>
                                                                     <span className="bg-black h-8 w-8 p-1 inline-flex rounded-full justify-center items-center">
@@ -669,7 +579,7 @@ export default function AssetManagement(localData: any) {
                                                                         />
                                                                         <span></span>
                                                                     </div>
-                                                                    <label className="text-black font-semibold">char <span className="text-gray-500 font-normal text-[14px]">(myLetter=&apos;D&apos;)</span></label>
+                                                                    <label className="text-black font-semibold">char <span className="text-gray-500 font-normal text-[14px]">(myLetter='D')</span></label>
                                                                 </div>
                                                                 <div className="flex pt-1 pb-1">
                                                                     <div className={`${styles.customRadio} mr-2`}>
@@ -697,7 +607,7 @@ export default function AssetManagement(localData: any) {
                                                                         />
                                                                         <span></span>
                                                                     </div>
-                                                                    <label className="text-black font-semibold">string <span className="text-gray-500 font-normal text-[14px]">(myText=&quot;Hello&quot;)</span></label>
+                                                                    <label className="text-black font-semibold">string <span className="text-gray-500 font-normal text-[14px]">(myText="Hello")</span></label>
                                                                 </div>
                                                                 <div className="flex pt-1 pb-1">
                                                                     <div className={`${styles.customRadio} mr-2`}>
@@ -717,6 +627,63 @@ export default function AssetManagement(localData: any) {
                                                             </div>
                                                             : null
                                                         }
+
+                                                    </div>
+                                                </div>
+
+
+                                                <div className="mb-10 relative column-2 flex justify-start items-center">
+                                                    <div className="w-[160px]">
+                                                        <label className="font-semibold text-black">Parent Join Key <span className="text-red-500">*</span></label>
+                                                    </div>
+                                                    <div className="w-3/4">
+                                                        <div className="rounded-lg border border-black min-h-[64px] pl-2 pr-2 w-[320px] pt-2 pb-2 flex flex-wrap justify-start items-center">
+                                                            {
+                                                                parentJoinKey && parentJoinKey.length > 0 ?
+                                                                    parentJoinKey.map((item: any, index: any) => (
+
+                                                                        <span
+                                                                            key={index}
+                                                                            className="rounded-lg inline-flex justify-center items-center h-8 pl-2 pr-2 bg-black text-white text-[14px] mr-2 mb-2">
+                                                                            {item}
+
+                                                                            {
+                                                                                isInArray(item, selParentTags) ?
+
+                                                                                    <div
+                                                                                        className="h-[18px] w-[18px] inline-flex justify-center items-center ml-3 cursor-pointer"
+                                                                                        onClick={() => unSelectParentKey(item)}
+                                                                                    >
+                                                                                        <Image
+                                                                                            src="/img/box_check_icon_white.svg"
+                                                                                            alt="close"
+                                                                                            height={14}
+                                                                                            width={14}
+                                                                                        />
+                                                                                    </div>
+
+                                                                                    :
+
+                                                                                    <div
+                                                                                        className="h-[18px] w-[18px] inline-flex justify-center items-center ml-3 cursor-pointer"
+                                                                                        onClick={() => selectedParentKey(item)}
+                                                                                    >
+                                                                                        <Image
+                                                                                            src="/img/blank_check_box_icon_white.svg"
+                                                                                            alt="close"
+                                                                                            height={14}
+                                                                                            width={14}
+                                                                                        />
+                                                                                    </div>
+                                                                            }
+
+                                                                        </span>
+                                                                    ))
+                                                                    :
+                                                                    null
+                                                            }
+                                                            <input type="hidden" value={parentJoinKey} name="parentJoinKey" id="parentJoinKey" />
+                                                        </div>
                                                     </div>
                                                 </div>
 
@@ -729,7 +696,7 @@ export default function AssetManagement(localData: any) {
                                                     </button>
                                                     <button
                                                         className="border border-black rounded-lg bg-white font-semibold text-black font-lg w-24 h-12 hover:text-white hover:bg-yellow-951 hover:border-yellow-951 ease-in-out duration-300"
-                                                        onClick={() => { setShowModal(false); setAllTags([]) }}
+                                                        onClick={() => {setShowModal(false); setAllTags([])}}
                                                     >
                                                         Cancel
                                                     </button>
@@ -753,7 +720,7 @@ export default function AssetManagement(localData: any) {
     )
 }
 
-AssetManagement.getLayout = function getLayout(page: any) {
+SubAsset.getLayout = function getLayout(page: any) {
     return (
         <Layout>{page}</Layout>
     )

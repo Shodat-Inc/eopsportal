@@ -1,12 +1,12 @@
 import React, { useState, useRef, useEffect } from "react";
-import Layout from "../../components/Layout";
-import NoDataFound from "../../common/nodatafound";
-import styles from '../../styles/Common.module.css';
-import { getChildObjectsData } from "../../lib/getchildobjects";
+import Layout from "../../../components/Layout";
+import NoDataFound from "../../../common/nodatafound";
+import styles from '../../../styles/Common.module.css';
+import { getChildObjectsData } from "../../../lib/getchildobjects";
 import { useRouter } from 'next/router'
 import Link from "next/link";
 import Image from "next/image";
-import Template from "./template";
+import Template from "../template";
 import axios from 'axios';
 import moment from "moment";
 import AlertMessage from "@/common/alertMessage";
@@ -222,7 +222,7 @@ export default function ChildObject(localData: any) {
                                             />
                                             <Link
                                                 href={{
-                                                    pathname: '/dashboard/objects',
+                                                    pathname: '/dashboard/assetmanagement/objects',
                                                     query: {
                                                         assets: parentAsset.class
                                                     }
@@ -244,7 +244,7 @@ export default function ChildObject(localData: any) {
                                             />
                                             <Link
                                                 href={{
-                                                    pathname: '/dashboard/subobject',
+                                                    pathname: '/dashboard/assetmanagement/subobject',
                                                     query: {
                                                         object: parentAsset.object,
                                                         parentObject: parentAsset.class
@@ -392,7 +392,7 @@ export default function ChildObject(localData: any) {
                                                                             <Link
                                                                                 key={i}
                                                                                 href={{
-                                                                                    pathname: '/dashboard/subchildobject',
+                                                                                    pathname: '/dashboard/assetmanagement/subchildobject',
                                                                                     query: {
                                                                                         class: parentAsset.class,
                                                                                         object: parentAsset.object,

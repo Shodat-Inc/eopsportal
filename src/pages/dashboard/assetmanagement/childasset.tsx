@@ -1,12 +1,12 @@
 import React, { useState, useRef, useEffect } from "react";
-import Layout from "../../components/Layout";
-import NoDataFound from "../../common/nodatafound";
-import styles from '../../styles/Common.module.css';
-import { getChildAssetsData } from "../../lib/getchildassets";
+import Layout from "../../../components/Layout";
+import NoDataFound from "../../../common/nodatafound";
+import styles from '../../../styles/Common.module.css';
+import { getChildAssetsData } from "../../../lib/getchildassets";
 import { useRouter } from 'next/router'
 import Link from "next/link";
 import Image from "next/image";
-import Template from "./template";
+import Template from "../template";
 import axios from 'axios';
 import AlertMessage from "@/common/alertMessage";
 
@@ -146,7 +146,7 @@ export default function ChildAsset(localData: any) {
                                         <div className="flex items-center">
                                             <Link
                                                 href={{
-                                                    pathname: '/dashboard/subasset',
+                                                    pathname: '/dashboard/assetmanagement/subasset',
                                                     query: {
                                                         assets: parentAsset.asset
                                                     }
@@ -231,7 +231,6 @@ export default function ChildAsset(localData: any) {
                                         <thead className="bg-gray-950 rounded-lg h-10 text-sm font-light">
                                             <tr>
                                                 <th>S.No</th>
-                                                {/* <th>Asset ID</th> */}
                                                 <th>Child Class Name</th>
                                                 <th>Tags/Key</th>
                                                 <th>Geoscope</th>
@@ -242,22 +241,10 @@ export default function ChildAsset(localData: any) {
                                             {data.map((item: any, index: any) => (
                                                 <tr className="hover:bg-yellow-950" key={index}>
                                                     <td className="w-[50px]">{index + 1}</td>
-                                                    {/* <td className="w-[150px]">
-                                                        <Link
-                                                            href={{
-                                                                pathname: '/dashboard/subasset',
-                                                                query: {
-                                                                    subassets: item.assetName
-                                                                }
-                                                            }}
-                                                        >
-                                                            {item.assetID}
-                                                        </Link>
-                                                    </td> */}
                                                     <td className="w-[180px]">
                                                         <Link
                                                             href={{
-                                                                pathname: '/dashboard/childasset',
+                                                                pathname: '/dashboard/assetmanagement/childasset',
                                                                 query: {
                                                                     asset: parentAsset.assets,
                                                                     subassets: item.assetName

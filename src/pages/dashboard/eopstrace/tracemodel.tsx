@@ -121,7 +121,7 @@ export default function TraceModel(localData: any) {
                                 <li>
                                     <Link
                                         href={{
-                                            pathname: "/dashboard/subchildobject",
+                                            pathname: "/dashboard/assetmanagement/subchildobject",
                                             query: {
                                                 class: parentAsset.objectID,
                                                 object: parentAsset.id,

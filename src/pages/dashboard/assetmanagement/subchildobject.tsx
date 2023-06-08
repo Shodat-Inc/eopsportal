@@ -1,14 +1,14 @@
 import React, { useState, useRef, useEffect } from "react";
-import Layout from "../../components/Layout";
-import NoDataFound from "../../common/nodatafound";
-import styles from '../../styles/Common.module.css';
-import { getChildAssetsData } from "../../lib/getchildassets";
+import Layout from "../../../components/Layout";
+import NoDataFound from "../../../common/nodatafound";
+import styles from '../../../styles/Common.module.css';
+import { getChildAssetsData } from "../../../lib/getchildassets";
 import { useRouter } from 'next/router'
 import Link from "next/link";
 import Image from "next/image";
-import Template from "./template";
+import Template from "../template";
 import axios from 'axios';
-import { getObjectsData } from "../../lib/getobjects";
+import { getObjectsData } from "../../../lib/getobjects";
 import AlertMessage from "@/common/alertMessage";
 
 export async function getServerSideProps() {
@@ -33,7 +33,7 @@ interface Item {
     Cylinders: number;
 }
 
-export default function SubObject(localData: any) {
+export default function SubChildObject(localData: any) {
     const router = useRouter();
     const parentAsset = router.query;
     const [success, setSuccess] = useState(false);
@@ -64,21 +64,17 @@ export default function SubObject(localData: any) {
     }, [parentAsset])
 
 
-    // Fetch the data for Sub Object with Conditions
-    const findKeys = (obj: any, val: any) =>
-        Object.keys(obj).filter(key => obj[key] === val);
-
     const fetchData = () => {
-        axios.get("/api/getObjects").then((response) => {
+        axios.get("/api/getChildObject").then((response) => {
             if (response.data) {
 
                 const filtered = response.data.filter((item: any) => {
-                    if (parentAsset.parentObject === "Manufacturing Plants") {
-                        return item.subObjects.PlantID === parentAsset.object
-                    } else if (parentAsset.parentObject === "Vehicles") {
-                        return item.subObjects.VIN === parentAsset.object
+                    if (parentAsset.class === "Manufacturing Plants") {
+                        return item.tags.ID === parentAsset.id
+                    } else if (parentAsset.class === "Vehicles") {
+                        return item.tags.SerialID === parentAsset.id || item.tags.SerialNo === parentAsset.id
                     } else {
-                        return item.subObjects.VIN === parentAsset.object
+                        return item.tags.VIN === parentAsset.id
                     }
                 });
                 if (filtered && filtered.length > 0) {
@@ -91,6 +87,7 @@ export default function SubObject(localData: any) {
         fetchData();
         if (fetchData.length) return;
     }, [localData.localData])
+
 
     return (
         <>
@@ -115,6 +112,11 @@ export default function SubObject(localData: any) {
                                                 height={24}
                                                 width={24}
                                             />
+
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <div className="flex items-center">
                                             <Image
                                                 src="/img/arrow-right.svg"
                                                 alt="arrow-right"
@@ -122,20 +124,16 @@ export default function SubObject(localData: any) {
                                                 height={24}
                                                 width={24}
                                             />
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <div className="flex items-center">
                                             <Link
                                                 href={{
-                                                    pathname: '/dashboard/objects',
+                                                    pathname: '/dashboard/assetmanagement/objects',
                                                     query: {
-                                                        assets: parentAsset.parentObject
+                                                        assets: parentAsset.class
                                                     }
                                                 }}
                                                 className="inline-flex items-center text-sm font-medium text-black hover:text-yellow-950"
                                             >
-                                                <span className="ml-1 text-sm font-medium text-black hover:text-yellow-950 md:ml-1">{parentAsset.parentObject}</span>
+                                                <span className="ml-1 text-sm font-medium text-black hover:text-yellow-950 md:ml-1">{parentAsset.class}</span>
                                             </Link>
                                         </div>
                                     </li>
@@ -148,10 +146,57 @@ export default function SubObject(localData: any) {
                                                 height={24}
                                                 width={24}
                                             />
-                                            <span className="ml-1 text-sm font-medium text-black hover:text-yellow-950 md:ml-1">
-                                                <span>{parentAsset.parentObject === 'Manufacturing Plants' ? "PlantID" : "VIN"}</span>
+                                            <Link
+                                                href={{
+                                                    pathname: '/dashboard/assetmanagement/subobject',
+                                                    query: {
+                                                        object: parentAsset.object,
+                                                        parentObject: parentAsset.class
+                                                    }
+                                                }}
+                                                className="inline-flex items-center text-sm font-medium text-black hover:text-yellow-950"
+                                            >
+                                                <span>{parentAsset.class === 'Manufacturing Plants' ? "PlantID" : "VIN"}</span>
                                                 <span className="ml-2">{parentAsset.object}</span>
-                                            </span>
+                                            </Link>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div className="flex items-center">
+                                            <Image
+                                                src="/img/arrow-right.svg"
+                                                alt="arrow-right"
+                                                className="h-6"
+                                                height={24}
+                                                width={24}
+                                            />
+                                            <Link
+                                                href={{
+                                                    pathname: '/dashboard/assetmanagement/childobject',
+                                                    query: {
+                                                        class: parentAsset.class,
+                                                        object: parentAsset.object,
+                                                        subObject: parentAsset.subObject
+                                                    }
+                                                }}
+                                                className="inline-flex items-center text-sm font-medium text-black hover:text-yellow-950"
+                                            >
+                                                
+                                                <span className="ml-2">{parentAsset.subObject}</span>
+                                            </Link>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div className="flex items-center text-black hover:text-yellow-950">
+                                            <Image
+                                                src="/img/arrow-right.svg"
+                                                alt="arrow-right"
+                                                className="h-6"
+                                                height={24}
+                                                width={24}
+                                            />
+                                            <span className="ml-1 text-sm font-medium md:ml-1">{parentAsset.class === 'Manufacturing Plants' ? "ID" : "SerialNo"}</span>
+                                            <span className="ml-1 text-sm font-medium  md:ml-1">{parentAsset.id}</span>
                                         </div>
                                     </li>
                                 </ol>
@@ -166,7 +211,7 @@ export default function SubObject(localData: any) {
                                     <thead className="bg-black text-white rounded-xl h-10 text-sm font-light">
                                         {
                                             subObj && Object.keys(subObj).length != 0 ?
-                                                Object.keys(subObj?.subObjects).map((item: any, i: any) => (
+                                                Object.keys(subObj?.tags).map((item: any, i: any) => (
                                                     <th className="capitalize" key={i}>
                                                         {
                                                             item.split(/(?=[A-Z])/).join(" ")
@@ -180,7 +225,7 @@ export default function SubObject(localData: any) {
                                         <tr className={`text-sm`}>
                                             {
                                                 subObj && Object.keys(subObj).length != 0 ?
-                                                    Object.values(subObj?.subObjects).map((item: any, i: any) => (
+                                                    Object.values(subObj?.tags).map((item: any, i: any) => (
 
                                                         <td key={i}>
                                                             {item}
@@ -202,7 +247,7 @@ export default function SubObject(localData: any) {
                                         subClassData.map((item: any, index: any) => (
                                             <Link
                                                 href={{
-                                                    pathname: '/dashboard/childobject',
+                                                    pathname: '/dashboard/assetmanagement/childobject',
                                                     query: {
                                                         class: `${parentAsset.parentObject}`,
                                                         object: `${parentAsset.object}`,
@@ -236,8 +281,10 @@ export default function SubObject(localData: any) {
                                     href={{
                                         pathname: '/dashboard/eopswatch/eopswatchmodel',
                                         query: {
-                                            objectID: parentAsset.parentObject,
-                                            key: parentAsset.object
+                                            objectID: parentAsset.class,
+                                            key: parentAsset.id,
+                                            id: parentAsset.object,
+                                            subObject: parentAsset.subObject
                                         }
                                     }}
                                     className="rounded-lg h-20 w-auto bg-red-951 flex justify-center items-center px-2 py-2 mr-4 flex-wrap flex-col"
@@ -254,10 +301,12 @@ export default function SubObject(localData: any) {
 
                                 <Link
                                     href={{
-                                        pathname: '/dashboard/eopswatch/eopswatchmodel',
+                                        pathname: '/dashboard/eopstrace/tracemodel',
                                         query: {
-                                            objectID: parentAsset.parentObject,
-                                            key: parentAsset.object
+                                            objectID: parentAsset.class,
+                                            key: parentAsset.id,
+                                            id: parentAsset.object,
+                                            subObject: parentAsset.subObject
                                         }
                                     }}
                                     className="rounded-lg h-20 w-auto bg-green-952 flex justify-center items-center px-2 py-2 mr-4 flex-wrap flex-col"
@@ -312,7 +361,7 @@ export default function SubObject(localData: any) {
     )
 }
 
-SubObject.getLayout = function getLayout(page: any) {
+SubChildObject.getLayout = function getLayout(page: any) {
     return (
         <Layout>{page}</Layout>
     )

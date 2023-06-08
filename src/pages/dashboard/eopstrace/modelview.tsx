@@ -73,7 +73,7 @@ export default function ModelView() {
                                 <li>
                                     <Link
                                         href={{
-                                            pathname: "/dashboard/subchildobject",
+                                            pathname: "/dashboard/assetmanagement/subchildobject",
                                             query: {
                                                 class: parentAsset.objectID,
                                                 object: parentAsset.id,
