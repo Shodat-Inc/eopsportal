@@ -27,8 +27,8 @@ export default function Home() {
               <p className="font-bold text-2xl text-black mb-4">Join Us!</p>
               <p className="font-normal text-xl text-gray-500 mb-10">To begin this journey, tell us what type of account you&apos;d be opening?</p>
 
-              <Link href="authentication/register" className="rounded-lg border border-black px-4 py-6 bg-gray-100 flex justify-center items-center relative">
-                <span className="rounded-md bg-gray-400 text-black h-7 w-20 flex font-medium justify-center items-center absolute top-2 right-10">Free</span>
+              <Link href="authentication/register" className="rounded-lg border border-black px-4 py-6 bg-gray-100 flex justify-center items-center relative hover:border-black hover:bg-[#f1f1f1] hover:shadow-lg transition-all">
+                <span className="rounded-md bg-gray-951 text-black h-7 w-20 flex font-medium justify-center items-center absolute top-2 right-10">Free</span>
                 <div className="mr-4">
                   <Image
                     src="/img/business.svg"

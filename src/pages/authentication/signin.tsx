@@ -153,7 +153,7 @@ export default function SignIn() {
                         </div>
 
                         <div className="text-left w-[470px]">
-                            <p className="font-bold text-3xl text-black mb-4 capitalize">Hello! Welcome Back.</p>
+                            <p className="font-bold text-3xl text-black mb-4 capitalize">Hello! <span className='bg-yellow-951 px-1 py-1 rounded'>Welcome Back.</span></p>
                             <p className="font-normal text-2xl text-gray-500">Log in with your credenticals that you entered during your registration.</p>
                             <div className="mb-4 mt-5 border border-gray-100 w-full h-[1px]"></div>
 
@@ -251,6 +251,7 @@ export default function SignIn() {
                                         </div>
 
                                     </div>
+
 
                                     <div className="relative">
                                         <button

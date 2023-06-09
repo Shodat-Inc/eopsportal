@@ -288,14 +288,12 @@ export default function Complete(props: any) {
                     </div>
 
                     <div className="mb-5 relative flex flex-wrap">
-                        <div className='flex'>
-                            <input
-                                className="checked:bg-black indeterminate:bg-gray-300"
-                                type="checkbox"
-                                name="agreement"
-                                onChange={handleChange}
-                            />
-                            <label className="ml-5 text-gray-951 block">I agree to terms & conditions</label>
+                        <div className='flex justify-start items-center'>
+                            <div className={`${styles.customCheck}`}>
+                                <input type='checkbox' name="agreement" onChange={handleChange}/>
+                                <span></span>
+                            </div>
+                            <label className="ml-2 text-black block">I agree to terms & conditions</label>
                         </div>
                         <span className='text-red-952 text-sm flex items-center justify-start'>
                             {!agreement ?

@@ -149,11 +149,18 @@ export default function Register() {
                         </div>
 
                         <div className="text-left w-[470px]">
+
+                            {/* <div className={`${styles.wrapper} ${styles.six}`}>
+                                <div>
+                                    <h3 className={`${styles.flicker}`}>FLICKER</h3>
+                                </div>
+                            </div> */}
+
                             <p className="font-bold text-2xl text-black mb-3 capitalize">
                                 {stepTwo ?
-                                    <span>Complete Your Profile!</span>
+                                    <span>Complete Your <span className='bg-yellow-951 pl-1 pr-1 pt-1 pb-1 rounded'>Profile!</span></span>
                                     :
-                                    <span>Register a Business Account!</span>}
+                                    <span><span className='bg-yellow-951 pl-1 pr-1 pt-1 pb-1 rounded'>Register</span> a Business Account!</span>}
                             </p>
                             <p className="font-normal text-xl text-gray-500">For the purpose of industry regulation, your details are required.</p>
                             <div className="mb-4 mt-5 border border-gray-100 w-full h-[1px]"></div>
