@@ -4,6 +4,9 @@ import Image from "next/image";
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import styles from '../../styles/Common.module.css';
+import AlertMessage from '@/common/alertMessage';
+import FabricInfo from './fabricInfo';
+import Head from 'next/head'
 
 export default function SignIn() {
     const { push } = useRouter();
@@ -133,33 +136,13 @@ export default function SignIn() {
 
     return (
         <>
+            <Head>
+                <title>eOPS Fabric - Login</title>
+                <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+            </Head>
             <div className="column-2 flex font-OpenSans">
-                <div className="w-[50%] bg-[url('/img/architecture2.jpg')] bg-cover bg-no-repeat bg-center h-screen">
-                    <div className="w-full h-full backdrop-brightness-25 px-16 py-16">
-                        <div className="flex">
-                            <Image
-                                src="/img/logo-white.svg"
-                                alt="logo"
-                                className="fill-white"
-                                width={127}
-                                height={27}
-                            />
-                        </div>
-                        <div className="mt-24">
-                            <p className="mb-3">
-                                <Image
-                                    src="/img/quote_alt_left_icon.svg"
-                                    alt="quote"
-                                    className="h-8"
-                                    width={32}
-                                    height={32}
-                                />
-                            </p>
-                            <p className="text-xl text-white font-light leading-10">
-                                The eOps Fabric - Edge enabled data mesh with management, processing, & security features. Enabling agile development & secured dilivery of analytics applications and ML models to meet high paced business demands. The eOps  Chord-Blockchain framework ensuring highly compliant and audited edge operations.
-                            </p>
-                        </div>
-                    </div>
+                <div className="w-[50%]">
+                    <FabricInfo />
                 </div>
 
                 <div className="w-[50%] relative">
@@ -176,31 +159,11 @@ export default function SignIn() {
 
                             {/* === Login Message Alert === */}
                             {responseError &&
-                                <div className="mb-2 bg-red-100 border border-[#F5C6CB] text-[#721C24] px-4 py-3 rounded rounded-xl relative flex items-center justify-start text-m" role="alert">
-                                    <Image
-                                        src="/img/AlertError.svg"
-                                        alt="Alert Success"
-                                        height={24}
-                                        width={24}
-                                        className='mr-2'
-                                    />
-                                    <strong className="font-semibold">Login Failed!</strong>
-                                    <span className="block sm:inline ml-2">Please try with different credentials!</span>
-                                </div>
+                                <AlertMessage alertType="error" title="Login Failed!" message="Please try with different credentials!" />
                             }
 
                             {success &&
-                                <div className="mb-2 bg-[#D4EDDA] border border-[#D4EDDA] text-[#155724] textt-sm px-4 py-3 rounded rounded-xl relative flex items-center justify-start" role="alert">
-                                    <Image
-                                        src="/img/AlertSuccess.svg"
-                                        alt="Alert Success"
-                                        height={24}
-                                        width={24}
-                                        className='mr-2'
-                                    />
-                                    <strong className="font-semibold">Login Success!</strong>
-                                    <span className="block sm:inline ml-2">Redirecting to portal ...</span>
-                                </div>
+                                <AlertMessage alertType="success" title="Login Success!" message="Redirecting to portal ..." />
                             }
                             {/* === Login Message Alert === */}
 

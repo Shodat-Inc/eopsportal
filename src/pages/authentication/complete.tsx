@@ -4,6 +4,8 @@ import Image from "next/image";
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import styles from '../../styles/Common.module.css';
+import FabricInfo from './fabricInfo';
+import Head from 'next/head'
 
 export default function Complete(props: any) {
     const { push } = useRouter();
@@ -115,8 +117,6 @@ export default function Complete(props: any) {
 
     const submitForm = async (evt: any) => {
         evt.preventDefault()
-        let targetName = evt.target.name;
-        let targetValue = evt.target.value;
         if (handleValidation()) {
             // Storing data to Users JSON            
             let currentDate = new Date().toISOString().split('T')[0];
