@@ -155,7 +155,7 @@ export default function SignIn() {
                                     height={32}
                                 />
                             </p>
-                            <p className="text-2xl text-white font-light leading-10">
+                            <p className="text-xl text-white font-light leading-10">
                                 The eOps Fabric - Edge enabled data mesh with management, processing, & security features. Enabling agile development & secured dilivery of analytics applications and ML models to meet high paced business demands. The eOps  Chord-Blockchain framework ensuring highly compliant and audited edge operations.
                             </p>
                         </div>
@@ -176,15 +176,29 @@ export default function SignIn() {
 
                             {/* === Login Message Alert === */}
                             {responseError &&
-                                <div className="mb-2 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
-                                    <strong className="font-bold">Login Failed!</strong>
+                                <div className="mb-2 bg-red-100 border border-[#F5C6CB] text-[#721C24] px-4 py-3 rounded rounded-xl relative flex items-center justify-start text-m" role="alert">
+                                    <Image
+                                        src="/img/AlertError.svg"
+                                        alt="Alert Success"
+                                        height={24}
+                                        width={24}
+                                        className='mr-2'
+                                    />
+                                    <strong className="font-semibold">Login Failed!</strong>
                                     <span className="block sm:inline ml-2">Please try with different credentials!</span>
                                 </div>
                             }
 
                             {success &&
-                                <div className="mb-2 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
-                                    <strong className="font-bold">Login Success!</strong>
+                                <div className="mb-2 bg-[#D4EDDA] border border-[#D4EDDA] text-[#155724] textt-sm px-4 py-3 rounded rounded-xl relative flex items-center justify-start" role="alert">
+                                    <Image
+                                        src="/img/AlertSuccess.svg"
+                                        alt="Alert Success"
+                                        height={24}
+                                        width={24}
+                                        className='mr-2'
+                                    />
+                                    <strong className="font-semibold">Login Success!</strong>
                                     <span className="block sm:inline ml-2">Redirecting to portal ...</span>
                                 </div>
                             }
@@ -199,14 +213,28 @@ export default function SignIn() {
                                                 type="text"
                                                 id="username"
                                                 name="username"
-                                                className={`${styles.form__field}`}
+                                                className={`${styles.form__field} border border-black ${errors.username ? 'border-red-952' : 'border-black'}`}
                                                 placeholder="Your email address"
                                                 value={formData.username}
                                                 onChange={(e) => handleInput(e)}
                                             />
                                             <label htmlFor="username" className={`${styles.form__label}`}>Your email address</label>
                                         </div>
-                                        <span className='text-red-500 text-sm'>{errors.username}</span>
+                                        <span className='text-red-952 text-sm flex items-center justify-start'>
+                                            {
+                                                errors.username &&
+                                                <>
+                                                    <Image
+                                                        height={14}
+                                                        width={14}
+                                                        alt="error"
+                                                        src="/img/alert-triangle.svg"
+                                                        className='mr-2'
+                                                    />
+                                                    {errors.username}
+                                                </>
+                                            }
+                                        </span>
                                     </div>
 
                                     <div className={`mb-5 ${styles.form__wrap}`}>
@@ -215,7 +243,7 @@ export default function SignIn() {
                                                 type={showPassword.password ? "text" : "password"}
                                                 id="password"
                                                 name="password"
-                                                className={`${styles.form__field}`}
+                                                className={`${styles.form__field} border border-black ${errors.password ? 'border-red-952' : 'border-black'}`}
                                                 placeholder="Enter password"
                                                 value={formData.password}
                                                 onChange={(e) => handleInput(e)}
@@ -241,7 +269,21 @@ export default function SignIn() {
                                             </span>
                                         </div>
                                         <div className="column-2 flex items-center justify-between">
-                                            <span className='text-red-500 text-sm'>{errors.password}</span>
+                                            <span className='text-red-952 text-sm flex items-center justify-start'>
+                                                {
+                                                    errors.password &&
+                                                    <>
+                                                        <Image
+                                                            height={14}
+                                                            width={14}
+                                                            alt="error"
+                                                            src="/img/alert-triangle.svg"
+                                                            className='mr-2'
+                                                        />
+                                                        {errors.password}
+                                                    </>
+                                                }
+                                            </span>
                                             <Link className="text-black text-sm font-medium mb-0 block" href="/authentication/forgotpassword">Forgot Password?</Link>
                                         </div>
 

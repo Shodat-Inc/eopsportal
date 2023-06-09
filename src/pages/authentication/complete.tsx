@@ -164,14 +164,27 @@ export default function Complete(props: any) {
                                 type="number"
                                 id="phoneNumber"
                                 name="phoneNumber"
-                                className={`${styles.form__field}`}
+                                className={`${styles.form__field} border border-black ${errors.phoneNumber ? 'border-red-952' : 'border-black'}`}
                                 placeholder="Phone number"
                                 value={formData.phoneNumber}
                                 onChange={(e) => handleInput(e)}
                             />
                             <label htmlFor="phoneNumber" className={`${styles.form__label}`}>Phone number</label>
                         </div>
-                        <span className='text-red-500 text-sm'>{errors.phoneNumber}</span>
+                        <span className='text-red-952 text-sm flex items-center justify-start'>
+                            {errors.phoneNumber &&
+                                <>
+                                    <Image
+                                        height={14}
+                                        width={14}
+                                        alt="error"
+                                        src="/img/alert-triangle.svg"
+                                        className='mr-2'
+                                    />
+                                    {errors.phoneNumber}
+                                </>
+                            }
+                        </span>
                     </div>
 
                     <div className={`mb-5 ${styles.form__wrap}`}>
@@ -180,7 +193,7 @@ export default function Complete(props: any) {
                                 type={showPassword.pass ? "text" : "password"}
                                 id="password"
                                 name="password"
-                                className={`${styles.form__field}`}
+                                className={`${styles.form__field} border border-black ${errors.password ? 'border-red-952' : 'border-black'}`}
                                 placeholder="Enter password"
                                 value={formData.password}
                                 onChange={(e) => handleInput(e)}
@@ -208,8 +221,21 @@ export default function Complete(props: any) {
                                 }
                             </span>
                         </div>
-                        <span className='text-red-500 text-sm'>{errors.password}</span>
-                    </div>                    
+                        <span className='text-red-952 text-sm flex items-center justify-start'>
+                            {errors.password &&
+                                <>
+                                    <Image
+                                        height={14}
+                                        width={14}
+                                        alt="error"
+                                        src="/img/alert-triangle.svg"
+                                        className='mr-2'
+                                    />
+                                    {errors.password}
+                                </>
+                            }
+                        </span>
+                    </div>
 
                     <div className={`mb-5 ${styles.form__wrap}`}>
                         <div className={`relative ${styles.form__group} font-OpenSans`}>
@@ -217,7 +243,7 @@ export default function Complete(props: any) {
                                 type={showPassword.confirmPassword ? "text" : "password"}
                                 id="confirmPassword"
                                 name="confirmPassword"
-                                className={`${styles.form__field}`}
+                                className={`${styles.form__field} border border-black ${errors.confirmPassword ? 'border-red-952' : 'border-black'}`}
                                 placeholder="Enter confirm password"
                                 value={formData.confirmPassword}
                                 onChange={(e) => handleInput(e)}
@@ -245,7 +271,20 @@ export default function Complete(props: any) {
                                 }
                             </span>
                         </div>
-                        <span className='text-red-500 text-sm'>{errors.confirmPassword}</span>
+                        <span className='text-red-952 text-sm flex items-center justify-start'>
+                            {errors.confirmPassword &&
+                                <>
+                                    <Image
+                                        height={14}
+                                        width={14}
+                                        alt="error"
+                                        src="/img/alert-triangle.svg"
+                                        className='mr-2'
+                                    />
+                                    {errors.confirmPassword}
+                                </>
+                            }
+                        </span>
                     </div>
 
                     <div className="mb-5 relative flex flex-wrap">
@@ -258,7 +297,20 @@ export default function Complete(props: any) {
                             />
                             <label className="ml-5 text-gray-951 block">I agree to terms & conditions</label>
                         </div>
-                        <span className='text-red-500 text-sm'>{!agreement ? agreementError : null}</span>
+                        <span className='text-red-952 text-sm flex items-center justify-start'>
+                            {!agreement ?
+                                <>
+                                    <Image
+                                        height={14}
+                                        width={14}
+                                        alt="error"
+                                        src="/img/alert-triangle.svg"
+                                        className='mr-2'
+                                    />
+                                    {agreementError}
+                                </>
+                                : null}
+                        </span>
                     </div>
                     <div className="relative">
                         <button className={`rounded-lg h-16 bg-black1 w-full text-white text-md ${!formIsValid} ? bg-black : bg-black`}>

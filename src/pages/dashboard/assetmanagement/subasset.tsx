@@ -439,7 +439,7 @@ export default function SubAsset(localData: any) {
                                                                     type="text"
                                                                     id="assetname"
                                                                     name="assetname"
-                                                                    className={`${styles.form__field}`}
+                                                                    className={`border border-black ${styles.form__field}`}
                                                                     placeholder="Enter class name"
                                                                     required
                                                                     onChange={(e) => (assetname.current = e.target.value)}

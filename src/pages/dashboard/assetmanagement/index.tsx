@@ -266,7 +266,7 @@ export default function AssetManagement(localData: any) {
                         </div>
 
                         {/* --- Alerts Start--- */}
-                        {success ? <AlertMessage /> : null}
+                        {success ? <AlertMessage alertType="success" title="Success" message="Data is stored successfully!" /> : null}
                         {/* --- Alerts End--- */}
 
                         <div className="w-full mt-10 flex">
@@ -530,7 +530,7 @@ export default function AssetManagement(localData: any) {
                                                                     type="text"
                                                                     id="assetname"
                                                                     name="assetname"
-                                                                    className={`${styles.form__field}`}
+                                                                    className={`border border-black ${styles.form__field}`}
                                                                     placeholder="Enter class name"
                                                                     required
                                                                     onChange={(e) => (assetname.current = e.target.value)}

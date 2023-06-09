@@ -186,14 +186,27 @@ export default function Register() {
                                                         type="text"
                                                         id="firstName"
                                                         name="firstName"
-                                                        className={`${styles.form__field}`}
+                                                        className={`${styles.form__field} border border-black ${errors.firstName ? 'border-red-952' : 'border-black'}`}
                                                         placeholder="First name"
                                                         value={formData.firstName}
                                                         onChange={(e) => handleInput(e)}
                                                     />
                                                     <label htmlFor="firstName" className={`${styles.form__label}`}>First Name</label>
                                                 </div>
-                                                <span className='text-red-500 text-sm'>{errors.firstName}</span>
+                                                <span className='text-red-952 text-sm flex items-center justify-start'>
+                                                    {errors.firstName &&
+                                                        <>
+                                                            <Image
+                                                                height={14}
+                                                                width={14}
+                                                                alt="error"
+                                                                src="/img/alert-triangle.svg"
+                                                                className='mr-2'
+                                                            />
+                                                            {errors.firstName}
+                                                        </>
+                                                    }
+                                                </span>
                                             </div>
 
                                             <div className={`mb-2 ${styles.form__wrap}`}>
@@ -202,14 +215,28 @@ export default function Register() {
                                                         type="text"
                                                         id="lastName"
                                                         name="lastName"
-                                                        className={`${styles.form__field}`}
+                                                        className={`${styles.form__field} border border-black ${errors.lastName ? 'border-red-952' : 'border-black'}`}
                                                         placeholder="Last name"
                                                         value={formData.lastName}
                                                         onChange={(e) => handleInput(e)}
                                                     />
                                                     <label htmlFor="lastName" className={`${styles.form__label}`}>Last Name</label>
                                                 </div>
-                                                <span className='text-red-500 text-sm'>{errors.lastName}</span>
+                                                <span className='text-red-952 text-sm flex items-center justify-start'>
+                                                    {
+                                                        errors.lastName &&
+                                                        <>
+                                                            <Image
+                                                                height={14}
+                                                                width={14}
+                                                                alt="error"
+                                                                src="/img/alert-triangle.svg"
+                                                                className='mr-2'
+                                                            />
+                                                            {errors.lastName}
+                                                        </>
+                                                    }
+                                                </span>
                                             </div>
 
                                             <div className={`mb-2 ${styles.form__wrap}`}>
@@ -218,14 +245,28 @@ export default function Register() {
                                                         type="text"
                                                         id="email"
                                                         name="email"
-                                                        className={`${styles.form__field}`}
+                                                        className={`${styles.form__field} border border-black ${errors.email ? 'border-red-952' : 'border-black'}`}
                                                         placeholder="Company Email"
                                                         value={formData.email}
                                                         onChange={(e) => handleInput(e)}
                                                     />
                                                     <label htmlFor="email" className={`${styles.form__label}`}>Company Email</label>
                                                 </div>
-                                                <span className='text-red-500 text-sm'>{errors.email}</span>
+                                                <span className='text-red-952 text-sm flex items-center justify-start'>
+                                                    {
+                                                        errors.email &&
+                                                        <>
+                                                            <Image
+                                                                height={14}
+                                                                width={14}
+                                                                alt="error"
+                                                                src="/img/alert-triangle.svg"
+                                                                className='mr-2'
+                                                            />
+                                                            {errors.email}
+                                                        </>
+                                                    }
+                                                </span>
                                             </div>
 
                                             <div className={`mb-5 ${styles.form__wrap}`}>
@@ -234,14 +275,28 @@ export default function Register() {
                                                         type="text"
                                                         id="companyName"
                                                         name="companyName"
-                                                        className={`${styles.form__field}`}
+                                                        className={`${styles.form__field} border border-black ${errors.companyName ? 'border-red-952' : 'border-black'}`}
                                                         placeholder="Company Name"
                                                         value={formData.companyName}
                                                         onChange={(e) => handleInput(e)}
                                                     />
                                                     <label htmlFor="companyName" className={`${styles.form__label}`}>Company Name</label>
                                                 </div>
-                                                <span className='text-red-500 text-sm'>{errors.companyName}</span>
+                                                <span className='text-red-952 text-sm flex items-center justify-start'>
+                                                    {
+                                                        errors.companyName &&
+                                                        <>
+                                                            <Image
+                                                                height={14}
+                                                                width={14}
+                                                                alt="error"
+                                                                src="/img/alert-triangle.svg"
+                                                                className='mr-2'
+                                                            />
+                                                            {errors.companyName}
+                                                        </>
+                                                    }
+                                                </span>
                                             </div>
 
                                             <div className="relative pt-2">

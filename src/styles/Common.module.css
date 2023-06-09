@@ -340,7 +340,7 @@
 .form__field {
     font-family: inherit;
     width: 100%;
-    border: 1px solid #000000;
+    /* border: 1px solid #000000; */
     height: 50px;
     border-radius: 10px;
     outline: 0;

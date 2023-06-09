@@ -1,5 +1,5 @@
 import Image from "next/image";
-const NoDataFound = (props) => {
+const NoDataFound = (props:any) => {
     return (
         <div className="flex justify-center items-center flex-wrap flex-col font-OpenSans">
             <div className="no-data-image">

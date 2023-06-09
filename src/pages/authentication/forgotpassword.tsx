@@ -118,30 +118,34 @@ export default function ForgotPassword() {
                             <div className="mb-4 mt-5 border border-gray-100 w-full h-[1px]"></div>
                             <div className="signinform relative">
                                 <form method='post' onSubmit={submitForm}>
-                                    {/* <div className="mb-6">
-                                        <label className="text-gray-500 text-lg font-medium mb-3 block">Company email address*</label>
-                                        <input
-                                            type="text"
-                                            className="border rounded-lg pl-10 pr-10 border-black h-12 w-full shadow-lg"
-                                            name="email"
-                                            placeholder="Enter email address"
-                                        />
-                                    </div> */}
-
                                     <div className={`mb-7 ${styles.form__wrap}`}>
                                         <div className={`relative ${styles.form__group} font-OpenSans`}>
                                             <input
                                                 type="text"
                                                 id="companyEmail"
                                                 name="companyEmail"
-                                                className={`${styles.form__field}`}
+                                                className={`${styles.form__field} border border-black ${errors.companyEmail ? 'border-red-952' : 'border-black'}`}
                                                 placeholder="Enter email address"
                                                 value={formData.companyEmail}
                                                 onChange={(e) => handleInput(e)}
                                             />
                                             <label htmlFor="companyEmail" className={`${styles.form__label}`}>Enter email address</label>
                                         </div>
-                                        <span className='text-red-500 text-sm'>{errors.companyEmail}</span>
+                                        <span className='text-red-952 text-sm flex items-center justify-start'>
+                                            {
+                                                errors.companyEmail &&
+                                                <>
+                                                    <Image
+                                                        height={14}
+                                                        width={14}
+                                                        alt="error"
+                                                        src="/img/alert-triangle.svg"
+                                                        className='mr-2'
+                                                    />
+                                                    {errors.companyEmail}
+                                                </>
+                                            }
+                                        </span>
                                     </div>
 
                                     <div className="relative">
