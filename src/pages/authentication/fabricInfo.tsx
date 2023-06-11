@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 const FabricInfo = (props: any) => {
     return (
-        <div className="bg-[url('/img/architecture2.jpg')] bg-cover bg-no-repeat bg-center h-screen">
+        <div className="bg-[url('/img/architecture2.jpg')] bg-cover bg-no-repeat bg-center h-screen sm:hidden md:block">
             <div className="w-full h-full backdrop-brightness-25 px-16 py-16">
                 <div className="flex">
                     <Image

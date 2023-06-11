@@ -11,6 +11,9 @@ module.exports = withMT({
     "./node_modules/react-tailwindcss-datepicker/dist/index.esm.js",
   ],
   theme: {
+    screens: {
+      'xss':'540px'
+    },
     extend: {
       fontFamily: {
         OpenSans: ["'Open Sans'", "sans-serif"]

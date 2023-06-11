@@ -140,21 +140,21 @@ export default function SignIn() {
                 <title>eOPS Fabric - Login</title>
                 <meta name="viewport" content="initial-scale=1.0, width=device-width" />
             </Head>
-            <div className="column-2 flex font-OpenSans">
-                <div className="w-[50%]">
-                    <FabricInfo />
+            <div className="font-OpenSans md:flex lg:flex">
+                <div className="min-[540px]:hidden md:w-[50%] md:block">
+                    <FabricInfo /> 
                 </div>
 
-                <div className="w-[50%] relative">
-                    <div className="flex justify-center items-center h-full">
+                <div className="lg:w-[50%] md:w-[50%] sm:w-full sm:mt-0 relative">
+                    <div className="flex justify-center items-center h-full flex-wrap">
 
-                        <div className="pt-10 pr-2 text-right text-black text-xl font-medium absolute top-0 right-2">
+                        <div className="pt-10 pr-2 text-right text-black text-xl font-medium absolute top-0 right-2 sm:relative sm:pt-3 sm:pb-3 sm:right-0 sm:left-0 md:absolute sm:pt-0 sm:pb-0 sm:right-2 sm:left-0">
                             <span className="text-gray-500 font-normal">Don&apos;t have an account? </span> <Link href="/authentication/register">Sign Up</Link>
                         </div>
 
-                        <div className="text-left w-[470px]">
-                            <p className="font-bold text-3xl text-black mb-4 capitalize">Hello! <span className='bg-yellow-951 px-1 py-1 rounded'>Welcome Back.</span></p>
-                            <p className="font-normal text-2xl text-gray-500">Log in with your credenticals that you entered during your registration.</p>
+                        <div className="text-left w-[470px] md:w-[470px] sm:w-full sm:px-5 sm:py-5 sm:text-left">
+                            <p className="font-bold text-3xl md:text-3xl md:text-left text-black mb-4 capitalize sm:text-center sm:text-2xl">Hello! <span className='bg-yellow-951 px-1 py-1 rounded'>Welcome Back.</span></p>
+                            <p className="font-normal text-2xl text-gray-500 sm:text-center sm:text-xl md:text-left sm:text-2xl">Log in with your credenticals that you entered during your registration.</p>
                             <div className="mb-4 mt-5 border border-gray-100 w-full h-[1px]"></div>
 
                             {/* === Login Message Alert === */}
@@ -167,7 +167,7 @@ export default function SignIn() {
                             }
                             {/* === Login Message Alert === */}
 
-                            <div className="signinform relative">
+                            <div className="signinform relative sm:pb-6">
                                 <form method='post' onSubmit={submitForm}>
 
                                     <div className={`mb-5 ${styles.form__wrap}`}>
