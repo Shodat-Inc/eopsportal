@@ -12,7 +12,7 @@ module.exports = withMT({
   ],
   theme: {
     screens: {
-      'xss':'540px'
+      'xss':'500px'
     },
     extend: {
       fontFamily: {

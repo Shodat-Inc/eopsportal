@@ -141,14 +141,14 @@ export default function SignIn() {
                 <meta name="viewport" content="initial-scale=1.0, width=device-width" />
             </Head>
             <div className="font-OpenSans md:flex lg:flex">
-                <div className="min-[540px]:hidden md:w-[50%] md:block">
+                <div className={`md:w-[50%] md:block ${styles.fabricInfo}`}>
                     <FabricInfo /> 
                 </div>
 
-                <div className="lg:w-[50%] md:w-[50%] sm:w-full sm:mt-0 relative">
+                <div className={`lg:w-[50%] md:w-[50%] sm:w-full sm:mt-0 relative ${styles.formContent}`}>
                     <div className="flex justify-center items-center h-full flex-wrap">
 
-                        <div className="pt-10 pr-2 text-right text-black text-xl font-medium absolute top-0 right-2 sm:relative sm:pt-3 sm:pb-3 sm:right-0 sm:left-0 md:absolute sm:pt-0 sm:pb-0 sm:right-2 sm:left-0">
+                        <div className={`pt-10 pr-2 text-right text-black text-xl font-medium absolute top-0 right-2 sm:relative sm:pt-3 sm:pb-3 sm:right-0 sm:left-0 md:absolute sm:pt-0 sm:pb-0 sm:right-2 sm:left-0 ${styles.dontHaveAcc}`}>
                             <span className="text-gray-500 font-normal">Don&apos;t have an account? </span> <Link href="/authentication/register">Sign Up</Link>
                         </div>
 

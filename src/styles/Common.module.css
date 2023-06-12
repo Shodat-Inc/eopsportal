@@ -476,3 +476,11 @@
     border-radius: 50%;
     transform: translate(-50%, -50%);
 }
+
+
+/* Media Query */
+@media only screen and (max-width:549px) {
+    .fabricInfo {display: none;}
+    .formContent {width: 100%; padding: 15px;}
+    .dontHaveAcc {position: relative; padding: 15px 0 30px 0;}
+}
