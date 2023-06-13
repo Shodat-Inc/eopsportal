@@ -66,11 +66,11 @@ export default function ForgotPassword() {
             </Head>
 
             <div className="column-2 flex font-OpenSans">
-                <div className="w-[50%]">
+                <div className={`lg:w-[50%] lg:block md:hidden md:hidde sm:hidden ${styles.fabricInfo}`}>
                     <FabricInfo />
                 </div>
 
-                <div className="w-[50%] relative">
+                <div className={`lg:w-[50%] md:w-full sm:w-full sm:mt-0 relative ${styles.formContent}`}>
                     <div className="flex justify-start items-center h-full flex-wrap flex-col">
 
                         <div className="flex justify-between items-center w-[470px] pt-5">

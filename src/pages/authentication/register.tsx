@@ -128,14 +128,14 @@ export default function Register() {
                 <meta name="viewport" content="initial-scale=1.0, width=device-width" />
             </Head>
             <div className="column-2 flex font-OpenSans">
-                <div className="w-[50%]">
+                <div className={`lg:w-[50%] lg:block md:hidden md:hidde sm:hidden ${styles.fabricInfo}`}>
                     <FabricInfo />
                 </div>
 
-                <div className="w-[50%] relative">
+                <div className={`lg:w-[50%] md:w-full sm:w-full sm:mt-0 relative ${styles.formContent}`}>
                     <div className="flex justify-start items-center h-full flex-wrap flex-col">
 
-                        <div className="pt-5 pr-2 text-left text-gray-951 text-lg font-medium mb-5 w-[470px]">
+                        <div className="pt-5 pr-2 text-left text-gray-951 text-lg font-medium mb-5 md:w-full md:pl-5 lg:w-[470px]">
                             <Link href="/" className="flex items-center justify-start">
                                 <Image
                                     src="/img/angle_left_icon.svg"
@@ -148,15 +148,8 @@ export default function Register() {
                             </Link>
                         </div>
 
-                        <div className="text-left w-[470px]">
-
-                            {/* <div className={`${styles.wrapper} ${styles.six}`}>
-                                <div>
-                                    <h3 className={`${styles.flicker}`}>FLICKER</h3>
-                                </div>
-                            </div> */}
-
-                            <p className="font-bold text-2xl text-black mb-3 capitalize">
+                        <div className="text-left w-[470px] lg:w-[470px] md:w-full sm:w-full lg:px-0 lg:py-0 md:px-5 md:py-5 sm:px-5 sm:py-5 sm:text-left">
+                        <p className="font-bold text-3xl md:text-3xl md:text-left text-black mb-4 capitalize sm:text-center sm:text-2xl">
                                 {stepTwo ?
                                     <span>Complete Your <span className='bg-yellow-951 pl-1 pr-1 pt-1 pb-1 rounded'>Profile!</span></span>
                                     :
