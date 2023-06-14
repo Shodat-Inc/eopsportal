@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Link from "next/link";
 import Image from "next/image";
 import axios from 'axios';
@@ -6,9 +7,11 @@ import { useRouter } from 'next/router';
 import styles from '../../styles/Common.module.css';
 import AlertMessage from '@/common/alertMessage';
 import FabricInfo from './fabricInfo';
-import Head from 'next/head'
+import Head from 'next/head';
+import { getSampleData } from '../../store/actions/getPostAction'
 
 export default function SignIn() {
+    const dispatch = useDispatch<any>();
     const { push } = useRouter();
     const [userData, setUserData] = useState([] as any);
     const [showPassword, setShowPassword] = useState({
@@ -32,6 +35,17 @@ export default function SignIn() {
                 setUserData(response.data)
             })
     }, [])
+
+    const sampleListData = useSelector((state: any) => state.sampleData);
+    const { sample } = sampleListData;
+    useEffect(() => {
+        dispatch(getSampleData());
+    }, [dispatch]);
+
+    console.log({
+        name:"sample",
+        data:sample
+    })
 
     // Show Hide Eye Icon
     const hideShow = () => {
@@ -142,7 +156,7 @@ export default function SignIn() {
             </Head>
             <div className="font-OpenSans md:flex lg:flex">
                 <div className={`md:w-[50%] md:block ${styles.fabricInfo}`}>
-                    <FabricInfo /> 
+                    <FabricInfo />
                 </div>
 
                 <div className={`lg:w-[50%] md:w-[50%] sm:w-full sm:mt-0 relative ${styles.formContent}`}>
