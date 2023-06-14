@@ -143,7 +143,8 @@ export default function AssetManagement(localData: any) {
         e.preventDefault();
         var formData = new FormData(e.target);
         const form_values = Object.fromEntries(formData);
-        const response = await fetch('/api/assets', {
+        // const response = await fetch('/api/assets', {
+        const response = await fetch('https://shodat.vercel.app/api/assets', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
