@@ -224,7 +224,7 @@ export default function Objects(localData: any) {
                                 >
 
                                     <div className="flex justify-between items-start w-full flex-wrap flex-row">
-                                        <h4 className="font-bold text-lg color-black font-semibold">Create New Object</h4>
+                                        <h4 className="font-bold text-lg color-black font-semibold small:mb-5">Create New Object</h4>
                                         <div className="relative flex">
                                             <div
                                                 className="flex justify-center items-center bg-white text-black rounded-t-md w-[130px] h-[50px] font-semibold cursor-pointer mr-7"
@@ -259,8 +259,8 @@ export default function Objects(localData: any) {
                                                 getParentData.map((item: any, index: any) => {
                                                     if (item == "Mfd Date" || item === "mfdDate" || item === "MfgDate") {
                                                         return (
-                                                            <div className="relative w-[50%] mb-5" key={index}>
-                                                                <div className="rounded-lg border border-gray-954 h-[44px] w-[320px] focus:outline-none focus:border-yellow-951">
+                                                            <div className="relative lg:w-[50%] small:w-full md:w-[50%] sm:w-full mb-5 sm:px-1" key={index}>
+                                                                <div className="rounded-lg border border-gray-954 h-[44px] small lg:w-[320px] small:w-full sm:w-full focus:outline-none focus:border-yellow-951">
                                                                     <Datepicker
                                                                         toggleClassName="absolute bg-yellow-951 rounded-r-lg text-white right-0 h-[42px] px-3 text-gray-400 focus:outline-none disabled:opacity-40 disabled:cursor-not-allowed"
                                                                         placeholder={item}
@@ -274,12 +274,12 @@ export default function Objects(localData: any) {
                                                         )
                                                     } else {
                                                         return (
-                                                            <div className="relative w-[50%] mb-5" key={index}>
+                                                            <div className="relative lg:w-[50%] small:w-full md:w-[50%] sm:w-full mb-5 sm:px-1" key={index}>
                                                                 <input
                                                                     type="text"
                                                                     placeholder={item}
                                                                     name={item.split(" ").join("")}
-                                                                    className="rounded-lg border border-gray-954 h-[44px] pl-5 pr-5 w-[320px] focus:outline-none focus:border-yellow-951"
+                                                                    className="rounded-lg border border-gray-954 h-[44px] pl-5 pr-5 lg:w-[320px] small:w-full sm:w-full focus:outline-none focus:border-yellow-951"
                                                                     onChange={(e) => (VIN.current = e.target.value)}
                                                                 />
                                                             </div>

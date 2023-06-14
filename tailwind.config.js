@@ -12,7 +12,8 @@ module.exports = withMT({
   ],
   theme: {
     screens: {
-      'xss':'500px'
+      'xss':'500px',
+      'small':{'min': '00px', 'max': '540px'}
     },
     extend: {
       fontFamily: {

@@ -212,9 +212,9 @@ export default function AssetManagement(localData: any) {
         <>
             <div className="flex font-OpenSans">
 
-                <div className="w-[84%]">
-                    <div className="columns-2 flex justify-between items-center">
-                        <p className="text-black text-lg mb-0 font-semibold">Class Management</p>
+                <div className="lg:w-[84%] md:w-full sm:w-full small:w-full">
+                    <div className="columns-2 flex justify-between md:items-center sm:flex sm:flex-wrap sm:flex-col sm:items-start md:flex-row small:flex-col small:flex-wrap small:items-start">
+                        <p className="text-black text-lg mb-0 font-semibold sm:mb-3 small:mb-3">Class Management</p>
                         <div className="flex justify-end items-right">
                             <button
                                 className="rounded-xl bg-yellow-951 border-[2px] border-yellow-951 text-black flex h-12 justify-center items-center pl-2 pr-2 hover:bg-white hover:text-black hover:border-black transition-all duration-[400ms] mr-3"
@@ -270,7 +270,7 @@ export default function AssetManagement(localData: any) {
                         {/* --- Alerts End--- */}
 
                         <div className="w-full mt-10 flex">
-                            <div className={`rounded rounded-xl border border-black bg-white h-32 w-56 p-3 shadow-lg mr-28 hover:bg-yellow-951 transition-all duration-[400ms] ${router.pathname == "/dashboard/assetmanagement" ? 'bg-yellow-951' : 'bg-white'}`}>
+                            <div className={`rounded rounded-xl border border-black bg-white h-32 w-56 p-3 shadow-lg lg:mr-28 md:mr-5 sm:mr-5 small:mr-5 hover:bg-yellow-951 transition-all duration-[400ms] ${router.pathname == "/dashboard/assetmanagement" ? 'bg-yellow-951' : 'bg-white'}`}>
                                 <Link href="" className="flex justify-between items-start">
                                     <div className="text-black w-[75%] text-lg font-semibold pt-10">Class Management</div>
                                     <div className="w-[25%] text-right">
@@ -306,8 +306,8 @@ export default function AssetManagement(localData: any) {
                         {data.length > 0 ?
                             <div className="h-96 flex justify-start items-start flex-wrap flex-col mt-12">
                                 <p className="text-black text-md mb-6 font-semibold">My Class</p>
-                                <div className="overflow-hidden border rounded-xl w-full">
-                                    <table className={`table-auto min-w-full text-left ${styles.table}`}>
+                                <div className="lg:overflow-hidden md:overflow-x-scroll sm:overflow-x-scroll border rounded-xl lg:w-full md:w-full lg:w-full sm:w-full small:w-full small:overflow-x-scroll">
+                                    <table className={`table-auto lg:min-w-full sm:w-full small:w-full text-left ${styles.table}`}>
                                         <thead className="bg-black text-white rounded-xl h-10 text-sm font-light">
                                             <tr>
                                                 <th>S.No</th>
@@ -382,7 +382,7 @@ export default function AssetManagement(localData: any) {
                     </div>
                 </div>
 
-                <div className="w-[16%] pl-5">
+                <div className="lg:w-[16%] lg:block md:hidden sm:hidden pl-5 small:hidden">
                     <Template />
                 </div>
 
@@ -481,9 +481,9 @@ export default function AssetManagement(localData: any) {
                         <div
                             className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
                         >
-                            <div className="relative my-6 w-[720px]">
+                            <div className="relative my-6 lg:w-[720px] small:w-[95%] sm:w-[95%]">
 
-                                <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+                                <div className="border-0 rounded-lg shadow-lg relative flex flex-col lg:w-full bg-white outline-none focus:outline-none">
                                     {/*header*/}
                                     <div className="flex items-start justify-between p-5">
                                         <h3 className="text-lg font-medium">
@@ -505,26 +505,26 @@ export default function AssetManagement(localData: any) {
                                     {/*body*/}
                                     <div className="relative p-6 flex-auto">
                                         <form
-                                            className="flex justify-center items-center flex-wrap flex-col w-full"
+                                            className="flex justify-center items-center flex-wrap flex-col lg:w-full"
                                             method='post'
                                             onSubmit={handleSubmit}
                                         >
-                                            <div className="mb-5 relative flex justify-center items-center flex-wrap flex-col">
+                                            <div className="mb-5 relative flex justify-center items-center flex-wrap flex-col sm:w-full small:w-full lg:w-[490px]">
 
-                                                <div className="mb-10 relative column-2 flex justify-start items-center">
-                                                    <div className="w-[160px]">
+                                                <div className="mb-10 relative column-2 flex justify-start items-center sm:w-full small:w-full">
+                                                    <div className="lg:w-[160px] small:w-[35%] sm:w-[35%]">
                                                         <label className="font-semibold text-black">Class Name <span className="text-red-500">*</span></label>
                                                     </div>
-                                                    <div className="w-3/4">
+                                                    <div className="lg:w-3/4 small:w-[65%] sm:w-[65%]">
                                                         <input
                                                             type="hidden"
                                                             name="assetid"
                                                             placeholder="Enter asset ID"
-                                                            className="rounded-lg border border-gray-500 h-[44px] pl-5 pr-5 w-[320px]"
+                                                            className="rounded-lg border border-gray-500 h-[44px] pl-5 pr-5 lg:w-[320px] small:w-full sm:w-full"
                                                             value={parseInt(getLastID) + 1}
                                                         />
                                                        
-                                                        <div className={`mb-5 w-[320px] ${styles.form__wrap}`}>
+                                                        <div className={`mb-5 lg:w-[320px] small:w-full small:w-full ${styles.form__wrap}`}>
                                                             <div className={`relative ${styles.form__group} font-OpenSans`}>
                                                                 <input
                                                                     type="text"
@@ -542,12 +542,12 @@ export default function AssetManagement(localData: any) {
                                                     </div>
                                                 </div>
 
-                                                <div className="mb-10 relative column-2 flex justify-start items-center">
-                                                    <div className="w-[160px]">
+                                                <div className="mb-10 relative column-2 flex justify-start items-center sm:w-full small:w-full">
+                                                    <div className="lg:w-[160px] small:w-[35%] sm:w-[35%]">
                                                         <label className="font-semibold text-black">Class Tags <span className="text-red-500">*</span></label>
                                                     </div>
-                                                    <div className="w-3/4">
-                                                        <div className="rounded-lg border border-black min-h-[64px] pl-2 pr-2 w-[320px] pt-2 pb-2 flex flex-wrap justify-start items-center">
+                                                    <div className="lg:w-3/4 small:w-[65%] sm:w-[65%]">
+                                                        <div className="rounded-lg border border-black min-h-[64px] pl-2 pr-2 lg:w-[320px] small:w-full sm:w-full pt-2 pb-2 flex flex-wrap justify-start items-center">
                                                             {
                                                                 allTags && allTags.length > 0 ?
                                                                     allTags.map((items: any, index: any) => (

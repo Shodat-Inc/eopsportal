@@ -320,8 +320,8 @@ export default function ChildObject(localData: any) {
                                                 subClassData.map((item: any, key: any) => {
                                                     if (item == "Mfd Date" || item === "mfdDate" || item === "MfgDate") {
                                                         return (
-                                                            <div className="relative w-[50%] mb-5" key={key}>
-                                                                <div className="rounded-lg border border-gray-954 h-[44px] w-[320px] focus:outline-none focus:border-yellow-951">
+                                                            <div className="relative lg:w-[50%] small:w-full md:w-[50%] sm:w-full mb-5" key={key}>
+                                                                <div className="rounded-lg border border-gray-954 h-[44px] lg:w-[320px] small:w-full sm:w-full focus:outline-none focus:border-yellow-951">
                                                                     <Datepicker
                                                                         toggleClassName="absolute bg-yellow-951 rounded-r-lg text-white right-0 h-[42px] px-3 text-gray-400 focus:outline-none disabled:opacity-40 disabled:cursor-not-allowed"
                                                                         placeholder={item}
@@ -335,12 +335,12 @@ export default function ChildObject(localData: any) {
                                                         )
                                                     } else {
                                                         return (
-                                                            <div className="relative w-[50%] mb-5" key={key}>
+                                                            <div className="relative lg:w-[50%] small:w-full md:w-[50%] sm:w-full mb-5" key={key}>
                                                                 <input
                                                                     type="text"
                                                                     placeholder={item}
                                                                     name={item.split(" ").join("")}
-                                                                    className="rounded-lg border border-gray-954 h-[44px] pl-5 pr-5 w-[320px] focus:outline-none focus:border-yellow-951"
+                                                                    className="rounded-lg border border-gray-954 h-[44px] pl-5 pr-5 lg:w-[320px] small:w-full sm:w-full focus:outline-none focus:border-yellow-951"
                                                                     onChange={(e) => (VIN.current = e.target.value)}
                                                                 />
                                                             </div>
