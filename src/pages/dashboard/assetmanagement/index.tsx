@@ -34,7 +34,6 @@ export default function AssetManagement(localData: any) {
     const [dataType, setDataType] = useState("");
     const [assetDataType, setAssetDataType] = useState<any[]>([]);
     const [showObjectModal, setShowObjectModal] = useState(false);
-    console.log(localData.localData[0].assetName)
     const [chooseAsset, setChooseAsset] = useState(localData && localData.localData.length > 0 ? localData.localData[0].assetName : '');
     const [toggleAsset, setToggleAsset] = useState(false);
     const [dtObject, setDtObject] = useState<any[]>([]);
@@ -182,21 +181,12 @@ export default function AssetManagement(localData: any) {
 
     // Delete Asset
     const deleteAsset = (assetID: any) => {
-        console.log({
-            data:data,
-            deleteID:assetID
-        })
+        
         const updatedData = data.filter((item:any)=>{
             if(parseInt(item.assetID) !== parseInt(assetID)) {
                 return data;
             }
         })
-
-        console.log({
-            data:updatedData,
-            deleteID:assetID
-        })
-
     }
 
 
@@ -213,7 +203,7 @@ export default function AssetManagement(localData: any) {
         <>
             <div className="flex font-OpenSans">
 
-                <div className="lg:w-[84%] md:w-full sm:w-full small:w-full">
+                <div className="lg:w-[86%] md:w-full sm:w-full small:w-full">
                     <div className="columns-2 flex justify-between md:items-center sm:flex sm:flex-wrap sm:flex-col sm:items-start md:flex-row small:flex-col small:flex-wrap small:items-start">
                         <p className="text-black text-lg mb-0 font-semibold sm:mb-3 small:mb-3">Class Management</p>
                         <div className="flex justify-end items-right">
@@ -383,7 +373,7 @@ export default function AssetManagement(localData: any) {
                     </div>
                 </div>
 
-                <div className="lg:w-[16%] lg:block md:hidden sm:hidden pl-5 small:hidden">
+                <div className="lg:w-[14%] lg:block md:hidden sm:hidden pl-5 small:hidden">
                     <Template />
                 </div>
 
