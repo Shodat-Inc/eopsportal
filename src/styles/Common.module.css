@@ -11,7 +11,7 @@
 }
 
 .table tbody tr:nth-child(even) {
-    background-color: #F9F9F9;
+    background-color: #FAFAFF;
 }
 
 .table tbody tr:nth-child(odd) {

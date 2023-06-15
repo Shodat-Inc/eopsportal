@@ -17,7 +17,11 @@ module.exports = withMT({
     },
     extend: {
       fontFamily: {
-        OpenSans: ["'Open Sans'", "sans-serif"]
+        OpenSans: ["'Open Sans'", "sans-serif"],
+        SegoeUI: ["'SegoeUI'", "sans-serif"],
+        SegoeUIItalic: ["'SegoeUI-Italic'", "sans-serif"],
+        SegoeUIBoldItalic: ["'SegoeUI-BoldItalic'", "sans-serif"],
+        SegoeUIBold: ["'SegoeUI-Bold'", "sans-serif"],
       },
       colors: {
         themeYellow: '#fed136',       
@@ -35,7 +39,12 @@ module.exports = withMT({
           953: '#F8F8F8',
           954: '#A7A7A7',
           955: '#272727',
-          956: '#F5F5F5'
+          956: '#F5F5F5',
+          957: '#E1E1E1',
+          958: '#DEDEDE',
+          959: '#EAEAEA',
+          960: '#FAFAFF',
+          961: '#A39D9D',
         },
         blue: {
           951: '#B4BBD2',
@@ -53,7 +62,8 @@ module.exports = withMT({
           959: '#155724'
         },
         pink: {
-          951: '#E29A9A'
+          951: '#E29A9A',
+          952: '#FFF7DA',
         },
         red: {
           951: '#AB3939',

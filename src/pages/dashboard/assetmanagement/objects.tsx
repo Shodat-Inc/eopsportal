@@ -114,7 +114,7 @@ export default function Objects(localData: any) {
 
     // Clear All Fields
     const clearAll = (e: any) => {
-        e.preventDefault();
+        e.preventDefault();        
     }
 
     // Storing data in json for sub class
@@ -155,20 +155,20 @@ export default function Objects(localData: any) {
 
     const joinKey = [
         {
-            "objectName" : "Manufacturing Plants",
+            "objectName": "Manufacturing Plants",
             "key": "PlantID",
-        }, 
+        },
         {
-            "objectName" : "Vehicles",
+            "objectName": "Vehicles",
             "key": "VIN",
         },
         {
-            "objectName" : "Gas Station",
+            "objectName": "Gas Station",
             "key": "ABC",
         }
     ]
 
-    var linkKey = joinKey.filter(function (items:any) { return items.objectName === parentAsset.assets; });
+    var linkKey = joinKey.filter(function (items: any) { return items.objectName === parentAsset.assets; });
 
     return (
         <>
@@ -212,7 +212,7 @@ export default function Objects(localData: any) {
                         </div>
 
                         {/* --- Alerts Start--- */}
-                        {success ? <AlertMessage /> : null}
+                        {success ? <AlertMessage alertType="success" title="Success" message="Object has been created successfully!" /> : null}
                         {/* --- Alerts End--- */}
 
                         <div className="flex justify-start items-start flex-wrap flex-col mt-4">
@@ -274,14 +274,21 @@ export default function Objects(localData: any) {
                                                         )
                                                     } else {
                                                         return (
-                                                            <div className="relative lg:w-[50%] small:w-full md:w-[50%] sm:w-full mb-5 sm:px-1" key={index}>
-                                                                <input
-                                                                    type="text"
-                                                                    placeholder={item}
-                                                                    name={item.split(" ").join("")}
-                                                                    className="rounded-lg border border-gray-954 h-[44px] pl-5 pr-5 lg:w-[320px] small:w-full sm:w-full focus:outline-none focus:border-yellow-951"
-                                                                    onChange={(e) => (VIN.current = e.target.value)}
-                                                                />
+                                                            <div className="relative lg:w-[50%] small:w-full md:w-[50%] sm:w-full mb-0 sm:px-1" key={index}>
+                                                                <div className={`mb-2 lg:w-[380px] small:w-full small:w-full ${styles.form__wrap}`}>
+                                                                    <div className={`relative ${styles.form__group} font-OpenSans`}>
+                                                                        <input
+                                                                            type="text"
+                                                                            id={item}
+                                                                            name={item.split(" ").join("")}
+                                                                            className={`border border-gray-961 ${styles.form__field}`}
+                                                                            placeholder={item}
+                                                                            required
+                                                                            onChange={(e) => (VIN.current = e.target.value)}
+                                                                        />
+                                                                        <label htmlFor={item} className={`${styles.form__label}`}>{item}</label>
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         )
                                                     }
@@ -299,28 +306,30 @@ export default function Objects(localData: any) {
                         {data && data.length > 0 ?
                             <div className="h-96 flex justify-start items-start flex-wrap flex-col mt-4">
                                 <h4 className="font-bold text-lg color-black mb-4 font-semibold">Objects</h4>
-                                <div className="overflow-x-auto border rounded-md w-full">
-                                    <table className={`table-auto min-w-full w-full text-left ${styles.table} ${styles.tableObject}`}>
-                                        <thead className="bg-gray-950 rounded-lg h-10 text-sm font-light">
-                                            <th>S.No</th>
-                                            {
-                                                subObj && Object.keys(subObj).length != 0 ?
-                                                    Object.keys(subObj?.subObjects).map((item: any, i: any) => (
-                                                        <th className="capitalize" key={i}>
-                                                            {
-                                                                item.split(/(?=[A-Z])/).join(" ")
-                                                            }
-                                                        </th>
-                                                    ))
-                                                    : null
-                                            }
-                                            <th>Actions</th>
+                                <div className="lg:overflow-hidden md:overflow-x-scroll sm:overflow-x-scroll border border-gray-958 rounded-xl lg:w-full md:w-full lg:w-full sm:w-full small:w-full small:overflow-x-scroll h-[300px] bg-white">
+                                    <table className={`table-auto lg:min-w-full sm:w-full small:w-full text-left ${styles.table}`}>
+                                        <thead className="bg-black text-white rounded-xl h-10 text-[14px] font-light">
+                                            <tr>
+                                                <th>S.No</th>
+                                                {
+                                                    subObj && Object.keys(subObj).length != 0 ?
+                                                        Object.keys(subObj?.subObjects).map((item: any, i: any) => (
+                                                            <th className="capitalize" key={i}>
+                                                                {
+                                                                    item.split(/(?=[A-Z])/).join(" ")
+                                                                }
+                                                            </th>
+                                                        ))
+                                                        : null
+                                                }
+                                                <th>Actions</th>
+                                            </tr>
                                         </thead>
-                                        <tbody className="cursor-pointer">
+                                        <tbody className="text-sm cursor-pointer">
                                             {
                                                 data.map((items: any, index: any) => {
                                                     return (
-                                                        <tr key={index} className={`text-sm`}>
+                                                        <tr className="hover:bg-yellow-950 text-sm border boder-gray-958 last:border-none" key={index}>
                                                             <td>{index + 1}</td>
                                                             {
                                                                 Object.values(items?.subObjects).map((item: any, i: any) => (
@@ -331,7 +340,7 @@ export default function Objects(localData: any) {
                                                                                 query: {
                                                                                     object: items?.subObjects?.PlantID || items?.subObjects?.VIN,
                                                                                     parentObject: parentAsset.assets,
-                                                                                    key:linkKey[0].key
+                                                                                    key: linkKey[0].key
                                                                                 }
                                                                             }}
                                                                         >
@@ -370,10 +379,12 @@ export default function Objects(localData: any) {
                                 </div>
                             </div>
                             :
-
-                            <div className="h-72 flex justify-center items-center flex-wrap flex-col mt-8">
-                                <NoDataFound createText="Create Sub Object" />
-                            </div>
+                            <>
+                                <p className="text-black text-md font-semibold mt-8 mb-3">Objects</p>
+                                <div className="flex justify-center items-center flex-wrap flex-col h-[300px] border-white bg-white rounded rounded-lg">
+                                    <NoDataFound titleText="No object data found!" messageText="Please create the sub object by clicking on the" createText="Create Sub Object" />
+                                </div>
+                            </>
                         }
 
                     </div>

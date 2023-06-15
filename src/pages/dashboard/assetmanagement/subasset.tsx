@@ -34,9 +34,8 @@ export default function SubAsset(localData: any) {
     const [showInput, setShowInput] = useState(false);
     const [showHideAddTagButton, setShowHideAddTagButton] = useState(false);
     const [selParentTags, setSelParentTags] = useState<any[]>([]);
-    const [checkIcon, setCheckIcon] = useState("/img/blank_check_box_icon_white.svg");
+    // const [checkIcon, setCheckIcon] = useState("/img/blank_check_box_icon_white.svg");
     const [tag, setTag] = useState<any[]>([]);
-
     const [dataType, setDataType] = useState("");
     const [toggleDT, setToggleDT] = useState(false);
     const [assetDataType, setAssetDataType] = useState<any[]>([]);
@@ -192,7 +191,7 @@ export default function SubAsset(localData: any) {
         let updatedList = selParentTags;
         updatedList.push(item)
         setSelParentTags(removeDuplicates(updatedList))
-        setCheckIcon("/img/box_check_icon_white.svg")
+        // setCheckIcon("/img/box_check_icon_white.svg")
     }
 
     // Un Select Parent Join Key
@@ -203,7 +202,7 @@ export default function SubAsset(localData: any) {
             arr.splice(index, 1);
         }
         setSelParentTags(removeDuplicates(arr));
-        setCheckIcon("/img/blank_check_box_icon_white.svg");
+        // setCheckIcon("/img/blank_check_box_icon_white.svg");
     }
 
 
@@ -242,7 +241,7 @@ export default function SubAsset(localData: any) {
         const resdata = await response.json();
         if (resdata) {
             router.replace(router.asPath);
-             // Updated state to close the modal
+            // Updated state to close the modal
             setShowModal(false);
             // Update state to Show the success message
             setSuccess(true);
@@ -260,7 +259,6 @@ export default function SubAsset(localData: any) {
     const isInArray = (value: any, array: any) => {
         return array.indexOf(value) > -1;
     }
-
 
     return (
         <>
@@ -286,7 +284,7 @@ export default function SubAsset(localData: any) {
                         </div>
                     </div>
 
-                    <div className="border min-h-full rounded-xl mt-3 px-4 py-4">
+                    <div className="border border-gray-957 bg-gray-953 min-h-full rounded-xl mt-3 px-4 py-4">
                         <div className="flex justify-start items-start">
                             <nav className="flex" aria-label="Breadcrumb">
                                 <ol className="inline-flex items-center space-x-1 md:space-x-1">
@@ -323,10 +321,24 @@ export default function SubAsset(localData: any) {
                         {/* --- Alerts End--- */}
 
 
+                        {/* Parent Class Tag */}
+                        {parentJoinKey && parentJoinKey.length > 0 ?
+                            <>
+                                <div className="bg-pink-952 p-2 rounded rounded-xl min-h-[53px] flex flex-wrap flex-row justify-start items-center mt-6">
+                                    <strong className="mr-4 ml-10 text-sm">Tags:</strong>
+                                    {
+                                        parentJoinKey.map((item: any, index: any) => (
+                                            <span className="rounded rounded-lg flex justify-center items-center text-sm bg-gray-959 h-[33px] mr-2 px-2" key={index}>{item}</span>
+                                        ))
+                                    }
+                                </div>
+                            </>
+                            : null}
+
                         {data.length > 0 ?
                             <div className="h-96 flex justify-start items-start flex-wrap flex-col mt-4">
-                                <h4 className="font-bold text-md color-black mb-4 font-semibold">Sub Class</h4>
-                                <div className="overflow-hidden border rounded-xl w-full">
+                                <h4 className="font-bold text-md color-black mb-4 font-semibold">Sub Classes</h4>
+                                <div className="lg:overflow-hidden md:overflow-x-scroll sm:overflow-x-scroll border border-gray-958 rounded-xl lg:w-full md:w-full lg:w-full sm:w-full small:w-full small:overflow-x-scroll h-[300px] bg-white">
                                     <table className={`table-auto min-w-full text-left ${styles.table}`}>
                                         <thead className="bg-black text-white rounded-xl h-10 text-sm font-light">
                                             <tr>
@@ -340,7 +352,7 @@ export default function SubAsset(localData: any) {
                                         </thead>
                                         <tbody className="text-sm cursor-pointer">
                                             {data.map((item: any, index: any) => (
-                                                <tr className="hover:bg-yellow-950" key={index}>
+                                                <tr className="hover:bg-yellow-950 border boder-gray-958 last:border-none" key={index}>
                                                     <td className="w-[50px]">{index + 1}</td>
                                                     <td className="w-[180px]">
                                                         <span className="font-bold">{item.assetName}</span>
@@ -373,9 +385,12 @@ export default function SubAsset(localData: any) {
                                 </div>
                             </div>
                             :
-                            <div className="h-72 flex justify-center items-center flex-wrap flex-col mt-8">
-                                <NoDataFound createText="Create Sub Class" />
-                            </div>
+                            <>
+                                <p className="text-black text-md font-semibold mt-8 mb-3">Sub Classes</p>
+                                <div className="flex justify-center items-center flex-wrap flex-col h-[300px] border-white bg-white rounded rounded-lg">
+                                    <NoDataFound titleText="No sub classes data found!" messageText="Please create the sub class by clicking on the" createText="Create Sub Class" />
+                                </div>
+                            </>
                         }
 
                     </div>
@@ -402,7 +417,7 @@ export default function SubAsset(localData: any) {
                                         </h3>
                                         <button
                                             className="p-1 ml-auto bg-transparent border-0 text-black float-right leading-none font-semibold outline-none focus:outline-none"
-                                            onClick={() => {setShowModal(false); setAllTags([])}}
+                                            onClick={() => { setShowModal(false); setAllTags([]) }}
                                         >
                                             <Image
                                                 src="/img/close.svg"
@@ -432,7 +447,7 @@ export default function SubAsset(localData: any) {
                                                             placeholder="Enter asset ID"
                                                             className="rounded-lg border border-gray-500 h-[44px] pl-5 pr-5 w-[320px]"
                                                             value={parseInt(getLastID) + 1}
-                                                        />                                                        
+                                                        />
                                                         <div className={`w-[320px] ${styles.form__wrap}`}>
                                                             <div className={`relative ${styles.form__group} font-OpenSans`}>
                                                                 <input
@@ -696,7 +711,7 @@ export default function SubAsset(localData: any) {
                                                     </button>
                                                     <button
                                                         className="border border-black rounded-lg bg-white font-semibold text-black font-lg w-24 h-12 hover:text-white hover:bg-yellow-951 hover:border-yellow-951 ease-in-out duration-300"
-                                                        onClick={() => {setShowModal(false); setAllTags([])}}
+                                                        onClick={() => { setShowModal(false); setAllTags([]) }}
                                                     >
                                                         Cancel
                                                     </button>
