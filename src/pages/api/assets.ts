@@ -7,10 +7,10 @@ const dataFilePath = path.join(process.cwd(), 'json/assets.json')
 
 export default async function handler(req:any, res:any) {
     try {
-        if (req.method !== 'POST') {
-            res.status(405).send({ message: 'Only POST requests allowed' })
-            return
-        }
+        // if (req.method !== 'POST') {
+        //     res.status(405).send({ message: 'Only POST requests allowed' })
+        //     return
+        // }
         // Read the existing data from the JSON file
         const jsonData:any = await fsPromises.readFile(dataFilePath);
         const objectData = JSON.parse(jsonData);
@@ -35,6 +35,6 @@ export default async function handler(req:any, res:any) {
     } catch (error) {
         console.error(error);
         // Send an error response
-        res.status(500).json({ message: 'Error storing data' });
+        res.status(500).json({ message: 'Error storing data', error });
     }
 };
