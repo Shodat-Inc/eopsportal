@@ -85,7 +85,7 @@ export default function EopsTrace() {
                     <p className="text-black text-lg mb-0 font-semibold">eOps Trace</p>
                 </div>
 
-                <div className="border min-h-full rounded-xl mt-3 px-4 py-4">
+                <div className="border border-gray-957 bg-gray-953 min-h-[600px] rounded-xl mt-3 px-4 py-4">
                     <div className="flex justify-start items-start">
                         <nav className="flex" aria-label="Breadcrumb">
                             <ol className="inline-flex items-center space-x-1 md:space-x-1">
@@ -106,14 +106,14 @@ export default function EopsTrace() {
                     </div>
 
                     {/* Search Bar */}
-                    <div className="flex w-full mt-10 justify-center items-center flex-wrap relative">
+                    <div className="flex w-full mt-5 justify-center items-center flex-wrap relative">
                         <div className="flex relative w-[480px] flex-wrap">
                             <input
                                 type="text"
                                 placeholder="Search"
                                 id="searchobjects"
                                 name="searchobjects"
-                                className="rounded rounded-lg border border-gray-500 pl-10 pr-2 w-[480px] h-12"
+                                className="rounded rounded-lg border border-gray-962 pl-10 pr-2 w-[480px] h-12"
                                 onChange={onChange}
                                 value={value}
                             />
@@ -152,8 +152,9 @@ export default function EopsTrace() {
                     </div>
 
 
+                    {/* Table */}
                     {subObj ?
-                        <div className="flex w-full flex-wrap mt-10">
+                        <div className="flex w-full flex-wrap mt-10 hidden">
                             <div className="text-black font-semibold text-md mb-2">Objects</div>
                             <div className="overflow-hidden border rounded-xl w-full">
                                 <table className={`table-auto min-w-full text-left ${styles.table}`}>

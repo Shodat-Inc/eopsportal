@@ -45,6 +45,9 @@ module.exports = withMT({
           959: '#EAEAEA',
           960: '#FAFAFF',
           961: '#A39D9D',
+          962: '#D9D9D9',
+          963: '#B1A8A8',
+          964: '#EBEBEB',
         },
         blue: {
           951: '#B4BBD2',

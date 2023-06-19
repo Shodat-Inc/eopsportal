@@ -484,3 +484,15 @@
     .formContent {width: 100%; padding: 15px;}
     .dontHaveAcc {position: relative; padding: 15px 0 30px 0;}
 }
+
+
+
+.tableTab tbody tr td:last-child {
+    text-align: left;
+    padding-right: 0px;
+}
+
+.tableTab thead tr th:last-child {
+    text-align: left;
+    padding-right: 0px;
+}
