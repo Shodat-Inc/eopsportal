@@ -496,3 +496,7 @@
     text-align: left;
     padding-right: 0px;
 }
+
+.form__group__bg input {
+    background-color: white !important;
+}

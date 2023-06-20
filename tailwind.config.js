@@ -48,6 +48,8 @@ module.exports = withMT({
           962: '#D9D9D9',
           963: '#B1A8A8',
           964: '#EBEBEB',
+          965: '#c6c6c6',
+          966: '#f2f2f2',
         },
         blue: {
           951: '#B4BBD2',

@@ -9,7 +9,7 @@ import axios from "axios";
 import NoDataFound from "@/common/nodatafound";
 
 export default function ProductionModel() {
-    
+
     const [showModal, setShowModal] = useState(false);
     const router = useRouter();
     const parentAsset = router.query;
@@ -50,7 +50,7 @@ export default function ProductionModel() {
 
     }
 
-  
+
     return (
         <div className="flex font-OpenSans">
 
@@ -140,13 +140,13 @@ export default function ProductionModel() {
                         {/* Upload Button */}
                         <div className="flex items-center justify-end">
                             <div className="flex items-center justify-start mr-7">
-                            <p className="text-gray mr-4">Disable</p>
-                            <div className={`${styles.radioWrap}`}>
-                                <input
-                                    type="checkbox"
-                                />
-                                <span className={`${styles.radioFrame}`}></span>
-                            </div>
+                                <p className="text-gray mr-4">Disable</p>
+                                <div className={`${styles.radioWrap}`}>
+                                    <input
+                                        type="checkbox"
+                                    />
+                                    <span className={`${styles.radioFrame}`}></span>
+                                </div>
                             </div>
                             <button
                                 className="flex justify-center items-center text-black bg-yellow-951 rounded rounded-xl h-12 px-4 transition-opacity duration-300"
