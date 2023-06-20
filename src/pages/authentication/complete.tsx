@@ -27,12 +27,13 @@ export default function Complete(props: any) {
     const [formIsValid, setFormIsValid] = useState(true);
     const [agreementError, setAgreementError] = useState("");
     const [userData, setUserData] = useState([] as any);
+    const [success, setSuccess] = useState(false);
 
     // Get User Data on Page Load
     useEffect(() => {
-        const res = axios.get("/api/getUsers")
+        axios.get("/api/getUsers")
             .then((response) => {
-                setUserData(response)
+                setUserData(response.data)
             })
     }, [])
 
@@ -69,6 +70,10 @@ export default function Complete(props: any) {
 
     // Get Last Asset ID
     const getLastID = (userData && userData.length > 0) ? userData.slice(-1)[0].userID : '1';
+    console.log({
+        getLastID:getLastID,
+        userData:userData,        
+    })
 
     const handleValidation = () => {
         const PHONE_REGEX = new RegExp(/^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/i);
@@ -138,6 +143,10 @@ export default function Complete(props: any) {
                 }
             }).then(res => {
                 console.log('res', res.data);
+                setSuccess(true)
+                setTimeout(() => {
+                    push("/authentication/success");
+                }, 2000)
             }).catch(err => {
                 console.log('error in request', err);
             });
@@ -290,7 +299,7 @@ export default function Complete(props: any) {
                     <div className="mb-5 relative flex flex-wrap">
                         <div className='flex justify-start items-center'>
                             <div className={`${styles.customCheck}`}>
-                                <input type='checkbox' name="agreement" onChange={handleChange}/>
+                                <input type='checkbox' name="agreement" onChange={handleChange} />
                                 <span></span>
                             </div>
                             <label className="ml-2 text-black block">I agree to terms & conditions</label>
@@ -312,7 +321,19 @@ export default function Complete(props: any) {
                     </div>
                     <div className="relative">
                         <button className={`rounded-lg h-16 bg-black1 w-full text-white text-md ${!formIsValid} ? bg-black : bg-black`}>
-                            Register Account
+                            {/* Register Account */}
+                            <span className='flex justify-center items-center'>
+                                <span>{success ? "Please wait..." : 'Register Account'}</span>
+                                {success ?
+                                    <Image
+                                        src="/img/loading-gif.gif"
+                                        alt="loader"
+                                        height={20}
+                                        width={20}
+                                        className='ml-5'
+                                    />
+                                    : null}
+                            </span>
                         </button>
                         <div className="mt-5 mb-5 flex items-center justify-center">
                             <Image
@@ -325,8 +346,8 @@ export default function Complete(props: any) {
                             <span className="text-gray-951 text-sm">Your info is safely secured</span>
                         </div>
                     </div>
-                </form>
-            </div>
+                </form >
+            </div >
 
         </>
     );
