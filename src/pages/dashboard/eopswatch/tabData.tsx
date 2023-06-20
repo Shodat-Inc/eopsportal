@@ -7,11 +7,12 @@ import axios from 'axios';
 export default function TabData(props: any) {
 
     console.log({
-        props:props
+        props: props
     })
 
     const [data, setData] = useState([] as any);
     const [dataHeader, setDataHeader] = useState([] as any);
+    const [searchData, setSearchData] = useState([] as any);
 
     // Get Child Object data on page load
     const fetchChildObjectData = () => {
@@ -31,6 +32,35 @@ export default function TabData(props: any) {
         fetchChildObjectData();
         if (fetchChildObjectData.length) return;
     }, [props])
+
+    
+    // Fetch the Child Object data when search item passed.
+    const fetchSearchedData = () => {
+        axios.get("/api/getChildObject").then((response) => {
+            if (response.data) {
+                const filtered = response.data.filter((item: any) => {
+                    return item?.tags?.VIN === props.searchData || item?.tags?.PlantID === props.searchData
+                });
+                if (filtered && filtered.length > 0) {
+                    setSearchData(filtered);
+                    setData(filtered);
+                    setDataHeader(filtered[0]);
+                }
+            }
+        });
+    };
+    useEffect(() => {
+        props && props.searchData ?
+            fetchSearchedData()
+            // if (f etchSearchedData.length) return;
+        : fetchChildObjectData(); 
+    }, [props]);
+
+    console.log({
+        searchData:searchData,
+        data: data,
+        dataHeader:dataHeader
+    })
 
     return (
         <>
@@ -61,9 +91,6 @@ export default function TabData(props: any) {
                                         {
                                             items && Object.keys(items).length != 0 ?
                                                 Object.values(items?.tags).map((item: any, i: any) => (
-
-                                                    // http://localhost:3000/dashboard/eopswatch/eopswatchmodel?objectID=Manufacturing+Plants&key=TPC71810-01-011&id=TPC3305-01&subObject=Walls
-
                                                     <td key={i}>
                                                         <Link
                                                             href={{
@@ -87,43 +114,6 @@ export default function TabData(props: any) {
                                 ))
                                 : null
                         }
-
-                        {/* <tr>
-                            <td>1</td>
-                            <td>TPC71810-01-011</td>
-                            <td>TPC71810-01</td>
-                            <td>Power Generator Engine</td>
-                            <td>1</td>
-                            <td>PGER</td>
-                            <td>North</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>TPC71810-01-012</td>
-                            <td>TPC71810-01</td>
-                            <td>Power Generator Engine</td>
-                            <td>1</td>
-                            <td>PGER</td>
-                            <td>East</td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>TPC71810-01-013</td>
-                            <td>TPC71810-01</td>
-                            <td>Gamma Reactor</td>
-                            <td>2</td>
-                            <td>GRR</td>
-                            <td>North</td>
-                        </tr>
-                        <tr>
-                            <td>4</td>
-                            <td>TPC71810-01-014</td>
-                            <td>TPC71810-01</td>
-                            <td>Gamma Reactor</td>
-                            <td>2</td>
-                            <td>GRR</td>
-                            <td>South</td>
-                        </tr> */}
                     </tbody>
                 </table>
             </div>

@@ -14,7 +14,7 @@ export default function EopsWatch() {
     const [subClassData, setSubClassData] = useState<any[]>([]);
     const [selectedTab, setSelectedTab] = useState(0);
     const [tabData, setTabData] = useState();
-    const [search, setSearch] = useState([] as any)
+    const [search, setSearch] = useState([] as any);
 
     // Fetch the JSON data of sub Asset
     const fetchClassData = () => {
@@ -38,6 +38,12 @@ export default function EopsWatch() {
 
     const onChange = (event: any) => {
         setValue(event.target.value)
+        console.log({
+           text:event.target.value 
+        })
+        if (event.target.value === "") {
+            fetchClassData(); return;
+        }
         axios.get("/api/getChildObject").then((response) => {
             if (response.data) {
 
@@ -67,7 +73,7 @@ export default function EopsWatch() {
 
     const subObjectSelected = (obj: any) => {
         setData([]);
-        setValue("");
+        // setValue("");
         setSearch(obj)
         axios.get("/api/getChildObject").then((response) => {
             if (response.data) {
