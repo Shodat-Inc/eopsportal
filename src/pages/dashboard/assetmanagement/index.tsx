@@ -37,7 +37,22 @@ export default function AssetManagement(localData: any) {
     const [chooseAsset, setChooseAsset] = useState(localData && localData.localData.length > 0 ? localData.localData[0].assetName : '');
     const [toggleAsset, setToggleAsset] = useState(false);
     const [dtObject, setDtObject] = useState<any[]>([]);
+    const { push } = useRouter();
 
+    // useEffect(() => {
+    //     if (!localStorage.getItem('authenticationToken')) {
+    //         console.log({
+    //             message: "No valid token found!",
+    //             authToken: localStorage.getItem('authenticationToken')
+    //         })
+    //         push("/authentication/signin");
+    //     } else {
+    //         console.log({
+    //             message:"valid auth token found!",
+    //             authToken: localStorage.getItem('authenticationToken')
+    //         })
+    //     }
+    // }, [])
 
     // Get JSON data on page load
     const fetchData = () => {
@@ -484,7 +499,7 @@ export default function AssetManagement(localData: any) {
                                         </h3>
                                         <button
                                             className="p-1 ml-auto bg-transparent border-0 text-black float-right leading-none font-semibold outline-none focus:outline-none"
-                                            onClick={() => { 
+                                            onClick={() => {
                                                 setShowModal(false);
                                                 setShowInput(false);
                                                 setShowHideAddTagButton(false)

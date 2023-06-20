@@ -1,4 +1,5 @@
-import { Fragment } from "react";
+import React, { Fragment, useState, useEffect } from "react";
+import { useRouter } from 'next/router'
 import {
   Bars3CenterLeftIcon,
   PencilIcon,
@@ -13,6 +14,31 @@ import styles from './TopBar.module.css';
 import Image from "next/image";
 
 export default function TopBar({ showNav, setShowNav }) {
+  const { push } = useRouter();
+
+  useEffect(() => {
+    if (!localStorage.getItem('authenticationToken')) {
+      console.log({
+        message: "No valid token found!",
+        authToken: localStorage.getItem('authenticationToken')
+      })
+      push("/authentication/signin");
+    } else {
+      console.log({
+        message: "valid auth token found!",
+        authToken: localStorage.getItem('authenticationToken')
+      })
+    }
+  }, [])
+
+  const logMeOut = () => {
+    sessionStorage.clear();
+    localStorage.clear();
+    setTimeout(() => {
+      push("/authentication/signin");
+    }, 1000);
+  }
+
   return (
     <div
       className={`fixed bg-white z-100 w-full h-16 flex justify-between items-center transition-all duration-[400ms] ${showNav ? "pl-48" : ""
@@ -47,7 +73,7 @@ export default function TopBar({ showNav, setShowNav }) {
           <Popover.Button className="outline-none mr-5 md:mr-8 cursor-pointer text-gray-700">
             <Image
               src="/img/bell.svg"
-              alt="company logo"              
+              alt="company logo"
               height={25}
               width={25}
             />
@@ -154,7 +180,7 @@ export default function TopBar({ showNav, setShowNav }) {
                 <Menu.Item>
                   <Link
                     href="#"
-                    className="flex hover:bg-yellow-950 hover:text-white text-gray-700 rounded p-2 text-sm group transition-colors items-center"
+                    className="w-full flex hover:bg-yellow-950 hover:text-white text-gray-700 rounded p-2 text-sm group transition-colors items-center"
                   >
                     <PencilIcon className="h-4 w-4 mr-2" />
                     Profile
@@ -170,13 +196,13 @@ export default function TopBar({ showNav, setShowNav }) {
                   </Link>
                 </Menu.Item>
                 <Menu.Item>
-                  <Link
-                    href="#"
-                    className="flex hover:bg-yellow-950 hover:text-white text-gray-700 rounded p-2 text-sm group transition-colors items-center"
+                  <button
+                    onClick={logMeOut}
+                    className="w-full flex hover:bg-yellow-950 hover:text-white text-gray-700 rounded p-2 text-sm group transition-colors items-center"
                   >
                     <Cog8ToothIcon className="h-4 w-4 mr-2" />
                     Logout
-                  </Link>
+                  </button>
                 </Menu.Item>
               </div>
             </Menu.Items>
@@ -214,7 +240,7 @@ export default function TopBar({ showNav, setShowNav }) {
                     <PencilIcon className="h-4 w-4 mr-2" />
                     Settings
                   </Link>
-                </Menu.Item>                
+                </Menu.Item>
               </div>
             </Menu.Items>
           </Transition>
