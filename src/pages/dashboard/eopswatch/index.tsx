@@ -27,7 +27,8 @@ export default function EopsWatch(props: any) {
     const [search, setSearch] = useState([] as any);
     const [chooseAsset, setChooseAsset] = useState(props.assetData && props.assetData.length > 0 ? props.assetData[0].assetName : '');
     const [toggleAsset, setToggleAsset] = useState(false);
-    const [classData, setClassData] = useState(props.assetData)
+    const [classData, setClassData] = useState(props.assetData);
+    const [showHideTab, setShowHideTab] = useState(true);
 
     // Fetch the JSON data of sub Asset
     const fetchClassData = () => {
@@ -86,6 +87,7 @@ export default function EopsWatch(props: any) {
         setData([]);
         // setValue("");
         setSearch(obj)
+        setShowHideTab(false);
         axios.get("/api/getChildObject").then((response) => {
             if (response.data) {
 
@@ -113,7 +115,8 @@ export default function EopsWatch(props: any) {
 
     const tabSelection = (index: any, item: any) => {
         setSelectedTab(index);
-        setTabData(item)
+        setTabData(item);
+        setShowHideTab(true);
     }
 
     // Getting the filtered list if VIN || PlantID from search bar
@@ -141,6 +144,7 @@ export default function EopsWatch(props: any) {
     const selectAsset = (item: any) => {
         setChooseAsset(item);
         setToggleAsset(false);
+        setShowHideTab(true);
     }
 
     console.log({
@@ -271,20 +275,22 @@ export default function EopsWatch(props: any) {
                     {/* =========== TABS ============= */}
                     <div className="text-black font-semibold text-md mb-5">Objects</div>
                     <div className="mt-2 flex w-full flex-wrap justify-start item-center flex-col">
-                        <div className="relative border-l-[1px]">
-                            {
-                                subClassData && subClassData.length > 0 ?
-                                    subClassData.map((item: any, index: any) => (
-                                        <button
-                                            key={index}
-                                            onClick={() => tabSelection(index, item.assetName)}
-                                            className={`rounded rounded-tr-lg rounded-tl-lg rounded-bl-[0px] rounded-br-[0px] h-[44px] flex-inline justify-center items-center min-w-[70px] px-3 mr-2 font-semibold border-b-[0px] ${selectedTab === index ? 'bg-black text-white border border-black' : 'bg-gray-964 border border-gray-963 text-black'}`}>
-                                            <span>{item.assetName}</span>
-                                        </button>
-                                    ))
-                                    : null
-                            }
-                        </div>
+                        {showHideTab ?
+                            <div className="relative border-l-[1px]">
+                                {
+                                    subClassData && subClassData.length > 0 ?
+                                        subClassData.map((item: any, index: any) => (
+                                            <button
+                                                key={index}
+                                                onClick={() => tabSelection(index, item.assetName)}
+                                                className={`rounded rounded-tr-lg rounded-tl-lg rounded-bl-[0px] rounded-br-[0px] h-[44px] flex-inline justify-center items-center min-w-[70px] px-3 mr-2 font-semibold border-b-[0px] ${selectedTab === index ? 'bg-black text-white border border-black' : 'bg-gray-964 border border-gray-963 text-black'}`}>
+                                                <span>{item.assetName}</span>
+                                            </button>
+                                        ))
+                                        : null
+                                }
+                            </div>
+                            : null}
                         <div className="relative">
                             <TabData
                                 objData={tabData}
