@@ -6,13 +6,13 @@ import axios from 'axios';
 
 export default function TabData(props: any) {
 
-    console.log({
-        props: props
-    })
-
     const [data, setData] = useState([] as any);
     const [dataHeader, setDataHeader] = useState([] as any);
     const [searchData, setSearchData] = useState([] as any);
+
+    console.log({
+        props: props
+    })
 
     // Get Child Object data on page load
     const fetchChildObjectData = () => {
@@ -31,20 +31,25 @@ export default function TabData(props: any) {
     useEffect(() => {
         fetchChildObjectData();
         if (fetchChildObjectData.length) return;
-    }, [props])
+    }, [props.objData])
 
-    
+
     // Fetch the Child Object data when search item passed.
     const fetchSearchedData = () => {
         axios.get("/api/getChildObject").then((response) => {
             if (response.data) {
                 const filtered = response.data.filter((item: any) => {
-                    return item?.tags?.VIN === props.searchData || item?.tags?.PlantID === props.searchData
+                    if(props.className === "Manufacturing Plants") {
+                        return item?.tags?.PlantID === props.searchData
+                    } else {
+                        return item?.tags?.VIN === props.searchData
+                    }
+                    // return item?.tags?.VIN === props.searchData ||  item?.tags?.PlantID === props.searchData
                 });
                 if (filtered && filtered.length > 0) {
-                    setSearchData(filtered);
                     setData(filtered);
                     setDataHeader(filtered[0]);
+                    setSearchData(filtered);
                 }
             }
         });
@@ -52,15 +57,9 @@ export default function TabData(props: any) {
     useEffect(() => {
         props && props.searchData ?
             fetchSearchedData()
-            // if (f etchSearchedData.length) return;
-        : fetchChildObjectData(); 
+            : fetchChildObjectData();
     }, [props]);
 
-    console.log({
-        searchData:searchData,
-        data: data,
-        dataHeader:dataHeader
-    })
 
     return (
         <>
@@ -92,19 +91,36 @@ export default function TabData(props: any) {
                                             items && Object.keys(items).length != 0 ?
                                                 Object.values(items?.tags).map((item: any, i: any) => (
                                                     <td key={i}>
-                                                        <Link
-                                                            href={{
-                                                                pathname: '/dashboard/eopswatch/eopswatchmodel',
-                                                                query: {
-                                                                    objectID: "Manufacturing Plants",
-                                                                    key: items?.tags.ID,
-                                                                    id: items?.tags.PlantID,
-                                                                    subObject: props.objData
-                                                                }
-                                                            }}
-                                                        >
-                                                            {item}
-                                                        </Link>
+                                                        {
+                                                            props.className === "Manufacturing Plants" ?
+                                                                <Link
+                                                                    href={{
+                                                                        pathname: '/dashboard/eopswatch/eopswatchmodel',
+                                                                        query: {
+                                                                            objectID: props.className,
+                                                                            key: items?.tags.ID,
+                                                                            id: items?.tags.PlantID,
+                                                                            subObject: props.objData
+                                                                        }
+                                                                    }}
+                                                                >
+                                                                    {item}
+                                                                </Link>
+                                                                :
+                                                                <Link
+                                                                    href={{
+                                                                        pathname: '/dashboard/eopswatch/eopswatchmodel',
+                                                                        query: {
+                                                                            objectID: props.className,
+                                                                            key: items?.tags.SerialNo,
+                                                                            id: items?.subObject,
+                                                                            subObject: props.objData
+                                                                        }
+                                                                    }}
+                                                                >
+                                                                    {item}
+                                                                </Link>
+                                                        }
                                                     </td>
 
                                                 ))
