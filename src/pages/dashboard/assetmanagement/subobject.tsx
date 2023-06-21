@@ -162,7 +162,7 @@ export default function SubObject(localData: any) {
                         {/* Show The data for Sub Object */}
                         <div className="h-96 flex justify-start items-start flex-wrap flex-col mt-8">
                             <div className="overflow-x-auto border rounded-xl w-full mb-10">
-                                <table className={`table-auto min-w-full w-full text-left ${styles.table} ${styles.tableObject}`}>
+                                <table className={`table-auto min-w-full w-full text-left ${styles.table} ${styles.tableObject} ${styles.tableTab}`}>
                                     <thead className="bg-black text-white rounded-xl h-10 text-sm font-light">
                                         {
                                             subObj && Object.keys(subObj).length != 0 ?
