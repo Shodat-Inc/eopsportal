@@ -36,7 +36,7 @@ export default function TopBar({ showNav, setShowNav }) {
     localStorage.clear();
     setTimeout(() => {
       push("/authentication/signin");
-    }, 1000);
+    }, 200);
   }
 
   return (
