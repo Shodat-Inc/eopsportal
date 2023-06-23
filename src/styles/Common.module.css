@@ -11,7 +11,7 @@
 }
 
 .table tbody tr:nth-child(even) {
-    background-color: #F9F9F9;
+    background-color: #FAFAFF;
 }
 
 .table tbody tr:nth-child(odd) {
@@ -396,13 +396,15 @@
     width: 25px;
     height: 25px;
 }
-.customCheck input[type="checkbox"]{
+
+.customCheck input[type="checkbox"] {
     transform: scale(1.6);
     position: relative;
     left: 4px;
     z-index: 9;
     opacity: 0;
 }
+
 .customCheck span {
     border: 1px solid #C2C2C2;
     background-color: #ffffff;
@@ -414,12 +416,14 @@
     width: 20px;
     transition: cubic-bezier(0.075, 0.82, 0.165, 1) all 0.3s;
 }
-.customCheck input[type="checkbox"]:checked + span {
+
+.customCheck input[type="checkbox"]:checked+span {
     background-color: #FED136;
     border-color: #FED136;
     transition: cubic-bezier(0.075, 0.82, 0.165, 1) all 0.3s;
 }
-.customCheck input[type="checkbox"]:checked + span:after {
+
+.customCheck input[type="checkbox"]:checked+span:after {
     height: 7px;
     width: 14px;
     content: "";
@@ -441,13 +445,15 @@
     width: 25px;
     height: 25px;
 }
-.customRadio input[type="radio"]{
+
+.customRadio input[type="radio"] {
     transform: scale(1.6);
     position: relative;
     left: 4px;
     z-index: 9;
     opacity: 0;
 }
+
 .customRadio span {
     border: 1px solid #C2C2C2;
     background-color: #ffffff;
@@ -459,12 +465,14 @@
     width: 20px;
     transition: cubic-bezier(0.075, 0.82, 0.165, 1) all 0.3s;
 }
-.customRadio input[type="radio"]:checked + span {
+
+.customRadio input[type="radio"]:checked+span {
     background-color: #FED136;
     border-color: #FED136;
     transition: cubic-bezier(0.075, 0.82, 0.165, 1) all 0.3s;
 }
-.customRadio input[type="radio"]:checked + span:after {
+
+.customRadio input[type="radio"]:checked+span:after {
     height: 12px;
     width: 12px;
     content: "";
@@ -480,7 +488,77 @@
 
 /* Media Query */
 @media only screen and (max-width:549px) {
-    .fabricInfo {display: none;}
-    .formContent {width: 100%; padding: 15px;}
-    .dontHaveAcc {position: relative; padding: 15px 0 30px 0;}
+    .fabricInfo {
+        display: none;
+    }
+
+    .formContent {
+        width: 100%;
+        padding: 15px;
+    }
+
+    .dontHaveAcc {
+        position: relative;
+        padding: 15px 0 30px 0;
+    }
+}
+
+
+
+.tableTab tbody tr td:last-child {
+    text-align: left;
+    padding-right: 0px;
+}
+
+.tableTab thead tr th:last-child {
+    text-align: left;
+    padding-right: 0px;
+}
+
+.form__group__bg input {
+    background-color: white !important;
+}
+
+
+/* Prosense Table */
+.proSenseTable thead th {
+    height: 40px;
+}
+
+.proSenseTable tbody tr {
+    background-color: #ffffff;
+    border: 1px solid #DEDEDE;
+    border-radius: 15px;
+    margin-bottom: 15px;
+}
+
+.proSenseTable tbody tr td {
+    height: 80px;
+    padding: 6px;
+}
+
+table.proSenseTable {
+    border-collapse: separate;
+    border-spacing: 0 15px;
+}
+
+.proTableWrap {
+    scrollbar-width: thin;
+    scrollbar-color: #000000;
+}
+
+/* Chrome, Edge, and Safari */
+.proTableWrap::-webkit-scrollbar {
+    width: 8px;
+}
+
+.proTableWrap::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 5px;
+}
+
+.proTableWrap::-webkit-scrollbar-thumb {
+    background-color: #BDBDBD;
+    border-radius: 14px;
+    border: 3px solid #BDBDBD;
 }

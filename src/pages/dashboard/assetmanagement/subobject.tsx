@@ -162,7 +162,7 @@ export default function SubObject(localData: any) {
                         {/* Show The data for Sub Object */}
                         <div className="h-96 flex justify-start items-start flex-wrap flex-col mt-8">
                             <div className="overflow-x-auto border rounded-xl w-full mb-10">
-                                <table className={`table-auto min-w-full w-full text-left ${styles.table} ${styles.tableObject}`}>
+                                <table className={`table-auto min-w-full w-full text-left ${styles.table} ${styles.tableObject} ${styles.tableTab}`}>
                                     <thead className="bg-black text-white rounded-xl h-10 text-sm font-light">
                                         {
                                             subObj && Object.keys(subObj).length != 0 ?
@@ -196,7 +196,7 @@ export default function SubObject(localData: any) {
 
 
                             {/* Show The Sub Asset Tabs  */}
-                            <div className="relative flex flex-wrap">
+                            <div className="relative flex flex-wrap small:flex-wrap small:flex-row small:w-full">
                                 {
                                     subClassData && subClassData.length > 0 ?
                                         subClassData.map((item: any, index: any) => (
@@ -209,7 +209,7 @@ export default function SubObject(localData: any) {
                                                         subObject: `${item.assetName}`
                                                     }
                                                 }}
-                                                className="bg-yellow-951 rounded-lg h-20 inline-flex justify-center items-center w-44 mr-8 hover:bg-black hover:text-white transition-all duration-[400ms] mb-8"
+                                                className="bg-yellow-951 rounded-lg h-20 inline-flex justify-center items-center w-44 mr-8 small:mr-0 hover:bg-black hover:text-white transition-all duration-[400ms] mb-8 small:w-full"
                                                 key={index}
                                             >
                                                 <span>{item.assetName}</span>
@@ -231,7 +231,7 @@ export default function SubObject(localData: any) {
 
                         {/* Links Box */}
                         <div className="mt-0 flex  w-full">
-                            <div className="flex flex-wrap flex-row w-full justify-end">
+                            <div className="flex flex-wrap flex-row w-full justify-end small:justify-between small:flex-wrap small:flex-row">
                                 <Link
                                     href={{
                                         pathname: '/dashboard/eopswatch/eopswatchmodel',
@@ -240,7 +240,7 @@ export default function SubObject(localData: any) {
                                             key: parentAsset.object
                                         }
                                     }}
-                                    className="rounded-lg h-20 w-auto bg-red-951 flex justify-center items-center px-2 py-2 mr-4 flex-wrap flex-col"
+                                    className="small:mb-2 small:w-[48%] rounded-lg h-20 w-auto bg-red-951 flex justify-center items-center px-2 py-2 mr-4 small:mr-0 flex-wrap flex-col"
                                 >
                                     <Image
                                         src="/img/clockwhite.svg"
@@ -260,7 +260,7 @@ export default function SubObject(localData: any) {
                                             key: parentAsset.object
                                         }
                                     }}
-                                    className="rounded-lg h-20 w-auto bg-green-952 flex justify-center items-center px-2 py-2 mr-4 flex-wrap flex-col"
+                                    className="small:mb-2 small:w-[48%] rounded-lg h-20 w-auto bg-green-952 flex justify-center items-center px-2 py-2 mr-4 small:mr-0 flex-wrap flex-col"
                                 >
                                     <Image
                                         src="/img/airplaywhite.svg"
@@ -272,7 +272,7 @@ export default function SubObject(localData: any) {
                                     <span className="text-white text-[14px]">eOps Trace</span>
                                 </Link>
 
-                                <div className="rounded-lg h-20 w-auto bg-blue-953 flex justify-center items-center px-2 py-2 flex-wrap flex-col mr-4">
+                                <div className="small:mb-2 small:w-[48%] small:mb-2 rounded-lg h-20 w-auto bg-blue-953 flex justify-center items-center px-2 py-2 flex-wrap flex-col mr-4">
                                     <Image
                                         src="/img/maximizewhite.svg"
                                         alt="eops Prosense"
@@ -283,7 +283,7 @@ export default function SubObject(localData: any) {
                                     <span className="text-white text-[14px]">eOps Prosense</span>
                                 </div>
 
-                                <div className="rounded-lg h-20 w-auto bg-brown-951 flex justify-center items-center px-2 py-2 flex-wrap flex-col">
+                                <div className="small:mb-2 small:w-[48%] rounded-lg h-20 w-auto bg-brown-951 flex justify-center items-center px-2 py-2 flex-wrap flex-col">
                                     <Image
                                         src="/img/bar-chart-white.svg"
                                         alt="eops Prosense"

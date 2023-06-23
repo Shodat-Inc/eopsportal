@@ -7,3 +7,67 @@
 body {
   @apply bg-white;
 }
+
+@font-face {
+  font-family: 'SegoeUI';
+  src: url('/public/fonts/SegoeUI.eot');
+  /* IE9 Compat Modes */
+  src: url('/public/fonts/SegoeUI.eot?#iefix') format('embedded-opentype'),
+    /* IE6-IE8 */
+    url('/public/fonts/SegoeUI.woff2') format('woff2'),
+    /* Super Modern Browsers */
+    url('/public/fonts/SegoeUI.woff') format('woff'),
+    /* Pretty Modern Browsers */
+    url('/public/fonts/SegoeUI.ttf') format('truetype'),
+    /* Safari, Android, iOS */
+    url('/public/fonts/SegoeUI.svg#svgFontName') format('svg');
+  /* Legacy iOS */
+}
+
+@font-face {
+  font-family: 'SegoeUI-Bold';
+  src: url('/public/fonts/SegoeUI-Bold.eot');
+  /* IE9 Compat Modes */
+  src: url('/public/fonts/SegoeUI-Bold.eot?#iefix') format('embedded-opentype'),
+    /* IE6-IE8 */
+    url('/public/fonts/SegoeUI-Bold.woff2') format('woff2'),
+    /* Super Modern Browsers */
+    url('/public/fonts/SegoeUI-Bold.woff') format('woff'),
+    /* Pretty Modern Browsers */
+    url('/public/fonts/SegoeUI-Bold.ttf') format('truetype'),
+    /* Safari, Android, iOS */
+    url('/public/fonts/SegoeUI-Bold.svg#svgFontName') format('svg');
+  /* Legacy iOS */
+}
+
+@font-face {
+  font-family: 'SegoeUI-BoldItalic';
+  src: url('/public/fonts/SegoeUI-BoldItalic.eot');
+  /* IE9 Compat Modes */
+  src: url('/public/fonts/SegoeUI-BoldItalic.eot?#iefix') format('embedded-opentype'),
+    /* IE6-IE8 */
+    url('/public/fonts/SegoeUI-BoldItalic.woff2') format('woff2'),
+    /* Super Modern Browsers */
+    url('/public/fonts/SegoeUI-BoldItalic.woff') format('woff'),
+    /* Pretty Modern Browsers */
+    url('/public/fonts/SegoeUI-BoldItalic.ttf') format('truetype'),
+    /* Safari, Android, iOS */
+    url('/public/fonts/SegoeUI-BoldItalic.svg#svgFontName') format('svg');
+  /* Legacy iOS */
+}
+
+@font-face {
+  font-family: 'SegoeUI-Italic';
+  src: url('/public/fonts/SegoeUI-Italic.eot');
+  /* IE9 Compat Modes */
+  src: url('/public/fonts/SegoeUI-Italic.eot?#iefix') format('embedded-opentype'),
+    /* IE6-IE8 */
+    url('/public/fonts/SegoeUI-Italic.woff2') format('woff2'),
+    /* Super Modern Browsers */
+    url('/public/fonts/SegoeUI-Italic.woff') format('woff'),
+    /* Pretty Modern Browsers */
+    url('/public/fonts/SegoeUI-Italic.ttf') format('truetype'),
+    /* Safari, Android, iOS */
+    url('/public/fonts/SegoeUI-Italic.svg#svgFontName') format('svg');
+  /* Legacy iOS */
+}

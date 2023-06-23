@@ -12,11 +12,16 @@ module.exports = withMT({
   ],
   theme: {
     screens: {
-      'xss':'500px'
+      'xss':'500px',
+      'small':{'min': '00px', 'max': '540px'}
     },
     extend: {
       fontFamily: {
-        OpenSans: ["'Open Sans'", "sans-serif"]
+        OpenSans: ["'Open Sans'", "sans-serif"],
+        SegoeUI: ["'SegoeUI'", "sans-serif"],
+        SegoeUIItalic: ["'SegoeUI-Italic'", "sans-serif"],
+        SegoeUIBoldItalic: ["'SegoeUI-BoldItalic'", "sans-serif"],
+        SegoeUIBold: ["'SegoeUI-Bold'", "sans-serif"],
       },
       colors: {
         themeYellow: '#fed136',       
@@ -34,7 +39,18 @@ module.exports = withMT({
           953: '#F8F8F8',
           954: '#A7A7A7',
           955: '#272727',
-          956: '#F5F5F5'
+          956: '#F5F5F5',
+          957: '#E1E1E1',
+          958: '#DEDEDE',
+          959: '#EAEAEA',
+          960: '#FAFAFF',
+          961: '#A39D9D',
+          962: '#D9D9D9',
+          963: '#B1A8A8',
+          964: '#EBEBEB',
+          965: '#c6c6c6',
+          966: '#f2f2f2',
+          967: '#666666',
         },
         blue: {
           951: '#B4BBD2',
@@ -42,7 +58,8 @@ module.exports = withMT({
           953: '#2B4C74',
           957: '#CCE5FF',
           958: '#B8DAFF',
-          959: '#004085'
+          959: '#004085',
+          960: '#378EDE',
         },
         green: {
           951: '#C2D9C4',
@@ -52,20 +69,23 @@ module.exports = withMT({
           959: '#155724'
         },
         pink: {
-          951: '#E29A9A'
+          951: '#E29A9A',
+          952: '#FFF7DA',
         },
         red: {
           951: '#AB3939',
           952: '#DC3545',
           957: '#F8D7DA',
           958: '#F5C6CB',
-          959: '#721C24'
+          959: '#721C24',
+          960: '#D80000',
         },
         brown: {
           951: '#9A7122'
         },
         orange: {
-          951: '#FFF2C6'
+          951: '#FFF2C6',
+          952: '#F3500A',
         }
       },
       backdropBrightness: {

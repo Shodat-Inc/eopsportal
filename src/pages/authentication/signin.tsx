@@ -42,11 +42,6 @@ export default function SignIn() {
         dispatch(getSampleData());
     }, [dispatch]);
 
-    console.log({
-        name:"sample",
-        data:sample
-    })
-
     // Show Hide Eye Icon
     const hideShow = () => {
         setShowPassword({
@@ -121,12 +116,15 @@ export default function SignIn() {
                 return item.username === formData.username && item.password === formData.password
             })
             if (matched && matched.length > 0) {
-                sessionStorage.setItem("auth", userData);
-                localStorage.setItem("auth", userData);
+                const token:any = Math.floor((Math.random() * 1000000000000000) + 1);
+                sessionStorage.setItem("authenticationhUsername", matched[0].username);
+                localStorage.setItem("authenticationUsername", matched[0].username);
+                sessionStorage.setItem("authenticationToken", token);
+                localStorage.setItem("authenticationToken", token);
                 setSuccess(true)
                 setTimeout(() => {
                     push("/dashboard/assetmanagement");
-                }, 2000)
+                }, 1)
 
             } else {
                 setResponseError(true);

@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import Head from 'next/head'
 import FabricInfo from "./authentication/fabricInfo";
+import styles from '../styles/Common.module.css';
 
 export default function Home() {
   return (
@@ -11,19 +12,29 @@ export default function Home() {
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
 
-      <div className="column-2 flex font-OpenSans">
-        <div className="w-[50%]">
+      <div className="font-OpenSans md:flex lg:flex">
+        <div className={`md:w-[50%] md:block sm:hidden ${styles.fabricInfo}`}>
           <FabricInfo />
         </div>
 
-        <div className="w-[50%] relative">
-          <div className="flex justify-center items-center h-full">
+        <div className={`lg:w-[50%] md:w-[50%] sm:w-full sm:mt-0 relative ${styles.formContent}`}>
+          <div className="sm:block md:hidden lg:hidden sm:mb-10 sm:w-full sm:flex sm:justify-center sm:items-center sm:pt-10 max-[540px]:mb-5 max-[540px]:w-full max-[540px]:flex max-[540px]:justify-center max-[540px]:items-center max-[540px]:pt-5 ">
+            <Image
+              src="/img/logo.svg"
+              height={20}
+              width={20}
+              alt="logo"
+              className="h-auto w-[200px]"
+            />
+          </div>
+          <div className="flex justify-center items-center h-full sm:flex-wrap sm:flex-row xss:flex-wrap xss:flex-row">
 
-            <div className="pt-10 pr-2 text-right text-black text-xl font-medium absolute top-0 right-2">
+
+            <div className={`pt-10 pr-2 text-right text-black text-xl font-medium absolute top-0 right-2 sm:relative sm:pt-3 sm:pb-3 sm:right-0 sm:left-0 md:absolute sm:pt-0 sm:pb-0 sm:right-2 sm:left-0 ${styles.dontHaveAcc}`}>
               <span className="text-gray-500 font-normal">Already have an account? </span> <Link href="/authentication/signin">Sign In</Link>
             </div>
 
-            <div className="text-left w-[470px]">
+            <div className="text-left lg:w-[470px] md:w-full sm:w-full sm:px-4">
               <p className="font-bold text-2xl text-black mb-4">Join Us!</p>
               <p className="font-normal text-xl text-gray-500 mb-10">To begin this journey, tell us what type of account you&apos;d be opening?</p>
 

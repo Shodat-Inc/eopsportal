@@ -56,6 +56,7 @@ export default function Objects(localData: any) {
     });
     const [mfdDate, setMfdDate] = useState();
     const [subObj, setSebObj] = useState({} as any);
+    const [deleteModal, setDeleteModal] = useState(false);
 
 
     // Get JSON data on page load
@@ -155,20 +156,25 @@ export default function Objects(localData: any) {
 
     const joinKey = [
         {
-            "objectName" : "Manufacturing Plants",
+            "objectName": "Manufacturing Plants",
             "key": "PlantID",
-        }, 
+        },
         {
-            "objectName" : "Vehicles",
+            "objectName": "Vehicles",
             "key": "VIN",
         },
         {
-            "objectName" : "Gas Station",
+            "objectName": "Gas Station",
             "key": "ABC",
         }
     ]
 
-    var linkKey = joinKey.filter(function (items:any) { return items.objectName === parentAsset.assets; });
+    var linkKey = joinKey.filter(function (items: any) { return items.objectName === parentAsset.assets; });
+
+    // Delete Asset
+    const deleteAsset = (assetID: any) => {
+        setDeleteModal(true);
+    }
 
     return (
         <>
@@ -212,7 +218,7 @@ export default function Objects(localData: any) {
                         </div>
 
                         {/* --- Alerts Start--- */}
-                        {success ? <AlertMessage /> : null}
+                        {success ? <AlertMessage alertType="success" title="Success" message="Object has been created successfully!" /> : null}
                         {/* --- Alerts End--- */}
 
                         <div className="flex justify-start items-start flex-wrap flex-col mt-4">
@@ -224,7 +230,7 @@ export default function Objects(localData: any) {
                                 >
 
                                     <div className="flex justify-between items-start w-full flex-wrap flex-row">
-                                        <h4 className="font-bold text-lg color-black font-semibold">Create New Object</h4>
+                                        <h4 className="font-bold text-lg color-black font-semibold small:mb-5">Create New Object</h4>
                                         <div className="relative flex">
                                             <div
                                                 className="flex justify-center items-center bg-white text-black rounded-t-md w-[130px] h-[50px] font-semibold cursor-pointer mr-7"
@@ -253,16 +259,16 @@ export default function Objects(localData: any) {
                                             </button>
                                         </div>
                                     </div>
-                                    <div className="shadow-lg bg-white p-5 w-full rounded-lg rounded-tr-none min-h-[170px]">
+                                    <div className="shadow-lg bg-white p-5 pt-2 w-full rounded-lg rounded-tr-none min-h-[170px]">
                                         <div className="flex justify-start items-center flex-wrap flex-row">
                                             {
                                                 getParentData.map((item: any, index: any) => {
                                                     if (item == "Mfd Date" || item === "mfdDate" || item === "MfgDate") {
                                                         return (
-                                                            <div className="relative w-[50%] mb-5" key={index}>
-                                                                <div className="rounded-lg border border-gray-954 h-[44px] w-[320px] focus:outline-none focus:border-yellow-951">
+                                                            <div className="relative lg:w-[50%] small:w-full md:w-[50%] sm:w-full mb-1 sm:px-1 pt-[15px]" key={index}>
+                                                                <div className="rounded-lg border border-gray-954 h-[50px] small lg:w-[380px] small:w-full sm:w-full focus:outline-none focus:border-yellow-951">
                                                                     <Datepicker
-                                                                        toggleClassName="absolute bg-yellow-951 rounded-r-lg text-white right-0 h-[42px] px-3 text-gray-400 focus:outline-none disabled:opacity-40 disabled:cursor-not-allowed"
+                                                                        toggleClassName="absolute bg-yellow-951 rounded-r-lg text-white right-0 h-[50px] px-3 text-gray-400 focus:outline-none disabled:opacity-40 disabled:cursor-not-allowed"
                                                                         placeholder={item}
                                                                         useRange={false}
                                                                         asSingle={true}
@@ -274,14 +280,21 @@ export default function Objects(localData: any) {
                                                         )
                                                     } else {
                                                         return (
-                                                            <div className="relative w-[50%] mb-5" key={index}>
-                                                                <input
-                                                                    type="text"
-                                                                    placeholder={item}
-                                                                    name={item.split(" ").join("")}
-                                                                    className="rounded-lg border border-gray-954 h-[44px] pl-5 pr-5 w-[320px] focus:outline-none focus:border-yellow-951"
-                                                                    onChange={(e) => (VIN.current = e.target.value)}
-                                                                />
+                                                            <div className="relative lg:w-[50%] small:w-full md:w-[50%] sm:w-full mb-0 sm:px-1" key={index}>
+                                                                <div className={`mb-1 lg:w-[380px] small:w-full small:w-full ${styles.form__wrap}`}>
+                                                                    <div className={`relative ${styles.form__group} font-OpenSans`}>
+                                                                        <input
+                                                                            type="text"
+                                                                            id={item}
+                                                                            name={item.split(" ").join("")}
+                                                                            className={`border border-gray-961 ${styles.form__field}`}
+                                                                            placeholder={item}
+                                                                            required
+                                                                            onChange={(e) => (VIN.current = e.target.value)}
+                                                                        />
+                                                                        <label htmlFor={item} className={`${styles.form__label}`}>{item}</label>
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         )
                                                     }
@@ -299,28 +312,30 @@ export default function Objects(localData: any) {
                         {data && data.length > 0 ?
                             <div className="h-96 flex justify-start items-start flex-wrap flex-col mt-4">
                                 <h4 className="font-bold text-lg color-black mb-4 font-semibold">Objects</h4>
-                                <div className="overflow-x-auto border rounded-md w-full">
-                                    <table className={`table-auto min-w-full w-full text-left ${styles.table} ${styles.tableObject}`}>
-                                        <thead className="bg-gray-950 rounded-lg h-10 text-sm font-light">
-                                            <th>S.No</th>
-                                            {
-                                                subObj && Object.keys(subObj).length != 0 ?
-                                                    Object.keys(subObj?.subObjects).map((item: any, i: any) => (
-                                                        <th className="capitalize" key={i}>
-                                                            {
-                                                                item.split(/(?=[A-Z])/).join(" ")
-                                                            }
-                                                        </th>
-                                                    ))
-                                                    : null
-                                            }
-                                            <th>Actions</th>
+                                <div className="lg:overflow-hidden md:overflow-x-scroll sm:overflow-x-scroll border border-gray-958 rounded-xl lg:w-full md:w-full lg:w-full sm:w-full small:w-full small:overflow-x-scroll h-[300px] bg-white">
+                                    <table className={`table-auto lg:min-w-full sm:w-full small:w-full text-left ${styles.table} ${styles.tableTab}`}>
+                                        <thead className="bg-black text-white rounded-xl h-10 text-[14px] font-light">
+                                            <tr>
+                                                <th>S.No</th>
+                                                {
+                                                    subObj && Object.keys(subObj).length != 0 ?
+                                                        Object.keys(subObj?.subObjects).map((item: any, i: any) => (
+                                                            <th className="capitalize" key={i}>
+                                                                {
+                                                                    item.split(/(?=[A-Z])/).join(" ")
+                                                                }
+                                                            </th>
+                                                        ))
+                                                        : null
+                                                }
+                                                <th>Actions</th>
+                                            </tr>
                                         </thead>
-                                        <tbody className="cursor-pointer">
+                                        <tbody className="text-sm cursor-pointer">
                                             {
                                                 data.map((items: any, index: any) => {
                                                     return (
-                                                        <tr key={index} className={`text-sm`}>
+                                                        <tr className="hover:bg-yellow-950 text-sm border boder-gray-958 last:border-none" key={index}>
                                                             <td>{index + 1}</td>
                                                             {
                                                                 Object.values(items?.subObjects).map((item: any, i: any) => (
@@ -331,7 +346,7 @@ export default function Objects(localData: any) {
                                                                                 query: {
                                                                                     object: items?.subObjects?.PlantID || items?.subObjects?.VIN,
                                                                                     parentObject: parentAsset.assets,
-                                                                                    key:linkKey[0].key
+                                                                                    key: linkKey[0].key
                                                                                 }
                                                                             }}
                                                                         >
@@ -342,7 +357,7 @@ export default function Objects(localData: any) {
                                                                 ))
                                                             }
                                                             <td>
-                                                                <button className="mr-2">
+                                                                <button className="mr-3">
                                                                     <Image
                                                                         src="/img/edit.svg"
                                                                         alt="Edit"
@@ -350,7 +365,7 @@ export default function Objects(localData: any) {
                                                                         width={18}
                                                                     />
                                                                 </button>
-                                                                <button>
+                                                                <button onClick={() => deleteAsset(items)}>
                                                                     <Image
                                                                         src="/img/trash.svg"
                                                                         alt="Trash"
@@ -370,10 +385,12 @@ export default function Objects(localData: any) {
                                 </div>
                             </div>
                             :
-
-                            <div className="h-72 flex justify-center items-center flex-wrap flex-col mt-8">
-                                <NoDataFound createText="Create Sub Object" />
-                            </div>
+                            <>
+                                <p className="text-black text-md font-semibold mt-8 mb-3">Objects</p>
+                                <div className="flex justify-center items-center flex-wrap flex-col h-[300px] border-white bg-white rounded rounded-lg">
+                                    <NoDataFound titleText="No object data found!" messageText="Please create the sub object by clicking on the" createText="Create Sub Object" />
+                                </div>
+                            </>
                         }
 
                     </div>
@@ -382,6 +399,58 @@ export default function Objects(localData: any) {
                 <div className="w-[16%] pl-5 hidden">
                     <Template />
                 </div>
+
+                {/* ===== Delete Modal starts ===== */}
+                {deleteModal ?
+                    <>
+                        <div
+                            className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
+                        >
+                            <div className="relative my-6 w-[580px]">
+                                <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+                                    {/*header*/}
+                                    <div className="flex items-start justify-between p-2">
+                                        <h3 className="text-lg font-medium"></h3>
+                                        <button
+                                            className="p-1 ml-auto bg-transparent border-0 text-black float-right leading-none font-semibold outline-none focus:outline-none"
+                                            onClick={() => setDeleteModal(false)}
+                                        >
+                                            <Image
+                                                src="/img/close.svg"
+                                                alt="close"
+                                                className="h-6"
+                                                height={24}
+                                                width={24}
+                                            />
+                                        </button>
+                                    </div>
+                                    {/*body*/}
+                                    <div className="relative pt-2 pb-8 flex-auto">
+                                        <div className="flex justify-start items-center flex-wrap flex-col">
+                                            <p className="flex justify-center items-center text-lg">Are you sure want to delete this record?</p>
+                                            <div className="mt-10 relative flex justify-center items-center w-full">
+                                                <button
+                                                    className="border border-black rounded-lg bg-black text-white text-lg w-[70px] h-[47px] mr-5 hover:bg-yellow-951 hover:text-white hover:border-yellow-951 ease-in-out duration-300 disabled:bg-gray-951 disabled:hover:border-gray-951 disabled:border-gray-951"
+                                                    onClick={() => { setDeleteModal(false); }}
+                                                >
+                                                    Yes
+                                                </button>
+                                                <button
+                                                    className="border border-black rounded-lg bg-white text-black text-lg w-[70px] h-[47px] hover:text-white hover:bg-yellow-951 hover:border-yellow-951 ease-in-out duration-300"
+                                                    onClick={() => { setDeleteModal(false); }}
+                                                >
+                                                    No
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="opacity-75 fixed inset-0 z-40 bg-black"></div>
+                    </>
+                    : null}
+                {/* ===== Delete Modal Ends ===== */}
 
 
             </div>
