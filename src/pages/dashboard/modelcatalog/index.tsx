@@ -6,6 +6,72 @@ import Image from "next/image";
 import Link from "next/link";
 import { Carousel } from "@material-tailwind/react";
 import { IconButton } from "@material-tailwind/react";
+import RangeSlider from "@/common/rangeSlider";
+
+// const RangeSlider = ({ min, max, value, step, onChange }) => {
+//     const [minValue, setMinValue] = React.useState(value ? value.min : min);
+//     const [maxValue, setMaxValue] = React.useState(value ? value.max : max);
+
+//     React.useEffect(() => {
+//         if (value) {
+//             setMinValue(value.min);
+//             setMaxValue(value.max);
+//         }
+//     }, [value]);
+
+//     const handleMinChange = e => {
+//         e.preventDefault();
+//         const newMinVal = Math.min(+e.target.value, maxValue - step);
+//         if (!value) setMinValue(newMinVal);
+//         onChange({ min: newMinVal, max: maxValue });
+//     };
+
+//     const handleMaxChange = e => {
+//         e.preventDefault();
+//         const newMaxVal = Math.max(+e.target.value, minValue + step);
+//         if (!value) setMaxValue(newMaxVal);
+//         onChange({ min: minValue, max: newMaxVal });
+//     };
+
+//     const minPos = ((minValue - min) / (max - min)) * 100;
+//     const maxPos = ((maxValue - min) / (max - min)) * 100;
+
+//     return (
+//         <div className="wrapper">
+//             <div className="input-wrapper">
+//                 {/* <input
+//                     className="input"
+//                     type="range"
+//                     value={minValue}
+//                     min={min}
+//                     max={max}
+//                     step={step}
+//                     onChange={handleMinChange}
+//                 /> */}
+//                 <input
+//                     className="input"
+//                     type="range"
+//                     value={maxValue}
+//                     min={min}
+//                     max={max}
+//                     step={step}
+//                     onChange={handleMaxChange}
+//                 />
+//             </div>
+
+//             <div className="control-wrapper">
+//                 <div className="control" style={{ left: `${minPos}%` }} />
+//                 <div className="rail">
+//                     <div
+//                         className="inner-rail"
+//                         style={{ left: `${minPos}%`, right: `${100 - maxPos}%` }}
+//                     />
+//                 </div>
+//                 <div className="control" style={{ left: `${maxPos}%` }} />
+//             </div>
+//         </div>
+//     );
+// };
 
 export default function ModelCatalog() {
     const [showModal, setShowModal] = useState(false);
@@ -14,12 +80,38 @@ export default function ModelCatalog() {
         setShowModal(true);
         setModalTitle(item)
     }
+    const [value, setValue] = useState(20);
+    const handleRange = (e: any) => {
+        console.log({
+            value: e.target.value
+        })
+        setValue(e.target.value)
+    }
+
     return (
         <div className="flex font-OpenSans">
 
             <div className="w-[100%]">
                 <div className="columns-2 flex justify-between items-center">
                     <p className="text-black text-lg mb-0 font-semibold">Model Catalog</p>
+                </div>
+
+                <div className="hidden">
+                    <div className={`${styles.rangeSlider}`}>
+                        <input
+                            type="range"
+                            max={100}
+                            min={0}
+                            step={1}
+                            value={value}
+                            defaultValue={value}
+                            onChange={handleRange}
+                            title={value.toString()}
+                        />
+                    </div>
+                    <div className="relative mb-5 mt-5 h-[20px] w-[380px] inline-block">
+                        <span className={`absolute left-[${value}%]  top-0`}>{value.toString()}</span>
+                    </div>
                 </div>
 
                 <div className="border border-gray-957 bg-gray-953 min-h-[450px] rounded-xl mt-3 px-4 py-4">
@@ -43,6 +135,7 @@ export default function ModelCatalog() {
                     </div>
 
                     {/* Content Goes Here */}
+
                     <div className="flex items-center justify-center">
                         <div className="relative mt-20 w-[95%]">
                             <Carousel
