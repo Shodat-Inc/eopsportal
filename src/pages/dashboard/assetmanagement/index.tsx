@@ -291,7 +291,7 @@ export default function AssetManagement(localData: any) {
                         {data.length > 0 ?
                             <div className="h-96 flex justify-start items-start flex-wrap flex-row mt-12">
                                 <p className="text-black text-md mb-6 font-semibold">My Class</p>
-                                <div className="lg:overflow-hidden md:overflow-x-scroll sm:overflow-x-scroll border border-gray-958 rounded-xl lg:w-full md:w-full lg:w-full sm:w-full small:w-full small:overflow-x-scroll h-[300px] bg-white">
+                                <div className={`lg:overflow-hidden md:overflow-x-scroll sm:overflow-x-scroll border border-gray-958 rounded-xl lg:w-full md:w-full lg:w-full sm:w-full small:w-full small:overflow-x-scroll h-[300px] bg-white ${styles.proTableWrap}`}>
                                     <table className={`table-auto lg:min-w-full sm:w-full small:w-full text-left ${styles.table}`}>
                                         <thead className="bg-black text-white rounded-xl h-10 text-[14px] font-light">
                                             <tr>

@@ -13,6 +13,7 @@ const SideBar = forwardRef(({ showNav, setShowNav }, ref) => {
   const [eopstrace, setEopstatch] = useState(false);
   const [eopspro, setEopspro] = useState(false);
   const [eopsinsight, setEopinsight] = useState(false);
+  const [modelCatalog, setModelCatalog] = useState(false);
 
   return (
     <div ref={ref} className={`fixed w-60 h-full  shadow-sm bg-black ${styles.sidebar}`}>
@@ -124,8 +125,8 @@ const SideBar = forwardRef(({ showNav, setShowNav }, ref) => {
                   <Image
                     src={
                       router.pathname == "/dashboard/eopswatch"
-                        ? '/img/clock.svg'
-                        : '/img/clock.svg'
+                        ? '/img/eops-watch-black-3.svg'
+                        : '/img/eops-watch-black-3.svg'
                     }
                     alt="clock"
                     className={`w-32 h-auto ${styles.sideicons}`}
@@ -136,8 +137,8 @@ const SideBar = forwardRef(({ showNav, setShowNav }, ref) => {
                   <Image
                     src={
                       router.pathname == "/dashboard/eopswatch"
-                        ? '/img/clock.svg'
-                        : '/img/clock-white.svg'
+                        ? '/img/eops-watch-black-3.svg'
+                        : '/img/eops-watch-white-3.svg'
                     }
                     alt="clock"
                     className={`w-32 h-auto ${styles.sideicons}`}
@@ -165,7 +166,7 @@ const SideBar = forwardRef(({ showNav, setShowNav }, ref) => {
               {
                 eopstrace ?
                   <Image
-                    src={router.pathname == "/dashboard/eopstrace" ? '/img/airplay.svg' : '/img/airplay.svg'}
+                    src={router.pathname == "/dashboard/eopstrace" ? '/img/eops-trace-black-2.svg' : '/img/airplay.svg'}
                     alt="company logo"
                     className={`w-32 h-auto ${styles.sideicons}`}
                     height={25}
@@ -173,7 +174,7 @@ const SideBar = forwardRef(({ showNav, setShowNav }, ref) => {
                   />
                   :
                   <Image
-                    src={router.pathname == "/dashboard/eopstrace" ? '/img/airplay.svg' : '/img/airplay-white.svg'}
+                    src={router.pathname == "/dashboard/eopstrace" ? '/img/eops-trace-black-2.svg' : '/img/eops-trace-white-2.svg'}
                     alt="company logo"
                     className={`w-32 h-auto ${styles.sideicons}`}
                     height={25}
@@ -200,7 +201,7 @@ const SideBar = forwardRef(({ showNav, setShowNav }, ref) => {
               {
                 eopspro ?
                   <Image
-                    src={router.pathname == "/dashboard/eopsprosense" ? '/img/maximize.svg' : '/img/maximize.svg'}
+                    src={router.pathname == "/dashboard/eopsprosense" ? '/img/eops-prosense-black.svg' : '/img/eops-prosense-black.svg'}
                     alt="company logo"
                     className={`w-32 h-auto ${styles.sideicons}`}
                     height={25}
@@ -208,7 +209,7 @@ const SideBar = forwardRef(({ showNav, setShowNav }, ref) => {
                   />
                   :
                   <Image
-                    src={router.pathname == "/dashboard/eopsprosense" ? '/img/maximize.svg' : '/img/maximize-white.svg'}
+                    src={router.pathname == "/dashboard/eopsprosense" ? '/img/eops-prosense-black.svg' : '/img/eops-prosense-white.svg'}
                     alt="company logo"
                     className={`w-32 h-auto ${styles.sideicons}`}
                     height={25}
@@ -235,7 +236,7 @@ const SideBar = forwardRef(({ showNav, setShowNav }, ref) => {
               {
                 eopsinsight ?
                   <Image
-                    src={router.pathname == "/dashboard/eopsinsight" ? '/img/bar-chart.svg' : '/img/bar-chart.svg'}
+                    src={router.pathname == "/dashboard/eopsinsight" ? '/img/eops-insights-black.svg' : '/img/eops-insights-black.svg'}
                     alt="company logo"
                     className={`w-32 h-auto ${styles.sideicons}`}
                     height={25}
@@ -243,7 +244,7 @@ const SideBar = forwardRef(({ showNav, setShowNav }, ref) => {
                   />
                   :
                   <Image
-                    src={router.pathname == "/dashboard/eopsinsight" ? '/img/bar-chart.svg' : '/img/bar-chart-white-2.svg'}
+                    src={router.pathname == "/dashboard/eopsinsight" ? '/img/eops-insights-black.svg' : '/img/eops-insights-white.svg'}
                     alt="company logo"
                     className={`w-32 h-auto ${styles.sideicons}`}
                     height={25}
@@ -253,6 +254,42 @@ const SideBar = forwardRef(({ showNav, setShowNav }, ref) => {
             </div>
             <div>
               <p>eOps Insight/Report</p>
+            </div>
+          </div>
+        </Link>
+
+
+        <Link href="/dashboard/modelcatalog">
+          <div
+            className={`pl-6 font-OpenSans font-light py-3 mx-0 text-center cursor-pointer mb-3 flex items-center  transition-colors ${router.pathname == "/dashboard/modelcatalog"
+              ? "bg-white text-black"
+              : "text-white hover:bg-yellow-951 hover:text-black"
+              }`}
+            onMouseOver={() => setModelCatalog(true)}
+            onMouseOut={() => setModelCatalog(false)}
+          >
+            <div className="mr-2">
+              {
+                modelCatalog ?
+                  <Image
+                    src={router.pathname == "/dashboard/modelcatalog" ? '/img/model-catalog-black.svg' : '/img/model-catalog-black.svg'}
+                    alt="company logo"
+                    className={`w-32 h-auto ${styles.sideicons}`}
+                    height={25}
+                    width={25}
+                  />
+                  :
+                  <Image
+                    src={router.pathname == "/dashboard/modelcatalog" ? '/img/model-catalog-black.svg' : '/img/model-catalog-white.svg'}
+                    alt="company logo"
+                    className={`w-32 h-auto ${styles.sideicons}`}
+                    height={25}
+                    width={25}
+                  />
+              }
+            </div>
+            <div>
+              <p>Models Catalog</p>
             </div>
           </div>
         </Link>

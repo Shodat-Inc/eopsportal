@@ -50,6 +50,7 @@ module.exports = withMT({
           964: '#EBEBEB',
           965: '#c6c6c6',
           966: '#f2f2f2',
+          967: '#666666',
         },
         blue: {
           951: '#B4BBD2',
@@ -57,7 +58,8 @@ module.exports = withMT({
           953: '#2B4C74',
           957: '#CCE5FF',
           958: '#B8DAFF',
-          959: '#004085'
+          959: '#004085',
+          960: '#378EDE',
         },
         green: {
           951: '#C2D9C4',
@@ -75,13 +77,15 @@ module.exports = withMT({
           952: '#DC3545',
           957: '#F8D7DA',
           958: '#F5C6CB',
-          959: '#721C24'
+          959: '#721C24',
+          960: '#D80000',
         },
         brown: {
           951: '#9A7122'
         },
         orange: {
-          951: '#FFF2C6'
+          951: '#FFF2C6',
+          952: '#F3500A',
         }
       },
       backdropBrightness: {
