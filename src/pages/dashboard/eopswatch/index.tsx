@@ -6,6 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import axios from 'axios';
 import TabData from "./tabData";
+import Tabs from './tabs';
 import { getAssetsData } from "@/lib/getassets";
 
 export async function getServerSideProps() {
@@ -38,7 +39,6 @@ export default function EopsWatch(props: any) {
                     return item.parentAssetName === chooseAsset;
                 });
                 if (filtered && filtered.length > 0) {
-                    console.log("filtered", filtered)
                     setSubClassData(filtered);
                     setTabData(filtered[0].assetName)
                 }
@@ -53,8 +53,11 @@ export default function EopsWatch(props: any) {
 
     const onChange = (event: any) => {
         setValue(event.target.value)
-        if (event.target.value === "") {
-            fetchClassData(); return;
+        if (event.target.value === "" || event.target.value.length <=0) {
+            fetchClassData(); 
+            setData([])
+            setSearch([])
+            return;
         }
         axios.get("/api/getChildObject").then((response) => {
             if (response.data) {
@@ -146,13 +149,6 @@ export default function EopsWatch(props: any) {
         setToggleAsset(false);
         setShowHideTab(true);
     }
-
-    console.log({
-        chooseAsset: chooseAsset,
-        subObj: subObj,
-        subClassData: subClassData,
-        tabData: tabData
-    })
 
     return (
         <div className="flex font-OpenSans">
@@ -275,8 +271,8 @@ export default function EopsWatch(props: any) {
                     {/* =========== TABS ============= */}
                     <div className="text-black font-semibold text-md mb-5">Objects</div>
                     <div className="mt-2 flex w-full flex-wrap justify-start item-center flex-col">
-                        {showHideTab ?
-                            <div className="relative border-l-[1px]">
+                        {/* {showHideTab ?
+                            <div className="relative border-l-[1px] hidden">
                                 {
                                     subClassData && subClassData.length > 0 ?
                                         subClassData.map((item: any, index: any) => (
@@ -290,12 +286,13 @@ export default function EopsWatch(props: any) {
                                         : null
                                 }
                             </div>
-                            : null}
+                            : null} */}
                         <div className="relative">
-                            <TabData
-                                objData={tabData}
+                            <Tabs
+                                // objData={tabData}
                                 className={chooseAsset}
                                 searchData={search}
+                                // subClassData={subClassData}
                             />
                         </div>
                     </div>
