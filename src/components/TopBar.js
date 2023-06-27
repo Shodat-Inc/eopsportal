@@ -15,6 +15,7 @@ import Image from "next/image";
 
 export default function TopBar({ showNav, setShowNav }) {
   const { push } = useRouter();
+  const router = useRouter();
 
   useEffect(() => {
     if (!localStorage.getItem('authenticationToken')) {
@@ -51,6 +52,10 @@ export default function TopBar({ showNav, setShowNav }) {
             onClick={() => setShowNav(!showNav)}
           />
         </div>
+        {
+          router.pathname ==="/dashboard/eopswatch" ||
+          router.pathname === "/dashboard/eopstrace" ?        
+          null :
         <div className="pl-9 relative">
           <Image
             src="/img/search.svg"
@@ -65,7 +70,7 @@ export default function TopBar({ showNav, setShowNav }) {
             placeholder="Search..."
             name="globalsearch"
           />
-        </div>
+        </div> }
       </div>
 
       <div className="flex items-center pr-4 md:pr-16 mt-7">

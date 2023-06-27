@@ -53,8 +53,8 @@ export default function EopsWatch(props: any) {
 
     const onChange = (event: any) => {
         setValue(event.target.value)
-        if (event.target.value === "" || event.target.value.length <=0) {
-            fetchClassData(); 
+        if (event.target.value === "" || event.target.value.length <= 0) {
+            fetchClassData();
             setData([])
             setSearch([])
             return;
@@ -67,12 +67,69 @@ export default function EopsWatch(props: any) {
                 }
 
                 const filtered = response.data.filter((item: any) => {
+                    console.log({
+                        response: response.data
+                    })
+
+                    // if (item.tags?.hasOwnProperty("VIN")) {
+                    //     if (
+                    //         item.tags?.VIN.toString().toLowerCase().includes(event.target.value.toString().toLowerCase())
+                    //     ) {
+                    //         return item
+                    //     }
+                   
+                    // }
+
+                    // var indexes = item.filter((item:any, i:any) => {
+                    //     return item.tags.VIN.toLowerCase().indexOf(event.target.value.toString().toLowerCase()) !== -1;    
+                    //   })  
+
+                    // if(
+                    //     item.tags?.hasOwnProperty("VIN") &&
+                    //     item.tags?.hasOwnProperty("SerialNo") &&
+                    //     item.tags?.hasOwnProperty("SerialID") &&
+                    //     item.tags?.hasOwnProperty("ID") &&
+                    //     item.tags?.hasOwnProperty("PlantID")
+                    // ) {
+                    //     console.log("HERE")
+                    //     if(item.tags?.VIN.toString().toLowerCase().includes(event.target.value.toString().toLowerCase())) {
+                    //         return item;
+                    //     } 
+                    // } else {
+                    //     if(item.tags?.VIN.toString().toLowerCase().includes(event.target.value.toString().toLowerCase())) {
+                    //         return item;
+                    //     }
+                    // }
+
+                    // return item;
+
                     if (item.tags.hasOwnProperty("VIN")) {
-                        if (item.tags.VIN.toString().toLowerCase().includes(event.target.value.toString().toLowerCase())) {
+                        console.log("HERE VIN")
+                        if (item.tags.VIN.toString().toLowerCase().includes(event.target.value.toString().toLowerCase()) ) {
+                            return item;
+                        }
+                    } else if (item.tags.hasOwnProperty("SerialNo")) {
+                        console.log("HERE SerialNo")
+                        if (item.tags.SerialNo.toString().toLowerCase().includes(event.target.value.toString().toLowerCase()) ) {
+                            return item;
+                        }
+                    } else if (item.tags?.hasOwnProperty("SerialNo")) {
+                        console.log("HERE SerialNo")
+                        if (item.tags?.SerialNo.toString().toLowerCase().includes(event.target.value.toString().toLowerCase()) ) {
+                            return item;
+                        }
+                    } else if (item.tags.hasOwnProperty("ID")) {
+                        console.log("HERE ID")
+                        if (item.tags.ID.toString().toLowerCase().includes(event.target.value.toString().toLowerCase()) ) {
+                            return item;
+                        }
+                    } else if (item.tags.hasOwnProperty("PlantID")) {
+                        console.log("HERE PlantID")
+                        if (item.tags.PlantID.toString().toLowerCase().includes(event.target.value.toString().toLowerCase()) ) {
                             return item;
                         }
                     } else {
-                        if (item.tags.PlantID.toString().toLowerCase().includes(event.target.value.toString().toLowerCase())) {
+                        if (item.tags?.VIN?.toString().toLowerCase().includes(event.target.value.toString().toLowerCase())) {
                             return item;
                         }
                     }
@@ -88,7 +145,7 @@ export default function EopsWatch(props: any) {
 
     const subObjectSelected = (obj: any) => {
         setData([]);
-        // setValue("");
+        setValue(obj);
         setSearch(obj)
         setShowHideTab(false);
         axios.get("/api/getChildObject").then((response) => {
@@ -122,12 +179,15 @@ export default function EopsWatch(props: any) {
         setShowHideTab(true);
     }
 
+    console.log({
+        data:data
+    })
     // Getting the filtered list if VIN || PlantID from search bar
     const filteredData = data && data.map((items: any) => {
         if (items.className === "Manufacturing Plants") {
-            return items.tags?.PlantID
+            return items.tags?.PlantID || items.tags?.ID
         } else {
-            return items.tags?.VIN
+            return items.tags?.SerialNo || items.tags?.SerialID || items.tags?.VIN
         }
     })
 
@@ -179,51 +239,11 @@ export default function EopsWatch(props: any) {
                     </div>
 
                     {/* Search Bar */}
-                    <div className="flex w-full mt-5 justify-center items-center flex-wrap relative">
+                    <div className="flex w-full mt-5 justify-start items-center flex-wrap relative">
                         <>
-                            <div className="relative">
-                                <div className="flex relative w-[480px] flex-wrap">
-                                    <input
-                                        type="text"
-                                        placeholder="Search"
-                                        id="searchobjects"
-                                        name="searchobjects"
-                                        className="rounded rounded-lg border border-gray-962 pl-10 pr-2 w-[480px] h-12"
-                                        onChange={onChange}
-                                        value={value}
-                                    />
-                                    <Image
-                                        src="/img/search.svg"
-                                        alt="search"
-                                        height={18}
-                                        width={18}
-                                        className="absolute left-3 top-[14px]"
-                                    />
-                                </div>
 
-                                {
-                                    data && data.length > 0 ?
-                                        <div className="bg-white shadow-lg rounded rounded-xl w-[480px] overflow-hidden overflow-y-auto min-h-[200px] absolute top-[100%] z-10">
-                                            {
-                                                arr.map((items: any, index: any) => (
-                                                    <button
-                                                        className="text-left px-4 py-3 hover:bg-yellow-951 w-full"
-                                                        key={index}
-                                                        onClick={() => subObjectSelected(items)}
-                                                    >
-                                                        {items}
-
-                                                    </button>
-                                                ))
-                                            }
-                                        </div>
-                                        :
-                                        null
-                                }
-                            </div>
-
-                            <div className="relative p-6 flex-auto">
-                                <div className="flex justify-start items-center flex-wrap flex-col">
+                            <div className="relative pt-6 pb-6 flex-auto">
+                                <div className="flex justify-start items-start flex-wrap flex-col">
                                     <div className="w-[400px]">
                                         <div
                                             className="border rounded-xl border-gray-500 h-[55px] w-[400px] pl-2 pr-5 relative flex items-center justify-start bg-white"
@@ -261,6 +281,48 @@ export default function EopsWatch(props: any) {
                                 </div>
                             </div>
 
+                            <div className="relative">
+                                <div className="flex relative w-[400px] flex-wrap">
+                                    <input
+                                        type="text"
+                                        placeholder="Search"
+                                        id="searchobjects"
+                                        name="searchobjects"
+                                        className="rounded rounded-lg border border-gray-962 pl-10 pr-2 w-[480px] h-12"
+                                        onChange={onChange}
+                                        value={value}
+                                        autoComplete="off"
+                                    />
+                                    <Image
+                                        src="/img/search.svg"
+                                        alt="search"
+                                        height={18}
+                                        width={18}
+                                        className="absolute left-3 top-[14px]"
+                                    />
+                                </div>
+
+                                {
+                                    data && data.length > 0 ?
+                                        <div className="bg-white shadow-lg rounded rounded-xl w-[400px] overflow-hidden overflow-y-auto min-h-[200px] absolute top-[100%] z-10">
+                                            {
+                                                arr.map((items: any, index: any) => (
+                                                    <button
+                                                        className="text-left px-4 py-3 hover:bg-yellow-951 w-full"
+                                                        key={index}
+                                                        onClick={() => subObjectSelected(items)}
+                                                    >
+                                                        {items}
+
+                                                    </button>
+                                                ))
+                                            }
+                                        </div>
+                                        :
+                                        null
+                                }
+                            </div>
+
                         </>
 
 
@@ -292,7 +354,7 @@ export default function EopsWatch(props: any) {
                                 // objData={tabData}
                                 className={chooseAsset}
                                 searchData={search}
-                                // subClassData={subClassData}
+                            // subClassData={subClassData}
                             />
                         </div>
                     </div>

@@ -96,7 +96,7 @@ export default function ModelCatalog() {
                     <p className="text-black text-lg mb-0 font-semibold">Model Catalog</p>
                 </div>
 
-                <div className="hidden">
+                <div className="hidden1">
                     <div className={`${styles.rangeSlider}`}>
                         <input
                             type="range"
