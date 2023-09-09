@@ -18,7 +18,11 @@ export default function TrainingView() {
             setLoader(false)
         }, 4000)
     }, [])
+<<<<<<< HEAD
     console.log("parentAsset", parentAsset)
+=======
+    const [value, setValue] = useState(0);
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
 
     const fetchObjectData = () => {
         axios.get("/api/geteopsWatch").then((response) => {
@@ -30,10 +34,17 @@ export default function TrainingView() {
                 });
                 if (filtered && filtered.length > 0) {
                     if (filtered[0].images) {
+<<<<<<< HEAD
                         console.log("HERE", filtered[0].images)
                         const filterArr = filtered[0].images.filter((item: any) => {
                             return item.imageID.toString() === parentAsset.imageID
                         })
+=======
+                        const filterArr = filtered[0].images.filter((item: any) => {
+                            return item.imageID.toString() === parentAsset.imageID
+                        })
+                        setValue(filterArr[0].thresholdValue)
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                         setData(filterArr);
                     }
                 }
@@ -45,7 +56,13 @@ export default function TrainingView() {
         if (fetchObjectData.length) return;
     }, [parentAsset])
 
+<<<<<<< HEAD
     console.log("DATA =>", data)
+=======
+    const handleRange = (e: any) => {
+        setValue(e.target.value)
+    }
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
 
     return (
         <div className="flex font-OpenSans">
@@ -155,6 +172,14 @@ export default function TrainingView() {
                                 </li>
                             </ol>
                         </nav>
+<<<<<<< HEAD
+=======
+
+                        <div className="flex justify-center items-center">
+                            <button className="bg-yellow-951 text-black rounded rounded-xl border b order-yellow-951 flex justify-center items-center px-3 h-[44px] ml-2 transition-all duration-[400ms] mr-3 transition-opacity duration-300 outline-none transform active:scale-75 transition-transform">Generate RCA</button>
+                            <button className="bg-yellow-951 text-black rounded rounded-xl border b order-yellow-951 flex justify-center items-center px-3 h-[44px] ml-2 transition-all duration-[400ms] mr-3 transition-opacity duration-300 outline-none transform active:scale-75 transition-transform">Track Issue</button>
+                        </div>
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                     </div>
 
 
@@ -238,13 +263,41 @@ export default function TrainingView() {
                                                                 data ?
                                                                     <>
                                                                         <p className="mb-2 p-0 text-black text-xl font-semibold">Threshold Value</p>
+<<<<<<< HEAD
                                                                         <Image
+=======
+
+                                                                        <div className="mb-3">
+                                                                            <div className="relative mb-1 h-[20px] w-[380px] inline-block">
+                                                                                <span className={`absolute left-0 top-0 font-bold text-xl`}>{value}%</span>
+                                                                            </div>
+
+                                                                            <div className={`${styles.rangeSlider}`}>
+                                                                                <input
+                                                                                    type="range"
+                                                                                    max={100}
+                                                                                    min={0}
+                                                                                    step={1}
+                                                                                    value={value}
+                                                                                    defaultValue={data[0].thresholdValue}
+                                                                                    onChange={handleRange}
+                                                                                    title={data[0].thresholdValue.toString()}
+                                                                                />
+                                                                            </div>
+                                                                        </div>
+
+                                                                        {/* <Image
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                                                                             src={data[0].threshold}
                                                                             alt="Result"
                                                                             height={70}
                                                                             width={290}
                                                                             className="mb-2 h-auto w-auto"
+<<<<<<< HEAD
                                                                         />
+=======
+                                                                        /> */}
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                                                                     </>
                                                                     : null
                                                             }

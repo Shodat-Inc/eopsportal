@@ -291,7 +291,11 @@ export default function ChildObject(localData: any) {
                                         <h4 className="font-bold text-lg color-black font-semibold">Create New Object</h4>
                                         <div className="relative flex">
                                             <div
+<<<<<<< HEAD
                                                 className="flex justify-center items-center bg-white text-black rounded-t-md w-[130px] h-[50px] font-semibold cursor-pointer mr-7"
+=======
+                                                className="flex justify-center items-center bg-white text-black rounded-t-md w-[130px] h-[50px] font-semibold cursor-pointer mr-7 transition-opacity duration-300 outline-none transform active:scale-75 transition-transform"
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                                                 onClick={clearAll}
                                             >
                                                 <Image
@@ -304,7 +308,11 @@ export default function ChildObject(localData: any) {
                                                 <span>Clear All</span>
                                             </div>
                                             <button
+<<<<<<< HEAD
                                                 className="flex justify-center items-center bg-yellow-950 text-black rounded-t-md w-[130px] h-[50px] font-semibold"
+=======
+                                                className="flex justify-center items-center bg-yellow-950 text-black rounded-t-md w-[130px] h-[50px] font-semibold transition-opacity duration-300 outline-none transform active:scale-75 transition-transform"
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                                             >
                                                 <Image
                                                     src="/img/tick.svg"
@@ -417,7 +425,11 @@ export default function ChildObject(localData: any) {
                                                                     ))
                                                                 }
                                                                 <td>
+<<<<<<< HEAD
                                                                     <button className="mr-4">
+=======
+                                                                    <button className="mr-4 transition-opacity duration-300 outline-none transform active:scale-75 transition-transform">
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                                                                         <Image
                                                                             src="/img/edit.svg"
                                                                             alt="Edit"
@@ -425,7 +437,11 @@ export default function ChildObject(localData: any) {
                                                                             width={18}
                                                                         />
                                                                     </button>
+<<<<<<< HEAD
                                                                     <button onClick={() => deleteAsset(items)}>
+=======
+                                                                    <button className="transition-opacity duration-300 outline-none transform active:scale-75 transition-transform" onClick={() => deleteAsset(items)}>
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                                                                         <Image
                                                                             src="/img/trash.svg"
                                                                             alt="Trash"
@@ -542,7 +558,11 @@ export default function ChildObject(localData: any) {
                                     <div className="flex items-start justify-between p-2">
                                         <h3 className="text-lg font-medium"></h3>
                                         <button
+<<<<<<< HEAD
                                             className="p-1 ml-auto bg-transparent border-0 text-black float-right leading-none font-semibold outline-none focus:outline-none"
+=======
+                                            className="p-1 ml-auto bg-transparent border-0 text-black float-right leading-none font-semibold outline-none focus:outline-none transition-opacity duration-300 outline-none transform active:scale-75 transition-transform"
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                                             onClick={() => setDeleteModal(false)}
                                         >
                                             <Image

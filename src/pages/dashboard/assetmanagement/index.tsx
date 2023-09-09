@@ -1,16 +1,29 @@
 import React, { useState, useRef, useEffect } from "react";
+<<<<<<< HEAD
+=======
+import { useDetectClickOutside } from 'react-detect-click-outside';
+import { useDispatch, useSelector } from 'react-redux';
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
 import Layout from "../../../components/Layout";
 import NoDataFound from "../../../common/nodatafound";
 import styles from '../../../styles/Common.module.css';
 import { getAssetsData } from "../../../lib/getassets";
 import { useRouter } from 'next/router'
+<<<<<<< HEAD
+=======
+import Router from 'next/router'
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
 import Link from "next/link";
 import Image from "next/image";
 import Template from "../template";
 import axios from 'axios';
 import AlertMessage from "@/common/alertMessage";
 import moment from "moment";
+<<<<<<< HEAD
 
+=======
+import { setSelectedClass } from "@/store/actions/classAction";
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
 export async function getServerSideProps() {
     const localData = await getAssetsData()
     return {
@@ -21,6 +34,10 @@ export async function getServerSideProps() {
 }
 
 export default function AssetManagement(localData: any) {
+<<<<<<< HEAD
+=======
+    const dispatch = useDispatch<any>();
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
     const [showModal, setShowModal] = useState(false);
     const [success, setSuccess] = useState(false);
     const assetname = useRef("");
@@ -39,6 +56,33 @@ export default function AssetManagement(localData: any) {
     const [dtObject, setDtObject] = useState<any[]>([]);
     const [deleteModal, setDeleteModal] = useState(false);
 
+<<<<<<< HEAD
+=======
+
+    function useOutsideAlerter(ref: any) {
+        useEffect(() => {
+            /**
+             * Alert if clicked on outside of element
+             */
+            function handleClickOutside(event: any) {
+                if (ref.current && !ref.current.contains(event.target)) {
+                    //   alert("You clicked outside of me!");
+                    setToggleAsset(false)
+                }
+            }
+            // Bind the event listener
+            document.addEventListener("mousedown", handleClickOutside);
+            return () => {
+                // Unbind the event listener on clean up
+                document.removeEventListener("mousedown", handleClickOutside);
+            };
+        }, [ref]);
+    }
+
+    const wrapperRef = useRef(null);
+    useOutsideAlerter(wrapperRef);
+
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
     // Get JSON data on page load
     const fetchData = () => {
         axios.get("/api/getAssets").then((response) => {
@@ -193,16 +237,54 @@ export default function AssetManagement(localData: any) {
         setToggleAsset(false)
     }
 
+<<<<<<< HEAD
+=======
+    // Continue to next page after setting the selected class to redux
+    const continueToNext = () => {
+        console.log({
+            chooseAsset: chooseAsset
+        })
+        dispatch(setSelectedClass(chooseAsset));
+
+        setTimeout(() => {
+            Router.push({
+                pathname: '/dashboard/assetmanagement/objects',
+                query: {
+                    chooseAsset
+                }
+            }, 'assetmanagement/objects')
+        }, 100)
+    }
+
+    // Send props to next page
+    function sendProps() {
+        Router.push({
+            pathname: "/dashboard/assetmanagement/subasset",
+            query: {
+                chooseAsset
+            }
+        },'assetmanagement/subasset')
+    }
+
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
     return (
         <>
             <div className="flex font-OpenSans">
 
+<<<<<<< HEAD
                 <div className="lg:w-[86%] md:w-full sm:w-full small:w-full">
+=======
+                <div className="lg:w-full md:w-full sm:w-full small:w-full">
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                     <div className="columns-2 flex justify-between md:items-center sm:flex sm:flex-wrap sm:flex-col sm:items-start md:flex-row small:flex-col small:flex-wrap small:items-start">
                         <p className="text-black text-lg lg:mb-0 font-semibold sm:mb-3 small:mb-3">Class Management</p>
                         <div className="flex justify-end items-right">
                             <button
+<<<<<<< HEAD
                                 className="rounded-xl bg-yellow-951 border-[2px] border-yellow-951 text-black flex h-12 justify-center items-center pl-2 pr-2 hover:bg-white hover:text-black hover:border-black transition-all duration-[400ms] mr-3"
+=======
+                                className="rounded-xl bg-yellow-951 border-[2px] border-yellow-951 text-black flex h-12 justify-center items-center pl-2 pr-2 hover:bg-white hover:text-black hover:border-black transition-all duration-[400ms] mr-3 transition-opacity duration-300 outline-none transform active:scale-75 transition-transform"
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                                 onClick={() => setShowModal(true)}
                             >
                                 <Image
@@ -216,7 +298,11 @@ export default function AssetManagement(localData: any) {
                             </button>
 
                             <button
+<<<<<<< HEAD
                                 className="rounded-xl bg-yellow-951 border-[2px] border-yellow-951 text-black flex h-12 justify-center items-center pl-2 pr-2 hover:bg-white hover:text-black hover:border-black transition-all duration-[400ms]"
+=======
+                                className="rounded-xl bg-yellow-951 border-[2px] border-yellow-951 text-black flex h-12 justify-center items-center pl-2 pr-2 hover:bg-white hover:text-black hover:border-black transition-all duration-[400ms] transition-opacity duration-300 outline-none transform active:scale-75 transition-transform"
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                             >
                                 <Image
                                     src="/img/download-black.svg"
@@ -231,7 +317,11 @@ export default function AssetManagement(localData: any) {
                         </div>
                     </div>
 
+<<<<<<< HEAD
                     <div className="border border-gray-957 bg-gray-953 min-h-full rounded-xl mt-3 px-4 py-4 ">
+=======
+                    <div className="border border-gray-957 bg-gray-953 rounded-xl mt-3 px-4 py-4 ">
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                         <div className="flex justify-start items-start">
                             <nav className="flex" aria-label="Breadcrumb">
                                 <ol className="inline-flex items-center space-x-1 md:space-x-1">
@@ -255,7 +345,11 @@ export default function AssetManagement(localData: any) {
                         {/* --- Alerts End--- */}
 
                         <div className="w-full mt-7 flex">
+<<<<<<< HEAD
                             <div className={`rounded rounded-xl border border-yelow-951 bg-yellow-951 h-[105px] w-[194px] p-3 lg:mr-28 md:mr-5 sm:mr-5 small:mr-5 hover:bg-yellow-951 transition-all duration-[400ms] ${router.pathname == "/dashboard/assetmanagement" ? 'bg-yellow-951' : 'bg-yellow-951'}`}>
+=======
+                            <div className={`rounded rounded-xl border border-yelow-951 bg-yellow-951 h-[105px] w-[194px] p-3 lg:mr-16 md:mr-5 sm:mr-5 small:mr-5 hover:bg-yellow-951 transition-all duration-[400ms] ${router.pathname == "/dashboard/assetmanagement" ? 'bg-yellow-951' : 'bg-yellow-951'}`}>
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                                 <Link href="" className="flex justify-between items-start">
                                     <div className="text-black w-[75%] text-[16px] font-normal pt-6">Class Management</div>
                                     <div className="w-[25%] text-right">
@@ -289,8 +383,13 @@ export default function AssetManagement(localData: any) {
 
                         {/* Table */}
                         {data.length > 0 ?
+<<<<<<< HEAD
                             <div className="h-96 flex justify-start items-start flex-wrap flex-row mt-12">
                                 <p className="text-black text-md mb-6 font-semibold">My Class</p>
+=======
+                            <div className="h-96 flex justify-start items-start flex-wrap flex-col mt-12">
+                                <p className="text-black text-md mb-3 font-semibold">My Class</p>
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                                 <div className={`lg:overflow-hidden md:overflow-x-scroll sm:overflow-x-scroll border border-gray-958 rounded-xl lg:w-full md:w-full lg:w-full sm:w-full small:w-full small:overflow-x-scroll h-[300px] bg-white ${styles.proTableWrap}`}>
                                     <table className={`table-auto lg:min-w-full sm:w-full small:w-full text-left ${styles.table}`}>
                                         <thead className="bg-black text-white rounded-xl h-10 text-[14px] font-light">
@@ -307,7 +406,16 @@ export default function AssetManagement(localData: any) {
                                                 <tr className="hover:bg-yellow-950 text-sm border boder-gray-958 last:border-none" key={index}>
                                                     <td className="w-[6%] min-h-[50px]">{index + 1}</td>
                                                     <td className="w-[25%] min-h-[50px]">
+<<<<<<< HEAD
                                                         <Link
+=======
+                                                        <a
+                                                            onClick={() => sendProps()}
+                                                        >
+                                                            <span className="font-semibold">{item.assetName}</span>
+                                                        </a>
+                                                        {/* <Link
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                                                             href={{
                                                                 pathname: '/dashboard/assetmanagement/subasset',
                                                                 query: {
@@ -317,23 +425,38 @@ export default function AssetManagement(localData: any) {
                                                             className="w-[25%]"
                                                         >
                                                             <span className="font-semibold">{item.assetName}</span>
+<<<<<<< HEAD
                                                         </Link>
+=======
+                                                        </Link> */}
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                                                     </td>
                                                     <td className="w-[25%] min-h-[50px]">
                                                         <div className="flex w-[300px]">
                                                             <Image
                                                                 src="/img/export.svg"
+<<<<<<< HEAD
                                                                 height={18}
                                                                 width={18}
                                                                 alt="export"
                                                                 className="mr-2"
+=======
+                                                                className="mr-2 h-[18px] w-[18px]"
+                                                                height={18}
+                                                                width={18}
+                                                                alt="export"
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                                                             />
                                                             <span className="whitespace-nowrap overflow-hidden text-ellipsis">
                                                                 {item.assetkey.toString().split(",").join(", ")}
                                                             </span>
                                                         </div>
                                                     </td>
+<<<<<<< HEAD
                                                     <td className="w-[15%] min-h-[50px]"><span>{moment(item.dateCreated).format('DD-MM-YYYY')}</span></td>
+=======
+                                                    <td className="w-[15%] min-h-[50px]"><span>{moment(new Date(item.dateCreated)).format('DD/MM/YYYY')}</span></td>
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                                                     <td className="w-[15%]">
                                                         <button className="mr-5">
                                                             <Image
@@ -370,10 +493,13 @@ export default function AssetManagement(localData: any) {
                     </div>
                 </div>
 
+<<<<<<< HEAD
                 <div className="lg:w-[14%] lg:block md:hidden sm:hidden pl-5 small:hidden">
                     <Template />
                 </div>
 
+=======
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
 
                 {/* ----- OBJECT MODAL STARTS ----- */}
                 {showObjectModal ? (
@@ -420,7 +546,11 @@ export default function AssetManagement(localData: any) {
                                                     <span className="text-lg text-black pl-2">{chooseAsset}</span>
                                                 </div>
                                                 {toggleAsset ?
+<<<<<<< HEAD
                                                     <div className={`h-52 border rounded-xl border-gray-500 h-[155px] w-[400px]  relative flex items-start justify-start mt-1 overflow-hidden overflow-y-scroll ${styles.scroll}`}>
+=======
+                                                    <div ref={wrapperRef} className={`h-52 border rounded-xl border-gray-500 h-[155px] w-[400px]  relative flex items-start justify-start mt-1 overflow-hidden overflow-y-scroll ${styles.scroll} transition-opacity duration-300 outline-none transform active:scale-75 transition-transform`}>
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                                                         {data && data.length > 0 ?
                                                             <ul className="p-0 m-0 w-full">
                                                                 {
@@ -440,6 +570,7 @@ export default function AssetManagement(localData: any) {
                                                     : null}
                                             </div>
                                             <div className="w-[400px] mt-10 flex justify-end items-end">
+<<<<<<< HEAD
                                                 <Link
                                                     href={{
                                                         pathname: '/dashboard/assetmanagement/objects',
@@ -451,6 +582,14 @@ export default function AssetManagement(localData: any) {
                                                 >
                                                     <span className="font-normal">Continue</span>
                                                 </Link>
+=======
+                                                <button
+                                                    onClick={continueToNext}
+                                                    className="rounded-xl bg-black border-[2px] border-black text-white flex h-12 justify-center items-center pl-2 pr-2 hover:bg-yellow-951 hover:text-black hover:border-yellow-951 w-[120px] transition-all duration-[400ms] transition-opacity duration-300 outline-none transform active:scale-75 transition-transform"
+                                                >
+                                                    <span className="font-normal">Continue</span>
+                                                </button>
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                                             </div>
                                         </div>
                                     </div>
@@ -772,6 +911,7 @@ export default function AssetManagement(localData: any) {
                                         <div className="flex justify-start items-center flex-wrap flex-col">
                                             <p className="flex justify-center items-center text-lg">Are you sure want to delete this record?</p>
                                             <div className="mt-10 relative flex justify-center items-center w-full">
+<<<<<<< HEAD
                                                     <button
                                                         className="border border-black rounded-lg bg-black text-white text-lg w-[70px] h-[47px] mr-5 hover:bg-yellow-951 hover:text-white hover:border-yellow-951 ease-in-out duration-300 disabled:bg-gray-951 disabled:hover:border-gray-951 disabled:border-gray-951"
                                                         onClick={() => { setDeleteModal(false);}}
@@ -785,6 +925,21 @@ export default function AssetManagement(localData: any) {
                                                         No
                                                     </button>
                                                 </div>
+=======
+                                                <button
+                                                    className="border border-black rounded-lg bg-black text-white text-lg w-[70px] h-[47px] mr-5 hover:bg-yellow-951 hover:text-white hover:border-yellow-951 ease-in-out duration-300 disabled:bg-gray-951 disabled:hover:border-gray-951 disabled:border-gray-951"
+                                                    onClick={() => { setDeleteModal(false); }}
+                                                >
+                                                    Yes
+                                                </button>
+                                                <button
+                                                    className="border border-black rounded-lg bg-white text-black text-lg w-[70px] h-[47px] hover:text-white hover:bg-yellow-951 hover:border-yellow-951 ease-in-out duration-300"
+                                                    onClick={() => { setDeleteModal(false); }}
+                                                >
+                                                    No
+                                                </button>
+                                            </div>
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                                         </div>
                                     </div>
                                 </div>

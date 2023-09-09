@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import Link from "next/link";
 import styles from '../../styles/Common.module.css';
+<<<<<<< HEAD
 import Router from 'next/router';
+=======
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
 import Image from "next/image";
 import FabricInfo from './fabricInfo';
 import Head from 'next/head'
@@ -53,7 +56,11 @@ export default function ForgotPassword() {
     const submitForm = (evt: any) => {
         evt.preventDefault()
         if (handleValidation()) {
+<<<<<<< HEAD
             console.log("GOOD TO GOOOooo !")
+=======
+            console.log("GOOD TO GO !")
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
         } else {
             console.log("SOMETHING WENT WRONG !")
         }
@@ -61,7 +68,11 @@ export default function ForgotPassword() {
     return (
         <>
             <Head>
+<<<<<<< HEAD
                 <title>eOPS Fabric - Forgot Password</title>
+=======
+                <title>eOps Fabric - Forgot Password</title>
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                 <meta name="viewport" content="initial-scale=1.0, width=device-width" />
             </Head>
 
@@ -93,8 +104,13 @@ export default function ForgotPassword() {
                         </div>
 
                         <div className="text-left w-[470px] mt-28">
+<<<<<<< HEAD
                             <p className="font-bold text-3xl text-black mb-4 capitalize"><span className='bg-yellow-951 px-1 py-1 rounded'>Forgot</span> Password</p>
                             <p className="font-normal text-2xl text-gray-500">Don&apos;t worry about your password! you can reset that any time.</p>
+=======
+                            <p className="font-bold text-3xl text-black mb-4 capitalize">Password Password?</p>
+                            <p className="font-normal text-lg text-gray-972">Don&apos;t worry about your password! you can reset that any time.</p>
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                             <div className="mb-4 mt-5 border border-gray-100 w-full h-[1px]"></div>
                             <div className="signinform relative">
                                 <form method='post' onSubmit={submitForm}>

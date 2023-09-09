@@ -27,7 +27,11 @@ export default function Template() {
                 <Image
                     src="/img/gas-station.svg"
                     alt="gas-station"
+<<<<<<< HEAD
                     className="mb-2"
+=======
+                    className="mb-2 h-[36px] w-[36px]"
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                     height={36}
                     width={36}
                 />

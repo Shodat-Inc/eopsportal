@@ -1,9 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap');
+<<<<<<< HEAD
+=======
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+<<<<<<< HEAD
 body {
   @apply bg-white;
 }
@@ -70,4 +76,18 @@ body {
     /* Safari, Android, iOS */
     url('/public/fonts/SegoeUI-Italic.svg#svgFontName') format('svg');
   /* Legacy iOS */
+=======
+
+
+
+.gm-style-iw,
+.gm-style-iw-c {
+  background-color: #fed136 !important;
+}
+.gm-style-iw-d {
+  overflow: hidden !important;
+}
+.gm-style .gm-style-iw-tc::after {
+  background-color: #fed136 !important;
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
 }

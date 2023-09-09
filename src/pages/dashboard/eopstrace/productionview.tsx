@@ -10,6 +10,42 @@ export default function ProductionView() {
 
     const router = useRouter();
     const parentAsset = router.query;
+<<<<<<< HEAD
+=======
+    const [loader, setLoader] = useState(true);
+    const [data, setData] = useState([] as any);
+    useEffect(() => {
+        setTimeout(() => {
+            setLoader(false)
+        }, 3000)
+    }, [])
+
+    const fetchObjectData = () => {
+        axios.get("/api/getBattery").then((response) => {
+            if (response.data) {
+                const filtered = response.data.filter((item: any) => {
+                    if (item.className === parentAsset.objectID && item.SerialNo === parentAsset.key) {
+                        return item;
+                    }
+                });
+                if (filtered && filtered.length > 0) {
+                    const arr = filtered[0].subData.filter((item: any) => {
+                        if (item.ID.toString() === parentAsset.pid) {
+                            return item
+                        }
+                    })
+                    setData(arr);
+                }
+            }
+        });
+    }
+    useEffect(() => {
+        fetchObjectData();
+        if (fetchObjectData.length) return;
+    }, [parentAsset])
+
+    // console.log("DATA =>", data[0])
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
 
     return (
         <div className="flex font-OpenSans">
@@ -37,7 +73,21 @@ export default function ProductionView() {
                                     </Link>
                                 </li>
                                 <li>
+<<<<<<< HEAD
                                     <div className="flex items-center">
+=======
+                                    <Link
+                                        href={{
+                                            pathname: "/dashboard/assetmanagement/subchildobject",
+                                            query: {
+                                                class: parentAsset.objectID,
+                                                object: parentAsset.id,
+                                                id: parentAsset.key,
+                                                subObject: parentAsset.subObject,
+                                            }
+                                        }}
+                                        className="flex items-center">
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                                         <Image
                                             src="/img/arrow-right.svg"
                                             alt="arrow-right"
@@ -46,7 +96,11 @@ export default function ProductionView() {
                                             width={24}
                                         />
                                         <span className="ml-1 text-sm text-black hover:text-yellow-950 md:ml-1 font-bold">{parentAsset.key}</span>
+<<<<<<< HEAD
                                     </div>
+=======
+                                    </Link>
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                                 </li>
                                 <li>
                                     <Link
@@ -54,7 +108,14 @@ export default function ProductionView() {
                                             pathname: "/dashboard/eopstrace/tracemodel",
                                             query: {
                                                 objectID: parentAsset.objectID,
+<<<<<<< HEAD
                                                 key: parentAsset.key
+=======
+                                                key: parentAsset.key,
+                                                id: parentAsset.id,
+                                                subObject: parentAsset.subObject,
+                                                model: parentAsset.model
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                                             }
                                         }}
                                         className="flex items-center"
@@ -76,6 +137,11 @@ export default function ProductionView() {
                                             query: {
                                                 objectID: parentAsset.objectID,
                                                 key: parentAsset.key,
+<<<<<<< HEAD
+=======
+                                                id: parentAsset.id,
+                                                subObject: parentAsset.subObject,
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                                                 model: parentAsset.model
                                             }
                                         }}
@@ -88,7 +154,11 @@ export default function ProductionView() {
                                             height={24}
                                             width={24}
                                         />
+<<<<<<< HEAD
                                         <span className="ml-1 text-sm font-medium text-black hover:text-yellow-950 md:ml-1">Productions</span>
+=======
+                                        <span className="ml-1 text-sm font-medium text-black hover:text-yellow-950 md:ml-1">Production</span>
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                                     </Link>
                                 </li>
                                 <li>
@@ -105,10 +175,19 @@ export default function ProductionView() {
                                 </li>
                             </ol>
                         </nav>
+<<<<<<< HEAD
+=======
+
+                        <div className="flex justify-center items-center">
+                            <button className="bg-yellow-951 text-black rounded rounded-xl border b order-yellow-951 flex justify-center items-center px-3 h-[44px] ml-2 transition-all duration-[400ms] mr-3 transition-opacity duration-300 outline-none transform active:scale-75 transition-transform">Generate RCA</button>
+                            <button className="bg-yellow-951 text-black rounded rounded-xl border b order-yellow-951 flex justify-center items-center px-3 h-[44px] ml-2 transition-all duration-[400ms] mr-3 transition-opacity duration-300 outline-none transform active:scale-75 transition-transform">Track Issue</button>
+                        </div>
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                     </div>
 
 
                     {/* Images */}
+<<<<<<< HEAD
                     <div className="relative mt-10 rounded overflow-hidden rounded-xl">
                         {parentAsset.result ?
                             <Image
@@ -131,6 +210,65 @@ export default function ProductionView() {
                             </div>
                         }
                     </div>
+=======
+                    {
+                        loader ?
+                            <div className="relative w-full flex justify-center items-center h-96">
+                                <Image
+                                    src="/img/loading-gif.gif"
+                                    alt="loader"
+                                    height={124}
+                                    width={124}
+                                    className=""
+                                />
+                            </div>
+                            :
+                            <>
+                                {
+                                    data ?
+                                        <div className="relative mt-10 rounded overflow-hidden rounded-xl text-center flex flex-wrap flex-rpw items-center justify-around">
+
+                                            <div className="border border-gray-951 rounded rounded-xl p-4 w-56 h-48 flex items-center justify-center flex-wrap flex-col">
+                                                <p className="text-black font-bold mb-2">{data[0]?.result.batteryUtilization}</p>
+                                                <Image
+                                                    src="/img/BatteryUtilization.svg"
+                                                    alt="no image"
+                                                    height={60}
+                                                    width={75}
+                                                    className="h-auto w-auto inline-block mb-2"
+                                                />
+                                                <p className="text-black font-semibold mb-10">Battery Utilization</p>
+                                            </div>
+
+                                            <div className="border border-gray-951 rounded rounded-xl p-4 w-56 h-48 flex items-center justify-center flex-wrap flex-col">
+                                                <p className="text-black font-bold mb-2">{data[0]?.result.remainingCyclesLeft}</p>
+                                                <Image
+                                                    src="/img/RemainingCycle.svg"
+                                                    alt="no image"
+                                                    height={60}
+                                                    width={75}
+                                                    className="h-auto w-auto inline-block mb-2"
+                                                />
+                                                <p className="text-black font-semibold mb-10">Remaining cycles left</p>
+                                            </div>
+
+                                            <div className="border border-gray-951 rounded rounded-xl p-4 w-56 h-48 flex items-center justify-center flex-wrap flex-col">
+                                                <p className="text-black font-bold mb-2">{data[0]?.result.estTotalCycle}</p>
+                                                <Image
+                                                    src="/img/totalCycle.svg"
+                                                    alt="no image"
+                                                    height={75}
+                                                    width={75}
+                                                    className="h-auto w-auto inline-block mb-2"
+                                                />
+                                                <p className="text-black font-semibold mb-10">Est. total cycle</p>
+                                            </div>
+                                        </div>
+                                        : null
+                                }
+                            </>
+                    }
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
 
                 </div>
             </div>

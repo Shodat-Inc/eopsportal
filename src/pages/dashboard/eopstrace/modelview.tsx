@@ -153,6 +153,14 @@ export default function ModelView() {
                                 </li>
                             </ol>
                         </nav>
+<<<<<<< HEAD
+=======
+
+                        <div className="flex justify-center items-center">
+                            <button className="bg-yellow-951 text-black rounded rounded-xl border b order-yellow-951 flex justify-center items-center px-3 h-[44px] ml-2 transition-all duration-[400ms] mr-3 transition-opacity duration-300 outline-none transform active:scale-75 transition-transform">Generate RCA</button>
+                            <button className="bg-yellow-951 text-black rounded rounded-xl border b order-yellow-951 flex justify-center items-center px-3 h-[44px] ml-2 transition-all duration-[400ms] mr-3 transition-opacity duration-300 outline-none transform active:scale-75 transition-transform">Track Issue</button>
+                        </div>
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                     </div>
 
 

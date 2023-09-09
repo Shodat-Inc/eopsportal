@@ -8,11 +8,11 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>eOPS Fabric</title>
+        <title>eOps Fabric</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
 
-      <div className="font-OpenSans md:flex lg:flex">
+      <div className="font-Inter md:flex lg:flex">
         <div className={`md:w-[50%] md:block sm:hidden ${styles.fabricInfo}`}>
           <FabricInfo />
         </div>
@@ -34,34 +34,44 @@ export default function Home() {
               <span className="text-gray-500 font-normal">Already have an account? </span> <Link href="/authentication/signin">Sign In</Link>
             </div>
 
-            <div className="text-left lg:w-[470px] md:w-full sm:w-full sm:px-4">
-              <p className="font-bold text-2xl text-black mb-4">Join Us!</p>
-              <p className="font-normal text-xl text-gray-500 mb-10">To begin this journey, tell us what type of account you&apos;d be opening?</p>
+            <div className="text-left lg:w-[520px] md:w-full sm:w-full sm:px-4">
+              <p className="font-[800] text-3xl text-black mb-4">Join Us!</p>
+              <p className="font-normal text-lg text-gray-500 mb-10">To begin this journey, tell us what type of account you&apos;d be opening.</p>
 
-              <Link href="authentication/register" className="rounded-lg border border-black px-4 py-6 bg-gray-100 flex justify-center items-center relative hover:border-black hover:bg-[#f1f1f1] hover:shadow-lg transition-all">
-                <span className="rounded-md bg-gray-951 text-black h-7 w-20 flex font-medium justify-center items-center absolute top-2 right-10">Free</span>
-                <div className="mr-4">
-                  <Image
-                    src="/img/business.svg"
-                    alt="business"
-                    className="h-14"
-                    height={56}
-                    width={56}
-                  />
-                </div>
+              <Link
+                href="authentication/register"
+                className="rounded-lg border border-black px-4 py-6 bg-gray-100 flex justify-between items-center relative hover:border-black hover:bg-[#f1f1f1] hover:shadow-lg transition-all mb-10"
+              >
+                <Image
+                  src="/img/sign/individual.svg"
+                  alt="individual.svg"
+                  height={52}
+                  width={52}
+                  className=""
+                />
                 <div className="ml-2">
-                  <p className="text-black font-medium text-xl w-[200px]">Business</p>
-                  <p className="text-gray-600 font-normal text-lg w-[300px] leading-5">Own or belong to a company, this is for you.</p>
+                  <p className="text-black mb-1 font-medium text-xl w-[200px]">Individual</p>
+                  <p className="text-gray-600 font-normal text-md w-[250px] leading-5">Personal account to manage all you activities.</p>
                 </div>
-                <div className="ml-2 mt-2">
-                  <Image
-                    src="/img/arrowRight.svg"
-                    alt="business"
-                    className="h-5"
-                    width={18}
-                    height={20}
-                  />
+                <button className="rounded-md bg-gray-970 text-black h-7 w-20 flex font-medium justify-center items-center">Free</button>
+              </Link>
+
+              <Link
+                href="authentication/enterprise"
+                className="rounded-lg border border-[#efefef] px-4 py-6 bg-white shadow shadow-md flex justify-between items-center relative hover:shadow-lg transition-all"
+              >
+                <Image
+                  src="/img/sign/enterprises.svg"
+                  alt="enterprises.svg"
+                  height={52}
+                  width={52}
+                  className=""
+                />
+                <div className="ml-2">
+                  <p className="text-black mb-1 font-medium text-xl w-[200px]">Enterprises</p>
+                  <p className="text-gray-600 font-normal text-md w-[250px] leading-5">Own or belong to a company, this is for you.</p>
                 </div>
+                <button className="rounded-md bg-gray-970 text-black h-7 w-20 flex font-medium justify-center items-center">Contact</button>
               </Link>
 
             </div>

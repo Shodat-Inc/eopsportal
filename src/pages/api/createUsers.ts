@@ -29,9 +29,16 @@ export default async function handler(req:any, res:any) {
 
         // Send a success response
         res.status(200).json({ message: 'Data stored successfully' });
+<<<<<<< HEAD
     } catch (error) {
         console.error(error);
         // Send an error response
         res.status(500).json({ message: 'Error storing data' });
+=======
+    } catch (error:any) {
+        console.error(error);
+        // Send an error response
+        res.status(error.response.status).json({ message: error.response.statusText });
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
     }
 };

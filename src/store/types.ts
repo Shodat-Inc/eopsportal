@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 export const LOGIN_LOADING ="LOGIN_LOADING";
 export const LOGIN_SUCCESS ="LOGIN_SUCCESS";
 export const LOGIN_ERROR ="LOGIN_ERROR";
@@ -22,6 +23,12 @@ export const RESET_STATE_FAIL =  "RESET_STATE_FAIL";
 export const RESET_STATE_LOADING =  "RESET_STATE_LOADING";
 export const RESET_STATE_RELOAD =  "RESET_STATE_RELOAD";
 export const RESET_STATE_SUCCEED = "RESET_STATE_SUCCEED";
+=======
+export const PROSENSE_LOADING ="PROSENSE_LOADING";
+export const PROSENSE_SUCCESS ="PROSENSE_SUCCESS";
+export const PROSENSE_ERROR ="PROSENSE_ERROR";
+export const PROSENSE_RELOADING ="PROSENSE_RELOADING";
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
 
 export const LOADING ="LOADING";
 export const ERROR ="ERROR";
@@ -29,4 +36,12 @@ export const SUCCESS ="SUCCESS";
 export const RELOADING ="RELOADING";
 export const NONE ="NONE";
 export const GET_SAMPLE="GET_SAMPLE";
+<<<<<<< HEAD
 export const SAMPLE_ERROR="SAMPLE_ERROR";
+=======
+export const SAMPLE_ERROR="SAMPLE_ERROR";
+
+export const CLASS_LOADING = "CLASS_LOADING";
+export const CLASS_SUCCESS = "CLASS_SUCCESS";
+export const CLASS_ERROR = "CLASS_ERROR";
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d

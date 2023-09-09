@@ -5,7 +5,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from 'next/router'
 import axios from 'axios';
+<<<<<<< HEAD
 import NoDataFound from "../../../common/nodatafound";
+=======
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
 import styles from '../../../styles/Common.module.css';
 
 export default function ProductionView() {
@@ -19,7 +22,11 @@ export default function ProductionView() {
             setLoader(false)
         }, 4000)
     }, [])
+<<<<<<< HEAD
     // console.log("parentAsset", parentAsset)
+=======
+    const [value, setValue] = useState(0);
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
 
     const fetchObjectData = () => {
         axios.get("/api/geteopsWatch").then((response) => {
@@ -31,10 +38,17 @@ export default function ProductionView() {
                 });
                 if (filtered && filtered.length > 0) {
                     if (filtered[0].images) {
+<<<<<<< HEAD
                         console.log("HERE", filtered[0].images)
                         const filterArr = filtered[0].images.filter((item: any) => {
                             return item.imageID.toString() === parentAsset.imageID
                         })
+=======
+                        const filterArr = filtered[0].images.filter((item: any) => {
+                            return item.imageID.toString() === parentAsset.imageID
+                        })
+                        setValue(filterArr[0].thresholdValue)
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                         setData(filterArr);
                     }
                 }
@@ -46,7 +60,13 @@ export default function ProductionView() {
         if (fetchObjectData.length) return;
     }, [parentAsset])
 
+<<<<<<< HEAD
     // console.log("DATA =>", data)
+=======
+    const handleRange = (e: any) => {
+        setValue(e.target.value)
+    }
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
 
     return (
         <div className="flex font-OpenSans">
@@ -139,7 +159,11 @@ export default function ProductionView() {
                                             height={24}
                                             width={24}
                                         />
+<<<<<<< HEAD
                                         <span className="ml-1 text-sm font-medium text-black hover:text-yellow-950 md:ml-1">Productions</span>
+=======
+                                        <span className="ml-1 text-sm font-medium text-black hover:text-yellow-950 md:ml-1">Production</span>
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                                     </Link>
                                 </li>
                                 <li>
@@ -156,10 +180,22 @@ export default function ProductionView() {
                                 </li>
                             </ol>
                         </nav>
+<<<<<<< HEAD
+=======
+
+                        <div className="flex justify-center items-center">
+                            <button className="bg-yellow-951 text-black rounded rounded-xl border b order-yellow-951 flex justify-center items-center px-3 h-[44px] ml-2 transition-all duration-[400ms] mr-3 transition-opacity duration-300 outline-none transform active:scale-75 transition-transform">Generate RCA</button>
+                            <button className="bg-yellow-951 text-black rounded rounded-xl border b order-yellow-951 flex justify-center items-center px-3 h-[44px] ml-2 transition-all duration-[400ms] mr-3 transition-opacity duration-300 outline-none transform active:scale-75 transition-transform">Track Issue</button>
+                        </div>
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                     </div>
 
 
                     {/* Images */}
+<<<<<<< HEAD
+=======
+
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                     {
                         loader ?
                             <div className="relative w-full flex justify-center items-center h-96">
@@ -182,7 +218,11 @@ export default function ProductionView() {
                                                         <div className="relative w-[45%]">
                                                             <div className="bg-gray-951 flex justify-center items-center rounded rounded-xl overflow-hidden">
                                                                 <Image
+<<<<<<< HEAD
                                                                     src={parentAsset?.result?.toString()}
+=======
+                                                                    src={data ? data[0].resultImage : parentAsset?.result?.toString()}
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                                                                     alt="Result"
                                                                     height={700}
                                                                     width={500}
@@ -191,7 +231,11 @@ export default function ProductionView() {
                                                             </div>
                                                         </div>
                                                         <div className="relative pl-10 w-[55%]">
+<<<<<<< HEAD
                                                             <p className="mb-10 p-0 text-black text-xl font-semibold">Predictions </p>
+=======
+                                                            <p className="mb-2 p-0 text-black text-xl font-semibold">Predictions </p>
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                                                             {
                                                                 data ?
                                                                     <>
@@ -200,7 +244,11 @@ export default function ProductionView() {
                                                                             alt="Result"
                                                                             height={300}
                                                                             width={300}
+<<<<<<< HEAD
                                                                         // className="mb-2 h-auto w-auto"
+=======
+                                                                            // className="mb-2 h-auto w-auto"
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                                                                         />
                                                                     </>
                                                                     : null
@@ -212,6 +260,10 @@ export default function ProductionView() {
                                                     <div className="relative mt-0 w-full flex flex-wrap justify-start items-start">
                                                         <div className="relative w-[45%]">
                                                             <Image
+<<<<<<< HEAD
+=======
+                                                                // src="/img/CrackDetection/TPC3305-01-011/Test/PipeTest2ResultNew.png"
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                                                                 src={data ? data[0].resultImage : parentAsset?.result?.toString()}
                                                                 alt="Result"
                                                                 height={700}
@@ -237,13 +289,41 @@ export default function ProductionView() {
                                                                 data ?
                                                                     <>
                                                                         <p className="mb-2 p-0 text-black text-xl font-semibold">Threshold Value</p>
+<<<<<<< HEAD
                                                                         <Image
+=======
+
+                                                                        <div className="mb-3">
+                                                                            <div className="relative mb-1 h-[20px] w-[380px] inline-block">
+                                                                                <span className={`absolute left-0 top-0 font-bold text-xl`}>{value}%</span>
+                                                                            </div>
+
+                                                                            <div className={`${styles.rangeSlider}`}>
+                                                                                <input
+                                                                                    type="range"
+                                                                                    max={100}
+                                                                                    min={0}
+                                                                                    step={1}
+                                                                                    value={value}
+                                                                                    defaultValue={data[0].thresholdValue}
+                                                                                    onChange={handleRange}
+                                                                                    title={data[0].thresholdValue.toString()}
+                                                                                />
+                                                                            </div>
+                                                                        </div>
+
+                                                                        {/* <Image
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                                                                             src={data[0].threshold}
                                                                             alt="Result"
                                                                             height={70}
                                                                             width={290}
                                                                             className="mb-2 h-auto w-auto"
+<<<<<<< HEAD
                                                                         />
+=======
+                                                                        /> */}
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                                                                     </>
                                                                     : null
                                                             }
@@ -269,13 +349,20 @@ export default function ProductionView() {
                                                                                         </tr>
                                                                                     ))
                                                                                 }
+<<<<<<< HEAD
 
+=======
+                                                                                
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                                                                             </tbody>
                                                                         </table>
                                                                     </div>
                                                                     : null
                                                             }
+<<<<<<< HEAD
 
+=======
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                                                         </div>
 
                                                     </div>

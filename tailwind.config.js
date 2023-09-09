@@ -12,19 +12,26 @@ module.exports = withMT({
   ],
   theme: {
     screens: {
-      'xss':'500px',
-      'small':{'min': '00px', 'max': '540px'}
+      'xss': '500px',
+      'small': { 'min': '00px', 'max': '540px' }
     },
     extend: {
       fontFamily: {
         OpenSans: ["'Open Sans'", "sans-serif"],
+        Inter:["'Inter', sans-serif"],
         SegoeUI: ["'SegoeUI'", "sans-serif"],
         SegoeUIItalic: ["'SegoeUI-Italic'", "sans-serif"],
         SegoeUIBoldItalic: ["'SegoeUI-BoldItalic'", "sans-serif"],
         SegoeUIBold: ["'SegoeUI-Bold'", "sans-serif"],
       },
       colors: {
-        themeYellow: '#fed136',       
+        themeYellow: '#fed136',
+        low: '#378EDE',
+        high: '#D80000',
+        medium: '#F3500A',
+        new:'#00AEEF',
+        inProcess:'#FF6D03',
+        resolved:'#54C104',
         yellow: {
           950: '#fed136',
           951: '#fed136',
@@ -51,6 +58,11 @@ module.exports = withMT({
           965: '#c6c6c6',
           966: '#f2f2f2',
           967: '#666666',
+          968: '#555555',
+          969: '#EEEEEE',
+          970: '#B7B7B7',
+          971: '#696F79',
+          972: '#8692A6',
         },
         blue: {
           951: '#B4BBD2',
@@ -60,6 +72,7 @@ module.exports = withMT({
           958: '#B8DAFF',
           959: '#004085',
           960: '#378EDE',
+          961: '#4784BD',
         },
         green: {
           951: '#C2D9C4',

@@ -41,13 +41,32 @@ export default function SubAsset(localData: any) {
     const [assetDataType, setAssetDataType] = useState<any[]>([]);
     const [dtObject, setDtObject] = useState<any[]>([]);
 
+<<<<<<< HEAD
+=======
+    const {
+        query : {chooseAsset}
+    } = router
+
+    const props = {
+        chooseAsset
+    }
+
+    console.log({
+        props:props
+    })
+
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
 
     // Get JSON data on page load
     const fetchDataForParent = () => {
         axios.get("/api/getAssets").then((response) => {
             if (response.data) {
                 const filtered = response.data.filter((item: any) => {
+<<<<<<< HEAD
                     return item.assetName === parentAsset.assets;
+=======
+                    return item.assetName === props.chooseAsset;
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                 });
                 if (filtered && filtered.length > 0) {
                     setParentJoinKey(filtered[0].assetkey);
@@ -77,7 +96,11 @@ export default function SubAsset(localData: any) {
         axios.get("/api/getSubAssets").then((response) => {
             if (response.data) {
                 const filtered = localData.localData.filter((item: any) => {
+<<<<<<< HEAD
                     return item.parentAssetName === parentAsset.assets;
+=======
+                    return item.parentAssetName === props.chooseAsset;
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                 });
                 if (filtered && filtered.length > 0) {
                     setData(filtered);
@@ -85,7 +108,11 @@ export default function SubAsset(localData: any) {
 
                 let arr: any = [];
                 response.data.map((item: any, key: any) => {
+<<<<<<< HEAD
                     if (item.parentAssetName === parentAsset.assets) {
+=======
+                    if (item.parentAssetName === props.chooseAsset) {
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                         arr.push(...item.tags);
                         setTag(removeDuplicates(arr))
                     }
@@ -191,7 +218,10 @@ export default function SubAsset(localData: any) {
         let updatedList = selParentTags;
         updatedList.push(item)
         setSelParentTags(removeDuplicates(updatedList))
+<<<<<<< HEAD
         // setCheckIcon("/img/box_check_icon_white.svg")
+=======
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
     }
 
     // Un Select Parent Join Key
@@ -202,13 +232,19 @@ export default function SubAsset(localData: any) {
             arr.splice(index, 1);
         }
         setSelParentTags(removeDuplicates(arr));
+<<<<<<< HEAD
         // setCheckIcon("/img/blank_check_box_icon_white.svg");
+=======
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
     }
 
 
     // Get Last Asset ID
     const getLastID = (data && data.length > 0) ? data.slice(-1)[0].assetID : '2000000001';
+<<<<<<< HEAD
     console.log("getLastID", getLastID)
+=======
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
 
     // Storing data in json for sub class
     const handleSubmit = async (e: any) => {
@@ -225,8 +261,13 @@ export default function SubAsset(localData: any) {
                     assetID: `${form_values.assetid}`,
                     assetName: `${form_values.assetname}`,
                     slug: `${form_values.assetname}`,
+<<<<<<< HEAD
                     parentAssetID: parentAsset.assets,
                     parentAssetName: parentAsset.assets,
+=======
+                    parentAssetID: props.chooseAsset,
+                    parentAssetName: props.chooseAsset,
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                     tags: allTags,
                     parentJoinKey: selParentTags,
                     dateCreated: new Date().toLocaleString() + "",
@@ -269,7 +310,11 @@ export default function SubAsset(localData: any) {
                         <p className="text-black text-lg mb-0 font-semibold">Class Management</p>
                         <div className="flex justify-end items-right">
                             <button
+<<<<<<< HEAD
                                 className="rounded-xl bg-yellow-951 border-[2px] border-yellow-951 text-black flex h-12 justify-center items-center pl-2 pr-2 hover:bg-white hover:text-black hover:border-black transition-all duration-[400ms]"
+=======
+                                className="rounded-xl bg-yellow-951 border-[2px] border-yellow-951 text-black flex h-12 justify-center items-center pl-2 pr-2 hover:bg-white hover:text-black hover:border-black transition-all duration-[400ms] transition-opacity duration-300 outline-none transform active:scale-75 transition-transform"
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                                 onClick={() => setShowModal(true)}
                             >
                                 <Image
@@ -309,7 +354,11 @@ export default function SubAsset(localData: any) {
                                                 height={24}
                                                 width={24}
                                             />
+<<<<<<< HEAD
                                             <span className="ml-1 text-sm font-semibold text-black hover:text-yellow-950 md:ml-1">{parentAsset.assets}</span>
+=======
+                                            <span className="ml-1 text-sm font-semibold text-black hover:text-yellow-950 md:ml-1">{props.chooseAsset}</span>
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                                         </div>
                                     </li>
                                 </ol>
@@ -361,7 +410,11 @@ export default function SubAsset(localData: any) {
                                                     <td><span>{item.parentJoinKey.toString().split(",").join(", ")}</span></td>
                                                     <td><span>{moment(item.dateCreated).format('DD-MM-YYYY')}</span></td>
                                                     <td>
+<<<<<<< HEAD
                                                         <button className="mr-4">
+=======
+                                                        <button className="mr-4 transition-opacity duration-300 outline-none transform active:scale-75 transition-transform">
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                                                             <Image
                                                                 src="/img/edit.svg"
                                                                 alt="Edit"
@@ -369,7 +422,11 @@ export default function SubAsset(localData: any) {
                                                                 width={18}
                                                             />
                                                         </button>
+<<<<<<< HEAD
                                                         <button>
+=======
+                                                        <button className="transition-opacity duration-300 outline-none transform active:scale-75 transition-transform">
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                                                             <Image
                                                                 src="/img/trash.svg"
                                                                 alt="Trash"
@@ -416,7 +473,11 @@ export default function SubAsset(localData: any) {
                                             Add Sub Class
                                         </h3>
                                         <button
+<<<<<<< HEAD
                                             className="p-1 ml-auto bg-transparent border-0 text-black float-right leading-none font-semibold outline-none focus:outline-none"
+=======
+                                            className="p-1 ml-auto bg-transparent border-0 text-black float-right leading-none font-semibold outline-none focus:outline-none transition-opacity duration-300 outline-none transform active:scale-75 transition-transform"
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                                             onClick={() => { setShowModal(false); setAllTags([]) }}
                                         >
                                             <Image
@@ -480,7 +541,11 @@ export default function SubAsset(localData: any) {
                                                                             className="rounded-lg inline-flex justify-center items-center h-8 pl-2 pr-2 bg-black text-white text-[14px] mr-2 mb-2">
                                                                             {items}
                                                                             <button
+<<<<<<< HEAD
                                                                                 className="rounded-full border-2 border-white h-[18px] w-[18px] inline-flex justify-center items-center ml-3"
+=======
+                                                                                className="rounded-full border-2 border-white h-[18px] w-[18px] inline-flex justify-center items-center ml-3 transition-opacity duration-300 outline-none transform active:scale-75 transition-transform"
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                                                                                 onClick={() => removeElement(items)}
                                                                             >
                                                                                 <Image
@@ -506,14 +571,22 @@ export default function SubAsset(localData: any) {
                                                                             required
                                                                         />
                                                                         <button
+<<<<<<< HEAD
                                                                             className={`text-black border border-transparent rounded inline-flex justify-center items-center text-sm h-8 px-2 ml-1 bg-yellow-951 ${dataType && (dataType != null || dataType != "") ? 'okay' : 'disabled disabled:bg-gray-300'}`}
+=======
+                                                                            className={`text-black border border-transparent rounded inline-flex justify-center items-center text-sm h-8 px-2 ml-1 bg-yellow-951 ${dataType && (dataType != null || dataType != "") ? 'okay' : 'disabled disabled:bg-gray-300'} transition-opacity duration-300 outline-none transform active:scale-75 transition-transform`}
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                                                                             onClick={saveNewTag}
                                                                             disabled={dataType && (dataType != null || dataType != "") ? false : true}
                                                                         >
                                                                             Add
                                                                         </button>
                                                                         <button
+<<<<<<< HEAD
                                                                             className="text-white border border-transparent rounded inline-flex justify-center items-center text-sm h-8 px-2 ml-1 bg-red-600"
+=======
+                                                                            className="text-white border border-transparent rounded inline-flex justify-center items-center text-sm h-8 px-2 ml-1 bg-red-600 transition-opacity duration-300 outline-none transform active:scale-75 transition-transform"
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                                                                             onClick={cancelAddingTag}
                                                                         >
                                                                             Cancel
@@ -525,7 +598,11 @@ export default function SubAsset(localData: any) {
 
                                                             {!showHideAddTagButton ?
                                                                 <button
+<<<<<<< HEAD
                                                                     className="text-gray-952 inline-flex justify-center items-center text-lg h-8 mb-2"
+=======
+                                                                    className="text-gray-952 inline-flex justify-center items-center text-lg h-8 mb-2 transition-opacity duration-300 outline-none transform active:scale-75 transition-transform"
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                                                                     onClick={addTags}
                                                                 >
                                                                     <Image
@@ -704,13 +781,21 @@ export default function SubAsset(localData: any) {
 
                                                 <div className="mb-5 relative flex justify-end items-center w-full pr-4">
                                                     <button
+<<<<<<< HEAD
                                                         className="border border-black rounded-lg bg-black text-white font-lg w-20 h-12 mr-5 font-semibold hover:bg-yellow-951 hover:text-white hover:border-yellow-951 ease-in-out duration-300 disabled:bg-gray-951 disabled:hover:border-gray-951 disabled:border-gray-951"
+=======
+                                                        className="border border-black rounded-lg bg-black text-white font-lg w-20 h-12 mr-5 font-semibold hover:bg-yellow-951 hover:text-white hover:border-yellow-951 ease-in-out duration-300 disabled:bg-gray-951 disabled:hover:border-gray-951 disabled:border-gray-951 transition-opacity duration-300 outline-none transform active:scale-75 transition-transform"
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                                                         disabled={(allTags && allTags.length > 0) ? false : true}
                                                     >
                                                         Save
                                                     </button>
                                                     <button
+<<<<<<< HEAD
                                                         className="border border-black rounded-lg bg-white font-semibold text-black font-lg w-24 h-12 hover:text-white hover:bg-yellow-951 hover:border-yellow-951 ease-in-out duration-300"
+=======
+                                                        className="border border-black rounded-lg bg-white font-semibold text-black font-lg w-24 h-12 hover:text-white hover:bg-yellow-951 hover:border-yellow-951 ease-in-out duration-300 transition-opacity duration-300 outline-none transform active:scale-75 transition-transform"
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                                                         onClick={() => { setShowModal(false); setAllTags([]) }}
                                                     >
                                                         Cancel

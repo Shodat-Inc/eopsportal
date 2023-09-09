@@ -8,6 +8,56 @@ import { useRouter } from 'next/router'
 import axios from "axios";
 import NoDataFound from "@/common/nodatafound";
 
+<<<<<<< HEAD
+=======
+const batteryJSON = [
+    {
+        "SerialNo": "LI7481",
+        "VIN": "5PVBN3TK3R6Y67222",
+        "modal": "Battery Life Prediction",
+        "ID": "5PVBE7AJ8R5T50001",
+        "object": "Battery",
+        "className": "Vehicles",
+        "Manufacturer": "Cummins",
+        "Capacity(AH)": "230",
+        "Voltage(V)": "600",
+        "subData": [
+            {
+                "ID": 1,
+                "Capacity": "1.856",
+                "VoltageMeasured": "3.97",
+                "CurrentMeasured": "2.012528",
+                "TemperatureMeasured": "24.39",
+                "CurrentLoad": "1.99",
+                "VoltageLoad": "3.06",
+                "DateTime": "2022-07-02 15:25:4",
+            },
+
+            {
+                "ID": 2,
+                "Capacity": "1.38",
+                "VoltageMeasured": "3.402",
+                "CurrentMeasured": "2",
+                "TemperatureMeasured": "33.02",
+                "CurrentLoad": "1.99",
+                "VoltageLoad": "2.493",
+                "DateTime": "2023-01-10 07:56:22",
+            },
+            {
+                "ID": 3,
+                "Capacity": "1.27",
+                "VoltageMeasured": "3.19",
+                "CurrentMeasured": "1.89",
+                "TemperatureMeasured": "35.48",
+                "CurrentLoad": "1.85",
+                "VoltageLoad": "2.25",
+                "DateTime": "2023-03-22 01:29:35",
+            }
+        ]
+    }
+]
+
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
 export default function ProductionModel() {
 
     const [showModal, setShowModal] = useState(false);
@@ -16,6 +66,10 @@ export default function ProductionModel() {
     const [showImageModal, setShowImageModal] = useState(false);
     const [data, setData] = useState([] as any);
     const [resImage, setResImage] = useState("");
+<<<<<<< HEAD
+=======
+    const [objdata, setObjdata] = useState([] as any);
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
 
     // Fetch the JSON data of sub Asset
     const fetchClassData = () => {
@@ -50,6 +104,29 @@ export default function ProductionModel() {
 
     }
 
+<<<<<<< HEAD
+=======
+    // Fetch Data from JSON
+    const fetchObjectData = () => {
+        axios.get("/api/getBattery").then((response) => {
+            if (response.data) {
+                const filtered = response.data.filter((item: any) => {
+                    if (item.className === parentAsset.objectID && item.SerialNo === parentAsset.key && item.modal === parentAsset.model) {
+                        return item;
+                    }
+                });
+                if (filtered && filtered.length > 0) {
+                    setObjdata(filtered);
+                }
+            }
+        });
+    }
+    useEffect(() => {
+        fetchObjectData();
+        if (fetchObjectData.length) return;
+    }, [parentAsset])
+
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
 
     return (
         <div className="flex font-OpenSans">
@@ -139,7 +216,11 @@ export default function ProductionModel() {
 
                         {/* Upload Button */}
                         <div className="flex items-center justify-end">
+<<<<<<< HEAD
                             <div className="flex items-center justify-start mr-7">
+=======
+                            <div className="flex items-center justify-start mr-3">
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                                 <p className="text-gray mr-4">Disable</p>
                                 <div className={`${styles.radioWrap}`}>
                                     <input
@@ -149,7 +230,11 @@ export default function ProductionModel() {
                                 </div>
                             </div>
                             <button
+<<<<<<< HEAD
                                 className="flex justify-center items-center text-black bg-yellow-951 rounded rounded-xl h-12 px-4 transition-opacity duration-300"
+=======
+                                className="flex justify-center items-center text-black bg-yellow-951 rounded rounded-xl h-12 px-4 transition-opacity duration-300 mr-3"
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                                 onClick={() => setShowModal(true)}
                             >
                                 <Image
@@ -161,6 +246,32 @@ export default function ProductionModel() {
                                 />
                                 <span>Configure Images</span>
                             </button>
+<<<<<<< HEAD
+=======
+
+                            <Link
+                            href={{
+                                pathname: "/dashboard/eopstrace/eopstracealerts",
+                                query: {
+                                    objectID: parentAsset.objectID,
+                                    key: parentAsset.key,
+                                    model: parentAsset.model,
+                                    id: parentAsset.id,
+                                    subObject: parentAsset.subObject,
+                                }
+                            }}
+                            className="flex justify-center items-center text-black bg-yellow-951 rounded rounded-xl h-12 px-4 transition-opacity duration-300"
+                        >
+                            <Image
+                                src="/img/message-square.svg"
+                                alt="activity"
+                                height={19}
+                                width={19}
+                                className="mr-2"
+                            />
+                            <span>Alerts</span>
+                        </Link>
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                         </div>
                     </div>
 
@@ -206,6 +317,7 @@ export default function ProductionModel() {
                         </button>
                     </div>
 
+<<<<<<< HEAD
                     {/* Images Grid */}
                     {filterData && filterData.length > 0 ?
                         <div className="relative grid grid-cols-3 gap-10 mt-8">
@@ -340,6 +452,123 @@ export default function ProductionModel() {
                         :
                         <div className="h-72 flex justify-center items-center flex-wrap flex-col mt-8 w-full">
                             <NoDataFound createText="No image found!" />
+=======
+                    {/* Table Grid */}
+                    {objdata && objdata.length > 0 ?
+                        <div className={`relative mt-8 h-[400px] overflow-y-auto ${styles.scrollDes}`}>
+
+                            <div className={`overflow-hidden rounded-xl w-full mb-12 pr-2 ${styles.scrollDes1}`}>
+                                {
+                                    objdata[0]?.subData.map((item: any, k: any) => (
+
+                                        <table className={`table-auto min-w-full text-left ${styles.table} ${styles.table2} mb-10`}>
+                                            <thead className="bg-gray-952 text-white rounded-xl h-10 text-[13px] font-light">
+                                                <tr>
+                                                    {
+                                                        Object.keys(item?.batteryInfo[0]).map((items: any, i: any) => (
+                                                            <th>{items}</th>
+                                                        ))
+                                                    }
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody className="text-[13px] ">
+                                                <tr>
+                                                    {
+                                                        Object.values(item?.batteryInfo[0]).map((items: any, i: any) => (
+                                                            <td>{items}</td>
+                                                        ))
+                                                    }
+                                                    <td className="w-[200px] relative">
+                                                        <span className={`${styles.testbtn}`}>
+                                                            <Link
+                                                                href={{
+                                                                    pathname: "/dashboard/eopstrace/productionview",
+                                                                    query: {
+                                                                        objectID: parentAsset.objectID,
+                                                                        key: parentAsset.key,
+                                                                        model: parentAsset.model,
+                                                                        id: parentAsset.id,
+                                                                        subObject: parentAsset.subObject,
+                                                                        pid: item.ID
+                                                                    }
+                                                                }}
+                                                                className="bg-yellow-951 rounded rounded-md flex justify-center items-center texxt-black font-semibold text-sm p-2 w-24"
+                                                            >
+                                                                <Image
+                                                                    src="/img/carIcon.svg"
+                                                                    alt="car"
+                                                                    height={21}
+                                                                    width={21}
+                                                                    className="mr-2"
+                                                                />
+                                                                <span>Test</span>
+                                                            </Link>
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    ))
+                                }
+                            </div>
+
+
+                            <div className="overflow-hidden border rounded-xl w-full mb-12 hidden">
+                                {
+                                    batteryJSON[0].subData.map((item: any, k: any) => (
+                                        <table className={`table-auto min-w-full text-left mb-14 ${styles.table}`}>
+                                            <thead className="bg-gray-952 text-white rounded-xl h-10 text-sm font-light">
+                                                <tr>
+                                                    {
+                                                        Object.keys(item).map((items: any, i: any) => (
+
+                                                            <th className="capitalize" key={i}>
+                                                                {
+                                                                    items.split(/(?=[A-Z])/).join(" ")
+                                                                }
+                                                            </th>
+                                                        ))
+                                                    }
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr className={`text-sm cursor-pointer`}>
+                                                    {
+                                                        Object.values(item).map((items: any, i: any) => (
+
+                                                            <td key={i}>
+                                                                <Link
+                                                                    href={{
+                                                                        pathname: "/dashboard/eopstrace/productionview",
+                                                                        query: {
+                                                                            objectID: parentAsset.objectID,
+                                                                            key: parentAsset.key,
+                                                                            model: parentAsset.model,
+                                                                            id: parentAsset.id,
+                                                                            subObject: parentAsset.subObject,
+                                                                            pid: item.ID
+                                                                        }
+                                                                    }}
+                                                                >
+                                                                    {items}
+                                                                </Link>
+                                                            </td>
+
+                                                        ))
+                                                    }
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    ))
+                                }
+                            </div>
+
+                        </div>
+                        :
+                        <div className="h-72 flex justify-center items-center flex-wrap flex-col mt-8 w-full">
+                            <NoDataFound createText="No data found!" />
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                         </div>
                     }
 

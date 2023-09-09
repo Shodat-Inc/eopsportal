@@ -1,0 +1,16 @@
+[
+    {
+        "ID":1,
+        "templateName": "Ops Template",
+        "templateHeading": "Ops Template",
+        "templateContent": "The alert has been detected please sign to the dashboard and resolve",
+        "subject":"low"
+    },
+    {
+        "ID":2, 
+        "templateName": "Management Template",
+        "templateHeading": "Management Template",
+        "templateContent": "The alert has been detected please sign to the dashboard and resolve",
+        "subject":"low"
+    }
+]

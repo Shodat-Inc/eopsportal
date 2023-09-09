@@ -15,8 +15,14 @@
                     {
                         "Crack": "14.9"
                     }
+<<<<<<< HEAD
                 ]
                 
+=======
+                ],
+                "thresholdValue":"38.9",
+                "plots": []
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
             },
             {
                 "imageID":2,
@@ -29,7 +35,13 @@
                     {
                         "Crack": "14.9"
                     }
+<<<<<<< HEAD
                 ]
+=======
+                ],
+                "thresholdValue":"2",
+                "plots": []
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
             },
             {
                 "imageID":3,
@@ -48,7 +60,13 @@
                     {
                         "Crack": "45.7"
                     }
+<<<<<<< HEAD
                 ]
+=======
+                ],
+                "thresholdValue":"20",
+                "plots": []
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
             },
             {
                 "imageID":4,
@@ -57,7 +75,13 @@
                 "resultImage": "",
                 "dateUploaded": "05-11-2023",
                 "threshold" : "",
+<<<<<<< HEAD
                 "thresholdTags": []
+=======
+                "thresholdTags": [],
+                "thresholdValue":"",
+                "plots": []
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
             },
             {
                 "imageID":5,
@@ -76,6 +100,47 @@
                     {
                         "Crack" : "9.5"
                     }
+<<<<<<< HEAD
+=======
+                ],
+                "thresholdValue":"9",
+                "plots":[
+                    {
+                        "x":50,
+                        "y":20,
+                        "tvalue":10
+                    },
+                    {
+                        "x":70,
+                        "y":30,
+                        "tvalue":20
+                    },
+                    {
+                        "x":100,
+                        "y":60,
+                        "tvalue":30
+                    },
+                    {
+                        "x":150,
+                        "y":80,
+                        "tvalue":40
+                    },
+                    {
+                        "x":250,
+                        "y":80,
+                        "tvalue":50
+                    },
+                    {
+                        "x":278,
+                        "y":25,
+                        "tvalue":60
+                    }, 
+                    {
+                        "x":378,
+                        "y":155,
+                        "tvalue":90
+                    }
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                 ]
             },
             {
@@ -95,7 +160,13 @@
                     {
                         "Crack" : "9.5"
                     }
+<<<<<<< HEAD
                 ]
+=======
+                ],
+                "thresholdValue":"7",
+                "plots": []
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
             }
         ]
     },
@@ -111,7 +182,13 @@
                 "resultImage": "",
                 "dateUploaded": "05-11-2023",
                 "threshold":"/img/CrackDetection/TPC3305-01-011/Test/threshold-2.png",                
+<<<<<<< HEAD
                 "thresholdTags":[]
+=======
+                "thresholdTags":[],
+                "thresholdValue":"",
+                "plots": []
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
             },
             {
                 "imageID":2,
@@ -130,7 +207,13 @@
                     {
                         "Crack" : "3.3"
                     }
+<<<<<<< HEAD
                 ]
+=======
+                ],
+                "thresholdValue":"2",
+                "plots": []
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
             },
             {
                 "imageID":3,
@@ -149,7 +232,13 @@
                     {
                         "Crack" : "45.7"
                     }
+<<<<<<< HEAD
                 ]
+=======
+                ],
+                "thresholdValue":"20",
+                "plots": []
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
             }
            
         ]
@@ -166,7 +255,13 @@
                 "resultImage": "",
                 "dateUploaded": "05-11-2023",
                 "threshold":"",
+<<<<<<< HEAD
                 "thresholdTags":[]
+=======
+                "thresholdTags":[],
+                "thresholdValue":"",
+                "plots": []
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
             },
             {
                 "imageID":2,
@@ -175,7 +270,13 @@
                 "resultImage": "",
                 "dateUploaded": "05-11-2023",
                 "threshold":"",
+<<<<<<< HEAD
                 "thresholdTags":[]
+=======
+                "thresholdTags":[],
+                "thresholdValue":"",
+                "plots": []
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
             },
             {
                 "imageID":3,
@@ -191,7 +292,13 @@
                     {
                         "Crack" : "77.6"
                     }
+<<<<<<< HEAD
                 ]
+=======
+                ],
+                "thresholdValue":"7",
+                "plots": []
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
             }
            
         ]
@@ -208,7 +315,13 @@
                 "resultImage": "",
                 "dateUploaded": "05-11-2023",
                 "threshold":"",
+<<<<<<< HEAD
                 "thresholdTags":[]
+=======
+                "thresholdTags":[],
+                "thresholdValue":"",
+                "plots": []
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
             },
             {
                 "imageID":2,
@@ -217,7 +330,13 @@
                 "resultImage": "",
                 "dateUploaded": "05-11-2023",
                 "threshold":"",
+<<<<<<< HEAD
                 "thresholdTags":[]
+=======
+                "thresholdTags":[],
+                "thresholdValue":"",
+                "plots": []
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
             },
             {
                 "imageID":3,
@@ -226,7 +345,13 @@
                 "resultImage":"/img/BatteryLifePrediction/LI7481/Test/BatteryTraceTest1.png", 
                 "dateUploaded": "05-11-2023",
                 "threshold":"",
+<<<<<<< HEAD
                 "thresholdTags":[]
+=======
+                "thresholdTags":[], 
+                "thresholdValue":"",
+                "plots": []
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
             }
            
         ]
@@ -243,7 +368,13 @@
                 "resultImage": "/img/TireWearPrediction/NEC1TT01522/Test/TireTest1.png",
                 "dateUploaded": "05-11-2023",
                 "threshold":"/img/TireWearPrediction/NEC1TT01522/Test/16k.png",
+<<<<<<< HEAD
                 "thresholdTags": []
+=======
+                "thresholdTags": [],
+                "thresholdValue":"",
+                "plots": []
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
             },
             {
                 "imageID":2,
@@ -252,7 +383,13 @@
                 "resultImage": "/img/TireWearPrediction/NEC1TT01522/Test/TireTest2.png",
                 "dateUploaded": "05-11-2023",
                 "threshold":"/img/TireWearPrediction/NEC1TT01522/Test/30k-miles.png",
+<<<<<<< HEAD
                 "thresholdTags": []
+=======
+                "thresholdTags": [],
+                "thresholdValue":"",
+                "plots": []
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
             },
             {
                 "imageID":3,
@@ -261,7 +398,13 @@
                 "resultImage":"/img/TireWearPrediction/NEC1TT01522/Test/TireTest3.png",
                 "dateUploaded": "05-11-2023",
                 "threshold":"/img/TireWearPrediction/NEC1TT01522/Test/9k-miles.png",
+<<<<<<< HEAD
                 "thresholdTags": []
+=======
+                "thresholdTags": [],
+                "thresholdValue":"",
+                "plots": []
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
             },
             {
                 "imageID":4,
@@ -270,7 +413,13 @@
                 "resultImage":"/img/TireWearPrediction/NEC1TT01522/Test/TireTest4.png",
                 "dateUploaded": "05-11-2023",
                 "threshold":"/img/TireWearPrediction/NEC1TT01522/Test/60k-miles.png",
+<<<<<<< HEAD
                 "thresholdTags": []
+=======
+                "thresholdTags": [],
+                "thresholdValue":"",
+                "plots": []
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
             },
             {
                 "imageID":5,
@@ -279,7 +428,13 @@
                 "resultImage":"/img/TireWearPrediction/NEC1TT01522/Test/TireTest5.png", 
                 "dateUploaded": "05-11-2023",
                 "threshold":"/img/TireWearPrediction/NEC1TT01522/Test/0k-miles.png",
+<<<<<<< HEAD
                 "thresholdTags": []
+=======
+                "thresholdTags": [],
+                "thresholdValue":"",
+                "plots": []
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
             }
            
         ]

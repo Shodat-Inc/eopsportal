@@ -4,6 +4,7 @@ const dataFilePath = path.join(process.cwd(), 'json/subassets.json')
 
 export default async function handler(req:any, res:any) {
     try {
+<<<<<<< HEAD
         if (req.method !== 'POST') {
             res.status(405).send({ message: 'Only POST requests allowed' })
             return
@@ -11,6 +12,18 @@ export default async function handler(req:any, res:any) {
         // Read the existing data from the JSON file
         const jsonData:any = await fsPromises.readFile(dataFilePath);
         const objectData = JSON.parse(jsonData);
+=======
+        // if (req.method !== 'POST') {
+        //     res.status(405).send({ message: 'Only POST requests allowed' })
+        //     return
+        // }
+        // Read the existing data from the JSON file
+        const jsonData:any = await fsPromises.readFile(dataFilePath);
+        let objectData:any = {}
+        if (jsonData) {
+            objectData = JSON.parse(jsonData);
+        }
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
 
         // Get the data from the request body
         const { assetID, assetName, slug, parentAssetID, parentAssetName, tags, parentJoinKey,  dateCreated, dateModified, geoScopeLink, tagsWithDataType, assetTypes   } = req.body;
@@ -27,11 +40,31 @@ export default async function handler(req:any, res:any) {
         // Write the updated data to the JSON file
         await fsPromises.writeFile(dataFilePath, updatedData);
 
+<<<<<<< HEAD
         // Send a success response
         res.status(200).json({ message: 'Data stored successfully' });
     } catch (error) {
         console.error(error);
         // Send an error response
         res.status(500).json({ message: 'Error storing data' });
+=======
+        console.log({
+            position: "Try Block",
+            status : res.status,
+            response: res
+        })
+
+        // Send a success response
+        res.status(200).json({ message: 'Data stored successfully' });
+    } catch (error:any) {
+        console.log({
+            position: "Catch Block",
+            errorObject:error, 
+            errorStatus: error.response.status, 
+            errorTextMessage: error.response.statusText
+        });
+        // Send an error response
+        res.status(error.response.status).json({ message: error.response.statusText });
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
     }
 };

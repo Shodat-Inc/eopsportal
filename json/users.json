@@ -1,1 +1,81 @@
+<<<<<<< HEAD
 [{"userID":1,"username":"amitpandey0107@gmail.com","firstName":"Amit","lastName":"Pandey","companyName":"SHODAT","phoneNumber":"9571373757","password":"12345","terms":true,"dateCreated":"2023-06-05","dateModified":"2023-06-05","role":"admin"},{"userID":2,"username":"amitpandey@shodat.com","firstName":"Amit","lastName":"Pandey","companyName":"SHODAT","phoneNumber":"9571373757","password":"123456","terms":true,"dateCreated":"2023-06-20","dateModified":"2023-06-20","role":"admin"},{"userID":3,"username":"barryallen@shodat.com","firstName":"Barry","lastName":"Allen","companyName":"SHODAT","phoneNumber":"1122334455","password":"11111","terms":true,"dateCreated":"2023-06-20","dateModified":"2023-06-20","role":"admin"}]
+=======
+[
+    {
+        "userID": 1,
+        "username": "amitpandey@shodat.com",
+        "emailAddress": "amitpandey@shodat.com",
+        "firstName": "Amit",
+        "lastName": "Pandey",
+        "companyName": "SHODAT",
+        "phoneNumber": "9571373757",
+        "password": "12345",
+        "terms": true,
+        "dateCreated": "2023-06-05",
+        "dateModified": "2023-06-05",
+        "role": "admin",
+        "address": "12th Steet, Park Avenue, NJ - 12345",
+        "city": "New Jersey",
+        "state": "California",
+        "pincode": "50001",
+        "country": "United States"
+    },
+    {
+        "userID": 2,
+        "username": "chinmaynaik@shodat.com",
+        "emailAddress": "chinmaynaik@shodat.com",
+        "firstName": "Chinmay",
+        "lastName": "Naik",
+        "companyName": "SHODAT",
+        "phoneNumber": "+12133009229",
+        "password": "12345",
+        "terms": true,
+        "dateCreated": "2023-06-20",
+        "dateModified": "2023-06-20",
+        "role": "admin",
+        "address": "12th Steet, Park Avenue, NJ - 12345",
+        "city": "New Jersey",
+        "state": "California",
+        "pincode": "50001",
+        "country": "United States"
+    },
+    {
+        "userID": 3,
+        "username": "vedlad@shodat.com",
+        "emailAddress": "vedlad@shodat.com",
+        "firstName": "Ved",
+        "lastName": "Lad",
+        "companyName": "SHODAT",
+        "phoneNumber": "1122334455",
+        "password": "12345",
+        "terms": true,
+        "dateCreated": "2023-06-20",
+        "dateModified": "2023-06-20",
+        "role": "admin",
+        "address": "12th Steet, Park Avenue, NJ - 12345",
+        "city": "New Jersey",
+        "state": "California",
+        "pincode": "50001",
+        "country": "United States"
+    },
+    {
+        "userID": 4,
+        "username": "amitpandey01071@gmail.com",
+        "firstName": "Amit",
+        "lastName": "Pandey",
+        "companyName": "SHODAT",
+        "phoneNumber": "+919588239578",
+        "password": "11111",
+        "terms": true,
+        "dateCreated": "2023-09-07",
+        "dateModified": "2023-09-07",
+        "role": "admin",
+        "address": "12th Steet, Park Avenue, NJ - 12345",
+        "city": "New Jersey",
+        "state": "California",
+        "pincode": "50001",
+        "country": "United States"
+    }
+]
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d

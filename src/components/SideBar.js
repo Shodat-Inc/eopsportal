@@ -15,34 +15,37 @@ const SideBar = forwardRef(({ showNav, setShowNav }, ref) => {
   const [eopsinsight, setEopinsight] = useState(false);
   const [modelCatalog, setModelCatalog] = useState(false);
 
+  const arr = router.pathname.split("/");
+  const splitPathName = arr.filter(n => n);
+
   return (
     <div ref={ref} className={`fixed w-60 h-full  shadow-sm bg-black ${styles.sidebar}`}>
-      <div className="flex items-center justify-left pl-6 pt-6 pb-6 bg-white">
+      <div className="flex items-center justify-left pl-6 pt-6 pb-6 bg-white h-20">
         <picture>
           <Image
-            src="/img/logo.svg"
+            src="/img/logo-new.svg"
             alt="company logo"
-            className={`w-32 h-auto`}
+            className={`w-36 h-auto`}
             height={88}
             width={20}
           />
         </picture>
         <div className="pl-24 md:pl-24 mt-0 z-[400]">
-          <Image
+          {/* <Image
             src="/img/menu.svg"
             alt="company logo"
             className={`w-12 h-auto pr-1`}
             onClick={() => setShowNav(!showNav)}
             height={29}
             width={29}
-          />
+          /> */}
         </div>
       </div>
 
-      <div className="flex flex-col pt-2 font-OpenSans">
-        <Link href="/dashboard" className="hidden">
+      <div className="flex flex-col pt-1 font-OpenSans">
+        <Link href="/dashboard" className="hidden1">
           <div
-            className={`pl-6 font-normal font-OpenSans font-light py-3 mx-0 text-center cursor-pointer mb-3 flex items-center transition-colors ${router.pathname == "/dashboard"
+            className={`pl-6 font-light font-OpenSans font-light py-3 mx-0 text-center cursor-pointer mb-3 flex text-sm items-center transition-colors ${router.pathname == "/dashboard"
               ? "bg-white text-black"
               : "text-white hover:bg-yellow-951 hover:text-black"
               }`}
@@ -55,21 +58,21 @@ const SideBar = forwardRef(({ showNav, setShowNav }, ref) => {
                   <Image
                     src={router.pathname == "/dashboard" ? '/img/grid.svg' : '/img/grid.svg'}
                     alt="grid"
-                    className={`w-32 h-auto ${styles.sideicons}`}
-                    height={25}
-                    width={25}
+                    className={`w-28 h-auto ${styles.sideicons}`}
+                    height={22}
+                    width={22}
                   />
                   :
                   <Image
                     src={router.pathname == "/dashboard" ? '/img/grid.svg' : '/img/grid-white.svg'}
                     alt="grid"
-                    className={`w-32 h-auto ${styles.sideicons}`}
-                    height={25}
-                    width={25}
+                    className={`w-28 h-auto ${styles.sideicons}`}
+                    height={22}
+                    width={22}
                   />
               }
             </div>
-            <div>
+            <div className="ml-3">
               <p>Dashboard</p>
             </div>
           </div>
@@ -77,7 +80,7 @@ const SideBar = forwardRef(({ showNav, setShowNav }, ref) => {
 
         <Link href="/dashboard/assetmanagement">
           <div
-            className={`pl-6 font-OpenSans font-light py-3 mx-0 text-center cursor-pointer mb-3 flex items-center transition-colors ${router.pathname == "/dashboard/assetmanagement"
+            className={`pl-6 text-sm font-OpenSans font-light py-3 mx-0 text-center cursor-pointer mb-3 flex items-center transition-colors ${router.pathname == "/dashboard/assetmanagement" || splitPathName.includes("assetmanagement")
               ? "bg-white text-black"
               : "text-white hover:bg-yellow-951 hover:text-black"
               }`}
@@ -88,7 +91,7 @@ const SideBar = forwardRef(({ showNav, setShowNav }, ref) => {
               {
                 asstMgmt ?
                   <Image
-                    src={router.pathname == "/dashboard/assetmanagement" ? '/img/box-black.svg' : '/img/box-black.svg'}
+                    src={router.pathname == "/dashboard/assetmanagement" || splitPathName.includes("assetmanagement") ? '/img/box-black.svg' : '/img/box-black.svg'}
                     alt="clock"
                     className={`w-32 h-auto ${styles.sideicons}`}
                     height={25}
@@ -96,7 +99,7 @@ const SideBar = forwardRef(({ showNav, setShowNav }, ref) => {
                   />
                   :
                   <Image
-                    src={router.pathname == "/dashboard/assetmanagement" ? '/img/box-black.svg' : '/img/box.svg'}
+                    src={router.pathname == "/dashboard/assetmanagement" || splitPathName.includes("assetmanagement") ? '/img/box-black.svg' : '/img/box.svg'}
                     alt="clock"
                     className={`w-32 h-auto ${styles.sideicons}`}
                     height={25}
@@ -104,7 +107,7 @@ const SideBar = forwardRef(({ showNav, setShowNav }, ref) => {
                   />
               }
             </div>
-            <div>
+            <div className="ml-3">
               <p>Asset Management</p>
             </div>
           </div>
@@ -112,7 +115,7 @@ const SideBar = forwardRef(({ showNav, setShowNav }, ref) => {
 
         <Link href="/dashboard/eopswatch">
           <div
-            className={`pl-6 font-OpenSans font-light py-3 mx-0 text-center cursor-pointer mb-3 flex items-center transition-colors ${router.pathname == "/dashboard/eopswatch"
+            className={`pl-6 text-sm font-OpenSans font-light py-3 mx-0 text-center cursor-pointer mb-3 flex items-center transition-colors ${router.pathname == "/dashboard/eopswatch" || splitPathName.includes("eopswatch")
               ? "bg-white text-black"
               : "text-white hover:bg-yellow-951 hover:text-black"
               }`}
@@ -124,7 +127,7 @@ const SideBar = forwardRef(({ showNav, setShowNav }, ref) => {
                 eopswatch ?
                   <Image
                     src={
-                      router.pathname == "/dashboard/eopswatch"
+                      router.pathname == "/dashboard/eopswatch" || splitPathName.includes("eopswatch")
                         ? '/img/eops-watch-black-3.svg'
                         : '/img/eops-watch-black-3.svg'
                     }
@@ -136,7 +139,7 @@ const SideBar = forwardRef(({ showNav, setShowNav }, ref) => {
                   :
                   <Image
                     src={
-                      router.pathname == "/dashboard/eopswatch"
+                      router.pathname == "/dashboard/eopswatch" || splitPathName.includes("eopswatch")
                         ? '/img/eops-watch-black-3.svg'
                         : '/img/eops-watch-white-3.svg'
                     }
@@ -147,7 +150,7 @@ const SideBar = forwardRef(({ showNav, setShowNav }, ref) => {
                   />
               }
             </div>
-            <div>
+            <div className="ml-3">
               <p>eOps Watch</p>
             </div>
           </div>
@@ -155,7 +158,7 @@ const SideBar = forwardRef(({ showNav, setShowNav }, ref) => {
 
         <Link href="/dashboard/eopstrace">
           <div
-            className={`pl-6 font-OpenSans font-light py-3 mx-0 text-center cursor-pointer mb-3 flex items-center  transition-colors ${router.pathname == "/dashboard/eopstrace"
+            className={`pl-6 text-sm font-OpenSans font-light py-3 mx-0 text-center cursor-pointer mb-3 flex items-center  transition-colors ${router.pathname == "/dashboard/eopstrace" || splitPathName.includes("eopstrace")
               ? "bg-white text-black"
               : "text-white hover:bg-yellow-951 hover:text-black"
               }`}
@@ -166,7 +169,7 @@ const SideBar = forwardRef(({ showNav, setShowNav }, ref) => {
               {
                 eopstrace ?
                   <Image
-                    src={router.pathname == "/dashboard/eopstrace" ? '/img/eops-trace-black-2.svg' : '/img/airplay.svg'}
+                    src={router.pathname == "/dashboard/eopstrace" || splitPathName.includes("eopstrace") ? '/img/eops-trace-black-2.svg' : '/img/airplay.svg'}
                     alt="company logo"
                     className={`w-32 h-auto ${styles.sideicons}`}
                     height={25}
@@ -174,7 +177,7 @@ const SideBar = forwardRef(({ showNav, setShowNav }, ref) => {
                   />
                   :
                   <Image
-                    src={router.pathname == "/dashboard/eopstrace" ? '/img/eops-trace-black-2.svg' : '/img/eops-trace-white-2.svg'}
+                    src={router.pathname == "/dashboard/eopstrace" || splitPathName.includes("eopstrace") ? '/img/eops-trace-black-2.svg' : '/img/eops-trace-white-2.svg'}
                     alt="company logo"
                     className={`w-32 h-auto ${styles.sideicons}`}
                     height={25}
@@ -182,7 +185,7 @@ const SideBar = forwardRef(({ showNav, setShowNav }, ref) => {
                   />
               }
             </div>
-            <div>
+            <div className="ml-3">
               <p>eOps Trace</p>
             </div>
           </div>
@@ -190,7 +193,7 @@ const SideBar = forwardRef(({ showNav, setShowNav }, ref) => {
 
         <Link href="/dashboard/eopsprosense">
           <div
-            className={`pl-6 font-OpenSans font-light py-3 mx-0 text-center cursor-pointer mb-3 flex items-center transition-colors ${router.pathname == "/dashboard/eopsprosense"
+            className={`pl-6 text-sm font-OpenSans font-light py-3 mx-0 text-center cursor-pointer mb-3 flex items-center transition-colors ${router.pathname == "/dashboard/eopsprosense" || splitPathName.includes("eopsprosense")
               ? "bg-white text-black"
               : "text-white hover:bg-yellow-951 hover:text-black"
               }`}
@@ -201,7 +204,7 @@ const SideBar = forwardRef(({ showNav, setShowNav }, ref) => {
               {
                 eopspro ?
                   <Image
-                    src={router.pathname == "/dashboard/eopsprosense" ? '/img/eops-prosense-black.svg' : '/img/eops-prosense-black.svg'}
+                    src={router.pathname == "/dashboard/eopsprosense" || splitPathName.includes("eopsprosense") ? '/img/eops-prosense-black.svg' : '/img/eops-prosense-black.svg'}
                     alt="company logo"
                     className={`w-32 h-auto ${styles.sideicons}`}
                     height={25}
@@ -209,7 +212,7 @@ const SideBar = forwardRef(({ showNav, setShowNav }, ref) => {
                   />
                   :
                   <Image
-                    src={router.pathname == "/dashboard/eopsprosense" ? '/img/eops-prosense-black.svg' : '/img/eops-prosense-white.svg'}
+                    src={router.pathname == "/dashboard/eopsprosense" || splitPathName.includes("eopsprosense") ? '/img/eops-prosense-black.svg' : '/img/eops-prosense-white.svg'}
                     alt="company logo"
                     className={`w-32 h-auto ${styles.sideicons}`}
                     height={25}
@@ -217,7 +220,7 @@ const SideBar = forwardRef(({ showNav, setShowNav }, ref) => {
                   />
               }
             </div>
-            <div>
+            <div className="ml-3">
               <p>eOps Prosense</p>
             </div>
           </div>
@@ -225,7 +228,7 @@ const SideBar = forwardRef(({ showNav, setShowNav }, ref) => {
 
         <Link href="/dashboard/eopsinsight">
           <div
-            className={`pl-6 font-OpenSans font-light py-3 mx-0 text-center cursor-pointer mb-3 flex items-center  transition-colors ${router.pathname == "/dashboard/eopsinsight"
+            className={`pl-6 text-sm font-OpenSans font-light py-3 mx-0 text-center cursor-pointer mb-3 flex items-center  transition-colors ${router.pathname == "/dashboard/eopsinsight" || splitPathName.includes("eopsinsight")
               ? "bg-white text-black"
               : "text-white hover:bg-yellow-951 hover:text-black"
               }`}
@@ -236,7 +239,7 @@ const SideBar = forwardRef(({ showNav, setShowNav }, ref) => {
               {
                 eopsinsight ?
                   <Image
-                    src={router.pathname == "/dashboard/eopsinsight" ? '/img/eops-insights-black.svg' : '/img/eops-insights-black.svg'}
+                    src={router.pathname == "/dashboard/eopsinsight" || splitPathName.includes("eopsinsight") ? '/img/eops-insights-black.svg' : '/img/eops-insights-black.svg'}
                     alt="company logo"
                     className={`w-32 h-auto ${styles.sideicons}`}
                     height={25}
@@ -244,7 +247,7 @@ const SideBar = forwardRef(({ showNav, setShowNav }, ref) => {
                   />
                   :
                   <Image
-                    src={router.pathname == "/dashboard/eopsinsight" ? '/img/eops-insights-black.svg' : '/img/eops-insights-white.svg'}
+                    src={router.pathname == "/dashboard/eopsinsight" || splitPathName.includes("eopsinsight") ? '/img/eops-insights-black.svg' : '/img/eops-insights-white.svg'}
                     alt="company logo"
                     className={`w-32 h-auto ${styles.sideicons}`}
                     height={25}
@@ -252,7 +255,7 @@ const SideBar = forwardRef(({ showNav, setShowNav }, ref) => {
                   />
               }
             </div>
-            <div>
+            <div className="ml-3">
               <p>eOps Insight/Report</p>
             </div>
           </div>
@@ -261,7 +264,7 @@ const SideBar = forwardRef(({ showNav, setShowNav }, ref) => {
 
         <Link href="/dashboard/modelcatalog">
           <div
-            className={`pl-6 font-OpenSans font-light py-3 mx-0 text-center cursor-pointer mb-3 flex items-center  transition-colors ${router.pathname == "/dashboard/modelcatalog"
+            className={`pl-6 text-sm font-OpenSans font-light py-3 mx-0 text-center cursor-pointer mb-3 flex items-center  transition-colors ${router.pathname == "/dashboard/modelcatalog" || splitPathName.includes("modelcatalog")
               ? "bg-white text-black"
               : "text-white hover:bg-yellow-951 hover:text-black"
               }`}
@@ -272,7 +275,7 @@ const SideBar = forwardRef(({ showNav, setShowNav }, ref) => {
               {
                 modelCatalog ?
                   <Image
-                    src={router.pathname == "/dashboard/modelcatalog" ? '/img/model-catalog-black.svg' : '/img/model-catalog-black.svg'}
+                    src={router.pathname == "/dashboard/modelcatalog" || splitPathName.includes("modelcatalog") ? '/img/model-catalog-active.svg' : '/img/model-catalog-active.svg'}
                     alt="company logo"
                     className={`w-32 h-auto ${styles.sideicons}`}
                     height={25}
@@ -280,7 +283,7 @@ const SideBar = forwardRef(({ showNav, setShowNav }, ref) => {
                   />
                   :
                   <Image
-                    src={router.pathname == "/dashboard/modelcatalog" ? '/img/model-catalog-black.svg' : '/img/model-catalog-white.svg'}
+                    src={router.pathname == "/dashboard/modelcatalog" || splitPathName.includes("modelcatalog") ? '/img/model-catalog-active.svg' : '/img/model-catalog-incative.svg'}
                     alt="company logo"
                     className={`w-32 h-auto ${styles.sideicons}`}
                     height={25}
@@ -288,7 +291,7 @@ const SideBar = forwardRef(({ showNav, setShowNav }, ref) => {
                   />
               }
             </div>
-            <div>
+            <div className="ml-3">
               <p>Models Catalog</p>
             </div>
           </div>

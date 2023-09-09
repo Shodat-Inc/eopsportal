@@ -2,10 +2,14 @@ import { useState, useEffect, Fragment } from "react";
 import SideBar from "./SideBar";
 import TopBar from "./TopBar";
 import { Transition } from "@headlessui/react";
+import { useRouter } from "next/router";
 
 export default function Layout({ children }) {
   const [showNav, setShowNav] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
+  const router = useRouter();
+  const arr = router.pathname.split("/");
+  const splitPathName = arr.filter(n => n);
 
   function handleResize() {
     if (innerWidth <= 640) {
@@ -43,10 +47,12 @@ export default function Layout({ children }) {
         <SideBar showNav={showNav} setShowNav={setShowNav} />
       </Transition>
       <main
-        className={`pt-24 transition-all duration-[400ms] ${showNav && !isMobile ? "pl-64" : ""
+        className={`h-screen h-[100%] ${splitPathName.includes("eopswatch") || splitPathName.includes("eopsprosense") ||  splitPathName.includes("eopsinsight") ? 'bg-gray-966' : 'bg-white'} pt-24 transition-all duration-[400ms] ${showNav && !isMobile ? "pl-64" : ""
           }`}
       >
-        <div className="px-4 md:px-4">{children}</div>
+        <div className="pb-5 pr-4">{children}</div>
+
+        <div className="text-sm py-2 text-gray-967">Copyright 2023 eOps Fabric <span className="ml-4">Version 1.0</span> </div> 
       </main>
     </>
   );

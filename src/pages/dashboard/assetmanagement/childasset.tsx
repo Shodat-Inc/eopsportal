@@ -104,6 +104,7 @@ export default function ChildAsset(localData: any) {
                                 />
                                 Create Sub Class
                             </button>
+<<<<<<< HEAD
                             {/* <button
                                 className="rounded-lg bg-black text-white flex h-10 justify-center items-center pl-2 pr-2 hover:bg-yellow-950 hover:text-white transition-all duration-[400ms]"
                             >
@@ -116,6 +117,8 @@ export default function ChildAsset(localData: any) {
                                 />
                                 Import Sub Class
                             </button> */}
+=======
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                         </div>
                     </div>
 
@@ -269,7 +272,11 @@ export default function ChildAsset(localData: any) {
                                                     </td>
                                                     <td><span className="block w-[100px] whitespace-nowrap overflow-hidden text-ellipsis">{item.geoScopeLink}</span></td>
                                                     <td>
+<<<<<<< HEAD
                                                         <button className="mr-8">
+=======
+                                                        <button className="mr-8 transition-opacity duration-300 outline-none transform active:scale-75 transition-transform">
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                                                             <Image
                                                                 src="/img/edit.svg"
                                                                 alt="Edit"
@@ -277,7 +284,11 @@ export default function ChildAsset(localData: any) {
                                                                 width={18}
                                                             />
                                                         </button>
+<<<<<<< HEAD
                                                         <button>
+=======
+                                                        <button className="transition-opacity duration-300 outline-none transform active:scale-75 transition-transform">
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                                                             <Image
                                                                 src="/img/trash.svg"
                                                                 alt="Trash"
@@ -374,7 +385,11 @@ export default function ChildAsset(localData: any) {
                                             Add Sub Class
                                         </h3>
                                         <button
+<<<<<<< HEAD
                                             className="p-1 ml-auto bg-transparent border-0 text-black float-right leading-none font-semibold outline-none focus:outline-none"
+=======
+                                            className="p-1 ml-auto bg-transparent border-0 text-black float-right leading-none font-semibold outline-none focus:outline-none transition-opacity duration-300 outline-none transform active:scale-75 transition-transform"
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                                             onClick={() => setShowModal(false)}
                                         >
                                             <Image
@@ -460,12 +475,20 @@ export default function ChildAsset(localData: any) {
                                             </div>
                                             <div className="mb-5 relative flex justify-end items-center w-full pr-12">
                                                 <button
+<<<<<<< HEAD
                                                     className="border border-black rounded-lg bg-black text-white font-lg w-20 h-12 mr-5"
+=======
+                                                    className="border border-black rounded-lg bg-black text-white font-lg w-20 h-12 mr-5 transition-opacity duration-300 outline-none transform active:scale-75 transition-transform"
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                                                 >
                                                     Save
                                                 </button>
                                                 <button
+<<<<<<< HEAD
                                                     className="border border-black rounded-lg bg-white text-black font-lg w-24 h-12"
+=======
+                                                    className="border border-black rounded-lg bg-white text-black font-lg w-24 h-12 transition-opacity duration-300 outline-none transform active:scale-75 transition-transform"
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                                                     onClick={() => setShowModal(false)}
                                                 >
                                                     Cancel

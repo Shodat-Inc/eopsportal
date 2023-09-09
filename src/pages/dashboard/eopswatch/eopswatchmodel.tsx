@@ -25,7 +25,12 @@ export default function EopsWatchModel() {
     const router = useRouter();
     const parentAsset = router.query;
 
+<<<<<<< HEAD
     const [chooseAsset, setChooseAsset] = useState(parentAsset.objectID === "Manufacturing Plants" ? ManufacturingPlantsClass[0] : VehicleClass[0]);
+=======
+    let selectedAsset = parentAsset.objectID === "Manufacturing Plants" ? ManufacturingPlantsClass[0] : parentAsset.objectID === "Vehicles" && parentAsset.subObject === "Tire"  ? VehicleClass[2] : VehicleClass[0]; 
+    const [chooseAsset, setChooseAsset] = useState(selectedAsset);
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
     const [toggleAsset, setToggleAsset] = useState(false);
     const [image, setImage] = useState();
 
@@ -59,7 +64,31 @@ export default function EopsWatchModel() {
         if (fetchClassData.length) return;
     }, [parentAsset])
 
+<<<<<<< HEAD
     console.log("AMIT", image)
+=======
+    
+    
+    // Hook that alerts clicks outside of the passed ref
+    function useOutsideAlerter(ref: any) {
+        useEffect(() => {
+            function handleClickOutside(event: any) {
+                if (ref.current && !ref.current.contains(event.target)) {
+                    setToggleAsset(false)
+                }
+            }
+            // Bind the event listener
+            document.addEventListener("mousedown", handleClickOutside);
+            return () => {
+                // Unbind the event listener on clean up
+                document.removeEventListener("mousedown", handleClickOutside);
+            };
+        }, [ref]);
+    }
+
+    const wrapperRef = useRef(null);
+    useOutsideAlerter(wrapperRef);
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
 
 
     return (
@@ -116,7 +145,10 @@ export default function EopsWatchModel() {
                     <div className="flex items-end justify-end mt-[-32px]">
                         <Link
                             className="flex justify-center items-center text-black bg-yellow-951 rounded rounded-xl h-12 px-4 transition-opacity duration-300 mr-5"
+<<<<<<< HEAD
                             // href="/dashboard/eopswatch/modelperformance"
+=======
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                             href={{
                                 pathname: "/dashboard/eopswatch/modelperformance",
                                 query: {
@@ -137,6 +169,7 @@ export default function EopsWatchModel() {
                             />
                             <span>Model Performance</span>
                         </Link>
+<<<<<<< HEAD
 
                         <Link
                             // href="/dashboard/eopswatch/eopswatchalerts"
@@ -162,6 +195,8 @@ export default function EopsWatchModel() {
                             <span>Alerts</span>
                         </Link>
 
+=======
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                     </div>
 
                     <div className="flex items-center justify-start mt-10">
@@ -201,7 +236,11 @@ export default function EopsWatchModel() {
                                     <span className="text-md text-black pl-2">{chooseAsset}</span>
                                 </div>
                                 {toggleAsset ?
+<<<<<<< HEAD
                                     <div className={`h-52 border rounded-xl border-gray-500 h-[250px] w-[400px]  flex items-start justify-start mt-1 overflow-hidden overflow-y-scroll absolute top-[100%] left-0 z-10 ${styles.scroll}`}>
+=======
+                                    <div ref={wrapperRef} className={`h-52 border rounded-xl border-gray-500 h-[250px] w-[400px]  flex items-start justify-start mt-1 overflow-hidden overflow-y-scroll absolute top-[100%] left-0 z-10 ${styles.scroll}`}>
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                                         <ul className="p-0 m-0 w-full z-5">
                                             {
                                                 parentAsset.objectID === 'Manufacturing Plants' ?

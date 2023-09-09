@@ -7,7 +7,11 @@ export default function Success() {
     return (
         <>
             <Head>
+<<<<<<< HEAD
                 <title>eOPS Fabric - Success</title>
+=======
+                <title>eOps Fabric - Success</title>
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                 <meta name="viewport" content="initial-scale=1.0, width=device-width" />
             </Head>
             <div className="column-2 flex font-OpenSans">

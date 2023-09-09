@@ -48,11 +48,19 @@ export default function CustomReport() {
                     {/* Content Goes Here */}
                     <div className="mt-8">
                         <Image
+<<<<<<< HEAD
                             src="/img/eopsinsights/CustomReport.png"
                             alt="Custom report"
                             height={500}
                             width={500}
                             className="h-full w-full"
+=======
+                            src="/img/Custom-Report-eOps-Insight.png"
+                            alt="Custom report"
+                            height={1000}
+                            width={1000}
+                            // className="h-full w-full"
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                         />
                     </div>
 

@@ -1,10 +1,27 @@
+<<<<<<< HEAD
 import React, { useState, useRef, useEffect } from "react"
+=======
+import React, { useState, useRef, useEffect, useMemo } from "react"
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
 import Layout from "../../../components/Layout";
 import Template from "../template";
 import Image from "next/image";
 import Link from "next/link";
+<<<<<<< HEAD
 
 export default function LiveTracking() {
+=======
+import { GoogleMap, useJsApiLoader, useLoadScript, Marker, InfoWindow } from '@react-google-maps/api';
+import styles from '../../../styles/Common.module.css';
+// import '../../../styles/globals.css';
+
+export default function LiveTracking() {
+
+    const { isLoaded } = useLoadScript({
+        googleMapsApiKey: "AIzaSyBb9Fpz_nbVvsbLKvgOsKvPeStV4B2qniQ"
+    })
+    if (!isLoaded) return <div>Loading ...</div>
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
     return (
         <div className="flex font-OpenSans">
 
@@ -59,12 +76,20 @@ export default function LiveTracking() {
 
                     {/* Content Goes Here */}
                     <div className="mt-8">
+<<<<<<< HEAD
+=======
+                        <Map />
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                         <Image
                             src="/img/eopsinsights/live_tracking_img.png"
                             alt="Live Tracking"
                             height={500}
                             width={500}
+<<<<<<< HEAD
                             className="h-full w-full"
+=======
+                            className="h-full w-full hidden"
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                         />
                     </div>
 
@@ -83,4 +108,49 @@ LiveTracking.getLayout = function getLayout(page: any) {
     return (
         <Layout>{page}</Layout>
     )
+<<<<<<< HEAD
+=======
+}
+
+function Map() {
+
+    const onLoad = (marker: any) => {
+        console.log('marker: ', marker)
+    }
+
+    const centerPos = useMemo(() => ({ lat: 26.9124, lng: 75.7873 }), [])
+
+    const [showInfo, setShowInfo] = useState(true);
+    const handleInfoWindow = () => {
+        setShowInfo(!showInfo);
+    }
+    const handleToggleClose = () => {
+        setShowInfo(false);
+    }
+
+    return <GoogleMap
+        zoom={15}
+        center={centerPos}
+        mapContainerClassName={`${styles.mapContainer}`}
+    >
+        <Marker
+            onLoad={onLoad}
+            position={centerPos}
+            onClick={handleInfoWindow}
+        >
+            {showInfo ?
+                <InfoWindow
+                    onLoad={onLoad}
+                    position={centerPos}
+                    onCloseClick={handleToggleClose}
+                >
+                    <div className="rounded rounded-xl h-[70px] w-[250px] flex justify-center items-center bg-yellow-951 flex-wrap flex-col">
+                        <h1 className="text-xl font-bold text-black w-full text-center">VIN</h1>
+                        <p className="text-black text-lg w-full text-center">5PVBE7AJ8R5T50001</p>
+                    </div>
+                </InfoWindow>
+                : null}
+        </Marker>
+    </GoogleMap>
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
 }

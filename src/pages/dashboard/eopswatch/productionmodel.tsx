@@ -42,7 +42,11 @@ export default function ProductionModel() {
 
 
     const filterData = data.filter((item: any) => {
+<<<<<<< HEAD
         return item.folder === "Production"
+=======
+        return item.folder === "Test"
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
     })
 
     const imageModal = (item: any) => {
@@ -75,7 +79,11 @@ export default function ProductionModel() {
                                         <Image
                                             src="/img/home.svg"
                                             alt="home"
+<<<<<<< HEAD
                                             className="h-6"
+=======
+                                            className="h-6 h-[24px] w-[24px]"
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                                             height={24}
                                             width={24}
                                         />
@@ -96,7 +104,11 @@ export default function ProductionModel() {
                                         <Image
                                             src="/img/arrow-right.svg"
                                             alt="arrow-right"
+<<<<<<< HEAD
                                             className="h-6"
+=======
+                                            className="h-6 h-[24px] w-[24px]"
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                                             height={24}
                                             width={24}
                                         />
@@ -109,7 +121,11 @@ export default function ProductionModel() {
                                             pathname: "/dashboard/eopswatch/eopswatchmodel",
                                             query: {
                                                 objectID: parentAsset.objectID,
+<<<<<<< HEAD
                                                 key: parentAsset.key, 
+=======
+                                                key: parentAsset.key,
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                                                 id: parentAsset.id,
                                                 subObject: parentAsset.subObject,
                                             }
@@ -119,7 +135,11 @@ export default function ProductionModel() {
                                         <Image
                                             src="/img/arrow-right.svg"
                                             alt="arrow-right"
+<<<<<<< HEAD
                                             className="h-6"
+=======
+                                            className="h-6 h-[24px] w-[24px]"
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                                             height={24}
                                             width={24}
                                         />
@@ -131,7 +151,11 @@ export default function ProductionModel() {
                                         <Image
                                             src="/img/arrow-right.svg"
                                             alt="arrow-right"
+<<<<<<< HEAD
                                             className="h-6"
+=======
+                                            className="h-6 h-[24px] w-[24px]"
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                                             height={24}
                                             width={24}
                                         />
@@ -143,8 +167,13 @@ export default function ProductionModel() {
 
                         {/* Upload Button */}
                         <div className="flex items-center justify-end">
+<<<<<<< HEAD
                             <div className="flex items-center justify-start mr-7">
                                 <p className="text-gray mr-4">{ toggleText ? "Enabled" : "Disabled"}</p>
+=======
+                            <div className="flex items-center justify-start mr-5">
+                                <p className="text-gray mr-4">{toggleText ? "Enabled" : "Disabled"}</p>
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                                 <div className={`${styles.radioWrap}`}>
                                     <input
                                         type="checkbox"
@@ -154,7 +183,11 @@ export default function ProductionModel() {
                                 </div>
                             </div>
                             <button
+<<<<<<< HEAD
                                 className="flex justify-center items-center text-black bg-yellow-951 rounded rounded-xl h-12 px-4 transition-opacity duration-300"
+=======
+                                className="flex justify-center items-center text-black bg-yellow-951 rounded rounded-xl h-12 px-4 transition-opacity duration-300 mr-5"
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                                 onClick={() => setShowModal(true)}
                             >
                                 <Image
@@ -162,10 +195,41 @@ export default function ProductionModel() {
                                     alt="activity"
                                     height={24}
                                     width={24}
+<<<<<<< HEAD
                                     className="mr-2"
                                 />
                                 <span>Configure Images</span>
                             </button>
+=======
+                                    className="mr-2 h-[24px] w-[24px]"
+                                />
+                                <span>Configure Images</span>
+                            </button>
+
+                            <Link
+                                href={{
+                                    pathname: "/dashboard/eopswatch/alerts",
+                                    query: {
+                                        objectID: parentAsset.objectID,
+                                        key: parentAsset.key,
+                                        model: parentAsset.model,
+                                        id: parentAsset.id,
+                                        subObject: parentAsset.subObject
+                                    }
+                                }}
+                                className="flex justify-center items-center text-black bg-yellow-951 rounded rounded-xl h-12 px-4 transition-opacity duration-300"
+                            >
+                                <Image
+                                    src="/img/message-square.svg"
+                                    alt="activity"
+                                    height={19}
+                                    width={19}
+                                    className="mr-2 h-[19px] w-[19px]"
+                                />
+                                <span>Alerts</span>
+                            </Link>
+
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                         </div>
                     </div>
 
@@ -185,7 +249,11 @@ export default function ProductionModel() {
                                 alt="reset"
                                 width={18}
                                 height={18}
+<<<<<<< HEAD
                                 className="mr-1"
+=======
+                                className="mr-1 h-[18px] w-[18px]"
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                             />
                             <span>Reset</span>
                         </button>
@@ -195,7 +263,11 @@ export default function ProductionModel() {
                                 alt="reset"
                                 width={18}
                                 height={18}
+<<<<<<< HEAD
                                 className="mr-1"
+=======
+                                className="mr-1 h-[18px] w-[18px]"
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                             />
                             <span>Clear All</span>
                         </button>
@@ -205,7 +277,11 @@ export default function ProductionModel() {
                                 alt="reset"
                                 width={18}
                                 height={18}
+<<<<<<< HEAD
                                 className="mr-1"
+=======
+                                className="mr-1 h-[18px] w-[18px]"
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                             />
                             <span>Filters</span>
                         </button>
@@ -218,8 +294,13 @@ export default function ProductionModel() {
                             {
 
                                 filterData.map((item: any, index: any) => (
+<<<<<<< HEAD
                                     <>
                                         <div className="col-span-3 sm:col-span-2 md:col-span-3 lg:col-span-1 xl:col-span-4..." key={index}>
+=======
+                                    <div key={index}>
+                                        <div className="col-span-3 sm:col-span-2 md:col-span-3 lg:col-span-1 xl:col-span-4..." >
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                                             <div className={`border border-gray-200 h-72 w-full rounded-md overflow-hidden relative ${styles.imagewrap}`}>
                                                 <input type="checkbox" className="scale-125 absolute top-1 left-1" />
                                                 <Image
@@ -243,21 +324,37 @@ export default function ProductionModel() {
                                                                     id: parentAsset.id,
                                                                     subObject: parentAsset.subObject,
                                                                     result: item.resultImage ? item.resultImage : '',
+<<<<<<< HEAD
                                                                     imageID : item.imageID
                                                                 }
                                                             }}
                                                             className="bg-yellow-951 rounded rounded-md flex justify-center items-center texxt-black font-semibold text-sm p-2 w-32"
+=======
+                                                                    imageID: item.imageID
+                                                                }
+                                                            }}
+                                                            className="bg-yellow-951 rounded rounded-md flex justify-center items-center texxt-black font-semibold text-sm p-2 w-24"
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                                                         >
                                                             <Image
                                                                 src="/img/carIcon.svg"
                                                                 alt="car"
                                                                 height={21}
                                                                 width={21}
+<<<<<<< HEAD
                                                                 className="mr-2"
                                                             />
                                                             <span>Show Result</span>
                                                         </Link>
                                                         <button
+=======
+                                                                className="mr-2 h-[21px] w-[21px]"
+                                                            />
+                                                            <span>Test</span>
+                                                        </Link>
+                                                        <button
+                                                            // onClick={() => setShowImageModal(true)}
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                                                             onClick={() => imageModal(item.path)}
                                                             className="bg-yellow-951 rounded rounded-md flex justify-center items-center texxt-black font-semibold text-sm p-2 w-24 ml-3"
                                                         >
@@ -266,9 +363,15 @@ export default function ProductionModel() {
                                                                 alt="car"
                                                                 height={21}
                                                                 width={21}
+<<<<<<< HEAD
                                                                 className="mr-2"
                                                             />
                                                             <span>Preview</span>
+=======
+                                                                className="mr-2 h-[21px] w-[21px]"
+                                                            />
+                                                            <span>Prev</span>
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                                                         </button>
                                                     </div>
                                                 </div>
@@ -282,6 +385,10 @@ export default function ProductionModel() {
                                                         alt="close"
                                                         height={14}
                                                         width={14}
+<<<<<<< HEAD
+=======
+                                                        className="h-[14px] w-[14px]"
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                                                     />
                                                     <span>Add Tag</span>
                                                 </button>
@@ -304,7 +411,11 @@ export default function ProductionModel() {
                                                                     <Image
                                                                         src="/img/close.svg"
                                                                         alt="close"
+<<<<<<< HEAD
                                                                         className="h-6"
+=======
+                                                                        className="h-6 h-[24px] w-[24px]"
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                                                                         height={24}
                                                                         width={24}
                                                                     />
@@ -341,7 +452,11 @@ export default function ProductionModel() {
                                             </>
                                         ) : null}
 
+<<<<<<< HEAD
                                     </>
+=======
+                                    </div>
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                                 ))
                             }
                         </div>
@@ -369,7 +484,11 @@ export default function ProductionModel() {
                                                 <Image
                                                     src="/img/close.svg"
                                                     alt="close"
+<<<<<<< HEAD
                                                     className="h-6"
+=======
+                                                    className="h-6 h-[24px] w-[24px]"
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                                                     height={24}
                                                     width={24}
                                                 />
@@ -395,6 +514,10 @@ export default function ProductionModel() {
                                                                 alt="browse"
                                                                 height={24}
                                                                 width={24}
+<<<<<<< HEAD
+=======
+                                                                className="h-[24px] w-[24px]"
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                                                             />
                                                             <span>Browse your files</span>
                                                         </div>

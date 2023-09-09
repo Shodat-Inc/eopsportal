@@ -94,6 +94,29 @@ export default function TraceModel(localData: any) {
         if (fetchData.length) return;
     }, [])
 
+<<<<<<< HEAD
+=======
+    // Hook that alerts clicks outside of the passed ref
+    function useOutsideAlerter(ref: any) {
+        useEffect(() => {
+            function handleClickOutside(event: any) {
+                if (ref.current && !ref.current.contains(event.target)) {
+                    setToggleAsset(false)
+                }
+            }
+            // Bind the event listener
+            document.addEventListener("mousedown", handleClickOutside);
+            return () => {
+                // Unbind the event listener on clean up
+                document.removeEventListener("mousedown", handleClickOutside);
+            };
+        }, [ref]);
+    }
+
+    const wrapperRef = useRef(null);
+    useOutsideAlerter(wrapperRef);
+
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
     return (
         <div className="flex font-OpenSans">
 
@@ -164,7 +187,10 @@ export default function TraceModel(localData: any) {
                     <div className="flex items-end justify-end mt-[-32px]">
                         <Link
                             className="flex justify-center items-center text-black bg-yellow-951 rounded rounded-xl h-12 px-4 transition-opacity duration-300 mr-5"
+<<<<<<< HEAD
                             // href="/dashboard/eopstrace/modelperformance"
+=======
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                             href={{
                                 pathname: "/dashboard/eopstrace/modelperformance",
                                 query: {
@@ -186,6 +212,7 @@ export default function TraceModel(localData: any) {
                             <span>Model Performance</span>
                         </Link>
 
+<<<<<<< HEAD
                         <Link
                             // href="/dashboard/eopstrace/eopstracealerts"
                             href={{
@@ -210,6 +237,8 @@ export default function TraceModel(localData: any) {
                             <span>Alerts</span>
                         </Link>
 
+=======
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                     </div>
 
                     <div className="flex items-center justify-center flex-wrap mt-10">
@@ -295,7 +324,11 @@ export default function TraceModel(localData: any) {
                                     <span className="text-md text-black pl-2">{chooseAsset}</span>
                                 </div>
                                 {toggleAsset ?
+<<<<<<< HEAD
                                     <div className={`h-52 border rounded-xl border-gray-500 h-[250px] w-[400px]  flex items-start justify-start mt-1 overflow-hidden overflow-y-scroll absolute top-[100%] left-0 z-10 ${styles.scroll}`}>
+=======
+                                    <div ref={wrapperRef} className={`h-52 border rounded-xl border-gray-500 h-[250px] w-[400px]  flex items-start justify-start mt-1 overflow-hidden overflow-y-scroll absolute top-[100%] left-0 z-10 ${styles.scroll}`}>
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                                         <ul className="p-0 m-0 w-full z-5">
                                             {
                                                 parentAsset.objectID === 'Manufacturing Plants' ?

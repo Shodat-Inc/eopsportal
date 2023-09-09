@@ -231,6 +231,23 @@ export default function SubObject(localData: any) {
 
                         {/* Links Box */}
                         <div className="mt-0 flex  w-full">
+<<<<<<< HEAD
+=======
+                            <div>
+                                <button
+                                    className="small:mb-2 small:w-[48%] rounded-lg h-20 w-auto bg-black flex justify-center items-center px-2 py-2 mr-4 small:mr-0 flex-wrap flex-row"
+                                >
+                                    <Image
+                                        src="/img/upload-cloud.svg"
+                                        alt="eops watch"
+                                        height={24}
+                                        width={24}
+                                        className="mb-1"
+                                    />
+                                    <span className="text-white text-[14px]">Upload Related Documents </span>
+                                </button>
+                            </div>
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                             <div className="flex flex-wrap flex-row w-full justify-end small:justify-between small:flex-wrap small:flex-row">
                                 <Link
                                     href={{

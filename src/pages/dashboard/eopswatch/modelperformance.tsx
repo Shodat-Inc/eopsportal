@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import React, { useState, useRef, useEffect } from "react";
+=======
+import React from "react";
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
 import styles from '../../../styles/Common.module.css';
 import Layout from "../../../components/Layout";
 import Template from "../template";
@@ -50,7 +54,11 @@ export default function ModelPerformance() {
 
                     {/* Content Goes Here */}
                     <div className="mt-8">
+<<<<<<< HEAD
                         <p className="text-sm mb-4">Finished training on: <span className="font-semibold">1/9/2022, 7:14:18 AM using General domain</span></p>
+=======
+                        <p className="text-sm mb-4">Finished training on: <span className="font-semibold">02/08/2023, 8:14:18 AM using General domain</span></p>
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
 
                         <p className="text-sm">Iteration id: <span className="font-semibold">3e932594-1df9-465f-b9a6-a5dce3e587d8</span></p>
 

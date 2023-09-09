@@ -218,7 +218,11 @@ export default function TestModel() {
                                     width={24}
                                     className="mr-2"
                                 />
+<<<<<<< HEAD
                                 <span>Upload Images</span>
+=======
+                                <span>Upload Data</span>
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                             </button>
                         </div>
                     </div>

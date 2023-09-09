@@ -1,4 +1,9 @@
 import React, { useState, useRef, useEffect } from "react";
+<<<<<<< HEAD
+=======
+import { useDispatch, useSelector } from 'react-redux';
+import Router from 'next/router'
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
 import Layout from "../../../components/Layout";
 import NoDataFound from "../../../common/nodatafound";
 import styles from '../../../styles/Common.module.css';
@@ -8,6 +13,7 @@ import Link from "next/link";
 import Image from "next/image";
 import Template from "../template";
 import axios from 'axios';
+<<<<<<< HEAD
 import moment from "moment";
 import AlertMessage from "@/common/alertMessage";
 import { Input } from "@material-tailwind/react";
@@ -16,6 +22,11 @@ import Datepicker from "react-tailwindcss-datepicker";
 
 
 
+=======
+import AlertMessage from "@/common/alertMessage";
+import Datepicker from "react-tailwindcss-datepicker";
+
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
 export async function getServerSideProps() {
     const localData = await getObjectsData()
     return {
@@ -27,6 +38,13 @@ export async function getServerSideProps() {
 
 export default function Objects(localData: any) {
     const router = useRouter();
+<<<<<<< HEAD
+=======
+    // Getting Props
+    const {  query : {chooseAsset}} = router
+    const props = {chooseAsset}
+  
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
     const parentAsset = router.query;
     const [showModal, setShowModal] = useState(false);
     const [success, setSuccess] = useState(false);
@@ -37,8 +55,14 @@ export default function Objects(localData: any) {
     const [hide, setHide] = useState(false);
     const [showHideAddTagButton, setShowHideAddTagButton] = useState(false);
     const [selParentTags, setSelParentTags] = useState<any[]>([]);
+<<<<<<< HEAD
     const filtered = localData.localData.filter((item: any) => {
         return item.parentAssetName === parentAsset.assets;
+=======
+    const getClass = useSelector((state: any) => state.classReducer);
+    const filtered = localData.localData.filter((item: any) => {
+        return item.parentAssetName === props.chooseAsset;
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
     });
     const [filteredList, setFilteredList] = useState(filtered);
     const [checkIcon, setCheckIcon] = useState("/img/blank_check_box_icon_white.svg");
@@ -58,13 +82,23 @@ export default function Objects(localData: any) {
     const [subObj, setSebObj] = useState({} as any);
     const [deleteModal, setDeleteModal] = useState(false);
 
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
     // Get JSON data on page load
     const fetchDataForParent = () => {
         axios.get("/api/getAssets").then((response) => {
             if (response.data) {
                 const filtered = response.data.filter((item: any) => {
+<<<<<<< HEAD
                     return item.assetName === parentAsset.assets;
+=======
+                    // return item.assetName === parentAsset.assets;
+                    // return item.assetName === getClass.selectedClass;
+                    return item.assetName === props.chooseAsset;
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                 });
                 if (filtered && filtered.length > 0) {
                     setGetParentData(filtered[0].assetkey);
@@ -75,7 +109,11 @@ export default function Objects(localData: any) {
     useEffect(() => {
         fetchDataForParent();
         if (fetchDataForParent.length) return;
+<<<<<<< HEAD
     }, [parentAsset])
+=======
+    }, [getClass])
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
 
 
     // Get JSON data on page load
@@ -83,7 +121,12 @@ export default function Objects(localData: any) {
         axios.get("/api/getObjects").then((response) => {
             if (response.data) {
                 const filtered = response.data.filter((item: any) => {
+<<<<<<< HEAD
                     return item.parentAssetID === parentAsset.assets;
+=======
+                    // return item.parentAssetID === getClass.selectedClass;
+                    return item.parentAssetID === props.chooseAsset;
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                 });
                 if (filtered && filtered.length > 0) {
                     // update state and store data
@@ -131,8 +174,13 @@ export default function Objects(localData: any) {
             },
             body: JSON.stringify(
                 {
+<<<<<<< HEAD
                     parentAssetID: parentAsset.assets,
                     parentAssetName: parentAsset.assets,
+=======
+                    parentAssetID: props.chooseAsset,
+                    parentAssetName: props.chooseAsset,
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                     subObjectName: `${form_values.Name ? form_values.Name : ''}`,
                     subObjectID: `${form_values.PlantID ? form_values.PlantID : ''}`,
                     subObjects: form_values,
@@ -169,7 +217,11 @@ export default function Objects(localData: any) {
         }
     ]
 
+<<<<<<< HEAD
     var linkKey = joinKey.filter(function (items: any) { return items.objectName === parentAsset.assets; });
+=======
+    var linkKey = joinKey.filter(function (items: any) { return items.objectName === props.chooseAsset; });
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
 
     // Delete Asset
     const deleteAsset = (assetID: any) => {
@@ -210,7 +262,11 @@ export default function Objects(localData: any) {
                                     </li>
                                     <li>
                                         <div className="flex items-center">
+<<<<<<< HEAD
                                             <span className="ml-1 text-sm font-medium text-black hover:text-yellow-950 md:ml-1">{parentAsset.assets}</span>
+=======
+                                            <span className="ml-1 text-sm font-medium text-black hover:text-yellow-950 md:ml-1">{props.chooseAsset}</span>
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                                         </div>
                                     </li>
                                 </ol>
@@ -345,7 +401,11 @@ export default function Objects(localData: any) {
                                                                                 pathname: '/dashboard/assetmanagement/subobject',
                                                                                 query: {
                                                                                     object: items?.subObjects?.PlantID || items?.subObjects?.VIN,
+<<<<<<< HEAD
                                                                                     parentObject: parentAsset.assets,
+=======
+                                                                                    parentObject: props.chooseAsset,
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                                                                                     key: linkKey[0].key
                                                                                 }
                                                                             }}
@@ -357,7 +417,11 @@ export default function Objects(localData: any) {
                                                                 ))
                                                             }
                                                             <td>
+<<<<<<< HEAD
                                                                 <button className="mr-3">
+=======
+                                                                <button className="mr-3 transition-opacity duration-300 outline-none transform active:scale-75 transition-transform">
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                                                                     <Image
                                                                         src="/img/edit.svg"
                                                                         alt="Edit"
@@ -365,7 +429,13 @@ export default function Objects(localData: any) {
                                                                         width={18}
                                                                     />
                                                                 </button>
+<<<<<<< HEAD
                                                                 <button onClick={() => deleteAsset(items)}>
+=======
+                                                                <button
+                                                                className="transition-opacity duration-300 outline-none transform active:scale-75 transition-transform" 
+                                                                onClick={() => deleteAsset(items)}>
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                                                                     <Image
                                                                         src="/img/trash.svg"
                                                                         alt="Trash"
@@ -412,7 +482,11 @@ export default function Objects(localData: any) {
                                     <div className="flex items-start justify-between p-2">
                                         <h3 className="text-lg font-medium"></h3>
                                         <button
+<<<<<<< HEAD
                                             className="p-1 ml-auto bg-transparent border-0 text-black float-right leading-none font-semibold outline-none focus:outline-none"
+=======
+                                            className="p-1 ml-auto bg-transparent border-0 text-black float-right leading-none font-semibold outline-none focus:outline-none transition-opacity duration-300 outline-none transform active:scale-75 transition-transform"
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                                             onClick={() => setDeleteModal(false)}
                                         >
                                             <Image
@@ -430,13 +504,21 @@ export default function Objects(localData: any) {
                                             <p className="flex justify-center items-center text-lg">Are you sure want to delete this record?</p>
                                             <div className="mt-10 relative flex justify-center items-center w-full">
                                                 <button
+<<<<<<< HEAD
                                                     className="border border-black rounded-lg bg-black text-white text-lg w-[70px] h-[47px] mr-5 hover:bg-yellow-951 hover:text-white hover:border-yellow-951 ease-in-out duration-300 disabled:bg-gray-951 disabled:hover:border-gray-951 disabled:border-gray-951"
+=======
+                                                    className="border border-black rounded-lg bg-black text-white text-lg w-[70px] h-[47px] mr-5 hover:bg-yellow-951 hover:text-white hover:border-yellow-951 ease-in-out duration-300 disabled:bg-gray-951 disabled:hover:border-gray-951 disabled:border-gray-951 transition-opacity duration-300 outline-none transform active:scale-75 transition-transform"
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                                                     onClick={() => { setDeleteModal(false); }}
                                                 >
                                                     Yes
                                                 </button>
                                                 <button
+<<<<<<< HEAD
                                                     className="border border-black rounded-lg bg-white text-black text-lg w-[70px] h-[47px] hover:text-white hover:bg-yellow-951 hover:border-yellow-951 ease-in-out duration-300"
+=======
+                                                    className="border border-black rounded-lg bg-white text-black text-lg w-[70px] h-[47px] hover:text-white hover:bg-yellow-951 hover:border-yellow-951 ease-in-out duration-300 transition-opacity duration-300 outline-none transform active:scale-75 transition-transform"
+>>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                                                     onClick={() => { setDeleteModal(false); }}
                                                 >
                                                     No
