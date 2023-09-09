@@ -1,0 +1,52 @@
+[
+    {
+        "subClassID":"101120111001",
+        "subClassName":"Battery", 
+        "subClassSlug": "Battery",
+        "parentAsset": "Cars", 
+        "parentAssetID": "110011001001",
+        "subClassTags": [
+            "Battery Type", 
+            "Size",
+            "Mfd Date"
+        ],
+        "parentJoinKey":[
+            "VIN"
+        ],
+        "dateCreated":"5/8/2023, 11:45:18 PM",
+        "dateModified": "5/8/2023, 11:45:18 PM"
+    },
+    {
+        "subClassID":"101120111002",
+        "subClassName":"Door", 
+        "subClassSlug": "Door",
+        "parentAsset": "Cars", 
+        "parentAssetID": "110011001001",
+        "subClassTags": [
+            "Left", 
+            "Right"
+        ],
+        "parentJoinKey":[
+            "Model Type"
+        ],
+        "dateCreated":"5/8/2023, 11:45:18 PM",
+        "dateModified": "5/8/2023, 11:45:18 PM"
+    }, 
+    {
+        "subClassID":"101120111003",
+        "subClassName":"Engine", 
+        "subClassSlug": "Engine",
+        "parentAsset": "Cars", 
+        "parentAssetID": "110011001001",
+        "subClassTags": [
+            "Rubber",
+            "Connecting Rod",
+            "HP"
+        ],
+        "parentJoinKey":[
+            "Model Type"
+        ],
+        "dateCreated":"5/8/2023, 11:45:18 PM",
+        "dateModified": "5/8/2023, 11:45:18 PM"
+    }
+]

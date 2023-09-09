@@ -1,0 +1,118 @@
+[
+    {
+        "assetID": "1000000001",
+        "assetName": "Manufacturing Plants",
+        "slug": "Manufacturing Plants",
+        "assetkey": [
+            "PlantID",
+            "Street",
+            "City",
+            "State",
+            "Zipcode",
+            "Country",
+            "Name",
+            "Description"
+        ],
+        "dateModified": "5/29/2023, 2:32:00 PM",
+        "dateCreated": "5/29/2023, 2:32:00 PM",
+        "assetTypes": [
+            "int",
+            "string",
+            "string",
+            "string",
+            "int",
+            "string",
+            "string",
+            "string"
+        ],
+        "tags": [
+            {
+                "tagName": "PlantID",
+                "dataType": "int"
+            },
+            {
+                "tagName": "Street",
+                "dataType": "string"
+            },
+            {
+                "tagName": "City",
+                "dataType": "string"
+            },
+            {
+                "tagName": "State",
+                "dataType": "string"
+            },
+            {
+                "tagName": "Zipcode",
+                "dataType": "int"
+            },
+            {
+                "tagName": "Country",
+                "dataType": "string"
+            },
+            {
+                "tagName": "Name",
+                "dataType": "string"
+            },
+            {
+                "tagName": "Description",
+                "dataType": "string"
+            }
+        ]
+    },
+    {
+        "assetID": "1000000002",
+        "assetName": "Vehicles",
+        "slug": "Vehicles",
+        "assetkey": [
+            "VIN",
+            "MfgDate",
+            "Model",
+            "AssemblyPlant",
+            "LotNo",
+            "ModelYear",
+            "Type"
+        ],
+        "dateModified": "5/29/2023, 2:47:23 PM",
+        "dateCreated": "5/29/2023, 2:47:23 PM",
+        "assetTypes": [
+            "string",
+            "date",
+            "string",
+            "string",
+            "string",
+            "int",
+            "string"
+        ],
+        "tags": [
+            {
+                "tagName": "VIN",
+                "dataType": "string"
+            },
+            {
+                "tagName": "MfgDate",
+                "dataType": "date"
+            },
+            {
+                "tagName": "Model",
+                "dataType": "string"
+            },
+            {
+                "tagName": "AssemblyPlant",
+                "dataType": "string"
+            },
+            {
+                "tagName": "LotNo",
+                "dataType": "string"
+            },
+            {
+                "tagName": "ModelYear",
+                "dataType": "int"
+            },
+            {
+                "tagName": "Type",
+                "dataType": "string"
+            }
+        ]
+    }   
+]

@@ -1,0 +1,16 @@
+export const PROSENSE_LOADING ="PROSENSE_LOADING";
+export const PROSENSE_SUCCESS ="PROSENSE_SUCCESS";
+export const PROSENSE_ERROR ="PROSENSE_ERROR";
+export const PROSENSE_RELOADING ="PROSENSE_RELOADING";
+
+export const LOADING ="LOADING";
+export const ERROR ="ERROR";
+export const SUCCESS ="SUCCESS";
+export const RELOADING ="RELOADING";
+export const NONE ="NONE";
+export const GET_SAMPLE="GET_SAMPLE";
+export const SAMPLE_ERROR="SAMPLE_ERROR";
+
+export const CLASS_LOADING = "CLASS_LOADING";
+export const CLASS_SUCCESS = "CLASS_SUCCESS";
+export const CLASS_ERROR = "CLASS_ERROR";

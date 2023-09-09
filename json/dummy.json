@@ -1,0 +1,50 @@
+[
+    {
+        "assetID":"110001",
+        "assetName":"Engine",
+        "slug":"engine",
+        "parentAssetID":"0001",
+        "parentAssetName":"Car",
+        "tagsKeys": [
+            "Date",
+            "Vin",
+            "Colo",
+            "Piston"
+        ], 
+        "geoScopeLink":"https://abc.com",
+        "dateCreated":"5/8/2023, 12:17:48 AM",
+        "dateModified":"5/8/2023, 12:20:25 AM"
+    },
+    {
+        "assetID":"110002",
+        "assetName":"Door",
+        "slug":"door",
+        "parentAssetID":"0001",
+        "parentAssetName":"Car",
+        "tagsKeys": [
+            "Date",
+            "Vin",
+            "Colo",
+            "Piston"
+        ], 
+        "geoScopeLink":"https://thisisgeoscopelink.xyz",
+        "dateCreated":"5/8/2023, 12:17:48 AM",
+        "dateModified":"5/8/2023, 12:20:25 AM"
+    }, 
+    {
+        "assetID":"110003",
+        "assetName":"Window",
+        "slug":"window",
+        "parentAssetID":"0003",
+        "parentAssetName":"Bike",
+        "tagsKeys": [
+            "Piston",
+            "Vin",
+            "Colo",
+            "Date"
+        ], 
+        "geoScopeLink":"https://xyz.com",
+        "dateCreated":"5/8/2023, 12:17:48 AM",
+        "dateModified":"5/8/2023, 12:20:25 AM"
+    }
+]

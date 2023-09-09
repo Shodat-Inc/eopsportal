@@ -1,0 +1,26 @@
+[
+    {
+        "assetID": "110011002021",
+        "assetName": "Connecting Rod",
+        "slug": "Connecting Rod",
+        "parentAssetID": "Vehicles",
+        "parentAssetName": "Vehicles",
+        "parentSubAsset":"Engine",
+        "tagsKeys": "Tag1, Tag2, Tag3",
+        "dateCreated": "5/8/2023, 11:37:50 PM",
+        "dateModified": "5/8/2023, 11:37:50 PM",
+        "geoScopeLink": "http://localhost:3000/dashboard/assetmanagement"
+    },
+    {
+        "assetID": "110011002022",
+        "assetName": "Engine Rubber Mount",
+        "slug": "Engine Rubber Mount",
+        "parentAssetID": "Vehicles",
+        "parentAssetName": "Vehicles",
+        "parentSubAsset":"Engine",
+        "tagsKeys": "Tag1, Tag2, Tag3",
+        "dateCreated": "5/8/2023, 11:37:50 PM",
+        "dateModified": "5/8/2023, 11:37:50 PM",
+        "geoScopeLink": "http://localhost:3000/dashboard/assetmanagement"
+    }
+]

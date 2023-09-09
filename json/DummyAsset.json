@@ -1,0 +1,85 @@
+[
+    {
+        "assetID":"110011001001",
+        "assetName":"Cars",
+        "assetSlug":"Cars",
+        "dateCreated":"5/8/2023, 11:45:18 PM",
+        "dateModified": "5/8/2023, 11:45:18 PM",
+        "assetTags": [
+            "Model Type", 
+            "VIN", 
+            "Color",
+            "Serial No"
+        ],
+        "assetTypes": [
+            {
+                "name": "Model Type",
+                "type" : "string"
+            },
+            {
+                "name": "VIN",
+                "type" : "int"
+            },
+            {
+                "name": "Color",
+                "type" : "string"
+            },
+            {
+                "name": "Serial No",
+                "type": "int"
+            }
+        ]
+    },
+    {
+        "assetID":"110011001002",
+        "assetName":"Truck",
+        "assetSlug":"Truck",
+        "dateCreated":"5/8/2023, 11:45:18 PM",
+        "dateModified": "5/8/2023, 11:45:18 PM",
+        "assetTags": [
+            "Model Type", 
+            "VIN", 
+            "Color",
+            "Serial No"
+        ]
+    }, 
+    {
+        "assetID":"110011001003",
+        "assetName":"Moter Cycle",
+        "assetSlug":"Moter Cycle",
+        "dateCreated":"5/8/2023, 11:45:18 PM",
+        "dateModified": "5/8/2023, 11:45:18 PM",
+        "assetTags": [
+            "Model Type", 
+            "VIN", 
+            "Color",
+            "Serial No"
+        ]
+    }, 
+    {
+        "assetID":"110011001004",
+        "assetName":"Electric Bike",
+        "assetSlug":"Electric Bike",
+        "dateCreated":"5/8/2023, 11:45:18 PM",
+        "dateModified": "5/8/2023, 11:45:18 PM",
+        "assetTags": [
+            "Model Type", 
+            "VIN", 
+            "Color",
+            "Serial No"
+        ]
+    },
+    {
+        "assetID":"110011001005",
+        "assetName":"Jeep",
+        "assetSlug":"Jeep",
+        "dateCreated":"5/8/2023, 11:45:18 PM",
+        "dateModified": "5/8/2023, 11:45:18 PM",
+        "assetTags": [
+            "Model Type", 
+            "VIN", 
+            "Color",
+            "Serial No"
+        ]
+    }
+]

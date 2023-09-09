@@ -1,0 +1,58 @@
+[
+    {
+        "ID": 1,
+        "alertID": 10000000001,
+        "alertName": "Medium Wear",
+        "model": "Tire Wear Detection",
+        "primaryClass": "Vehicles",
+        "subObject": "Tire",
+        "condition": "",
+        "threshold": "",
+        "tireware": "Medium Tire Wear",
+        "serialNo": "NEC1TT01522",
+        "dateCreated": "2023-05-18 18:20:34",
+        "status": true
+    },
+    {
+        "ID": 2,
+        "alertID": 10000000002,
+        "alertName": "10K Warning",
+        "model": "Tire Wear Detection",
+        "primaryClass": "Vehicles",
+        "subObject": "Tire",
+        "condition": "less than",
+        "threshold": "10000",
+        "tireware": "",
+        "serialNo": "NEC1TT01522",
+        "dateCreated": "2023-06-27 21:21:21",
+        "status": true
+    },
+    {
+        "ID": 3,
+        "alertID": 10000000003,
+        "alertName": "High Battery Util",
+        "model": "Battery Life Prediction",
+        "primaryClass": "Vehicles",
+        "subObject": "Battery",
+        "condition": "greather than",
+        "batteryUtilizationValue": "75%",
+        "remainingCyclesLeft": "",
+        "serialNo": "1S223",
+        "dateCreated": "2023-04-27 12:20:51",
+        "status": true
+    },
+    {
+        "ID": 4,
+        "alertID": 10000000004,
+        "alertName": "Low Battery Life",
+        "model": "Battery Life Prediction",
+        "primaryClass": "Vehicles",
+        "subObject": "Battery",
+        "condition": "",
+        "batteryUtilizationValue": "",
+        "remainingCyclesLeft": "50",
+        "serialNo": "1S223",
+        "dateCreated": "2023-05-15 10:20:30",
+        "status": true
+    }
+]
