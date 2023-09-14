@@ -3,18 +3,26 @@ import Router from 'next/router';
 import Image from "next/image";
 import axios from 'axios';
 import useSWR from 'swr';
+import { auth } from './firebase.config';
+import { RecaptchaVerifier, signInWithPhoneNumber } from 'firebase/auth';
 
 const fetcher = (url: any) => axios.get(url).then(res => res.data)
 export default function Account(props: any) {
-    const [successVerify, setSuccessVerify] = useState(false)
+    const [successVerify, setSuccessVerify] = useState(false);
+    const [phone, setPhone] = useState('+91');
+    const [hasFilled, setHasFilled] = useState(false);
+    const [otp, setOtp] = useState('');
+
+    
 
     const verifyEmailFunction = () => {
-        setSuccessVerify(!successVerify)
-        setTimeout(() => {
-            Router.push({
-                pathname: '/authentication/verifyaccount'
-            }, 'verifyaccount')
-        }, 100)
+        setSuccessVerify(!successVerify);
+        setHasFilled(true);
+        // setTimeout(() => {
+        //     Router.push({
+        //         pathname: '/authentication/verifyaccount'
+        //     }, 'verifyaccount')
+        // }, 100)
     }
 
 
@@ -24,7 +32,7 @@ export default function Account(props: any) {
         email: "",
         password: "",
         confirmPassword: "",
-        verify:false,
+        verify: false,
     });
     const [errors, setErrors] = useState({
         firstName: "",
@@ -125,7 +133,7 @@ export default function Account(props: any) {
 
     const submitForm = (evt: any) => {
         evt.preventDefault();
-        if (handleValidation()) { 
+        if (handleValidation()) {
             localStorage.setItem('registerData', JSON.stringify(formData));
             setTimeout(() => {
                 Router.push({
