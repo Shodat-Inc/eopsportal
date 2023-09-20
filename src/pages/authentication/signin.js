@@ -37,6 +37,8 @@ export default function SignIn() {
     const [showTick, setShowTick] = useState(false);
     const [otpError, setOtpError] = useState(false);
     const [loader, setLoader] = useState(false);
+    const [otpSent, setOtpSent] = useState(false);
+    const [userPhone, setUserPhone] = useState("")
 
     // Firebase OTP
     function onCaptchVerify() {
@@ -73,6 +75,7 @@ export default function SignIn() {
                 console.log({
                     matched: matched[0].phoneNumber
                 })
+                setUserPhone(phoneNumber);
                 sessionStorage.setItem("authenticationUsername", matched[0].username);
                 localStorage.setItem("authenticationUsername", matched[0].username);
 
@@ -82,12 +85,14 @@ export default function SignIn() {
                         console.log({
                             message: "OTP sent successfully!"
                         })
+                        setOtpSent(true);
                         setTimeout(() => {
                             setOtpScreen(true);
                             setLoader(false)
                         }, 1000)
                     })
                     .catch((error) => {
+                        setOtpSent(false);
                         setResponseError(true);
                         console.log({
                             message: error
@@ -115,12 +120,21 @@ export default function SignIn() {
                     setResponseError(false)
                 }, 2000)
             }
-
-
-
-
         }
 
+    }
+
+    // Phone Number With Starts
+    const phoneNumberWithStar = (phone) => {
+        let last4Digit = phone.substr(phone.length - 4);
+        let lengthOfPhone = phone.length - 4;
+        let hiddenPhone = [];
+        let finalPhone = '';
+        for (let i = 0; i < lengthOfPhone; i++) {
+            hiddenPhone.push("*")
+        }
+        finalPhone = hiddenPhone.join("").toString() + last4Digit.toString();
+        return finalPhone;
     }
 
 
@@ -322,6 +336,9 @@ export default function SignIn() {
                             }
                             {/* === Login Message Alert === */}
 
+                            {otpSent &&
+                                <AlertMessage alertType="success" title="" message={`An OTP is sent to you mobile number ${phoneNumberWithStar(userPhone)}`} />
+                            }
                             <div className="signinform relative sm:pb-6">
                                 <div id="recaptcha-container"></div>
                                 {
