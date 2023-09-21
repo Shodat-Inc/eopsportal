@@ -70,6 +70,7 @@ export default function Payment(props: any) {
     const [premiumList, setPremiumList] = useState([] as any);
     const [total, setTotal] = useState(0);
     const [tax, setTax] = useState("29.59");
+    const [edit, setEdit] = useState(false);
     useEffect(() => {
         setData(premiumJson[0]);
         let totl = parseFloat(premiumJson[0].price) + parseFloat(tax);
@@ -97,10 +98,12 @@ export default function Payment(props: any) {
         }
 
     }, [duration])
-    console.log({
-        data: data,
-        premiumList: premiumList
-    })
+    const toggleEdit = () => {
+        setEdit(!edit);
+    }
+    const handleClose = () => {
+        setEdit(false)
+    }
 
     return (
         <div className="flex font-OpenSans">
@@ -217,12 +220,227 @@ export default function Payment(props: any) {
                                 </div>
                                 {
                                     billing &&
-                                    <div className="flex w-full justify-between items-center">
-                                        <div className="text-sm">
-                                            <p className="font-semibold mb-1">Narendra N</p>
-                                            <p>440 N, Wolfe Rd, Unit Ms234, Sunnyvale, CA 94085</p>
-                                        </div>
-                                        <button className="bg-yellow-951 text-black text-sm px-2 py-1 rounded rounded-lg flex justify-center items-center">Edit</button>
+                                    <div className="flex w-full justify-start items-start flex-wrap flex-col">
+                                        {!edit &&
+                                            <div className="flex w-full justify-between items-center">
+                                                <div className="text-sm">
+                                                    <p className="font-semibold mb-1">Narendra N</p>
+                                                    <p>440 N, Wolfe Rd, Unit Ms234, Sunnyvale, CA 94085</p>
+                                                </div>
+                                                <button onClick={toggleEdit} className="bg-yellow-951 text-black text-sm px-2 py-1 rounded rounded-lg flex justify-center items-center">Edit</button>
+                                            </div>
+                                        }
+
+                                        {edit &&
+                                            <div className="mt-1 relative flex w-full justify-start items-start flex-wrap flex-col">
+
+                                                <div>
+                                                    <p className="text-[13px] mb-5">We collect this information to register your products, verify your identity, and calculate applicable taxes and fees.</p>
+                                                    <p className="text-[13px]">All fields required unless otherwise stated.</p>
+                                                </div>
+
+                                                <div className="flex justify-between items-start mb-3 w-full">
+                                                    <div className="w-[48%]">
+                                                        <div className={`lg:w-full small:w-full small:w-full ${styles.form__wrap}`}>
+                                                            <div className={`relative ${styles.form__group} font-OpenSans`}>
+                                                                <input
+                                                                    type="text"
+                                                                    id="firstName"
+                                                                    name="firstName"
+                                                                    className={`${styles.form__field} border border-[#A7A7A7]`}
+                                                                    placeholder="First Name"
+
+                                                                />
+                                                                <label htmlFor="description" className={`${styles.form__label} !text-[#A7A7A7]`}>First Name</label>
+                                                            </div>
+                                                            <span className='text-red-952 text-sm flex items-center justify-start'></span>
+                                                        </div>
+                                                    </div>
+                                                    <div className="w-[48%]">
+                                                        <div className={`lg:w-full small:w-full small:w-full ${styles.form__wrap}`}>
+                                                            <div className={`relative ${styles.form__group} font-OpenSans`}>
+                                                                <input
+                                                                    type="text"
+                                                                    id="lastName"
+                                                                    name="lastName"
+                                                                    className={`${styles.form__field} border border-[#A7A7A7]`}
+                                                                    placeholder="Last Name"
+
+                                                                />
+                                                                <label htmlFor="description" className={`${styles.form__label} !text-[#A7A7A7]`}>Last Name</label>
+                                                            </div>
+                                                            <span className='text-red-952 text-sm flex items-center justify-start'></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div className="flex justify-between items-start mb-3 w-full">
+                                                    <div className="w-[48%]">
+                                                        <div className={`lg:w-full small:w-full small:w-full ${styles.form__wrap}`}>
+                                                            <div className={`relative ${styles.form__group} font-OpenSans`}>
+                                                                <input
+                                                                    type="text"
+                                                                    id="email"
+                                                                    name="email"
+                                                                    className={`${styles.form__field} border border-[#A7A7A7]`}
+                                                                    placeholder="Email"
+
+                                                                />
+                                                                <label htmlFor="description" className={`${styles.form__label} !text-[#A7A7A7]`}>Email</label>
+                                                            </div>
+                                                            <span className='text-red-952 text-sm flex items-center justify-start'></span>
+                                                        </div>
+                                                    </div>
+                                                    <div className="w-[48%]">
+                                                        <div className={`lg:w-full small:w-full small:w-full ${styles.form__wrap}`}>
+                                                            <div className={`relative ${styles.form__group} font-OpenSans`}>
+                                                                <input
+                                                                    type="text"
+                                                                    id="phoneNumner"
+                                                                    name="phoneNumner"
+                                                                    className={`${styles.form__field} border border-[#A7A7A7]`}
+                                                                    placeholder="Phone Number"
+
+                                                                />
+                                                                <label htmlFor="description" className={`${styles.form__label} !text-[#A7A7A7]`}>Phone Number</label>
+                                                            </div>
+                                                            <span className='text-[#A7A7A7] text-[11px] flex items-center justify-start'>Used to register products and to validate your identity</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div className="flex justify-between items-start mb-3 w-full">
+                                                    <div className={`lg:w-full small:w-full small:w-full ${styles.form__wrap}`}>
+                                                        <div className={`relative ${styles.form__group} font-OpenSans`}>
+                                                            <input
+                                                                type="text"
+                                                                id="houseNo"
+                                                                name="houseNo"
+                                                                className={`${styles.form__field} border border-[#A7A7A7]`}
+                                                                placeholder="House no/Building"
+
+                                                            />
+                                                            <label htmlFor="description" className={`${styles.form__label} !text-[#A7A7A7]`}>House no/Building</label>
+                                                        </div>
+                                                        <span className='text-red-952 text-sm flex items-center justify-start'></span>
+                                                    </div>
+                                                </div>
+
+                                                <div className="flex justify-between items-start mb-3 w-full">
+                                                    <div className="w-[48%]">
+                                                        <div className={`lg:w-full small:w-full small:w-full ${styles.form__wrap}`}>
+                                                            <div className={`relative ${styles.form__group} font-OpenSans`}>
+                                                                <input
+                                                                    type="text"
+                                                                    id="street"
+                                                                    name="street"
+                                                                    className={`${styles.form__field} border border-[#A7A7A7]`}
+                                                                    placeholder="Street/Landmark"
+
+                                                                />
+                                                                <label htmlFor="description" className={`${styles.form__label} !text-[#A7A7A7]`}>Street/Landmark</label>
+                                                            </div>
+                                                            <span className='text-red-952 text-sm flex items-center justify-start'></span>
+                                                        </div>
+                                                    </div>
+                                                    <div className="w-[48%]">
+                                                        <div className={`lg:w-full small:w-full small:w-full ${styles.form__wrap}`}>
+                                                            <div className={`relative ${styles.form__group} font-OpenSans`}>
+                                                                <input
+                                                                    type="text"
+                                                                    id="city"
+                                                                    name="city"
+                                                                    className={`${styles.form__field} border border-[#A7A7A7]`}
+                                                                    placeholder="City"
+
+                                                                />
+                                                                <label htmlFor="description" className={`${styles.form__label} !text-[#A7A7A7]`}>City</label>
+                                                            </div>
+                                                            <span className='text-red-952 text-sm flex items-center justify-start'></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div className="flex justify-between items-start mb-3 w-full">
+                                                    <div className="w-[48%]">
+                                                        <div className={`lg:w-full small:w-full small:w-full ${styles.form__wrap}`}>
+                                                            <div className={`relative ${styles.form__group} font-OpenSans`}>
+                                                                <input
+                                                                    type="text"
+                                                                    id="state"
+                                                                    name="state"
+                                                                    className={`${styles.form__field} border border-[#A7A7A7]`}
+                                                                    placeholder="State"
+
+                                                                />
+                                                                <label htmlFor="description" className={`${styles.form__label} !text-[#A7A7A7]`}>State</label>
+                                                            </div>
+                                                            <span className='text-red-952 text-sm flex items-center justify-start'></span>
+                                                        </div>
+                                                    </div>
+                                                    <div className="w-[48%]">
+                                                        <div className={`lg:w-full small:w-full small:w-full ${styles.form__wrap}`}>
+                                                            <div className={`relative ${styles.form__group} font-OpenSans`}>
+                                                                <input
+                                                                    type="text"
+                                                                    id="pin"
+                                                                    name="pin"
+                                                                    className={`${styles.form__field} border border-[#A7A7A7]`}
+                                                                    placeholder="PIN"
+
+                                                                />
+                                                                <label htmlFor="description" className={`${styles.form__label} !text-[#A7A7A7]`}>PIN</label>
+                                                            </div>
+                                                            <span className='text-red-952 text-sm flex items-center justify-start'></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div className="flex justify-between items-start mb-3 w-full">
+                                                    <div className={`lg:w-full small:w-full small:w-full ${styles.form__wrap}`}>
+                                                        <div className={`relative ${styles.form__group} font-OpenSans`}>
+                                                            <input
+                                                                type="text"
+                                                                id="companyName"
+                                                                name="companyName"
+                                                                className={`${styles.form__field} border border-[#A7A7A7]`}
+                                                                placeholder="Company name (Optional)"
+
+                                                            />
+                                                            <label htmlFor="description" className={`${styles.form__label} !text-[#A7A7A7]`}>Company name (Optional)</label>
+                                                        </div>
+                                                        <span className='text-red-952 text-sm flex items-center justify-start'></span>
+                                                    </div>
+                                                </div>
+
+                                                <div className="flex justify-between items-start mb-3 w-full">
+                                                    <div className={`lg:w-full small:w-full small:w-full ${styles.form__wrap}`}>
+                                                        <div className={`relative ${styles.form__group} font-OpenSans`}>
+                                                            <input
+                                                                type="text"
+                                                                id="taxID"
+                                                                name="taxID"
+                                                                className={`${styles.form__field} border border-[#A7A7A7]`}
+                                                                placeholder="TAX ID"
+
+                                                            />
+                                                            <label htmlFor="description" className={`${styles.form__label} !text-[#A7A7A7]`}>TAX ID</label>
+                                                        </div>
+                                                        <span className='text-[#A7A7A7] text-[11px] flex items-center justify-start'>For currect tax calculation</span>
+                                                    </div>
+                                                </div>
+
+                                                <div className="flex justify-between items-start w-full">
+                                                    <div className="w-[48%]">
+                                                        <button className="rounded rounded-xl bg-yellow-951 border border-yellow-951 text-black text-sm h-[44px] w-full flex justify-center items-center">Save</button>
+                                                    </div>
+                                                    <div className="w-[48%]">
+                                                        <button onClick={handleClose} className="rounded rounded-xl bg-white border border-black text-black text-sm h-[44px] w-full flex justify-center items-center">Cancel</button>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        }
                                     </div>
                                 }
                             </div>
