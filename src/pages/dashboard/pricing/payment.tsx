@@ -62,13 +62,19 @@ const durationList = [
     "36"
 ]
 
-export default function Payment(props:any) {
+export default function Payment(props: any) {
     const [premium, setPremium] = useState(true);
     const [billing, setBilling] = useState(true);
     const [duration, setDuration] = useState("1");
     const [data, setData] = useState([] as any);
-    useEffect(()=>{
-        setData(premiumJson[0])
+    const [premiumList, setPremiumList] = useState([] as any);
+    const [total, setTotal] = useState(0);
+    const [tax, setTax] = useState("29.59");
+    useEffect(() => {
+        setData(premiumJson[0]);
+        let totl = parseFloat(premiumJson[0].price) + parseFloat(tax);
+        setTotal(totl)
+
     }, [])
     const togglePremium = () => {
         setPremium(!premium)
@@ -79,17 +85,21 @@ export default function Payment(props:any) {
     const handlePremiumDuration = (event: any) => {
         setDuration(event.target.value)
     }
-    useEffect(()=>{
+    useEffect(() => {
         const filtered = premiumJson.filter((item: any) => {
             return item.premiumID === duration
         })
-        if(filtered && filtered.length > 0) {
-            setData(filtered)
+        if (filtered && filtered.length > 0) {
+            setData(filtered);
+            setPremiumList(filtered[0].premiumList);
+            let totl = parseFloat(filtered[0].price) + parseFloat(tax);
+            setTotal(totl)
         }
-        
+
     }, [duration])
     console.log({
-        data:data
+        data: data,
+        premiumList: premiumList
     })
 
     return (
@@ -142,38 +152,29 @@ export default function Payment(props:any) {
                                         {
                                             premium &&
                                             <ul className={`text-gray-967 text-[14px] list-disc space-y-1 ml-6 transition-all`}>
-                                                <li>Up to 1000 clicks/ month</li>
-                                                <li>eOps Watch Platform</li>
-                                                <li>eOps Trace Platform</li>
-                                                <li>eOps Prosense Platform</li>
-                                                <li>Real-Time Insights/Reports</li>
-                                                <li>15 Team members</li>
-                                                <li>5 Asset Tracking Project </li>
+                                                {
+                                                    data && data.length > 0 ?
+                                                        premiumList.map((item: any, index: any) => (
+                                                            <li key={index}>{item}</li>
+                                                        ))
+                                                        : null
+                                                }
                                             </ul>
+
                                         }
                                     </div>
                                     <div className="w-[50%]">
                                         <div className="flex justify-between items-start mb-4">
                                             <div className="flex justify-between items-start flex-wrap flex-col">
                                                 <span className="text-sm font-bold mb-2">Price</span>
-                                                <span className="text-sm font-bold">$149.00/monthly</span>
+                                                <span className="text-sm font-bold"><span>$</span>{data && data.length > 0 ? data[0].price : null}/monthly</span>
                                             </div>
-                                            {/* <select 
-                                            name="premiumDuration" 
-                                            id="premiumDuration" 
-                                            onChange={handlePremiumDuration}
-                                            className="border border-[#A7A7A7] rounded rounded-xl h-[46px] w-[146px] text-sm px-2">
-                                                <option value="1 Months">1 Months</option>
-                                                <option selected value="12 Months">12 Months</option>
-                                                <option value="24 Months">24 Months</option>
-                                                <option value="36 Months">12 Months</option>
-                                            </select> */}
                                             <select
                                                 name="premiumDuration"
                                                 id="premiumDuration"
                                                 className="border border-[#A7A7A7] rounded rounded-xl h-[46px] w-[146px] text-sm px-2"
                                                 value={duration}
-                                                onChange={(e:any)=>handlePremiumDuration(e)}
+                                                onChange={(e: any) => handlePremiumDuration(e)}
                                             >
                                                 <option value="">-Select-</option>
                                                 {
@@ -232,15 +233,15 @@ export default function Payment(props:any) {
                                 <h3 className="font-bold text-sm pb-4 border  border-t-0 border-l-0 border-r-0 border-b-1 border-[#C4C1C1] mb-3">Order Summary</h3>
                                 <div className="flex justify-between items-center mb-3">
                                     <div className="font-semibold text-sm">Subtotal (USD)</div>
-                                    <div className="font-semibold text-sm">$149.00</div>
+                                    <div className="font-semibold text-sm"><span>$</span>{data && data.length > 0 ? data[0].price : null}</div>
                                 </div>
                                 <div className="flex justify-between items-center mb-3">
                                     <div className="text-sm">GST/TAX and Fees</div>
-                                    <div className="text-sm">$29.59</div>
+                                    <div className="text-sm"><span>$</span>{tax}</div>
                                 </div>
                                 <div className="flex justify-between items-center">
                                     <div className="font-semibold text-sm">Total</div>
-                                    <div className="font-semibold text-sm">$178.59</div>
+                                    <div className="font-semibold text-sm"><span>$</span>{total}</div>
                                 </div>
                                 <div className={`mt-5 lg:full small:w-full small:w-full ${styles.form__wrap}`}>
                                     <div className={`relative ${styles.form__group} font-OpenSans`}>
