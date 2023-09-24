@@ -22,8 +22,14 @@ export default function Pricing() {
                     <p className="text-black text-lg mb-0 font-semibold">eOps Plans and Pricing</p>
                 </div>
 
-                <div className="border border-gray-957 min-h-full rounded-xl mt-3 px-4 py-4 bg-gray-953 flex justify-center items-center">
+                <div className="border border-gray-957 min-h-full rounded-xl mt-3 px-4 py-4 bg-gray-953 flex justify-center items-center relative">
+                <div className="bg-black rounded rounded-xl min-w-[280px] min-h-[67px] border border-yellow-951 p-3 absolute top-[15px] left-[15px]">
+                            <p className="text-white font-bold mb-2">Your current plan is: <span className="text-yellow-951">PREMIUM</span></p>
+                            <p className="font-semibold text-white">Expire on 29 July 2024</p>
+                        </div>
                     <div className="w-[980px] relative flex justify-center items-center flex-wrap flex-col">
+
+                        
 
                         {/* Pricing Top Heading */}
                         <div className="w-full flex-wrap flex-col flex justify-center items-center mb-5">
