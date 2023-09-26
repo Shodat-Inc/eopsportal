@@ -1,12 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import Layout from "../../../components/Layout";
 import Image from "next/image";
-import EditProfile from "./editprofile";
-import ManageTeams from "./manageteams";
-import Notification from "./notification";
-import ChangePassword from "./changepassword";
-import ChangePhone from "./changePhone";
-export default function MyAccount() {
+
+export default function ManageProducts() {
     const [tab, setTab] = useState(1);
     // Toggle Tab function
     const toggleTab = (item: any) => {
@@ -130,11 +126,11 @@ export default function MyAccount() {
                         <div className="w-[70%] min-h-[300px] bg-white border border-gray-957 overflow-hidden rounded-tr-xl rounded-br-xl rounded-bl-xl">
                             {/* Tab Contents */}
                             <div className=" bg-white w-full h-full rounded-tr-xl rounded-br-xl rounded-bl-xl overflow-hidden">
-                                {tab === 1 && <EditProfile />}
-                                {tab === 2 && <ManageTeams />}
+                                {tab === 1 && <>There!</>}
+                                {/* {tab === 2 && <ManageTeams />}
                                 {tab === 3 && <Notification />}
                                 {tab === 4 && <ChangePassword />}
-                                {tab === 5 && <ChangePhone />}
+                                {tab === 4 && <ChangeEmail />} */}
                             </div>
                         </div>
                     </div>
@@ -147,7 +143,7 @@ export default function MyAccount() {
     )
 }
 
-MyAccount.getLayout = function getLayout(page: any) {
+ManageProducts.getLayout = function getLayout(page: any) {
     return (
         <Layout>{page}</Layout>
     )
