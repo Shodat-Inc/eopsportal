@@ -20,11 +20,10 @@ const premiumJson = [
         "premiumID": "12",
         "price": "249",
         "premiumList": [
-            "Up to 500 clicks/month",
+            "Up to 50 clicks/month",
             "eOps Watch Platform",
-            "eOps Trace Platform",
             "Real-Time Insights/Report",
-            "15 Team Members",
+            "5 Team Members",
             "1 Asset Tracking Project"
         ]
     },
@@ -32,26 +31,22 @@ const premiumJson = [
         "premiumID": "24",
         "price": "349",
         "premiumList": [
-            "Up to 1000 clicks/month",
+            "Up to 50 clicks/month",
             "eOps Watch Platform",
-            "eOps Trace Platform",
-            "eOps Prosense Platform",
             "Real-Time Insights/Report",
-            "50 Team Members",
-            "10 Asset Tracking Project"
+            "5 Team Members",
+            "1 Asset Tracking Project"
         ]
     },
     {
         "premiumID": "36",
         "price": "449",
         "premiumList": [
-            "Up to 2000 clicks/month",
+            "Up to 50 clicks/month",
             "eOps Watch Platform",
-            "eOps Trace Platform",
-            "eOps Prosense Platform",
             "Real-Time Insights/Report",
-            "100 Team Members",
-            "15 Asset Tracking Project"
+            "5 Team Members",
+            "1 Asset Tracking Project"
         ]
     }
 ]

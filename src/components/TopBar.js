@@ -54,6 +54,14 @@ export default function TopBar({ showNav, setShowNav }) {
     }, 200);
   }
 
+  const arr = router.pathname.split("/");
+  const splitPathName = arr.filter(n => n);
+  useEffect(()=>{
+    if(router.pathname == "dashboard/pricing" || splitPathName.includes("pricing")) {
+      setShowNav(false)
+    }
+  }, [])
+
   return (
     <div
       className={`h-20 fixed z-[9] w-full h-16 flex justify-between items-center transition-all duration-[400ms] ${showNav ? "pl-48" : ""
