@@ -244,7 +244,7 @@ export default function TopBar({ showNav, setShowNav }) {
                     </Menu.Item>
                     <Menu.Item>
                       <Link
-                        href="/dashboard/products"
+                        href="/dashboard/manageproducts"
                         className="w-full flex text-black mb-4 text-sm group transition-colors items-center"
                       >
                         Manage Products

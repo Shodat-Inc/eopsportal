@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import Layout from "../../../components/Layout";
 import Image from "next/image";
+import MyProduct from "./myproduct";
 
 export default function ManageProducts() {
     const [tab, setTab] = useState(1);
@@ -14,7 +15,7 @@ export default function ManageProducts() {
 
             <div className="w-[100%]">
                 <div className="columns-2 flex justify-between items-center">
-                    <p className="text-black text-lg mb-0 font-semibold">Manage my account</p>
+                    <p className="text-black text-lg mb-0 font-semibold">Manage Products</p>
                 </div>
 
                 <div className="border border-gray-957 min-h-full rounded-xl mt-3 px-4 py-4 bg-gray-953">
@@ -25,7 +26,7 @@ export default function ManageProducts() {
                                 <button
                                     onClick={() => toggleTab(1)}
                                     className={`h-[56px] px-4 text-left relative w-full border-gray-957 border-b-[1px] ${tab === 1 ? 'bg-white' : 'bg-transparent'} `}>
-                                    <span>Edit Profile</span>
+                                    <span>My Products</span>
                                     {tab === 1 &&
                                         <Image
                                             src="/img/angle_right_icon_black.svg"
@@ -39,7 +40,7 @@ export default function ManageProducts() {
                                 <button
                                     onClick={() => toggleTab(2)}
                                     className={`h-[56px] px-4 text-left relative w-full border-gray-957 border-b-[1px] ${tab === 2 ? 'bg-white' : 'bg-transparent'} `}>
-                                    <span>Manage Team</span>
+                                    <span>Billing History</span>
                                     {tab === 2 &&
                                         <Image
                                             src="/img/angle_right_icon_black.svg"
@@ -53,7 +54,7 @@ export default function ManageProducts() {
                                 <button
                                     onClick={() => toggleTab(3)}
                                     className={`h-[56px] px-4 text-left relative w-full ${tab === 3 ? 'bg-white' : 'bg-transparent'} `}>
-                                    <span>Notification</span>
+                                    <span>Cancel Subscription</span>
                                     {tab === 3 &&
                                         <Image
                                             src="/img/angle_right_icon_black.svg"
@@ -67,7 +68,7 @@ export default function ManageProducts() {
                                 <button
                                     onClick={() => toggleTab(4)}
                                     className={`h-[56px] px-4 text-left relative w-full ${tab === 4 ? 'bg-white' : 'bg-transparent'} `}>
-                                    <span>Change Password</span>
+                                    <span>Support</span>
                                     {tab === 4 &&
                                         <Image
                                             src="/img/angle_right_icon_black.svg"
@@ -77,56 +78,14 @@ export default function ManageProducts() {
                                             className="absolute right-2 top-5"
                                         />
                                     }
-                                </button>
-                                <button
-                                    onClick={() => toggleTab(5)}
-                                    className={`h-[56px] px-4 text-left relative w-full ${tab === 5 ? 'bg-white' : 'bg-transparent'} `}>
-                                    <span>Change Phone Number</span>
-                                    {tab === 5 &&
-                                        <Image
-                                            src="/img/angle_right_icon_black.svg"
-                                            alt="angle_right_icon"
-                                            height={8}
-                                            width={8}
-                                            className="absolute right-2 top-5"
-                                        />
-                                    }
-                                </button>
-                                <button
-                                    onClick={() => toggleTab(6)}
-                                    className={`h-[56px] px-4 text-left relative w-full ${tab === 6 ? 'bg-white' : 'bg-transparent'} `}>
-                                    <span>Change Email Address</span>
-                                    {tab === 6 &&
-                                        <Image
-                                            src="/img/angle_right_icon_black.svg"
-                                            alt="angle_right_icon"
-                                            height={8}
-                                            width={8}
-                                            className="absolute right-2 top-5"
-                                        />
-                                    }
-                                </button>
-                                <button
-                                    onClick={() => toggleTab(7)}
-                                    className={`h-[56px] px-4 text-left relative w-full ${tab === 7 ? 'bg-white' : 'bg-transparent'} `}>
-                                    <span>Delete My Account</span>
-                                    {tab === 7 &&
-                                        <Image
-                                            src="/img/angle_right_icon_black.svg"
-                                            alt="angle_right_icon"
-                                            height={8}
-                                            width={8}
-                                            className="absolute right-2 top-5"
-                                        />
-                                    }
-                                </button>
+                                </button>                                
                             </div>
                         </div>
 
                         <div className="w-[70%] min-h-[300px] bg-white border border-gray-957 overflow-hidden rounded-tr-xl rounded-br-xl rounded-bl-xl">
                             {/* Tab Contents */}
                             <div className=" bg-white w-full h-full rounded-tr-xl rounded-br-xl rounded-bl-xl overflow-hidden">
-                                {tab === 1 && <>There!</>}
+                                {tab === 1 && <MyProduct />}
                                 {/* {tab === 2 && <ManageTeams />}
                                 {tab === 3 && <Notification />}
                                 {tab === 4 && <ChangePassword />}
