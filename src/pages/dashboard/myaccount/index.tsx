@@ -6,6 +6,7 @@ import ManageTeams from "./manageteams";
 import Notification from "./notification";
 import ChangePassword from "./changepassword";
 import ChangePhone from "./changePhone";
+import DeleteAccount from "./deleteaccount";
 export default function MyAccount() {
     const [tab, setTab] = useState(1);
     // Toggle Tab function
@@ -53,21 +54,7 @@ export default function MyAccount() {
                                             className="absolute right-2 top-5"
                                         />
                                     }
-                                </button>
-                                <button
-                                    onClick={() => toggleTab(3)}
-                                    className={`h-[56px] px-4 text-left relative w-full ${tab === 3 ? 'bg-white' : 'bg-transparent'} `}>
-                                    <span>Notification</span>
-                                    {tab === 3 &&
-                                        <Image
-                                            src="/img/angle_right_icon_black.svg"
-                                            alt="angle_right_icon"
-                                            height={8}
-                                            width={8}
-                                            className="absolute right-2 top-5"
-                                        />
-                                    }
-                                </button>
+                                </button>                                
                                 <button
                                     onClick={() => toggleTab(4)}
                                     className={`h-[56px] px-4 text-left relative w-full ${tab === 4 ? 'bg-white' : 'bg-transparent'} `}>
@@ -124,10 +111,24 @@ export default function MyAccount() {
                                         />
                                     }
                                 </button>
+                                <button
+                                    onClick={() => toggleTab(3)}
+                                    className={`h-[56px] px-4 text-left relative w-full ${tab === 3 ? 'bg-white' : 'bg-transparent'} `}>
+                                    <span>Notification</span>
+                                    {tab === 3 &&
+                                        <Image
+                                            src="/img/angle_right_icon_black.svg"
+                                            alt="angle_right_icon"
+                                            height={8}
+                                            width={8}
+                                            className="absolute right-2 top-5"
+                                        />
+                                    }
+                                </button>
                             </div>
                         </div>
 
-                        <div className="w-[70%] min-h-[300px] bg-white border border-gray-957 overflow-hidden rounded-tr-xl rounded-br-xl rounded-bl-xl">
+                        <div className="w-[70%] min-h-[500px] bg-white border border-gray-957 overflow-hidden rounded-tr-xl rounded-br-xl rounded-bl-xl">
                             {/* Tab Contents */}
                             <div className=" bg-white w-full h-full rounded-tr-xl rounded-br-xl rounded-bl-xl overflow-hidden">
                                 {tab === 1 && <EditProfile />}
@@ -135,6 +136,7 @@ export default function MyAccount() {
                                 {tab === 3 && <Notification />}
                                 {tab === 4 && <ChangePassword />}
                                 {tab === 5 && <ChangePhone />}
+                                {tab === 7 && <DeleteAccount />}
                             </div>
                         </div>
                     </div>
