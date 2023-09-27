@@ -2,6 +2,9 @@ import React, { useState, useRef, useEffect } from "react";
 import Layout from "../../../components/Layout";
 import Image from "next/image";
 import MyProduct from "./myproduct";
+import CancelSubscription from "./cancelsubscription";
+import Support from "./support";
+import BillingHistory from "./billinghistory";
 
 export default function ManageProducts() {
     const [tab, setTab] = useState(1);
@@ -53,7 +56,7 @@ export default function ManageProducts() {
                                 </button>
                                 <button
                                     onClick={() => toggleTab(3)}
-                                    className={`h-[56px] px-4 text-left relative w-full ${tab === 3 ? 'bg-white' : 'bg-transparent'} `}>
+                                    className={`h-[56px] px-4 text-left relative w-full border-gray-957 border-b-[1px] ${tab === 3 ? 'bg-white' : 'bg-transparent'} `}>
                                     <span>Cancel Subscription</span>
                                     {tab === 3 &&
                                         <Image
@@ -82,14 +85,13 @@ export default function ManageProducts() {
                             </div>
                         </div>
 
-                        <div className="w-[70%] min-h-[300px] bg-white border border-gray-957 overflow-hidden rounded-tr-xl rounded-br-xl rounded-bl-xl">
+                        <div className="w-[70%] min-h-[500px] bg-white border border-gray-957 overflow-hidden rounded-tr-xl rounded-br-xl rounded-bl-xl">
                             {/* Tab Contents */}
                             <div className=" bg-white w-full h-full rounded-tr-xl rounded-br-xl rounded-bl-xl overflow-hidden">
                                 {tab === 1 && <MyProduct />}
-                                {/* {tab === 2 && <ManageTeams />}
-                                {tab === 3 && <Notification />}
-                                {tab === 4 && <ChangePassword />}
-                                {tab === 4 && <ChangeEmail />} */}
+                                {tab === 2 && <BillingHistory />}
+                                {tab === 3 && <CancelSubscription />}
+                                {tab === 4 && <Support />}
                             </div>
                         </div>
                     </div>
