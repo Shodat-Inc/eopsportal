@@ -1,82 +1,286 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styles from '../../../styles/Common.module.css';
 import Image from "next/image";
 export default function MyProduct(props: any) {
-    const [edit, setEdit] = useState(false);
-    const [phoneNumber, setPhoneNumber] = useState("+919571373757")
-    // Toggle Edit & Save button
-    const toggleSave = () => {
-        setEdit(!edit)
+    const [toggleDrop, setToggleDrop] = useState(false);
+    const [selectedOption, setSelectedOption] = useState(1);
+    const toggleDropFunction = (item: any) => {
+        setToggleDrop(!toggleDrop);
+        setSelectedOption(item)
     }
-    // Save Form Data
-    const saveDetails = () => {
-        console.log("Save Details!")
+
+    // Hook that alerts clicks outside of the passed ref
+    function useOutsideAlerter(ref: any) {
+        useEffect(() => {
+            function handleClickOutside(event: any) {
+                if (ref.current && !ref.current.contains(event.target)) {
+                    setToggleDrop(false)
+                }
+            }
+            document.addEventListener("mousedown", handleClickOutside);
+            return () => {
+                document.removeEventListener("mousedown", handleClickOutside);
+            };
+        }, [ref]);
     }
+    const wrapperRef = useRef(null);
+    useOutsideAlerter(wrapperRef);
+
     return (
-        <div className="relative bg-white p-5">
-
-            <div className="flex justify-between items-start mb-5">
-                <div className="text-lg font-semibold text-black w-[33%]">My Products</div>
-                <div className='flex justify-start items-center'>
-                    <span className='uppercase font-semibold'>Premium</span>
-                    <button
-                        className='bg-yellow-951 text-black text-sm rounded rounded-lg flex justify-center items-center h-[32px] w-[70px] ml-4'>
-                        Upgrade
-                    </button>
-                </div>
-            </div>
-
-            <div className='w-full flex justify-start item-start border border-[#E1E1E1] py-3 flex-wrap flex-col'>
-                <div className='flex justify-start items-start w-full px-4 border border-l-0 border-r-0 border-t-0 border-b-1 border-[#E1E1E1] pb-3'>
-
-                    <div className='font-semibold w-[60%]'>Product Name</div>
-                    <div className='font-semibold w-[20%]'>End Date</div>
-                    <div className='font-semibold w-[20%]'>Status</div>
-                </div>
-
-                <div className='flex justify-start items-start w-full px-4 border border-l-0 border-r-0 border-t-0 border-b-1 border-[#E1E1E1] pb-3 py-3'>
-                    <div className='font-semibold w-[60%] pr-8'>
-                        <div className='font-semibold'>Crack Detection</div>
-                        <p className='font-normal text-sm'>Automated crack detection: Enhancing infrastructure safety through advanced technology.</p>
-                    </div>
-                    <div className='font-semibold w-[20%]'>
-                        <span className='font-normal text-sm'>30/12/2023</span>
-                    </div>
-                    <div className='font-semibold w-[20%]'>
-                        <div className="flex items-center justify-start mr-5">
+        <div className="relative bg-white pt-5 w-full flex justify-start items-start px-3">
+            <table className={`w-full ${styles.tablePro}`}>
+                <thead>
+                    <tr>
+                        <th className='w-[5%]'>
+                            <div className={`${styles.customCheck} mt-2`}>
+                                <input
+                                    type='checkbox'
+                                    name="agreement"
+                                />
+                                <span></span>
+                            </div>
+                        </th>
+                        <th className='w-[60%] text-left'>Description</th>
+                        <th className='w-[15%] text-left'>Billing Date</th>
+                        <th className='w-[10%] text-left'>Auto Renew</th>
+                        <th className='w-[10%] text-left'>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td className='w-[5%] text-center'>
+                            <div className={`${styles.customCheck} mt-2`}>
+                                <input
+                                    type='checkbox'
+                                    name="agreement"
+                                />
+                                <span></span>
+                            </div>
+                        </td>
+                        <td className='w-[60%] text-left'>
+                            <div className='font-semibold w-[80%]'>
+                                <div className='font-semibold'>Crack Detection</div>
+                                <p className='font-normal text-sm'>Automated crack detection: Enhancing infrastructure safety through advanced technology.</p>
+                            </div>
+                        </td>
+                        <td className='w-[15%] text-left'>
+                            <div className='font-semibold w-full'>
+                                <div className='font-semibold'>Expire On</div>
+                                <p className='font-normal text-sm'>30/12/2023</p>
+                            </div>
+                        </td>
+                        <td className='w-[10%] text-left'>
                             <div className={`${styles.radioWrap}`}>
                                 <input
                                     type="checkbox"
                                 />
                                 <span className={`${styles.radioFrame}`}></span>
                             </div>
-                        </div>
-                    </div>
-                </div>
+                        </td>
+                        <td className='w-[10%] text-left relative'>
+                            <div className="flex justify-start items-center relative">
+                                <button
+                                    onClick={() => toggleDropFunction(1)}
+                                    className='hover:bg-yellow-951 h-7 w-7 flex justify-center items-center'>
+                                    <Image
+                                        src="/img/more-vertical.svg"
+                                        alt='more-vertical'
+                                        height={24}
+                                        width={24}
+                                    />
+                                </button>
+                                {(toggleDrop && selectedOption === 1) &&
+                                    <div ref={wrapperRef} className="bg-white text-black overflow-hidden rounded rounded-xl w-[160px] flex flex-col flex-wrap items-start justify-start shadow-lg absolute top-[30px] right-[80px] z-[1] border border-[#E1E1E1] py-3">
+                                        <button
+                                            className="text-black text-[14px] hover:bg-white hover:text-black h-[40px] px-4 w-full text-left">
+                                            <span>Renew Order</span>
+                                        </button>
+                                        <button
+                                            className="text-black text-[14px] hover:bg-white hover:text-black h-[40px] px-4 w-full text-left">
+                                            <span>Cancel Order</span>
+                                        </button>
+                                    </div>
+                                }
+                            </div>
+                        </td>
+                    </tr>
 
-                <div className='flex justify-start items-start w-full px-4 border border-l-0 border-r-0 border-t-0 border-b-0 border-[#E1E1E1] pb-3 py-3'>
-                    <div className='font-semibold w-[60%] pr-8'>
-                        <div className='font-semibold'>Crystallization Detection</div>
-                        <p className='font-normal text-sm'>Crystallization detection: Harnessing data insights to optimize processes and enhance material performance.</p>
-                    </div>
-                    <div className='font-semibold w-[20%]'>
-                        <span className='font-normal text-sm'>10/05/2024</span>
-                    </div>
-                    <div className='font-semibold w-[20%]'>
-                        <div className="flex items-center justify-start mr-5">
+                    <tr>
+                        <td className='w-[5%] text-center'>
+                            <div className={`${styles.customCheck} mt-2`}>
+                                <input
+                                    type='checkbox'
+                                    name="agreement"
+                                />
+                                <span></span>
+                            </div>
+                        </td>
+                        <td className='w-[60%] text-left'>
+                            <div className='font-semibold w-[80%]'>
+                                <div className='font-semibold'>Crack Detection</div>
+                                <p className='font-normal text-sm'>Automated crack detection: Enhancing infrastructure safety through advanced technology.</p>
+                            </div>
+                        </td>
+                        <td className='w-[15%] text-left'>
+                            <div className='font-semibold w-full'>
+                                <div className='font-semibold'>Expire On</div>
+                                <p className='font-normal text-sm'>30/12/2023</p>
+                            </div>
+                        </td>
+                        <td className='w-[10%] text-left'>
                             <div className={`${styles.radioWrap}`}>
                                 <input
                                     type="checkbox"
                                 />
                                 <span className={`${styles.radioFrame}`}></span>
                             </div>
-                        </div>
-                    </div>
-                </div>
+                        </td>
+                        <td className='w-[10%] text-left relative'>
+                            <div className="flex justify-start items-center relative">
+                                <button
+                                    onClick={() => toggleDropFunction(2)}
+                                    className='hover:bg-yellow-951 h-7 w-7 flex justify-center items-center'>
+                                    <Image
+                                        src="/img/more-vertical.svg"
+                                        alt='more-vertical'
+                                        height={24}
+                                        width={24}
+                                    />
+                                </button>
+                                {(toggleDrop && selectedOption === 2) &&
+                                    <div ref={wrapperRef} className="bg-white text-black overflow-hidden rounded rounded-xl w-[160px] flex flex-col flex-wrap items-start justify-start shadow-lg absolute top-[30px] right-[80px] z-[1] border border-[#E1E1E1] py-3">
+                                        <button
+                                            className="text-black text-[14px] hover:bg-white hover:text-black h-[40px] px-4 w-full text-left">
+                                            <span>Renew Order</span>
+                                        </button>
+                                        <button
+                                            className="text-black text-[14px] hover:bg-white hover:text-black h-[40px] px-4 w-full text-left">
+                                            <span>Cancel Order</span>
+                                        </button>
+                                    </div>
+                                }
+                            </div>
+                        </td>
+                    </tr>
 
-            </div>
+                    <tr>
+                        <td className='w-[5%] text-center'>
+                            <div className={`${styles.customCheck} mt-2`}>
+                                <input
+                                    type='checkbox'
+                                    name="agreement"
+                                />
+                                <span></span>
+                            </div>
+                        </td>
+                        <td className='w-[60%] text-left'>
+                            <div className='font-semibold w-[80%]'>
+                                <div className='font-semibold'>Crack Detection</div>
+                                <p className='font-normal text-sm'>Automated crack detection: Enhancing infrastructure safety through advanced technology.</p>
+                            </div>
+                        </td>
+                        <td className='w-[15%] text-left'>
+                            <div className='font-semibold w-full'>
+                                <div className='font-semibold'>Expire On</div>
+                                <p className='font-normal text-sm'>30/12/2023</p>
+                            </div>
+                        </td>
+                        <td className='w-[10%] text-left'>
+                            <div className={`${styles.radioWrap}`}>
+                                <input
+                                    type="checkbox"
+                                />
+                                <span className={`${styles.radioFrame}`}></span>
+                            </div>
+                        </td>
+                        <td className='w-[10%] text-left relative'>
+                            <div className="flex justify-start items-center relative">
+                                <button
+                                    onClick={() => toggleDropFunction(3)}
+                                    className='hover:bg-yellow-951 h-7 w-7 flex justify-center items-center'>
+                                    <Image
+                                        src="/img/more-vertical.svg"
+                                        alt='more-vertical'
+                                        height={24}
+                                        width={24}
+                                    />
+                                </button>
+                                {(toggleDrop && selectedOption === 3) &&
+                                    <div ref={wrapperRef} className="bg-white text-black overflow-hidden rounded rounded-xl w-[160px] flex flex-col flex-wrap items-start justify-start shadow-lg absolute top-[30px] right-[80px] z-[1] border border-[#E1E1E1] py-3">
+                                        <button
+                                            className="text-black text-[14px] hover:bg-white hover:text-black h-[40px] px-4 w-full text-left">
+                                            <span>Renew Order</span>
+                                        </button>
+                                        <button
+                                            className="text-black text-[14px] hover:bg-white hover:text-black h-[40px] px-4 w-full text-left">
+                                            <span>Cancel Order</span>
+                                        </button>
+                                    </div>
+                                }
+                            </div>
+                        </td>
+                    </tr>
 
+                    <tr>
+                        <td className='w-[5%] text-center'>
+                            <div className={`${styles.customCheck} mt-2`}>
+                                <input
+                                    type='checkbox'
+                                    name="agreement"
+                                />
+                                <span></span>
+                            </div>
+                        </td>
+                        <td className='w-[60%] text-left'>
+                            <div className='font-semibold w-[80%]'>
+                                <div className='font-semibold'>Crack Detection</div>
+                                <p className='font-normal text-sm'>Automated crack detection: Enhancing infrastructure safety through advanced technology.</p>
+                            </div>
+                        </td>
+                        <td className='w-[15%] text-left'>
+                            <div className='font-semibold w-full'>
+                                <div className='font-semibold'>Expire On</div>
+                                <p className='font-normal text-sm'>30/12/2023</p>
+                            </div>
+                        </td>
+                        <td className='w-[10%] text-left'>
+                            <div className={`${styles.radioWrap}`}>
+                                <input
+                                    type="checkbox"
+                                />
+                                <span className={`${styles.radioFrame}`}></span>
+                            </div>
+                        </td>
+                        <td className='w-[10%] text-left relative'>
+                            <div className="flex justify-start items-center relative">
+                                <button
+                                    onClick={() => toggleDropFunction(4)}
+                                    className='hover:bg-yellow-951 h-7 w-7 flex justify-center items-center'>
+                                    <Image
+                                        src="/img/more-vertical.svg"
+                                        alt='more-vertical'
+                                        height={24}
+                                        width={24}
+                                    />
+                                </button>
+                                {(toggleDrop && selectedOption === 4) &&
+                                    <div ref={wrapperRef} className="bg-white text-black overflow-hidden rounded rounded-xl w-[160px] flex flex-col flex-wrap items-start justify-start shadow-lg absolute top-[30px] right-[80px] z-[1] border border-[#E1E1E1] py-3">
+                                        <button
+                                            className="text-black text-[14px] hover:bg-white hover:text-black h-[40px] px-4 w-full text-left">
+                                            <span>Renew Order</span>
+                                        </button>
+                                        <button
+                                            className="text-black text-[14px] hover:bg-white hover:text-black h-[40px] px-4 w-full text-left">
+                                            <span>Cancel Order</span>
+                                        </button>
+                                    </div>
+                                }
+                            </div>
+                        </td>
+                    </tr>
 
+                </tbody>
+            </table>
         </div>
     )
 }

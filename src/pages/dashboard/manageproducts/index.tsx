@@ -16,88 +16,46 @@ export default function ManageProducts() {
     return (
         <div className="flex font-OpenSans">
 
-            <div className="w-[100%]">
-                <div className="columns-2 flex justify-between items-center">
-                    <p className="text-black text-lg mb-0 font-semibold">Manage Products</p>
+            <div className="w-[100%] border border-gray-957 min-h-full rounded-xl mt-3 px-4 py-4 bg-gray-953">
+
+                {/* Title */}
+                <div className="columns-2 flex justify-between items-center mb-7">
+                    <p className="text-black text-lg font-semibold">Manage Products</p>
                 </div>
 
-                <div className="border border-gray-957 min-h-full rounded-xl mt-3 px-4 py-4 bg-gray-953">
-                    <div className="w-full flex justify-start items-start">
-                        <div className="w-[25%]">
-                            {/* Tabs Buttons */}
-                            <div className="border-gray-957 border-l-[1px] border-t-[1px] border-b-[1px] rounded-tl-xl rounded-bl-xl w-full h-full overflow-hidden">
-                                <button
-                                    onClick={() => toggleTab(1)}
-                                    className={`h-[56px] px-4 text-left relative w-full border-gray-957 border-b-[1px] ${tab === 1 ? 'bg-white' : 'bg-transparent'} `}>
-                                    <span>My Products</span>
-                                    {tab === 1 &&
-                                        <Image
-                                            src="/img/angle_right_icon_black.svg"
-                                            alt="angle_right_icon"
-                                            height={8}
-                                            width={8}
-                                            className="absolute right-2 top-5"
-                                        />
-                                    }
-                                </button>
-                                <button
-                                    onClick={() => toggleTab(2)}
-                                    className={`h-[56px] px-4 text-left relative w-full border-gray-957 border-b-[1px] ${tab === 2 ? 'bg-white' : 'bg-transparent'} `}>
-                                    <span>Billing History</span>
-                                    {tab === 2 &&
-                                        <Image
-                                            src="/img/angle_right_icon_black.svg"
-                                            alt="angle_right_icon"
-                                            height={8}
-                                            width={8}
-                                            className="absolute right-2 top-5"
-                                        />
-                                    }
-                                </button>
-                                <button
-                                    onClick={() => toggleTab(3)}
-                                    className={`h-[56px] px-4 text-left relative w-full border-gray-957 border-b-[1px] ${tab === 3 ? 'bg-white' : 'bg-transparent'} `}>
-                                    <span>Cancel Subscription</span>
-                                    {tab === 3 &&
-                                        <Image
-                                            src="/img/angle_right_icon_black.svg"
-                                            alt="angle_right_icon"
-                                            height={8}
-                                            width={8}
-                                            className="absolute right-2 top-5"
-                                        />
-                                    }
-                                </button>
-                                <button
-                                    onClick={() => toggleTab(4)}
-                                    className={`h-[56px] px-4 text-left relative w-full ${tab === 4 ? 'bg-white' : 'bg-transparent'} `}>
-                                    <span>Support</span>
-                                    {tab === 4 &&
-                                        <Image
-                                            src="/img/angle_right_icon_black.svg"
-                                            alt="angle_right_icon"
-                                            height={8}
-                                            width={8}
-                                            className="absolute right-2 top-5"
-                                        />
-                                    }
-                                </button>                                
-                            </div>
-                        </div>
+                {/* Tabs */}
+                <div className="flex justify-start items-center z-[1] relative top-[1px]">
+                    <button
+                        onClick={() => toggleTab(1)}
+                        className={`rounded-tr-xl rounded-tl-xl mr-1 h-[48px] min-w-[100px] px-4 inline-flex jsutify-center items-center bg-white font-semibold ${tab === 1 ? "bg-white border border-[#E1E1E1] border-b-0" : "bg-yellow-951 bg-opacity-50 hover:bg-opacity-100"}`}>
+                        My Order
+                    </button>
+                    <button
+                        onClick={() => toggleTab(2)}
+                        className={`rounded-tr-xl rounded-tl-xl mr-1 h-[48px] min-w-[100px] px-4 inline-flex jsutify-center items-center bg-white font-semibold ${tab === 2 ? "bg-white border border-[#E1E1E1] border-b-0" : "bg-yellow-951 bg-opacity-50 hover:bg-opacity-100"}`}>
+                        Order History
+                    </button>
+                    <button
+                        onClick={() => toggleTab(3)}
+                        className={`rounded-tr-xl rounded-tl-xl mr-1 h-[48px] min-w-[100px] px-4 inline-flex jsutify-center items-center bg-white font-semibold ${tab === 3 ? "bg-white border border-[#E1E1E1] border-b-0" : "bg-yellow-951 bg-opacity-50 hover:bg-opacity-100"}`}>
+                        Subscription
+                    </button>
+                    <button
+                        onClick={() => toggleTab(4)}
+                        className={`rounded-tr-xl rounded-tl-xl mr-1 h-[48px] min-w-[100px] px-4 inline-flex jsutify-center items-center bg-white font-semibold ${tab === 4 ? "bg-white border border-[#E1E1E1] border-b-0" : "bg-yellow-951 bg-opacity-50 hover:bg-opacity-100"}`}>
+                        Support
+                    </button>
+                </div>
 
-                        <div className="w-[70%] min-h-[500px] bg-white border border-gray-957 overflow-hidden rounded-tr-xl rounded-br-xl rounded-bl-xl">
-                            {/* Tab Contents */}
-                            <div className=" bg-white w-full h-full rounded-tr-xl rounded-br-xl rounded-bl-xl overflow-hidden">
-                                {tab === 1 && <MyProduct />}
-                                {tab === 2 && <BillingHistory />}
-                                {tab === 3 && <CancelSubscription />}
-                                {tab === 4 && <Support />}
-                            </div>
-                        </div>
+                {/* Tab Contect */}
+                <div className="w-full min-h-[500px] bg-white border border-gray-957 overflow-hidden rounded-tr-xl rounded-br-xl rounded-bl-xl">
+                    <div className=" bg-white w-full h-full rounded-tr-xl rounded-br-xl rounded-bl-xl overflow-hidden">
+                        {tab === 1 && <MyProduct />}
+                        {tab === 2 && <BillingHistory />}
+                        {tab === 3 && <CancelSubscription />}
+                        {tab === 4 && <Support />}
                     </div>
-
                 </div>
-
             </div>
 
         </div>

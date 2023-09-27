@@ -908,9 +908,11 @@ table.proSenseTable tbody tr td {
 .tableV3 tbody tr:hover {
     background-color: #EEEEEE;
 }
+
 .tableV3 tbody tr:last-child {
-    border-bottom:none;
+    border-bottom: none;
 }
+
 .textarea:focus-visible {
     border: 0;
     outline: none;
@@ -919,7 +921,32 @@ table.proSenseTable tbody tr td {
 .phoneField {
     position: relative;
 }
+
 .phoneField input[type="tel"]:focus-visible {
     border: 0;
     outline: none;
+}
+
+
+
+
+.tablePro {
+    border-collapse: collapse;
+    border-spacing: 0 2em;
+    min-height: 300px;
+}
+
+.tablePro thead {
+    border-bottom: 1px solid #E1E1E1;
+    font-size: 14px;
+}
+
+.tablePro thead th {
+    padding-top: 10px;
+    padding-bottom: 10px
+}
+
+.tablePro tbody tr td {
+    padding-top: 20px;
+    padding-bottom: 20px
 }
