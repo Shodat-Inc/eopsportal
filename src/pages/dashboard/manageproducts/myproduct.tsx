@@ -4,6 +4,7 @@ import Image from "next/image";
 export default function MyProduct(props: any) {
     const [toggleDrop, setToggleDrop] = useState(false);
     const [selectedOption, setSelectedOption] = useState(1);
+    const [agreement, setAgreement] = useState(false);
     const toggleDropFunction = (item: any) => {
         setToggleDrop(!toggleDrop);
         setSelectedOption(item)
@@ -26,19 +27,26 @@ export default function MyProduct(props: any) {
     const wrapperRef = useRef(null);
     useOutsideAlerter(wrapperRef);
 
+    // Handel Check all
+    const handleCheckAll = (event: any) => {
+        setAgreement(event.target.checked);
+    }
+
     return (
         <div className="relative bg-white pt-5 w-full flex justify-start items-start flex-wrap flex-col px-3">
-            <div className='flex justify-center items-center mb-2'>
-                <button className='rounded rounded-xl text-white inline-flex justify-center items-center h-[44px] px-2 bg-black min-w-[100px] text-sm mr-2'>Renew Now</button>
-                <button className='rounded rounded-xl text-white inline-flex justify-center items-center h-[44px] px-2 bg-black min-w-[100px] text-sm mr-2'>Auto Renew Off</button>
-                <button className='rounded rounded-xl text-white inline-flex justify-center items-center h-[44px] px-2 bg-black min-w-[100px] text-sm mr-2'>Cancel Order</button>
-            </div>
+            {agreement ?
+                <div className='flex justify-center items-center mb-2'>
+                    <button className='rounded rounded-xl text-white inline-flex justify-center items-center h-[44px] px-2 bg-black min-w-[100px] text-sm mr-2'>Renew Now</button>
+                    <button className='rounded rounded-xl text-white inline-flex justify-center items-center h-[44px] px-2 bg-black min-w-[100px] text-sm mr-2'>Auto Renew Off</button>
+                    <button className='rounded rounded-xl text-white inline-flex justify-center items-center h-[44px] px-2 bg-black min-w-[100px] text-sm mr-2'>Cancel Order</button>
+                </div> : null}
             <table className={`w-full ${styles.tablePro}`}>
                 <thead>
                     <tr>
                         <th className='w-[5%]'>
                             <div className={`${styles.customCheck} mt-2`}>
                                 <input
+                                    onChange={handleCheckAll}
                                     type='checkbox'
                                     name="agreement"
                                 />
@@ -58,6 +66,7 @@ export default function MyProduct(props: any) {
                                 <input
                                     type='checkbox'
                                     name="agreement"
+                                    onChange={handleCheckAll}
                                 />
                                 <span></span>
                             </div>
@@ -116,6 +125,7 @@ export default function MyProduct(props: any) {
                                 <input
                                     type='checkbox'
                                     name="agreement"
+                                    onChange={handleCheckAll}
                                 />
                                 <span></span>
                             </div>
@@ -174,6 +184,7 @@ export default function MyProduct(props: any) {
                                 <input
                                     type='checkbox'
                                     name="agreement"
+                                    onChange={handleCheckAll}
                                 />
                                 <span></span>
                             </div>
@@ -232,6 +243,7 @@ export default function MyProduct(props: any) {
                                 <input
                                     type='checkbox'
                                     name="agreement"
+                                    onChange={handleCheckAll}
                                 />
                                 <span></span>
                             </div>
