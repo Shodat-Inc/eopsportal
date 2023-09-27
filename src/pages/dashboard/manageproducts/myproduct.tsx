@@ -27,7 +27,12 @@ export default function MyProduct(props: any) {
     useOutsideAlerter(wrapperRef);
 
     return (
-        <div className="relative bg-white pt-5 w-full flex justify-start items-start px-3">
+        <div className="relative bg-white pt-5 w-full flex justify-start items-start flex-wrap flex-col px-3">
+            <div className='flex justify-center items-center mb-2'>
+                <button className='rounded rounded-xl text-white inline-flex justify-center items-center h-[44px] px-2 bg-black min-w-[100px] text-sm mr-2'>Renew Now</button>
+                <button className='rounded rounded-xl text-white inline-flex justify-center items-center h-[44px] px-2 bg-black min-w-[100px] text-sm mr-2'>Auto Renew Off</button>
+                <button className='rounded rounded-xl text-white inline-flex justify-center items-center h-[44px] px-2 bg-black min-w-[100px] text-sm mr-2'>Cancel Order</button>
+            </div>
             <table className={`w-full ${styles.tablePro}`}>
                 <thead>
                     <tr>
