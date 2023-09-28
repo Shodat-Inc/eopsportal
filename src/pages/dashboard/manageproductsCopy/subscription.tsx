@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styles from '../../../styles/Common.module.css';
 import Image from "next/image";
-export default function CancelSubscription(props: any) {
+export default function Subscription(props: any) {
     const [deleteModal, setDeleteModal] = useState(false);
     const [revokeSubscription, setRevokeSubscription] = useState(false);
     const deleteAsset = () => {

@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import Layout from "../../../components/Layout";
 import Image from "next/image";
 import MyProduct from "./myproduct";
-import CancelSubscription from "./cancelsubscription";
+import Subscription from "./subscription";
 import Support from "./support";
 import BillingHistory from "./billinghistory";
 
@@ -52,7 +52,7 @@ export default function ManageProducts() {
                     <div className=" bg-white w-full h-full rounded-tr-xl rounded-br-xl rounded-bl-xl overflow-hidden">
                         {tab === 1 && <MyProduct />}
                         {tab === 2 && <BillingHistory />}
-                        {tab === 3 && <CancelSubscription />}
+                        {tab === 3 && <Subscription />}
                         {tab === 4 && <Support />}
                     </div>
                 </div>

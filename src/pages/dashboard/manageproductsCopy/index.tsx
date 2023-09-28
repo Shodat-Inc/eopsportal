@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import Layout from "../../../components/Layout";
 import Image from "next/image";
 import MyProduct from "./myproduct";
-import CancelSubscription from "./cancelsubscription";
+import CancelSubscription from "./subscription";
 import Support from "./support";
 import BillingHistory from "./billinghistory";
 
