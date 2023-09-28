@@ -33,14 +33,18 @@ export default function MyProduct(props: any) {
     }
 
     return (
-        <div className="relative bg-white pt-5 w-full flex justify-start items-start flex-wrap flex-col px-3">
+        <div className="relative bg-white pt-5 w-full flex justify-start items-start flex-wrap flex-col">
             {agreement ?
-                <div className='flex justify-center items-center mb-2'>
+                <div className='flex justify-center items-center mb-2 px-3'>
                     <button className='rounded rounded-xl text-white inline-flex justify-center items-center h-[44px] px-2 bg-black min-w-[100px] text-sm mr-2'>Renew Now</button>
                     <button className='rounded rounded-xl text-white inline-flex justify-center items-center h-[44px] px-2 bg-black min-w-[100px] text-sm mr-2'>Auto Renew Off</button>
                     <button className='rounded rounded-xl text-white inline-flex justify-center items-center h-[44px] px-2 bg-black min-w-[100px] text-sm mr-2'>Cancel Order</button>
-                </div> : null}
-            <table className={`w-full ${styles.tablePro}`}>
+                </div>
+                : null
+            }
+
+            {/* Table */}
+            <table className={`w-full ${styles.tablePro} mb-7 px-3`}>
                 <thead>
                     <tr>
                         <th className='w-[5%]'>
@@ -298,6 +302,26 @@ export default function MyProduct(props: any) {
 
                 </tbody>
             </table>
+
+            {/* Cancelled Order */}
+            <div className="flex justify-start items-start flex-wrap flex-col w-full mb-10">
+                <div className='font-semibold mb-3 px-3 w-full'>Cancelled Orders</div>
+
+                <div className='bg-[#FBEBEB] flex justify-between items-start w-full py-4 px-6'>
+                    <div className='flex justify-start items-start flex-wrap flex-col w-[60%]'>
+                        <div className='font-semibold w-[85%]'>Crack Detection</div>
+                        <p className='font-normal text-sm w-[85%]'>Automated crack detection: Enhancing infrastructure safety through advanced technology.</p>
+                    </div>
+                    <div className='flex justify-start items-center flex-wrap flex-col w-[20%]'>
+                        <div className='font-semibold text-sm'>Expire On</div>
+                        <p className='font-normal text-sm'>30/12/2023</p>
+                    </div>
+                    <div className='w-[20%] flex justify-start items-center'>
+                        <button className='bg-[#DE0000] text-white text-sm rounded rounded-xl flex justify-center items-center h-[44px] px-3 min-w-[100px]'>Refund status</button>
+                    </div>
+                </div>
+            </div>
+
         </div>
     )
 }
