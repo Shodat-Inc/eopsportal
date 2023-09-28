@@ -950,3 +950,35 @@ table.proSenseTable tbody tr td {
     padding-top: 20px;
     padding-bottom: 20px
 }
+
+
+
+.progessWrap span {
+    margin-top: 2px;
+}
+.progessWrap span img, 
+.progessWrap span {
+    position: relative;
+    z-index: 1;
+}
+.progessWrap .processBox {
+    position: relative;
+}
+.progessWrap .processBox::before {
+    content: '';
+    position: absolute;
+    height: 100%;
+    width: 1px;
+    background: #E1E1E1;
+    left: 16px;
+    top: 0;
+}
+.progessWrap .completed.processBox::before {
+    background: #6bb560;
+}
+.progessWrap .processBox:first-child:before {
+    top: 2px;
+}
+.progessWrap .processBox:last-child:before {
+    height: 85%;
+}

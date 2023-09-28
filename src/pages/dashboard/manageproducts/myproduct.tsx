@@ -5,6 +5,7 @@ export default function MyProduct(props: any) {
     const [toggleDrop, setToggleDrop] = useState(false);
     const [selectedOption, setSelectedOption] = useState(1);
     const [agreement, setAgreement] = useState(false);
+    const [refundStatus, setRefundStatus] = useState(false);
     const toggleDropFunction = (item: any) => {
         setToggleDrop(!toggleDrop);
         setSelectedOption(item)
@@ -30,6 +31,10 @@ export default function MyProduct(props: any) {
     // Handel Check all
     const handleCheckAll = (event: any) => {
         setAgreement(event.target.checked);
+    }
+
+    const refundStatusFunction = () => {
+        setRefundStatus(!refundStatus)
     }
 
     return (
@@ -304,7 +309,7 @@ export default function MyProduct(props: any) {
             </table>
 
             {/* Cancelled Order */}
-            <div className="flex justify-start items-start flex-wrap flex-col w-full mb-10">
+            <div className="flex justify-start items-start flex-wrap flex-col w-full mb-10 relative">
                 <div className='font-semibold mb-3 px-3 w-full'>Cancelled Orders</div>
 
                 <div className='bg-[#FBEBEB] flex justify-between items-start w-full py-4 px-6'>
@@ -316,8 +321,85 @@ export default function MyProduct(props: any) {
                         <div className='font-semibold text-sm'>Expire On</div>
                         <p className='font-normal text-sm'>30/12/2023</p>
                     </div>
-                    <div className='w-[20%] flex justify-start items-center'>
-                        <button className='bg-[#DE0000] text-white text-sm rounded rounded-xl flex justify-center items-center h-[44px] px-3 min-w-[100px]'>Refund status</button>
+                    <div className='w-[20%] flex justify-center items-center relative'>
+                        <button
+                            onClick={refundStatusFunction}
+                            className='bg-[#DE0000] text-white text-sm rounded rounded-xl flex justify-center items-center h-[44px] px-3 min-w-[100px]'>
+                            <span>Refund status</span>
+                        </button>
+                        {refundStatus &&
+                            <div className='h-[345px] w-[340px] rounded rounded-xl shadow shadow-xl py-7 px-5 bg-white border border-[#E1E1E1] absolute top-[-360px] right-[45px]'>
+                                <button
+                                    className='absolute top-2 right-2'
+                                    onClick={() => setRefundStatus(false)}>
+                                    <Image
+                                        src="/img/x.svg"
+                                        alt="close"
+                                        height={25}
+                                        width={25}
+                                    />
+                                </button>
+                                <div className={`${styles.progessWrap}`}>
+                                    <div className={`${styles.processBox} ${styles.completed} pl-2 pt-0 pb-2 relative flex justify-start items-start`}>
+                                        <span className='mr-4'>
+                                            <Image
+                                                src="/img/radio-check-green.svg"
+                                                alt="close"
+                                                height={18}
+                                                width={18}
+                                            />
+                                        </span>
+                                        <div className='relative'>
+                                            <p className='text-sm font-semibold mb-1'>Refund Requested</p>
+                                            <p className='text-sm'>Thu, 21st  Sep 23, 22.30 PM</p>
+                                        </div>
+                                    </div>
+                                    <div className={`${styles.processBox} ${styles.completed} pl-2 pt-2 pb-2 relative flex justify-start items-start`}>
+                                        <span className='mr-4'>
+                                            <Image
+                                                src="/img/radio-check-green.svg"
+                                                alt="close"
+                                                height={18}
+                                                width={18}
+                                            />
+                                        </span>
+                                        <div className='relative'>
+                                            <p className='text-sm font-semibold mb-1'>Refund Initiated</p>
+                                            <p className='text-sm'>Thu, 21st  Sep 23, 22.30 PM</p>
+                                        </div>
+                                    </div>
+                                    <div className={`${styles.processBox} ${styles.completed} pl-2 pt-2 pb-2 relative flex justify-start items-start`}>
+                                        <span className='mr-4'>
+                                            <Image
+                                                src="/img/radio-check-green.svg"
+                                                alt="close"
+                                                height={18}
+                                                width={18}
+                                            />
+                                        </span>
+                                        <div className='relative'>
+                                            <p className='text-sm font-semibold mb-1'>Refund Approved</p>
+                                            <p className='text-sm'>Thu, 21st  Sep 23, 22.30 PM</p>
+                                        </div>
+                                    </div>
+                                    <div className={`${styles.processBox} pl-2 pt-2 pb-2 relative flex justify-start items-start`}>
+                                        <span className='mr-4 h-[18px] w-[18px] rounded rounded-full border border-[#E1E1E1] bg-white'></span>
+                                        <div className='relative'>
+                                            <p className='text-sm font-semibold mb-1'>Refund Under Processing</p>
+                                            <p className='text-sm'>Thu, 21st  Sep 23, 22.30 PM</p>
+                                        </div>
+                                    </div>
+                                    <div className={`${styles.processBox} pl-2 pt-2 pb-0 relative flex justify-start items-start`}>
+                                        <span className='mr-4 h-[18px] w-[18px] rounded rounded-full border border-[#E1E1E1] bg-white'></span>
+                                        <div className='relative'>
+                                            <p className='text-sm font-semibold mb-1'>Refund Credited to Your Bank</p>
+                                            <p className='text-sm hidden'>Thu, 21st  Sep 23, 22.30 PM</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
                     </div>
                 </div>
             </div>
