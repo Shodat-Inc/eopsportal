@@ -48,8 +48,8 @@ export default function ManageProducts() {
                 </div>
 
                 {/* Tab Contect */}
-                <div className="w-full min-h-[500px] bg-white border border-gray-957 overflow-hidden rounded-tr-xl rounded-br-xl rounded-bl-xl">
-                    <div className=" bg-white w-full h-full rounded-tr-xl rounded-br-xl rounded-bl-xl overflow-hidden">
+                <div className="w-full min-h-[500px] bg-white border border-gray-957 overflow-hidden1 rounded-tr-xl rounded-br-xl rounded-bl-xl">
+                    <div className=" bg-white w-full h-full rounded-tr-xl rounded-br-xl rounded-bl-xl overflow-hidden1">
                         {tab === 1 && <MyProduct />}
                         {tab === 2 && <BillingHistory />}
                         {tab === 3 && <Subscription />}
