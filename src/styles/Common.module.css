@@ -953,6 +953,29 @@ table.proSenseTable tbody tr td {
 
 
 
+.tableBilling {
+    border-collapse: collapse;
+    border-spacing: 0 2em;
+    /* min-height: 300px; */
+}
+
+.tableBilling thead {
+    border-bottom: 1px solid #E1E1E1;
+    font-size: 14px;
+}
+
+.tableBilling thead th {
+    padding-top: 10px;
+    padding-bottom: 10px
+}
+
+.tableBilling tbody tr td {
+    padding-top: 10px;
+    padding-bottom: 10px
+}
+
+
+
 .progessWrap span {
     margin-top: 2px;
 }
