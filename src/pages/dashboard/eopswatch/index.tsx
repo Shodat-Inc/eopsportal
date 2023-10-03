@@ -64,7 +64,7 @@ export default function EopsWatch() {
         setShowAsset(data);
     }
 
-    useEffect(()=> {
+    useEffect(() => {
         axios.get("/api/getChildObject").then((response) => {
             if (response.data) {
                 let filteredData = response.data.filter((item: any) => {
@@ -72,8 +72,8 @@ export default function EopsWatch() {
                 })
                 setObjectData(filteredData)
                 console.log({
-                    response:response.data,
-                    filteredData:filteredData
+                    response: response.data,
+                    filteredData: filteredData
                 })
             }
         });
@@ -94,10 +94,12 @@ export default function EopsWatch() {
 
                         {
                             toggleDrop &&
+                            <div ref={wrapperRef}>
                             <Drop
                                 subAssets={subAssets}
                                 handleClick={handleDropFunction}
                             />
+                            </div>
                         }
 
                     </div>
@@ -134,7 +136,11 @@ export default function EopsWatch() {
                 </div>
                 {/* Top Section Ends */}
 
-                <Table data={objectData} />
+                <Table
+                    data={objectData}
+                    classData={classData}
+                    assetData={showAsset}
+                />
 
             </div>
         </div>

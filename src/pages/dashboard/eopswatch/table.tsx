@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default function Table(props: any) {
-    const { data } = props;
+    const { data, classData, assetData } = props;
     const [toggleSort, setToggleSort] = useState(false);
 
     const sortByID = () => {
@@ -35,9 +35,21 @@ export default function Table(props: any) {
                         data && data.length > 0 ?
                             data.map((item: any, index: any) => (
                                 <tr key={index}>
-                                    <td>{index+1}</td>
+                                    <td>{index + 1}</td>
                                     <td>
-                                        <Link href="/dashboard/eopswatch/models" className="font-semibold">{item?.tags?.ID}</Link>
+                                        <Link
+                                            href={{
+                                                pathname: '/dashboard/eopswatch/models',
+                                                query: {
+                                                    objectID: classData,
+                                                    subObject: assetData,
+                                                    key: item?.tags?.ID,
+                                                    id: item?.tags?.PlantID
+                                                }
+                                            }}
+                                        >
+                                            <span className="font-medium">{item?.tags?.ID}</span>
+                                        </Link>
                                     </td>
                                     <td>{item?.tags?.PlantID}</td>
                                     <td>{item?.tags?.Description}</td>
@@ -48,116 +60,6 @@ export default function Table(props: any) {
                             ))
                             : null
                     }
-                    {/* <tr>
-                        <td>1</td>
-                        <td>
-                            <Link href="/dashboard/eopswatch/models" className="font-semibold">TPC71810-01-001</Link>
-                        </td>
-                        <td>TPC71810-01</td>
-                        <td>Power Generator Engine</td>
-                        <td>1</td>
-                        <td>PGER</td>
-                        <td>North</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>TPC71810-01-001</td>
-                        <td>TPC71810-01</td>
-                        <td>Power Generator Engine</td>
-                        <td>3</td>
-                        <td>PGER</td>
-                        <td>North</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>TPC71810-01-001</td>
-                        <td>TPC71810-01</td>
-                        <td>Power Generator Engine</td>
-                        <td>3</td>
-                        <td>PGER</td>
-                        <td>North</td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td>TPC71810-01-001</td>
-                        <td>TPC71810-01</td>
-                        <td>Power Generator Engine</td>
-                        <td>2</td>
-                        <td>PGER</td>
-                        <td>North</td>
-                    </tr>
-                    <tr>
-                        <td>5</td>
-                        <td>TPC71810-01-001</td>
-                        <td>TPC71810-01</td>
-                        <td>Power Generator Engine</td>
-                        <td>1</td>
-                        <td>PGER</td>
-                        <td>North</td>
-                    </tr>
-                    <tr>
-                        <td>6</td>
-                        <td>TPC71810-01-001</td>
-                        <td>TPC71810-01</td>
-                        <td>Power Generator Engine</td>
-                        <td>4</td>
-                        <td>PGER</td>
-                        <td>North</td>
-                    </tr>
-                    <tr>
-                        <td>7</td>
-                        <td>TPC71810-01-001</td>
-                        <td>TPC71810-01</td>
-                        <td>Power Generator Engine</td>
-                        <td>4</td>
-                        <td>PGER</td>
-                        <td>North</td>
-                    </tr>
-                    <tr>
-                        <td>8</td>
-                        <td>TPC71810-01-001</td>
-                        <td>TPC71810-01</td>
-                        <td>Power Generator Engine</td>
-                        <td>1</td>
-                        <td>PGER</td>
-                        <td>North</td>
-                    </tr>
-                    <tr>
-                        <td>9</td>
-                        <td>TPC71810-01-001</td>
-                        <td>TPC71810-01</td>
-                        <td>Power Generator Engine</td>
-                        <td>1</td>
-                        <td>PGER</td>
-                        <td>North</td>
-                    </tr>
-                    <tr>
-                        <td>10</td>
-                        <td>TPC71810-01-001</td>
-                        <td>TPC71810-01</td>
-                        <td>Power Generator Engine</td>
-                        <td>2</td>
-                        <td>PGER</td>
-                        <td>North</td>
-                    </tr>
-                    <tr>
-                        <td>11</td>
-                        <td>TPC71810-01-001</td>
-                        <td>TPC71810-01</td>
-                        <td>Power Generator Engine</td>
-                        <td>3</td>
-                        <td>PGER</td>
-                        <td>North</td>
-                    </tr>
-                    <tr>
-                        <td>12</td>
-                        <td>TPC71810-01-001</td>
-                        <td>TPC71810-01</td>
-                        <td>Power Generator Engine</td>
-                        <td>3</td>
-                        <td>PGER</td>
-                        <td>North</td>
-                    </tr> */}
                 </tbody>
             </table>
         </div>

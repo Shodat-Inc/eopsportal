@@ -6,8 +6,12 @@ import Link from "next/link";
 import Test from "./test";
 import Production from "./production";
 import Datepicker from "react-tailwindcss-datepicker";
+import { useRouter } from 'next/router'
 
 export default function Preview() {
+    const router = useRouter();
+    const routerParams = router.query;
+
     const [defaultTab, setDefaultTab] = useState("test");
     const [toggleArrow, setToggleArrow] = useState(false);
     const [toggleDrop, setToggleDrop] = useState(false);
@@ -88,7 +92,7 @@ export default function Preview() {
                             href="/dashboard/eopswatch"
                             className="font-semibold"
                         >
-                            TPC71810-01-012
+                            {routerParams.key}
                         </Link>
                     </li>
                     <li className="flex justify-start items-center">
@@ -99,7 +103,15 @@ export default function Preview() {
                             width={28}
                         />
                         <Link
-                            href="/dashboard/eopswatch/models"
+                            href={{
+                                pathname: '/dashboard/eopswatch/models',
+                                query: {
+                                    objectID: routerParams.objectID,
+                                    subObject: routerParams.subObject,
+                                    key: routerParams.key,
+                                    id: routerParams.id,
+                                }
+                            }}
                             className="font-semibold"
                         >
                             Models
@@ -113,10 +125,18 @@ export default function Preview() {
                             width={28}
                         />
                         <Link
-                            href="/dashboard/eopswatch/models"
+                            href={{
+                                pathname: '/dashboard/eopswatch/models',
+                                query: {
+                                    objectID: routerParams.objectID,
+                                    subObject: routerParams.subObject,
+                                    key: routerParams.key,
+                                    id: routerParams.id,
+                                }
+                            }}
                             className="font-semibold"
                         >
-                            Crack Detection
+                            {routerParams.model}
                         </Link>
                     </li>
                     <li className="flex justify-start items-center">
