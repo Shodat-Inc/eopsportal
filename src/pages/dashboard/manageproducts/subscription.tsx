@@ -6,6 +6,7 @@ export default function Subscription(props: any) {
     const [premiumModal, setPremiumModal] = useState(false);
     const [revokeSubscription, setRevokeSubscription] = useState(false);
     const [refundStatus, setRefundStatus] = useState(false);
+    const [premiumPlans, setPremiumPlans] = useState(false)
     const cancelModal = () => {
         setPremiumModal(true);
     }
@@ -16,10 +17,13 @@ export default function Subscription(props: any) {
     const refundStatusFunction = () => {
         setRefundStatus(!refundStatus)
     }
+    const togglePremiumPlans = () => {
+        setPremiumPlans(!premiumPlans)
+    }
     return (
         <div className="relative bg-white">
 
-            <div className='w-full flex justify-start item-start p-3 flex-wrap flex-col'>
+            <div className='w-full flex justify-start item-start p-3 flex-wrap flex-col relative'>
                 {/* Table */}
                 <table className={`w-full ${styles.tableBilling} mb-7 px-3`}>
                     <thead>
@@ -50,7 +54,7 @@ export default function Subscription(props: any) {
                             <tbody className='text-sm'>
                                 <tr>
                                     <td className='w-[40%] text-left'>
-                                        <div className='cursor-pointer'>
+                                        <div className='cursor-pointer' onClick={togglePremiumPlans} >
                                             <p className='uppercase font-semibold flex mb-2'>
                                                 <span>Premium</span>
                                                 <Image
@@ -79,6 +83,26 @@ export default function Subscription(props: any) {
                             </tbody>
                     }
                 </table>
+
+                {/* Premium Plans */}
+                {premiumPlans &&
+                    <div className='h-[432px] w-[537px] border border-[#E1E1E1] rounded rounded-xl shadow shadow-lg p-5 absolute top-[131px] left-[8px] bg-white'>
+                        <div className='flex justify-end items-end w-full'>
+                            <button onClick={() => setPremiumPlans(false)}>
+                                <Image
+                                    src="/img/x.svg"
+                                    alt='close'
+                                    height={30}
+                                    width={30}
+                                />
+                            </button>
+                        </div>
+                        <div className='h-full w-full flex justify-center items-center'>
+                            <p className='uppercase text-lg font-semibold'>PREMIUM PLAN DETAILS HERE</p>
+                        </div>
+                    </div>
+                }
+                {/* Premium Plan Ends */}
 
 
                 {/* Cancelled Order */}
