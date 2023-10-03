@@ -412,7 +412,7 @@ export default function MyProduct(props: any) {
 
 
 
-            {/* ===== Delete Modal starts ===== */}
+            {/* ===== Calcel Order Modal starts ===== */}
             {cancelOrder ?
                 <>
                     <div
@@ -465,7 +465,7 @@ export default function MyProduct(props: any) {
                 </>
                 : null}
 
-            {/* ===== Delete Modal Ends ===== */}
+            {/* ===== Calcel Order Modal Ends ===== */}
 
 
         </div>
