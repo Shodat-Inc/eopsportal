@@ -1,4 +1,8 @@
+import path from "path";
 import { apiHandler, usersRepo } from "../../helpers/api";
+import sendResponseData from "../../helpers/constant";
+
+const dataFilePath = path.join(process.cwd(), "json/users.json");
 
 export default apiHandler({
   post: handler,
@@ -10,7 +14,7 @@ async function handler(req: any, res: any) {
       res.status(405).send({ message: "Only POST requests allowed" });
       return;
     }
-    const data = await usersRepo.create(req.body);
+    const data = await usersRepo.authenticate(req.body);
     res.send(data);
   } catch (error: any) {
     console.error(error);
