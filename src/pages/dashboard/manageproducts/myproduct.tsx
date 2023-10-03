@@ -6,6 +6,7 @@ export default function MyProduct(props: any) {
     const [selectedOption, setSelectedOption] = useState(1);
     const [agreement, setAgreement] = useState(false);
     const [refundStatus, setRefundStatus] = useState(false);
+    const [cancelOrder, setCancelOrder] = useState(false);
     const toggleDropFunction = (item: any) => {
         setToggleDrop(!toggleDrop);
         setSelectedOption(item)
@@ -115,11 +116,12 @@ export default function MyProduct(props: any) {
                                 {(toggleDrop && selectedOption === 1) &&
                                     <div ref={wrapperRef} className="bg-white text-black overflow-hidden rounded rounded-xl w-[160px] flex flex-col flex-wrap items-start justify-start shadow-lg absolute top-[30px] right-[80px] z-[1] border border-[#E1E1E1] py-3">
                                         <button
-                                            className="text-black text-[14px] hover:bg-white hover:text-black h-[40px] px-4 w-full text-left">
+                                            className="text-black text-[14px] hover:bg-white hover:text-black h-[40px] px-4 w-full text-left hover:bg-[#f8f8f8]">
                                             <span>Renew Order</span>
                                         </button>
                                         <button
-                                            className="text-black text-[14px] hover:bg-white hover:text-black h-[40px] px-4 w-full text-left">
+                                            onClick={() => setCancelOrder(true)}
+                                            className="text-black text-[14px] hover:bg-white hover:text-black h-[40px] px-4 w-full text-left hover:bg-[#f8f8f8]">
                                             <span>Cancel Order</span>
                                         </button>
                                     </div>
@@ -174,11 +176,12 @@ export default function MyProduct(props: any) {
                                 {(toggleDrop && selectedOption === 2) &&
                                     <div ref={wrapperRef} className="bg-white text-black overflow-hidden rounded rounded-xl w-[160px] flex flex-col flex-wrap items-start justify-start shadow-lg absolute top-[30px] right-[80px] z-[1] border border-[#E1E1E1] py-3">
                                         <button
-                                            className="text-black text-[14px] hover:bg-white hover:text-black h-[40px] px-4 w-full text-left">
+                                            className="text-black text-[14px] hover:bg-white hover:text-black h-[40px] px-4 w-full text-left hover:bg-[#f8f8f8]">
                                             <span>Renew Order</span>
                                         </button>
                                         <button
-                                            className="text-black text-[14px] hover:bg-white hover:text-black h-[40px] px-4 w-full text-left">
+                                            onClick={() => setCancelOrder(true)}
+                                            className="text-black text-[14px] hover:bg-white hover:text-black h-[40px] px-4 w-full text-left hover:bg-[#f8f8f8]">
                                             <span>Cancel Order</span>
                                         </button>
                                     </div>
@@ -233,11 +236,12 @@ export default function MyProduct(props: any) {
                                 {(toggleDrop && selectedOption === 3) &&
                                     <div ref={wrapperRef} className="bg-white text-black overflow-hidden rounded rounded-xl w-[160px] flex flex-col flex-wrap items-start justify-start shadow-lg absolute top-[30px] right-[80px] z-[1] border border-[#E1E1E1] py-3">
                                         <button
-                                            className="text-black text-[14px] hover:bg-white hover:text-black h-[40px] px-4 w-full text-left">
+                                            className="text-black text-[14px] hover:bg-white hover:text-black h-[40px] px-4 w-full text-left hover:bg-[#f8f8f8]">
                                             <span>Renew Order</span>
                                         </button>
                                         <button
-                                            className="text-black text-[14px] hover:bg-white hover:text-black h-[40px] px-4 w-full text-left">
+                                            onClick={() => setCancelOrder(true)}
+                                            className="text-black text-[14px] hover:bg-white hover:text-black h-[40px] px-4 w-full text-left hover:bg-[#f8f8f8]">
                                             <span>Cancel Order</span>
                                         </button>
                                     </div>
@@ -292,11 +296,12 @@ export default function MyProduct(props: any) {
                                 {(toggleDrop && selectedOption === 4) &&
                                     <div ref={wrapperRef} className="bg-white text-black overflow-hidden rounded rounded-xl w-[160px] flex flex-col flex-wrap items-start justify-start shadow-lg absolute top-[30px] right-[80px] z-[1] border border-[#E1E1E1] py-3">
                                         <button
-                                            className="text-black text-[14px] hover:bg-white hover:text-black h-[40px] px-4 w-full text-left">
+                                            className="text-black text-[14px] hover:bg-white hover:text-black h-[40px] px-4 w-full text-left hover:bg-[#f8f8f8]">
                                             <span>Renew Order</span>
                                         </button>
                                         <button
-                                            className="text-black text-[14px] hover:bg-white hover:text-black h-[40px] px-4 w-full text-left">
+                                            onClick={() => setCancelOrder(true)}
+                                            className="text-black text-[14px] hover:bg-white hover:text-black h-[40px] px-4 w-full text-left hover:bg-[#f8f8f8]">
                                             <span>Cancel Order</span>
                                         </button>
                                     </div>
@@ -403,6 +408,65 @@ export default function MyProduct(props: any) {
                     </div>
                 </div>
             </div>
+
+
+
+
+            {/* ===== Delete Modal starts ===== */}
+            {cancelOrder ?
+                <>
+                    <div
+                        className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
+                    >
+                        <div className="relative my-6 w-[580px]">
+                            <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+                                {/*header*/}
+                                <div className="flex items-start justify-between p-5">
+                                    <h3 className="text-xl font-medium">Cancel Order</h3>
+                                    <button
+                                        className="p-1 ml-auto bg-transparent border-0 text-black float-right leading-none font-semibold outline-none focus:outline-none"
+                                        onClick={() => setCancelOrder(false)}
+                                    >
+                                        <Image
+                                            src="/img/x.svg"
+                                            alt="close"
+                                            className="h-6"
+                                            height={28}
+                                            width={28}
+                                        />
+                                    </button>
+                                </div>
+                                {/*body*/}
+                                <div className="relative pb-8 flex-auto">
+                                    <div className="flex justify-start items-center flex-wrap flex-col p-5">
+                                        <p className="flex justify-center items-center">This order will be transfer to the "Cancelled" section. You will receive an automatic notification once the cancellation is processed. Please note that this action cannot be reversed and your data will be permanently lost.</p>
+                                        <div className="mt-10 relative flex justify-center items-center w-full px-8">
+                                            <form action="" className='w-full'>
+                                                <input
+                                                    type='text'
+                                                    name='password'
+                                                    id='password'
+                                                    placeholder='Enter Password'
+                                                    className='border border-[#A7A7A7] rounded rounded-xl h-[46px] w-full p-2 mb-6'
+                                                />
+                                                <button
+                                                    className='bg-yellow-951 border border-yellow-951 rounded rounded-xl h-[46px] w-full flex justify-center items-center text-sm text-black hover:bg-black hover:text-white hover:border-black'
+                                                >
+                                                    <span>Confirm</span>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="opacity-75 fixed inset-0 z-40 bg-black"></div>
+                </>
+                : null}
+
+            {/* ===== Delete Modal Ends ===== */}
+
 
         </div>
     )
