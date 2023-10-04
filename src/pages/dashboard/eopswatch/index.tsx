@@ -20,7 +20,11 @@ export default function EopsWatch() {
     const [classData, setClassData] = useState(classes[0]);
     const [showAsset, setShowAsset] = useState();
     const [objectData, setObjectData] = useState([] as any);
-    const [filteredArray, setFilteredArray] = useState([] as any)
+    const [filteredArray, setFilteredArray] = useState([] as any);
+
+    const [search, setSearch] = useState([] as any);
+    const [value, setValue] = useState("");
+    const [data, setData] = useState([] as any);
 
     const toggleFilterFunction = () => {
         setToggleArrow(!toggleArrow);
@@ -71,6 +75,10 @@ export default function EopsWatch() {
         setShowAsset(data);
     }
 
+    const handleFilterFunction = (data: any) => {
+        setToggleFilter(false)
+    }
+
     useEffect(() => {
         axios.get("/api/getChildObject").then((response) => {
             if (response.data) {
@@ -89,6 +97,80 @@ export default function EopsWatch() {
         }
         setFilteredArray(filteredArray)
     }, [showAsset])
+
+
+    const onChange = (event: any) => {
+        setValue(event.target.value);
+        if (event.target.value === "" || event.target.value.length <= 0) {
+            axios.get("/api/getChildObject").then((response) => {
+                if (response.data) {
+                    let filteredData = response.data.filter((item: any) => {
+                        return item.object === showAsset
+                    })
+                    setObjectData(filteredData)
+                }
+            });
+            setData([])
+            setSearch([])
+            return;
+        }
+        axios.get("/api/getChildObject").then((response) => {
+            if (response.data) {
+
+                if (event.target.value === "") {
+                    setData([]); return;
+                }
+
+                let filteredData = response.data.filter((item: any) => {
+                    return item.object === showAsset
+                })
+
+                
+                const filtered = filteredData.filter((item: any) => {
+
+                    if (item.tags.hasOwnProperty("VIN")) {
+                        if (item.tags.VIN.toString().toLowerCase().includes(event.target.value.toString().toLowerCase())) {
+                            return item;
+                        }
+                    } else if (item.tags.hasOwnProperty("SerialNo")) {
+                        if (item.tags.SerialNo.toString().toLowerCase().includes(event.target.value.toString().toLowerCase())) {
+                            return item;
+                        }
+                    } else if (item.tags?.hasOwnProperty("SerialNo")) {
+                        if (item.tags?.SerialNo.toString().toLowerCase().includes(event.target.value.toString().toLowerCase())) {
+                            return item;
+                        }
+                    } else if (item.tags.hasOwnProperty("ID")) {
+                        if (item.tags.ID.toString().toLowerCase().includes(event.target.value.toString().toLowerCase())) {
+                            return item;
+                        }
+                    } else if (item.tags.hasOwnProperty("PlantID")) {
+                        if (item.tags.PlantID.toString().toLowerCase().includes(event.target.value.toString().toLowerCase())) {
+                            return item;
+                        }
+                    } else if (item.tags.hasOwnProperty("Room")) {
+                        if (item.tags.Room.toString().toLowerCase().includes(event.target.value.toString().toLowerCase())) {
+                            return item;
+                        }
+                    } else {
+                        if (item.tags?.VIN?.toString().toLowerCase().includes(event.target.value.toString().toLowerCase())) {
+                            return item;
+                        }
+                    }
+                });
+
+                if (filtered && filtered.length > 0) {
+                    setObjectData(filtered);
+                }
+
+                console.log({
+                    filteredData:filteredData,
+                    filtered:filtered
+                })
+
+            }
+        });
+    }
 
 
     return (
@@ -117,7 +199,16 @@ export default function EopsWatch() {
                     <div className="flex">
                         <div className="flex relative">
                             <Image src="/img/search-icon-gray.svg" alt="search" height={22} width={22} className="absolute top-[11px] left-3" />
-                            <input type="text" name="search" className="border-2 border-gray-969 rounded-xl h-[44px] w-[300px] pl-10 pr-2" placeholder="Search" />
+                            <input 
+                                type="text"
+                                placeholder="Search"
+                                id="searchobjects"
+                                name="searchobjects"
+                                className="border-2 border-gray-969 rounded-xl h-[44px] w-[300px] pl-10 pr-2"
+                                onChange={onChange}
+                                value={value}
+                                autoComplete="off"
+                            />
                         </div>
                         <div className="relative ml-3">
                             <button
@@ -142,7 +233,7 @@ export default function EopsWatch() {
 
                             {
                                 toggleFilter &&
-                                <Filter />
+                                <Filter handleClick={handleFilterFunction} />
                             }
 
                         </div>

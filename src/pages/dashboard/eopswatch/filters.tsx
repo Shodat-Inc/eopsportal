@@ -3,7 +3,7 @@ import styles from '../../../styles/Common.module.css';
 import Image from "next/image";
 import Datepicker from "react-tailwindcss-datepicker";
 
-export default function Filter() {
+export default function Filter(props: any) {
 
 
     const [toggleArrow, setToggleArrow] = useState(false);
@@ -124,6 +124,9 @@ export default function Filter() {
         setToDate(newValue);
     }
 
+    const handleClickFunction = () => {
+        props.handleClick(false)
+    }
 
     return (
         <div ref={wrapperRef} className="rounded rounded-xl shadow shadow-xl border border-gray-951 min-h-[350px] w-[380px] px-4 py-3 bg-white absolute right-0 top-[100%] mt-1 z-10">
@@ -139,7 +142,9 @@ export default function Filter() {
                     Apply
                 </button>
 
-                <button onClick={() => setToggleFilter(false)}>
+                <button
+                    onClick={handleClickFunction}
+                >
                     <Image
                         src="/img/x-thin.svg"
                         alt="calendar"

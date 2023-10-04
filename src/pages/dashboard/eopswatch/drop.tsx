@@ -1,10 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 export default function Drop(props: any) {
 
-    console.log({
-        props:props
-    })
-
     const toggleAsset = (item: any) => {
         props.handleClick(item)
     }
