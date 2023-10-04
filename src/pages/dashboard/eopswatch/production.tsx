@@ -28,7 +28,7 @@ export default function Production(props: any) {
     const wrapperRef = useRef(null);
     useOutsideAlerter(wrapperRef);
     return (
-        <div>
+        <div className="w-full">
             <div className="mt-5 relative flex flex-wrap justify-start items-start w-full h-full p-3">
 
                 {
@@ -83,7 +83,7 @@ export default function Production(props: any) {
                             </div>
                         ))
                         :
-                        <div className="h-72 flex justify-center items-center flex-wrap flex-col mt-8 w-full">
+                        <div className="h-48 flex justify-center items-center flex-wrap flex-col mt-8 w-full">
                             <NoDataFound createText="No image found!" />
                         </div>
                 }

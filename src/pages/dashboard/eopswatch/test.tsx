@@ -28,7 +28,7 @@ export default function Test(props: any) {
     const wrapperRef = useRef(null);
     useOutsideAlerter(wrapperRef);
     return (
-        <div>
+        <div className="w-full">
             <div className="mt-5 relative flex flex-wrap justify-start items-start w-full h-full p-3">
 
                 {
@@ -83,112 +83,10 @@ export default function Test(props: any) {
                             </div>
                         ))
                         :
-                        <div className="h-72 flex justify-center items-center flex-wrap flex-col mt-8 w-full">
+                        <div className="h-48 flex justify-center items-center flex-wrap flex-col mt-8 w-full">
                             <NoDataFound createText="No image found!" />
                         </div>
                 }
-
-                {/* <div className="w-[246px] overflow-hidden rounded rounded-xl mr-4 mb-4 relative">
-                    <div className="h-[200px] w-[246px] overflow-hidden rounded rounded-xl relative">
-                        <div className="flex justify-start items-center absolute top-0 right-0">
-                            <button className="text-sm font-semibold h-[32px] px-2 rounded rounded-lg inline-flex justify-center items-center bg-yellow-951 mr-4">
-                                <Image
-                                    src="/img/test-icon.svg"
-                                    alt="Test Icon"
-                                    height={20}
-                                    width={20}
-                                />
-                                <span className="pl-2">Test</span>
-                            </button>
-                            <button
-                                onClick={() => imageModalFunction('/img/CrackDetection/TPC71810-01-012/Test/WallTest1.png')}
-                                className="text-sm font-semibold h-[32px] px-1 rounded rounded-lg inline-flex justify-center items-center bg-[#333333]">
-                                <Image
-                                    src="/img/external-link-white.svg"
-                                    alt="Test Icon"
-                                    height={26}
-                                    width={26}
-                                />
-                            </button>
-                        </div>
-                        <Image
-                            src="/img/CrackDetection/TPC71810-01-012/Test/WallTest1.png"
-                            alt="Crack Detection"
-                            height={200}
-                            width={246}
-                            className="object-cover h-full w-full"
-                        />
-                    </div>
-                    <p className="mt-1 text-[13px] text-[#666666]">Uploaded Date: 30-05-2023</p>
-                </div>
-
-                <div className="w-[246px] overflow-hidden rounded rounded-xl mr-4 mb-4 relative">
-                    <div className="h-[200px] w-[246px] overflow-hidden rounded rounded-xl relative">
-                        <div className="flex justify-start items-center absolute top-0 right-0">
-                            <button className="text-sm font-semibold h-[32px] px-2 rounded rounded-lg inline-flex justify-center items-center bg-yellow-951 mr-4">
-                                <Image
-                                    src="/img/test-icon.svg"
-                                    alt="Test Icon"
-                                    height={20}
-                                    width={20}
-                                />
-                                <span className="pl-2">Test</span>
-                            </button>
-                            <button
-                                onClick={() => imageModalFunction('/img/CrackDetection/TPC71810-01-012/Test/WallTest2.png')}
-                                className="text-sm font-semibold h-[32px] px-1 rounded rounded-lg inline-flex justify-center items-center bg-[#333333]">
-                                <Image
-                                    src="/img/external-link-white.svg"
-                                    alt="Test Icon"
-                                    height={26}
-                                    width={26}
-                                />
-                            </button>
-                        </div>
-                        <Image
-                            src="/img/CrackDetection/TPC71810-01-012/Test/WallTest2.png"
-                            alt="Crack Detection"
-                            height={200}
-                            width={246}
-                            className="object-cover h-full w-full"
-                        />
-                    </div>
-                    <p className="mt-1 text-[13px] text-[#666666]">Uploaded Date: 30-05-2023</p>
-                </div>
-
-                <div className="w-[246px] overflow-hidden rounded rounded-xl mr-4 mb-4 relative">
-                    <div className="h-[200px] w-[246px] overflow-hidden rounded rounded-xl relative">
-                        <div className="flex justify-start items-center absolute top-0 right-0">
-                            <button className="text-sm font-semibold h-[32px] px-2 rounded rounded-lg inline-flex justify-center items-center bg-yellow-951 mr-4">
-                                <Image
-                                    src="/img/test-icon.svg"
-                                    alt="Test Icon"
-                                    height={20}
-                                    width={20}
-                                />
-                                <span className="pl-2">Test</span>
-                            </button>
-                            <button
-                                onClick={() => imageModalFunction('/img/CrackDetection/TPC71810-01-012/Test/WallTest3.png')}
-                                className="text-sm font-semibold h-[32px] px-1 rounded rounded-lg inline-flex justify-center items-center bg-[#333333]">
-                                <Image
-                                    src="/img/external-link-white.svg"
-                                    alt="Test Icon"
-                                    height={26}
-                                    width={26}
-                                />
-                            </button>
-                        </div>
-                        <Image
-                            src="/img/CrackDetection/TPC71810-01-012/Test/WallTest3.png"
-                            alt="Crack Detection"
-                            height={200}
-                            width={246}
-                            className="object-cover h-full w-full"
-                        />
-                    </div>
-                    <p className="mt-1 text-[13px] text-[#666666]">Uploaded Date: 30-05-2023</p>
-                </div> */}
 
             </div>
 
