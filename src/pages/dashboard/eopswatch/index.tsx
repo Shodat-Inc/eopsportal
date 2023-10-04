@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect } from "react";
-import styles from '../../../styles/Common.module.css';
 import Layout from "../../../components/Layout";
 import Image from "next/image";
 import Table from "./table";
@@ -20,7 +19,8 @@ export default function EopsWatch() {
     const [subAssets, setSubAssets] = useState([] as any);
     const [classData, setClassData] = useState(classes[0]);
     const [showAsset, setShowAsset] = useState();
-    const [objectData, setObjectData] = useState([] as any)
+    const [objectData, setObjectData] = useState([] as any);
+    const [filteredArray, setFilteredArray] = useState([] as any)
 
     const toggleFilterFunction = () => {
         setToggleArrow(!toggleArrow);
@@ -33,8 +33,15 @@ export default function EopsWatch() {
                 let filteredData = response.data.filter((item: any) => {
                     return item.parentAssetName === classData
                 })
-                setSubAssets(filteredData);
-                setShowAsset(filteredData[0].assetName)
+
+                let arr = [] as any;
+                if (filteredData.length > 0) {
+                    filteredData.map((item: any) => {
+                        arr.push(item.assetName)
+                    })
+                }
+                setSubAssets(arr);
+                setShowAsset(filteredData[0].assetName);
             }
         });
     }, [])
@@ -71,12 +78,16 @@ export default function EopsWatch() {
                     return item.object === showAsset
                 })
                 setObjectData(filteredData)
-                console.log({
-                    response: response.data,
-                    filteredData: filteredData
-                })
             }
         });
+    }, [showAsset])
+
+    useEffect(() => {
+        var filteredArray = [];
+        if (showAsset) {
+            filteredArray = subAssets.filter(function (e: any) { return e != showAsset })
+        }
+        setFilteredArray(filteredArray)
     }, [showAsset])
 
 
@@ -95,10 +106,10 @@ export default function EopsWatch() {
                         {
                             toggleDrop &&
                             <div ref={wrapperRef}>
-                            <Drop
-                                subAssets={subAssets}
-                                handleClick={handleDropFunction}
-                            />
+                                <Drop
+                                    subAssets={filteredArray}
+                                    handleClick={handleDropFunction}
+                                />
                             </div>
                         }
 
@@ -129,7 +140,10 @@ export default function EopsWatch() {
                                 />
                             </button>
 
-                            {toggleFilter && <Filter />}
+                            {
+                                toggleFilter &&
+                                <Filter />
+                            }
 
                         </div>
                     </div>

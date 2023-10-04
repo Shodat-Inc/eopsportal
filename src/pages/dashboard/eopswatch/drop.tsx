@@ -1,6 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 export default function Drop(props: any) {
 
+    console.log({
+        props:props
+    })
+
     const toggleAsset = (item: any) => {
         props.handleClick(item)
     }
@@ -10,10 +14,10 @@ export default function Drop(props: any) {
                 props.subAssets && props.subAssets.length > 0 ?
                     props.subAssets.map((item: any, index: any) => (
                         <button
-                            onClick={() => toggleAsset(item.assetName)}
+                            onClick={() => toggleAsset(item)}
                             key={index}
                             className="text-white text-sm hover:bg-white hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left">
-                            {item.assetName}
+                            {item}
                         </button>
                     ))
                     : null
