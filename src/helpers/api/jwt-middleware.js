@@ -15,6 +15,7 @@ function jwtMiddleware(req, res) {
       // public routes that don't require authentication
       "/api/createUsers",
       "/api/signIn",
+      "/api/assets"
     ],
   });
 
