@@ -84,7 +84,11 @@ export default function Test(props: any) {
                         ))
                         :
                         <div className="h-48 flex justify-center items-center flex-wrap flex-col mt-8 w-full">
-                            <NoDataFound createText="No image found!" />
+                            <NoDataFound
+                                titleText="No Data Found!"
+                                messageText="No image are found for TEST folder"
+                                createText={''}
+                            />
                         </div>
                 }
 

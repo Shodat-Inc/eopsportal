@@ -48,7 +48,7 @@ export default function Production(props: any) {
                                                     subObject: routerParams.subObject,
                                                     result: item.resultImage ? item.resultImage : '',
                                                     imageID: item.imageID,
-                                                    from:"eopswatch"
+                                                    from: "eopswatch"
                                                 }
                                             }}
                                             className="text-sm font-semibold h-[32px] px-2 rounded rounded-lg inline-flex justify-center items-center bg-yellow-951 mr-4">
@@ -84,7 +84,11 @@ export default function Production(props: any) {
                         ))
                         :
                         <div className="h-48 flex justify-center items-center flex-wrap flex-col mt-8 w-full">
-                            <NoDataFound createText="No image found!" />
+                            <NoDataFound
+                                titleText="No Data Found!"
+                                messageText="No image are found for PRODUCTION folder"
+                                createText={''}
+                            />
                         </div>
                 }
 
