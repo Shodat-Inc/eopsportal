@@ -14,6 +14,9 @@ import { auth } from './firebase.config';
 
 
 export default function Complete() {
+    console.log({
+
+    })
     const { push } = useRouter();
     const [showPassword, setShowPassword] = useState({
         pass: false,
@@ -138,40 +141,44 @@ export default function Complete() {
     const submitForm = async (evt) => {
         evt.preventDefault();
         console.log({
-            phoneCode: phoneCode
+            phoneCode: phoneCode,
+            items:items
         })
-        // if (handleValidation()) {
-        //     let currentDate = new Date().toISOString().split('T')[0];
-        //     let currentTime = new Date().toISOString().split('T')[1].split(".")[0];
-        //     let currentDateTime = currentDate + " " + currentTime;
-        //     axios.post('/api/createUsers', {
-        //         userID: lastID + 1,
-        //         username: `${items.email}`,
-        //         firstName: `${items.firstName}`,
-        //         lastName: `${items.lastName}`,
-        //         companyName: `${formData.companyName}`,
-        //         phoneNumber: `${phoneCode}`,
-        //         password: `${items.password}`,
-        //         terms: agreement,
-        //         dateCreated: currentDateTime,
-        //         dateModified: currentDateTime,
-        //         role: "admin"
-        //     }, {
-        //         headers: {
-        //             'Content-Type': 'application/json'
-        //         }
-        //     }).then(res => {
-        //         setSuccess(true)
-        //         setTimeout(() => {
-        //             push("/authentication/success");
-        //         }, 2000)
-        //     }).catch(err => {
-        //         console.log('error in request', err);
-        //     });
+        if (handleValidation()) {
+            let currentDate = new Date().toISOString().split('T')[0];
+            let currentTime = new Date().toISOString().split('T')[1].split(".")[0];
+            let currentDateTime = currentDate + " " + currentTime;
+            axios.post('http://localhost:3000/api/createUsers', {                
+                username: `${items.email}`,
+                emailAddress: `${items.email}`,
+                firstName: `${items.firstName}`,
+                lastName: `${items.lastName}`,
+                companyName: `${formData.companyName}`,
+                phoneNumber: parseInt(phoneCode),
+                password: `${items.password}`,
+                terms: agreement,
+                role: "admin",
+                address:"",
+                city:"",
+                state:"",
+                pincode:"",
+                country:"",
+            }, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(res => {
+                setSuccess(true)
+                setTimeout(() => {
+                    push("/authentication/success");
+                }, 2000)
+            }).catch(err => {
+                console.log('error in request', err);
+            });
 
-        // } else {
-        //     console.log("SOMETHING WENT WRONG !")
-        // }
+        } else {
+            console.log("SOMETHING WENT WRONG !")
+        }
     }
 
     // Handle change for checkbox

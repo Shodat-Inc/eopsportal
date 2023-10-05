@@ -40,6 +40,10 @@ async function initialize() {
 
     db.initialized = true;
   } catch (e) {
+
+    console.log({
+      message:"print here", e
+    })
   }
 }
 

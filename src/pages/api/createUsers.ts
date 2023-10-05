@@ -10,6 +10,9 @@ async function handler(req: any, res: any) {
       res.status(405).send({ message: "Only POST requests allowed" });
       return;
     }
+    console.log({
+      message: "you are here"
+    })
     const data = await usersRepo.create(req.body);
     res.send(data);
   } catch (error: any) {

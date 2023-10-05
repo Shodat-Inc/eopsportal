@@ -50,6 +50,9 @@ async function getById(id) {
 }
 
 async function create(params) {
+  console.log({
+    message: "you are in create"
+  })
   try {
     // validate
     let user_data = await db.User.findOne({
@@ -68,6 +71,11 @@ async function create(params) {
     const data = await user.save();
     return sendResponseData(true, "User added successfully", data);
   } catch (error) {
+
+    console.log({
+      message: "you are in create catch block,", error
+    })
+
     return sendResponseData(false, "error", error);
   }
 }
