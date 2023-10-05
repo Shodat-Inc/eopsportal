@@ -6,9 +6,14 @@ import Link from "next/link";
 import Test from "./test";
 import Production from "./production";
 import Datepicker from "react-tailwindcss-datepicker";
+import { useRouter } from 'next/router'
+import axios from "axios";
 
 export default function Preview() {
-    const [defaultTab, setDefaultTab] = useState("test");
+    const router = useRouter();
+    const routerParams = router.query;
+
+    const [defaultTab, setDefaultTab] = useState("Test");
     const [toggleArrow, setToggleArrow] = useState(false);
     const [toggleDrop, setToggleDrop] = useState(false);
     const [toggleFilter, setToggleFilter] = useState(false);
@@ -17,6 +22,8 @@ export default function Preview() {
     const [defaultMethod, setDefaultMethod] = useState("GET");
     const [authType, setAuthType] = useState(false);
     const [drop, setDrop] = useState(false);
+    const [data, setData] = useState([] as any);
+
     const authenticationType = [
         "Basic", "Client Certificate", "Active Directory OAuth", "Raw", "Managed Identity"
     ];
@@ -77,6 +84,43 @@ export default function Preview() {
         setDefaultAuthType(item);
         setAuthType(false);
     }
+
+
+    // Fetch the JSON data of sub Asset
+    const fetchClassData = () => {
+        axios.get("/api/geteopsWatch").then((response) => {
+            if (response.data) {
+                const filtered = response.data.filter((item: any) => {
+                    if (item.class === routerParams.objectID && item.ID === routerParams.key && item.modal === routerParams.model) {
+                        return item;
+                    }
+                });
+                if (filtered && filtered.length > 0) {
+                    if (filtered[0].images) {
+                        setData(filtered[0].images);
+                    }
+                }
+            }
+        });
+    };
+    useEffect(() => {
+        fetchClassData();
+        if (fetchClassData.length) return;
+    }, [routerParams])
+
+    const filteredDataTest = data.filter((item: any) => {
+        return item.folder === "Test"
+    })
+    const filteredDataProduction = data.filter((item: any) => {
+        return item.folder === "Production"
+    })
+
+    console.log({
+        data:data,
+        filteredDataTest:filteredDataTest,
+        filteredDataProduction:filteredDataProduction
+    })
+
     return (
         <div className="w-full h-full font-OpenSans">
             <p className="text-black text-lg mb-4 font-semibold text-xl">eOps Watch</p>
@@ -88,7 +132,7 @@ export default function Preview() {
                             href="/dashboard/eopswatch"
                             className="font-semibold"
                         >
-                            TPC71810-01-012
+                            {routerParams.key}
                         </Link>
                     </li>
                     <li className="flex justify-start items-center">
@@ -99,7 +143,15 @@ export default function Preview() {
                             width={28}
                         />
                         <Link
-                            href="/dashboard/eopswatch/models"
+                            href={{
+                                pathname: '/dashboard/eopswatch/models',
+                                query: {
+                                    objectID: routerParams.objectID,
+                                    subObject: routerParams.subObject,
+                                    key: routerParams.key,
+                                    id: routerParams.id,
+                                }
+                            }}
                             className="font-semibold"
                         >
                             Models
@@ -113,10 +165,18 @@ export default function Preview() {
                             width={28}
                         />
                         <Link
-                            href="/dashboard/eopswatch/models"
+                            href={{
+                                pathname: '/dashboard/eopswatch/models',
+                                query: {
+                                    objectID: routerParams.objectID,
+                                    subObject: routerParams.subObject,
+                                    key: routerParams.key,
+                                    id: routerParams.id,
+                                }
+                            }}
                             className="font-semibold"
                         >
-                            Crack Detection
+                            {routerParams.model}
                         </Link>
                     </li>
                     <li className="flex justify-start items-center">
@@ -134,13 +194,13 @@ export default function Preview() {
             {/* content */}
             <div className="flex relative justify-start items-start h-[54px] mt-5">
                 <button
-                    onClick={() => toggleTabFunction("test")}
-                    className={`h-[54px] w-[70px] rounded-tl-lg rounded-tr-lg flex justify-center items-center ${defaultTab === "test" ? "bg-white" : "bg-yellow-951 bg-opacity-50 hover:bg-opacity-100"}`}>
+                    onClick={() => toggleTabFunction("Test")}
+                    className={`h-[54px] w-[70px] rounded-tl-lg rounded-tr-lg flex justify-center items-center ${defaultTab === "Test" ? "bg-white" : "bg-yellow-951 bg-opacity-50 hover:bg-opacity-100"}`}>
                     <span className="font-semibold">Test</span>
                 </button>
                 <button
-                    onClick={() => toggleTabFunction("production")}
-                    className={`h-[54px] w-[120px] rounded-tl-lg rounded-tr-lg flex justify-center items-center ${defaultTab === "production" ? "bg-white" : "bg-yellow-951 bg-opacity-50 hover:bg-opacity-100"}`}>
+                    onClick={() => toggleTabFunction("Production")}
+                    className={`h-[54px] w-[120px] rounded-tl-lg rounded-tr-lg flex justify-center items-center ${defaultTab === "Production" ? "bg-white" : "bg-yellow-951 bg-opacity-50 hover:bg-opacity-100"}`}>
                     <span className="font-semibold">Production</span>
                 </button>
             </div>
@@ -151,7 +211,7 @@ export default function Preview() {
                         <p className="text-md font-semibold px-3 py-2">Images</p>
                     </div>
                     <div className="flex justify-start items-center relative pr-3 h-[65px]">
-                        {defaultTab === "production" && <>
+                        {defaultTab === "Production" && <>
                             <div className="flex items-center justify-start ml-7">
                                 <p className="text-gray mr-3 text-sm font-semibold">Site Visity</p>
                                 <div className={`${styles.radioWrap} relative top-[2px]`}>
@@ -390,8 +450,8 @@ export default function Preview() {
 
                 {/* Tab Contents */}
                 <>
-                    {defaultTab === "test" && <Test />}
-                    {defaultTab === "production" && <Production />}
+                    {defaultTab === "Test" && <Test data={filteredDataTest} routerParams={routerParams} />}
+                    {defaultTab === "Production" && <Production data={filteredDataProduction} routerParams={routerParams} />}
                 </>
 
             </div>
@@ -629,22 +689,6 @@ export default function Preview() {
                                                     </button>
                                                 </div>
                                             </div>
-
-
-                                            {/* <div className="h-full w-full relative flex items-center justify-center hidden">
-                                                            <div className="relative mt-10 w-[400px] mb-10">
-                                                                <input type="file" name="uploadImages" id="uploadImages" className="scale-150 relative left-24 z-10 opacity-0" />
-                                                                <div className="text-white rounded rounded-xl shadow-xl flex justify-center items-center bg-gray-955  w-full h-16 flex-wrap flex-col absolute top-[-13px]">
-                                                                    <Image
-                                                                        src="/img/upload-cloud.svg"
-                                                                        alt="browse"
-                                                                        height={24}
-                                                                        width={24}
-                                                                    />
-                                                                    <span>Browse your files</span>
-                                                                </div>
-                                                            </div>
-                                                        </div> */}
 
                                         </div>
 

@@ -60,103 +60,195 @@ export default function TrainingView() {
                 <div className="border min-h-full rounded-xl mt-3 px-4 py-4">
                     <div className="flex justify-between items-center">
                         {/* Breadcrumb */}
-                        <nav className="flex" aria-label="Breadcrumb">
-                            <ol className="inline-flex items-center space-x-1 md:space-x-1">
-                                <li className="inline-flex items-center">
-                                    <Link href="/dashboard/assetmanagement"
-                                        className="inline-flex items-center text-sm font-medium text-black hover:text-yellow-950">
-                                        <Image
-                                            src="/img/home.svg"
-                                            alt="home"
-                                            className="h-6"
-                                            height={24}
-                                            width={24}
-                                        />
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link
-                                        href={{
-                                            pathname: "/dashboard/assetmanagement/subchildobject",
-                                            query: {
-                                                class: parentAsset.objectID,
-                                                object: parentAsset.id,
-                                                id: parentAsset.key,
-                                                subObject: parentAsset.subObject,
-                                            }
-                                        }}
-                                        className="flex items-center">
-                                        <Image
-                                            src="/img/arrow-right.svg"
-                                            alt="arrow-right"
-                                            className="h-6"
-                                            height={24}
-                                            width={24}
-                                        />
-                                        <span className="ml-1 text-sm font-medium text-black hover:text-yellow-950 md:ml-1">{parentAsset.key}</span>
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link
-                                        href={{
-                                            pathname: "/dashboard/eopswatch/eopswatchmodel",
-                                            query: {
-                                                objectID: parentAsset.objectID,
-                                                key: parentAsset.key,
-                                                id: parentAsset.id,
-                                                subObject: parentAsset.subObject,
-                                            }
-                                        }}
-                                        className="flex items-center"
-                                    >
-                                        <Image
-                                            src="/img/arrow-right.svg"
-                                            alt="arrow-right"
-                                            className="h-6"
-                                            height={24}
-                                            width={24}
-                                        />
-                                        <span className="ml-1 text-sm font-medium text-black hover:text-yellow-950 md:ml-1">{parentAsset.model}</span>
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link
-                                        href={{
-                                            pathname: "/dashboard/eopswatch/trainingmodel",
-                                            query: {
-                                                objectID: parentAsset.objectID,
-                                                key: parentAsset.key,
-                                                id: parentAsset.id,
-                                                subObject: parentAsset.subObject,
-                                                model: parentAsset.model,
-                                            }
-                                        }}
-                                        className="flex items-center"
-                                    >
-                                        <Image
-                                            src="/img/arrow-right.svg"
-                                            alt="arrow-right"
-                                            className="h-6"
-                                            height={24}
-                                            width={24}
-                                        />
-                                        <span className="ml-1 text-sm font-medium text-black hover:text-yellow-950 md:ml-1">Test</span>
-                                    </Link>
-                                </li>
-                                <li>
-                                    <div className="flex items-center">
-                                        <Image
-                                            src="/img/arrow-right.svg"
-                                            alt="arrow-right"
-                                            className="h-6"
-                                            height={24}
-                                            width={24}
-                                        />
-                                        <span className="ml-1 text-sm font-medium text-black md:ml-1">Result</span>
-                                    </div>
-                                </li>
-                            </ol>
-                        </nav>
+                        {
+                            parentAsset.from === "eopswatch" ?
+                                <div className="flex relative bg-white rounded rounded-lg px-3 py-1 inline-flex border border-[#E3E3E3]">
+                                    <ul className="flex justify-start items-center text-sm">
+                                        <li className="flex justify-start items-center">
+                                            <Link
+                                                href="/dashboard/eopswatch"
+                                                className="font-semibold"
+                                            >
+                                                {parentAsset.key}
+                                            </Link>
+                                        </li>
+                                        <li className="flex justify-start items-center">
+                                            <Image
+                                                src="/img/chevron-right.svg"
+                                                alt="chevron-right"
+                                                height={28}
+                                                width={28}
+                                            />
+                                            <Link
+                                                href={{
+                                                    pathname: '/dashboard/eopswatch/models',
+                                                    query: {
+                                                        objectID: parentAsset.objectID,
+                                                        subObject: parentAsset.subObject,
+                                                        key: parentAsset.key,
+                                                        id: parentAsset.id,
+                                                    }
+                                                }}
+                                                className="font-semibold"
+                                            >
+                                                Models
+                                            </Link>
+                                        </li>
+                                        <li className="flex justify-start items-center">
+                                            <Image
+                                                src="/img/chevron-right.svg"
+                                                alt="chevron-right"
+                                                height={28}
+                                                width={28}
+                                            />
+                                            <Link
+                                                href={{
+                                                    pathname: '/dashboard/eopswatch/models',
+                                                    query: {
+                                                        objectID: parentAsset.objectID,
+                                                        subObject: parentAsset.subObject,
+                                                        key: parentAsset.key,
+                                                        id: parentAsset.id,
+                                                    }
+                                                }}
+                                                className="font-semibold"
+                                            >
+                                                {parentAsset.model}
+                                            </Link>
+                                        </li>
+                                        <li className="flex justify-start items-center">
+                                            <Image
+                                                src="/img/chevron-right.svg"
+                                                alt="chevron-right"
+                                                height={28}
+                                                width={28}
+                                            />
+                                            <Link
+                                                href={{
+                                                    pathname: '/dashboard/eopswatch/preview',
+                                                    query: {
+                                                        objectID: parentAsset.objectID,
+                                                        subObject: parentAsset.subObject,
+                                                        key: parentAsset.key,
+                                                        id: parentAsset.id,
+                                                        model: parentAsset.model
+                                                    }
+                                                }}
+                                                className="font-semibold"
+                                            >
+                                                Test
+                                            </Link>
+                                        </li>
+                                        <li className="flex justify-start items-center">
+                                            <Image
+                                                src="/img/chevron-right.svg"
+                                                alt="chevron-right"
+                                                height={28}
+                                                width={28}
+                                            />
+                                            <span className="text-gray-967 capitalize">Result</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                                :
+                                <nav className="flex" aria-label="Breadcrumb">
+                                    <ol className="inline-flex items-center space-x-1 md:space-x-1">
+                                        <li className="inline-flex items-center">
+                                            <Link href="/dashboard/assetmanagement"
+                                                className="inline-flex items-center text-sm font-medium text-black hover:text-yellow-950">
+                                                <Image
+                                                    src="/img/home.svg"
+                                                    alt="home"
+                                                    className="h-6"
+                                                    height={24}
+                                                    width={24}
+                                                />
+                                            </Link>
+                                        </li>
+                                        <li>
+                                            <Link
+                                                href={{
+                                                    pathname: "/dashboard/assetmanagement/subchildobject",
+                                                    query: {
+                                                        class: parentAsset.objectID,
+                                                        object: parentAsset.id,
+                                                        id: parentAsset.key,
+                                                        subObject: parentAsset.subObject,
+                                                    }
+                                                }}
+                                                className="flex items-center">
+                                                <Image
+                                                    src="/img/arrow-right.svg"
+                                                    alt="arrow-right"
+                                                    className="h-6"
+                                                    height={24}
+                                                    width={24}
+                                                />
+                                                <span className="ml-1 text-sm font-medium text-black hover:text-yellow-950 md:ml-1">{parentAsset.key}</span>
+                                            </Link>
+                                        </li>
+                                        <li>
+                                            <Link
+                                                href={{
+                                                    pathname: "/dashboard/eopswatch/eopswatchmodel",
+                                                    query: {
+                                                        objectID: parentAsset.objectID,
+                                                        key: parentAsset.key,
+                                                        id: parentAsset.id,
+                                                        subObject: parentAsset.subObject,
+                                                    }
+                                                }}
+                                                className="flex items-center"
+                                            >
+                                                <Image
+                                                    src="/img/arrow-right.svg"
+                                                    alt="arrow-right"
+                                                    className="h-6"
+                                                    height={24}
+                                                    width={24}
+                                                />
+                                                <span className="ml-1 text-sm font-medium text-black hover:text-yellow-950 md:ml-1">{parentAsset.model}</span>
+                                            </Link>
+                                        </li>
+                                        <li>
+                                            <Link
+                                                href={{
+                                                    pathname: "/dashboard/eopswatch/trainingmodel",
+                                                    query: {
+                                                        objectID: parentAsset.objectID,
+                                                        key: parentAsset.key,
+                                                        id: parentAsset.id,
+                                                        subObject: parentAsset.subObject,
+                                                        model: parentAsset.model,
+                                                    }
+                                                }}
+                                                className="flex items-center"
+                                            >
+                                                <Image
+                                                    src="/img/arrow-right.svg"
+                                                    alt="arrow-right"
+                                                    className="h-6"
+                                                    height={24}
+                                                    width={24}
+                                                />
+                                                <span className="ml-1 text-sm font-medium text-black hover:text-yellow-950 md:ml-1">Test</span>
+                                            </Link>
+                                        </li>
+                                        <li>
+                                            <div className="flex items-center">
+                                                <Image
+                                                    src="/img/arrow-right.svg"
+                                                    alt="arrow-right"
+                                                    className="h-6"
+                                                    height={24}
+                                                    width={24}
+                                                />
+                                                <span className="ml-1 text-sm font-medium text-black md:ml-1">Result</span>
+                                            </div>
+                                        </li>
+                                    </ol>
+                                </nav>
+                        }
 
                         <div className="flex justify-center items-center">
                             <button className="bg-yellow-951 text-black rounded rounded-xl border b order-yellow-951 flex justify-center items-center px-3 h-[44px] ml-2 transition-all duration-[400ms] mr-3 transition-opacity duration-300 outline-none transform active:scale-75 transition-transform">Generate RCA</button>
@@ -207,7 +299,7 @@ export default function TrainingView() {
                                                                             alt="Result"
                                                                             height={300}
                                                                             width={300}
-                                                                            // className="mb-2 h-auto w-auto"
+                                                                        // className="mb-2 h-auto w-auto"
                                                                         />
                                                                     </>
                                                                     : null
@@ -297,7 +389,7 @@ export default function TrainingView() {
                                                                                         </tr>
                                                                                     ))
                                                                                 }
-                                                                                
+
                                                                             </tbody>
                                                                         </table>
                                                                     </div>

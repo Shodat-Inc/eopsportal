@@ -4,6 +4,7 @@ import Layout from "../../../components/Layout";
 import Image from "next/image";
 import Link from "next/link";
 import Router from 'next/router'
+import { useRouter } from 'next/router'
 
 const jsonData = [
     {
@@ -54,16 +55,29 @@ const jsonData = [
 ]
 
 export default function Models() {
+    const router = useRouter();
+    const routerParams = router.query;
+
+
     const [data, setData] = useState(jsonData[0]);
-    const [clickCounter, setClickCounter] = useState(0);
     const setModelInformation = (model: any) => {
         const filterData = jsonData.filter((item: any) => {
             return item.name === model
         })
         setData(filterData[0]);
     }
+
     const redirectToNext = () => {
-        Router.push('/dashboard/eopswatch/preview')
+        Router.push({
+            pathname: '/dashboard/eopswatch/preview',
+            query: {
+                objectID: routerParams.objectID,
+                subObject: routerParams.subObject,
+                key: routerParams.key,
+                id: routerParams.id,
+                model:data.name
+            }
+        })
     }
     return (
         <div className="w-full h-full font-OpenSans">
@@ -76,7 +90,7 @@ export default function Models() {
                             href="/dashboard/eopswatch"
                             className="font-semibold"
                         >
-                            TPC71810-01-012
+                            {routerParams.key}
                         </Link>
                     </li>
                     <li className="flex justify-start items-center">
@@ -216,7 +230,7 @@ export default function Models() {
                     </div>
                 </div>
             </div>
-           
+
         </div>
     )
 }
