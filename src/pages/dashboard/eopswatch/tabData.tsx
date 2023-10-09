@@ -106,7 +106,7 @@ export default function TabData(props: any) {
                                                                         pathname: '/dashboard/eopstrace/tracemodel',
                                                                         query: {
                                                                             objectID: props.classes,
-                                                                            key: items?.tags.SerialID,
+                                                                            key: items?.tags.ID,
                                                                             id: items?.subObject,
                                                                             subObject: items?.object
                                                                         }
