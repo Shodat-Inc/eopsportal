@@ -1,15 +1,3 @@
-<<<<<<< HEAD
-import React, { useState, useEffect } from 'react'
-import Link from "next/link";
-import Image from "next/image";
-import { useRouter } from 'next/navigation';
-import axios from 'axios';
-import styles from '../../styles/Common.module.css';
-import FabricInfo from './fabricInfo';
-import Head from 'next/head'
-
-export default function Complete(props: any) {
-=======
 import React, { useState, useEffect } from 'react';
 import styles from '../../styles/Common.module.css';
 import Link from "next/link";
@@ -23,7 +11,6 @@ import PhoneInput from 'react-phone-number-input'
 import { useRouter } from 'next/navigation';
 
 export default function Complete() {
->>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
     const { push } = useRouter();
     const [showPassword, setShowPassword] = useState({
         pass: false,
@@ -31,29 +18,15 @@ export default function Complete() {
     });
     const [formData, setFormData] = useState({
         phoneNumber: "",
-<<<<<<< HEAD
-        password: "",
-        confirmPassword: ""
-    })
-    const [errors, setErrors] = useState({
-        phoneNumber: "",
-        password: "",
-        confirmPassword: ""
-=======
         companyName: "",
     })
     const [errors, setErrors] = useState({
         phoneNumber: "",
         companyName: "",
->>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
     })
     const [agreement, setAgreement] = useState(false);
     const [formIsValid, setFormIsValid] = useState(true);
     const [agreementError, setAgreementError] = useState("");
-<<<<<<< HEAD
-    const [userData, setUserData] = useState([] as any);
-    const [success, setSuccess] = useState(false);
-=======
     const [success, setSuccess] = useState(false);
     const [items, setItems] = useState([] as any);
     const [lastID, setLastID] = useState(0)
@@ -66,39 +39,16 @@ export default function Complete() {
     }, []);
 
     const [phoneCode, setPhoneCode] = useState('RU')
->>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
 
     // Get User Data on Page Load
     useEffect(() => {
         axios.get("/api/getUsers")
             .then((response) => {
-<<<<<<< HEAD
-                setUserData(response.data)
-            })
-    }, [])
-
-    // Show Hide Eye Icon
-    const hideShow = () => {
-        setShowPassword({
-            ...showPassword,
-            pass: !showPassword.pass
-        })
-    }
-    const hideShowConfirm = () => {
-        setShowPassword({
-            ...showPassword,
-            confirmPassword: !showPassword.confirmPassword
-        })
-    }
-
-
-=======
                 let lastID = response.data.slice(-1)[0].userID;
                 setLastID(lastID)
             })
     }, [])
 
->>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
     const handleInput = (evt: any) => {
         evt.preventDefault()
         let targetName = evt.target.name;
@@ -115,43 +65,6 @@ export default function Complete() {
         setFormIsValid(false);
     };
 
-<<<<<<< HEAD
-    // Get Last Asset ID
-    const getLastID = (userData && userData.length > 0) ? userData.slice(-1)[0].userID : '1';
-    console.log({
-        getLastID:getLastID,
-        userData:userData,        
-    })
-
-    const handleValidation = () => {
-        const PHONE_REGEX = new RegExp(/^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/i);
-        const newErrorsState = { ...errors };
-        let formIsValid = true;
-        if (!formData.phoneNumber) {
-            formIsValid = false;
-            newErrorsState.phoneNumber = "Phone number must not be empty!"
-        } else if (!PHONE_REGEX.test(formData.phoneNumber)) {
-            formIsValid = false;
-            newErrorsState.phoneNumber = "Please enter valid phone number!"
-        } else if (formData.phoneNumber.length != 10) {
-            formIsValid = false;
-            newErrorsState.phoneNumber = "Please enter valid  phone number!"
-        }
-
-        // Validate Last Name
-        if (!formData.password) {
-            formIsValid = false;
-            newErrorsState.password = "Password must not be empty!"
-        }
-
-        // Validate company Name
-        if (!formData.confirmPassword) {
-            formIsValid = false;
-            newErrorsState.confirmPassword = "Confirm password must not be empty!"
-        } else if (formData.confirmPassword !== formData.password) {
-            formIsValid = false;
-            newErrorsState.confirmPassword = "Password and Confirm Password does not match"
-=======
     const handleValidation = () => {
         const newErrorsState = { ...errors };
         let formIsValid = true;
@@ -160,7 +73,6 @@ export default function Complete() {
         if (!formData.companyName) {
             formIsValid = false;
             newErrorsState.companyName = "Company name must not be empty!"
->>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
         }
 
         // Validation for Checkbox
@@ -181,21 +93,6 @@ export default function Complete() {
     const submitForm = async (evt: any) => {
         evt.preventDefault()
         if (handleValidation()) {
-<<<<<<< HEAD
-            // Storing data to Users JSON            
-            let currentDate = new Date().toISOString().split('T')[0];
-            axios.post('/api/createUsers', {
-                userID: parseInt(getLastID) + 1,
-                username: `${props.registerData.email}`,
-                firstName: `${props.registerData.firstName}`,
-                lastName: `${props.registerData.lastName}`,
-                companyName: `${props.registerData.companyName}`,
-                phoneNumber: `${formData.phoneNumber}`,
-                password: `${formData.password}`,
-                terms: agreement,
-                dateCreated: currentDate,
-                dateModified: currentDate,
-=======
             let currentDate = new Date().toISOString().split('T')[0];
             let currentTime = new Date().toISOString().split('T')[1].split(".")[0];
             let currentDateTime = currentDate + " " + currentTime;
@@ -210,17 +107,12 @@ export default function Complete() {
                 terms: agreement,
                 dateCreated: currentDateTime,
                 dateModified: currentDateTime,
->>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                 role: "admin"
             }, {
                 headers: {
                     'Content-Type': 'application/json'
                 }
             }).then(res => {
-<<<<<<< HEAD
-                console.log('res', res.data);
-=======
->>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                 setSuccess(true)
                 setTimeout(() => {
                     push("/authentication/success");
@@ -239,196 +131,6 @@ export default function Complete() {
         if (event.target.checkbox) { setFormIsValid(false); }
     }
 
-<<<<<<< HEAD
-    return (
-        <>
-
-            <div className="signinform relative">
-                <form method='post' onSubmit={submitForm}>
-
-                    <div className={`mb-5 ${styles.form__wrap}`}>
-                        <div className={`relative ${styles.form__group} font-OpenSans`}>
-                            <input
-                                type="number"
-                                id="phoneNumber"
-                                name="phoneNumber"
-                                className={`${styles.form__field} border border-black ${errors.phoneNumber ? 'border-red-952' : 'border-black'}`}
-                                placeholder="Phone number"
-                                value={formData.phoneNumber}
-                                onChange={(e) => handleInput(e)}
-                            />
-                            <label htmlFor="phoneNumber" className={`${styles.form__label}`}>Phone number</label>
-                        </div>
-                        <span className='text-red-952 text-sm flex items-center justify-start'>
-                            {errors.phoneNumber &&
-                                <>
-                                    <Image
-                                        height={14}
-                                        width={14}
-                                        alt="error"
-                                        src="/img/alert-triangle.svg"
-                                        className='mr-2'
-                                    />
-                                    {errors.phoneNumber}
-                                </>
-                            }
-                        </span>
-                    </div>
-
-                    <div className={`mb-5 ${styles.form__wrap}`}>
-                        <div className={`relative ${styles.form__group} font-OpenSans`}>
-                            <input
-                                type={showPassword.pass ? "text" : "password"}
-                                id="password"
-                                name="password"
-                                className={`${styles.form__field} border border-black ${errors.password ? 'border-red-952' : 'border-black'}`}
-                                placeholder="Enter password"
-                                value={formData.password}
-                                onChange={(e) => handleInput(e)}
-                            />
-                            <label htmlFor="password" className={`${styles.form__label}`}>Enter password</label>
-                            <span
-                                className="absolute text-black font-normal font-8 right-2 bottom-[8px] cursor-pointer"
-                                onClick={hideShow}
-                            >
-                                {
-                                    showPassword.pass ?
-                                        <Image
-                                            src="/img/eye_hide_off_see_view_icon.svg"
-                                            alt='hide'
-                                            height={32}
-                                            width={32}
-                                        />
-                                        :
-                                        <Image
-                                            src="/img/eye_on_see_show_view_icon.svg"
-                                            alt='hide'
-                                            height={32}
-                                            width={32}
-                                        />
-                                }
-                            </span>
-                        </div>
-                        <span className='text-red-952 text-sm flex items-center justify-start'>
-                            {errors.password &&
-                                <>
-                                    <Image
-                                        height={14}
-                                        width={14}
-                                        alt="error"
-                                        src="/img/alert-triangle.svg"
-                                        className='mr-2'
-                                    />
-                                    {errors.password}
-                                </>
-                            }
-                        </span>
-                    </div>
-
-                    <div className={`mb-5 ${styles.form__wrap}`}>
-                        <div className={`relative ${styles.form__group} font-OpenSans`}>
-                            <input
-                                type={showPassword.confirmPassword ? "text" : "password"}
-                                id="confirmPassword"
-                                name="confirmPassword"
-                                className={`${styles.form__field} border border-black ${errors.confirmPassword ? 'border-red-952' : 'border-black'}`}
-                                placeholder="Enter confirm password"
-                                value={formData.confirmPassword}
-                                onChange={(e) => handleInput(e)}
-                            />
-                            <label htmlFor="confirmPassword" className={`${styles.form__label}`}>Enter confirm password</label>
-                            <span
-                                className="absolute text-black font-normal font-8 right-2 bottom-[8px] cursor-pointer"
-                                onClick={hideShowConfirm}
-                            >
-                                {
-                                    showPassword.confirmPassword ?
-                                        <Image
-                                            src="/img/eye_hide_off_see_view_icon.svg"
-                                            alt='hide'
-                                            height={32}
-                                            width={32}
-                                        />
-                                        :
-                                        <Image
-                                            src="/img/eye_on_see_show_view_icon.svg"
-                                            alt='hide'
-                                            height={32}
-                                            width={32}
-                                        />
-                                }
-                            </span>
-                        </div>
-                        <span className='text-red-952 text-sm flex items-center justify-start'>
-                            {errors.confirmPassword &&
-                                <>
-                                    <Image
-                                        height={14}
-                                        width={14}
-                                        alt="error"
-                                        src="/img/alert-triangle.svg"
-                                        className='mr-2'
-                                    />
-                                    {errors.confirmPassword}
-                                </>
-                            }
-                        </span>
-                    </div>
-
-                    <div className="mb-5 relative flex flex-wrap">
-                        <div className='flex justify-start items-center'>
-                            <div className={`${styles.customCheck}`}>
-                                <input type='checkbox' name="agreement" onChange={handleChange} />
-                                <span></span>
-                            </div>
-                            <label className="ml-2 text-black block">I agree to terms & conditions</label>
-                        </div>
-                        <span className='text-red-952 text-sm flex items-center justify-start'>
-                            {!agreement ?
-                                <>
-                                    <Image
-                                        height={14}
-                                        width={14}
-                                        alt="error"
-                                        src="/img/alert-triangle.svg"
-                                        className='mr-2'
-                                    />
-                                    {agreementError}
-                                </>
-                                : null}
-                        </span>
-                    </div>
-                    <div className="relative">
-                        <button className={`rounded-lg h-16 bg-black1 w-full text-white text-md ${!formIsValid} ? bg-black : bg-black`}>
-                            {/* Register Account */}
-                            <span className='flex justify-center items-center'>
-                                <span>{success ? "Please wait..." : 'Register Account'}</span>
-                                {success ?
-                                    <Image
-                                        src="/img/loading-gif.gif"
-                                        alt="loader"
-                                        height={20}
-                                        width={20}
-                                        className='ml-5'
-                                    />
-                                    : null}
-                            </span>
-                        </button>
-                        <div className="mt-5 mb-5 flex items-center justify-center">
-                            <Image
-                                src="/img/lock.svg"
-                                alt="lock"
-                                className="h-6"
-                                height={24}
-                                width={24}
-                            />
-                            <span className="text-gray-951 text-sm">Your info is safely secured</span>
-                        </div>
-                    </div>
-                </form >
-            </div >
-
-=======
 
     const [successVerify, setSuccessVerify] = useState(false)
     const verifyPhoneFunction = () => {
@@ -568,7 +270,6 @@ export default function Complete() {
                 </div>
 
             </div>
->>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
         </>
     );
 }

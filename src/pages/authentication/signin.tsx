@@ -26,10 +26,6 @@ export default function SignIn() {
         password: ""
     })
     const [formIsValid, setFormIsValid] = useState(true);
-<<<<<<< HEAD
-    const [loader, setLoader] = useState(false);
-=======
->>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
     const [success, setSuccess] = useState(false);
     const [responseError, setResponseError] = useState(false);
     useEffect(() => {
@@ -40,11 +36,6 @@ export default function SignIn() {
     }, [])
 
     const sampleListData = useSelector((state: any) => state.sampleData);
-<<<<<<< HEAD
-    const { sample } = sampleListData;
-=======
-
->>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
     useEffect(() => {
         dispatch(getSampleData());
     }, [dispatch]);
@@ -57,21 +48,6 @@ export default function SignIn() {
         })
     }
 
-<<<<<<< HEAD
-    // Return matching email address
-    const checkEmailAdress = (email: any) => {
-        const matched = userData.filter((item: any) => {
-            return item.username === email
-        })
-        if (matched && matched.length > 0) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-=======
->>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
     // Handle Input
     const handleInput = (evt: any) => {
         evt.preventDefault()
@@ -126,23 +102,14 @@ export default function SignIn() {
                 return item.username === formData.username && item.password === formData.password
             })
             if (matched && matched.length > 0) {
-<<<<<<< HEAD
-                const token:any = Math.floor((Math.random() * 1000000000000000) + 1);
-                sessionStorage.setItem("authenticationhUsername", matched[0].username);
-=======
                 const token: any = Math.floor((Math.random() * 1000000000000000) + 1);
                 sessionStorage.setItem("authenticationUsername", matched[0].username);
->>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                 localStorage.setItem("authenticationUsername", matched[0].username);
                 sessionStorage.setItem("authenticationToken", token);
                 localStorage.setItem("authenticationToken", token);
                 setSuccess(true)
                 setTimeout(() => {
-<<<<<<< HEAD
-                    push("/dashboard/assetmanagement");
-=======
                     push("/dashboard/");
->>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                 }, 1)
 
             } else {
@@ -157,11 +124,7 @@ export default function SignIn() {
                         username: "",
                         password: ""
                     })
-<<<<<<< HEAD
-                }, 4000)
-=======
                 }, 100)
->>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
             }
         } else {
             console.log("SOMETHING WENT WRONG !")
@@ -172,17 +135,10 @@ export default function SignIn() {
     return (
         <>
             <Head>
-<<<<<<< HEAD
-                <title>eOPS Fabric - Login</title>
-                <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-            </Head>
-            <div className="font-OpenSans md:flex lg:flex">
-=======
                 <title>eOps Fabric - Login</title>
                 <meta name="viewport" content="initial-scale=1.0, width=device-width" />
             </Head>
             <div className="font-Inter md:flex lg:flex">
->>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                 <div className={`md:w-[50%] md:block ${styles.fabricInfo}`}>
                     <FabricInfo />
                 </div>
@@ -195,13 +151,8 @@ export default function SignIn() {
                         </div>
 
                         <div className="text-left w-[470px] md:w-[470px] sm:w-full sm:px-5 sm:py-5 sm:text-left">
-<<<<<<< HEAD
-                            <p className="font-bold text-3xl md:text-3xl md:text-left text-black mb-4 capitalize sm:text-center sm:text-2xl">Hello! <span className='bg-yellow-951 px-1 py-1 rounded'>Welcome Back.</span></p>
-                            <p className="font-normal text-2xl text-gray-500 sm:text-center sm:text-xl md:text-left sm:text-2xl">Log in with your credenticals that you entered during your registration.</p>
-=======
                             <p className="font-bold text-3xl md:text-3xl md:text-left text-black mb-4 capitalize sm:text-center sm:text-2xl">Hello! Welcome back.</p>
                             <p className="font-normal text-lg text-gray-972">Log in with your credenticals that you entered during your registration.</p>
->>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                             <div className="mb-4 mt-5 border border-gray-100 w-full h-[1px]"></div>
 
                             {/* === Login Message Alert === */}
@@ -217,32 +168,18 @@ export default function SignIn() {
                             <div className="signinform relative sm:pb-6">
                                 <form method='post' onSubmit={submitForm}>
 
-<<<<<<< HEAD
-                                    <div className={`mb-5 ${styles.form__wrap}`}>
-                                        <div className={`relative ${styles.form__group} font-OpenSans`}>
-=======
                                     <div className={`mb-5`}>
                                         <div className={`relative`}>
                                             <label className="font-[500] text-md text-gray-971 mb-3 block">Your email address<span>*</span></label>
->>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                                             <input
                                                 type="text"
                                                 id="username"
                                                 name="username"
-<<<<<<< HEAD
-                                                className={`${styles.form__field} border border-black ${errors.username ? 'border-red-952' : 'border-black'}`}
-                                                placeholder="Your email address"
-                                                value={formData.username}
-                                                onChange={(e) => handleInput(e)}
-                                            />
-                                            <label htmlFor="username" className={`${styles.form__label}`}>Your email address</label>
-=======
                                                 className='rounded rounded-lg border border-gray-972 shadow shadow-lg h-[46px] pl-4 pr-2 w-full'
                                                 placeholder="Enter email address"
                                                 value={formData.username}
                                                 onChange={(e) => handleInput(e)}
                                             />
->>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                                         </div>
                                         <span className='text-red-952 text-sm flex items-center justify-start'>
                                             {
@@ -261,34 +198,21 @@ export default function SignIn() {
                                         </span>
                                     </div>
 
-<<<<<<< HEAD
-                                    <div className={`mb-5 ${styles.form__wrap}`}>
-                                        <div className={`relative ${styles.form__group} font-OpenSans`}>
-=======
                                     <div className={`mb-5`}>
                                         <div className={`relative font-Inter`}>
                                             <div className='flex justify-between items-start'>
                                                 <label className="font-[500] text-md text-gray-971 mb-3 block">Password<span>*</span></label>
                                                 <Link className="text-black text-md font-medium mb-0 block" href="/authentication/forgotpassword">Forgot Password?</Link>
                                             </div>
->>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                                             <input
                                                 type={showPassword.password ? "text" : "password"}
                                                 id="password"
                                                 name="password"
-<<<<<<< HEAD
-                                                className={`${styles.form__field} border border-black ${errors.password ? 'border-red-952' : 'border-black'}`}
-=======
                                                 className='rounded rounded-lg border border-gray-972 shadow shadow-lg h-[46px] pl-4 pr-2 w-full'
->>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                                                 placeholder="Enter password"
                                                 value={formData.password}
                                                 onChange={(e) => handleInput(e)}
                                             />
-<<<<<<< HEAD
-                                            <label htmlFor="password" className={`${styles.form__label}`}>Enter password</label>
-=======
->>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                                             <span className="absolute text-black font-normal font-8 right-4 bottom-[11px] cursor-pointer" onClick={hideShow}>
                                                 {
                                                     showPassword.password ?
@@ -324,10 +248,6 @@ export default function SignIn() {
                                                     </>
                                                 }
                                             </span>
-<<<<<<< HEAD
-                                            <Link className="text-black text-sm font-medium mb-0 block" href="/authentication/forgotpassword">Forgot Password?</Link>
-=======
->>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                                         </div>
 
                                     </div>
@@ -351,15 +271,6 @@ export default function SignIn() {
                                                     : null}
                                             </span>
                                         </button>
-<<<<<<< HEAD
-                                        {/* <Link
-                                            className="rounded-lg h-16 bg-black w-full text-white text-lg block flex justify-center items-center"
-                                            href="/dashboard/assetmanagement"
-                                        >
-                                            Login
-                                        </Link> */}
-=======
->>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
                                     </div>
                                 </form>
                             </div>

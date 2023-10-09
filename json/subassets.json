@@ -222,37 +222,6 @@
             "string",
             "string"
         ]
-    },
-    {
-        "assetID": "2000000002",
-        "assetName": "Sub Dummy",
-        "slug": "Sub Dummy",
-        "parentAssetID": "Dummy Class",
-        "parentAssetName": "Dummy Class",
-        "tags": [
-            "ID",
-            "Date"
-        ],
-        "parentJoinKey": [
-            "VIN"
-        ],
-        "dateCreated": "6/6/2023, 7:01:54 PM",
-        "dateModified": "6/6/2023, 7:01:54 PM",
-        "geoScopeLink": "",
-        "tagsWithDataType": [
-            {
-                "tagName": "ID",
-                "dataType": "int"
-            },
-            {
-                "tagName": "Date",
-                "dataType": "date"
-            }
-        ],
-        "assetTypes": [
-            "int",
-            "date"
-        ]
     }
 ]
 >>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d

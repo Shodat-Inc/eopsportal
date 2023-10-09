@@ -33,18 +33,18 @@ export default function TopBar({ showNav, setShowNav }) {
     }
   }, [])
 
-  useEffect(() => {
-    let authenticationUsername = localStorage.getItem('authenticationUsername');
-    setUsername(authenticationUsername ? authenticationUsername : '')
-    if (!localStorage.getItem('authenticationToken')) {
-      push("/authentication/signin");
-    } else {
-      console.log({
-        message: "valid auth token found!",
-        authToken: localStorage.getItem('authenticationToken')
-      })
-    }
-  }, [])
+  // useEffect(() => {
+  //   let authenticationUsername = localStorage.getItem('authenticationUsername');
+  //   setUsername(authenticationUsername ? authenticationUsername : '')
+  //   if (!localStorage.getItem('authenticationToken')) {
+  //     push("/authentication/signin");
+  //   } else {
+  //     console.log({
+  //       message: "valid auth token found!",
+  //       authToken: localStorage.getItem('authenticationToken')
+  //     })
+  //   }
+  // }, [])
 
   const logMeOut = () => {
     sessionStorage.clear();
@@ -53,6 +53,14 @@ export default function TopBar({ showNav, setShowNav }) {
       push("/authentication/signin");
     }, 200);
   }
+
+  const arr = router.pathname.split("/");
+  const splitPathName = arr.filter(n => n);
+  useEffect(()=>{
+    if(router.pathname == "dashboard/pricing" || splitPathName.includes("pricing")) {
+      setShowNav(false)
+    }
+  }, [])
 
   return (
     <div
@@ -236,10 +244,10 @@ export default function TopBar({ showNav, setShowNav }) {
                     </Menu.Item>
                     <Menu.Item>
                       <Link
-                        href="/dashboard/pricing"
+                        href="/dashboard/manageproducts"
                         className="w-full flex text-black mb-4 text-sm group transition-colors items-center"
                       >
-                        Manage my plan
+                        Manage Products
                       </Link>
                     </Menu.Item>
                     <Menu.Item>

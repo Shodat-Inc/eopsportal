@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { forwardRef } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -31,14 +31,6 @@ const SideBar = forwardRef(({ showNav, setShowNav }, ref) => {
           />
         </picture>
         <div className="pl-24 md:pl-24 mt-0 z-[400]">
-          {/* <Image
-            src="/img/menu.svg"
-            alt="company logo"
-            className={`w-12 h-auto pr-1`}
-            onClick={() => setShowNav(!showNav)}
-            height={29}
-            width={29}
-          /> */}
         </div>
       </div>
 

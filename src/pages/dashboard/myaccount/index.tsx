@@ -1,18 +1,14 @@
 import React, { useState, useRef, useEffect } from "react";
-import styles from '../../../styles/Common.module.css';
 import Layout from "../../../components/Layout";
 import Image from "next/image";
-import Link from "next/link";
 import EditProfile from "./editprofile";
 import ManageTeams from "./manageteams";
 import Notification from "./notification";
 import ChangePassword from "./changepassword";
-
+import ChangePhone from "./changePhone";
+import DeleteAccount from "./deleteaccount";
 export default function MyAccount() {
     const [tab, setTab] = useState(1);
-
-    const [edit, setEdit] = useState(false);
-
     // Toggle Tab function
     const toggleTab = (item: any) => {
         setTab(item)
@@ -58,6 +54,62 @@ export default function MyAccount() {
                                             className="absolute right-2 top-5"
                                         />
                                     }
+                                </button>                                
+                                <button
+                                    onClick={() => toggleTab(4)}
+                                    className={`h-[56px] px-4 text-left relative w-full ${tab === 4 ? 'bg-white' : 'bg-transparent'} `}>
+                                    <span>Change Password</span>
+                                    {tab === 4 &&
+                                        <Image
+                                            src="/img/angle_right_icon_black.svg"
+                                            alt="angle_right_icon"
+                                            height={8}
+                                            width={8}
+                                            className="absolute right-2 top-5"
+                                        />
+                                    }
+                                </button>
+                                <button
+                                    onClick={() => toggleTab(5)}
+                                    className={`h-[56px] px-4 text-left relative w-full ${tab === 5 ? 'bg-white' : 'bg-transparent'} `}>
+                                    <span>Change Phone Number</span>
+                                    {tab === 5 &&
+                                        <Image
+                                            src="/img/angle_right_icon_black.svg"
+                                            alt="angle_right_icon"
+                                            height={8}
+                                            width={8}
+                                            className="absolute right-2 top-5"
+                                        />
+                                    }
+                                </button>
+                                <button
+                                    onClick={() => toggleTab(6)}
+                                    className={`h-[56px] px-4 text-left relative w-full ${tab === 6 ? 'bg-white' : 'bg-transparent'} `}>
+                                    <span>Change Email Address</span>
+                                    {tab === 6 &&
+                                        <Image
+                                            src="/img/angle_right_icon_black.svg"
+                                            alt="angle_right_icon"
+                                            height={8}
+                                            width={8}
+                                            className="absolute right-2 top-5"
+                                        />
+                                    }
+                                </button>
+                                <button
+                                    onClick={() => toggleTab(7)}
+                                    className={`h-[56px] px-4 text-left relative w-full ${tab === 7 ? 'bg-white' : 'bg-transparent'} `}>
+                                    <span>Delete My Account</span>
+                                    {tab === 7 &&
+                                        <Image
+                                            src="/img/angle_right_icon_black.svg"
+                                            alt="angle_right_icon"
+                                            height={8}
+                                            width={8}
+                                            className="absolute right-2 top-5"
+                                        />
+                                    }
                                 </button>
                                 <button
                                     onClick={() => toggleTab(3)}
@@ -73,30 +125,18 @@ export default function MyAccount() {
                                         />
                                     }
                                 </button>
-                                <button
-                                    onClick={() => toggleTab(4)}
-                                    className={`h-[56px] px-4 text-left relative w-full ${tab === 4 ? 'bg-white' : 'bg-transparent'} `}>
-                                    <span>Change Password</span>
-                                    {tab === 4 &&
-                                        <Image
-                                            src="/img/angle_right_icon_black.svg"
-                                            alt="angle_right_icon"
-                                            height={8}
-                                            width={8}
-                                            className="absolute right-2 top-5"
-                                        />
-                                    }
-                                </button>
                             </div>
                         </div>
 
-                        <div className="w-[70%] min-h-[300px] bg-white border border-gray-957 overflow-hidden rounded-tr-xl rounded-br-xl rounded-bl-xl">
+                        <div className="w-[70%] min-h-[500px] bg-white border border-gray-957 overflow-hidden rounded-tr-xl rounded-br-xl rounded-bl-xl">
                             {/* Tab Contents */}
                             <div className=" bg-white w-full h-full rounded-tr-xl rounded-br-xl rounded-bl-xl overflow-hidden">
                                 {tab === 1 && <EditProfile />}
                                 {tab === 2 && <ManageTeams />}
                                 {tab === 3 && <Notification />}
                                 {tab === 4 && <ChangePassword />}
+                                {tab === 5 && <ChangePhone />}
+                                {tab === 7 && <DeleteAccount />}
                             </div>
                         </div>
                     </div>

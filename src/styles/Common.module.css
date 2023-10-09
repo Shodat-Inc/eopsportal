@@ -199,13 +199,8 @@
 
 .radioWrap .radioFrame {
     display: inline-block;
-<<<<<<< HEAD
-    height: 27px;
-    width: 45px;
-=======
     height: 20px;
     width: 35px;
->>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
     border-radius: 20px;
     position: absolute;
     left: 0;
@@ -218,13 +213,8 @@
     background-color: #000000;
     border-radius: 50%;
     position: absolute;
-<<<<<<< HEAD
-    height: 19px;
-    width: 19px;
-=======
     height: 12px;
     width: 12px;
->>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
     left: 4px;
     top: 4px;
 }
@@ -372,13 +362,10 @@
     left: 15px;
 }
 
-<<<<<<< HEAD
-=======
 .form__field.form__field__disabled {
     background-color: #F9F9F9;
 }
 
->>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
 
 .form__wrap label,
 .form__field:focus~.form__label {
@@ -405,8 +392,6 @@
     padding-bottom: 6px;
 }
 
-<<<<<<< HEAD
-=======
 .form__wrap_large .form__field {
     height: 75px;
 }
@@ -415,7 +400,6 @@
     top: 40px;
 }
 
->>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
 
 /* ======== Custom Checkbox ======== */
 .customCheck {
@@ -558,19 +542,13 @@
     border: 1px solid #DEDEDE;
     border-radius: 15px;
     margin-bottom: 15px;
-<<<<<<< HEAD
-=======
     box-shadow: 0px 0px 0px 1px #DEDEDE;
->>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
 }
 
 .proSenseTable tbody tr td {
     height: 80px;
     padding: 6px;
-<<<<<<< HEAD
-=======
     width: 200px;
->>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
 }
 
 table.proSenseTable {
@@ -578,13 +556,10 @@ table.proSenseTable {
     border-spacing: 0 15px;
 }
 
-<<<<<<< HEAD
-=======
 table.proSenseTable tbody tr td {
     font-size: 14px;
 }
 
->>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
 .proTableWrap {
     scrollbar-width: thin;
     scrollbar-color: #000000;
@@ -604,11 +579,8 @@ table.proSenseTable tbody tr td {
     background-color: #BDBDBD;
     border-radius: 14px;
     border: 3px solid #BDBDBD;
-<<<<<<< HEAD
-}
-=======
-}
 
+}
 
 /* Range Slider */
 .rangeSlider {
@@ -936,9 +908,11 @@ table.proSenseTable tbody tr td {
 .tableV3 tbody tr:hover {
     background-color: #EEEEEE;
 }
+
 .tableV3 tbody tr:last-child {
-    border-bottom:none;
+    border-bottom: none;
 }
+
 .textarea:focus-visible {
     border: 0;
     outline: none;
@@ -947,8 +921,87 @@ table.proSenseTable tbody tr td {
 .phoneField {
     position: relative;
 }
+
 .phoneField input[type="tel"]:focus-visible {
     border: 0;
     outline: none;
 }
->>>>>>> b0579d24bbe05fbed9660d886b2fc1aeecd70b1d
+
+
+
+
+.tablePro {
+    border-collapse: collapse;
+    border-spacing: 0 2em;
+    min-height: 300px;
+}
+
+.tablePro thead {
+    border-bottom: 1px solid #E1E1E1;
+    font-size: 14px;
+}
+
+.tablePro thead th {
+    padding-top: 10px;
+    padding-bottom: 10px
+}
+
+.tablePro tbody tr td {
+    padding-top: 20px;
+    padding-bottom: 20px
+}
+
+
+
+.tableBilling {
+    border-collapse: collapse;
+    border-spacing: 0 2em;
+    /* min-height: 300px; */
+}
+
+.tableBilling thead {
+    border-bottom: 1px solid #E1E1E1;
+    font-size: 14px;
+}
+
+.tableBilling thead th {
+    padding-top: 10px;
+    padding-bottom: 10px
+}
+
+.tableBilling tbody tr td {
+    padding-top: 10px;
+    padding-bottom: 10px
+}
+
+
+
+.progessWrap span {
+    margin-top: 2px;
+}
+.progessWrap span img, 
+.progessWrap span {
+    position: relative;
+    z-index: 1;
+}
+.progessWrap .processBox {
+    position: relative;
+}
+.progessWrap .processBox::before {
+    content: '';
+    position: absolute;
+    height: 100%;
+    width: 1px;
+    background: #E1E1E1;
+    left: 16px;
+    top: 0;
+}
+.progessWrap .completed.processBox::before {
+    background: #6bb560;
+}
+.progessWrap .processBox:first-child:before {
+    top: 2px;
+}
+.progessWrap .processBox:last-child:before {
+    height: 85%;
+}
