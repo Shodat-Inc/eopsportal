@@ -1,252 +1,200 @@
 import React, { useState, useRef, useEffect } from "react";
 import Layout from "../../../components/Layout";
+import styles from '../../../styles/Common.module.css';
 import Image from "next/image";
+import Link from "next/dist/client/link";
 import Table from "./table";
 import Filter from "./filters";
 import axios from "axios";
 import Drop from "./drop";
 
-const classes = [
+const classData = [
+    "Vehicles",
     "Manufacturing Plants",
-    "Vehicles"
+    "Automotive",
+    "Oil, Gas & Energy",
+    "Transportation & Logistics"
 ]
 
+
 export default function EopsWatch() {
-    const [toggleArrow, setToggleArrow] = useState(false);
-    const [toggleDrop, setToggleDrop] = useState(false);
-    const [toggleFilter, setToggleFilter] = useState(false);
 
-    const [subAssets, setSubAssets] = useState([] as any);
-    const [classData, setClassData] = useState(classes[0]);
-    const [showAsset, setShowAsset] = useState();
-    const [objectData, setObjectData] = useState([] as any);
-    const [filteredArray, setFilteredArray] = useState([] as any);
+    const [toggleAsset, setToggleAsset] = useState(false);
+    const [showHideTab, setShowHideTab] = useState(true);
+    const [chooseAsset, setChooseAsset] = useState('Manufacturing Plants');
+    const [toggleSort, setToggleSort] = useState(false);
 
-    const [search, setSearch] = useState([] as any);
-    const [value, setValue] = useState("");
-    const [data, setData] = useState([] as any);
-
-    const toggleFilterFunction = () => {
-        setToggleArrow(!toggleArrow);
-        setToggleFilter(!toggleFilter);
+    const sortByID = () => {
+        setToggleSort(!toggleSort)
     }
 
-    useEffect(() => {
-        axios.get("/api/getSubAssets").then((response) => {
-            if (response.data) {
-                let filteredData = response.data.filter((item: any) => {
-                    return item.parentAssetName === classData
-                })
-
-                let arr = [] as any;
-                if (filteredData.length > 0) {
-                    filteredData.map((item: any) => {
-                        arr.push(item.assetName)
-                    })
-                }
-                setSubAssets(arr);
-                setShowAsset(filteredData[0].assetName);
-            }
-        });
-    }, [])
-
+    // Hook that alerts clicks outside of the passed ref
     function useOutsideAlerter(ref: any) {
         useEffect(() => {
             function handleClickOutside(event: any) {
                 if (ref.current && !ref.current.contains(event.target)) {
-                    setToggleDrop(false);
+                    setToggleAsset(false)
                 }
             }
+            // Bind the event listener
             document.addEventListener("mousedown", handleClickOutside);
             return () => {
+                // Unbind the event listener on clean up
                 document.removeEventListener("mousedown", handleClickOutside);
             };
         }, [ref]);
     }
+
     const wrapperRef = useRef(null);
     useOutsideAlerter(wrapperRef);
 
-    const toggleDropFunction = () => {
-        setToggleDrop(!toggleDrop);
+    // Show Choose Asset List
+    const showChooseAssetList = () => {
+        setToggleAsset(!toggleAsset)
     }
 
-    const handleDropFunction = (data: any) => {
-        setToggleDrop(false);
-        setShowAsset(data);
+    const selectAsset = (item: any) => {
+        setChooseAsset(item);
+        setToggleAsset(false);
+        setShowHideTab(true);
     }
-
-    const handleFilterFunction = (data: any) => {
-        setToggleFilter(false)
-    }
-
-    useEffect(() => {
-        axios.get("/api/getChildObject").then((response) => {
-            if (response.data) {
-                let filteredData = response.data.filter((item: any) => {
-                    return item.object === showAsset
-                })
-                setObjectData(filteredData)
-            }
-        });
-    }, [showAsset])
-
-    useEffect(() => {
-        var filteredArray = [];
-        if (showAsset) {
-            filteredArray = subAssets.filter(function (e: any) { return e != showAsset })
-        }
-        setFilteredArray(filteredArray)
-    }, [showAsset])
-
-
-    const onChange = (event: any) => {
-        setValue(event.target.value);
-        if (event.target.value === "" || event.target.value.length <= 0) {
-            axios.get("/api/getChildObject").then((response) => {
-                if (response.data) {
-                    let filteredData = response.data.filter((item: any) => {
-                        return item.object === showAsset
-                    })
-                    setObjectData(filteredData)
-                }
-            });
-            setData([])
-            setSearch([])
-            return;
-        }
-        axios.get("/api/getChildObject").then((response) => {
-            if (response.data) {
-
-                if (event.target.value === "") {
-                    setData([]); return;
-                }
-
-                let filteredData = response.data.filter((item: any) => {
-                    return item.object === showAsset
-                })
-
-                
-                const filtered = filteredData.filter((item: any) => {
-
-                    if (item.tags.hasOwnProperty("VIN")) {
-                        if (item.tags.VIN.toString().toLowerCase().includes(event.target.value.toString().toLowerCase())) {
-                            return item;
-                        }
-                    } else if (item.tags.hasOwnProperty("SerialNo")) {
-                        if (item.tags.SerialNo.toString().toLowerCase().includes(event.target.value.toString().toLowerCase())) {
-                            return item;
-                        }
-                    } else if (item.tags?.hasOwnProperty("SerialNo")) {
-                        if (item.tags?.SerialNo.toString().toLowerCase().includes(event.target.value.toString().toLowerCase())) {
-                            return item;
-                        }
-                    } else if (item.tags.hasOwnProperty("ID")) {
-                        if (item.tags.ID.toString().toLowerCase().includes(event.target.value.toString().toLowerCase())) {
-                            return item;
-                        }
-                    } else if (item.tags.hasOwnProperty("PlantID")) {
-                        if (item.tags.PlantID.toString().toLowerCase().includes(event.target.value.toString().toLowerCase())) {
-                            return item;
-                        }
-                    } else if (item.tags.hasOwnProperty("Room")) {
-                        if (item.tags.Room.toString().toLowerCase().includes(event.target.value.toString().toLowerCase())) {
-                            return item;
-                        }
-                    } else {
-                        if (item.tags?.VIN?.toString().toLowerCase().includes(event.target.value.toString().toLowerCase())) {
-                            return item;
-                        }
-                    }
-                });
-
-                if (filtered && filtered.length > 0) {
-                    setObjectData(filtered);
-                }
-
-                console.log({
-                    filteredData:filteredData,
-                    filtered:filtered
-                })
-
-            }
-        });
-    }
-
 
     return (
         <div className="w-full h-full font-OpenSans">
             <p className="text-black text-lg mb-4 font-semibold text-xl">eOps Watch</p>
-            <div className="bg-white min-h-[500px] rounded rounded-xl lg:p-4 md:p-4 sm:p-4">
-                {/* Top Section */}
-                <div className="flex justify-between items-center mb-5">
-                    <div className="flex relative justify-start items-center">
-                        <span className="font-semibold">{showAsset}</span>
-                        <button className={`ml-2 border-2 rounded rounded-md ${toggleDrop === true ? 'border-black' : 'border-white'}`} onClick={toggleDropFunction}>
-                            <Image src="/img/more-vertical.svg" alt="more-vertical" height={24} width={24} />
-                        </button>
 
-                        {
-                            toggleDrop &&
-                            <div ref={wrapperRef}>
-                                <Drop
-                                    subAssets={filteredArray}
-                                    handleClick={handleDropFunction}
-                                />
-                            </div>
-                        }
-
+            {/* Top Information */}
+            <div className="bg-white rounded rounded-xl min-h-[120px] px-3 py-4 flex justify-between items-center mb-4">
+                <div className="w-[34%] border border-[#EEEEEE] border-l-0 border-t-0 border-b-0 border-r-1">
+                    <div
+                        className="border rounded-xl border-gray-500 h-[55px] pl-2 pr-5 relative flex items-center justify-start bg-white w-[80%]"
+                        onClick={showChooseAssetList}
+                    >
+                        <label className="absolute text-sm top-[-10px] left-2 pl-2 pr-2 bg-white">Choose Industry type</label>
+                        <Image
+                            src="/img/arrow-down-black.svg"
+                            alt="arrow-down"
+                            height={20}
+                            width={20}
+                            className="absolute right-3 top-4"
+                        />
+                        <span className="text-lg text-black pl-2">{chooseAsset}</span>
                     </div>
-                    <div className="flex">
-                        <div className="flex relative">
-                            <Image src="/img/search-icon-gray.svg" alt="search" height={22} width={22} className="absolute top-[11px] left-3" />
-                            <input 
-                                type="text"
-                                placeholder="Search"
-                                id="searchobjects"
-                                name="searchobjects"
-                                className="border-2 border-gray-969 rounded-xl h-[44px] w-[300px] pl-10 pr-2"
-                                onChange={onChange}
-                                value={value}
-                                autoComplete="off"
-                            />
-                        </div>
-                        <div className="relative ml-3">
-                            <button
-                                className={`bg-white border-2  rounded-xl h-[44px] transition-all duration-[400ms] h-[44px] rounded rounded-xl px-2 py-2 flex items-center justify-start ${toggleFilter === true ? 'border-black' : 'border-gray-969'}`}
-                                onClick={toggleFilterFunction}
-                            >
-                                <Image
-                                    src="/img/filter-icon.svg"
-                                    alt="calendar"
-                                    height={22}
-                                    width={22}
-                                />
-                                <span className="mr-2 ml-1">Filters</span>
-                                <Image
-                                    src="/img/arrow-down-black.svg"
-                                    alt="Arrow Down"
-                                    height={24}
-                                    width={24}
-                                    className={`${toggleArrow === true ? 'rotate-180' : 'rotate-0'}`}
-                                />
-                            </button>
 
-                            {
-                                toggleFilter &&
-                                <Filter handleClick={handleFilterFunction} />
-                            }
-
+                    {toggleAsset ?
+                        <div ref={wrapperRef} className={`h-52 border rounded-xl border-gray-500 h-auto max-h-[250px] w-[400px]  absolute flex items-start justify-start mt-1 overflow-hidden overflow-y-auto bg-white ${styles.scroll} z-10`}>
+                            <ul className="p-0 m-0 w-full">
+                                {
+                                    classData.map((item: any, index: any) => (
+                                        <li
+                                            className="px-5 py-2 bg-white cursor-pointer hover:bg-yellow-951 w-full font-normal"
+                                            onClick={() => selectAsset(item)}
+                                            key={index}
+                                        >
+                                            <span>{item}</span>
+                                        </li>
+                                    ))
+                                }
+                            </ul>
                         </div>
+                        : null}
+                </div>
+                <div className="w-[34%] border border-[#EEEEEE] border-l-0 border-t-0 border-b-0 border-r-1">
+                    <div className="text-center flex justify-center items-center w-full flex-wrap flex-col">
+                        <p className="mb-2">Total Manufacturing Plants</p>
+                        <p className="text-2xl font-semibold">4</p>
                     </div>
                 </div>
-                {/* Top Section Ends */}
+                <div className="w-[34%]">
+                    <div className="text-center flex justify-center items-center w-full flex-wrap flex-col">
+                        <p className="mb-2">Total Objects</p>
+                        <p className="text-2xl font-semibold">224</p>
+                    </div>
+                </div>
+            </div>
 
-                <Table
-                    data={objectData}
-                    classData={classData}
-                    assetData={showAsset}
-                />
-
+            {/* Table Information */}
+            <p className="text-black text-md mb-4 font-semibold">Manufacturing Plants</p>
+            <div className="bg-white rounded rounded-xl min-h-[220px] px-3 py-4 flex justify-between items-center w-full">
+                <div className="flex flex-wrap flex-col justify-start items-start w-full">
+                    <table className={`table-auto lg:min-w-full sm:w-full small:w-full text-left ${styles.tableV3}`}>
+                        <thead className="text-sm font-normal">
+                            <tr>
+                                <th>S.No</th>
+                                <th>
+                                    <button className="flex" onClick={sortByID}>
+                                        <Image src="/img/arrow-up-gray.svg" alt="sort" height={20} width={20} className={`${toggleSort === true ? 'rotate-180' : 'rotate-0'}`} />
+                                        <span>Plant ID</span>
+                                    </button>
+                                </th>
+                                <th>Plant Name</th>
+                                <th>Street</th>
+                                <th>City</th>
+                                <th>State</th>
+                                <th>Zip Code</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                {/* <td>1122334455</td> */}
+                                <td>
+                                    <Link
+                                        href={{
+                                            pathname: '/dashboard/eopswatch/objects',
+                                            query: {
+                                                objectID: "Manufacturing Plants",
+                                            }
+                                        }}
+                                    >
+                                        <span className="font-medium">1122334455</span>
+                                    </Link>
+                                </td>
+                                <td>SS Industrial Constructions Inc</td>
+                                <td>132, My Street</td>
+                                <td>Kingston</td>
+                                <td>New York</td>
+                                <td>12401</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>1122334455</td>
+                                <td>SS Industrial Constructions Inc</td>
+                                <td>132, My Street</td>
+                                <td>Kingston</td>
+                                <td>New York</td>
+                                <td>12401</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>1122334455</td>
+                                <td>SS Industrial Constructions Inc</td>
+                                <td>132, My Street</td>
+                                <td>Kingston</td>
+                                <td>New York</td>
+                                <td>12401</td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td>1122334455</td>
+                                <td>SS Industrial Constructions Inc</td>
+                                <td>132, My Street</td>
+                                <td>Kingston</td>
+                                <td>New York</td>
+                                <td>12401</td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td>1122334455</td>
+                                <td>SS Industrial Constructions Inc</td>
+                                <td>132, My Street</td>
+                                <td>Kingston</td>
+                                <td>New York</td>
+                                <td>12401</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     )

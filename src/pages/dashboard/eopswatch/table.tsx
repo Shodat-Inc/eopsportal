@@ -44,7 +44,8 @@ export default function Table(props: any) {
                                                     objectID: classData,
                                                     subObject: assetData,
                                                     key: item?.tags?.ID,
-                                                    id: item?.tags?.PlantID
+                                                    id: item?.tags?.PlantID,
+                                                    industryID:"1122334455"
                                                 }
                                             }}
                                         >
