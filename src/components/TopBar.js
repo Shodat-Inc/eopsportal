@@ -33,18 +33,18 @@ export default function TopBar({ showNav, setShowNav }) {
     }
   }, [])
 
-  useEffect(() => {
-    let authenticationUsername = localStorage.getItem('authenticationUsername');
-    setUsername(authenticationUsername ? authenticationUsername : '')
-    if (!localStorage.getItem('authenticationToken')) {
-      push("/authentication/signin");
-    } else {
-      console.log({
-        message: "valid auth token found!",
-        authToken: localStorage.getItem('authenticationToken')
-      })
-    }
-  }, [])
+  // useEffect(() => {
+  //   let authenticationUsername = localStorage.getItem('authenticationUsername');
+  //   setUsername(authenticationUsername ? authenticationUsername : '')
+  //   if (!localStorage.getItem('authenticationToken')) {
+  //     push("/authentication/signin");
+  //   } else {
+  //     console.log({
+  //       message: "valid auth token found!",
+  //       authToken: localStorage.getItem('authenticationToken')
+  //     })
+  //   }
+  // }, [])
 
   const logMeOut = () => {
     sessionStorage.clear();

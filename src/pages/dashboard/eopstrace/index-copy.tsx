@@ -6,41 +6,22 @@ import Image from "next/image";
 import Link from "next/link";
 import axios from 'axios';
 import TabData from "../eopswatch/tabData";
-import { getAssetsData } from "@/lib/getassets";
 
-export async function getServerSideProps() {
-    const assetData = await getAssetsData()
-    return {
-        props: {
-            assetData,
-        },
-    }
-}
-export default function EopsWatch(props: any) {
-    console.log({
-        props: props
-    })
+export default function EopsWatchCopy() {
     const [value, setValue] = useState("");
     const [data, setData] = useState([] as any);
     const [subObj, setSebObj] = useState({} as any);
     const [subClassData, setSubClassData] = useState<any[]>([]);
     const [selectedTab, setSelectedTab] = useState(0);
     const [tabData, setTabData] = useState();
-    const [search, setSearch] = useState([] as any);
-    const [allClasses, setAllClasses] = useState([] as any);
-    const [classes, setClasses] = useState('Vehicles');
-    const [chooseAsset, setChooseAsset] = useState(props.assetData && props.assetData.length > 0 ? props.assetData[1].assetName : 'Vehicles');
-    const [toggleAsset, setToggleAsset] = useState(false);
-    const [showHideTab, setShowHideTab] = useState(true);
-    const [classData, setClassData] = useState(props.assetData);
-
+    const [search, setSearch] = useState([] as any)
 
     // Fetch the JSON data of sub Asset
     const fetchClassData = () => {
         axios.get("/api/getSubAssets").then((response) => {
             if (response.data) {
                 const filtered = response.data.filter((item: any) => {
-                    return item.parentAssetName === chooseAsset;
+                    return item.parentAssetName === "Manufacturing Plants";
                 });
                 if (filtered && filtered.length > 0) {
                     setSubClassData(filtered);
@@ -53,7 +34,7 @@ export default function EopsWatch(props: any) {
     useEffect(() => {
         fetchClassData();
         if (fetchClassData.length) return;
-    }, [chooseAsset])
+    }, [])
 
     const onChange = (event: any) => {
         setValue(event.target.value)
@@ -63,7 +44,7 @@ export default function EopsWatch(props: any) {
                 if (event.target.value === "") {
                     setData([]); return;
                 }
-
+                
                 const filtered = response.data.filter((item: any) => {
                     if (item.tags.hasOwnProperty("VIN")) {
                         if (item.tags.VIN.toString().toLowerCase().includes(event.target.value.toString().toLowerCase())) {
@@ -112,72 +93,33 @@ export default function EopsWatch(props: any) {
         });
     }
 
+    
 
-
-    const tabSelection = (index: any, item: any) => {
+    const tabSelection = (index:any, item:any) => {
         setSelectedTab(index);
         setTabData(item)
     }
-
+    
     // Getting the filtered list if VIN || PlantID from search bar
-    const filteredData = data && data.map((items: any) => {
-        if (items.className === chooseAsset) {
-            return items.tags?.PlantID
+    const filteredData = data && data.map((items:any) => {
+        if(items.className === "Manufacturing Plants") {
+           return items.tags?.PlantID
         } else {
             return items.tags?.VIN
         }
     })
 
     // remove duplicate items in array
-    function removeDuplicates(arr: any) {
-        return arr.filter((item: any, index: any) => arr.indexOf(item) === index);
+    function removeDuplicates(arr:any) {
+        return arr.filter((item:any, index:any) => arr.indexOf(item) === index);
     }
     // New Array after removing duplicate items
     const arr = removeDuplicates(filteredData)
     console.log({
         subClassData: subClassData,
-        filteredData: filteredData,
-        arr: arr
+        filteredData:filteredData,
+        arr : arr
     })
-
-
-
-
-
-
-    // Show Choose Asset List
-    const showChooseAssetList = () => {
-        setToggleAsset(!toggleAsset)
-    }
-
-    const selectAsset = (item: any) => {
-        setChooseAsset(item);
-        setToggleAsset(false);
-        setShowHideTab(true);
-    }
-
-    console.log({
-        chooseAsset: chooseAsset
-    })
-    // Hook that alerts clicks outside of the passed ref
-    function useOutsideAlerter(ref: any) {
-        useEffect(() => {
-            function handleClickOutside(event: any) {
-                if (ref.current && !ref.current.contains(event.target)) {
-                    setToggleAsset(false)
-                }
-            }
-            // Bind the event listener
-            document.addEventListener("mousedown", handleClickOutside);
-            return () => {
-                // Unbind the event listener on clean up
-                document.removeEventListener("mousedown", handleClickOutside);
-            };
-        }, [ref]);
-    }
-
-    const wrapperRef = useRef(null);
-    useOutsideAlerter(wrapperRef);
 
     return (
         <div className="flex font-OpenSans">
@@ -208,51 +150,14 @@ export default function EopsWatch(props: any) {
                     </div>
 
                     {/* Search Bar */}
-                    <div className="flex w-full mt-5 justify-between items-center flex-wrap relative mb-5">
-
-                        <div className="w-[400px]">
-                            <div
-                                className="border rounded-xl border-gray-500 h-[55px] w-[400px] pl-2 pr-5 relative flex items-center justify-start bg-white"
-                                onClick={showChooseAssetList}
-                            >
-                                <label className="absolute text-sm top-[-10px] left-2 pl-2 pr-2 bg-white">Class</label>
-                                <Image
-                                    src="/img/arrow-down-black.svg"
-                                    alt="arrow-down"
-                                    height={20}
-                                    width={20}
-                                    className="absolute right-3 top-4"
-                                />
-                                <span className="text-lg text-black pl-2">{chooseAsset}</span>
-                            </div>
-
-                            {toggleAsset ?
-                                <div ref={wrapperRef} className={`h-52 border rounded-xl border-gray-500 h-auto max-h-[250px] w-[400px]  absolute flex items-start justify-start mt-1 overflow-hidden overflow-y-auto bg-white ${styles.scroll} z-10`}>
-                                    <ul className="p-0 m-0 w-full">
-                                        {
-                                            classData.map((item: any, index: any) => (
-                                                <li
-                                                    className="px-5 py-4 bg-white cursor-pointer hover:bg-yellow-951 w-full font-normal"
-                                                    onClick={() => selectAsset(item.assetName)}
-                                                    key={index}
-                                                >
-                                                    <span>{item.assetName}</span>
-                                                </li>
-                                            ))
-                                        }
-                                    </ul>
-                                </div>
-                                : null}
-                        </div>
-
-
+                    <div className="flex w-full mt-5 justify-center items-center flex-wrap relative">
                         <div className="flex relative w-[480px] flex-wrap">
                             <input
                                 type="text"
                                 placeholder="Search"
                                 id="searchobjects"
                                 name="searchobjects"
-                                className="rounded rounded-xl border border-gray-962 pl-10 pr-2 w-[480px] h-14"
+                                className="rounded rounded-lg border border-gray-962 pl-10 pr-2 w-[480px] h-12"
                                 onChange={onChange}
                                 value={value}
                             />
@@ -261,7 +166,7 @@ export default function EopsWatch(props: any) {
                                 alt="search"
                                 height={18}
                                 width={18}
-                                className="absolute left-3 top-[19px]"
+                                className="absolute left-3 top-[14px]"
                             />
                         </div>
 
@@ -295,18 +200,18 @@ export default function EopsWatch(props: any) {
                             {
                                 subClassData && subClassData.length > 0 ?
                                     subClassData.map((item: any, index: any) => (
-                                        <button
-                                            key={index}
-                                            onClick={() => tabSelection(index, item.assetName)}
-                                            className={`rounded rounded-tr-lg rounded-tl-lg rounded-bl-[0px] rounded-br-[0px] h-[44px] flex-inline justify-center items-center min-w-[70px] px-3 mr-2 font-semibold border-b-[0px] ${selectedTab === index ? 'bg-black text-white border border-black' : 'bg-gray-964 border border-gray-963 text-black'}`}>
+                                        <button  
+                                        key={index}
+                                        onClick={() => tabSelection(index, item.assetName)}
+                                        className={`rounded rounded-tr-lg rounded-tl-lg rounded-bl-[0px] rounded-br-[0px] h-[44px] flex-inline justify-center items-center min-w-[70px] px-3 mr-2 font-semibold border-b-[0px] ${selectedTab === index ? 'bg-black text-white border border-black': 'bg-gray-964 border border-gray-963 text-black'}`}>
                                             <span>{item.assetName}</span>
                                         </button>
                                     ))
-                                    : null
+                                : null
                             }
                         </div>
                         <div className="relative">
-                            <TabData objData={tabData} searchData={search} classes={chooseAsset} />
+                            <TabData objData={tabData} searchData={search} />
                         </div>
                     </div>
 
@@ -332,16 +237,6 @@ export default function EopsWatch(props: any) {
                                         }
                                     </thead>
                                     <tbody className="cursor-pointer">
-                                        {/* 
-                                        http://localhost:3000/dashboard/eopstrace/tracemodel?
-                                        objectID=Vehicles
-                                        &
-                                        key=NEC1TT01522
-                                        &
-                                        id=5PVBE7AJ8R5T50001
-                                        &
-                                        subObject=Tire 
-                                        */}
                                         <tr>
                                             {
                                                 subObj && Object.keys(subObj).length != 0 ?
@@ -350,12 +245,9 @@ export default function EopsWatch(props: any) {
                                                         <td key={i}>
                                                             <Link
                                                                 href={{
-                                                                    pathname: '/dashboard/eopstrace/tracemodel',
+                                                                    pathname: '/dashboard/eopswatch/eopswatchmodel',
                                                                     query: {
-                                                                        objectID: chooseAsset,
-                                                                        // key: parentAsset.id,
-                                                                        // id: parentAsset.object,
-                                                                        // subObject: parentAsset.subObject
+                                                                        key: item
                                                                     }
                                                                 }}
                                                             >
@@ -376,11 +268,15 @@ export default function EopsWatch(props: any) {
                 </div>
             </div>
 
+            <div className="w-[16%] pl-5 hidden">
+                <Template />
+            </div>
+
         </div>
     )
 }
 
-EopsWatch.getLayout = function getLayout(page: any) {
+EopsWatchCopy.getLayout = function getLayout(page: any) {
     return (
         <Layout>{page}</Layout>
     )

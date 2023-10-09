@@ -133,7 +133,7 @@ export default function ProductionModel() {
                         <nav className="flex" aria-label="Breadcrumb">
                             <ol className="inline-flex items-center space-x-1 md:space-x-1">
                                 <li className="inline-flex items-center">
-                                    <Link href="/dashboard/assetmanagement"
+                                    <Link href="/dashboard/eopstrace"
                                         className="inline-flex items-center text-sm font-medium text-black hover:text-yellow-950">
                                         <Image
                                             src="/img/home.svg"
@@ -147,13 +147,13 @@ export default function ProductionModel() {
                                 <li>
                                     <Link
                                         href={{
-                                            pathname: "/dashboard/assetmanagement/subchildobject",
-                                            query: {
-                                                class: parentAsset.objectID,
-                                                object: parentAsset.id,
-                                                id: parentAsset.key,
-                                                subObject: parentAsset.subObject,
-                                            }
+                                            pathname: "/dashboard/eopstrace",
+                                            // query: {
+                                            //     class: parentAsset.objectID,
+                                            //     object: parentAsset.id,
+                                            //     id: parentAsset.key,
+                                            //     subObject: parentAsset.subObject,
+                                            // }
                                         }}
                                         className="flex items-center">
                                         <Image
