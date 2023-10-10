@@ -1,10 +1,16 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styles from '../../../styles/Common.module.css';
 import Image from "next/image";
+import DeleteModal from '@/common/deletemodal';
+import SuspendModal from '@/common/suspendmodal';
+import ActiveModal from '@/common/activemodal';
 export default function ManageTeams(props: any) {
     const [toggleText, setToggleText] = useState(false)
     const [toggleDrop, setToggleDrop] = useState(false);
     const [selectedOption, setSelectedOption] = useState(1);
+    const [deleteModal, setDeleteModal] = useState(false);
+    const [suspendModal, setSuspendModal] = useState(false);
+    const [activeModal, setActiveModal] = useState(false);
 
     // Toggle Text
     const toggleChecked = () => {
@@ -30,6 +36,28 @@ export default function ManageTeams(props: any) {
     }
     const wrapperRef = useRef(null);
     useOutsideAlerter(wrapperRef);
+
+    const handleDeleteFunction = () => {
+        setDeleteModal(false)
+    }
+    const deleteUser = () => {
+        setDeleteModal(true);
+    }
+
+    const handleSuspendFunction = () => {
+        setSuspendModal(false)
+    }
+    const suspendUser = () => {
+        setSuspendModal(true);
+    }
+
+
+    const handleActiveFunction = () => {
+        setActiveModal(false)
+    }
+    const activeUser = () => {
+        setActiveModal(true);
+    }
     return (
         <div className="relative bg-white p-5 min-h-[430px]">
 
@@ -170,10 +198,12 @@ export default function ManageTeams(props: any) {
                                                         <span>Permissions & Settings</span>
                                                     </button>
                                                     <button
+                                                        onClick={suspendUser}
                                                         className="text-black text-[14px] hover:bg-white hover:text-black h-[45px] px-4 w-full text-left hover:bg-[#f8f8f8]">
                                                         <span>Suspend</span>
                                                     </button>
                                                     <button
+                                                        onClick={deleteUser}
                                                         className="text-black text-[14px] hover:bg-white hover:text-black h-[45px] px-4 w-full text-left hover:bg-[#f8f8f8]">
                                                         <span>Delete</span>
                                                     </button>
@@ -196,7 +226,7 @@ export default function ManageTeams(props: any) {
                                         <span className='bg-[#9FCCDC] h-[30px] min-w-[71px] rounded rounded-xl inline-flex justify-center items-center text-sm px-3'>User</span>
                                     </td>
                                     <td>
-                                        <span className='bg-[#666666] h-[30px] min-w-[71px] rounded rounded-xl inline-flex justify-center items-center text-sm px-3 text-white'>Suspended</span>
+                                        <span className='bg-[#EF0000] h-[30px] min-w-[71px] rounded rounded-xl inline-flex justify-center items-center text-sm px-3 text-white'>Suspended</span>
                                     </td>
                                     <td>
                                         <div className="flex justify-start items-center relative">
@@ -215,10 +245,12 @@ export default function ManageTeams(props: any) {
                                                         <span>Permissions & Settings</span>
                                                     </button>
                                                     <button
+                                                        onClick={activeUser}
                                                         className="text-black text-[14px] hover:bg-white hover:text-black h-[45px] px-4 w-full text-left hover:bg-[#f8f8f8]">
-                                                        <span>Suspend</span>
+                                                        <span>Active</span>
                                                     </button>
                                                     <button
+                                                        onClick={deleteUser}
                                                         className="text-black text-[14px] hover:bg-white hover:text-black h-[45px] px-4 w-full text-left hover:bg-[#f8f8f8]">
                                                         <span>Delete</span>
                                                     </button>
@@ -260,10 +292,12 @@ export default function ManageTeams(props: any) {
                                                         <span>Permissions & Settings</span>
                                                     </button>
                                                     <button
+                                                        onClick={suspendUser}
                                                         className="text-black text-[14px] hover:bg-white hover:text-black h-[45px] px-4 w-full text-left hover:bg-[#f8f8f8]">
                                                         <span>Suspend</span>
                                                     </button>
                                                     <button
+                                                        onClick={deleteUser}
                                                         className="text-black text-[14px] hover:bg-white hover:text-black h-[45px] px-4 w-full text-left hover:bg-[#f8f8f8]">
                                                         <span>Delete</span>
                                                     </button>
@@ -442,6 +476,29 @@ export default function ManageTeams(props: any) {
                     </button>
                 </div>
             </div>
+
+
+            {/* ===== Delete Modal starts ===== */}
+            {
+                deleteModal &&
+                <DeleteModal handleClick={handleDeleteFunction} />
+            }
+            {/* ===== Delete Modal Ends ===== */}
+
+            {/* ===== Suspend Modal starts ===== */}
+            {
+                suspendModal &&
+                <SuspendModal handleClick={handleSuspendFunction} />
+            }
+            {/* ===== Suspend Modal Ends ===== */}
+
+            {/* ===== Suspend Modal starts ===== */}
+            {
+                activeModal &&
+                <ActiveModal handleClick={handleActiveFunction} />
+            }
+            {/* ===== Suspend Modal Ends ===== */}
+
         </div>
     )
 }

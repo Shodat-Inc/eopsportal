@@ -19,7 +19,7 @@ export default function MyAccount() {
     return (
         <div className="flex font-OpenSans">
 
-            <div className="w-[100%] border border-gray-957 min-h-full rounded-xl mt-3 px-4 py-4 bg-gray-953">
+            <div className="w-[100%] min-h-full rounded-xl mt-3 px-4 py-4 bg-gray-966">
 
                 {/* Title */}
                 <div className="columns-2 flex justify-between items-center mb-7">
@@ -74,7 +74,7 @@ export default function MyAccount() {
 
                 {/* Tab Contect */}
                 <div className="w-full min-h-[500px] bg-white border border-gray-957 overflow-hidden1 rounded-tr-xl rounded-br-xl rounded-bl-xl">
-                    <div className=" bg-white w-full h-full rounded-tr-xl rounded-br-xl rounded-bl-xl overflow-hidden1">
+                    <div className=" bg-white w-full h-full rounded-tr-xl rounded-br-xl rounded-bl-xl overflow-hidden">
                         {tab === 1 && <ManageTeams />}
                         {tab === 2 && <EditProfile />}
                         {tab === 3 && <Notification />}

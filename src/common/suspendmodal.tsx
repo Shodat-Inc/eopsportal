@@ -1,10 +1,10 @@
 import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-export default function DeleteModal(props: any) {
+export default function SuspendModal(props: any) {
     const closeModal = () => {
         console.log({
-            item:"item"
+            item: "item"
         })
         props.handleClick("Nothing")
     }
@@ -34,7 +34,7 @@ export default function DeleteModal(props: any) {
                         {/*body*/}
                         <div className="relative pt-2 pb-8 flex-auto">
                             <div className="flex justify-start items-center flex-wrap flex-col">
-                                <p className="flex justify-center items-center text-lg">Are you sure want to <span className="text-[#EF0000] mx-1 font-semibold">Delete</span> this ?</p>
+                                <p className="flex justify-center items-center text-lg">Are you sure want to <span className="text-[#EF0000] mx-1 font-semibold">Suspend</span> this user?</p>
                                 <div className="mt-10 relative flex justify-center items-center w-full">
                                     <button
                                         className="border border-black rounded-lg bg-black text-white text-lg w-[70px] h-[47px] mr-5 hover:bg-yellow-951 hover:text-white hover:border-yellow-951 ease-in-out duration-300 disabled:bg-gray-951 disabled:hover:border-gray-951 disabled:border-gray-951"
