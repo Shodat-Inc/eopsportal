@@ -900,6 +900,12 @@ table.proSenseTable tbody tr td {
 .tableV3 tbody tr {
     border-bottom: 1px solid #EEEEEE;
 }
+.tableV4 tbody tr td {
+    height: 70px;
+}
+.tableV4 tbody tr {
+    border-bottom: 1px solid #E1E1E1;
+}
 
 .tableV3 {
     border-collapse: collpase;
