@@ -1,4 +1,4 @@
-const sendResponseData = (success, message, data) => {
+const sendResponseData = (success: boolean, message: string, data: any) => {
   return {
     success,
     message,

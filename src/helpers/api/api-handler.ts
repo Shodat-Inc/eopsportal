@@ -2,8 +2,8 @@ import { db, errorHandler, jwtMiddleware } from "./index";
 
 export { apiHandler };
 
-function apiHandler(handler) {
-  return async (req, res) => {
+function apiHandler(handler: any) {
+  return async (req: any, res: any) => {
     const method = req.method.toLowerCase();
 
     // check handler supports HTTP method

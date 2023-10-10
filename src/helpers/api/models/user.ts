@@ -1,24 +1,23 @@
-
-
-
 import { DataTypes } from "sequelize";
 
-export function Test(sequelize) {
+export function User(sequelize: any) {
   const attributes = {
     username: { type: DataTypes.STRING, allowNull: false },
     firstName: { type: DataTypes.STRING, allowNull: false },
     emailAddress: { type: DataTypes.STRING, allowNull: true },
     lastName: { type: DataTypes.STRING, allowNull: false },
     companyName: { type: DataTypes.STRING, allowNull: false },
-    phoneNumber: { type: DataTypes.INTEGER, allowNull: false },
+    countryCode: { type: DataTypes.STRING, allowNull: true },
+    phoneNumber: { type: DataTypes.STRING, allowNull: false },
     terms: { type: DataTypes.BOOLEAN, allowNull: false },
     password: { type: DataTypes.STRING, allowNull: false },
-    role: { type: DataTypes.STRING, allowNull: false },
-    address: { type: DataTypes.STRING, allowNull: false },
-    city: { type: DataTypes.STRING, allowNull: true },
-    state: { type: DataTypes.STRING, allowNull: true },
-    pincode: { type: DataTypes.INTEGER, allowNull: true },
-    country: { type: DataTypes.STRING, allowNull: true },
+    roleId: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: "Roles",
+        id: "id",
+      },
+    },
   };
 
   const options = {
@@ -32,5 +31,5 @@ export function Test(sequelize) {
     },
   };
 
-  return sequelize.define("Test", attributes, options);
+  return sequelize.define("User", attributes, options);
 }

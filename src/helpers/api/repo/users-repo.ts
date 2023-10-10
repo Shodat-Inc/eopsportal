@@ -1,8 +1,10 @@
 import getConfig from "next/config";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
-import { db } from "../api/db";
-import sendResponseData from "../constant";
+import { db } from "../db";
+import sendResponseData from "../../constant";
+import { loggerInfo, loggerError } from "@/logger";
+import { info } from "console";
 
 const { serverRuntimeConfig } = getConfig();
 
@@ -15,8 +17,9 @@ export const usersRepo = {
   delete: _delete,
 };
 
-async function authenticate({ username, password }) {
+async function authenticate(data: any) {
   try {
+    let { username, password } = data;
     const user = await db.User.scope("withHash").findOne({
       where: { username },
     });
@@ -37,19 +40,22 @@ async function authenticate({ username, password }) {
     // return user and jwt
     return sendResponseData(true, "Login successfully", { ...userJson, token });
   } catch (error) {
+    loggerError.error("Authentication Error");
     return sendResponseData(false, "error", error);
   }
 }
 
 async function getAll() {
+  loggerInfo.info(`POST api/getUser`);
   return await db.User.findAll();
 }
 
-async function getById(id) {
+async function getById(id: any) {
   return await db.User.findByPk(id);
 }
 
-async function create(params) {
+async function create(params: any) {
+  loggerInfo.info("User Repo ", info);
   try {
     // validate
     let user_data = await db.User.findOne({
@@ -58,21 +64,38 @@ async function create(params) {
     if (user_data) {
       return sendResponseData(false, "User already exist", {});
     }
+    //if role id is set to false or if roleid isnt in table
+    if (params.roleId) {
+      let role_data = await db.Role.findByPk(params.roleId);
+      if (!role_data) {
+        return sendResponseData(false, "Role does not exist!", {});
+      }
+      if (!role_data.isActive) {
+        return sendResponseData(false, "Role is not active", {});
+      }
+    }
+
     const user = new db.User(params);
 
     // hash password
     if (params.password) {
       user.password = bcrypt.hashSync(params.password, 10);
     }
+    //hash contact number
+    if (params.phoneNumber) {
+      user.phoneNumber = bcrypt.hashSync(params.phoneNumber);
+    }
     // save user
     const data = await user.save();
     return sendResponseData(true, "User added successfully", data);
   } catch (error) {
+    loggerError.error("Error in creating user :", error);
+
     return sendResponseData(false, "error", error);
   }
 }
 
-async function update(id, params) {
+async function update(id: any, params: any) {
   const user = await db.User.findByPk(id);
 
   // validate
@@ -95,7 +118,7 @@ async function update(id, params) {
   await user.save();
 }
 
-async function _delete(id) {
+async function _delete(id: number) {
   const user = await db.User.findByPk(id);
   if (!user) throw "User not found";
 
