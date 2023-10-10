@@ -102,13 +102,13 @@ export default function EopsWatch() {
                 <div className="w-[34%] border border-[#EEEEEE] border-l-0 border-t-0 border-b-0 border-r-1">
                     <div className="text-center flex justify-center items-center w-full flex-wrap flex-col">
                         <p className="mb-2">Total Manufacturing Plants</p>
-                        <p className="text-2xl font-semibold">4</p>
+                        <p className="text-2xl font-semibold">5</p>
                     </div>
                 </div>
                 <div className="w-[34%]">
                     <div className="text-center flex justify-center items-center w-full flex-wrap flex-col">
                         <p className="mb-2">Total Objects</p>
-                        <p className="text-2xl font-semibold">224</p>
+                        <p className="text-2xl font-semibold">-</p>
                     </div>
                 </div>
             </div>
@@ -132,6 +132,7 @@ export default function EopsWatch() {
                                 <th>City</th>
                                 <th>State</th>
                                 <th>Zip Code</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -155,6 +156,16 @@ export default function EopsWatch() {
                                 <td>Kingston</td>
                                 <td>New York</td>
                                 <td>12401</td>
+                                <td>
+                                    <button>
+                                        <Image
+                                            src="/img/more-vertical.svg"
+                                            alt="Upload"
+                                            height={24}
+                                            width={24}
+                                        />
+                                    </button>
+                                </td>
                             </tr>
                             <tr>
                                 <td>2</td>
@@ -164,6 +175,16 @@ export default function EopsWatch() {
                                 <td>Kingston</td>
                                 <td>New York</td>
                                 <td>12401</td>
+                                <td>
+                                    <button>
+                                        <Image
+                                            src="/img/more-vertical.svg"
+                                            alt="Upload"
+                                            height={24}
+                                            width={24}
+                                        />
+                                    </button>
+                                </td>
                             </tr>
                             <tr>
                                 <td>3</td>
@@ -173,6 +194,16 @@ export default function EopsWatch() {
                                 <td>Kingston</td>
                                 <td>New York</td>
                                 <td>12401</td>
+                                <td>
+                                    <button>
+                                        <Image
+                                            src="/img/more-vertical.svg"
+                                            alt="Upload"
+                                            height={24}
+                                            width={24}
+                                        />
+                                    </button>
+                                </td>
                             </tr>
                             <tr>
                                 <td>4</td>
@@ -182,6 +213,16 @@ export default function EopsWatch() {
                                 <td>Kingston</td>
                                 <td>New York</td>
                                 <td>12401</td>
+                                <td>
+                                    <button>
+                                        <Image
+                                            src="/img/more-vertical.svg"
+                                            alt="Upload"
+                                            height={24}
+                                            width={24}
+                                        />
+                                    </button>
+                                </td>
                             </tr>
                             <tr>
                                 <td>5</td>
@@ -191,6 +232,16 @@ export default function EopsWatch() {
                                 <td>Kingston</td>
                                 <td>New York</td>
                                 <td>12401</td>
+                                <td>
+                                    <button>
+                                        <Image
+                                            src="/img/more-vertical.svg"
+                                            alt="Upload"
+                                            height={24}
+                                            width={24}
+                                        />
+                                    </button>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
