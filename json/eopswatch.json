@@ -126,7 +126,7 @@
             {
                 "imageID":6,
                 "folder": "Production",
-                "path": "/img/CrackDetection/TPC71810-01-012/Production/WallProd2.png",
+                "path": "/img/CrackDetection/TPC71810-01-012/Production/WallProd2Result.png",
                 "resultImage": "/img/CrackDetection/TPC71810-01-012/Production/WallProd2ResultNew.png",
                 "dateUploaded": "05-11-2023",
                 "threshold" : "/img/CrackDetection/TPC71810-01-012/Test/threshold-7.png",
