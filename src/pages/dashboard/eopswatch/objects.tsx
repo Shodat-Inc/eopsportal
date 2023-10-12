@@ -217,7 +217,7 @@ export default function Objects() {
                             height={28}
                             width={28}
                         />
-                        <span className="text-gray-967 capitalize">1122334455</span>
+                        <span className="text-gray-967 capitalize">VIN: {routerParams.VIN}</span>
                     </li>
                 </ul>
             </div>
@@ -292,6 +292,7 @@ export default function Objects() {
                     data={objectData}
                     classData={classData}
                     assetData={showAsset}
+                    urlParams={routerParams}
                 />
 
             </div>

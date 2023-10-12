@@ -4,12 +4,43 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default function Table(props: any) {
-    const { data, classData, assetData } = props;
+    const { data, classData, assetData, urlParams } = props;
     const [toggleSort, setToggleSort] = useState(false);
+    const [actions, setActions] = useState(false);
+    const [actionCount, setActionCount] = useState(1);
+    console.log({
+        urlParams:urlParams
+    })
 
     const sortByID = () => {
         setToggleSort(!toggleSort)
     }
+
+    const toggleActions = (item: any) => {
+        setActionCount(item);
+        setActions(!actions);
+    }
+
+    const selectedAction = (item: any) => {
+        setActions(false);
+    }
+
+    // Hook that alerts clicks outside of the passed ref
+    function useOutsideAlerter(ref: any) {
+        useEffect(() => {
+            function handleClickOutside(event: any) {
+                if (ref.current && !ref.current.contains(event.target)) {
+                    setActions(false);
+                }
+            }
+            document.addEventListener("mousedown", handleClickOutside);
+            return () => {
+                document.removeEventListener("mousedown", handleClickOutside);
+            };
+        }, [ref]);
+    }
+    const wrapperRef = useRef(null);
+    useOutsideAlerter(wrapperRef);
 
     return (
         <div className="flex flex-wrap flex-col justify-start items-start">
@@ -28,6 +59,7 @@ export default function Table(props: any) {
                         <th>Floor</th>
                         <th>Room</th>
                         <th>Direction</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -45,7 +77,8 @@ export default function Table(props: any) {
                                                     subObject: assetData,
                                                     key: item?.tags?.ID,
                                                     id: item?.tags?.PlantID,
-                                                    industryID:"1122334455"
+                                                    industryID: "1122334455",
+                                                    VIN:urlParams.VIN
                                                 }
                                             }}
                                         >
@@ -57,6 +90,38 @@ export default function Table(props: any) {
                                     <td>{item?.tags?.Floor}</td>
                                     <td>{item?.tags?.Room}</td>
                                     <td>{item?.tags?.Direction}</td>
+                                    <td>
+                                        <div className="flex justify-start items-center relative">
+                                            <button onClick={() => toggleActions(index + 1)}>
+                                                <Image
+                                                    src="/img/more-vertical.svg"
+                                                    alt="more-vertical"
+                                                    height={24}
+                                                    width={24}
+                                                />
+                                            </button>
+                                            {(actions && actionCount === index + 1) &&
+                                                <div ref={wrapperRef} className="bg-black text-white border overflow-hidden border-black rounded rounded-xl w-[160px] flex flex-col flex-wrap items-start justify-start shadow-sm absolute top-[30px] right-[40px] z-[1] ">
+                                                    <Link
+                                                        href={{
+                                                            pathname: '/dashboard/eopswatch/models',
+                                                            query: {
+                                                                objectID: classData,
+                                                                subObject: assetData,
+                                                                key: item?.tags?.ID,
+                                                                id: item?.tags?.PlantID,
+                                                                industryID: "1122334455",
+                                                                VIN:urlParams.VIN
+                                                            }
+                                                        }}
+                                                        onClick={() => selectedAction(item?.tags?.ID)}
+                                                        className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
+                                                        <span>AI Model Detection</span>
+                                                    </Link>
+                                                </div>
+                                            }
+                                        </div>
+                                    </td>
                                 </tr>
                             ))
                             : null

@@ -122,11 +122,15 @@ export default function Models() {
                         />
                         <Link
                             href={{
-                                pathname: '/dashboard/eopswatch/',
+                                pathname: '/dashboard/eopswatch/objects/',
+                                query: {
+                                    objectID: routerParams.objectID,
+                                    VIN: routerParams.VIN
+                                }
                             }}
                             className="font-semibold"
                         >
-                            {routerParams.industryID}
+                            <span className="">VIN: {routerParams.VIN}</span>
                         </Link>
                     </li>
                     <li className="flex justify-start items-center">
@@ -138,7 +142,11 @@ export default function Models() {
                         />
                         <Link
                             href={{
-                                pathname: '/dashboard/eopswatch/',
+                                pathname: '/dashboard/eopswatch/objects/',
+                                query: {
+                                    objectID: routerParams.objectID,
+                                    VIN: routerParams.VIN
+                                }
                             }}
                             className="font-semibold"
                         >
@@ -152,7 +160,7 @@ export default function Models() {
                             height={28}
                             width={28}
                         />
-                        <span className="text-gray-967">{routerParams.key}</span>
+                        <span className="text-gray-967">AI Models</span>
                     </li>
                 </ul>
             </div>
