@@ -14,6 +14,7 @@ import AlertMessage from "@/common/alertMessage";
 import moment from "moment";
 import { setSelectedClass } from "@/store/actions/classAction";
 import DeleteModal from "@/common/deletemodal";
+import ObjectModal from "./objectmodal";
 export async function getServerSideProps() {
     const localData = await getAssetsData()
     return {
@@ -46,19 +47,13 @@ export default function AssetManagement(localData: any) {
 
     function useOutsideAlerter(ref: any) {
         useEffect(() => {
-            /**
-             * Alert if clicked on outside of element
-             */
             function handleClickOutside(event: any) {
                 if (ref.current && !ref.current.contains(event.target)) {
-                    //   alert("You clicked outside of me!");
                     setToggleAsset(false)
                 }
             }
-            // Bind the event listener
             document.addEventListener("mousedown", handleClickOutside);
             return () => {
-                // Unbind the event listener on clean up
                 document.removeEventListener("mousedown", handleClickOutside);
             };
         }, [ref]);
@@ -223,18 +218,13 @@ export default function AssetManagement(localData: any) {
 
     // Continue to next page after setting the selected class to redux
     const continueToNext = () => {
-        console.log({
-            chooseAsset: chooseAsset
-        })
-        dispatch(setSelectedClass(chooseAsset));
-
         setTimeout(() => {
             Router.push({
                 pathname: '/dashboard/assetmanagement/objects',
                 query: {
-                    chooseAsset
+                    assets: chooseAsset
                 }
-            }, 'assetmanagement/objects')
+            })
         }, 100)
     }
 
@@ -438,13 +428,14 @@ export default function AssetManagement(localData: any) {
 
                 {/* ----- OBJECT MODAL STARTS ----- */}
                 {showObjectModal ? (
+                    // <ObjectModal data={data} />
                     <>
                         <div
                             className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
                         >
                             <div className="relative my-6 w-[720px]">
                                 <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
-                                    {/*header*/}
+
                                     <div className="flex items-start justify-between p-5">
                                         <h3 className="text-lg font-medium">
                                             Choose your class and continue
@@ -462,7 +453,7 @@ export default function AssetManagement(localData: any) {
                                             />
                                         </button>
                                     </div>
-                                    {/*body*/}
+
                                     <div className="relative p-6 flex-auto">
                                         <div className="flex justify-start items-center flex-wrap flex-col">
                                             <div className="w-[400px]">

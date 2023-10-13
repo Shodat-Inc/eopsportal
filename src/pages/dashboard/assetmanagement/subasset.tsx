@@ -34,7 +34,6 @@ export default function SubAsset(localData: any) {
     const [showInput, setShowInput] = useState(false);
     const [showHideAddTagButton, setShowHideAddTagButton] = useState(false);
     const [selParentTags, setSelParentTags] = useState<any[]>([]);
-    // const [checkIcon, setCheckIcon] = useState("/img/blank_check_box_icon_white.svg");
     const [tag, setTag] = useState<any[]>([]);
     const [dataType, setDataType] = useState("");
     const [toggleDT, setToggleDT] = useState(false);
