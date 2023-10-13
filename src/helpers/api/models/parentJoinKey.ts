@@ -1,5 +1,6 @@
 import { DataTypes } from "sequelize";
-export function classTag(sequelize: {
+
+export function parentJoinKey(sequelize: {
   define: (
     arg0: string,
     arg1: {
@@ -9,38 +10,23 @@ export function classTag(sequelize: {
         allowNull: boolean;
         autoIncrement: boolean;
       };
-      tagName: {
-        type: DataTypes.StringDataTypeConstructor;
-        allowNull: boolean;
-      };
       classId: {
         type: DataTypes.IntegerDataTypeConstructor;
         references: { model: string; id: string };
       };
-      dataTypeId: {
+      parentTagId: {
         type: DataTypes.IntegerDataTypeConstructor;
-        references: { model: string; id: string };
+        allowNull: boolean;
       };
     }
   ) => any;
 }) {
-  const attributes: any = {
+  const attributes = {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       allowNull: false,
       autoIncrement: true,
-    },
-    tagName: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    dataTypeId: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: "TagDataTypes",
-        id: "id",
-      },
     },
     classId: {
       type: DataTypes.INTEGER,
@@ -49,7 +35,11 @@ export function classTag(sequelize: {
         id: "id",
       },
     },
+    parentTagId: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
   };
 
-  return sequelize.define("ClassTag", attributes);
+  return sequelize.define("parentJoinKey", attributes);
 }

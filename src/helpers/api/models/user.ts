@@ -4,11 +4,8 @@ export function User(sequelize: any) {
   const attributes = {
     username: { type: DataTypes.STRING, allowNull: false },
     firstName: { type: DataTypes.STRING, allowNull: false },
-    emailAddress: { type: DataTypes.STRING, allowNull: true },
+    email: { type: DataTypes.STRING, allowNull: true },
     lastName: { type: DataTypes.STRING, allowNull: false },
-    companyName: { type: DataTypes.STRING, allowNull: false },
-    countryCode: { type: DataTypes.STRING, allowNull: true },
-    phoneNumber: { type: DataTypes.STRING, allowNull: false },
     terms: { type: DataTypes.BOOLEAN, allowNull: false },
     password: { type: DataTypes.STRING, allowNull: false },
     roleId: {

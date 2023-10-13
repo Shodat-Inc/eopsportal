@@ -54,7 +54,6 @@ export default async function handler(req: any, res: any) {
     res.status(200).json({ message: "Data stored successfully" });
   } catch (error) {
     loggerError.error(error);
-    console.error(error);
     // Send an error response
     res.status(500).json({ message: "Error storing data" });
   }

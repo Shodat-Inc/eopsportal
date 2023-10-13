@@ -1,10 +1,10 @@
 export interface CreateUser {
   username: string;
   firstName: string;
-  emailAddress: string;
+  email: string;
   lastName: string;
   companyName: string;
-  countryCode: string;
+  countryCodeId: number;
   phoneNumber: string;
   password: string;
   terms: string;
@@ -15,4 +15,8 @@ export interface CreateUser {
   pincode: number;
   country: string;
   roleId: number;
+  isPrimary: string;
+  primary: string;
+  isActive: string;
+  countryId: string;
 }

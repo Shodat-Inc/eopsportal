@@ -3,6 +3,7 @@ import mysql from "mysql2/promise";
 import { Sequelize } from "sequelize";
 import * as models from "./models/index";
 import { loggerInfo, loggerError } from "@/logger";
+import { dialData } from "../countryCode";
 const { serverRuntimeConfig } = getConfig();
 
 export const db: any = {
@@ -71,6 +72,16 @@ async function seedDemoTagDataType(tagDataType: any) {
   }
 }
 
+//country code data model
+
+async function seedCountryCodeData(countryCodeModel: any) {
+  for (let country of dialData) {
+    await countryCodeModel.findOrCreate({
+      where: { countryCode: country.countryCode },
+      defaults: country,
+    });
+  }
+}
 // initialize db and models, called on first api request from /helpers/api/api-handler.js
 async function initialize() {
   loggerInfo.info("<----db connection----->");
@@ -96,17 +107,24 @@ async function initialize() {
     });
     for (let key in models) {
       db[key] = (models as any)[key](sequelize);
-      console.log(key);
+      loggerInfo.error(key);
     }
-    // sync all models with database
-    await sequelize.sync({ alter: true });
-    //demo role
-    if (db.Role) {
-      await seedDemoRoles(db.Role);
-    }
-    //demo tagDatatype
-    if (db.tagDataType) {
-      await seedDemoTagDataType(db.tagDataType);
+
+    if (!db.initialized) {
+      // sync all models with database
+      await sequelize.sync({ alter: true });
+      //demo role
+      if (db.Role) {
+        await seedDemoRoles(db.Role);
+      }
+      //demo tagDatatype
+      if (db.tagDataType) {
+        await seedDemoTagDataType(db.tagDataType);
+      }
+      //demo countryCode
+      if (db.countryCodeModel) {
+        await seedCountryCodeData(db.countryCodeModel);
+      }
     }
 
     db.initialized = true;

@@ -1,3 +1,30 @@
 {
-  "extends": "next/core-web-vitals"
+  "overrides": [
+      {
+          "files": ["pages/api/**/*.ts"],
+          "plugins": ["jsdoc"],
+          "rules": {
+              "jsdoc/require-jsdoc": [
+                  "error",
+                  {
+                      "require": {
+                          "FunctionDeclaration": true,
+                          "MethodDefinition": true,
+                          "ClassDeclaration": true,
+                          "ArrowFunctionExpression": true,
+                          "FunctionExpression": true
+                      },
+                      "contexts": ["ExportDefaultDeclaration"]
+                  }
+              ],
+              "jsdoc/require-tag": [
+                  "error",
+                  {
+                      "tags": ["swagger"],
+                      "contexts": ["ExportDefaultDeclaration"]
+                  }
+              ]
+          }
+      }
+  ]
 }

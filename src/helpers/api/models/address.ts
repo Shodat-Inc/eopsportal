@@ -19,9 +19,13 @@ export function Address(sequelize: {
         type: DataTypes.IntegerDataTypeConstructor;
         allowNull: boolean;
       };
-      country: {
-        type: DataTypes.StringDataTypeConstructor;
+      primary: {
+        type: DataTypes.AbstractDataTypeConstructor;
         allowNull: boolean;
+      };
+      countryId: {
+        type: DataTypes.IntegerDataTypeConstructor;
+        references: { model: string; id: string };
       };
       userId: {
         type: DataTypes.IntegerDataTypeConstructor;
@@ -41,7 +45,17 @@ export function Address(sequelize: {
     city: { type: DataTypes.STRING, allowNull: true },
     state: { type: DataTypes.STRING, allowNull: true },
     pincode: { type: DataTypes.INTEGER, allowNull: true },
-    country: { type: DataTypes.STRING, allowNull: true },
+    primary: {
+      type: DataTypes.BOOLEAN,
+      allowNull: true,
+    },
+    countryId: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: "CountryCodeModels",
+        id: "id",
+      },
+    },
     userId: {
       type: DataTypes.INTEGER,
       references: {

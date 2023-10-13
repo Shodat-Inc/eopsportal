@@ -82,9 +82,9 @@ async function create(params: any) {
       user.password = bcrypt.hashSync(params.password, 10);
     }
     //hash contact number
-    if (params.phoneNumber) {
-      user.phoneNumber = bcrypt.hashSync(params.phoneNumber);
-    }
+    // if (params.phoneNumber) {
+    //   user.phoneNumber = bcrypt.hashSync(params.phoneNumber);
+    // }
     // save user
     const data = await user.save();
     return sendResponseData(true, "User added successfully", data);

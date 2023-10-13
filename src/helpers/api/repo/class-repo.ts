@@ -9,12 +9,17 @@ async function create(params: any) {
   loggerInfo.info("Create Class Repo:");
   try {
     // validate
-    const classes = new db.AddClasses(params);
+    let class_data = await db.AddClasses.findOne({
+      where: { className: params.className },
+    });
+    if (class_data) {
+      return sendResponseData(false, "Class already exist", {});
+    }
     // save class
+    const classes = new db.AddClasses(params);
     const data = await classes.save();
     return sendResponseData(true, "Class added successfully", data);
   } catch (error) {
-    console.log(error);
     loggerError.error("Error in class repo", error);
     return sendResponseData(false, "error", error);
   }

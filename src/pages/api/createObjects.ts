@@ -1,5 +1,6 @@
 import { apiHandler, objectRepo } from "@/helpers/api";
-import { loggerInfo,loggerError } from "@/logger";
+import { valueRepo } from "@/helpers/api/repo/value-repo";
+import { loggerInfo, loggerError } from "@/logger";
 export default apiHandler({
   post: handler,
 });
@@ -11,9 +12,20 @@ async function handler(req: any, res: any) {
       res.status(405).send({ message: "Only POST requests allowed" });
       return;
     }
-    const data = await objectRepo.create(req.body);
+    const reqData = req.body;
+    const objData = await objectRepo.create(reqData);
+    const objectId = objData.data.id;
+    let valueData = [];
+    for (let key of reqData.values) {
+      valueData.push({
+        objectId: objectId,
+        classTagId: key.classTagId,
+        values: key.value,
+      });
+    }
+    const value = await valueRepo.bulkCreate(valueData);
 
-    res.send(data);
+    res.send({ reqData, value });
     // res.status(200).json({ message: "Data stored successfully" });
   } catch (error: any) {
     loggerError.error(error);

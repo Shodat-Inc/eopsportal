@@ -18,7 +18,8 @@ function jwtMiddleware(req: any, res: any) {
       "/api/createUsers",
       "/api/signIn",
       "/api/assets",
-      "/api/createClasses"
+      "/api/createClasses",
+      "/api/createObjects",
     ],
   });
 

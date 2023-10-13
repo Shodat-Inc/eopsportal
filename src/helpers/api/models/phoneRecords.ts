@@ -1,6 +1,5 @@
 import { DataTypes } from "sequelize";
-
-export function object(sequelize: {
+export function phoneRecord(sequelize: {
   define: (
     arg0: string,
     arg1: {
@@ -10,44 +9,62 @@ export function object(sequelize: {
         allowNull: boolean;
         autoIncrement: boolean;
       };
-      classId: {
+      userId: {
         type: DataTypes.IntegerDataTypeConstructor;
         references: { model: string; id: string };
       };
-      superParentId: {
+      countryCodeId: {
         type: DataTypes.IntegerDataTypeConstructor;
+        references: { model: string; id: string };
+      };
+      phoneNumber: {
+        type: DataTypes.StringDataTypeConstructor;
         allowNull: boolean;
       };
-      parentId: {
-        type: DataTypes.IntegerDataTypeConstructor;
+      isPrimary: {
+        type: DataTypes.AbstractDataTypeConstructor;
+        allowNull: boolean;
+      };
+      isActive: {
+        type: DataTypes.AbstractDataTypeConstructor;
         allowNull: boolean;
       };
     }
   ) => any;
 }) {
-  const attributes: any = {
+  const attributes = {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       allowNull: false,
       autoIncrement: true,
     },
-    classId: {
+    userId: {
       type: DataTypes.INTEGER,
       references: {
-        model: "Classes",
+        model: "Users",
         id: "id",
       },
     },
-    superParentId: {
+    countryCodeId: {
       type: DataTypes.INTEGER,
+      references: {
+        model: "CountryCodeModels",
+        id: "id",
+      },
+    },
+    phoneNumber: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    isPrimary: {
+      type: DataTypes.BOOLEAN,
       allowNull: true,
     },
-    parentId: {
-      type: DataTypes.INTEGER,
+    isActive: {
+      type: DataTypes.BOOLEAN,
       allowNull: true,
     },
   };
-
-  return sequelize.define("Object", attributes);
+  return sequelize.define("PhoneRecord", attributes);
 }

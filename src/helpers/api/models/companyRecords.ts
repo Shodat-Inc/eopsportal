@@ -1,6 +1,5 @@
 import { DataTypes } from "sequelize";
-
-export function AddClasses(sequelize: {
+export function companyRecord(sequelize: {
   define: (
     arg0: string,
     arg1: {
@@ -10,21 +9,13 @@ export function AddClasses(sequelize: {
         allowNull: boolean;
         autoIncrement: boolean;
       };
-      className: {
-        type: DataTypes.StringDataTypeConstructor;
-        allowNull: boolean;
-      };
-      superParentId: {
-        type: DataTypes.IntegerDataTypeConstructor;
-        allowNull: boolean;
-      };
-      parentId: {
-        type: DataTypes.IntegerDataTypeConstructor;
-        allowNull: boolean;
-      };
       userId: {
         type: DataTypes.IntegerDataTypeConstructor;
         references: { model: string; id: string };
+      };
+      companyName: {
+        type: DataTypes.StringDataTypeConstructor;
+        allowNull: boolean;
       };
     }
   ) => any;
@@ -36,18 +27,6 @@ export function AddClasses(sequelize: {
       allowNull: false,
       autoIncrement: true,
     },
-    className: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    superParentId: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-    },
-    parentId: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-    },
     userId: {
       type: DataTypes.INTEGER,
       references: {
@@ -55,7 +34,10 @@ export function AddClasses(sequelize: {
         id: "id",
       },
     },
+    companyName: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
   };
-
-  return sequelize.define("Class", attributes);
+  return sequelize.define("CompanyRecord", attributes);
 }

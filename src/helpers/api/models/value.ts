@@ -1,6 +1,6 @@
 import { DataTypes } from "sequelize";
 
-export function AddClasses(sequelize: {
+export function AddValues(sequelize: {
   define: (
     arg0: string,
     arg1: {
@@ -10,19 +10,15 @@ export function AddClasses(sequelize: {
         allowNull: boolean;
         autoIncrement: boolean;
       };
-      className: {
+      values: {
         type: DataTypes.StringDataTypeConstructor;
         allowNull: boolean;
       };
-      superParentId: {
+      classTagId: {
         type: DataTypes.IntegerDataTypeConstructor;
-        allowNull: boolean;
+        references: { model: string; id: string };
       };
-      parentId: {
-        type: DataTypes.IntegerDataTypeConstructor;
-        allowNull: boolean;
-      };
-      userId: {
+      objectId: {
         type: DataTypes.IntegerDataTypeConstructor;
         references: { model: string; id: string };
       };
@@ -36,26 +32,25 @@ export function AddClasses(sequelize: {
       allowNull: false,
       autoIncrement: true,
     },
-    className: {
+    values: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    superParentId: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-    },
-    parentId: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-    },
-    userId: {
+    classTagId: {
       type: DataTypes.INTEGER,
       references: {
-        model: "Users",
+        model: "ClassTags",
+        id: "id",
+      },
+    },
+    objectId: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: "Objects",
         id: "id",
       },
     },
   };
 
-  return sequelize.define("Class", attributes);
+  return sequelize.define("objectValues", attributes);
 }
