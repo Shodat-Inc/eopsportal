@@ -13,7 +13,7 @@ import axios from 'axios';
 import AlertMessage from "@/common/alertMessage";
 import moment from "moment";
 import { setSelectedClass } from "@/store/actions/classAction";
-import DeleteModal from "@/common/deleteModal";
+import DeleteModal from "@/common/deletemodal";
 export async function getServerSideProps() {
     const localData = await getAssetsData()
     return {
@@ -367,12 +367,12 @@ export default function AssetManagement(localData: any) {
                                                 <tr className="hover:bg-yellow-950 text-sm border boder-gray-958 last:border-none" key={index}>
                                                     <td className="w-[6%] min-h-[50px]">{index + 1}</td>
                                                     <td className="w-[25%] min-h-[50px]">
-                                                        <a
+                                                        {/* <a
                                                             onClick={() => sendProps()}
                                                         >
                                                             <span className="font-semibold">{item.assetName}</span>
-                                                        </a>
-                                                        {/* <Link
+                                                        </a> */}
+                                                        <Link
                                                             href={{
                                                                 pathname: '/dashboard/assetmanagement/subasset',
                                                                 query: {
@@ -382,7 +382,7 @@ export default function AssetManagement(localData: any) {
                                                             className="w-[25%]"
                                                         >
                                                             <span className="font-semibold">{item.assetName}</span>
-                                                        </Link> */}
+                                                        </Link>
                                                     </td>
                                                     <td className="w-[25%] min-h-[50px]">
                                                         <div className="flex w-[300px]">

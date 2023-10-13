@@ -59,7 +59,7 @@ export default function SubAsset(localData: any) {
         axios.get("/api/getAssets").then((response) => {
             if (response.data) {
                 const filtered = response.data.filter((item: any) => {
-                    return item.assetName === props.chooseAsset;
+                    return item.assetName === parentAsset.assets;
                 });
                 if (filtered && filtered.length > 0) {
                     setParentJoinKey(filtered[0].assetkey);
@@ -89,7 +89,7 @@ export default function SubAsset(localData: any) {
         axios.get("/api/getSubAssets").then((response) => {
             if (response.data) {
                 const filtered = localData.localData.filter((item: any) => {
-                    return item.parentAssetName === props.chooseAsset;
+                    return item.parentAssetName === parentAsset.assets;
                 });
                 if (filtered && filtered.length > 0) {
                     setData(filtered);
@@ -97,7 +97,7 @@ export default function SubAsset(localData: any) {
 
                 let arr: any = [];
                 response.data.map((item: any, key: any) => {
-                    if (item.parentAssetName === props.chooseAsset) {
+                    if (item.parentAssetName === parentAsset.assets) {
                         arr.push(...item.tags);
                         setTag(removeDuplicates(arr))
                     }
@@ -234,8 +234,8 @@ export default function SubAsset(localData: any) {
                     assetID: `${form_values.assetid}`,
                     assetName: `${form_values.assetname}`,
                     slug: `${form_values.assetname}`,
-                    parentAssetID: props.chooseAsset,
-                    parentAssetName: props.chooseAsset,
+                    parentAssetID: parentAsset.assets,
+                    parentAssetName: parentAsset.assets,
                     tags: allTags,
                     parentJoinKey: selParentTags,
                     dateCreated: new Date().toLocaleString() + "",
@@ -318,7 +318,7 @@ export default function SubAsset(localData: any) {
                                                 height={24}
                                                 width={24}
                                             />
-                                            <span className="ml-1 text-sm font-semibold text-black hover:text-yellow-950 md:ml-1">{props.chooseAsset}</span>
+                                            <span className="ml-1 text-sm font-semibold text-black hover:text-yellow-950 md:ml-1">{parentAsset.assets}</span>
                                         </div>
                                     </li>
                                 </ol>
