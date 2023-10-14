@@ -179,6 +179,11 @@ export default function EopsWatch(props: any) {
     const wrapperRef = useRef(null);
     useOutsideAlerter(wrapperRef);
 
+
+    console.log({
+        tabData:tabData
+    })
+
     return (
         <div className="flex font-OpenSans">
 

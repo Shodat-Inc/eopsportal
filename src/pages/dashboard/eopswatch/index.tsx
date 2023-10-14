@@ -109,7 +109,7 @@ export default function EopsWatch(props: any) {
             {/* Table Information */}
             <p className="text-black text-md mb-4 font-semibold">Manufacturing Plants</p>
             <div className="bg-white rounded rounded-xl min-h-[220px] px-3 py-4 flex justify-between items-center w-full">
-                <div className="flex flex-wrap flex-col justify-start items-start w-full">
+                <div className="flex flex-wrap flex-col justify-start items-start w-full hidden1">
                     <table className={`table-auto lg:min-w-full sm:w-full small:w-full text-left ${styles.tableV3}`}>
                         <thead className="text-sm font-normal">
                             <tr>
