@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 export default function CustomDrop(props: any) {
     const [toggleAsset, setToggleAsset] = useState(false);
-    const [chooseAsset, setChooseAsset] = useState('Manufacturing Plants');
+    const [chooseAsset, setChooseAsset] = useState(props.defaultClass ? props.defaultClass : 'Manufacturing Plants');
 
     const toggleDropdownFunction = () => {
         setToggleAsset(!toggleAsset)
