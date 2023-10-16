@@ -1,10 +1,15 @@
 import React, { useState, useRef, useEffect } from "react";
 import styles from '../styles/Common.module.css';
-import Link from "next/link";
 import Image from "next/image";
 export default function CustomDrop(props: any) {
+    // console.log({
+    //     props: props
+    // })
     const [toggleAsset, setToggleAsset] = useState(false);
-    const [chooseAsset, setChooseAsset] = useState(props.defaultClass ? props.defaultClass : 'Manufacturing Plants');
+    const [chooseAsset, setChooseAsset] = useState("");
+    useEffect(()=>{
+        setChooseAsset(props.defaultClass);
+    }, [props.defaultClass])
 
     const toggleDropdownFunction = () => {
         setToggleAsset(!toggleAsset)
@@ -16,7 +21,6 @@ export default function CustomDrop(props: any) {
         props.handleClick(item)
     }
 
-    // Hook that alerts clicks outside of the passed ref
     function useOutsideAlerter(ref: any) {
         useEffect(() => {
             function handleClickOutside(event: any) {
@@ -56,10 +60,10 @@ export default function CustomDrop(props: any) {
                             props.data.map((item: any, index: any) => (
                                 <li
                                     className="px-5 py-2 bg-white cursor-pointer hover:bg-yellow-951 w-full font-normal"
-                                    onClick={() => selectItemFunction(item)}
+                                    onClick={() => selectItemFunction(item.assetName)}
                                     key={index}
                                 >
-                                    <span>{item}</span>
+                                    <span>{item.assetName}</span>
                                 </li>
                             ))
                         }

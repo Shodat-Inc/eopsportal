@@ -37,23 +37,6 @@ export default function Filter(props: any) {
     const toggleDropFunction = () => {
         setToggleDrop(!toggleDrop);
     }
-    // Hook that alerts clicks outside of the passed ref
-    function useOutsideAlerter(ref: any) {
-        useEffect(() => {
-            function handleClickOutside(event: any) {
-                if (ref.current && !ref.current.contains(event.target)) {
-                    setToggleDrop(false)
-                    // setToggleFilter(false);
-                }
-            }
-            document.addEventListener("mousedown", handleClickOutside);
-            return () => {
-                document.removeEventListener("mousedown", handleClickOutside);
-            };
-        }, [ref]);
-    }
-    const wrapperRef = useRef(null);
-    useOutsideAlerter(wrapperRef);
 
     // Sort Table By ID
     const sortByID = () => {
@@ -129,7 +112,7 @@ export default function Filter(props: any) {
     }
 
     return (
-        <div ref={wrapperRef} className="rounded rounded-xl shadow shadow-xl border border-gray-951 min-h-[350px] w-[380px] px-4 py-3 bg-white absolute right-0 top-[100%] mt-1 z-10">
+        <div className="rounded rounded-xl shadow shadow-xl border border-gray-951 min-h-[350px] w-[380px] px-4 py-3 bg-white absolute right-0 top-[100%] mt-1 z-10">
             <div className="flex w-full justify-end items-center mb-5">
                 <button
                     onClick={resetFilter}

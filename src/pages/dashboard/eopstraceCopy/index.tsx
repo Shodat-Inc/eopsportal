@@ -337,16 +337,6 @@ export default function EopsWatch(props: any) {
                                         }
                                     </thead>
                                     <tbody className="cursor-pointer">
-                                        {/* 
-                                        http://localhost:3000/dashboard/eopstrace/tracemodel?
-                                        objectID=Vehicles
-                                        &
-                                        key=NEC1TT01522
-                                        &
-                                        id=5PVBE7AJ8R5T50001
-                                        &
-                                        subObject=Tire 
-                                        */}
                                         <tr>
                                             {
                                                 subObj && Object.keys(subObj).length != 0 ?
@@ -358,9 +348,6 @@ export default function EopsWatch(props: any) {
                                                                     pathname: '/dashboard/eopstrace/tracemodel',
                                                                     query: {
                                                                         objectID: chooseAsset,
-                                                                        // key: parentAsset.id,
-                                                                        // id: parentAsset.object,
-                                                                        // subObject: parentAsset.subObject
                                                                     }
                                                                 }}
                                                             >
