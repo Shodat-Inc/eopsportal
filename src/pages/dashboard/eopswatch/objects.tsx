@@ -177,6 +177,7 @@ export default function Objects() {
         });
     }
 
+    const hasParams = routerParams.hasOwnProperty("PlantID")
 
     return (
         <div className="w-full h-full font-OpenSans">
@@ -193,7 +194,7 @@ export default function Objects() {
                             All Industries
                         </Link>
                     </li>
-                    
+
                     <li className="flex justify-start items-center">
                         <Image
                             src="/img/chevron-right.svg"
@@ -217,7 +218,14 @@ export default function Objects() {
                             height={28}
                             width={28}
                         />
-                        <span className="text-gray-967 capitalize">VIN: {routerParams.VIN}</span>
+                        <span className="text-gray-967 capitalize">
+                            {
+                                hasParams ?
+                                <>Plant ID : {routerParams.PlantID}</>
+                                :
+                                <>VIN : {routerParams.VIN}</>
+                            }
+                        </span>
                     </li>
                 </ul>
             </div>
