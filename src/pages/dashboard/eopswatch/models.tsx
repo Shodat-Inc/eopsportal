@@ -80,6 +80,8 @@ export default function Models() {
             }
         })
     }
+    const hasParams = routerParams.hasOwnProperty("PlantID");
+    const hasObjectParams = routerParams.hasOwnProperty("subObject")
     return (
         <div className="w-full h-full font-OpenSans">
             <p className="text-black text-lg mb-4 font-semibold text-xl">eOps Watch</p>
@@ -130,7 +132,14 @@ export default function Models() {
                             }}
                             className="font-semibold"
                         >
-                            <span className="">VIN: {routerParams.VIN}</span>
+                            <span className="capitalize">
+                            {
+                                hasParams ?
+                                <>Plant ID : {routerParams.PlantID}</>
+                                :
+                                <>VIN : {routerParams.VIN}</>
+                            }
+                        </span>
                         </Link>
                     </li>
                     <li className="flex justify-start items-center">
@@ -150,7 +159,7 @@ export default function Models() {
                             }}
                             className="font-semibold"
                         >
-                            {routerParams.subObject}
+                            <span>{routerParams.subObject}</span> : <span>{routerParams.key}</span>
                         </Link>
                     </li>
                     <li className="flex justify-start items-center">

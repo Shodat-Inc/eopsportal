@@ -6,9 +6,6 @@ import axios from 'axios';
 import Spinner from "@/common/spinner";
 
 export default function TabData(props: any) {
-    console.log({
-        "props in tabData => ": props
-    })
     const [data, setData] = useState([] as any);
     const [dataHeader, setDataHeader] = useState([] as any);
     const [searchData, setSearchData] = useState([] as any);
@@ -118,7 +115,7 @@ export default function TabData(props: any) {
 
     // Filter UseEffect
     useEffect(() => {
-        if (props.filterData.state === "" && props.filterData.city === "" && props.filterData.zipcode === "" && props.filterData.date === "" && props.filterData.from === "" && props.filterData.to === "") {
+        if (props.filterData.state === "" && props.filterData.city === "" && props.filterData.zipcode === "" && props.filterData.date === "" && props.filterData.from === "" && props.filterData.to === "" && props.filterData.model === "" && props.filterData.modelYear === "" && props.filterData.type === "") {
             console.log({
                 message: "here you go"
             })
@@ -165,6 +162,24 @@ export default function TabData(props: any) {
                     } else if (props.filterData.date !== "") {
                         if (item.subObjects?.hasOwnProperty("mfdDate")) {
                             if (item.subObjects?.mfdDate.toString().toLowerCase().includes(props.filterData.date.toString().toLowerCase())) {
+                                return item;
+                            }
+                        }
+                    } else if (props.filterData.model !== "") {
+                        if (item.subObjects?.hasOwnProperty("Model")) {
+                            if (item.subObjects?.Model.toString().toLowerCase().includes(props.filterData.model.toString().toLowerCase())) {
+                                return item;
+                            }
+                        }
+                    } else if (props.filterData.modelYear !== "") {
+                        if (item.subObjects?.hasOwnProperty("ModelYear")) {
+                            if (item.subObjects?.ModelYear.toString().toLowerCase().includes(props.filterData.modelYear.toString().toLowerCase())) {
+                                return item;
+                            }
+                        }
+                    } else if (props.filterData.type !== "") {
+                        if (item.subObjects?.hasOwnProperty("Type")) {
+                            if (item.subObjects?.Type.toString().toLowerCase().includes(props.filterData.type.toString().toLowerCase())) {
                                 return item;
                             }
                         }

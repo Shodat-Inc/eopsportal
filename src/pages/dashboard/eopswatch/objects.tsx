@@ -22,7 +22,7 @@ export default function Objects() {
     const [toggleFilter, setToggleFilter] = useState(false);
 
     const [subAssets, setSubAssets] = useState([] as any);
-    const [classData, setClassData] = useState(classes[0]);
+    const [classData, setClassData] = useState('' as any);
     const [showAsset, setShowAsset] = useState();
     const [objectData, setObjectData] = useState([] as any);
     const [filteredArray, setFilteredArray] = useState([] as any);
@@ -36,11 +36,15 @@ export default function Objects() {
         setToggleFilter(!toggleFilter);
     }
 
+    useEffect(()=>{
+        setClassData(routerParams.objectID)
+    }, [routerParams.objectID])
+
     useEffect(() => {
         axios.get("/api/getSubAssets").then((response) => {
             if (response.data) {
                 let filteredData = response.data.filter((item: any) => {
-                    return item.parentAssetName === classData
+                    return item.parentAssetName === routerParams.objectID
                 })
 
                 let arr = [] as any;
@@ -48,12 +52,15 @@ export default function Objects() {
                     filteredData.map((item: any) => {
                         arr.push(item.assetName)
                     })
+
+                    setSubAssets(arr);
+                    setShowAsset(filteredData[0].assetName);
                 }
-                setSubAssets(arr);
-                setShowAsset(filteredData[0].assetName);
             }
         });
     }, [])
+
+
 
     function useOutsideAlerter(ref: any) {
         useEffect(() => {
@@ -96,12 +103,16 @@ export default function Objects() {
     }, [showAsset])
 
     useEffect(() => {
-        var filteredArray = [];
+        var fArray = [];
         if (showAsset) {
-            filteredArray = subAssets.filter(function (e: any) { return e != showAsset })
+            fArray = subAssets.filter(function (e: any) { return e != showAsset })
         }
-        setFilteredArray(filteredArray)
+        setFilteredArray(fArray)
     }, [showAsset])
+
+    // console.log({
+    //     filteredArray: filteredArray
+    // })
 
 
     const onChange = (event: any) => {
@@ -221,9 +232,9 @@ export default function Objects() {
                         <span className="text-gray-967 capitalize">
                             {
                                 hasParams ?
-                                <>Plant ID : {routerParams.PlantID}</>
-                                :
-                                <>VIN : {routerParams.VIN}</>
+                                    <>Plant ID : {routerParams.PlantID}</>
+                                    :
+                                    <>VIN : {routerParams.VIN}</>
                             }
                         </span>
                     </li>
@@ -297,7 +308,7 @@ export default function Objects() {
                 {/* Top Section Ends */}
 
                 <Table
-                    data={objectData}
+                    tabledata={objectData}
                     classData={classData}
                     assetData={showAsset}
                     urlParams={routerParams}
