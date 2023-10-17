@@ -7,13 +7,14 @@ import Spinner from "@/common/spinner";
 
 export default function TabData(props: any) {
     console.log({
-        props: props
+        "props in tabData => ": props
     })
     const [data, setData] = useState([] as any);
     const [dataHeader, setDataHeader] = useState([] as any);
     const [searchData, setSearchData] = useState([] as any);
     const [actions, setActions] = useState(false);
     const [actionCount, setActionCount] = useState(1);
+    const [spinner, setSpinner] = useState(false);
 
     function useOutsideAlerter(ref: any) {
         useEffect(() => {
@@ -85,48 +86,20 @@ export default function TabData(props: any) {
                 if (props.search === "") {
                     setData([]); return;
                 }
-
-
                 let filteredData = response.data.filter((item: any) => {
                     return item.parentAssetName === props.objData;
                 })
-
-
                 const filtered = filteredData.filter((item: any) => {
-                    console.log("you are here 1")
 
                     if (item.subObjects?.hasOwnProperty("VIN")) {
                         if (item.subObjects?.VIN.toString().toLowerCase().includes(props.searchData.toString().toLowerCase())) {
                             return item;
                         }
-                    }
-                    // else if (item.subObjects?.hasOwnProperty("AssemblyPlant")) {
-                    //     if (item.subObjects?.AssemblyPlant.toString().toLowerCase().includes(props.searchData.toString().toLowerCase())) {
-                    //         return item;
-                    //     }
-                    // } else if (item.subObjects?.hasOwnProperty("LotNo")) {
-                    //     if (item.subObjects?.LotNo.toString().toLowerCase().includes(props.searchData)) {
-                    //         return item;
-                    //     }
-                    // } 
-
-                    else if (item.subObjects?.hasOwnProperty("PlantID")) {
+                    } else if (item.subObjects?.hasOwnProperty("PlantID")) {
                         if (item.subObjects?.PlantID.toString().toLowerCase().includes(props.searchData.toString().toLowerCase())) {
                             return item;
                         }
-                    }
-
-                    // else if (item.subObjects?.hasOwnProperty("Name")) {
-                    //     if (item.subObjects?.Name.toString().toLowerCase().includes(props.searchData)) {
-                    //         return item;
-                    //     }
-                    // }
-                    // else if (item.subObjects?.hasOwnProperty("Zipcode")) {
-                    //     if (item.subObjects?.Zipcode.toString().toLowerCase().includes(props.searchData.toString().toLowerCase())) {
-                    //         return item;
-                    //     }
-                    // } 
-                    else {
+                    } else {
                         if (item.subObjects?.VIN?.toString().toLowerCase().includes(props.searchData.toString().toLowerCase())) {
                             return item;
                         }
@@ -138,16 +111,92 @@ export default function TabData(props: any) {
                     setDataHeader(filtered[0]);
                     props.handleClick(filtered.length)
                 }
-
-                console.log({
-                    filteredData: filteredData,
-                    filtered: filtered
-                })
-
             }
         });
 
     }, [props.searchData])
+
+    // Filter UseEffect
+    useEffect(() => {
+        if (props.filterData.state === "" && props.filterData.city === "" && props.filterData.zipcode === "" && props.filterData.date === "" && props.filterData.from === "" && props.filterData.to === "") {
+            console.log({
+                message: "here you go"
+            })
+            axios.get("/api/getObjects").then((response) => {
+                if (response.data) {
+                    const filtered = response.data.filter((item: any) => {
+                        return item.parentAssetName === props.objData;
+                    });
+                    if (filtered && filtered.length > 0) {
+                        setData(filtered);
+                        setDataHeader(filtered[0]);
+                        props.handleClick(filtered.length)
+                    }
+                }
+            });
+            setData([])
+            setSearchData([])
+            return;
+        }
+        axios.get("/api/getObjects").then((response) => {
+            if (response.data) {
+                let resfiltered = response.data.filter((item: any) => {
+                    return item.parentAssetName === props.objData;
+                })
+                const filtered = resfiltered.filter((item: any) => {
+                    if (props.filterData.state !== "") {
+                        if (item.subObjects?.hasOwnProperty("State")) {
+                            if (item.subObjects?.State.toString().toLowerCase().includes(props.filterData.state.toString().toLowerCase())) {
+                                return item;
+                            }
+                        }
+                    } else if (props.filterData.city !== "") {
+                        if (item.subObjects?.hasOwnProperty("City")) {
+                            if (item.subObjects?.City.toString().toLowerCase().includes(props.filterData.city.toString().toLowerCase())) {
+                                return item;
+                            }
+                        }
+                    } else if (props.filterData.zipcode !== "") {
+                        if (item.subObjects?.hasOwnProperty("Zipcode")) {
+                            if (item.subObjects?.Zipcode.toString().toLowerCase().includes(props.filterData.zipcode.toString().toLowerCase())) {
+                                return item;
+                            }
+                        }
+                    } else if (props.filterData.date !== "") {
+                        if (item.subObjects?.hasOwnProperty("mfdDate")) {
+                            if (item.subObjects?.mfdDate.toString().toLowerCase().includes(props.filterData.date.toString().toLowerCase())) {
+                                return item;
+                            }
+                        }
+                    } else if (props.filterData.state !== "" && props.filterData.zipcode !== "") {
+                        if (item.subObjects?.hasOwnProperty("State") && item.subObjects?.hasOwnProperty("Zipcode")) {
+                            if (
+                                item.subObjects?.mfdDate.toString().toLowerCase().includes(props.filterData.date.toString().toLowerCase())
+                                &&
+                                item.subObjects?.Zipcode.toString().toLowerCase().includes(props.filterData.zipcode.toString().toLowerCase())
+                            ) {
+                                return item;
+                            }
+                        }
+                    } else {
+                        if (item.subObjects?.hasOwnProperty("State")) {
+                            if (item.subObjects?.State.toString().toLowerCase().includes(props.filterData.state.toString().toLowerCase())) {
+                                return item;
+                            }
+                        }
+                    }
+                })
+                if (filtered) {
+                    setData(filtered);
+                    setDataHeader(filtered[0]);
+                    props.handleClick(filtered.length)
+                }
+                console.log({
+                    "filtered response": filtered
+                })
+            }
+        })
+    }, [props.filterData])
 
     const linkToNext = (items: any) => {
         if (props.classes === "Vehicles") {
@@ -178,6 +227,13 @@ export default function TabData(props: any) {
             </Link>
         }
     }
+
+    useEffect(() => {
+        setSpinner(true)
+        setTimeout(() => {
+            setSpinner(false)
+        }, 2000)
+    }, [data])
 
     return (
         <>
@@ -269,7 +325,10 @@ export default function TabData(props: any) {
                         </tbody>
                     </table>
                     :
-                    <Spinner height={16} width={16} />
+                    <>
+                        {spinner && <Spinner height={16} width={16} />}
+                        {!spinner && <p className="text-xl text-center w-full">No Matched data found!!</p>}
+                    </>
                 }
             </div>
         </>

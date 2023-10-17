@@ -17,7 +17,7 @@ export default function EopsWatch(props: any) {
     const [tabData, setTabData] = useState();
     const [subClassData, setSubClassData] = useState<any[]>([]);
     const [count, setCount] = useState(0);
-    const [search, setSearch] = useState([] as any);
+    const [filter, setFilter] = useState({} as any);
     const [value, setValue] = useState("");
     const [data, setData] = useState([] as any);
     const [toggleArrow, setToggleArrow] = useState(false);
@@ -56,10 +56,6 @@ export default function EopsWatch(props: any) {
                     setSubClassData(filtered);
                     setTabData(filtered[0].parentAssetName)
                 }
-                console.log({
-                    data:response.data
-                })
-
             }
         });
     };
@@ -79,7 +75,7 @@ export default function EopsWatch(props: any) {
     const handleFilterFunction = (data: any) => {
         setToggleFilter(false)
     }
-
+    
     // Hook that alerts clicks outside of the passed ref
     function useOutsideAlerter(ref: any) {
         useEffect(() => {
@@ -104,9 +100,12 @@ export default function EopsWatch(props: any) {
     }
 
     const onChange = (event: any) => {
-        setValue(event.target.value);        
+        setValue(event.target.value);
     }
 
+    const handleApplyFunction = (data:any) => {
+        setFilter(data)
+    }
 
     return (
         <div className="w-full h-full font-OpenSans">
@@ -154,32 +153,37 @@ export default function EopsWatch(props: any) {
                         />
                     </div>
                     <div className="relative ml-3">
-                            <button
-                                className={`bg-white border-2  rounded-xl h-[44px] transition-all duration-[400ms] h-[44px] rounded rounded-xl px-2 py-2 flex items-center justify-start ${toggleFilter === true ? 'border-black' : 'border-gray-969'}`}
-                                onClick={toggleFilterFunction}
-                            >
-                                <Image
-                                    src="/img/filter-icon.svg"
-                                    alt="calendar"
-                                    height={22}
-                                    width={22}
-                                />
-                                <span className="mr-2 ml-1">Filters</span>
-                                <Image
-                                    src="/img/arrow-down-black.svg"
-                                    alt="Arrow Down"
-                                    height={24}
-                                    width={24}
-                                    className={`${toggleArrow === true ? 'rotate-180' : 'rotate-0'}`}
-                                />
-                            </button>
+                        <button
+                            className={`bg-white border-2  rounded-xl h-[44px] transition-all duration-[400ms] h-[44px] rounded rounded-xl px-2 py-2 flex items-center justify-start ${toggleFilter === true ? 'border-black' : 'border-gray-969'}`}
+                            onClick={toggleFilterFunction}
+                        >
+                            <Image
+                                src="/img/filter-icon.svg"
+                                alt="calendar"
+                                height={22}
+                                width={22}
+                            />
+                            <span className="mr-2 ml-1">Filters</span>
+                            <Image
+                                src="/img/arrow-down-black.svg"
+                                alt="Arrow Down"
+                                height={24}
+                                width={24}
+                                className={`${toggleArrow === true ? 'rotate-180' : 'rotate-0'}`}
+                            />
+                        </button>
 
-                            {
-                                toggleFilter &&
-                                <div ref={wrapperRef}><Filter handleClick={handleFilterFunction} /></div>
-                            }
+                        {
+                            toggleFilter &&
+                            <div ref={wrapperRef}>
+                                <Filter
+                                    handleClick={handleFilterFunction}
+                                    handleApply={handleApplyFunction}
+                                />
+                            </div>
+                        }
 
-                        </div>
+                    </div>
                 </div>
             </div>
             <TabData
@@ -187,6 +191,7 @@ export default function EopsWatch(props: any) {
                 searchData={value}
                 classes={chooseAsset}
                 handleClick={handleCounter}
+                filterData={filter}
             />
         </div>
     )
