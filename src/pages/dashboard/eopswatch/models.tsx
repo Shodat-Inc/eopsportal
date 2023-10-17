@@ -76,7 +76,7 @@ export default function Models() {
                 key: routerParams.key,
                 id: routerParams.id,
                 model:data.name,
-                industryID:routerParams.industryID
+                industryID:routerParams.id
             }
         })
     }

@@ -115,11 +115,14 @@ export default function Preview() {
         return item.folder === "Production"
     })
 
-    console.log({
-        data:data,
-        filteredDataTest:filteredDataTest,
-        filteredDataProduction:filteredDataProduction
-    })
+    // console.log({
+    //     data:data,
+    //     filteredDataTest:filteredDataTest,
+    //     filteredDataProduction:filteredDataProduction
+    // })
+
+    const hasParams = routerParams.hasOwnProperty("PlantID");
+    const hasObjectParams = routerParams.hasOwnProperty("subObject")
 
     return (
         <div className="w-full h-full font-OpenSans">
@@ -167,10 +170,17 @@ export default function Preview() {
                             }}
                             className="font-semibold"
                         >
-                            {routerParams.industryID}
+                            {
+                                routerParams.objectID === "Manufacturing Plants"
+                                ?
+                                <span>Plant ID : {routerParams.id}</span>
+                                :
+                                <span>VIN : {routerParams.id}</span>
+                            }
+                            
                         </Link>
                     </li>
-                    <li className="flex justify-start items-center">
+                    <li className="flex justify-start items-center hidden">
                         <Image
                             src="/img/chevron-right.svg"
                             alt="chevron-right"
@@ -183,7 +193,7 @@ export default function Preview() {
                             }}
                             className="font-semibold"
                         >
-                            {routerParams.subObject}
+                            <span>{routerParams.subObject}</span> : <span>{routerParams.key}</span>
                         </Link>
                     </li>
                     <li className="flex justify-start items-center">
@@ -206,7 +216,7 @@ export default function Preview() {
                             }}
                             className="font-semibold"
                         >
-                            {routerParams.key}
+                            <span>{routerParams.subObject}</span> : <span>{routerParams.key}</span>
                         </Link>
                     </li>                 
                     <li className="flex justify-start items-center">
