@@ -26,7 +26,10 @@ export default function Filter(props: any) {
         zipcode: "",
         date: "",
         from: "",
-        to: ""
+        to: "",
+        model: "",
+        modelYear: "",
+        type: "",
     })
 
     const [value, setValue] = useState(0);
@@ -122,7 +125,10 @@ export default function Filter(props: any) {
             zipcode: "",
             date: "",
             from: "",
-            to: ""
+            to: "",
+            model: "",
+            modelYear: "",
+            type: "",
         });
         setData([]);
         setToggleFilter(false);
@@ -158,44 +164,85 @@ export default function Filter(props: any) {
                 </button>
             </div>
 
-            <div className="w-full mb-5 hiiden flex justify-between items-center gap-2">
-                <div className="flex flex-wrap">
-                    <p className="mb-2 p-0 text-black text-sm font-bold">City</p>
-                    <input
-                        type="text"
-                        className="border border-gray-951 rounded rounded-xl h-[40px] w-full px-2"
-                        name="city"
-                        id="city"
-                        placeholder="City"
-                        value={filterData.city}
-                        onChange={handleValueChange}
-                    />
+            {props.selectedClass === "Manufacturing Plants" ?
+                <div className="w-full mb-5 flex justify-between items-center gap-2">
+                    <div className="flex flex-wrap">
+                        <p className="mb-2 p-0 text-black text-sm font-bold">City</p>
+                        <input
+                            type="text"
+                            className="border border-gray-951 rounded rounded-xl h-[40px] w-full px-2"
+                            name="city"
+                            id="city"
+                            placeholder="City"
+                            value={filterData.city}
+                            onChange={handleValueChange}
+                        />
+                    </div>
+                    <div className="flex flex-wrap">
+                        <p className="mb-2 p-0 text-black text-sm font-bold">State</p>
+                        <input
+                            type="text"
+                            className="border border-gray-951 rounded rounded-xl h-[40px] w-full px-2"
+                            name="state"
+                            id="state"
+                            placeholder="State"
+                            value={filterData.state}
+                            onChange={handleValueChange}
+                        />
+                    </div>
+                    <div className="flex flex-wrap">
+                        <p className="mb-2 p-0 text-black text-sm font-bold">ZipCode</p>
+                        <input
+                            type="text"
+                            className="border border-gray-951 rounded rounded-xl h-[40px] w-full px-2"
+                            name="zipcode"
+                            id="zipcode"
+                            placeholder="Zip Code"
+                            value={filterData.zipcode}
+                            onChange={handleValueChange}
+                        />
+                    </div>
                 </div>
-                <div className="flex flex-wrap">
-                    <p className="mb-2 p-0 text-black text-sm font-bold">State</p>
-                    <input
-                        type="text"
-                        className="border border-gray-951 rounded rounded-xl h-[40px] w-full px-2"
-                        name="state"
-                        id="state"
-                        placeholder="State"
-                        value={filterData.state}
-                        onChange={handleValueChange}
-                    />
+                :
+                <div className="w-full mb-5 flex justify-between items-center gap-2">
+                    <div className="flex flex-wrap">
+                        <p className="mb-2 p-0 text-black text-sm font-bold">Model</p>
+                        <input
+                            type="text"
+                            className="border border-gray-951 rounded rounded-xl h-[40px] w-full px-2"
+                            name="model"
+                            id="model"
+                            placeholder="model"
+                            value={filterData.model}
+                            onChange={handleValueChange}
+                        />
+                    </div>
+                    <div className="flex flex-wrap">
+                        <p className="mb-2 p-0 text-black text-sm font-bold">Model Year</p>
+                        <input
+                            type="text"
+                            className="border border-gray-951 rounded rounded-xl h-[40px] w-full px-2"
+                            name="modelYear"
+                            id="modelYear"
+                            placeholder="Model Year"
+                            value={filterData.modelYear}
+                            onChange={handleValueChange}
+                        />
+                    </div>
+                    <div className="flex flex-wrap">
+                        <p className="mb-2 p-0 text-black text-sm font-bold">Type</p>
+                        <input
+                            type="text"
+                            className="border border-gray-951 rounded rounded-xl h-[40px] w-full px-2"
+                            name="type"
+                            id="type"
+                            placeholder="Type"
+                            value={filterData.type}
+                            onChange={handleValueChange}
+                        />
+                    </div>
                 </div>
-                <div className="flex flex-wrap">
-                    <p className="mb-2 p-0 text-black text-sm font-bold">ZipCode</p>
-                    <input
-                        type="text"
-                        className="border border-gray-951 rounded rounded-xl h-[40px] w-full px-2"
-                        name="zipcode"
-                        id="zipcode"
-                        placeholder="Zip Code"
-                        value={filterData.zipcode}
-                        onChange={handleValueChange}
-                    />
-                </div>
-            </div>
+            }
 
             <div className="w-full">
                 <p className="mb-3 p-0 text-black text-sm font-bold">Mfd Date</p>
