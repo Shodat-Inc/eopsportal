@@ -1,4 +1,6 @@
 export interface CreateUser {
+  idDeleted: boolean;
+  parentId: number;
   username: string;
   firstName: string;
   email: string;
@@ -7,7 +9,6 @@ export interface CreateUser {
   countryCodeId: number;
   phoneNumber: string;
   password: string;
-  terms: string;
   role: string;
   address: string;
   city: string;

@@ -5,7 +5,6 @@ import * as models from "./models/index";
 import { loggerInfo, loggerError } from "@/logger";
 import { dialData } from "../countryCode";
 const { serverRuntimeConfig } = getConfig();
-
 export const db: any = {
   initialized: false,
   initialize,
@@ -90,6 +89,7 @@ async function initialize() {
     // create db if it doesn't already exist
     const { host, port, user, password, database } =
       serverRuntimeConfig.dbConfig;
+    const { isDBSync } = serverRuntimeConfig;
 
     const connection = await mysql.createConnection({
       host,
@@ -112,18 +112,45 @@ async function initialize() {
 
     if (!db.initialized) {
       // sync all models with database
-      await sequelize.sync({ alter: true });
+
+      // A user can have multiple addresses:
+      db.User.hasMany(db.Address, { foreignKey: "userId" });
+      // As Address table contains a userId, you should also define the reverse relationship:
+      db.Address.belongsTo(db.User, { foreignKey: "userId" });
+
+      db.User.hasMany(db.phoneRecord, { foreignKey: "userId" });
+      // As phoneRecord table contains a userId, you should also define the reverse relationship:
+      db.phoneRecord.belongsTo(db.User, { foreignKey: "userId" });
+
+      db.User.hasOne(db.companyRecord, { foreignKey: "userId" });
+      // As companyRecord table contains a userId, you should also define the reverse relationship:
+      db.companyRecord.belongsTo(db.User, { foreignKey: "userId" });
+
+      db.countryCodeModel.hasMany(db.Address, { foreignKey: "countryId" });
+      db.Address.belongsTo(db.countryCodeModel, { foreignKey: "countryId" });
+
+      db.countryCodeModel.hasMany(db.phoneRecord, {
+        foreignKey: "countryCodeId",
+      });
+      db.phoneRecord.belongsTo(db.countryCodeModel, {
+        foreignKey: "countryCodeId",
+      });
+
       //demo role
-      if (db.Role) {
-        await seedDemoRoles(db.Role);
-      }
-      //demo tagDatatype
-      if (db.tagDataType) {
-        await seedDemoTagDataType(db.tagDataType);
-      }
-      //demo countryCode
-      if (db.countryCodeModel) {
-        await seedCountryCodeData(db.countryCodeModel);
+
+      if (isDBSync) {
+        await sequelize.sync({ alter: true });
+        if (db.Role) {
+          await seedDemoRoles(db.Role);
+        }
+        //demo tagDatatype
+        if (db.tagDataType) {
+          await seedDemoTagDataType(db.tagDataType);
+        }
+        //demo countryCode
+        if (db.countryCodeModel) {
+          await seedCountryCodeData(db.countryCodeModel);
+        }
       }
     }
 

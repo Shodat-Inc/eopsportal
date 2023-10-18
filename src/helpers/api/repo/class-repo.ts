@@ -4,6 +4,7 @@ import { loggerInfo, loggerError } from "@/logger";
 
 export const classRepo = {
   create,
+  getAllClassNames,
 };
 async function create(params: any) {
   loggerInfo.info("Create Class Repo:");
@@ -21,6 +22,17 @@ async function create(params: any) {
     return sendResponseData(true, "Class added successfully", data);
   } catch (error) {
     loggerError.error("Error in class repo", error);
+    return sendResponseData(false, "error", error);
+  }
+}
+
+async function getAllClassNames() {
+  try {
+    const classes = await db.AddClasses.findAll();
+    loggerInfo.info("Fetched all class names:");
+    return sendResponseData(true, "Classes fetched successfully", classes);
+  } catch (error) {
+    loggerError.error("Error fetching data:", error);
     return sendResponseData(false, "error", error);
   }
 }
