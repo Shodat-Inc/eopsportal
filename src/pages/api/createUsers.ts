@@ -1,37 +1,80 @@
-import fsPromises from 'fs/promises';
-import path from 'path';
-const dataFilePath = path.join(process.cwd(), 'json/users.json')
+import { apiHandler, usersRepo } from "../../helpers/api";
+import { loggerInfo, loggerError } from "@/logger";
+import { NextApiRequest, NextApiResponse } from "next";
+import { CreateUser } from "../../interface/createUser.interface";
+import { info } from "console";
+import { addressRepo } from "@/helpers/api/repo/address-repo";
+import { phoneRecordRepo } from "@/helpers/api/repo/phone-record-repo";
+import { CompanyRecordRepo } from "@/helpers/api/repo/company-record-repo";
 
-export default async function handler(req:any, res:any) {
-    try {
-        if (req.method !== 'POST') {
-            res.status(405).send({ message: 'Only POST requests allowed' })
-            return
-        }
-        // Read the existing data from the JSON file
-        const jsonData:any = await fsPromises.readFile(dataFilePath);
-        const objectData = JSON.parse(jsonData);
+export default apiHandler({
+  post: handler,
+});
 
-        // Get the data from the request body
-        const { userID, username, firstName, lastName, companyName, phoneNumber, password, terms, dateCreated, dateModified, role } = req.body;
-
-        // Add the new data to the object
-        const newData = {
-            userID, username, firstName, lastName, companyName, phoneNumber, password, terms, dateCreated, dateModified, role
-        };
-        objectData.push(newData);
-
-        // Convert the object back to a JSON string
-        const updatedData = JSON.stringify(objectData);
-
-        // Write the updated data to the JSON file
-        await fsPromises.writeFile(dataFilePath, updatedData);
-
-        // Send a success response
-        res.status(200).json({ message: 'Data stored successfully' });
-    } catch (error:any) {
-        console.error(error);
-        // Send an error response
-        res.status(error.response.status).json({ message: error.response.statusText });
+async function handler(req: NextApiRequest, res: NextApiResponse) {
+  try {
+    loggerInfo.info("reateUser API:", info);
+    if (req.method !== "POST") {
+      res.status(405).send({ message: "Only POST requests allowed" });
+      return;
     }
-};
+    const reqData: CreateUser = req.body;
+    const {
+      username,
+      email,
+      firstName,
+      lastName,
+      password,
+      terms,
+      roleId,
+      ...objData
+    } = reqData;
+    const { address, city, state, pincode, countryId, primary, ...recordData } =
+      objData;
+    //phone record
+    const { countryCodeId, phoneNumber, isPrimary, isActive, ...recordData1 } =
+      recordData;
+    loggerInfo.info(recordData);
+    //company record
+    const { companyName } = recordData1;
+    //user Data
+    const userData = await usersRepo.create({
+      username,
+      email,
+      firstName,
+      lastName,
+      password,
+      terms,
+      roleId,
+    });
+    //address data
+    const addressData = await addressRepo.create({
+      address,
+      city,
+      state,
+      pincode,
+      countryId,
+      primary,
+      userId: userData.data.id,
+    });
+    //company record
+    const companyRecord = await CompanyRecordRepo.create({
+      companyName,
+      userId: userData.data.id,
+    });
+    //phone Record
+    const phoneRecord = await phoneRecordRepo.create({
+      countryCodeId,
+      phoneNumber,
+      isPrimary,
+      isActive,
+      userId: userData.data.id,
+    });
+    res.send({ userData, addressData, phoneRecord, companyRecord });
+  } catch (error: any) {
+    loggerError.error("error in createUsers API ", error);
+    res
+      .status(error.response.status)
+      .json({ message: error.response.statusText });
+  }
+}
