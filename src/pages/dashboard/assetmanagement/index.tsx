@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect } from "react";
-import { useDetectClickOutside } from 'react-detect-click-outside';
 import { useDispatch, useSelector } from 'react-redux';
 import Layout from "../../../components/Layout";
 import NoDataFound from "../../../common/nodatafound";
@@ -14,6 +13,8 @@ import axios from 'axios';
 import AlertMessage from "@/common/alertMessage";
 import moment from "moment";
 import { setSelectedClass } from "@/store/actions/classAction";
+import DeleteModal from "@/common/deletemodal";
+import ObjectModal from "./objectmodal";
 export async function getServerSideProps() {
     const localData = await getAssetsData()
     return {
@@ -46,19 +47,13 @@ export default function AssetManagement(localData: any) {
 
     function useOutsideAlerter(ref: any) {
         useEffect(() => {
-            /**
-             * Alert if clicked on outside of element
-             */
             function handleClickOutside(event: any) {
                 if (ref.current && !ref.current.contains(event.target)) {
-                    //   alert("You clicked outside of me!");
                     setToggleAsset(false)
                 }
             }
-            // Bind the event listener
             document.addEventListener("mousedown", handleClickOutside);
             return () => {
-                // Unbind the event listener on clean up
                 document.removeEventListener("mousedown", handleClickOutside);
             };
         }, [ref]);
@@ -223,18 +218,13 @@ export default function AssetManagement(localData: any) {
 
     // Continue to next page after setting the selected class to redux
     const continueToNext = () => {
-        console.log({
-            chooseAsset: chooseAsset
-        })
-        dispatch(setSelectedClass(chooseAsset));
-
         setTimeout(() => {
             Router.push({
                 pathname: '/dashboard/assetmanagement/objects',
                 query: {
-                    chooseAsset
+                    assets: chooseAsset
                 }
-            }, 'assetmanagement/objects')
+            })
         }, 100)
     }
 
@@ -245,7 +235,12 @@ export default function AssetManagement(localData: any) {
             query: {
                 chooseAsset
             }
-        },'assetmanagement/subasset')
+        }, 'assetmanagement/subasset')
+    }
+
+
+    const handleDeleteFunction = () => {
+        setDeleteModal(false)
     }
 
     return (
@@ -362,12 +357,12 @@ export default function AssetManagement(localData: any) {
                                                 <tr className="hover:bg-yellow-950 text-sm border boder-gray-958 last:border-none" key={index}>
                                                     <td className="w-[6%] min-h-[50px]">{index + 1}</td>
                                                     <td className="w-[25%] min-h-[50px]">
-                                                        <a
+                                                        {/* <a
                                                             onClick={() => sendProps()}
                                                         >
                                                             <span className="font-semibold">{item.assetName}</span>
-                                                        </a>
-                                                        {/* <Link
+                                                        </a> */}
+                                                        <Link
                                                             href={{
                                                                 pathname: '/dashboard/assetmanagement/subasset',
                                                                 query: {
@@ -377,7 +372,7 @@ export default function AssetManagement(localData: any) {
                                                             className="w-[25%]"
                                                         >
                                                             <span className="font-semibold">{item.assetName}</span>
-                                                        </Link> */}
+                                                        </Link>
                                                     </td>
                                                     <td className="w-[25%] min-h-[50px]">
                                                         <div className="flex w-[300px]">
@@ -433,13 +428,14 @@ export default function AssetManagement(localData: any) {
 
                 {/* ----- OBJECT MODAL STARTS ----- */}
                 {showObjectModal ? (
+                    // <ObjectModal data={data} />
                     <>
                         <div
                             className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
                         >
                             <div className="relative my-6 w-[720px]">
                                 <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
-                                    {/*header*/}
+
                                     <div className="flex items-start justify-between p-5">
                                         <h3 className="text-lg font-medium">
                                             Choose your class and continue
@@ -457,7 +453,7 @@ export default function AssetManagement(localData: any) {
                                             />
                                         </button>
                                     </div>
-                                    {/*body*/}
+
                                     <div className="relative p-6 flex-auto">
                                         <div className="flex justify-start items-center flex-wrap flex-col">
                                             <div className="w-[400px]">
@@ -795,55 +791,11 @@ export default function AssetManagement(localData: any) {
 
 
                 {/* ===== Delete Modal starts ===== */}
-                {deleteModal ?
-                    <>
-                        <div
-                            className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
-                        >
-                            <div className="relative my-6 w-[580px]">
-                                <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
-                                    {/*header*/}
-                                    <div className="flex items-start justify-between p-2">
-                                        <h3 className="text-lg font-medium"></h3>
-                                        <button
-                                            className="p-1 ml-auto bg-transparent border-0 text-black float-right leading-none font-semibold outline-none focus:outline-none"
-                                            onClick={() => setDeleteModal(false)}
-                                        >
-                                            <Image
-                                                src="/img/close.svg"
-                                                alt="close"
-                                                className="h-6"
-                                                height={24}
-                                                width={24}
-                                            />
-                                        </button>
-                                    </div>
-                                    {/*body*/}
-                                    <div className="relative pt-2 pb-8 flex-auto">
-                                        <div className="flex justify-start items-center flex-wrap flex-col">
-                                            <p className="flex justify-center items-center text-lg">Are you sure want to delete this record?</p>
-                                            <div className="mt-10 relative flex justify-center items-center w-full">
-                                                <button
-                                                    className="border border-black rounded-lg bg-black text-white text-lg w-[70px] h-[47px] mr-5 hover:bg-yellow-951 hover:text-white hover:border-yellow-951 ease-in-out duration-300 disabled:bg-gray-951 disabled:hover:border-gray-951 disabled:border-gray-951"
-                                                    onClick={() => { setDeleteModal(false); }}
-                                                >
-                                                    Yes
-                                                </button>
-                                                <button
-                                                    className="border border-black rounded-lg bg-white text-black text-lg w-[70px] h-[47px] hover:text-white hover:bg-yellow-951 hover:border-yellow-951 ease-in-out duration-300"
-                                                    onClick={() => { setDeleteModal(false); }}
-                                                >
-                                                    No
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="opacity-75 fixed inset-0 z-40 bg-black"></div>
-                    </>
-                    : null}
+
+                {
+                    deleteModal &&
+                    <DeleteModal handleClick={handleDeleteFunction} />
+                }
 
                 {/* ===== Delete Modal Ends ===== */}
 

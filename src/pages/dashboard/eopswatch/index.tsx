@@ -1,60 +1,88 @@
 import React, { useState, useRef, useEffect } from "react";
 import Layout from "../../../components/Layout";
+import styles from '../../../styles/Common.module.css';
 import Image from "next/image";
+import Link from "next/dist/client/link";
 import Table from "./table";
 import Filter from "./filters";
 import axios from "axios";
 import Drop from "./drop";
+import CustomDrop from "@/common/customdrop";
+import TabData from "./tabData";
 
-const classes = [
-    "Manufacturing Plants",
-    "Vehicles"
-]
-
-export default function EopsWatch() {
+export default function EopsWatch(props: any) {
+    const [chooseAsset, setChooseAsset] = useState('Manufacturing Plants');
+    const [actions, setActions] = useState(false);
+    const [classData, setClassData] = useState([] as any);
+    const [tabData, setTabData] = useState();
+    const [subClassData, setSubClassData] = useState<any[]>([]);
+    const [count, setCount] = useState(0);
+    const [filter, setFilter] = useState({} as any);
+    const [value, setValue] = useState("");
+    const [data, setData] = useState([] as any);
     const [toggleArrow, setToggleArrow] = useState(false);
     const [toggleDrop, setToggleDrop] = useState(false);
     const [toggleFilter, setToggleFilter] = useState(false);
 
-    const [subAssets, setSubAssets] = useState([] as any);
-    const [classData, setClassData] = useState(classes[0]);
-    const [showAsset, setShowAsset] = useState();
-    const [objectData, setObjectData] = useState([] as any);
-    const [filteredArray, setFilteredArray] = useState([] as any);
 
-    const [search, setSearch] = useState([] as any);
-    const [value, setValue] = useState("");
-    const [data, setData] = useState([] as any);
-
-    const toggleFilterFunction = () => {
-        setToggleArrow(!toggleArrow);
-        setToggleFilter(!toggleFilter);
-    }
-
-    useEffect(() => {
-        axios.get("/api/getSubAssets").then((response) => {
+    // Fetch the JSON data of Classes
+    const fetchClassData = () => {
+        axios.get("/api/getAssets").then((response) => {
             if (response.data) {
-                let filteredData = response.data.filter((item: any) => {
-                    return item.parentAssetName === classData
-                })
-
-                let arr = [] as any;
-                if (filteredData.length > 0) {
-                    filteredData.map((item: any) => {
-                        arr.push(item.assetName)
-                    })
+                const filtered = response.data.filter((item: any) => {
+                    return item.assetName
+                });
+                if (filtered && filtered.length > 0) {
+                    setClassData(filtered);
                 }
-                setSubAssets(arr);
-                setShowAsset(filteredData[0].assetName);
             }
         });
+    };
+    useEffect(() => {
+        fetchClassData();
+        if (fetchClassData.length) return;
     }, [])
 
+
+
+    // Fetch the JSON data of sub Asset
+    const fetchSubAssets = () => {
+        axios.get("/api/getObjects").then((response) => {
+            if (response.data) {
+                const filtered = response.data.filter((item: any) => {
+                    return item.parentAssetName === chooseAsset;
+                });
+                if (filtered && filtered.length > 0) {
+                    setSubClassData(filtered);
+                    setTabData(filtered[0].parentAssetName)
+                }
+            }
+        });
+    };
+    useEffect(() => {
+        fetchSubAssets();
+        if (fetchSubAssets.length) return;
+    }, [chooseAsset])
+
+    const handleCounter = (item: any) => {
+        setCount(item)
+    }
+
+    const handleDropDown = (item: any) => {
+        setChooseAsset(item)
+    }
+
+    const handleFilterFunction = (data: any) => {
+        setToggleFilter(false)
+    }
+    
+    // Hook that alerts clicks outside of the passed ref
     function useOutsideAlerter(ref: any) {
         useEffect(() => {
             function handleClickOutside(event: any) {
                 if (ref.current && !ref.current.contains(event.target)) {
-                    setToggleDrop(false);
+                    setActions(false);
+                    setToggleFilter(false)
                 }
             }
             document.addEventListener("mousedown", handleClickOutside);
@@ -66,188 +94,106 @@ export default function EopsWatch() {
     const wrapperRef = useRef(null);
     useOutsideAlerter(wrapperRef);
 
-    const toggleDropFunction = () => {
-        setToggleDrop(!toggleDrop);
+    const toggleFilterFunction = () => {
+        setToggleArrow(!toggleArrow);
+        setToggleFilter(!toggleFilter);
     }
-
-    const handleDropFunction = (data: any) => {
-        setToggleDrop(false);
-        setShowAsset(data);
-    }
-
-    const handleFilterFunction = (data: any) => {
-        setToggleFilter(false)
-    }
-
-    useEffect(() => {
-        axios.get("/api/getChildObject").then((response) => {
-            if (response.data) {
-                let filteredData = response.data.filter((item: any) => {
-                    return item.object === showAsset
-                })
-                setObjectData(filteredData)
-            }
-        });
-    }, [showAsset])
-
-    useEffect(() => {
-        var filteredArray = [];
-        if (showAsset) {
-            filteredArray = subAssets.filter(function (e: any) { return e != showAsset })
-        }
-        setFilteredArray(filteredArray)
-    }, [showAsset])
-
 
     const onChange = (event: any) => {
         setValue(event.target.value);
-        if (event.target.value === "" || event.target.value.length <= 0) {
-            axios.get("/api/getChildObject").then((response) => {
-                if (response.data) {
-                    let filteredData = response.data.filter((item: any) => {
-                        return item.object === showAsset
-                    })
-                    setObjectData(filteredData)
-                }
-            });
-            setData([])
-            setSearch([])
-            return;
-        }
-        axios.get("/api/getChildObject").then((response) => {
-            if (response.data) {
-
-                if (event.target.value === "") {
-                    setData([]); return;
-                }
-
-                let filteredData = response.data.filter((item: any) => {
-                    return item.object === showAsset
-                })
-
-                
-                const filtered = filteredData.filter((item: any) => {
-
-                    if (item.tags.hasOwnProperty("VIN")) {
-                        if (item.tags.VIN.toString().toLowerCase().includes(event.target.value.toString().toLowerCase())) {
-                            return item;
-                        }
-                    } else if (item.tags.hasOwnProperty("SerialNo")) {
-                        if (item.tags.SerialNo.toString().toLowerCase().includes(event.target.value.toString().toLowerCase())) {
-                            return item;
-                        }
-                    } else if (item.tags?.hasOwnProperty("SerialNo")) {
-                        if (item.tags?.SerialNo.toString().toLowerCase().includes(event.target.value.toString().toLowerCase())) {
-                            return item;
-                        }
-                    } else if (item.tags.hasOwnProperty("ID")) {
-                        if (item.tags.ID.toString().toLowerCase().includes(event.target.value.toString().toLowerCase())) {
-                            return item;
-                        }
-                    } else if (item.tags.hasOwnProperty("PlantID")) {
-                        if (item.tags.PlantID.toString().toLowerCase().includes(event.target.value.toString().toLowerCase())) {
-                            return item;
-                        }
-                    } else if (item.tags.hasOwnProperty("Room")) {
-                        if (item.tags.Room.toString().toLowerCase().includes(event.target.value.toString().toLowerCase())) {
-                            return item;
-                        }
-                    } else {
-                        if (item.tags?.VIN?.toString().toLowerCase().includes(event.target.value.toString().toLowerCase())) {
-                            return item;
-                        }
-                    }
-                });
-
-                if (filtered && filtered.length > 0) {
-                    setObjectData(filtered);
-                }
-
-                console.log({
-                    filteredData:filteredData,
-                    filtered:filtered
-                })
-
-            }
-        });
     }
 
+    const handleApplyFunction = (data:any) => {
+        setFilter(data)
+    }
 
     return (
         <div className="w-full h-full font-OpenSans">
             <p className="text-black text-lg mb-4 font-semibold text-xl">eOps Watch</p>
-            <div className="bg-white min-h-[500px] rounded rounded-xl lg:p-4 md:p-4 sm:p-4">
-                {/* Top Section */}
-                <div className="flex justify-between items-center mb-5">
-                    <div className="flex relative justify-start items-center">
-                        <span className="font-semibold">{showAsset}</span>
-                        <button className={`ml-2 border-2 rounded rounded-md ${toggleDrop === true ? 'border-black' : 'border-white'}`} onClick={toggleDropFunction}>
-                            <Image src="/img/more-vertical.svg" alt="more-vertical" height={24} width={24} />
+
+            {/* Top Information */}
+            <div className="bg-white rounded rounded-xl min-h-[120px] px-3 py-4 flex justify-between items-center mb-4">
+                <div className="w-[34%] border border-[#EEEEEE] border-l-0 border-t-0 border-b-0 border-r-1">
+                    <CustomDrop
+                        data={classData}
+                        handleClick={handleDropDown}
+                        defaultClass={classData && classData.length > 0 ? classData[0].assetName : ""}
+                    />
+                </div>
+                <div className="w-[34%] border border-[#EEEEEE] border-l-0 border-t-0 border-b-0 border-r-1">
+                    <div className="text-center flex justify-center items-center w-full flex-wrap flex-col">
+                        <p className="mb-2">Total {chooseAsset}</p>
+                        <p className="text-2xl font-semibold">{count}</p>
+                    </div>
+                </div>
+                <div className="w-[34%]">
+                    <div className="text-center flex justify-center items-center w-full flex-wrap flex-col">
+                        <p className="mb-2">Total Objects</p>
+                        <p className="text-2xl font-semibold">-</p>
+                    </div>
+                </div>
+            </div>
+
+            {/* Table Information */}
+
+            <div className="mb-4 flex justify-between items-center">
+                <p className="text-black text-md font-semibold">{chooseAsset} </p>
+                <div className="flex justify-start items-center">
+                    <div className="flex relative">
+                        <Image src="/img/search-icon-gray.svg" alt="search" height={22} width={22} className="absolute top-[11px] left-3" />
+                        <input
+                            type="text"
+                            placeholder={`${chooseAsset === "Vehicles" ? "Search on VIN" : "Search on Plant ID"}`}
+                            id="searchobjects"
+                            name="searchobjects"
+                            className="border-2 border-gray-969 rounded-xl h-[44px] w-[300px] pl-10 pr-2"
+                            onChange={onChange}
+                            value={value}
+                            autoComplete="off"
+                        />
+                    </div>
+                    <div className="relative ml-3">
+                        <button
+                            className={`bg-white border-2  rounded-xl h-[44px] transition-all duration-[400ms] h-[44px] rounded rounded-xl px-2 py-2 flex items-center justify-start ${toggleFilter === true ? 'border-black' : 'border-gray-969'}`}
+                            onClick={toggleFilterFunction}
+                        >
+                            <Image
+                                src="/img/filter-icon.svg"
+                                alt="calendar"
+                                height={22}
+                                width={22}
+                            />
+                            <span className="mr-2 ml-1">Filters</span>
+                            <Image
+                                src="/img/arrow-down-black.svg"
+                                alt="Arrow Down"
+                                height={24}
+                                width={24}
+                                className={`${toggleArrow === true ? 'rotate-180' : 'rotate-0'}`}
+                            />
                         </button>
 
                         {
-                            toggleDrop &&
+                            toggleFilter &&
                             <div ref={wrapperRef}>
-                                <Drop
-                                    subAssets={filteredArray}
-                                    handleClick={handleDropFunction}
+                                <Filter
+                                    handleClick={handleFilterFunction}
+                                    handleApply={handleApplyFunction}
+                                    selectedClass={chooseAsset}
                                 />
                             </div>
                         }
 
                     </div>
-                    <div className="flex">
-                        <div className="flex relative">
-                            <Image src="/img/search-icon-gray.svg" alt="search" height={22} width={22} className="absolute top-[11px] left-3" />
-                            <input 
-                                type="text"
-                                placeholder="Search"
-                                id="searchobjects"
-                                name="searchobjects"
-                                className="border-2 border-gray-969 rounded-xl h-[44px] w-[300px] pl-10 pr-2"
-                                onChange={onChange}
-                                value={value}
-                                autoComplete="off"
-                            />
-                        </div>
-                        <div className="relative ml-3">
-                            <button
-                                className={`bg-white border-2  rounded-xl h-[44px] transition-all duration-[400ms] h-[44px] rounded rounded-xl px-2 py-2 flex items-center justify-start ${toggleFilter === true ? 'border-black' : 'border-gray-969'}`}
-                                onClick={toggleFilterFunction}
-                            >
-                                <Image
-                                    src="/img/filter-icon.svg"
-                                    alt="calendar"
-                                    height={22}
-                                    width={22}
-                                />
-                                <span className="mr-2 ml-1">Filters</span>
-                                <Image
-                                    src="/img/arrow-down-black.svg"
-                                    alt="Arrow Down"
-                                    height={24}
-                                    width={24}
-                                    className={`${toggleArrow === true ? 'rotate-180' : 'rotate-0'}`}
-                                />
-                            </button>
-
-                            {
-                                toggleFilter &&
-                                <Filter handleClick={handleFilterFunction} />
-                            }
-
-                        </div>
-                    </div>
                 </div>
-                {/* Top Section Ends */}
-
-                <Table
-                    data={objectData}
-                    classData={classData}
-                    assetData={showAsset}
-                />
-
             </div>
+            <TabData
+                objData={tabData}
+                searchData={value}
+                classes={chooseAsset}
+                handleClick={handleCounter}
+                filterData={filter}
+            />
         </div>
     )
 }
