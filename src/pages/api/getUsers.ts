@@ -1,16 +1,25 @@
-import fsPromises from 'fs/promises';
-import path from 'path';
+import { apiHandler, usersRepo } from "@/helpers/api";
+import { loggerError } from "@/logger";
 
-const dataFilePath = path.join(process.cwd(), 'json/users.json')
+export default apiHandler({
+  get: handleGetRequest,
+});
 
-export default async function handler(req:any, res:any) {
-    try {
-        const jsonData:any = await fsPromises.readFile(dataFilePath);
-        const objectData = JSON.parse(jsonData);
-        res.status(200).json(objectData);
-
-    } catch (error) {
-        res.status(405).send({ message: `{error.message}` })
-        return
+async function handleGetRequest(req: any, res: any) {
+  try {
+    const id = req.query.id;
+    if (id) {
+      const user = await usersRepo.getById(id);
+      if (!user) {
+        return res.status(404).send({ message: "User not found" });
+      }
+      res.status(200).json(user);
+    } else {
+      const users = await usersRepo.getAll();
+      res.status(200).json(users);
     }
-};
+  } catch (error: any) {
+    loggerError.error("Cant fetch User(s)", error);
+    res.status(500).send({ message: error.message });
+  }
+}

@@ -7,7 +7,7 @@ const { serverRuntimeConfig } = getConfig();
 
 export { jwtMiddleware };
 
-function jwtMiddleware(req: any, res: any) {
+async function jwtMiddleware(req: any, res: any) {
   loggerInfo.info("JWT");
   const middleware = expressjwt({
     secret: serverRuntimeConfig.secret,
@@ -17,11 +17,9 @@ function jwtMiddleware(req: any, res: any) {
       // public routes that don't require authentication
       "/api/createUsers",
       "/api/signIn",
-      "/api/assets",
-      "/api/createClasses",
-      "/api/createObjects",
+      "/api/getUsers"
     ],
   });
-
+  console.log(util.promisify(middleware)(req, res));
   return util.promisify(middleware)(req, res);
 }

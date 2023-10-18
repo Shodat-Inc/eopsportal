@@ -13,7 +13,7 @@ export default apiHandler({
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   try {
-    loggerInfo.info("reateUser API:", info);
+    loggerInfo.info("createUser API:", info);
     if (req.method !== "POST") {
       res.status(405).send({ message: "Only POST requests allowed" });
       return;
@@ -25,8 +25,8 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       firstName,
       lastName,
       password,
-      terms,
       roleId,
+      parentId,
       ...objData
     } = reqData;
     const { address, city, state, pincode, countryId, primary, ...recordData } =
@@ -44,8 +44,8 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       firstName,
       lastName,
       password,
-      terms,
       roleId,
+      parentId,
     });
     //address data
     const addressData = await addressRepo.create({

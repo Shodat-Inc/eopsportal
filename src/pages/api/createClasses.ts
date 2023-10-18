@@ -5,7 +5,6 @@ import { loggerInfo, loggerError } from "@/logger";
 export default apiHandler({
   post: handler,
 });
-
 async function handler(req: any, res: any) {
   loggerInfo.info("Class Creation API:");
   try {
@@ -13,7 +12,12 @@ async function handler(req: any, res: any) {
       res.status(405).send({ message: "Only POST requests allowed" });
       return;
     }
-    const reqData: CreateClass = req.body;
+    const reqData: CreateClass = {
+      ...req.body,
+      userId: req.id,
+    };
+    console.log(reqData,"=====reqData")
+    // const reqData: CreateClass = req.body;
     const classData = await classRepo.create(reqData);
     const classId = classData.data.id;
     const tagData = [];

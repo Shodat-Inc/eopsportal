@@ -46,16 +46,70 @@ async function authenticate(data: any) {
 }
 
 async function getAll() {
-  loggerInfo.info(`POST api/getUser`);
-  return await db.User.findAll();
+  loggerInfo.info("GET all users");
+
+  return await db.User.findAll({
+    attributes: ["username", "firstName", "lastName", "email"],
+    include: [
+      {
+        model: db.Address,
+        attributes: ["address", "city", "state", "pincode", "primary"],
+        include: [
+          {
+            model: db.countryCodeModel,
+            attributes: [["countryName", "addressCountryCode"]],
+          },
+        ],
+      },
+      {
+        model: db.phoneRecord,
+        attributes: ["phoneNumber", "isPrimary", "isActive"],
+        include: [
+          {
+            model: db.countryCodeModel,
+
+            attributes: [["dialCode", "phoneCountryCode"]],
+          },
+        ],
+      },
+      {
+        model: db.companyRecord,
+        attributes: ["companyName", "createdAt", "updatedAt"],
+      },
+    ],
+  });
 }
 
 async function getById(id: any) {
-  return await db.User.findByPk(id);
+  return await db.User.findByPk(id, {
+    attributes: ["username", "firstName", "lastName", "email"],
+    include: [
+      {
+        model: db.Address,
+        attributes: ["address", "city", "state", "pincode", "primary"],
+        include: {
+          model: db.countryCodeModel,
+          attributes: [["countryName", "addressCountryCode"]],
+        },
+      },
+      {
+        model: db.phoneRecord,
+        attributes: ["phoneNumber", "isPrimary", "isActive"],
+        include: {
+          model: db.countryCodeModel,
+          attributes: [["dialCode", "phoneCountryCode"]],
+        },
+      },
+      {
+        model: db.companyRecord,
+        attributes: ["companyName", "createdAt", "updatedAt"],
+      },
+    ],
+  });
 }
 
 async function create(params: any) {
-  loggerInfo.info("User Repo ", info);
+  loggerInfo.info("Create User", info);
   try {
     // validate
     let user_data = await db.User.findOne({
@@ -64,7 +118,6 @@ async function create(params: any) {
     if (user_data) {
       return sendResponseData(false, "User already exist", {});
     }
-    //if role id is set to false or if roleid isnt in table
     if (params.roleId) {
       let role_data = await db.Role.findByPk(params.roleId);
       if (!role_data) {
@@ -81,10 +134,6 @@ async function create(params: any) {
     if (params.password) {
       user.password = bcrypt.hashSync(params.password, 10);
     }
-    //hash contact number
-    // if (params.phoneNumber) {
-    //   user.phoneNumber = bcrypt.hashSync(params.phoneNumber);
-    // }
     // save user
     const data = await user.save();
     return sendResponseData(true, "User added successfully", data);
@@ -96,8 +145,10 @@ async function create(params: any) {
 }
 
 async function update(id: any, params: any) {
-  const user = await db.User.findByPk(id);
-
+  loggerInfo.info("Update User Info");
+  const user = await db.User.findByPk(id, {
+    include: [db.Address, db.phoneRecord],
+  });
   // validate
   if (!user) throw "User not found";
   if (
@@ -107,15 +158,27 @@ async function update(id: any, params: any) {
     throw 'Username "' + params.username + '" is already taken';
   }
 
-  // hash password if it was entered
   if (params.password) {
     params.hash = bcrypt.hashSync(params.password, 10);
   }
 
-  // copy params properties to user
-  Object.assign(user, params);
+  user.username = params.username || user.username;
+  user.email = params.email || user.email;
+  user.firstName = params.firstName || user.firstName;
+  user.lastName = params.lastName || user.lastName;
+  if (user.Address) {
+    user.Address.address = params.address || user.Address.address;
+    user.Address.state = params.state || user.Address.state;
+    user.Address.pincode = params.pincode || user.Address.pincode;
+    await user.Address.save();
+  }
+  if (user.phoneRecord) {
+    user.phoneRecord.phoneNumber =
+      params.phoneNumber || user.phoneRecord.phoneNumber;
+    await user.phoneRecord.save();
+  }
 
-  await user.save();
+  return await user.save();
 }
 
 async function _delete(id: number) {
