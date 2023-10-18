@@ -6,6 +6,10 @@ import Spinner from "@/common/spinner";
 import axios from 'axios';
 
 export default function Table(props: any) {
+
+    console.log({
+        "props in table": props
+    })
     const { tabledata, classData, assetData, urlParams } = props;
     const [toggleSort, setToggleSort] = useState(false);
     const [data, setData] = useState([] as any);
@@ -78,8 +82,12 @@ export default function Table(props: any) {
                 href={{
                     pathname: '/dashboard/eopswatch/models',
                     query: {
-                        objectID: props.classes,
-                        VIN: items?.subObjects.VIN
+                        objectID: props.classData,
+                        subObject: props.assetData,
+                        id: items?.tags?.VIN,
+                        key: items?.tags?.SerialNo ? items?.tags?.SerialNo : items?.tags?.SerialID,
+                        industryID: "1122334455",
+                        VIN: items?.tags?.VIN
                     }
                 }}
                 onClick={() => selectedAction(items?.subObjects.VIN)}
@@ -91,8 +99,12 @@ export default function Table(props: any) {
                 href={{
                     pathname: '/dashboard/eopswatch/models',
                     query: {
-                        objectID: props.classes,
-                        PlantID: items?.subObjects.PlantID
+                        objectID: props.classData,
+                        subObject: assetData,
+                        key: items?.tags?.ID,
+                        id: items?.tags?.PlantID,
+                        industryID: "1122334455",
+                        PlantID: items?.tags?.PlantID
                     }
                 }}
                 onClick={() => selectedAction(items?.subObjects.ID)}
@@ -168,7 +180,7 @@ export default function Table(props: any) {
                                                                             query: {
                                                                                 objectID: props.classData,
                                                                                 subObject: props.assetData,
-                                                                                id: items?.tags?.VIN, 
+                                                                                id: items?.tags?.VIN,
                                                                                 key: items?.tags?.SerialNo ? items?.tags?.SerialNo : items?.tags?.SerialID,
                                                                                 industryID: "1122334455",
                                                                                 VIN: items?.tags?.VIN
