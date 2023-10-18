@@ -8,3 +8,5 @@ export * from "./repo/object-repo";
 export * from "./repo/class-repo";
 export * from "./repo/classTag-repo";
 export * from "./repo/tagDataType-repo";
+export * from "./repo/delete-record-repo";
+export * from "./repo/reason-repo";

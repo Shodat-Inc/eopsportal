@@ -186,5 +186,5 @@ async function _delete(id: number) {
   if (!user) throw "User not found";
 
   // delete user
-  await user.destroy();
+  return await user.destroy();
 }

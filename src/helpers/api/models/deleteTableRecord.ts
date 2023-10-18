@@ -1,6 +1,6 @@
 import { DataTypes } from "sequelize";
 
-export function AddValues(sequelize: {
+export function deleteRecord(sequelize: {
   define: (
     arg0: string,
     arg1: {
@@ -10,15 +10,23 @@ export function AddValues(sequelize: {
         allowNull: boolean;
         autoIncrement: boolean;
       };
-      values: {
+      userId: {
+        type: DataTypes.IntegerDataTypeConstructor;
+        allowNull: boolean;
+      };
+      email: {
         type: DataTypes.StringDataTypeConstructor;
         allowNull: boolean;
       };
-      classTagId: {
-        type: DataTypes.IntegerDataTypeConstructor;
-        references: { model: string; id: string };
+      deleteAction: {
+        type: DataTypes.AbstractDataTypeConstructor;
+        allowNull: boolean;
       };
-      objectId: {
+      message: {
+        type: DataTypes.StringDataTypeConstructor;
+        allowNull: boolean;
+      };
+      reasonId: {
         type: DataTypes.IntegerDataTypeConstructor;
         references: { model: string; id: string };
       };
@@ -32,25 +40,30 @@ export function AddValues(sequelize: {
       allowNull: false,
       autoIncrement: true,
     },
-    values: {
+    userId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    email: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    classTagId: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: "ClassTags",
-        id: "id",
-      },
+    deleteAction: {
+      type: DataTypes.BOOLEAN,
+      allowNull: true,
     },
-    objectId: {
+    message: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    reasonId: {
       type: DataTypes.INTEGER,
       references: {
-        model: "Objects",
+        model: "Reasons",
         id: "id",
       },
     },
   };
 
-  return sequelize.define("ObjectValues", attributes);
+  return sequelize.define("DeleteTableRecord", attributes);
 }

@@ -20,6 +20,5 @@ async function jwtMiddleware(req: any, res: any) {
       "/api/getUsers"
     ],
   });
-  console.log(util.promisify(middleware)(req, res));
   return util.promisify(middleware)(req, res);
 }
