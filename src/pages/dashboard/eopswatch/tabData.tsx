@@ -116,9 +116,9 @@ export default function TabData(props: any) {
     // Filter UseEffect
     useEffect(() => {
         if (props.filterData.state === "" && props.filterData.city === "" && props.filterData.zipcode === "" && props.filterData.date === "" && props.filterData.from === "" && props.filterData.to === "" && props.filterData.model === "" && props.filterData.modelYear === "" && props.filterData.type === "") {
-            console.log({
-                message: "here you go"
-            })
+            // console.log({
+            //     message: "here you go"
+            // })
             axios.get("/api/getObjects").then((response) => {
                 if (response.data) {
                     const filtered = response.data.filter((item: any) => {
@@ -206,9 +206,9 @@ export default function TabData(props: any) {
                     setDataHeader(filtered[0]);
                     props.handleClick(filtered.length)
                 }
-                console.log({
-                    "filtered response": filtered
-                })
+                // console.log({
+                //     "filtered response": filtered
+                // })
             }
         })
     }, [props.filterData])

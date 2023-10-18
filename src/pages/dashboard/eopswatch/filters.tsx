@@ -2,14 +2,9 @@ import React, { useState, useRef, useEffect } from "react";
 import styles from '../../../styles/Common.module.css';
 import Image from "next/image";
 import Datepicker from "react-tailwindcss-datepicker";
+import axios from "axios";
 
 export default function Filter(props: any) {
-
-
-    const [toggleArrow, setToggleArrow] = useState(false);
-    const [toggleDrop, setToggleDrop] = useState(false);
-    const [toggleFilter, setToggleFilter] = useState(false);
-    const [toggleSort, setToggleSort] = useState(false);
 
     const [fromDate, setFromDate] = useState({
         startDate: null,
@@ -32,46 +27,74 @@ export default function Filter(props: any) {
         type: "",
     })
 
-    const [value, setValue] = useState(0);
     const [data, setData] = useState([] as any);
+    const [dataCity, setDataCity] = useState([] as any);
+    const [dataState, setDataState] = useState([] as any);
+    const [dataZipcode, setDataZipcode] = useState([] as any);
+
+    const [dataModel, setDataModel] = useState([] as any);
+    const [dataModelYear, setDataModelYear] = useState([] as any);
+    const [dataType, setDataType] = useState([] as any);
     const [toggleDateField, setToggleDateField] = useState(false);
 
-    const toggleFilterFunction = () => {
-        setToggleArrow(!toggleArrow);
-        setToggleFilter(!toggleFilter);
-    }
-    const toggleDropFunction = () => {
-        setToggleDrop(!toggleDrop);
+    function removeDuplicates(arr: any) {
+        return arr.filter((item: any, index: any) => arr.indexOf(item) === index);
     }
 
-    // Sort Table By ID
-    const sortByID = () => {
-        setToggleSort(!toggleSort)
-    }
+    // Get Child Object data on page load
+    const fetchChildObjectData = () => {
+        axios.get("/api/getObjects").then((response) => {
+            if (response.data) {
+                const filtered = response.data.filter((item: any) => {
+                    return item.parentAssetName === props.selectedClass;
+                    // return item;
+                });
+                if (filtered && filtered.length > 0) {
+                    setData(filtered)
+                    if (props.selectedClass === "Manufacturing Plants") {
+                        let cityArray = [] as any;
+                        let stateArray = [] as any;
+                        let zipcodeArray = [] as any;
+                        filtered.map((item: any) => {
+                            cityArray.push(item?.subObjects?.City);
+                            stateArray.push(item?.subObjects?.State);
+                            zipcodeArray.push(item?.subObjects?.Zipcode);
+                        })
+                        setDataCity(removeDuplicates(cityArray));
+                        setDataState(removeDuplicates(stateArray));
+                        setDataZipcode(removeDuplicates(zipcodeArray));
+                    } else {
+                        let modelArray = [] as any;
+                        let modelYearArray = [] as any;
+                        let typeArray = [] as any;
+                        filtered.map((item: any) => {
+                            modelArray.push(item?.subObjects?.Model);
+                            modelYearArray.push(item?.subObjects?.ModelYear);
+                            typeArray.push(item?.subObjects?.Type);
+                        })
+                        setDataCity(removeDuplicates(modelArray));
+                        setDataState(removeDuplicates(modelYearArray));
+                        setDataZipcode(removeDuplicates(typeArray));
+                    }
+                }
+            }
+        });
+    };
+    useEffect(() => {
+        fetchChildObjectData();
+        if (fetchChildObjectData.length) return;
+    }, [props.selectedClass])
 
+    // console.log({
+    //     data: data,
+    //     dataCity: dataCity,
+    //     dataState: dataState,
+    //     dataZipcode: dataZipcode,
+    //     dataModel: dataModel,
+    //     dataModelYear: dataModelYear,
+    //     dataType: dataType
+    // })
 
-    // Toggle Filters**
-    // Handle Range Slider
-    const handleRange = (e: any) => {
-        setValue(e.target.value);
-        let targetName = e.target.name;
-        let targetValue = e.target.value;
-        setFilterData((state: any) => ({
-            ...state,
-            [targetName]: targetValue
-        }));
-    }
-
-
-    // Handle Value change for radio (Impact Filter)
-    const handleValueChangeImpact = (e: any) => {
-        let targetName = e.target.name;
-        let targetValue = e.target.value;
-        setFilterData((state: any) => ({
-            ...state,
-            [targetName]: targetValue
-        }));
-    }
 
 
     // Handle Value change for radio (Any Date Filter)
@@ -113,7 +136,6 @@ export default function Filter(props: any) {
     // Apply filter function
     const applyFilter = async () => {
         props.handleApply(filterData);
-        setToggleFilter(false);
         props.handleClick(false)
     }
 
@@ -130,8 +152,6 @@ export default function Filter(props: any) {
             modelYear: "",
             type: "",
         });
-        setData([]);
-        setToggleFilter(false);
         props.handleClick(false);
         props.handleApply(filterData);
     }
@@ -165,81 +185,135 @@ export default function Filter(props: any) {
             </div>
 
             {props.selectedClass === "Manufacturing Plants" ?
-                <div className="w-full mb-5 flex justify-between items-center gap-2">
-                    <div className="flex flex-wrap">
+                <div className="w-full mb-5 flex justify-start items-statr flex-wrap flex-col">
+                    <div className="flex flex-wrap w-full mb-2">
                         <p className="mb-2 p-0 text-black text-sm font-bold">City</p>
-                        <input
-                            type="text"
+                        <select
                             className="border border-gray-951 rounded rounded-xl h-[40px] w-full px-2"
                             name="city"
                             id="city"
                             placeholder="City"
                             value={filterData.city}
                             onChange={handleValueChange}
-                        />
+                        >
+                            <option value="">-select-</option>
+                            {
+                                dataCity && dataCity.length > 0 ?
+                                    dataCity.map((item: any, index: any) => (
+                                        <option key={index} value={item}>{item}</option>
+                                    ))
+                                    :
+                                    null
+                            }
+                        </select>
                     </div>
-                    <div className="flex flex-wrap">
+                    <div className="flex flex-wrap w-full mb-2">
                         <p className="mb-2 p-0 text-black text-sm font-bold">State</p>
-                        <input
-                            type="text"
+                        <select
                             className="border border-gray-951 rounded rounded-xl h-[40px] w-full px-2"
                             name="state"
                             id="state"
                             placeholder="State"
                             value={filterData.state}
                             onChange={handleValueChange}
-                        />
+                        >
+                            <option value="">-select-</option>
+                            {
+                                dataState && dataState.length > 0 ?
+                                    dataState.map((item: any, index: any) => (
+                                        <option key={index} value={item}>{item}</option>
+                                    ))
+                                    :
+                                    null
+                            }
+                        </select>
                     </div>
-                    <div className="flex flex-wrap">
+                    <div className="flex flex-wrap w-full">
                         <p className="mb-2 p-0 text-black text-sm font-bold">ZipCode</p>
-                        <input
-                            type="text"
+                        <select
                             className="border border-gray-951 rounded rounded-xl h-[40px] w-full px-2"
                             name="zipcode"
                             id="zipcode"
                             placeholder="Zip Code"
                             value={filterData.zipcode}
                             onChange={handleValueChange}
-                        />
+                        >
+                            <option value="">-select-</option>
+                            {
+                                dataZipcode && dataZipcode.length > 0 ?
+                                    dataZipcode.map((item: any, index: any) => (
+                                        <option key={index} value={item}>{item}</option>
+                                    ))
+                                    :
+                                    null
+                            }
+                        </select>
                     </div>
                 </div>
                 :
-                <div className="w-full mb-5 flex justify-between items-center gap-2">
-                    <div className="flex flex-wrap">
+                <div className="w-full mb-5 flex justify-start items-statr flex-wrap flex-col">
+                    <div className="flex flex-wrap w-full mb-2">
                         <p className="mb-2 p-0 text-black text-sm font-bold">Model</p>
-                        <input
-                            type="text"
+                        <select
                             className="border border-gray-951 rounded rounded-xl h-[40px] w-full px-2"
                             name="model"
                             id="model"
                             placeholder="model"
                             value={filterData.model}
                             onChange={handleValueChange}
-                        />
+                        >
+                            <option value="">-select-</option>
+                            {
+                                dataModel && dataModel.length > 0 ?
+                                    dataModel.map((item: any, index: any) => (
+                                        <option key={index} value={item}>{item}</option>
+                                    ))
+                                    :
+                                    null
+                            }
+                        </select>
                     </div>
-                    <div className="flex flex-wrap">
+                    <div className="flex flex-wrap w-full mb-2">
                         <p className="mb-2 p-0 text-black text-sm font-bold">Model Year</p>
-                        <input
-                            type="text"
+                        <select
                             className="border border-gray-951 rounded rounded-xl h-[40px] w-full px-2"
                             name="modelYear"
                             id="modelYear"
                             placeholder="Model Year"
                             value={filterData.modelYear}
                             onChange={handleValueChange}
-                        />
+                        >
+                            <option value="">-select-</option>
+                            {
+                                dataModelYear && dataModelYear.length > 0 ?
+                                    dataModelYear.map((item: any, index: any) => (
+                                        <option key={index} value={item}>{item}</option>
+                                    ))
+                                    :
+                                    null
+                            }
+                        </select>
                     </div>
-                    <div className="flex flex-wrap">
+                    <div className="flex flex-wrap w-full">
                         <p className="mb-2 p-0 text-black text-sm font-bold">Type</p>
-                        <input
-                            type="text"
+                        <select
                             className="border border-gray-951 rounded rounded-xl h-[40px] w-full px-2"
                             name="type"
                             id="type"
                             placeholder="Type"
                             value={filterData.type}
                             onChange={handleValueChange}
-                        />
+                        >
+                            <option value="">-select-</option>
+                            {
+                                dataType && dataType.length > 0 ?
+                                    dataType.map((item: any, index: any) => (
+                                        <option key={index} value={item}>{item}</option>
+                                    ))
+                                    :
+                                    null
+                            }
+                        </select>
                     </div>
                 </div>
             }

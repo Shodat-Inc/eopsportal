@@ -180,6 +180,7 @@ export default function EopsWatch(props: any) {
                                     handleClick={handleFilterFunction}
                                     handleApply={handleApplyFunction}
                                     selectedClass={chooseAsset}
+                                    classData={classData}
                                 />
                             </div>
                         }
