@@ -17,6 +17,10 @@ export default function Objects() {
     const router = useRouter();
     const routerParams = router.query;
 
+    console.log({
+        routerParams:routerParams
+    })
+
     const [toggleArrow, setToggleArrow] = useState(false);
     const [toggleDrop, setToggleDrop] = useState(false);
     const [toggleFilter, setToggleFilter] = useState(false);
