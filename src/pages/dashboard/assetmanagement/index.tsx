@@ -25,6 +25,9 @@ export async function getServerSideProps() {
 }
 
 export default function AssetManagement(localData: any) {
+    console.log({
+        localData:localData
+    })
     const dispatch = useDispatch<any>();
     const [showModal, setShowModal] = useState(false);
     const [success, setSuccess] = useState(false);

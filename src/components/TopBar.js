@@ -192,7 +192,10 @@ export default function TopBar({ showNav, setShowNav }) {
               <Menu.Button className="inline-flex w-full justify-center items-center">
                 {
                   username ?
-                    <span className="bg-blue-961 text-sm rounded rounded-full flex justify-center items-center text-white font-semiboild h-[26px] w-[26px] relative top-[-4px]">{username.charAt(0).toUpperCase()}</span>
+                    <span className="bg-blue-961 text-sm rounded rounded-full flex justify-center items-center text-white font-semiboild h-[26px] w-[26px] relative top-[-4px]">
+                      {/* {username.charAt(0).toUpperCase()} */}
+                      Amit Pandey
+                      </span>
                     :
 
                     <picture>
@@ -219,7 +222,11 @@ export default function TopBar({ showNav, setShowNav }) {
                 <div className="p-6">
                   <div className="flex justify-center items-center flex-wrap flex-row text-center">
                     <div className="relative w-[55px] mb-4">
-                      <span className="bg-blue-961 text-xl rounded rounded-full flex justify-center items-center text-white font-semiboild h-[50px] w-[50px]">{username.charAt(0).toUpperCase()}</span>
+                      <span className="bg-blue-961 text-xl rounded rounded-full flex justify-center items-center text-white font-semiboild h-[50px] w-[50px]">
+                        {/* {username.charAt(0).toUpperCase()} */}
+                        Amit Pandey
+                      
+                      </span>
                       <button className="bg-white rounded rounded-full h-[21px] w-[21px] absolute right-[-3px] top-[25px] flex justify-center items-center">
                         <Image
                           src="/img/editpencil.svg"
@@ -229,7 +236,8 @@ export default function TopBar({ showNav, setShowNav }) {
                         />
                       </button>
                     </div>
-                    <div className="text-sm text-black w-full">{userData.firstName} {userData.lastName}</div>
+                    {/* <div className="text-sm text-black w-full">{userData.firstName} {userData.lastName}</div> */}
+                    <div className="text-sm text-black w-full">Amit Pandey</div>
                     <div className="text-gray-968 text-[13px] w-full">{username}</div>
                   </div>
 

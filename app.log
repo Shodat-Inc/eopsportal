@@ -208,3 +208,731 @@
 {"level":"info","message":"POST api/createUsers Save Address","timestamp":"2023-10-18T12:12:09.614Z"}
 {"level":"info","message":"POST api/createUsers Save Company records","timestamp":"2023-10-18T12:12:09.614Z"}
 {"level":"info","message":"POST api/createUsers Save Phone records","timestamp":"2023-10-18T12:12:09.614Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-10-19T09:13:36.991Z"}
+{"level":"error","message":"AddClasses","timestamp":"2023-10-19T09:13:38.164Z"}
+{"level":"error","message":"AddValues","timestamp":"2023-10-19T09:13:38.167Z"}
+{"level":"error","message":"Address","timestamp":"2023-10-19T09:13:38.168Z"}
+{"level":"error","message":"Reason","timestamp":"2023-10-19T09:13:38.170Z"}
+{"level":"error","message":"Role","timestamp":"2023-10-19T09:13:38.173Z"}
+{"level":"error","message":"User","timestamp":"2023-10-19T09:13:38.185Z"}
+{"level":"error","message":"classTag","timestamp":"2023-10-19T09:13:38.188Z"}
+{"level":"error","message":"companyRecord","timestamp":"2023-10-19T09:13:38.191Z"}
+{"level":"error","message":"countryCodeModel","timestamp":"2023-10-19T09:13:38.198Z"}
+{"level":"error","message":"deleteRecord","timestamp":"2023-10-19T09:13:38.200Z"}
+{"level":"error","message":"object","timestamp":"2023-10-19T09:13:38.203Z"}
+{"level":"error","message":"parentJoinKey","timestamp":"2023-10-19T09:13:38.205Z"}
+{"level":"error","message":"phoneRecord","timestamp":"2023-10-19T09:13:38.207Z"}
+{"level":"error","message":"tagDataType","timestamp":"2023-10-19T09:13:38.212Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-10-19T09:13:48.711Z"}
+{"level":"error","message":"AddClasses","timestamp":"2023-10-19T09:13:49.117Z"}
+{"level":"error","message":"AddValues","timestamp":"2023-10-19T09:13:49.119Z"}
+{"level":"error","message":"Address","timestamp":"2023-10-19T09:13:49.121Z"}
+{"level":"error","message":"Reason","timestamp":"2023-10-19T09:13:49.122Z"}
+{"level":"error","message":"Role","timestamp":"2023-10-19T09:13:49.124Z"}
+{"level":"error","message":"User","timestamp":"2023-10-19T09:13:49.126Z"}
+{"level":"error","message":"classTag","timestamp":"2023-10-19T09:13:49.128Z"}
+{"level":"error","message":"companyRecord","timestamp":"2023-10-19T09:13:49.129Z"}
+{"level":"error","message":"countryCodeModel","timestamp":"2023-10-19T09:13:49.131Z"}
+{"level":"error","message":"deleteRecord","timestamp":"2023-10-19T09:13:49.133Z"}
+{"level":"error","message":"object","timestamp":"2023-10-19T09:13:49.135Z"}
+{"level":"error","message":"parentJoinKey","timestamp":"2023-10-19T09:13:49.137Z"}
+{"level":"error","message":"phoneRecord","timestamp":"2023-10-19T09:13:49.138Z"}
+{"level":"error","message":"tagDataType","timestamp":"2023-10-19T09:13:49.139Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-10-19T09:13:52.519Z"}
+{"level":"error","message":"AddClasses","timestamp":"2023-10-19T09:13:52.560Z"}
+{"level":"error","message":"AddValues","timestamp":"2023-10-19T09:13:52.562Z"}
+{"level":"error","message":"Address","timestamp":"2023-10-19T09:13:52.565Z"}
+{"level":"error","message":"Reason","timestamp":"2023-10-19T09:13:52.568Z"}
+{"level":"error","message":"Role","timestamp":"2023-10-19T09:13:52.569Z"}
+{"level":"error","message":"User","timestamp":"2023-10-19T09:13:52.570Z"}
+{"level":"error","message":"classTag","timestamp":"2023-10-19T09:13:52.571Z"}
+{"level":"error","message":"companyRecord","timestamp":"2023-10-19T09:13:52.573Z"}
+{"level":"error","message":"countryCodeModel","timestamp":"2023-10-19T09:13:52.575Z"}
+{"level":"error","message":"deleteRecord","timestamp":"2023-10-19T09:13:52.576Z"}
+{"level":"error","message":"object","timestamp":"2023-10-19T09:13:52.577Z"}
+{"level":"error","message":"parentJoinKey","timestamp":"2023-10-19T09:13:52.580Z"}
+{"level":"error","message":"phoneRecord","timestamp":"2023-10-19T09:13:52.582Z"}
+{"level":"error","message":"tagDataType","timestamp":"2023-10-19T09:13:52.584Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-10-19T09:14:07.837Z"}
+{"level":"error","message":"AddClasses","timestamp":"2023-10-19T09:14:09.970Z"}
+{"level":"error","message":"AddValues","timestamp":"2023-10-19T09:14:09.971Z"}
+{"level":"error","message":"Address","timestamp":"2023-10-19T09:14:09.972Z"}
+{"level":"error","message":"Reason","timestamp":"2023-10-19T09:14:09.974Z"}
+{"level":"error","message":"Role","timestamp":"2023-10-19T09:14:09.975Z"}
+{"level":"error","message":"User","timestamp":"2023-10-19T09:14:09.976Z"}
+{"level":"error","message":"classTag","timestamp":"2023-10-19T09:14:09.977Z"}
+{"level":"error","message":"companyRecord","timestamp":"2023-10-19T09:14:09.979Z"}
+{"level":"error","message":"countryCodeModel","timestamp":"2023-10-19T09:14:09.981Z"}
+{"level":"error","message":"deleteRecord","timestamp":"2023-10-19T09:14:09.982Z"}
+{"level":"error","message":"object","timestamp":"2023-10-19T09:14:09.983Z"}
+{"level":"error","message":"parentJoinKey","timestamp":"2023-10-19T09:14:09.984Z"}
+{"level":"error","message":"phoneRecord","timestamp":"2023-10-19T09:14:09.986Z"}
+{"level":"error","message":"tagDataType","timestamp":"2023-10-19T09:14:09.987Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-10-19T09:14:12.356Z"}
+{"level":"error","message":"AddClasses","timestamp":"2023-10-19T09:14:14.901Z"}
+{"level":"error","message":"AddValues","timestamp":"2023-10-19T09:14:14.902Z"}
+{"level":"error","message":"Address","timestamp":"2023-10-19T09:14:14.903Z"}
+{"level":"error","message":"Reason","timestamp":"2023-10-19T09:14:14.904Z"}
+{"level":"error","message":"Role","timestamp":"2023-10-19T09:14:14.905Z"}
+{"level":"error","message":"User","timestamp":"2023-10-19T09:14:14.906Z"}
+{"level":"error","message":"classTag","timestamp":"2023-10-19T09:14:14.909Z"}
+{"level":"error","message":"companyRecord","timestamp":"2023-10-19T09:14:14.910Z"}
+{"level":"error","message":"countryCodeModel","timestamp":"2023-10-19T09:14:14.911Z"}
+{"level":"error","message":"deleteRecord","timestamp":"2023-10-19T09:14:14.912Z"}
+{"level":"error","message":"object","timestamp":"2023-10-19T09:14:14.913Z"}
+{"level":"error","message":"parentJoinKey","timestamp":"2023-10-19T09:14:14.914Z"}
+{"level":"error","message":"phoneRecord","timestamp":"2023-10-19T09:14:14.915Z"}
+{"level":"error","message":"tagDataType","timestamp":"2023-10-19T09:14:14.916Z"}
+{"level":"error","message":"db.ts Transaction cannot be committed because it has been finished with state: rollback","stack":"Error: Transaction cannot be committed because it has been finished with state: rollback\n    at Transaction.commit (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\transaction.js:57:29)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:2379:28\n    at processImmediate (node:internal/timers:466:21)\nFrom previous event:\n    at Function.findOrCreate (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:2376:15)\n    at seedCountryCodeData (webpack-internal:///(api)/./src/helpers/api/db.ts:136:32)\n    at async Object.initialize (webpack-internal:///(api)/./src/helpers/api/db.ts:218:21)\n    at async eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:15:70)","timestamp":"2023-10-19T09:15:35.216Z"}
+{"level":"info","message":"JWT","timestamp":"2023-10-19T09:15:35.216Z"}
+{"level":"info","message":"createUser API:","timestamp":"2023-10-19T09:15:35.218Z"}
+{"level":"info","message":{"companyName":"SHODAT","countryCodeId":98,"isPrimary":true,"phoneNumber":"9588239578"},"timestamp":"2023-10-19T09:15:35.218Z"}
+{"level":"info","message":"Create User","timestamp":"2023-10-19T09:15:35.219Z"}
+{"level":"error","message":"Error in creating user : WHERE parameter \"username\" has invalid \"undefined\" value","stack":"Error: WHERE parameter \"username\" has invalid \"undefined\" value\n    at MySQLQueryGenerator.whereItemQuery (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\dialects\\abstract\\query-generator.js:2184:13)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\dialects\\abstract\\query-generator.js:2173:25\n    at Array.forEach (<anonymous>)\n    at MySQLQueryGenerator.whereItemsQuery (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\dialects\\abstract\\query-generator.js:2171:35)\n    at MySQLQueryGenerator.getWhereConditions (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\dialects\\abstract\\query-generator.js:2583:19)\n    at MySQLQueryGenerator.selectQuery (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\dialects\\abstract\\query-generator.js:1315:28)\n    at QueryInterface.select (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\query-interface.js:1127:27)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1759:34\n    at processImmediate (node:internal/timers:466:21)\nFrom previous event:\n    at Function.findAll (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1757:8)\n    at Function.findOne (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1926:17)\n    at Object.create (webpack-internal:///(api)/./src/helpers/api/repo/users-repo.ts:186:72)\n    at Object.handler [as post] (webpack-internal:///(api)/./src/pages/api/createUsers.ts:39:84)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:33:34)","timestamp":"2023-10-19T09:15:35.225Z"}
+{"level":"info","message":"POST api/createUsers Save Address","timestamp":"2023-10-19T09:15:35.226Z"}
+{"level":"info","message":"POST api/createUsers Save Company records","timestamp":"2023-10-19T09:15:35.226Z"}
+{"level":"info","message":"POST api/createUsers Save Phone records","timestamp":"2023-10-19T09:15:35.227Z"}
+{"level":"error","message":"db.ts Transaction cannot be committed because it has been finished with state: rollback","stack":"Error: Transaction cannot be committed because it has been finished with state: rollback\n    at Transaction.commit (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\transaction.js:57:29)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:2379:28\n    at processImmediate (node:internal/timers:466:21)\nFrom previous event:\n    at Function.findOrCreate (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:2376:15)\n    at seedCountryCodeData (webpack-internal:///(api)/./src/helpers/api/db.ts:136:32)\n    at async Object.initialize (webpack-internal:///(api)/./src/helpers/api/db.ts:218:21)\n    at async eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:15:70)","timestamp":"2023-10-19T09:15:41.317Z"}
+{"level":"info","message":"JWT","timestamp":"2023-10-19T09:15:41.317Z"}
+{"level":"info","message":"Error Handler","timestamp":"2023-10-19T09:15:41.320Z"}
+{"level":"info","message":"JWT","timestamp":"2023-10-19T09:16:21.894Z"}
+{"level":"info","message":"Error Handler","timestamp":"2023-10-19T09:16:21.895Z"}
+{"level":"info","message":"JWT","timestamp":"2023-10-19T09:16:21.916Z"}
+{"level":"info","message":"Error Handler","timestamp":"2023-10-19T09:16:21.917Z"}
+{"level":"info","message":"JWT","timestamp":"2023-10-19T09:16:21.940Z"}
+{"level":"info","message":"Error Handler","timestamp":"2023-10-19T09:16:21.940Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-10-19T09:16:46.230Z"}
+{"level":"error","message":"AddClasses","timestamp":"2023-10-19T09:16:46.239Z"}
+{"level":"error","message":"AddValues","timestamp":"2023-10-19T09:16:46.240Z"}
+{"level":"error","message":"Address","timestamp":"2023-10-19T09:16:46.246Z"}
+{"level":"error","message":"Reason","timestamp":"2023-10-19T09:16:46.247Z"}
+{"level":"error","message":"Role","timestamp":"2023-10-19T09:16:46.248Z"}
+{"level":"error","message":"User","timestamp":"2023-10-19T09:16:46.249Z"}
+{"level":"error","message":"classTag","timestamp":"2023-10-19T09:16:46.250Z"}
+{"level":"error","message":"companyRecord","timestamp":"2023-10-19T09:16:46.251Z"}
+{"level":"error","message":"countryCodeModel","timestamp":"2023-10-19T09:16:46.253Z"}
+{"level":"error","message":"deleteRecord","timestamp":"2023-10-19T09:16:46.254Z"}
+{"level":"error","message":"object","timestamp":"2023-10-19T09:16:46.255Z"}
+{"level":"error","message":"parentJoinKey","timestamp":"2023-10-19T09:16:46.256Z"}
+{"level":"error","message":"phoneRecord","timestamp":"2023-10-19T09:16:46.260Z"}
+{"level":"error","message":"tagDataType","timestamp":"2023-10-19T09:16:46.261Z"}
+{"level":"info","message":"JWT","timestamp":"2023-10-19T09:17:08.079Z"}
+{"level":"info","message":"createUser API:","timestamp":"2023-10-19T09:17:08.080Z"}
+{"level":"info","message":{"companyName":"SHODAT","countryCodeId":98,"isPrimary":true,"phoneNumber":"9588239578"},"timestamp":"2023-10-19T09:17:08.080Z"}
+{"level":"info","message":"Create User","timestamp":"2023-10-19T09:17:08.080Z"}
+{"level":"error","message":"Error in creating user : WHERE parameter \"username\" has invalid \"undefined\" value","stack":"Error: WHERE parameter \"username\" has invalid \"undefined\" value\n    at MySQLQueryGenerator.whereItemQuery (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\dialects\\abstract\\query-generator.js:2184:13)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\dialects\\abstract\\query-generator.js:2173:25\n    at Array.forEach (<anonymous>)\n    at MySQLQueryGenerator.whereItemsQuery (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\dialects\\abstract\\query-generator.js:2171:35)\n    at MySQLQueryGenerator.getWhereConditions (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\dialects\\abstract\\query-generator.js:2583:19)\n    at MySQLQueryGenerator.selectQuery (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\dialects\\abstract\\query-generator.js:1315:28)\n    at QueryInterface.select (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\query-interface.js:1127:27)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1759:34\n    at processImmediate (node:internal/timers:466:21)\nFrom previous event:\n    at Function.findAll (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1757:8)\n    at Function.findOne (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1926:17)\n    at Object.create (webpack-internal:///(api)/./src/helpers/api/repo/users-repo.ts:186:72)\n    at Object.handler [as post] (webpack-internal:///(api)/./src/pages/api/createUsers.ts:39:84)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:33:34)","timestamp":"2023-10-19T09:17:08.083Z"}
+{"level":"info","message":"POST api/createUsers Save Address","timestamp":"2023-10-19T09:17:08.083Z"}
+{"level":"info","message":"POST api/createUsers Save Company records","timestamp":"2023-10-19T09:17:08.084Z"}
+{"level":"info","message":"POST api/createUsers Save Phone records","timestamp":"2023-10-19T09:17:08.084Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-10-19T09:17:56.181Z"}
+{"level":"error","message":"AddClasses","timestamp":"2023-10-19T09:17:56.187Z"}
+{"level":"error","message":"AddValues","timestamp":"2023-10-19T09:17:56.188Z"}
+{"level":"error","message":"Address","timestamp":"2023-10-19T09:17:56.189Z"}
+{"level":"error","message":"Reason","timestamp":"2023-10-19T09:17:56.191Z"}
+{"level":"error","message":"Role","timestamp":"2023-10-19T09:17:56.193Z"}
+{"level":"error","message":"User","timestamp":"2023-10-19T09:17:56.195Z"}
+{"level":"error","message":"classTag","timestamp":"2023-10-19T09:17:56.196Z"}
+{"level":"error","message":"companyRecord","timestamp":"2023-10-19T09:17:56.197Z"}
+{"level":"error","message":"countryCodeModel","timestamp":"2023-10-19T09:17:56.198Z"}
+{"level":"error","message":"deleteRecord","timestamp":"2023-10-19T09:17:56.199Z"}
+{"level":"error","message":"object","timestamp":"2023-10-19T09:17:56.200Z"}
+{"level":"error","message":"parentJoinKey","timestamp":"2023-10-19T09:17:56.201Z"}
+{"level":"error","message":"phoneRecord","timestamp":"2023-10-19T09:17:56.202Z"}
+{"level":"error","message":"tagDataType","timestamp":"2023-10-19T09:17:56.204Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-10-19T09:17:56.231Z"}
+{"level":"error","message":"AddClasses","timestamp":"2023-10-19T09:17:56.252Z"}
+{"level":"error","message":"AddValues","timestamp":"2023-10-19T09:17:56.253Z"}
+{"level":"error","message":"Address","timestamp":"2023-10-19T09:17:56.254Z"}
+{"level":"error","message":"Reason","timestamp":"2023-10-19T09:17:56.256Z"}
+{"level":"error","message":"Role","timestamp":"2023-10-19T09:17:56.258Z"}
+{"level":"error","message":"User","timestamp":"2023-10-19T09:17:56.259Z"}
+{"level":"error","message":"classTag","timestamp":"2023-10-19T09:17:56.261Z"}
+{"level":"error","message":"companyRecord","timestamp":"2023-10-19T09:17:56.262Z"}
+{"level":"error","message":"countryCodeModel","timestamp":"2023-10-19T09:17:56.263Z"}
+{"level":"error","message":"deleteRecord","timestamp":"2023-10-19T09:17:56.264Z"}
+{"level":"error","message":"object","timestamp":"2023-10-19T09:17:56.265Z"}
+{"level":"error","message":"parentJoinKey","timestamp":"2023-10-19T09:17:56.266Z"}
+{"level":"error","message":"phoneRecord","timestamp":"2023-10-19T09:17:56.267Z"}
+{"level":"error","message":"tagDataType","timestamp":"2023-10-19T09:17:56.268Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-10-19T09:18:12.932Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-10-19T09:18:13.021Z"}
+{"level":"error","message":"AddClasses","timestamp":"2023-10-19T09:18:13.498Z"}
+{"level":"error","message":"AddValues","timestamp":"2023-10-19T09:18:13.499Z"}
+{"level":"error","message":"Address","timestamp":"2023-10-19T09:18:13.500Z"}
+{"level":"error","message":"Reason","timestamp":"2023-10-19T09:18:13.501Z"}
+{"level":"error","message":"Role","timestamp":"2023-10-19T09:18:13.502Z"}
+{"level":"error","message":"User","timestamp":"2023-10-19T09:18:13.503Z"}
+{"level":"error","message":"classTag","timestamp":"2023-10-19T09:18:13.504Z"}
+{"level":"error","message":"companyRecord","timestamp":"2023-10-19T09:18:13.505Z"}
+{"level":"error","message":"countryCodeModel","timestamp":"2023-10-19T09:18:13.506Z"}
+{"level":"error","message":"deleteRecord","timestamp":"2023-10-19T09:18:13.508Z"}
+{"level":"error","message":"object","timestamp":"2023-10-19T09:18:13.509Z"}
+{"level":"error","message":"parentJoinKey","timestamp":"2023-10-19T09:18:13.510Z"}
+{"level":"error","message":"phoneRecord","timestamp":"2023-10-19T09:18:13.511Z"}
+{"level":"error","message":"tagDataType","timestamp":"2023-10-19T09:18:13.512Z"}
+{"level":"error","message":"AddClasses","timestamp":"2023-10-19T09:18:13.524Z"}
+{"level":"error","message":"AddValues","timestamp":"2023-10-19T09:18:13.525Z"}
+{"level":"error","message":"Address","timestamp":"2023-10-19T09:18:13.526Z"}
+{"level":"error","message":"Reason","timestamp":"2023-10-19T09:18:13.527Z"}
+{"level":"error","message":"Role","timestamp":"2023-10-19T09:18:13.528Z"}
+{"level":"error","message":"User","timestamp":"2023-10-19T09:18:13.529Z"}
+{"level":"error","message":"classTag","timestamp":"2023-10-19T09:18:13.533Z"}
+{"level":"error","message":"companyRecord","timestamp":"2023-10-19T09:18:13.534Z"}
+{"level":"error","message":"countryCodeModel","timestamp":"2023-10-19T09:18:13.535Z"}
+{"level":"error","message":"deleteRecord","timestamp":"2023-10-19T09:18:13.536Z"}
+{"level":"error","message":"object","timestamp":"2023-10-19T09:18:13.537Z"}
+{"level":"error","message":"parentJoinKey","timestamp":"2023-10-19T09:18:13.538Z"}
+{"level":"error","message":"phoneRecord","timestamp":"2023-10-19T09:18:13.541Z"}
+{"level":"error","message":"tagDataType","timestamp":"2023-10-19T09:18:13.542Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-10-19T09:18:32.998Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-10-19T09:18:33.016Z"}
+{"level":"error","message":"AddClasses","timestamp":"2023-10-19T09:18:34.881Z"}
+{"level":"error","message":"AddValues","timestamp":"2023-10-19T09:18:34.883Z"}
+{"level":"error","message":"Address","timestamp":"2023-10-19T09:18:34.895Z"}
+{"level":"error","message":"Reason","timestamp":"2023-10-19T09:18:34.897Z"}
+{"level":"error","message":"Role","timestamp":"2023-10-19T09:18:34.899Z"}
+{"level":"error","message":"User","timestamp":"2023-10-19T09:18:34.903Z"}
+{"level":"error","message":"classTag","timestamp":"2023-10-19T09:18:34.908Z"}
+{"level":"error","message":"companyRecord","timestamp":"2023-10-19T09:18:34.910Z"}
+{"level":"error","message":"countryCodeModel","timestamp":"2023-10-19T09:18:34.911Z"}
+{"level":"error","message":"deleteRecord","timestamp":"2023-10-19T09:18:34.912Z"}
+{"level":"error","message":"object","timestamp":"2023-10-19T09:18:34.914Z"}
+{"level":"error","message":"parentJoinKey","timestamp":"2023-10-19T09:18:34.915Z"}
+{"level":"error","message":"phoneRecord","timestamp":"2023-10-19T09:18:34.917Z"}
+{"level":"error","message":"tagDataType","timestamp":"2023-10-19T09:18:34.921Z"}
+{"level":"error","message":"AddClasses","timestamp":"2023-10-19T09:18:34.930Z"}
+{"level":"error","message":"AddValues","timestamp":"2023-10-19T09:18:34.931Z"}
+{"level":"error","message":"Address","timestamp":"2023-10-19T09:18:34.932Z"}
+{"level":"error","message":"Reason","timestamp":"2023-10-19T09:18:34.933Z"}
+{"level":"error","message":"Role","timestamp":"2023-10-19T09:18:34.934Z"}
+{"level":"error","message":"User","timestamp":"2023-10-19T09:18:34.938Z"}
+{"level":"error","message":"classTag","timestamp":"2023-10-19T09:18:34.939Z"}
+{"level":"error","message":"companyRecord","timestamp":"2023-10-19T09:18:34.940Z"}
+{"level":"error","message":"countryCodeModel","timestamp":"2023-10-19T09:18:34.941Z"}
+{"level":"error","message":"deleteRecord","timestamp":"2023-10-19T09:18:34.942Z"}
+{"level":"error","message":"object","timestamp":"2023-10-19T09:18:34.943Z"}
+{"level":"error","message":"parentJoinKey","timestamp":"2023-10-19T09:18:34.944Z"}
+{"level":"error","message":"phoneRecord","timestamp":"2023-10-19T09:18:34.949Z"}
+{"level":"error","message":"tagDataType","timestamp":"2023-10-19T09:18:34.951Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-10-19T09:18:36.901Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-10-19T09:18:36.904Z"}
+{"level":"error","message":"AddClasses","timestamp":"2023-10-19T09:18:37.642Z"}
+{"level":"error","message":"AddValues","timestamp":"2023-10-19T09:18:37.644Z"}
+{"level":"error","message":"Address","timestamp":"2023-10-19T09:18:37.645Z"}
+{"level":"error","message":"Reason","timestamp":"2023-10-19T09:18:37.646Z"}
+{"level":"error","message":"Role","timestamp":"2023-10-19T09:18:37.647Z"}
+{"level":"error","message":"User","timestamp":"2023-10-19T09:18:37.648Z"}
+{"level":"error","message":"classTag","timestamp":"2023-10-19T09:18:37.649Z"}
+{"level":"error","message":"companyRecord","timestamp":"2023-10-19T09:18:37.651Z"}
+{"level":"error","message":"countryCodeModel","timestamp":"2023-10-19T09:18:37.655Z"}
+{"level":"error","message":"deleteRecord","timestamp":"2023-10-19T09:18:37.657Z"}
+{"level":"error","message":"object","timestamp":"2023-10-19T09:18:37.658Z"}
+{"level":"error","message":"parentJoinKey","timestamp":"2023-10-19T09:18:37.659Z"}
+{"level":"error","message":"phoneRecord","timestamp":"2023-10-19T09:18:37.661Z"}
+{"level":"error","message":"tagDataType","timestamp":"2023-10-19T09:18:37.662Z"}
+{"level":"error","message":"AddClasses","timestamp":"2023-10-19T09:18:37.675Z"}
+{"level":"error","message":"AddValues","timestamp":"2023-10-19T09:18:37.676Z"}
+{"level":"error","message":"Address","timestamp":"2023-10-19T09:18:37.677Z"}
+{"level":"error","message":"Reason","timestamp":"2023-10-19T09:18:37.678Z"}
+{"level":"error","message":"Role","timestamp":"2023-10-19T09:18:37.679Z"}
+{"level":"error","message":"User","timestamp":"2023-10-19T09:18:37.680Z"}
+{"level":"error","message":"classTag","timestamp":"2023-10-19T09:18:37.682Z"}
+{"level":"error","message":"companyRecord","timestamp":"2023-10-19T09:18:37.684Z"}
+{"level":"error","message":"countryCodeModel","timestamp":"2023-10-19T09:18:37.685Z"}
+{"level":"error","message":"deleteRecord","timestamp":"2023-10-19T09:18:37.686Z"}
+{"level":"error","message":"object","timestamp":"2023-10-19T09:18:37.688Z"}
+{"level":"error","message":"parentJoinKey","timestamp":"2023-10-19T09:18:37.689Z"}
+{"level":"error","message":"phoneRecord","timestamp":"2023-10-19T09:18:37.690Z"}
+{"level":"error","message":"tagDataType","timestamp":"2023-10-19T09:18:37.691Z"}
+{"level":"info","message":"JWT","timestamp":"2023-10-19T09:19:12.367Z"}
+{"level":"info","message":"Error Handler","timestamp":"2023-10-19T09:19:12.377Z"}
+{"level":"info","message":"JWT","timestamp":"2023-10-19T09:19:15.971Z"}
+{"level":"info","message":"Error Handler","timestamp":"2023-10-19T09:19:15.972Z"}
+{"level":"info","message":"JWT","timestamp":"2023-10-19T09:20:16.105Z"}
+{"level":"info","message":"Error Handler","timestamp":"2023-10-19T09:20:16.113Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-10-19T09:20:16.173Z"}
+{"level":"error","message":"AddClasses","timestamp":"2023-10-19T09:20:18.189Z"}
+{"level":"error","message":"AddValues","timestamp":"2023-10-19T09:20:18.189Z"}
+{"level":"error","message":"Address","timestamp":"2023-10-19T09:20:18.190Z"}
+{"level":"error","message":"Reason","timestamp":"2023-10-19T09:20:18.191Z"}
+{"level":"error","message":"Role","timestamp":"2023-10-19T09:20:18.192Z"}
+{"level":"error","message":"User","timestamp":"2023-10-19T09:20:18.193Z"}
+{"level":"error","message":"classTag","timestamp":"2023-10-19T09:20:18.194Z"}
+{"level":"error","message":"companyRecord","timestamp":"2023-10-19T09:20:18.194Z"}
+{"level":"error","message":"countryCodeModel","timestamp":"2023-10-19T09:20:18.195Z"}
+{"level":"error","message":"deleteRecord","timestamp":"2023-10-19T09:20:18.196Z"}
+{"level":"error","message":"object","timestamp":"2023-10-19T09:20:18.197Z"}
+{"level":"error","message":"parentJoinKey","timestamp":"2023-10-19T09:20:18.197Z"}
+{"level":"error","message":"phoneRecord","timestamp":"2023-10-19T09:20:18.198Z"}
+{"level":"error","message":"tagDataType","timestamp":"2023-10-19T09:20:18.199Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-10-19T09:20:22.819Z"}
+{"level":"error","message":"AddClasses","timestamp":"2023-10-19T09:20:23.481Z"}
+{"level":"error","message":"AddValues","timestamp":"2023-10-19T09:20:23.483Z"}
+{"level":"error","message":"Address","timestamp":"2023-10-19T09:20:23.484Z"}
+{"level":"error","message":"Reason","timestamp":"2023-10-19T09:20:23.486Z"}
+{"level":"error","message":"Role","timestamp":"2023-10-19T09:20:23.488Z"}
+{"level":"error","message":"User","timestamp":"2023-10-19T09:20:23.489Z"}
+{"level":"error","message":"classTag","timestamp":"2023-10-19T09:20:23.490Z"}
+{"level":"error","message":"companyRecord","timestamp":"2023-10-19T09:20:23.491Z"}
+{"level":"error","message":"countryCodeModel","timestamp":"2023-10-19T09:20:23.492Z"}
+{"level":"error","message":"deleteRecord","timestamp":"2023-10-19T09:20:23.494Z"}
+{"level":"error","message":"object","timestamp":"2023-10-19T09:20:23.498Z"}
+{"level":"error","message":"parentJoinKey","timestamp":"2023-10-19T09:20:23.499Z"}
+{"level":"error","message":"phoneRecord","timestamp":"2023-10-19T09:20:23.500Z"}
+{"level":"error","message":"tagDataType","timestamp":"2023-10-19T09:20:23.506Z"}
+{"level":"info","message":"JWT","timestamp":"2023-10-19T09:20:28.676Z"}
+{"level":"info","message":"Error Handler","timestamp":"2023-10-19T09:20:28.677Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-10-19T09:20:28.747Z"}
+{"level":"error","message":"AddClasses","timestamp":"2023-10-19T09:20:34.790Z"}
+{"level":"error","message":"AddValues","timestamp":"2023-10-19T09:20:34.791Z"}
+{"level":"error","message":"Address","timestamp":"2023-10-19T09:20:34.791Z"}
+{"level":"error","message":"Reason","timestamp":"2023-10-19T09:20:34.792Z"}
+{"level":"error","message":"Role","timestamp":"2023-10-19T09:20:34.793Z"}
+{"level":"error","message":"User","timestamp":"2023-10-19T09:20:34.794Z"}
+{"level":"error","message":"classTag","timestamp":"2023-10-19T09:20:34.795Z"}
+{"level":"error","message":"companyRecord","timestamp":"2023-10-19T09:20:34.796Z"}
+{"level":"error","message":"countryCodeModel","timestamp":"2023-10-19T09:20:34.796Z"}
+{"level":"error","message":"deleteRecord","timestamp":"2023-10-19T09:20:34.798Z"}
+{"level":"error","message":"object","timestamp":"2023-10-19T09:20:34.799Z"}
+{"level":"error","message":"parentJoinKey","timestamp":"2023-10-19T09:20:34.800Z"}
+{"level":"error","message":"phoneRecord","timestamp":"2023-10-19T09:20:34.801Z"}
+{"level":"error","message":"tagDataType","timestamp":"2023-10-19T09:20:34.803Z"}
+{"level":"info","message":"JWT","timestamp":"2023-10-19T09:20:36.702Z"}
+{"level":"info","message":"Error Handler","timestamp":"2023-10-19T09:20:36.705Z"}
+{"level":"info","message":"JWT","timestamp":"2023-10-19T09:20:51.009Z"}
+{"level":"info","message":"Error Handler","timestamp":"2023-10-19T09:20:51.011Z"}
+{"level":"info","message":"JWT","timestamp":"2023-10-19T09:21:26.256Z"}
+{"level":"info","message":"Error Handler","timestamp":"2023-10-19T09:21:26.259Z"}
+{"level":"info","message":"JWT","timestamp":"2023-10-19T09:21:26.929Z"}
+{"level":"info","message":"Error Handler","timestamp":"2023-10-19T09:21:26.930Z"}
+{"level":"info","message":"JWT","timestamp":"2023-10-19T09:21:54.269Z"}
+{"level":"info","message":"Error Handler","timestamp":"2023-10-19T09:21:54.270Z"}
+{"level":"info","message":"JWT","timestamp":"2023-10-19T09:21:57.568Z"}
+{"level":"info","message":"createUser API:","timestamp":"2023-10-19T09:21:57.568Z"}
+{"level":"info","message":{"companyName":"SHODAT","countryCodeId":98,"isPrimary":true,"phoneNumber":"9981153021"},"timestamp":"2023-10-19T09:21:57.569Z"}
+{"level":"info","message":"Create User","timestamp":"2023-10-19T09:21:57.572Z"}
+{"level":"info","message":"POST api/createUsers Save Address","timestamp":"2023-10-19T09:21:57.913Z"}
+{"level":"info","message":"POST api/createUsers Save Company records","timestamp":"2023-10-19T09:21:58.022Z"}
+{"level":"info","message":"POST api/createUsers Save Phone records","timestamp":"2023-10-19T09:21:58.118Z"}
+{"level":"info","message":"JWT","timestamp":"2023-10-19T09:21:58.251Z"}
+{"level":"info","message":"Error Handler","timestamp":"2023-10-19T09:21:58.252Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-10-19T09:24:39.581Z"}
+{"level":"error","message":"AddClasses","timestamp":"2023-10-19T09:24:39.670Z"}
+{"level":"error","message":"AddValues","timestamp":"2023-10-19T09:24:39.672Z"}
+{"level":"error","message":"Address","timestamp":"2023-10-19T09:24:39.675Z"}
+{"level":"error","message":"Reason","timestamp":"2023-10-19T09:24:39.677Z"}
+{"level":"error","message":"Role","timestamp":"2023-10-19T09:24:39.682Z"}
+{"level":"error","message":"User","timestamp":"2023-10-19T09:24:39.685Z"}
+{"level":"error","message":"classTag","timestamp":"2023-10-19T09:24:39.687Z"}
+{"level":"error","message":"companyRecord","timestamp":"2023-10-19T09:24:39.689Z"}
+{"level":"error","message":"countryCodeModel","timestamp":"2023-10-19T09:24:39.691Z"}
+{"level":"error","message":"deleteRecord","timestamp":"2023-10-19T09:24:39.698Z"}
+{"level":"error","message":"object","timestamp":"2023-10-19T09:24:39.701Z"}
+{"level":"error","message":"parentJoinKey","timestamp":"2023-10-19T09:24:39.704Z"}
+{"level":"error","message":"phoneRecord","timestamp":"2023-10-19T09:24:39.707Z"}
+{"level":"error","message":"tagDataType","timestamp":"2023-10-19T09:24:39.708Z"}
+{"level":"info","message":"JWT","timestamp":"2023-10-19T09:24:39.722Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-10-19T09:26:23.281Z"}
+{"level":"error","message":"AddClasses","timestamp":"2023-10-19T09:26:23.289Z"}
+{"level":"error","message":"AddValues","timestamp":"2023-10-19T09:26:23.290Z"}
+{"level":"error","message":"Address","timestamp":"2023-10-19T09:26:23.293Z"}
+{"level":"error","message":"Reason","timestamp":"2023-10-19T09:26:23.295Z"}
+{"level":"error","message":"Role","timestamp":"2023-10-19T09:26:23.297Z"}
+{"level":"error","message":"User","timestamp":"2023-10-19T09:26:23.298Z"}
+{"level":"error","message":"classTag","timestamp":"2023-10-19T09:26:23.300Z"}
+{"level":"error","message":"companyRecord","timestamp":"2023-10-19T09:26:23.302Z"}
+{"level":"error","message":"countryCodeModel","timestamp":"2023-10-19T09:26:23.304Z"}
+{"level":"error","message":"deleteRecord","timestamp":"2023-10-19T09:26:23.306Z"}
+{"level":"error","message":"object","timestamp":"2023-10-19T09:26:23.308Z"}
+{"level":"error","message":"parentJoinKey","timestamp":"2023-10-19T09:26:23.314Z"}
+{"level":"error","message":"phoneRecord","timestamp":"2023-10-19T09:26:23.315Z"}
+{"level":"error","message":"tagDataType","timestamp":"2023-10-19T09:26:23.318Z"}
+{"level":"info","message":"JWT","timestamp":"2023-10-19T09:26:23.324Z"}
+{"level":"info","message":"Error Handler","timestamp":"2023-10-19T09:26:23.332Z"}
+{"level":"info","message":"JWT","timestamp":"2023-10-19T09:26:46.735Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-10-19T09:27:25.342Z"}
+{"level":"error","message":"AddClasses","timestamp":"2023-10-19T09:27:25.353Z"}
+{"level":"error","message":"AddValues","timestamp":"2023-10-19T09:27:25.354Z"}
+{"level":"error","message":"Address","timestamp":"2023-10-19T09:27:25.356Z"}
+{"level":"error","message":"Reason","timestamp":"2023-10-19T09:27:25.357Z"}
+{"level":"error","message":"Role","timestamp":"2023-10-19T09:27:25.359Z"}
+{"level":"error","message":"User","timestamp":"2023-10-19T09:27:25.360Z"}
+{"level":"error","message":"classTag","timestamp":"2023-10-19T09:27:25.362Z"}
+{"level":"error","message":"companyRecord","timestamp":"2023-10-19T09:27:25.364Z"}
+{"level":"error","message":"countryCodeModel","timestamp":"2023-10-19T09:27:25.367Z"}
+{"level":"error","message":"deleteRecord","timestamp":"2023-10-19T09:27:25.369Z"}
+{"level":"error","message":"object","timestamp":"2023-10-19T09:27:25.372Z"}
+{"level":"error","message":"parentJoinKey","timestamp":"2023-10-19T09:27:25.373Z"}
+{"level":"error","message":"phoneRecord","timestamp":"2023-10-19T09:27:25.375Z"}
+{"level":"error","message":"tagDataType","timestamp":"2023-10-19T09:27:25.376Z"}
+{"level":"info","message":"JWT","timestamp":"2023-10-19T09:27:25.390Z"}
+{"level":"info","message":"Update User Info","timestamp":"2023-10-19T09:27:25.393Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-10-19T09:29:39.965Z"}
+{"level":"error","message":"AddClasses","timestamp":"2023-10-19T09:29:39.975Z"}
+{"level":"error","message":"AddValues","timestamp":"2023-10-19T09:29:39.976Z"}
+{"level":"error","message":"Address","timestamp":"2023-10-19T09:29:39.978Z"}
+{"level":"error","message":"Reason","timestamp":"2023-10-19T09:29:39.981Z"}
+{"level":"error","message":"Role","timestamp":"2023-10-19T09:29:39.982Z"}
+{"level":"error","message":"User","timestamp":"2023-10-19T09:29:39.984Z"}
+{"level":"error","message":"classTag","timestamp":"2023-10-19T09:29:39.985Z"}
+{"level":"error","message":"companyRecord","timestamp":"2023-10-19T09:29:39.988Z"}
+{"level":"error","message":"countryCodeModel","timestamp":"2023-10-19T09:29:39.990Z"}
+{"level":"error","message":"deleteRecord","timestamp":"2023-10-19T09:29:39.992Z"}
+{"level":"error","message":"object","timestamp":"2023-10-19T09:29:39.993Z"}
+{"level":"error","message":"parentJoinKey","timestamp":"2023-10-19T09:29:39.994Z"}
+{"level":"error","message":"phoneRecord","timestamp":"2023-10-19T09:29:39.995Z"}
+{"level":"error","message":"tagDataType","timestamp":"2023-10-19T09:29:39.996Z"}
+{"level":"info","message":"JWT","timestamp":"2023-10-19T09:29:40.007Z"}
+{"level":"info","message":"Error Handler","timestamp":"2023-10-19T09:29:40.008Z"}
+{"level":"info","message":"JWT","timestamp":"2023-10-19T09:30:19.850Z"}
+{"level":"info","message":"Create Delete Record Repo:","timestamp":"2023-10-19T09:30:19.974Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-10-19T09:31:13.984Z"}
+{"level":"error","message":"AddClasses","timestamp":"2023-10-19T09:31:13.999Z"}
+{"level":"error","message":"AddValues","timestamp":"2023-10-19T09:31:14.000Z"}
+{"level":"error","message":"Address","timestamp":"2023-10-19T09:31:14.001Z"}
+{"level":"error","message":"Reason","timestamp":"2023-10-19T09:31:14.003Z"}
+{"level":"error","message":"Role","timestamp":"2023-10-19T09:31:14.004Z"}
+{"level":"error","message":"User","timestamp":"2023-10-19T09:31:14.005Z"}
+{"level":"error","message":"classTag","timestamp":"2023-10-19T09:31:14.007Z"}
+{"level":"error","message":"companyRecord","timestamp":"2023-10-19T09:31:14.010Z"}
+{"level":"error","message":"countryCodeModel","timestamp":"2023-10-19T09:31:14.013Z"}
+{"level":"error","message":"deleteRecord","timestamp":"2023-10-19T09:31:14.014Z"}
+{"level":"error","message":"object","timestamp":"2023-10-19T09:31:14.015Z"}
+{"level":"error","message":"parentJoinKey","timestamp":"2023-10-19T09:31:14.016Z"}
+{"level":"error","message":"phoneRecord","timestamp":"2023-10-19T09:31:14.017Z"}
+{"level":"error","message":"tagDataType","timestamp":"2023-10-19T09:31:14.019Z"}
+{"level":"info","message":"JWT","timestamp":"2023-10-19T09:31:14.036Z"}
+{"level":"info","message":"JWT","timestamp":"2023-10-19T09:31:14.052Z"}
+{"level":"info","message":"Error Handler","timestamp":"2023-10-19T09:31:14.053Z"}
+{"level":"info","message":"Error Handler","timestamp":"2023-10-19T09:31:14.055Z"}
+{"level":"info","message":"JWT","timestamp":"2023-10-19T09:31:14.161Z"}
+{"level":"info","message":"Error Handler","timestamp":"2023-10-19T09:31:14.162Z"}
+{"level":"info","message":"JWT","timestamp":"2023-10-19T09:31:14.164Z"}
+{"level":"info","message":"Error Handler","timestamp":"2023-10-19T09:31:14.165Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-10-19T09:31:28.784Z"}
+{"level":"error","message":"AddClasses","timestamp":"2023-10-19T09:31:28.796Z"}
+{"level":"error","message":"AddValues","timestamp":"2023-10-19T09:31:28.798Z"}
+{"level":"error","message":"Address","timestamp":"2023-10-19T09:31:28.799Z"}
+{"level":"error","message":"Reason","timestamp":"2023-10-19T09:31:28.800Z"}
+{"level":"error","message":"Role","timestamp":"2023-10-19T09:31:28.801Z"}
+{"level":"error","message":"User","timestamp":"2023-10-19T09:31:28.803Z"}
+{"level":"error","message":"classTag","timestamp":"2023-10-19T09:31:28.803Z"}
+{"level":"error","message":"companyRecord","timestamp":"2023-10-19T09:31:28.805Z"}
+{"level":"error","message":"countryCodeModel","timestamp":"2023-10-19T09:31:28.805Z"}
+{"level":"error","message":"deleteRecord","timestamp":"2023-10-19T09:31:28.806Z"}
+{"level":"error","message":"object","timestamp":"2023-10-19T09:31:28.809Z"}
+{"level":"error","message":"parentJoinKey","timestamp":"2023-10-19T09:31:28.814Z"}
+{"level":"error","message":"phoneRecord","timestamp":"2023-10-19T09:31:28.815Z"}
+{"level":"error","message":"tagDataType","timestamp":"2023-10-19T09:31:28.816Z"}
+{"level":"info","message":"JWT","timestamp":"2023-10-19T09:31:28.820Z"}
+{"level":"info","message":"Error Handler","timestamp":"2023-10-19T09:31:28.821Z"}
+{"level":"info","message":"JWT","timestamp":"2023-10-19T09:31:28.853Z"}
+{"level":"info","message":"Error Handler","timestamp":"2023-10-19T09:31:28.854Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-10-19T09:31:35.435Z"}
+{"level":"error","message":"AddClasses","timestamp":"2023-10-19T09:31:35.448Z"}
+{"level":"error","message":"AddValues","timestamp":"2023-10-19T09:31:35.449Z"}
+{"level":"error","message":"Address","timestamp":"2023-10-19T09:31:35.450Z"}
+{"level":"error","message":"Reason","timestamp":"2023-10-19T09:31:35.451Z"}
+{"level":"error","message":"Role","timestamp":"2023-10-19T09:31:35.452Z"}
+{"level":"error","message":"User","timestamp":"2023-10-19T09:31:35.457Z"}
+{"level":"error","message":"classTag","timestamp":"2023-10-19T09:31:35.458Z"}
+{"level":"error","message":"companyRecord","timestamp":"2023-10-19T09:31:35.459Z"}
+{"level":"error","message":"countryCodeModel","timestamp":"2023-10-19T09:31:35.460Z"}
+{"level":"error","message":"deleteRecord","timestamp":"2023-10-19T09:31:35.461Z"}
+{"level":"error","message":"object","timestamp":"2023-10-19T09:31:35.464Z"}
+{"level":"error","message":"parentJoinKey","timestamp":"2023-10-19T09:31:35.465Z"}
+{"level":"error","message":"phoneRecord","timestamp":"2023-10-19T09:31:35.466Z"}
+{"level":"error","message":"tagDataType","timestamp":"2023-10-19T09:31:35.467Z"}
+{"level":"info","message":"JWT","timestamp":"2023-10-19T09:31:35.479Z"}
+{"level":"info","message":"Error Handler","timestamp":"2023-10-19T09:31:35.482Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-10-19T09:31:35.624Z"}
+{"level":"error","message":"AddClasses","timestamp":"2023-10-19T09:31:35.635Z"}
+{"level":"error","message":"AddValues","timestamp":"2023-10-19T09:31:35.636Z"}
+{"level":"error","message":"Address","timestamp":"2023-10-19T09:31:35.639Z"}
+{"level":"error","message":"Reason","timestamp":"2023-10-19T09:31:35.640Z"}
+{"level":"error","message":"Role","timestamp":"2023-10-19T09:31:35.641Z"}
+{"level":"error","message":"User","timestamp":"2023-10-19T09:31:35.642Z"}
+{"level":"error","message":"classTag","timestamp":"2023-10-19T09:31:35.643Z"}
+{"level":"error","message":"companyRecord","timestamp":"2023-10-19T09:31:35.644Z"}
+{"level":"error","message":"countryCodeModel","timestamp":"2023-10-19T09:31:35.646Z"}
+{"level":"error","message":"deleteRecord","timestamp":"2023-10-19T09:31:35.647Z"}
+{"level":"error","message":"object","timestamp":"2023-10-19T09:31:35.648Z"}
+{"level":"error","message":"parentJoinKey","timestamp":"2023-10-19T09:31:35.649Z"}
+{"level":"error","message":"phoneRecord","timestamp":"2023-10-19T09:31:35.651Z"}
+{"level":"error","message":"tagDataType","timestamp":"2023-10-19T09:31:35.653Z"}
+{"level":"info","message":"JWT","timestamp":"2023-10-19T09:31:35.664Z"}
+{"level":"info","message":"Error Handler","timestamp":"2023-10-19T09:31:35.665Z"}
+{"level":"info","message":"JWT","timestamp":"2023-10-19T09:31:40.535Z"}
+{"level":"info","message":"Error Handler","timestamp":"2023-10-19T09:31:40.536Z"}
+{"level":"info","message":"JWT","timestamp":"2023-10-19T09:31:40.592Z"}
+{"level":"info","message":"Error Handler","timestamp":"2023-10-19T09:31:40.593Z"}
+{"level":"info","message":"JWT","timestamp":"2023-10-19T09:31:43.504Z"}
+{"level":"info","message":"Error Handler","timestamp":"2023-10-19T09:31:43.505Z"}
+{"level":"info","message":"JWT","timestamp":"2023-10-19T09:31:43.540Z"}
+{"level":"info","message":"Error Handler","timestamp":"2023-10-19T09:31:43.541Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-10-19T15:10:40.974Z"}
+{"level":"error","message":"AddClasses","timestamp":"2023-10-19T15:10:40.987Z"}
+{"level":"error","message":"AddValues","timestamp":"2023-10-19T15:10:40.988Z"}
+{"level":"error","message":"Address","timestamp":"2023-10-19T15:10:40.990Z"}
+{"level":"error","message":"Reason","timestamp":"2023-10-19T15:10:40.991Z"}
+{"level":"error","message":"Role","timestamp":"2023-10-19T15:10:40.992Z"}
+{"level":"error","message":"User","timestamp":"2023-10-19T15:10:40.994Z"}
+{"level":"error","message":"classTag","timestamp":"2023-10-19T15:10:40.995Z"}
+{"level":"error","message":"companyRecord","timestamp":"2023-10-19T15:10:40.997Z"}
+{"level":"error","message":"countryCodeModel","timestamp":"2023-10-19T15:10:40.999Z"}
+{"level":"error","message":"deleteRecord","timestamp":"2023-10-19T15:10:41.000Z"}
+{"level":"error","message":"object","timestamp":"2023-10-19T15:10:41.001Z"}
+{"level":"error","message":"parentJoinKey","timestamp":"2023-10-19T15:10:41.018Z"}
+{"level":"error","message":"phoneRecord","timestamp":"2023-10-19T15:10:41.019Z"}
+{"level":"error","message":"tagDataType","timestamp":"2023-10-19T15:10:41.020Z"}
+{"level":"info","message":"JWT","timestamp":"2023-10-19T15:10:41.024Z"}
+{"level":"info","message":"Error Handler","timestamp":"2023-10-19T15:10:41.027Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-10-19T15:11:38.252Z"}
+{"level":"error","message":"AddClasses","timestamp":"2023-10-19T15:11:38.260Z"}
+{"level":"error","message":"AddValues","timestamp":"2023-10-19T15:11:38.261Z"}
+{"level":"error","message":"Address","timestamp":"2023-10-19T15:11:38.263Z"}
+{"level":"error","message":"Reason","timestamp":"2023-10-19T15:11:38.264Z"}
+{"level":"error","message":"Role","timestamp":"2023-10-19T15:11:38.265Z"}
+{"level":"error","message":"User","timestamp":"2023-10-19T15:11:38.266Z"}
+{"level":"error","message":"classTag","timestamp":"2023-10-19T15:11:38.267Z"}
+{"level":"error","message":"companyRecord","timestamp":"2023-10-19T15:11:38.268Z"}
+{"level":"error","message":"countryCodeModel","timestamp":"2023-10-19T15:11:38.270Z"}
+{"level":"error","message":"deleteRecord","timestamp":"2023-10-19T15:11:38.271Z"}
+{"level":"error","message":"object","timestamp":"2023-10-19T15:11:38.273Z"}
+{"level":"error","message":"parentJoinKey","timestamp":"2023-10-19T15:11:38.275Z"}
+{"level":"error","message":"phoneRecord","timestamp":"2023-10-19T15:11:38.276Z"}
+{"level":"error","message":"tagDataType","timestamp":"2023-10-19T15:11:38.278Z"}
+{"level":"info","message":"JWT","timestamp":"2023-10-19T15:11:38.287Z"}
+{"level":"info","message":"Error Handler","timestamp":"2023-10-19T15:11:38.288Z"}
+{"level":"info","message":"JWT","timestamp":"2023-10-19T15:11:38.292Z"}
+{"level":"info","message":"Error Handler","timestamp":"2023-10-19T15:11:38.293Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-10-19T15:14:29.908Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-10-19T15:14:29.916Z"}
+{"level":"error","message":"AddClasses","timestamp":"2023-10-19T15:14:29.922Z"}
+{"level":"error","message":"AddValues","timestamp":"2023-10-19T15:14:29.924Z"}
+{"level":"error","message":"Address","timestamp":"2023-10-19T15:14:29.927Z"}
+{"level":"error","message":"Reason","timestamp":"2023-10-19T15:14:29.928Z"}
+{"level":"error","message":"Role","timestamp":"2023-10-19T15:14:29.929Z"}
+{"level":"error","message":"User","timestamp":"2023-10-19T15:14:29.931Z"}
+{"level":"error","message":"classTag","timestamp":"2023-10-19T15:14:29.932Z"}
+{"level":"error","message":"companyRecord","timestamp":"2023-10-19T15:14:29.933Z"}
+{"level":"error","message":"countryCodeModel","timestamp":"2023-10-19T15:14:29.934Z"}
+{"level":"error","message":"deleteRecord","timestamp":"2023-10-19T15:14:29.935Z"}
+{"level":"error","message":"object","timestamp":"2023-10-19T15:14:29.936Z"}
+{"level":"error","message":"parentJoinKey","timestamp":"2023-10-19T15:14:29.937Z"}
+{"level":"error","message":"phoneRecord","timestamp":"2023-10-19T15:14:29.938Z"}
+{"level":"error","message":"tagDataType","timestamp":"2023-10-19T15:14:29.939Z"}
+{"level":"info","message":"JWT","timestamp":"2023-10-19T15:14:29.945Z"}
+{"level":"info","message":"Error Handler","timestamp":"2023-10-19T15:14:29.947Z"}
+{"level":"error","message":"AddClasses","timestamp":"2023-10-19T15:14:29.954Z"}
+{"level":"error","message":"AddValues","timestamp":"2023-10-19T15:14:29.956Z"}
+{"level":"error","message":"Address","timestamp":"2023-10-19T15:14:29.969Z"}
+{"level":"error","message":"Reason","timestamp":"2023-10-19T15:14:29.973Z"}
+{"level":"error","message":"Role","timestamp":"2023-10-19T15:14:29.980Z"}
+{"level":"error","message":"User","timestamp":"2023-10-19T15:14:29.981Z"}
+{"level":"error","message":"classTag","timestamp":"2023-10-19T15:14:29.982Z"}
+{"level":"error","message":"companyRecord","timestamp":"2023-10-19T15:14:29.986Z"}
+{"level":"error","message":"countryCodeModel","timestamp":"2023-10-19T15:14:29.993Z"}
+{"level":"error","message":"deleteRecord","timestamp":"2023-10-19T15:14:29.994Z"}
+{"level":"error","message":"object","timestamp":"2023-10-19T15:14:30.000Z"}
+{"level":"error","message":"parentJoinKey","timestamp":"2023-10-19T15:14:30.023Z"}
+{"level":"error","message":"phoneRecord","timestamp":"2023-10-19T15:14:30.031Z"}
+{"level":"error","message":"tagDataType","timestamp":"2023-10-19T15:14:30.035Z"}
+{"level":"info","message":"JWT","timestamp":"2023-10-19T15:14:30.035Z"}
+{"level":"info","message":"Error Handler","timestamp":"2023-10-19T15:14:30.038Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-10-19T15:23:32.268Z"}
+{"level":"error","message":"AddClasses","timestamp":"2023-10-19T15:23:32.278Z"}
+{"level":"error","message":"AddValues","timestamp":"2023-10-19T15:23:32.279Z"}
+{"level":"error","message":"Address","timestamp":"2023-10-19T15:23:32.281Z"}
+{"level":"error","message":"Reason","timestamp":"2023-10-19T15:23:32.281Z"}
+{"level":"error","message":"Role","timestamp":"2023-10-19T15:23:32.282Z"}
+{"level":"error","message":"User","timestamp":"2023-10-19T15:23:32.283Z"}
+{"level":"error","message":"classTag","timestamp":"2023-10-19T15:23:32.285Z"}
+{"level":"error","message":"companyRecord","timestamp":"2023-10-19T15:23:32.287Z"}
+{"level":"error","message":"countryCodeModel","timestamp":"2023-10-19T15:23:32.288Z"}
+{"level":"error","message":"deleteRecord","timestamp":"2023-10-19T15:23:32.289Z"}
+{"level":"error","message":"object","timestamp":"2023-10-19T15:23:32.290Z"}
+{"level":"error","message":"parentJoinKey","timestamp":"2023-10-19T15:23:32.291Z"}
+{"level":"error","message":"phoneRecord","timestamp":"2023-10-19T15:23:32.292Z"}
+{"level":"error","message":"tagDataType","timestamp":"2023-10-19T15:23:32.293Z"}
+{"level":"info","message":"JWT","timestamp":"2023-10-19T15:23:32.298Z"}
+{"level":"info","message":"createUser API:","timestamp":"2023-10-19T15:23:32.299Z"}
+{"level":"info","message":{"companyName":"Shodat","dateCreated":"2023-10-19 15:23:31","dateModified":"2023-10-19 15:23:31","phoneNumber":"+919571373757","role":"admin","terms":true,"userID":5},"timestamp":"2023-10-19T15:23:32.300Z"}
+{"level":"info","message":"Create User","timestamp":"2023-10-19T15:23:32.301Z"}
+{"level":"info","message":"POST api/createUsers Save Address","timestamp":"2023-10-19T15:23:32.492Z"}
+{"errors":[{"instance":{"createdAt":"2023-10-19T15:23:32.497Z","id":null,"updatedAt":"2023-10-19T15:23:32.497Z","userId":2},"message":"Address.address cannot be null","origin":"CORE","path":"address","type":"notNull Violation","validatorArgs":[],"validatorKey":"is_null","validatorName":null,"value":null}],"level":"error","message":"Cant Save Address notNull Violation: Address.address cannot be null","name":"SequelizeValidationError","stack":"SequelizeValidationError: notNull Violation: Address.address cannot be null\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\instance-validator.js:74:15\nFrom previous event:\n    at InstanceValidator._validate (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\instance-validator.js:72:8)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\instance-validator.js:107:14\n    at processImmediate (node:internal/timers:466:21)\nFrom previous event:\n    at InstanceValidator._validateAndRunHooks (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\instance-validator.js:106:8)\n    at InstanceValidator.validate (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\instance-validator.js:90:38)\n    at model.validate (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:4140:49)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:3905:21\nFrom previous event:\n    at model.save (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:3902:23)\n    at Object.create (webpack-internal:///(api)/./src/helpers/api/repo/address-repo.ts:28:36)\n    at async Object.handler [as post] (webpack-internal:///(api)/./src/pages/api/createUsers.ts:49:29)\n    at async eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:33:13)","timestamp":"2023-10-19T15:23:32.501Z"}
+{"level":"info","message":"POST api/createUsers Save Company records","timestamp":"2023-10-19T15:23:32.502Z"}
+{"level":"info","message":"POST api/createUsers Save Phone records","timestamp":"2023-10-19T15:23:32.557Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-10-19T15:28:16.699Z"}
+{"level":"error","message":"AddClasses","timestamp":"2023-10-19T15:28:16.705Z"}
+{"level":"error","message":"AddValues","timestamp":"2023-10-19T15:28:16.706Z"}
+{"level":"error","message":"Address","timestamp":"2023-10-19T15:28:16.709Z"}
+{"level":"error","message":"Reason","timestamp":"2023-10-19T15:28:16.710Z"}
+{"level":"error","message":"Role","timestamp":"2023-10-19T15:28:16.711Z"}
+{"level":"error","message":"User","timestamp":"2023-10-19T15:28:16.712Z"}
+{"level":"error","message":"classTag","timestamp":"2023-10-19T15:28:16.714Z"}
+{"level":"error","message":"companyRecord","timestamp":"2023-10-19T15:28:16.716Z"}
+{"level":"error","message":"countryCodeModel","timestamp":"2023-10-19T15:28:16.717Z"}
+{"level":"error","message":"deleteRecord","timestamp":"2023-10-19T15:28:16.718Z"}
+{"level":"error","message":"object","timestamp":"2023-10-19T15:28:16.720Z"}
+{"level":"error","message":"parentJoinKey","timestamp":"2023-10-19T15:28:16.720Z"}
+{"level":"error","message":"phoneRecord","timestamp":"2023-10-19T15:28:16.721Z"}
+{"level":"error","message":"tagDataType","timestamp":"2023-10-19T15:28:16.722Z"}
+{"level":"info","message":"JWT","timestamp":"2023-10-19T15:28:16.735Z"}
+{"level":"info","message":"GET all users","timestamp":"2023-10-19T15:28:16.741Z"}
+{"level":"info","message":"JWT","timestamp":"2023-10-19T15:29:22.179Z"}
+{"level":"info","message":"GET all users","timestamp":"2023-10-19T15:29:22.180Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-10-19T15:39:33.737Z"}
+{"level":"error","message":"AddClasses","timestamp":"2023-10-19T15:39:33.742Z"}
+{"level":"error","message":"AddValues","timestamp":"2023-10-19T15:39:33.743Z"}
+{"level":"error","message":"Address","timestamp":"2023-10-19T15:39:33.745Z"}
+{"level":"error","message":"Reason","timestamp":"2023-10-19T15:39:33.746Z"}
+{"level":"error","message":"Role","timestamp":"2023-10-19T15:39:33.746Z"}
+{"level":"error","message":"User","timestamp":"2023-10-19T15:39:33.747Z"}
+{"level":"error","message":"classTag","timestamp":"2023-10-19T15:39:33.751Z"}
+{"level":"error","message":"companyRecord","timestamp":"2023-10-19T15:39:33.754Z"}
+{"level":"error","message":"countryCodeModel","timestamp":"2023-10-19T15:39:33.755Z"}
+{"level":"error","message":"deleteRecord","timestamp":"2023-10-19T15:39:33.756Z"}
+{"level":"error","message":"object","timestamp":"2023-10-19T15:39:33.757Z"}
+{"level":"error","message":"parentJoinKey","timestamp":"2023-10-19T15:39:33.758Z"}
+{"level":"error","message":"phoneRecord","timestamp":"2023-10-19T15:39:33.759Z"}
+{"level":"error","message":"tagDataType","timestamp":"2023-10-19T15:39:33.761Z"}
+{"level":"info","message":"JWT","timestamp":"2023-10-19T15:39:33.770Z"}
+{"level":"info","message":"GET all users","timestamp":"2023-10-19T15:39:33.772Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-10-19T15:39:48.271Z"}
+{"level":"error","message":"AddClasses","timestamp":"2023-10-19T15:39:48.325Z"}
+{"level":"error","message":"AddValues","timestamp":"2023-10-19T15:39:48.326Z"}
+{"level":"error","message":"Address","timestamp":"2023-10-19T15:39:48.327Z"}
+{"level":"error","message":"Reason","timestamp":"2023-10-19T15:39:48.328Z"}
+{"level":"error","message":"Role","timestamp":"2023-10-19T15:39:48.329Z"}
+{"level":"error","message":"User","timestamp":"2023-10-19T15:39:48.330Z"}
+{"level":"error","message":"classTag","timestamp":"2023-10-19T15:39:48.331Z"}
+{"level":"error","message":"companyRecord","timestamp":"2023-10-19T15:39:48.332Z"}
+{"level":"error","message":"countryCodeModel","timestamp":"2023-10-19T15:39:48.334Z"}
+{"level":"error","message":"deleteRecord","timestamp":"2023-10-19T15:39:48.335Z"}
+{"level":"error","message":"object","timestamp":"2023-10-19T15:39:48.336Z"}
+{"level":"error","message":"parentJoinKey","timestamp":"2023-10-19T15:39:48.337Z"}
+{"level":"error","message":"phoneRecord","timestamp":"2023-10-19T15:39:48.338Z"}
+{"level":"error","message":"tagDataType","timestamp":"2023-10-19T15:39:48.339Z"}
+{"level":"info","message":"JWT","timestamp":"2023-10-19T15:39:48.346Z"}
+{"level":"info","message":"Error Handler","timestamp":"2023-10-19T15:39:48.347Z"}
+{"level":"info","message":"JWT","timestamp":"2023-10-19T15:39:48.405Z"}
+{"level":"info","message":"Error Handler","timestamp":"2023-10-19T15:39:48.406Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-10-19T15:40:24.649Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-10-19T15:40:24.655Z"}
+{"level":"error","message":"AddClasses","timestamp":"2023-10-19T15:40:24.660Z"}
+{"level":"error","message":"AddValues","timestamp":"2023-10-19T15:40:24.660Z"}
+{"level":"error","message":"Address","timestamp":"2023-10-19T15:40:24.662Z"}
+{"level":"error","message":"Reason","timestamp":"2023-10-19T15:40:24.662Z"}
+{"level":"error","message":"Role","timestamp":"2023-10-19T15:40:24.663Z"}
+{"level":"error","message":"User","timestamp":"2023-10-19T15:40:24.665Z"}
+{"level":"error","message":"classTag","timestamp":"2023-10-19T15:40:24.665Z"}
+{"level":"error","message":"companyRecord","timestamp":"2023-10-19T15:40:24.666Z"}
+{"level":"error","message":"countryCodeModel","timestamp":"2023-10-19T15:40:24.667Z"}
+{"level":"error","message":"deleteRecord","timestamp":"2023-10-19T15:40:24.668Z"}
+{"level":"error","message":"object","timestamp":"2023-10-19T15:40:24.669Z"}
+{"level":"error","message":"parentJoinKey","timestamp":"2023-10-19T15:40:24.671Z"}
+{"level":"error","message":"phoneRecord","timestamp":"2023-10-19T15:40:24.672Z"}
+{"level":"error","message":"tagDataType","timestamp":"2023-10-19T15:40:24.673Z"}
+{"level":"info","message":"JWT","timestamp":"2023-10-19T15:40:24.679Z"}
+{"level":"info","message":"Error Handler","timestamp":"2023-10-19T15:40:24.681Z"}
+{"level":"error","message":"AddClasses","timestamp":"2023-10-19T15:40:24.687Z"}
+{"level":"error","message":"AddValues","timestamp":"2023-10-19T15:40:24.688Z"}
+{"level":"error","message":"Address","timestamp":"2023-10-19T15:40:24.689Z"}
+{"level":"error","message":"Reason","timestamp":"2023-10-19T15:40:24.690Z"}
+{"level":"error","message":"Role","timestamp":"2023-10-19T15:40:24.691Z"}
+{"level":"error","message":"User","timestamp":"2023-10-19T15:40:24.693Z"}
+{"level":"error","message":"classTag","timestamp":"2023-10-19T15:40:24.694Z"}
+{"level":"error","message":"companyRecord","timestamp":"2023-10-19T15:40:24.695Z"}
+{"level":"error","message":"countryCodeModel","timestamp":"2023-10-19T15:40:24.696Z"}
+{"level":"error","message":"deleteRecord","timestamp":"2023-10-19T15:40:24.697Z"}
+{"level":"error","message":"object","timestamp":"2023-10-19T15:40:24.698Z"}
+{"level":"error","message":"parentJoinKey","timestamp":"2023-10-19T15:40:24.699Z"}
+{"level":"error","message":"phoneRecord","timestamp":"2023-10-19T15:40:24.700Z"}
+{"level":"error","message":"tagDataType","timestamp":"2023-10-19T15:40:24.701Z"}
+{"level":"info","message":"JWT","timestamp":"2023-10-19T15:40:24.701Z"}
+{"level":"info","message":"Error Handler","timestamp":"2023-10-19T15:40:24.702Z"}
+{"level":"info","message":"JWT","timestamp":"2023-10-19T15:40:45.441Z"}
+{"level":"info","message":"Error Handler","timestamp":"2023-10-19T15:40:45.441Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-10-19T15:46:58.522Z"}
+{"level":"error","message":"AddClasses","timestamp":"2023-10-19T15:46:58.532Z"}
+{"level":"error","message":"AddValues","timestamp":"2023-10-19T15:46:58.533Z"}
+{"level":"error","message":"Address","timestamp":"2023-10-19T15:46:58.535Z"}
+{"level":"error","message":"Reason","timestamp":"2023-10-19T15:46:58.536Z"}
+{"level":"error","message":"Role","timestamp":"2023-10-19T15:46:58.538Z"}
+{"level":"error","message":"User","timestamp":"2023-10-19T15:46:58.539Z"}
+{"level":"error","message":"classTag","timestamp":"2023-10-19T15:46:58.541Z"}
+{"level":"error","message":"companyRecord","timestamp":"2023-10-19T15:46:58.542Z"}
+{"level":"error","message":"countryCodeModel","timestamp":"2023-10-19T15:46:58.543Z"}
+{"level":"error","message":"deleteRecord","timestamp":"2023-10-19T15:46:58.544Z"}
+{"level":"error","message":"object","timestamp":"2023-10-19T15:46:58.545Z"}
+{"level":"error","message":"parentJoinKey","timestamp":"2023-10-19T15:46:58.546Z"}
+{"level":"error","message":"phoneRecord","timestamp":"2023-10-19T15:46:58.547Z"}
+{"level":"error","message":"tagDataType","timestamp":"2023-10-19T15:46:58.548Z"}
+{"level":"info","message":"JWT","timestamp":"2023-10-19T15:46:58.554Z"}
+{"level":"info","message":"JWT","timestamp":"2023-10-19T16:01:49.322Z"}
+{"level":"info","message":"JWT","timestamp":"2023-10-19T16:02:03.063Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-10-19T16:03:34.159Z"}
+{"level":"error","message":"AddClasses","timestamp":"2023-10-19T16:03:34.165Z"}
+{"level":"error","message":"AddValues","timestamp":"2023-10-19T16:03:34.166Z"}
+{"level":"error","message":"Address","timestamp":"2023-10-19T16:03:34.167Z"}
+{"level":"error","message":"Reason","timestamp":"2023-10-19T16:03:34.168Z"}
+{"level":"error","message":"Role","timestamp":"2023-10-19T16:03:34.169Z"}
+{"level":"error","message":"User","timestamp":"2023-10-19T16:03:34.170Z"}
+{"level":"error","message":"classTag","timestamp":"2023-10-19T16:03:34.171Z"}
+{"level":"error","message":"companyRecord","timestamp":"2023-10-19T16:03:34.172Z"}
+{"level":"error","message":"countryCodeModel","timestamp":"2023-10-19T16:03:34.173Z"}
+{"level":"error","message":"deleteRecord","timestamp":"2023-10-19T16:03:34.173Z"}
+{"level":"error","message":"object","timestamp":"2023-10-19T16:03:34.174Z"}
+{"level":"error","message":"parentJoinKey","timestamp":"2023-10-19T16:03:34.177Z"}
+{"level":"error","message":"phoneRecord","timestamp":"2023-10-19T16:03:34.178Z"}
+{"level":"error","message":"tagDataType","timestamp":"2023-10-19T16:03:34.179Z"}
+{"level":"info","message":"JWT","timestamp":"2023-10-19T16:03:34.187Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-10-19T16:04:32.413Z"}
+{"level":"error","message":"AddClasses","timestamp":"2023-10-19T16:04:32.418Z"}
+{"level":"error","message":"AddValues","timestamp":"2023-10-19T16:04:32.419Z"}
+{"level":"error","message":"Address","timestamp":"2023-10-19T16:04:32.420Z"}
+{"level":"error","message":"Reason","timestamp":"2023-10-19T16:04:32.421Z"}
+{"level":"error","message":"Role","timestamp":"2023-10-19T16:04:32.422Z"}
+{"level":"error","message":"User","timestamp":"2023-10-19T16:04:32.423Z"}
+{"level":"error","message":"classTag","timestamp":"2023-10-19T16:04:32.424Z"}
+{"level":"error","message":"companyRecord","timestamp":"2023-10-19T16:04:32.426Z"}
+{"level":"error","message":"countryCodeModel","timestamp":"2023-10-19T16:04:32.427Z"}
+{"level":"error","message":"deleteRecord","timestamp":"2023-10-19T16:04:32.428Z"}
+{"level":"error","message":"object","timestamp":"2023-10-19T16:04:32.430Z"}
+{"level":"error","message":"parentJoinKey","timestamp":"2023-10-19T16:04:32.431Z"}
+{"level":"error","message":"phoneRecord","timestamp":"2023-10-19T16:04:32.432Z"}
+{"level":"error","message":"tagDataType","timestamp":"2023-10-19T16:04:32.433Z"}
+{"level":"info","message":"JWT","timestamp":"2023-10-19T16:04:32.438Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-10-19T16:05:20.756Z"}
+{"level":"error","message":"AddClasses","timestamp":"2023-10-19T16:05:20.761Z"}
+{"level":"error","message":"AddValues","timestamp":"2023-10-19T16:05:20.762Z"}
+{"level":"error","message":"Address","timestamp":"2023-10-19T16:05:20.763Z"}
+{"level":"error","message":"Reason","timestamp":"2023-10-19T16:05:20.764Z"}
+{"level":"error","message":"Role","timestamp":"2023-10-19T16:05:20.765Z"}
+{"level":"error","message":"User","timestamp":"2023-10-19T16:05:20.766Z"}
+{"level":"error","message":"classTag","timestamp":"2023-10-19T16:05:20.767Z"}
+{"level":"error","message":"companyRecord","timestamp":"2023-10-19T16:05:20.768Z"}
+{"level":"error","message":"countryCodeModel","timestamp":"2023-10-19T16:05:20.769Z"}
+{"level":"error","message":"deleteRecord","timestamp":"2023-10-19T16:05:20.770Z"}
+{"level":"error","message":"object","timestamp":"2023-10-19T16:05:20.770Z"}
+{"level":"error","message":"parentJoinKey","timestamp":"2023-10-19T16:05:20.771Z"}
+{"level":"error","message":"phoneRecord","timestamp":"2023-10-19T16:05:20.772Z"}
+{"level":"error","message":"tagDataType","timestamp":"2023-10-19T16:05:20.773Z"}
+{"level":"info","message":"JWT","timestamp":"2023-10-19T16:05:20.779Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-10-19T16:05:33.126Z"}
+{"level":"error","message":"AddClasses","timestamp":"2023-10-19T16:05:33.131Z"}
+{"level":"error","message":"AddValues","timestamp":"2023-10-19T16:05:33.131Z"}
+{"level":"error","message":"Address","timestamp":"2023-10-19T16:05:33.132Z"}
+{"level":"error","message":"Reason","timestamp":"2023-10-19T16:05:33.134Z"}
+{"level":"error","message":"Role","timestamp":"2023-10-19T16:05:33.135Z"}
+{"level":"error","message":"User","timestamp":"2023-10-19T16:05:33.136Z"}
+{"level":"error","message":"classTag","timestamp":"2023-10-19T16:05:33.137Z"}
+{"level":"error","message":"companyRecord","timestamp":"2023-10-19T16:05:33.138Z"}
+{"level":"error","message":"countryCodeModel","timestamp":"2023-10-19T16:05:33.139Z"}
+{"level":"error","message":"deleteRecord","timestamp":"2023-10-19T16:05:33.141Z"}
+{"level":"error","message":"object","timestamp":"2023-10-19T16:05:33.141Z"}
+{"level":"error","message":"parentJoinKey","timestamp":"2023-10-19T16:05:33.143Z"}
+{"level":"error","message":"phoneRecord","timestamp":"2023-10-19T16:05:33.144Z"}
+{"level":"error","message":"tagDataType","timestamp":"2023-10-19T16:05:33.145Z"}
+{"level":"info","message":"JWT","timestamp":"2023-10-19T16:05:33.149Z"}

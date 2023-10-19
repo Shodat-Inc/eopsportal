@@ -67,59 +67,129 @@ export default function SignIn() {
 
             const appVerifier = window.recaptchaVerifier;
 
-            const matched = userData.filter((item) => {
-                return item.username === formData.username && item.password === formData.password
+            axios.post("/api/signIn", {
+                username: formData.username,
+                password: formData.password
             })
-            if (matched && matched.length > 0) {
-                let phoneNumber = matched[0].phoneNumber;
-                console.log({
-                    matched: matched[0].phoneNumber
-                })
-                setUserPhone(phoneNumber);
-                sessionStorage.setItem("authenticationUsername", matched[0].username);
-                localStorage.setItem("authenticationUsername", matched[0].username);
+                .then((response) => {
+                    console.log({
+                        response: response.data.data.token
+                    })
+                    setUserData(response.data);
+                    if (response) {
+                        // let phoneNumber = response.data.data.phone;
+                        let phoneNumber = "+919571373757"
+                        setUserPhone(phoneNumber);
+                        sessionStorage.setItem("authenticationUsername", response.data.data.username);
+                        sessionStorage.setItem("authenticationUserID", response.data.data.id);
+                        localStorage.setItem("authenticationUsername", response.data.data.token);
 
-                signInWithPhoneNumber(auth, phoneNumber, appVerifier)
-                    .then((confirmationResult) => {
-                        window.confirmationResult = confirmationResult;
-                        console.log({
-                            message: "OTP sent successfully!"
-                        })
-                        setOtpSent(true);
+                        signInWithPhoneNumber(auth, phoneNumber, appVerifier)
+                            .then((confirmationResult) => {
+                                window.confirmationResult = confirmationResult;
+                                console.log({
+                                    message: "OTP sent successfully!"
+                                })
+                                setOtpSent(true);
+                                setTimeout(() => {
+                                    setOtpScreen(true);
+                                    setLoader(false)
+                                }, 1000)
+                            })
+                            .catch((error) => {
+                                setOtpSent(false);
+                                setResponseError(true);
+                                console.log({
+                                    message: error
+                                })
+                            });
+
                         setTimeout(() => {
-                            setOtpScreen(true);
-                            setLoader(false)
+                            setSuccess(true);
+                            // setOtpScreen(true)
                         }, 1000)
-                    })
-                    .catch((error) => {
-                        setOtpSent(false);
+                    } else {
+                        setOtpScreen(false)
                         setResponseError(true);
-                        console.log({
-                            message: error
-                        })
-                    });
+                        setTimeout(() => {
+                            setFormData({
+                                username: "",
+                                password: ""
+                            })
+                            setErrors({
+                                username: "",
+                                password: ""
+                            })
+                        }, 100);
+                        setTimeout(() => {
+                            setResponseError(false)
+                        }, 2000)
+                    }
 
-                setTimeout(() => {
-                    setSuccess(true);
-                    // setOtpScreen(true)
-                }, 1000)
-            } else {
-                setOtpScreen(false)
-                setResponseError(true);
-                setTimeout(() => {
-                    setFormData({
-                        username: "",
-                        password: ""
-                    })
-                    setErrors({
-                        username: "",
-                        password: ""
-                    })
-                }, 100);
-                setTimeout(() => {
-                    setResponseError(false)
-                }, 2000)
-            }
+                })
+                .catch((error) => {
+                    alert(error)
+                })
+
+            // setLoader(true)
+
+            // onCaptchVerify();
+
+            // const appVerifier = window.recaptchaVerifier;
+
+            // const matched = userData.filter((item) => {
+            //     return item.username === formData.username && item.password === formData.password
+            // })
+            // if (matched && matched.length > 0) {
+            //     let phoneNumber = matched[0].phoneNumber;
+            //     console.log({
+            //         matched: matched[0].phoneNumber
+            //     })
+            //     setUserPhone(phoneNumber);
+            //     sessionStorage.setItem("authenticationUsername", matched[0].username);
+            //     localStorage.setItem("authenticationUsername", matched[0].username);
+
+            //     signInWithPhoneNumber(auth, phoneNumber, appVerifier)
+            //         .then((confirmationResult) => {
+            //             window.confirmationResult = confirmationResult;
+            //             console.log({
+            //                 message: "OTP sent successfully!"
+            //             })
+            //             setOtpSent(true);
+            //             setTimeout(() => {
+            //                 setOtpScreen(true);
+            //                 setLoader(false)
+            //             }, 1000)
+            //         })
+            //         .catch((error) => {
+            //             setOtpSent(false);
+            //             setResponseError(true);
+            //             console.log({
+            //                 message: error
+            //             })
+            //         });
+
+            //     setTimeout(() => {
+            //         setSuccess(true);
+            //         // setOtpScreen(true)
+            //     }, 1000)
+            // } else {
+            //     setOtpScreen(false)
+            //     setResponseError(true);
+            //     setTimeout(() => {
+            //         setFormData({
+            //             username: "",
+            //             password: ""
+            //         })
+            //         setErrors({
+            //             username: "",
+            //             password: ""
+            //         })
+            //     }, 100);
+            //     setTimeout(() => {
+            //         setResponseError(false)
+            //     }, 2000)
+            // }
         }
 
     }
@@ -195,11 +265,21 @@ export default function SignIn() {
 
 
     useEffect(() => {
-        axios.get("/api/getUsers")
-            .then((response) => {
-                setUserData(response.data)
+        try {
+            axios.get("/api/getUsers")
+                .then((response) => {
+                    setUserData(response.data)
+                })
+        } catch (err) {
+            console.log({
+                error: err
             })
+        }
     }, [])
+
+    console.log({
+        userData: userData
+    })
 
     const sampleListData = useSelector((state) => state.sampleData);
 
