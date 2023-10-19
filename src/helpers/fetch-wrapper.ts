@@ -16,6 +16,7 @@ type HeadersType = {
 };
 
 function request(method: string) {
+  console.log('===================================')
   return (url: string, body?: any) => {
     const requestOptions: { method: string, headers: HeadersType, body?: string } = {
       method,

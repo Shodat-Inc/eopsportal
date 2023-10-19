@@ -18,7 +18,7 @@ function apiHandler(handler: any) {
       // global middleware
       const data = await jwtMiddleware(req, res);
 
-      const path = ["/api/createUsers", "/api/signIn", "/api/getUsers"];
+      const path = ["/api/createUsers", "/api/signIn"];
       if (!path.includes(req.url)) {
         const tokenData = req.auth;
 

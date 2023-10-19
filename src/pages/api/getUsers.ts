@@ -7,19 +7,18 @@ export default apiHandler({
 
 async function handleGetRequest(req: any, res: any) {
   try {
-    const id = req.query.id;
-    if (id) {
+    const id = req.id;
+    if (!id) {
+      res.error(400).json("Id isn't in the database");
+    } else {
       const user = await usersRepo.getById(id);
       if (!user) {
         return res.status(404).send({ message: "User not found" });
       }
       res.status(200).json(user);
-    } else {
-      const users = await usersRepo.getAll();
-      res.status(200).json(users);
     }
   } catch (error: any) {
-    loggerError.error("Cant fetch User(s)", error);
+    loggerError.error("Cant fetch User", error);
     res.status(500).send({ message: error.message });
   }
 }
