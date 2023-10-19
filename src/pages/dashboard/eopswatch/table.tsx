@@ -77,7 +77,7 @@ export default function Table(props: any) {
 
 
     const linkToNext = (items: any) => {
-        if (props.classes === "Vehicles") {
+        if (props.classData === "Vehicles") {
             return <Link
                 href={{
                     pathname: '/dashboard/eopswatch/models',
@@ -90,8 +90,7 @@ export default function Table(props: any) {
                         VIN: items?.tags?.VIN
                     }
                 }}
-                onClick={() => selectedAction(items?.subObjects.VIN)}
-                className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
+                className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start relative z-[99]">
                 <span>AI Model Detection</span>
             </Link>
         } else {
@@ -107,8 +106,7 @@ export default function Table(props: any) {
                         PlantID: items?.tags?.PlantID
                     }
                 }}
-                onClick={() => selectedAction(items?.subObjects.ID)}
-                className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
+                className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start relative z-[99]">
                 <span>AI Model Detection</span>
             </Link>
         }
@@ -206,8 +204,44 @@ export default function Table(props: any) {
                                                         />
                                                     </button>
                                                     {(actions && actionCount === index + 1) &&
-                                                        <div ref={wrapperRef} className="bg-black text-white border overflow-hidden border-black rounded rounded-xl w-[160px] flex flex-col flex-wrap items-start justify-start shadow-sm absolute top-[30px] right-[40px] z-[1] ">
-                                                            {linkToNext(items)}
+                                                        <div className="bg-black text-white border overflow-hidden border-black rounded rounded-xl w-[160px] flex flex-col flex-wrap items-start justify-start shadow-sm absolute top-[30px] right-[40px] z-[10] ">
+                                                            {/* {linkToNext(items)} */}
+                                                            {
+                                                                props.classData === "Vehicles"
+                                                                    ?
+                                                                    <Link
+                                                                        href={{
+                                                                            pathname: '/dashboard/eopswatch/models',
+                                                                            query: {
+                                                                                objectID: props.classData,
+                                                                                subObject: props.assetData,
+                                                                                id: items?.tags?.VIN,
+                                                                                key: items?.tags?.SerialNo ? items?.tags?.SerialNo : items?.tags?.SerialID,
+                                                                                industryID: "1122334455",
+                                                                                VIN: items?.tags?.VIN
+                                                                            }
+                                                                        }}
+                                                                        className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start relative z-[99]">
+                                                                        <span>AI Model Detection</span>
+                                                                    </Link>
+                                                                    :
+
+                                                                    <Link
+                                                                        href={{
+                                                                            pathname: '/dashboard/eopswatch/models',
+                                                                            query: {
+                                                                                objectID: props.classData,
+                                                                                subObject: assetData,
+                                                                                key: items?.tags?.ID,
+                                                                                id: items?.tags?.PlantID,
+                                                                                industryID: "1122334455",
+                                                                                PlantID: items?.tags?.PlantID
+                                                                            }
+                                                                        }}
+                                                                        className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start relative z-[99]">
+                                                                        <span>AI Model Detection</span>
+                                                                    </Link>
+                                                            }
                                                         </div>
                                                     }
                                                 </div>
