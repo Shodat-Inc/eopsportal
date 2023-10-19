@@ -31,6 +31,24 @@ async function seedDemoRoles(Role: any) {
   }
 }
 
+//reason model
+
+async function seedDemoReasons(Reason: any) {
+  const demoReason = [
+    { Reason: "Reason 1", isActive: true },
+    { Reason: "Reason 2", isActive: true },
+    { Reason: "Reason 3", isActive: false },
+  ];
+
+  for (let a of demoReason) {
+    // Using findOrCreate to ensure the demo reason aren't duplicated
+    await Reason.findOrCreate({
+      where: { reason: a.Reason },
+      defaults: a,
+    });
+  }
+}
+
 //demo Tag data
 async function seedDemoTagDataType(tagDataType: any) {
   const demoTagDataType = [
@@ -150,6 +168,9 @@ async function initialize() {
         //demo countryCode
         if (db.countryCodeModel) {
           await seedCountryCodeData(db.countryCodeModel);
+        }
+        if (db.Reason) {
+          await seedDemoReasons(db.Reason);
         }
       }
     }

@@ -1,6 +1,6 @@
 import { DataTypes } from "sequelize";
 
-export function parentJoinKey(sequelize: {
+export function Reason(sequelize: {
   define: (
     arg0: string,
     arg1: {
@@ -10,12 +10,9 @@ export function parentJoinKey(sequelize: {
         allowNull: boolean;
         autoIncrement: boolean;
       };
-      classId: {
-        type: DataTypes.IntegerDataTypeConstructor;
-        references: { model: string; id: string };
-      };
-      parentTagId: {
-        type: DataTypes.IntegerDataTypeConstructor;
+      Reason: { type: DataTypes.StringDataTypeConstructor; allowNull: boolean };
+      isActive: {
+        type: DataTypes.AbstractDataTypeConstructor;
         allowNull: boolean;
       };
     }
@@ -28,18 +25,12 @@ export function parentJoinKey(sequelize: {
       allowNull: false,
       autoIncrement: true,
     },
-    classId: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: "Classes",
-        id: "id",
-      },
-    },
-    parentTagId: {
-      type: DataTypes.INTEGER,
+    Reason: { type: DataTypes.STRING, allowNull: false },
+    isActive: {
+      type: DataTypes.BOOLEAN,
       allowNull: true,
     },
   };
 
-  return sequelize.define("ParentJoinKey", attributes);
+  return sequelize.define("Reason", attributes);
 }

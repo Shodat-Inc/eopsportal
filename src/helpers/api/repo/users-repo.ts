@@ -147,7 +147,7 @@ async function create(params: any) {
 async function update(id: any, params: any) {
   loggerInfo.info("Update User Info");
   const user = await db.User.findByPk(id, {
-    include: [db.Address, db.phoneRecord],
+    include: [db.Address, db.phoneRecord, db.companyRecord],
   });
   // validate
   if (!user) throw "User not found";
@@ -166,16 +166,36 @@ async function update(id: any, params: any) {
   user.email = params.email || user.email;
   user.firstName = params.firstName || user.firstName;
   user.lastName = params.lastName || user.lastName;
-  if (user.Address) {
-    user.Address.address = params.address || user.Address.address;
-    user.Address.state = params.state || user.Address.state;
-    user.Address.pincode = params.pincode || user.Address.pincode;
-    await user.Address.save();
+
+  if (params.address) {
+    await db.Address.update(
+      { address: params.address },
+      { where: { userId: id } }
+    );
   }
-  if (user.phoneRecord) {
-    user.phoneRecord.phoneNumber =
-      params.phoneNumber || user.phoneRecord.phoneNumber;
-    await user.phoneRecord.save();
+  if (params.state) {
+    await db.Address.update({ state: params.state }, { where: { userId: id } });
+  }
+  if (params.city) {
+    await db.Address.update({ city: params.city }, { where: { userId: id } });
+  }
+  if (params.pincode) {
+    await db.Address.update(
+      { pincode: params.pincode },
+      { where: { userId: id } }
+    );
+  }
+  if (params.phoneNumber) {
+    await db.phoneRecord.update(
+      { phoneNumber: params.phoneNumber },
+      { where: { userId: id } }
+    );
+  }
+  if (params.companyName) {
+    await db.companyRecord.update(
+      { companName: params.companyName },
+      { where: { userId: id } }
+    );
   }
 
   return await user.save();
@@ -186,5 +206,5 @@ async function _delete(id: number) {
   if (!user) throw "User not found";
 
   // delete user
-  await user.destroy();
+  return await user.destroy();
 }
