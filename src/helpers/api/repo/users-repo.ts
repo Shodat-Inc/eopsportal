@@ -83,28 +83,28 @@ async function getAll() {
 async function getById(id: any) {
   return await db.User.findByPk(id, {
     attributes: ["username", "firstName", "lastName", "email"],
-    include: [
-      {
-        model: db.Address,
-        attributes: ["address", "city", "state", "pincode", "primary"],
-        include: {
-          model: db.countryCodeModel,
-          attributes: [["countryName", "addressCountryCode"]],
-        },
-      },
-      {
-        model: db.phoneRecord,
-        attributes: ["phoneNumber", "isPrimary", "isActive"],
-        include: {
-          model: db.countryCodeModel,
-          attributes: [["dialCode", "phoneCountryCode"]],
-        },
-      },
-      {
-        model: db.companyRecord,
-        attributes: ["companyName", "createdAt", "updatedAt"],
-      },
-    ],
+    // include: [
+    //   {
+    //     model: db.Address,
+    //     attributes: ["address", "city", "state", "pincode", "primary"],
+    //     include: {
+    //       model: db.countryCodeModel,
+    //       attributes: [["countryName", "addressCountryCode"]],
+    //     },
+    //   },
+    //   {
+    //     model: db.phoneRecord,
+    //     attributes: ["phoneNumber", "isPrimary", "isActive"],
+    //     include: {
+    //       model: db.countryCodeModel,
+    //       attributes: [["dialCode", "phoneCountryCode"]],
+    //     },
+    //   },
+    //   {
+    //     model: db.companyRecord,
+    //     attributes: ["companyName", "createdAt", "updatedAt"],
+    //   },
+    // ],
   });
 }
 

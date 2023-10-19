@@ -1,4 +1,5 @@
 import React, { Fragment, useState, useEffect } from "react";
+import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router'
 import axios from "axios";
 import {
@@ -13,15 +14,32 @@ import { Menu, Transition, Popover } from "@headlessui/react";
 import Link from "next/link";
 import styles from './TopBar.module.css';
 import Image from "next/image";
+import { getSingleUser } from "@/store/actions/usersAction";
 
 export default function TopBar({ showNav, setShowNav }) {
   const { push } = useRouter();
+  const dispatch = useDispatch();
   const router = useRouter();
   const [username, setUsername] = useState("");
   const [userData, setUserData] = useState([]);
 
+  // let authenticationToken = localStorage.getItem('authenticationToken')
+  let authenticationToken = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImlhdCI6MTY5Nzc0MjU0MSwiZXhwIjoxNjk4MzQ3MzQxfQ.iO0kUhr8myayJtxk_V2q61iI3DfVPBDx3HuxbChwkBM`
+  useEffect(() => {
+    dispatch(getSingleUser(2));
+  }, [dispatch, authenticationToken]);
+  
+  const sampleListData = useSelector((state) => state.usersReducer);
+
+  console.log({
+    "userByID2": sampleListData
+  })
+
   useEffect(() => {
     let authenticationUsername = localStorage.getItem('authenticationUsername');
+    console.log({
+      authenticationToken:localStorage.getItem('authenticationToken')
+    })
     if (authenticationUsername) {
       axios.get("/api/getUsers")
         .then((response) => {

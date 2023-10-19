@@ -81,8 +81,8 @@ export default function SignIn() {
                         let phoneNumber = "+919571373757"
                         setUserPhone(phoneNumber);
                         sessionStorage.setItem("authenticationUsername", response.data.data.username);
-                        sessionStorage.setItem("authenticationUserID", response.data.data.id);
-                        localStorage.setItem("authenticationUsername", response.data.data.token);
+                        localStorage.setItem("authenticationUserID", response.data.data.id);
+                        localStorage.setItem("authenticationToken", response.data.data.token);
 
                         signInWithPhoneNumber(auth, phoneNumber, appVerifier)
                             .then((confirmationResult) => {
