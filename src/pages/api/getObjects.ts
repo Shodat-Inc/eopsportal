@@ -1,16 +1,19 @@
-import fsPromises from 'fs/promises';
-import path from 'path';
+import { apiHandler, objectRepo } from "@/helpers/api";
 
-const dataFilePath = path.join(process.cwd(), 'json/objects.json')
+export default apiHandler({
+  get: allhandler,
+});
 
-export default async function handler(req:any, res:any) {
-    try {
-        const jsonData:any = await fsPromises.readFile(dataFilePath);
-        const objectData = JSON.parse(jsonData);
-        res.status(200).json(objectData);
-
-    } catch (error) {
-        res.status(405).send({ message: `{error.message}` })
-        return
+async function allhandler(req: any, res: any) {
+  try {
+    const objects = await objectRepo.get(req);
+    if (!objects || (Array.isArray(objects) && objects.length === 0)) {
+      res.status(404).json({ message: "No data found." });
+      return;
     }
-};
+    res.status(200).json({ message: "Success", objects });
+  } catch (error: any) {
+    res.status(500).send({ message: error.message });
+    return;
+  }
+}

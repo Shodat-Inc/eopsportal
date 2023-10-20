@@ -34,5 +34,8 @@ function relationship() {
 
   db.classTag.hasMany(db.AddValues, { foreignKey: "classTagId" });
   db.AddValues.belongsTo(db.classTag, { foreignKey: "classTagId" });
+
+  db.object.hasMany(db.classTag, { foreignKey: "classId" });
+  db.classTag.belongsTo(db.object, { foreignKey: "classId" });
 }
 export default relationship;
