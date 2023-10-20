@@ -16,7 +16,6 @@ async function handler(req: any, res: any) {
       ...req.body,
       userId: req.id,
     };
-    console.log(reqData,"=====reqData")
     // const reqData: CreateClass = req.body;
     const classData = await classRepo.create(reqData);
     const classId = classData.data.id;
@@ -28,7 +27,7 @@ async function handler(req: any, res: any) {
         classId: classId,
       });
     }
-    const classTags = await classTagRepo.bulkCreate(tagData);
+    const classTags = await classTagRepo.bulkCreate(tagData, classId);
     res.send({ classData, classTags });
   } catch (error: any) {
     loggerError.error("Error in saving class", error);

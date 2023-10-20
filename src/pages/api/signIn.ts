@@ -17,7 +17,6 @@ async function handler(req: any, res: any) {
     const data = await usersRepo.authenticate(req.body);
     res.send(data);
   } catch (error: any) {
-    console.error(error);
     res
       .status(error.response.status)
       .json({ message: error.response.statusText });

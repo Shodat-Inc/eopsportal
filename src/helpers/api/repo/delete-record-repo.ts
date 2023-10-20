@@ -17,7 +17,6 @@ async function create(params: any) {
     }
     // save class
     const deleteData = new db.deleteRecord(params);
-    console.log(deleteData,)
     const data = await deleteData.save();
     return sendResponseData(true, "Deleted Record added successfully", data);
   } catch (error) {

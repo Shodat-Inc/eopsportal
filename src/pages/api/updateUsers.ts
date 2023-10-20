@@ -22,7 +22,9 @@ async function handler(req: any, res: any) {
       return res.status(404).send({ message: "User not found" });
     }
 
-    res.status(200).json(updatedUser, { res });
+    res
+      .status(200)
+      .json(updatedUser, { message: "Updated Successfully", updateData });
   } catch (error: any) {
     loggerError.error("Cannot update user", error);
     res.status(500).send({ message: error.message });

@@ -23,9 +23,9 @@ async function handler(req: any, res: any) {
         values: key.value,
       });
     }
-    const value = await valueRepo.bulkCreate(valueData);
+    const value = await valueRepo.bulkCreate(valueData, objectId);
 
-    res.send({ reqData, value });
+    res.send({ objData, value });
     // res.status(200).json({ message: "Data stored successfully" });
   } catch (error: any) {
     loggerError.error(error);

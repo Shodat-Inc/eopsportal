@@ -17,14 +17,13 @@ async function _delete(req: any, res: any) {
     }
 
     const user = await usersRepo.getById(id);
-    console.log(user);
+
     const data = req.body;
-    console.log(data);
+
     if (!user) {
       return res.status(404).send({ message: "User not found" });
     }
 
-    
     await usersRepo.delete(id);
     // Record the delete action to the deleteRecordTable
     await deleteRecordRepo.create({
