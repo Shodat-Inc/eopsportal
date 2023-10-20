@@ -72,9 +72,7 @@ export default function SignIn() {
                 password: formData.password
             })
                 .then((response) => {
-                    console.log({
-                        response: response.data.data.token
-                    })
+                    
                     setUserData(response.data);
                     if (response) {
                         // let phoneNumber = response.data.data.phone;
@@ -87,9 +85,6 @@ export default function SignIn() {
                         signInWithPhoneNumber(auth, phoneNumber, appVerifier)
                             .then((confirmationResult) => {
                                 window.confirmationResult = confirmationResult;
-                                console.log({
-                                    message: "OTP sent successfully!"
-                                })
                                 setOtpSent(true);
                                 setTimeout(() => {
                                     setOtpScreen(true);
@@ -167,10 +162,7 @@ export default function SignIn() {
     };
 
     const verifyOtpFunction = () => {
-        console.log({
-            code: code
-        })
-
+        
         setLoader(true)
 
         let otp = code.join("");
@@ -178,18 +170,10 @@ export default function SignIn() {
         window.confirmationResult
             .confirm(otp)
             .then(async (res) => {
-                console.log({
-                    res: res,
-                    message: "Verified"
-                });
                 setTimeout(() => {
                     setVerified(true);
                     setLoader(false);
                     setOtpScreen(false);
-                    // const token = Math.floor((Math.random() * 1000000000000000) + 1);
-                    // sessionStorage.setItem("authenticationToken", token);
-                    // localStorage.setItem("authenticationToken", token);
-
                     setTimeout(() => {
                         push("/dashboard/");
                     }, 1)
@@ -205,26 +189,6 @@ export default function SignIn() {
                 });
             });
     }
-
-
-    // useEffect(() => {
-    //     try {
-    //         axios.get("/api/getUsers")
-    //             .then((response) => {
-    //                 setUserData(response.data)
-    //             })
-    //     } catch (err) {
-    //         console.log({
-    //             error: err
-    //         })
-    //     }
-    // }, [])
-
-    // console.log({
-    //     userData: userData
-    // })
-
-    // const sampleListData = useSelector((state) => state.sampleData);
 
     useEffect(() => {
         dispatch(getSampleData());

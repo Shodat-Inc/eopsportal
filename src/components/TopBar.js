@@ -1,15 +1,11 @@
 import React, { Fragment, useState, useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router'
-import axios from "axios";
 import {
   Bars3CenterLeftIcon,
-  PencilIcon,
-  ChevronDownIcon,
-  CreditCardIcon,
-  Cog8ToothIcon,
+  PencilIcon
 } from "@heroicons/react/24/solid";
-import { BellIcon, CheckIcon } from "@heroicons/react/24/outline";
+import { CheckIcon } from "@heroicons/react/24/outline";
 import { Menu, Transition, Popover } from "@headlessui/react";
 import Link from "next/link";
 import styles from './TopBar.module.css';
@@ -20,22 +16,19 @@ export default function TopBar({ showNav, setShowNav }) {
   const { push } = useRouter();
   const dispatch = useDispatch();
   const router = useRouter();
-  const [username, setUsername] = useState("");
-  const [userData, setUserData] = useState([]);
+  const [userData, setUserData] = useState({});
 
   useEffect(() => {
     dispatch(getSingleUser());
   }, []);
 
   const sampleListData = useSelector((state) => state.usersReducer);
-
-  console.log({
-    "userByID2": sampleListData.singleUser.username
-  })
+  useEffect(() => {
+    setUserData(sampleListData.singleUser)
+  }, [sampleListData])
 
   useEffect(() => {
     let access_token = localStorage.getItem('authenticationToken');
-    setUserData(sampleListData)
     if (!access_token) {
       push("/authentication/signin");
     } else {
@@ -191,10 +184,10 @@ export default function TopBar({ showNav, setShowNav }) {
             <div>
               <Menu.Button className="inline-flex w-full justify-center items-center">
                 {
-                  sampleListData ?
+                  userData && userData.username ?
                     <span className="bg-blue-961 text-sm rounded rounded-full flex justify-center items-center text-white font-semiboild h-[26px] w-[26px] relative top-[-4px]">
-                      {sampleListData && sampleListData.singleUser.username.charAt(0).toUpperCase()}
-                      {/* Amit Pandey */}
+                      {userData && userData.username && userData.username.charAt(0).toUpperCase()}
+
                     </span>
                     :
 
@@ -223,8 +216,7 @@ export default function TopBar({ showNav, setShowNav }) {
                   <div className="flex justify-center items-center flex-wrap flex-row text-center">
                     <div className="relative w-[55px] mb-4">
                       <span className="bg-blue-961 text-xl rounded rounded-full flex justify-center items-center text-white font-semiboild h-[50px] w-[50px]">
-                        {sampleListData && sampleListData.singleUser.username.charAt(0).toUpperCase()}
-                        {/* Amit Pandey */}
+                        {userData && userData.username && userData.username && userData.username.charAt(0).toUpperCase()}
 
                       </span>
                       <button className="bg-white rounded rounded-full h-[21px] w-[21px] absolute right-[-3px] top-[25px] flex justify-center items-center">
@@ -237,9 +229,11 @@ export default function TopBar({ showNav, setShowNav }) {
                       </button>
                     </div>
                     <div className="text-sm text-black w-full">
-                      {sampleListData && sampleListData.singleUser.firstName} {sampleListData && sampleListData.singleUser.lastName}
+                      {userData && userData.firstName ? userData.firstName : ''} {userData && userData.lastName ? userData.lastName : ''}
                     </div>
-                    <div className="text-gray-968 text-[13px] w-full">{sampleListData && sampleListData.singleUser.email}</div>
+                    <div className="text-gray-968 text-[13px] w-full">
+                      {userData && userData.email ? userData.email : ''}
+                    </div>
                   </div>
 
                   <div className="relative mt-5">

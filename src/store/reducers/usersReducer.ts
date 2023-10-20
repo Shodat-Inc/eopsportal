@@ -1,7 +1,13 @@
-import { GET_SINGLE_USER_ERROR, GET_SINGLE_USER_LOADING, GET_SINGLE_USER_SUCCESS } from "../types";
+import { 
+    GET_SINGLE_USER_ERROR, 
+    GET_SINGLE_USER_SUCCESS,
+    UPDATE_USER_ERROR,
+    UPDATE_USER_SUCCESS
+} from "../types";
 
 const initialState = {
     singleUser: [],
+    updateUser: []
 };
 
 const usersReducer = (state = initialState, action: any) => {
@@ -16,6 +22,20 @@ const usersReducer = (state = initialState, action: any) => {
             return {
                 error: action.payload,
             };
+
+
+        case UPDATE_USER_SUCCESS:
+            return {
+                ...state,
+                updateUser: action.payload,
+            };
+
+        case UPDATE_USER_ERROR:
+            return {
+                error: action.payload,
+            };
+
+
 
         default:
             return state;

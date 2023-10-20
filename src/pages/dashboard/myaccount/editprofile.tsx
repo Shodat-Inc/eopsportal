@@ -2,16 +2,30 @@ import React, { useState, useEffect } from 'react';
 import styles from '../../../styles/Common.module.css';
 import Image from "next/image";
 import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+import { useRouter } from 'next/router'
+
+import { getSingleUser } from '@/store/actions/usersAction';
+import { updateUser } from '@/store/actions/usersAction';
 
 export default function EditProfile(props: any) {
+    const { push } = useRouter();
+    const dispatch = useDispatch();
     const [personalDetail, setPersonalDetail] = useState(false);
     const [contactInfo, setContactInfo] = useState(false);
     const [authContactInfo, setAuthContactInfo] = useState(false);
+    const [userData, setUserData] = useState({} as any);
+    const sampleListData = useSelector((state: any) => state.usersReducer);
+    const [personalData, setPersonalData] = useState({
+        firstName: "",
+        lastName: ""
+    } as any)
     const togglePersonalDetail = () => {
         setPersonalDetail(!personalDetail)
     }
     const editPersonalDetail = () => {
         setPersonalDetail(false);
+        dispatch(updateUser(personalData, userData.username) as any);
     }
     const toggleAuthContactInfo = () => {
         setAuthContactInfo(!authContactInfo)
@@ -24,6 +38,35 @@ export default function EditProfile(props: any) {
     }
     const editContactInfo = () => {
         setContactInfo(false);
+    }
+
+    useEffect(() => {
+        dispatch(getSingleUser() as any);
+    }, []);    
+    useEffect(() => {
+        if (sampleListData) {
+            setUserData(sampleListData.singleUser);
+        }
+    }, [sampleListData])
+    useEffect(() => {
+        if (userData) {
+            setPersonalData({
+                firstName: userData.firstName,
+                lastName: userData.lastName
+            })
+        }
+    }, [userData])
+    console.log({
+        userData: userData,
+        sampleListData:sampleListData
+    })
+    const handleInputField = (evt:any) => {
+        let targetName = evt.target.name;
+        let targetValue = evt.target.value;
+        setPersonalData((state:any) => ({
+            ...state,
+            [targetName]: targetValue
+        }));
     }
 
     return (
@@ -67,11 +110,11 @@ export default function EditProfile(props: any) {
                                 <div className='w-full'>
                                     <div className='relative flex justify-start items-center mb-2'>
                                         <p className='w-[30%] text-[#666666]'>First Name :</p>
-                                        <p className='w-[70%] text-black'>Narendra Kumar</p>
+                                        <p className='w-[70%] text-black'>{personalData.firstName}</p>
                                     </div>
                                     <div className='relative flex justify-start items-center mb-2'>
                                         <p className='w-[30%] text-[#666666]'>Last Name :</p>
-                                        <p className='w-[70%] text-black'>Nallamilli</p>
+                                        <p className='w-[70%] text-black'>{personalData.lastName}</p>
                                     </div>
                                 </div>
                                 :
@@ -84,7 +127,8 @@ export default function EditProfile(props: any) {
                                                 name="firstName"
                                                 className={`${styles.form__field} border border-[#A7A7A7] bg-white`}
                                                 placeholder="First Name"
-                                                value="Narendra Kumar"
+                                                value={personalData.firstName}
+                                                onChange={(e) => handleInputField(e)}
 
                                             />
                                             <label htmlFor="firstname" className={`${styles.form__label}`}>First Name</label>
@@ -99,7 +143,8 @@ export default function EditProfile(props: any) {
                                                 name="lastName"
                                                 className={`${styles.form__field} border border-[#A7A7A7] bg-white}`}
                                                 placeholder="Last Name"
-                                                value="Nallamilli"
+                                                value={personalData.lastName}
+                                                onChange={(e) => handleInputField(e)}
                                             />
                                             <label htmlFor="lastName" className={`${styles.form__label}`}>Last Name</label>
                                         </div>
