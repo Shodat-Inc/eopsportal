@@ -4,6 +4,7 @@ import { Sequelize } from "sequelize";
 import * as models from "./models/index";
 import { loggerInfo, loggerError } from "@/logger";
 import { dialData } from "../countryCode";
+import relationship from "./relation/relation";
 const { serverRuntimeConfig } = getConfig();
 export const db: any = {
   initialized: false,
@@ -130,31 +131,7 @@ async function initialize() {
 
     if (!db.initialized) {
       // sync all models with database
-
-      // A user can have multiple addresses:
-      db.User.hasMany(db.Address, { foreignKey: "userId" });
-      // As Address table contains a userId, you should also define the reverse relationship:
-      db.Address.belongsTo(db.User, { foreignKey: "userId" });
-
-      db.User.hasMany(db.phoneRecord, { foreignKey: "userId" });
-      // As phoneRecord table contains a userId, you should also define the reverse relationship:
-      db.phoneRecord.belongsTo(db.User, { foreignKey: "userId" });
-
-      db.User.hasOne(db.companyRecord, { foreignKey: "userId" });
-      // As companyRecord table contains a userId, you should also define the reverse relationship:
-      db.companyRecord.belongsTo(db.User, { foreignKey: "userId" });
-
-      db.countryCodeModel.hasMany(db.Address, { foreignKey: "countryId" });
-      db.Address.belongsTo(db.countryCodeModel, { foreignKey: "countryId" });
-
-      db.countryCodeModel.hasMany(db.phoneRecord, {
-        foreignKey: "countryCodeId",
-      });
-      db.phoneRecord.belongsTo(db.countryCodeModel, {
-        foreignKey: "countryCodeId",
-      });
-
-      //demo role
+      relationship();
 
       if (isDBSync) {
         await sequelize.sync({ alter: true });

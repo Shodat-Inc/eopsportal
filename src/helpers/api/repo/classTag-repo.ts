@@ -6,13 +6,14 @@ export const classTagRepo = {
   create,
   bulkCreate,
 };
-async function create(params: any) {
+async function create(params: any, classId: any) {
   loggerInfo.info("Create Class Tag Repo:");
+  if (!classId) {
+    loggerError.error("ClassId Is not provided, Tag not saved.");
+    return sendResponseData(false, "ClassId Is not provided!", {});
+  }
   try {
     // validate
-    if (!params.classId) {
-      return sendResponseData(false, "ClassId Is not provided!", {});
-    }
     const tags = new db.classTag(params);
     // save tags
     const data = await tags.save();
@@ -22,8 +23,12 @@ async function create(params: any) {
   }
 }
 
-async function bulkCreate(params: any[]) {
+async function bulkCreate(params: any[],classId:any) {
   loggerInfo.info("Bulk Create Class Tag Repo:");
+  if (!classId) {
+    loggerError.error("ClassId Is not provided, Tag not saved.");
+    return sendResponseData(false, "ClassId Is not provided!", {});
+  }
   try {
     const data = await db.classTag.bulkCreate(params);
     return sendResponseData(true, "Class Tags added successfully", data);

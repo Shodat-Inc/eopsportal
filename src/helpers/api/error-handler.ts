@@ -1,4 +1,4 @@
-import { loggerInfo } from "@/logger";
+import { loggerError, loggerInfo } from "@/logger";
 
 export { errorHandler };
 
@@ -12,12 +12,12 @@ function errorHandler(err: any, res: any) {
   }
 
   if (err.name === "UnauthorizedError") {
-    console.log(err.name)
+    loggerError.error(err.name);
     // jwt authentication error
     return res.status(401).json({ message: "Invalid Token" });
   }
 
   // default to 500 server error
-  console.error(err);
+  loggerError.error(500);
   return res.status(500).json({ message: err.message });
 }
