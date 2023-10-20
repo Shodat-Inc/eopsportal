@@ -23,46 +23,28 @@ export default function TopBar({ showNav, setShowNav }) {
   const [username, setUsername] = useState("");
   const [userData, setUserData] = useState([]);
 
-  // let authenticationToken = localStorage.getItem('authenticationToken')
-  let authenticationToken = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImlhdCI6MTY5Nzc0MjU0MSwiZXhwIjoxNjk4MzQ3MzQxfQ.iO0kUhr8myayJtxk_V2q61iI3DfVPBDx3HuxbChwkBM`
   useEffect(() => {
-    dispatch(getSingleUser(2));
-  }, [dispatch, authenticationToken]);
-  
+    dispatch(getSingleUser());
+  }, []);
+
   const sampleListData = useSelector((state) => state.usersReducer);
 
   console.log({
-    "userByID2": sampleListData
+    "userByID2": sampleListData.singleUser.username
   })
 
   useEffect(() => {
-    let authenticationUsername = localStorage.getItem('authenticationUsername');
-    console.log({
-      authenticationToken:localStorage.getItem('authenticationToken')
-    })
-    if (authenticationUsername) {
-      axios.get("/api/getUsers")
-        .then((response) => {
-          const filter = response.data.filter((item) => {
-            return item.username === authenticationUsername;
-          })
-          setUserData(filter[0])
-        })
+    let access_token = localStorage.getItem('authenticationToken');
+    setUserData(sampleListData)
+    if (!access_token) {
+      push("/authentication/signin");
+    } else {
+      console.log({
+        message: "valid auth token found!",
+        authToken: access_token
+      })
     }
   }, [])
-
-  // useEffect(() => {
-  //   let authenticationUsername = localStorage.getItem('authenticationUsername');
-  //   setUsername(authenticationUsername ? authenticationUsername : '')
-  //   if (!localStorage.getItem('authenticationToken')) {
-  //     push("/authentication/signin");
-  //   } else {
-  //     console.log({
-  //       message: "valid auth token found!",
-  //       authToken: localStorage.getItem('authenticationToken')
-  //     })
-  //   }
-  // }, [])
 
   const logMeOut = () => {
     sessionStorage.clear();
@@ -74,8 +56,8 @@ export default function TopBar({ showNav, setShowNav }) {
 
   const arr = router.pathname.split("/");
   const splitPathName = arr.filter(n => n);
-  useEffect(()=>{
-    if(router.pathname == "dashboard/pricing" || splitPathName.includes("pricing")) {
+  useEffect(() => {
+    if (router.pathname == "dashboard/pricing" || splitPathName.includes("pricing")) {
       setShowNav(false)
     }
   }, [])
@@ -209,11 +191,11 @@ export default function TopBar({ showNav, setShowNav }) {
             <div>
               <Menu.Button className="inline-flex w-full justify-center items-center">
                 {
-                  username ?
+                  sampleListData ?
                     <span className="bg-blue-961 text-sm rounded rounded-full flex justify-center items-center text-white font-semiboild h-[26px] w-[26px] relative top-[-4px]">
-                      {/* {username.charAt(0).toUpperCase()} */}
-                      Amit Pandey
-                      </span>
+                      {sampleListData && sampleListData.singleUser.username.charAt(0).toUpperCase()}
+                      {/* Amit Pandey */}
+                    </span>
                     :
 
                     <picture>
@@ -241,9 +223,9 @@ export default function TopBar({ showNav, setShowNav }) {
                   <div className="flex justify-center items-center flex-wrap flex-row text-center">
                     <div className="relative w-[55px] mb-4">
                       <span className="bg-blue-961 text-xl rounded rounded-full flex justify-center items-center text-white font-semiboild h-[50px] w-[50px]">
-                        {/* {username.charAt(0).toUpperCase()} */}
-                        Amit Pandey
-                      
+                        {sampleListData && sampleListData.singleUser.username.charAt(0).toUpperCase()}
+                        {/* Amit Pandey */}
+
                       </span>
                       <button className="bg-white rounded rounded-full h-[21px] w-[21px] absolute right-[-3px] top-[25px] flex justify-center items-center">
                         <Image
@@ -254,9 +236,10 @@ export default function TopBar({ showNav, setShowNav }) {
                         />
                       </button>
                     </div>
-                    {/* <div className="text-sm text-black w-full">{userData.firstName} {userData.lastName}</div> */}
-                    <div className="text-sm text-black w-full">Amit Pandey</div>
-                    <div className="text-gray-968 text-[13px] w-full">{username}</div>
+                    <div className="text-sm text-black w-full">
+                      {sampleListData && sampleListData.singleUser.firstName} {sampleListData && sampleListData.singleUser.lastName}
+                    </div>
+                    <div className="text-gray-968 text-[13px] w-full">{sampleListData && sampleListData.singleUser.email}</div>
                   </div>
 
                   <div className="relative mt-5">
