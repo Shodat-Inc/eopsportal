@@ -11,7 +11,7 @@ async function handleGetRequest(req: any, res: any) {
         if (!id) {
             res.error(400).json("Id isn't in the database");
         } else {
-            const user = await usersRepo.getById(2);
+            const user = await usersRepo.getById(id);
             if (!user) {
                 return res.status(404).send({ message: "User not found" });
             }
