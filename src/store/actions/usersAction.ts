@@ -48,15 +48,15 @@ export const updateUser = (data: any, username: any) => async (dispatch: any) =>
         await axios({
             method: 'PUT',
             url: `/api/updateUsers`,
+            data: {
+                username: `${username}`,
+                firstName: `${data.firstName}`,
+                lastName: `${data.lastName}`
+            },
             headers: {
                 "Authorization": `Bearer ${tokenStr}`,
                 "Content-Type": "application/json"
-            },
-            params: {
-                username: username,
-                firstName: data.firstName,
-                lastName: data.lastName
-            }
+            }            
         })
             .then(function (response) {
                 dispatch({

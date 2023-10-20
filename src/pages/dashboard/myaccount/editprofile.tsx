@@ -20,12 +20,17 @@ export default function EditProfile(props: any) {
         firstName: "",
         lastName: ""
     } as any)
+    const [authInfo, setAuthInfo] = useState({
+        phoneNumber: "",
+        email: ""
+    } as any)
     const togglePersonalDetail = () => {
         setPersonalDetail(!personalDetail)
     }
     const editPersonalDetail = () => {
         setPersonalDetail(false);
         dispatch(updateUser(personalData, userData.username) as any);
+
     }
     const toggleAuthContactInfo = () => {
         setAuthContactInfo(!authContactInfo)
@@ -42,7 +47,7 @@ export default function EditProfile(props: any) {
 
     useEffect(() => {
         dispatch(getSingleUser() as any);
-    }, []);    
+    }, []);
     useEffect(() => {
         if (sampleListData) {
             setUserData(sampleListData.singleUser);
@@ -54,16 +59,21 @@ export default function EditProfile(props: any) {
                 firstName: userData.firstName,
                 lastName: userData.lastName
             })
+            setAuthInfo({
+                phoneNumber: userData.PhoneRecords,
+                email: userData.email
+            })
         }
     }, [userData])
     console.log({
         userData: userData,
-        sampleListData:sampleListData
+        authInfo:authInfo,
+        sampleListData: sampleListData
     })
-    const handleInputField = (evt:any) => {
+    const handleInputField = (evt: any) => {
         let targetName = evt.target.name;
         let targetValue = evt.target.value;
-        setPersonalData((state:any) => ({
+        setPersonalData((state: any) => ({
             ...state,
             [targetName]: targetValue
         }));
@@ -74,7 +84,7 @@ export default function EditProfile(props: any) {
 
             <div className='w-full flex justify-start items-center mb-10'>
                 <div className='relative inline-block'>
-                    <div className='w-[120px] h-[120px] rounded rounded-full border border-[#5B5A59] bg-[#5B5A59] inline-flex justify-center items-center text-6xl text-white font-semibold'>N</div>
+                    <div className='w-[120px] h-[120px] rounded rounded-full border border-[#5B5A59] bg-[#5B5A59] inline-flex justify-center items-center text-6xl text-white font-semibold'>{userData && userData.username && userData.username.charAt(0).toUpperCase()}</div>
                     <button
                         className="rounded-full bg-white h-[24px] w-[24px] flex items-center justify-center absolute right-[-2px] bottom-[9px]"
                     >
@@ -87,7 +97,7 @@ export default function EditProfile(props: any) {
                     </button>
                 </div>
                 <div className='ml-8'>
-                    <p className='font-semibold text-2xl text-black mb-2'>Narendra Kumar  Nallamilli</p>
+                    <p className='font-semibold text-2xl text-black mb-2'>{userData && userData.firstName && userData.firstName} {userData && userData.lastName && userData.lastName}</p>
                     <span className='text-[12px] bg-[#E7E6E2] inline-flex px-2 py-1 justify-center items-center text-black rounded rounded-xl'>Admin</span>
                 </div>
             </div>
@@ -101,7 +111,10 @@ export default function EditProfile(props: any) {
                             {!personalDetail ?
                                 <button onClick={togglePersonalDetail} className='bg-[#666666] h-[27px] px-2 rounded rounde-lg py-1 flex justify-center items-center text-white text-sm ml-3'>Edit</button>
                                 :
-                                <button onClick={editPersonalDetail} className='bg-yellow-951 bg-opacity-50 hover:bg-opacity-100 h-[27px] px-2 rounded rounde-lg py-1 flex justify-center items-center text-black text-sm ml-3'>Save</button>
+                                <>
+                                    <button onClick={editPersonalDetail} className='bg-yellow-951 bg-opacity-50 hover:bg-opacity-100 h-[27px] px-2 rounded rounde-lg py-1 flex justify-center items-center text-black text-sm ml-3'>Save</button>
+                                    <button onClick={() => setPersonalDetail(false)} className='bg-resolved bg-opacity-50 hover:bg-opacity-100 h-[27px] px-2 rounded rounde-lg py-1 flex justify-center items-center text-black text-sm ml-3'>Close</button>
+                                </>
                             }
                         </div>
                         {
@@ -160,7 +173,10 @@ export default function EditProfile(props: any) {
                             {!authContactInfo ?
                                 <button onClick={toggleAuthContactInfo} className='bg-[#666666] h-[27px] px-2 rounded rounde-lg py-1 flex justify-center items-center text-white text-sm ml-3'>Edit</button>
                                 :
-                                <button onClick={editAuthContactInfo} className='bg-yellow-951 bg-opacity-50 hover:bg-opacity-100 h-[27px] px-2 rounded rounde-lg py-1 flex justify-center items-center text-black text-sm ml-3'>Save</button>
+                                <>
+                                    <button onClick={editAuthContactInfo} className='bg-yellow-951 bg-opacity-50 hover:bg-opacity-100 h-[27px] px-2 rounded rounde-lg py-1 flex justify-center items-center text-black text-sm ml-3'>Save</button>
+                                    <button onClick={() => setAuthContactInfo(false)} className='bg-resolved bg-opacity-50 hover:bg-opacity-100 h-[27px] px-2 rounded rounde-lg py-1 flex justify-center items-center text-black text-sm ml-3'>Close</button>
+                                </>
                             }
                         </div>
                         {
@@ -220,7 +236,10 @@ export default function EditProfile(props: any) {
                             {!contactInfo ?
                                 <button onClick={toggleContactInfo} className='bg-[#666666] h-[27px] px-2 rounded rounde-lg py-1 flex justify-center items-center text-white text-sm ml-3'>Edit</button>
                                 :
-                                <button onClick={editContactInfo} className='bg-yellow-951 bg-opacity-50 hover:bg-opacity-100 h-[27px] px-2 rounded rounde-lg py-1 flex justify-center items-center text-black text-sm ml-3'>Save</button>
+                                <>
+                                    <button onClick={editContactInfo} className='bg-yellow-951 bg-opacity-50 hover:bg-opacity-100 h-[27px] px-2 rounded rounde-lg py-1 flex justify-center items-center text-black text-sm ml-3'>Save</button>
+                                    <button onClick={() => setContactInfo(false)} className='bg-resolved bg-opacity-50 hover:bg-opacity-100 h-[27px] px-2 rounded rounde-lg py-1 flex justify-center items-center text-black text-sm ml-3'>Close</button>
+                                </>
                             }
                         </div>
                         {
