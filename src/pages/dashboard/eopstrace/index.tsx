@@ -8,63 +8,81 @@ import Filter from "./filters";
 import axios from "axios";
 import Drop from "./drop";
 import CustomDrop from "@/common/customdrop";
-
-const classData = [
-    "Vehicles",
-    "Manufacturing Plants",
-    "Automotive",
-    "Oil, Gas & Energy",
-    "Transportation & Logistics"
-]
-const data = [
-    {
-        "VIN": "5PVBN3TK3R6Y67222",
-        "mfdDate": "06/03/2022",
-        "model": "GS450",
-        "assemblyPlant": "Mineral Wells",
-        "lotNo": "104CY2231",
-        "year": "2022",
-        "type": "ICE"
-    },
-    {
-        "VIN": "5PVBN3TK3R6Y67223",
-        "mfdDate": "01/15/2023",
-        "model": "EX-F",
-        "assemblyPlant": "Virginia",
-        "lotNo": "104FG2001",
-        "year": "2023",
-        "type": "EV"
-    }
-]
-
+import TabData from "./tabData";
 
 export default function EopsTrace(props: any) {
-
-    const [toggleAsset, setToggleAsset] = useState(false);
     const [chooseAsset, setChooseAsset] = useState('Vehicles');
-    const [toggleSort, setToggleSort] = useState(false);
     const [actions, setActions] = useState(false);
-    const [actionCount, setActionCount] = useState(1);
+    const [classData, setClassData] = useState([] as any);
+    const [tabData, setTabData] = useState();
+    const [subClassData, setSubClassData] = useState<any[]>([]);
+    const [count, setCount] = useState(0);
+    const [filter, setFilter] = useState({} as any);
+    const [value, setValue] = useState("");
+    const [data, setData] = useState([] as any);
+    const [toggleArrow, setToggleArrow] = useState(false);
+    const [toggleDrop, setToggleDrop] = useState(false);
+    const [toggleFilter, setToggleFilter] = useState(false);
 
-    const sortByID = () => {
-        setToggleSort(!toggleSort)
+
+    // Fetch the JSON data of Classes
+    const fetchClassData = () => {
+        axios.get("/api/getAssets").then((response) => {
+            if (response.data) {
+                const filtered = response.data.filter((item: any) => {
+                    return item.assetName
+                });
+                if (filtered && filtered.length > 0) {
+                    setClassData(filtered);
+                }
+            }
+        });
+    };
+    useEffect(() => {
+        fetchClassData();
+        if (fetchClassData.length) return;
+    }, [])
+
+
+
+    // Fetch the JSON data of sub Asset
+    const fetchSubAssets = () => {
+        axios.get("/api/getObjects").then((response) => {
+            if (response.data) {
+                const filtered = response.data.filter((item: any) => {
+                    return item.parentAssetName === chooseAsset;
+                });
+                if (filtered && filtered.length > 0) {
+                    setSubClassData(filtered);
+                    setTabData(filtered[0].parentAssetName)
+                }
+            }
+        });
+    };
+    useEffect(() => {
+        fetchSubAssets();
+        if (fetchSubAssets.length) return;
+    }, [chooseAsset])
+
+    const handleCounter = (item: any) => {
+        setCount(item)
     }
 
     const handleDropDown = (item: any) => {
         setChooseAsset(item)
     }
 
-    const toggleActions = (item: any) => {
-        setActionCount(item);
-        setActions(!actions);
+    const handleFilterFunction = (data: any) => {
+        setToggleFilter(false)
     }
-
+    
     // Hook that alerts clicks outside of the passed ref
     function useOutsideAlerter(ref: any) {
         useEffect(() => {
             function handleClickOutside(event: any) {
                 if (ref.current && !ref.current.contains(event.target)) {
                     setActions(false);
+                    setToggleFilter(false)
                 }
             }
             document.addEventListener("mousedown", handleClickOutside);
@@ -76,8 +94,17 @@ export default function EopsTrace(props: any) {
     const wrapperRef = useRef(null);
     useOutsideAlerter(wrapperRef);
 
-    const selectedAction = (item: any) => {
-        setActions(false);
+    const toggleFilterFunction = () => {
+        setToggleArrow(!toggleArrow);
+        setToggleFilter(!toggleFilter);
+    }
+
+    const onChange = (event: any) => {
+        setValue(event.target.value);
+    }
+
+    const handleApplyFunction = (data:any) => {
+        setFilter(data)
     }
 
     return (
@@ -90,13 +117,13 @@ export default function EopsTrace(props: any) {
                     <CustomDrop
                         data={classData}
                         handleClick={handleDropDown}
-                        defaultClass={classData[0]}
+                        defaultClass={classData && classData.length > 0 ? classData[1].assetName : ""}
                     />
                 </div>
                 <div className="w-[34%] border border-[#EEEEEE] border-l-0 border-t-0 border-b-0 border-r-1">
                     <div className="text-center flex justify-center items-center w-full flex-wrap flex-col">
-                        <p className="mb-2">Total Manufacturing Plants</p>
-                        <p className="text-2xl font-semibold">5</p>
+                        <p className="mb-2">Total {chooseAsset}</p>
+                        <p className="text-2xl font-semibold">{count}</p>
                     </div>
                 </div>
                 <div className="w-[34%]">
@@ -108,92 +135,66 @@ export default function EopsTrace(props: any) {
             </div>
 
             {/* Table Information */}
-            <p className="text-black text-md mb-4 font-semibold">Manufacturing Plants</p>
-            <div className="bg-white rounded rounded-xl min-h-[220px] px-3 py-4 flex justify-between items-center w-full">
-                <div className="flex flex-wrap flex-col justify-start items-start w-full hidden1">
-                    <table className={`table-auto lg:min-w-full sm:w-full small:w-full text-left ${styles.tableV3}`}>
-                        <thead className="text-sm font-normal">
-                            <tr>
-                                <th>S.No</th>
-                                <th>
-                                    <button className="flex" onClick={sortByID}>
-                                        <Image src="/img/arrow-up-gray.svg" alt="sort" height={20} width={20} className={`${toggleSort === true ? 'rotate-180' : 'rotate-0'}`} />
-                                        <span>VIN</span>
-                                    </button>
-                                </th>
-                                <th>Mfd Date</th>
-                                <th>Model</th>
-                                <th>Assembly Plant</th>
-                                <th>Lot No</th>
-                                <th>Year</th>
-                                <th>Type</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {
-                                data && data.length > 0 ?
-                                    data.map((item: any, index: any) => (
-                                        <tr key={index}>
-                                            <td>{index + 1}</td>
-                                            <td>
-                                                <Link
-                                                    href={{
-                                                        pathname: '/dashboard/eopstrace/objects',
-                                                        query: {
-                                                            objectID: chooseAsset,
-                                                            VIN: item.VIN
-                                                        }
-                                                    }}
-                                                >
-                                                    <span className="font-medium">{item.VIN}</span>
-                                                </Link>
-                                            </td>
-                                            <td>{item.mfdDate}</td>
-                                            <td>{item.model}</td>
-                                            <td>{item.assemblyPlant}</td>
-                                            <td>{item.lotNo}</td>
-                                            <td>{item.year}</td>
-                                            <td>{item.type}</td>
-                                            <td>
-                                                <div className="flex justify-start items-center relative">
-                                                    <button onClick={() => toggleActions(index + 1)}>
-                                                        <Image
-                                                            src="/img/more-vertical.svg"
-                                                            alt="more-vertical"
-                                                            height={24}
-                                                            width={24}
-                                                        />
-                                                    </button>
-                                                    {(actions && actionCount === index + 1) &&
-                                                        <div ref={wrapperRef} className="bg-black text-white border overflow-hidden border-black rounded rounded-xl w-[160px] flex flex-col flex-wrap items-start justify-start shadow-sm absolute top-[30px] right-[40px] z-[1] ">
-                                                            <Link
-                                                                href={{
-                                                                    pathname: '/dashboard/eopstrace/models',
-                                                                    query: {
-                                                                        objectID: chooseAsset,
-                                                                        VIN: item.VIN
-                                                                    }
-                                                                }}
-                                                                onClick={() => selectedAction(item.VIN)}
-                                                                className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
-                                                                <span>AI Model Detection</span>
-                                                            </Link>
-                                                        </div>
-                                                    }
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    ))
-                                    :
-                                    <tr>
-                                        <td colSpan={8}>No data found!</td>
-                                    </tr>}
 
-                        </tbody>
-                    </table>
+            <div className="mb-4 flex justify-between items-center">
+                <p className="text-black text-md font-semibold">{chooseAsset} </p>
+                <div className="flex justify-start items-center">
+                    <div className="flex relative">
+                        <Image src="/img/search-icon-gray.svg" alt="search" height={22} width={22} className="absolute top-[11px] left-3" />
+                        <input
+                            type="text"
+                            placeholder={`${chooseAsset === "Vehicles" ? "Search on VIN" : "Search on Plant ID"}`}
+                            id="searchobjects"
+                            name="searchobjects"
+                            className="border-2 border-gray-969 rounded-xl h-[44px] w-[300px] pl-10 pr-2"
+                            onChange={onChange}
+                            value={value}
+                            autoComplete="off"
+                        />
+                    </div>
+                    <div className="relative ml-3">
+                        <button
+                            className={`bg-white border-2  rounded-xl h-[44px] transition-all duration-[400ms] h-[44px] rounded rounded-xl px-2 py-2 flex items-center justify-start ${toggleFilter === true ? 'border-black' : 'border-gray-969'}`}
+                            onClick={toggleFilterFunction}
+                        >
+                            <Image
+                                src="/img/filter-icon.svg"
+                                alt="calendar"
+                                height={22}
+                                width={22}
+                            />
+                            <span className="mr-2 ml-1">Filters</span>
+                            <Image
+                                src="/img/arrow-down-black.svg"
+                                alt="Arrow Down"
+                                height={24}
+                                width={24}
+                                className={`${toggleArrow === true ? 'rotate-180' : 'rotate-0'}`}
+                            />
+                        </button>
+
+                        {
+                            toggleFilter &&
+                            <div ref={wrapperRef}>
+                                <Filter
+                                    handleClick={handleFilterFunction}
+                                    handleApply={handleApplyFunction}
+                                    selectedClass={chooseAsset}
+                                    classData={classData}
+                                />
+                            </div>
+                        }
+
+                    </div>
                 </div>
             </div>
+            <TabData
+                objData={tabData}
+                searchData={value}
+                classes={chooseAsset}
+                handleClick={handleCounter}
+                filterData={filter}
+            />
         </div>
     )
 }
