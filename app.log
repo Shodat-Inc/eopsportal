@@ -4678,3 +4678,69 @@
 {"code":"ER_CON_COUNT_ERROR","errno":1040,"level":"error","message":"db.ts Too many connections","sqlState":"","stack":"Error: Too many connections\n    at Object.createConnection (D:\\WORK\\eopsportal\\node_modules\\mysql2\\promise.js:253:31)\n    at Object.initialize (webpack-internal:///(api)/./src/helpers/api/db.ts:153:88)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:15:115)\n    at D:\\WORK\\eopsportal\\node_modules\\next\\dist\\server\\api-utils\\node.js:463:16\n    at D:\\WORK\\eopsportal\\node_modules\\next\\dist\\server\\lib\\trace\\tracer.js:113:36\n    at NoopContextManager.with (D:\\WORK\\eopsportal\\node_modules\\next\\dist\\compiled\\@opentelemetry\\api\\index.js:1:7057)\n    at ContextAPI.with (D:\\WORK\\eopsportal\\node_modules\\next\\dist\\compiled\\@opentelemetry\\api\\index.js:1:516)\n    at NoopTracer.startActiveSpan (D:\\WORK\\eopsportal\\node_modules\\next\\dist\\compiled\\@opentelemetry\\api\\index.js:1:18086)\n    at ProxyTracer.startActiveSpan (D:\\WORK\\eopsportal\\node_modules\\next\\dist\\compiled\\@opentelemetry\\api\\index.js:1:18847)\n    at D:\\WORK\\eopsportal\\node_modules\\next\\dist\\server\\lib\\trace\\tracer.js:102:107\n    at NoopContextManager.with (D:\\WORK\\eopsportal\\node_modules\\next\\dist\\compiled\\@opentelemetry\\api\\index.js:1:7057)\n    at ContextAPI.with (D:\\WORK\\eopsportal\\node_modules\\next\\dist\\compiled\\@opentelemetry\\api\\index.js:1:516)\n    at NextTracerImpl.trace (D:\\WORK\\eopsportal\\node_modules\\next\\dist\\server\\lib\\trace\\tracer.js:102:32)\n    at apiResolver (D:\\WORK\\eopsportal\\node_modules\\next\\dist\\server\\api-utils\\node.js:461:63)\n    at processTicksAndRejections (node:internal/process/task_queues:96:5)\n    at async DevServer.runApi (D:\\WORK\\eopsportal\\node_modules\\next\\dist\\server\\next-server.js:661:9)\n    at async Object.fn (D:\\WORK\\eopsportal\\node_modules\\next\\dist\\server\\next-server.js:1127:35)\n    at async Router.execute (D:\\WORK\\eopsportal\\node_modules\\next\\dist\\server\\router.js:315:32)\n    at async DevServer.runImpl (D:\\WORK\\eopsportal\\node_modules\\next\\dist\\server\\base-server.js:602:29)\n    at async DevServer.run (D:\\WORK\\eopsportal\\node_modules\\next\\dist\\server\\dev\\next-dev-server.js:922:20)\n    at async DevServer.handleRequestImpl (D:\\WORK\\eopsportal\\node_modules\\next\\dist\\server\\base-server.js:533:20)","timestamp":"2023-10-20T16:31:28.962Z"}
 {"level":"info","message":"JWT","timestamp":"2023-10-20T16:31:28.962Z"}
 {"level":"error","message":"Authentication Error","timestamp":"2023-10-20T16:31:28.963Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-10-20T16:32:53.521Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-10-20T16:32:53.553Z"}
+{"level":"error","message":"AddClasses","timestamp":"2023-10-20T16:32:53.602Z"}
+{"level":"error","message":"AddValues","timestamp":"2023-10-20T16:32:53.605Z"}
+{"level":"error","message":"Address","timestamp":"2023-10-20T16:32:53.607Z"}
+{"level":"error","message":"Reason","timestamp":"2023-10-20T16:32:53.608Z"}
+{"level":"error","message":"Role","timestamp":"2023-10-20T16:32:53.609Z"}
+{"level":"error","message":"User","timestamp":"2023-10-20T16:32:53.611Z"}
+{"level":"error","message":"classTag","timestamp":"2023-10-20T16:32:53.612Z"}
+{"level":"error","message":"companyRecord","timestamp":"2023-10-20T16:32:53.614Z"}
+{"level":"error","message":"countryCodeModel","timestamp":"2023-10-20T16:32:53.617Z"}
+{"level":"error","message":"deleteRecord","timestamp":"2023-10-20T16:32:53.619Z"}
+{"level":"error","message":"object","timestamp":"2023-10-20T16:32:53.620Z"}
+{"level":"error","message":"parentJoinKey","timestamp":"2023-10-20T16:32:53.621Z"}
+{"level":"error","message":"phoneRecord","timestamp":"2023-10-20T16:32:53.622Z"}
+{"level":"error","message":"tagDataType","timestamp":"2023-10-20T16:32:53.623Z"}
+{"level":"info","message":"JWT","timestamp":"2023-10-20T16:32:53.642Z"}
+{"level":"error","message":"AddClasses","timestamp":"2023-10-20T16:32:53.724Z"}
+{"level":"error","message":"AddValues","timestamp":"2023-10-20T16:32:53.725Z"}
+{"level":"error","message":"Address","timestamp":"2023-10-20T16:32:53.727Z"}
+{"level":"error","message":"Reason","timestamp":"2023-10-20T16:32:53.728Z"}
+{"level":"error","message":"Role","timestamp":"2023-10-20T16:32:53.729Z"}
+{"level":"error","message":"User","timestamp":"2023-10-20T16:32:53.730Z"}
+{"level":"error","message":"classTag","timestamp":"2023-10-20T16:32:53.732Z"}
+{"level":"error","message":"companyRecord","timestamp":"2023-10-20T16:32:53.734Z"}
+{"level":"error","message":"countryCodeModel","timestamp":"2023-10-20T16:32:53.734Z"}
+{"level":"error","message":"deleteRecord","timestamp":"2023-10-20T16:32:53.735Z"}
+{"level":"error","message":"object","timestamp":"2023-10-20T16:32:53.736Z"}
+{"level":"error","message":"parentJoinKey","timestamp":"2023-10-20T16:32:53.737Z"}
+{"level":"error","message":"phoneRecord","timestamp":"2023-10-20T16:32:53.737Z"}
+{"level":"error","message":"tagDataType","timestamp":"2023-10-20T16:32:53.738Z"}
+{"level":"info","message":"JWT","timestamp":"2023-10-20T16:32:53.738Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-10-20T16:33:09.990Z"}
+{"level":"error","message":"AddClasses","timestamp":"2023-10-20T16:33:10.003Z"}
+{"level":"error","message":"AddValues","timestamp":"2023-10-20T16:33:10.004Z"}
+{"level":"error","message":"Address","timestamp":"2023-10-20T16:33:10.006Z"}
+{"level":"error","message":"Reason","timestamp":"2023-10-20T16:33:10.008Z"}
+{"level":"error","message":"Role","timestamp":"2023-10-20T16:33:10.009Z"}
+{"level":"error","message":"User","timestamp":"2023-10-20T16:33:10.010Z"}
+{"level":"error","message":"classTag","timestamp":"2023-10-20T16:33:10.012Z"}
+{"level":"error","message":"companyRecord","timestamp":"2023-10-20T16:33:10.014Z"}
+{"level":"error","message":"countryCodeModel","timestamp":"2023-10-20T16:33:10.016Z"}
+{"level":"error","message":"deleteRecord","timestamp":"2023-10-20T16:33:10.019Z"}
+{"level":"error","message":"object","timestamp":"2023-10-20T16:33:10.020Z"}
+{"level":"error","message":"parentJoinKey","timestamp":"2023-10-20T16:33:10.021Z"}
+{"level":"error","message":"phoneRecord","timestamp":"2023-10-20T16:33:10.023Z"}
+{"level":"error","message":"tagDataType","timestamp":"2023-10-20T16:33:10.024Z"}
+{"level":"info","message":"JWT","timestamp":"2023-10-20T16:33:10.149Z"}
+{"level":"info","message":"JWT","timestamp":"2023-10-20T16:33:10.176Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-10-20T16:33:11.210Z"}
+{"level":"error","message":"AddClasses","timestamp":"2023-10-20T16:33:11.221Z"}
+{"level":"error","message":"AddValues","timestamp":"2023-10-20T16:33:11.223Z"}
+{"level":"error","message":"Address","timestamp":"2023-10-20T16:33:11.224Z"}
+{"level":"error","message":"Reason","timestamp":"2023-10-20T16:33:11.226Z"}
+{"level":"error","message":"Role","timestamp":"2023-10-20T16:33:11.227Z"}
+{"level":"error","message":"User","timestamp":"2023-10-20T16:33:11.229Z"}
+{"level":"error","message":"classTag","timestamp":"2023-10-20T16:33:11.231Z"}
+{"level":"error","message":"companyRecord","timestamp":"2023-10-20T16:33:11.232Z"}
+{"level":"error","message":"countryCodeModel","timestamp":"2023-10-20T16:33:11.233Z"}
+{"level":"error","message":"deleteRecord","timestamp":"2023-10-20T16:33:11.235Z"}
+{"level":"error","message":"object","timestamp":"2023-10-20T16:33:11.236Z"}
+{"level":"error","message":"parentJoinKey","timestamp":"2023-10-20T16:33:11.237Z"}
+{"level":"error","message":"phoneRecord","timestamp":"2023-10-20T16:33:11.239Z"}
+{"level":"error","message":"tagDataType","timestamp":"2023-10-20T16:33:11.240Z"}
+{"level":"info","message":"JWT","timestamp":"2023-10-20T16:33:11.268Z"}
+{"level":"info","message":"JWT","timestamp":"2023-10-20T16:33:11.273Z"}
