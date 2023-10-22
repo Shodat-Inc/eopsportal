@@ -75,14 +75,16 @@ export default function Models() {
                 subObject: routerParams.subObject,
                 key: routerParams.key,
                 id: routerParams.id,
-                model:data.name,
-                industryID:routerParams.industryID
+                model: data.name,
+                industryID: routerParams.id
             }
         })
     }
+    const hasParams = routerParams.hasOwnProperty("PlantID");
+    const hasObjectParams = routerParams.hasOwnProperty("subObject")
     return (
         <div className="w-full h-full font-OpenSans">
-            <p className="text-black text-lg mb-4 font-semibold text-xl">eOps Watch</p>
+            <p className="text-black text-lg mb-4 font-semibold text-xl">eOps Trace</p>
             {/* Breadcrumb */}
             <div className="flex relative bg-white rounded rounded-lg px-3 py-1 inline-flex border border-[#E3E3E3]">
                 <ul className="flex justify-start items-center text-sm">
@@ -104,8 +106,8 @@ export default function Models() {
                         <Link
                             href={{
                                 pathname: '/dashboard/eopstrace/',
-                                query:{
-                                    objectID:routerParams.objectID
+                                query: {
+                                    objectID: routerParams.objectID
                                 }
                             }}
                             className="font-semibold"
@@ -120,39 +122,60 @@ export default function Models() {
                             height={28}
                             width={28}
                         />
-                        <Link
-                            href={{
-                                pathname: '/dashboard/eopstrace/objects/',
-                                query: {
-                                    objectID: routerParams.objectID,
-                                    VIN: routerParams.VIN
-                                }
-                            }}
-                            className="font-semibold"
-                        >
-                            <span className="">VIN: {routerParams.VIN}</span>
-                        </Link>
+                        {
+                            hasParams
+                                ?
+                                <Link
+                                    href={{
+                                        pathname: '/dashboard/eopstrace/objects/',
+                                        query: {
+                                            objectID: routerParams.objectID,
+                                            PlantID: routerParams.PlantID
+                                        }
+                                    }}
+                                    className="font-semibold"
+                                >
+                                    <span className="capitalize">Plant ID : {routerParams.PlantID}</span>
+                                </Link>
+                                :
+                                <Link
+                                    href={{
+                                        pathname: '/dashboard/eopstrace/objects/',
+                                        query: {
+                                            objectID: routerParams.objectID,
+                                            VIN: routerParams.VIN
+                                        }
+                                    }}
+                                    className="font-semibold"
+                                >
+                                    <span className="capitalize">VIN : {routerParams.VIN}</span>
+                                </Link>
+                        }
                     </li>
-                    <li className="flex justify-start items-center">
-                        <Image
-                            src="/img/chevron-right.svg"
-                            alt="chevron-right"
-                            height={28}
-                            width={28}
-                        />
-                        <Link
-                            href={{
-                                pathname: '/dashboard/eopstrace/objects/',
-                                query: {
-                                    objectID: routerParams.objectID,
-                                    VIN: routerParams.VIN
-                                }
-                            }}
-                            className="font-semibold"
-                        >
-                            {routerParams.subObject}
-                        </Link>
-                    </li>
+                    {
+                        routerParams.subObject &&
+
+                        <li className="flex justify-start items-center">
+                            <Image
+                                src="/img/chevron-right.svg"
+                                alt="chevron-right"
+                                height={28}
+                                width={28}
+                            />
+                            <Link
+                                href={{
+                                    pathname: '/dashboard/eopstrace/objects/',
+                                    query: {
+                                        objectID: routerParams.objectID,
+                                        VIN: routerParams.VIN
+                                    }
+                                }}
+                                className="font-semibold"
+                            >
+                                <span>{routerParams.subObject}</span> : <span>{routerParams.key}</span>
+                            </Link>
+                        </li>
+                    }
                     <li className="flex justify-start items-center">
                         <Image
                             src="/img/chevron-right.svg"

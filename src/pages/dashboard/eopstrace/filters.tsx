@@ -2,14 +2,9 @@ import React, { useState, useRef, useEffect } from "react";
 import styles from '../../../styles/Common.module.css';
 import Image from "next/image";
 import Datepicker from "react-tailwindcss-datepicker";
+import axios from "axios";
 
 export default function Filter(props: any) {
-
-
-    const [toggleArrow, setToggleArrow] = useState(false);
-    const [toggleDrop, setToggleDrop] = useState(false);
-    const [toggleFilter, setToggleFilter] = useState(false);
-    const [toggleSort, setToggleSort] = useState(false);
 
     const [fromDate, setFromDate] = useState({
         startDate: null,
@@ -21,83 +16,85 @@ export default function Filter(props: any) {
     });
 
     const [filterData, setFilterData] = useState<any>({
-        threshold: "",
-        impact: "",
-        date: ""
+        city: "",
+        state: "",
+        zipcode: "",
+        date: "",
+        from: "",
+        to: "",
+        model: "",
+        modelYear: "",
+        type: "",
     })
 
-    const [value, setValue] = useState(0);
     const [data, setData] = useState([] as any);
+    const [dataCity, setDataCity] = useState([] as any);
+    const [dataState, setDataState] = useState([] as any);
+    const [dataZipcode, setDataZipcode] = useState([] as any);
+
+    const [dataModel, setDataModel] = useState([] as any);
+    const [dataModelYear, setDataModelYear] = useState([] as any);
+    const [dataType, setDataType] = useState([] as any);
     const [toggleDateField, setToggleDateField] = useState(false);
 
-    const toggleFilterFunction = () => {
-        setToggleArrow(!toggleArrow);
-        setToggleFilter(!toggleFilter);
+    function removeDuplicates(arr: any) {
+        return arr.filter((item: any, index: any) => arr.indexOf(item) === index);
     }
-    const toggleDropFunction = () => {
-        setToggleDrop(!toggleDrop);
-    }
-    // Hook that alerts clicks outside of the passed ref
-    function useOutsideAlerter(ref: any) {
-        useEffect(() => {
-            function handleClickOutside(event: any) {
-                if (ref.current && !ref.current.contains(event.target)) {
-                    setToggleDrop(false)
-                    // setToggleFilter(false);
+
+    // Get Child Object data on page load
+    const fetchChildObjectData = () => {
+        axios.get("/api/getObjects").then((response) => {
+            if (response.data) {
+                const filtered = response.data.filter((item: any) => {
+                    return item.parentAssetName === props.selectedClass;
+                    // return item;
+                });
+                if (filtered && filtered.length > 0) {
+                    setData(filtered)
+                    if (props.selectedClass === "Manufacturing Plants") {
+                        let cityArray = [] as any;
+                        let stateArray = [] as any;
+                        let zipcodeArray = [] as any;
+                        filtered.map((item: any) => {
+                            cityArray.push(item?.subObjects?.City);
+                            stateArray.push(item?.subObjects?.State);
+                            zipcodeArray.push(item?.subObjects?.Zipcode);
+                        })
+                        setDataCity(removeDuplicates(cityArray));
+                        setDataState(removeDuplicates(stateArray));
+                        setDataZipcode(removeDuplicates(zipcodeArray));
+                    } else {
+                        let modelArray = [] as any;
+                        let modelYearArray = [] as any;
+                        let typeArray = [] as any;
+                        filtered.map((item: any) => {
+                            modelArray.push(item?.subObjects?.Model);
+                            modelYearArray.push(item?.subObjects?.ModelYear);
+                            typeArray.push(item?.subObjects?.Type);
+                        })
+                        setDataModel(removeDuplicates(modelArray));
+                        setDataModelYear(removeDuplicates(modelYearArray));
+                        setDataType(removeDuplicates(typeArray));
+                    }
                 }
             }
-            document.addEventListener("mousedown", handleClickOutside);
-            return () => {
-                document.removeEventListener("mousedown", handleClickOutside);
-            };
-        }, [ref]);
-    }
-    const wrapperRef = useRef(null);
-    useOutsideAlerter(wrapperRef);
-
-    // Sort Table By ID
-    const sortByID = () => {
-        setToggleSort(!toggleSort)
-    }
-
-
-    // Toggle Filters**
-    // Handle Range Slider
-    const handleRange = (e: any) => {
-        setValue(e.target.value);
-        let targetName = e.target.name;
-        let targetValue = e.target.value;
-        setFilterData((state: any) => ({
-            ...state,
-            [targetName]: targetValue
-        }));
-    }
-
-    // Apply filter function
-    const applyFilter = async () => {
-        setToggleFilter(false)
-    }
-
-    // Reset filter
-    const resetFilter = () => {
-        setFilterData({
-            threshold: "",
-            impact: "",
-            date: ""
         });
-        setData([]);
-        setToggleFilter(false)
-    }
+    };
+    useEffect(() => {
+        fetchChildObjectData();
+        if (fetchChildObjectData.length) return;
+    }, [props.selectedClass])
 
-    // Handle Value change for radio (Impact Filter)
-    const handleValueChangeImpact = (e: any) => {
-        let targetName = e.target.name;
-        let targetValue = e.target.value;
-        setFilterData((state: any) => ({
-            ...state,
-            [targetName]: targetValue
-        }));
-    }
+    // console.log({
+    //     data: data,
+    //     dataCity: dataCity,
+    //     dataState: dataState,
+    //     dataZipcode: dataZipcode,
+    //     dataModel: dataModel,
+    //     dataModelYear: dataModelYear,
+    //     dataType: dataType
+    // })
+
 
 
     // Handle Value change for radio (Any Date Filter)
@@ -118,18 +115,50 @@ export default function Filter(props: any) {
     // Handle DatePiker Change From Date
     const handleCalendarFromChange = (newValue: any) => {
         setFromDate(newValue);
+        setFilterData((state: any) => ({
+            ...state,
+            from: newValue.startDate
+        }));
     }
     // Handle DatePiker Change
     const handleCalendarToChange = (newValue: any) => {
         setToDate(newValue);
+        setFilterData((state: any) => ({
+            ...state,
+            to: newValue.startDate
+        }));
     }
 
     const handleClickFunction = () => {
         props.handleClick(false)
     }
 
+    // Apply filter function
+    const applyFilter = async () => {
+        props.handleApply(filterData);
+        props.handleClick(false)
+    }
+
+    // Reset filter
+    const resetFilter = () => {
+        setFilterData({
+            city: "",
+            state: "",
+            zipcode: "",
+            date: "",
+            from: "",
+            to: "",
+            model: "",
+            modelYear: "",
+            type: "",
+        });
+        props.handleClick(false);
+        props.handleApply(filterData);
+    }
+
+
     return (
-        <div ref={wrapperRef} className="rounded rounded-xl shadow shadow-xl border border-gray-951 min-h-[350px] w-[380px] px-4 py-3 bg-white absolute right-0 top-[100%] mt-1 z-10">
+        <div className="rounded rounded-xl shadow shadow-xl border border-gray-951 min-h-[350px] w-[380px] px-4 py-3 bg-white absolute right-0 top-[100%] mt-1 z-10">
             <div className="flex w-full justify-end items-center mb-5">
                 <button
                     onClick={resetFilter}
@@ -155,95 +184,142 @@ export default function Filter(props: any) {
                 </button>
             </div>
 
-            <div className="w-full mb-5">
-                <p className="mb-2 p-0 text-black text-sm font-bold">Battery  Utilization</p>
-                <div className="mb-2">
-                    <div className={`${styles.rangeSlider} ${styles.rangeSlider2}`}>
-                        <input
-                            type="range"
-                            max={100}
-                            min={0}
-                            step={5}
-                            // value={value}
-                            defaultValue={value}
-                            onChange={handleRange}
-                            title={"20"}
-                            name="threshold"
-                        />
+            {props.selectedClass === "Manufacturing Plants" ?
+                <div className="w-full mb-5 flex justify-start items-statr flex-wrap flex-col">
+                    <div className="flex flex-wrap w-full mb-2">
+                        <p className="mb-2 p-0 text-black text-sm font-bold">City</p>
+                        <select
+                            className="border border-gray-951 rounded rounded-xl h-[40px] w-full px-2"
+                            name="city"
+                            id="city"
+                            placeholder="City"
+                            value={filterData.city}
+                            onChange={handleValueChange}
+                        >
+                            <option value="">-select-</option>
+                            {
+                                dataCity && dataCity.length > 0 ?
+                                    dataCity.map((item: any, index: any) => (
+                                        <option key={index} value={item}>{item}</option>
+                                    ))
+                                    :
+                                    null
+                            }
+                        </select>
                     </div>
-                    <div className="relative w-[280px] inline-block">
-                        <span className={`absolute left-0 top-[-10px] text-md`}>{value}%</span>
+                    <div className="flex flex-wrap w-full mb-2">
+                        <p className="mb-2 p-0 text-black text-sm font-bold">State</p>
+                        <select
+                            className="border border-gray-951 rounded rounded-xl h-[40px] w-full px-2"
+                            name="state"
+                            id="state"
+                            placeholder="State"
+                            value={filterData.state}
+                            onChange={handleValueChange}
+                        >
+                            <option value="">-select-</option>
+                            {
+                                dataState && dataState.length > 0 ?
+                                    dataState.map((item: any, index: any) => (
+                                        <option key={index} value={item}>{item}</option>
+                                    ))
+                                    :
+                                    null
+                            }
+                        </select>
                     </div>
-                </div>
-            </div>
-
-            <div className="w-full mb-3 hidden">
-                <p className="mb-2 p-0 text-black text-sm font-bold">Impact</p>
-                <div className="flex justify-start items-center">
-                    <div className="flex-inline justify-start items-center mr-10">
-                        <div className={`${styles.cricleCheckWrap}`}>
-                            <input
-                                type="radio"
-                                name="impact"
-                                id="impact"
-                                value="high"
-                                onChange={handleValueChangeImpact}
-                                checked={filterData.impact && filterData.impact === "high" ? true : false}
-                            />
-                            <span></span>
-                        </div>
-                        <label htmlFor="impact" className="ml-1 text-sm">High</label>
-                    </div>
-                    <div className="flex-inline justify-start items-center mr-10">
-                        <div className={`${styles.cricleCheckWrap}`}>
-                            <input
-                                type="radio"
-                                name="impact"
-                                id="impact"
-                                value="medium"
-                                onChange={handleValueChangeImpact}
-                                checked={filterData.impact && filterData.impact === "medium" ? true : false}
-                            />
-                            <span></span>
-                        </div>
-                        <label htmlFor="impact" className="ml-1 text-sm">Medium</label>
-                    </div>
-                    <div className="flex-inline justify-start items-center">
-                        <div className={`${styles.cricleCheckWrap}`}>
-                            <input
-                                type="radio"
-                                name="impact"
-                                id="impact"
-                                value="low"
-                                onChange={handleValueChangeImpact}
-                                checked={filterData.impact && filterData.impact === "low" ? true : false}
-                            />
-                            <span></span>
-                        </div>
-                        <label htmlFor="impact" className="ml-1 text-sm">Low</label>
+                    <div className="flex flex-wrap w-full">
+                        <p className="mb-2 p-0 text-black text-sm font-bold">ZipCode</p>
+                        <select
+                            className="border border-gray-951 rounded rounded-xl h-[40px] w-full px-2"
+                            name="zipcode"
+                            id="zipcode"
+                            placeholder="Zip Code"
+                            value={filterData.zipcode}
+                            onChange={handleValueChange}
+                        >
+                            <option value="">-select-</option>
+                            {
+                                dataZipcode && dataZipcode.length > 0 ?
+                                    dataZipcode.map((item: any, index: any) => (
+                                        <option key={index} value={item}>{item}</option>
+                                    ))
+                                    :
+                                    null
+                            }
+                        </select>
                     </div>
                 </div>
-            </div>
-
-            <div className="w-full mb-3 hiiden flex justify-between items-center">
-                <div className="flex flex-wrap w-[45%]">
-                    <p className="mb-2 p-0 text-black text-sm font-bold">Remaining cycles left</p>
-                    <input
-                        type="text"
-                        className="border border-gray-951 rounded rounded-xl h-[40px] w-full px-2"
-                    />
+                :
+                <div className="w-full mb-5 flex justify-start items-statr flex-wrap flex-col">
+                    <div className="flex flex-wrap w-full mb-2">
+                        <p className="mb-2 p-0 text-black text-sm font-bold">Model</p>
+                        <select
+                            className="border border-gray-951 rounded rounded-xl h-[40px] w-full px-2"
+                            name="model"
+                            id="model"
+                            placeholder="model"
+                            value={filterData.model}
+                            onChange={handleValueChange}
+                        >
+                            <option value="">-select-</option>
+                            {
+                                dataModel && dataModel.length > 0 ?
+                                    dataModel.map((item: any, index: any) => (
+                                        <option key={index} value={item}>{item}</option>
+                                    ))
+                                    :
+                                    null
+                            }
+                        </select>
+                    </div>
+                    <div className="flex flex-wrap w-full mb-2">
+                        <p className="mb-2 p-0 text-black text-sm font-bold">Model Year</p>
+                        <select
+                            className="border border-gray-951 rounded rounded-xl h-[40px] w-full px-2"
+                            name="modelYear"
+                            id="modelYear"
+                            placeholder="Model Year"
+                            value={filterData.modelYear}
+                            onChange={handleValueChange}
+                        >
+                            <option value="">-select-</option>
+                            {
+                                dataModelYear && dataModelYear.length > 0 ?
+                                    dataModelYear.map((item: any, index: any) => (
+                                        <option key={index} value={item}>{item}</option>
+                                    ))
+                                    :
+                                    null
+                            }
+                        </select>
+                    </div>
+                    <div className="flex flex-wrap w-full">
+                        <p className="mb-2 p-0 text-black text-sm font-bold">Type</p>
+                        <select
+                            className="border border-gray-951 rounded rounded-xl h-[40px] w-full px-2"
+                            name="type"
+                            id="type"
+                            placeholder="Type"
+                            value={filterData.type}
+                            onChange={handleValueChange}
+                        >
+                            <option value="">-select-</option>
+                            {
+                                dataType && dataType.length > 0 ?
+                                    dataType.map((item: any, index: any) => (
+                                        <option key={index} value={item}>{item}</option>
+                                    ))
+                                    :
+                                    null
+                            }
+                        </select>
+                    </div>
                 </div>
-                <div className="flex flex-wrap w-[45%]">
-                    <p className="mb-2 p-0 text-black text-sm font-bold">Est. total cycles</p>
-                    <input
-                        type="text"
-                        className="border border-gray-951 rounded rounded-xl h-[40px] w-full px-2"
-                    />
-                </div>
-            </div>
+            }
 
             <div className="w-full">
-                <p className="mb-3 p-0 text-black text-sm font-bold">Any Date</p>
+                <p className="mb-3 p-0 text-black text-sm font-bold">Mfd Date</p>
                 <ul className="mb-4">
                     <li className="mb-1">
                         <div className="flex justify-start items-center">

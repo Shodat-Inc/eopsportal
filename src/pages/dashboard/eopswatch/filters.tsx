@@ -72,9 +72,9 @@ export default function Filter(props: any) {
                             modelYearArray.push(item?.subObjects?.ModelYear);
                             typeArray.push(item?.subObjects?.Type);
                         })
-                        setDataCity(removeDuplicates(modelArray));
-                        setDataState(removeDuplicates(modelYearArray));
-                        setDataZipcode(removeDuplicates(typeArray));
+                        setDataModel(removeDuplicates(modelArray));
+                        setDataModelYear(removeDuplicates(modelYearArray));
+                        setDataType(removeDuplicates(typeArray));
                     }
                 }
             }

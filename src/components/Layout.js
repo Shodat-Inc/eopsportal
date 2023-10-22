@@ -47,7 +47,7 @@ export default function Layout({ children }) {
         <SideBar showNav={showNav} setShowNav={setShowNav} />
       </Transition>
       <main
-        className={`h-screen h-[100%] ${splitPathName.includes("eopswatch") || splitPathName.includes("eopsprosense") ||  splitPathName.includes("eopsinsight") || splitPathName.includes("myaccount")? 'bg-gray-966' : 'bg-white'} pt-24 transition-all duration-[400ms] ${showNav && !isMobile ? "pl-64" : ""
+        className={`h-screen h-[100%] ${splitPathName.includes("eopswatch") || splitPathName.includes("eopsprosense") || splitPathName.includes("eopstrace") ||  splitPathName.includes("eopsinsight") || splitPathName.includes("myaccount")? 'bg-gray-966' : 'bg-white'} pt-24 transition-all duration-[400ms] ${showNav && !isMobile ? "pl-64" : ""
           }`}
       >
         <div className="pb-5 pr-4">{children}</div>

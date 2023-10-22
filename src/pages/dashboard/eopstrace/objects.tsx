@@ -17,12 +17,16 @@ export default function Objects() {
     const router = useRouter();
     const routerParams = router.query;
 
+    console.log({
+        routerParams:routerParams
+    })
+
     const [toggleArrow, setToggleArrow] = useState(false);
     const [toggleDrop, setToggleDrop] = useState(false);
     const [toggleFilter, setToggleFilter] = useState(false);
 
     const [subAssets, setSubAssets] = useState([] as any);
-    const [classData, setClassData] = useState(classes[1]);
+    const [classData, setClassData] = useState('' as any);
     const [showAsset, setShowAsset] = useState();
     const [objectData, setObjectData] = useState([] as any);
     const [filteredArray, setFilteredArray] = useState([] as any);
@@ -36,11 +40,15 @@ export default function Objects() {
         setToggleFilter(!toggleFilter);
     }
 
+    useEffect(()=>{
+        setClassData(routerParams.objectID)
+    }, [routerParams.objectID])
+
     useEffect(() => {
         axios.get("/api/getSubAssets").then((response) => {
             if (response.data) {
                 let filteredData = response.data.filter((item: any) => {
-                    return item.parentAssetName === classData
+                    return item.parentAssetName === routerParams.objectID
                 })
 
                 let arr = [] as any;
@@ -48,18 +56,15 @@ export default function Objects() {
                     filteredData.map((item: any) => {
                         arr.push(item.assetName)
                     })
+
+                    setSubAssets(arr);
+                    setShowAsset(filteredData[0].assetName);
                 }
-                console.log({
-                    classData:classData,
-                    filteredData:filteredData,
-                    arr:arr
-                })
-                setSubAssets(arr);
-                setShowAsset(filteredData[0].assetName);
             }
         });
     }, [])
-    
+
+
 
     function useOutsideAlerter(ref: any) {
         useEffect(() => {
@@ -91,17 +96,10 @@ export default function Objects() {
     }
 
     useEffect(() => {
-        
         axios.get("/api/getChildObject").then((response) => {
             if (response.data) {
                 let filteredData = response.data.filter((item: any) => {
                     return item.object === showAsset
-                })
-                console.log({
-                    showAsset:showAsset ,
-                    data:response.data,
-                    filteredData:filteredData
-
                 })
                 setObjectData(filteredData)
             }
@@ -109,12 +107,16 @@ export default function Objects() {
     }, [showAsset])
 
     useEffect(() => {
-        var filteredArray = [];
+        var fArray = [];
         if (showAsset) {
-            filteredArray = subAssets.filter(function (e: any) { return e != showAsset })
+            fArray = subAssets.filter(function (e: any) { return e != showAsset })
         }
-        setFilteredArray(filteredArray)
+        setFilteredArray(fArray)
     }, [showAsset])
+
+    // console.log({
+    //     filteredArray: filteredArray
+    // })
 
 
     const onChange = (event: any) => {
@@ -190,13 +192,7 @@ export default function Objects() {
         });
     }
 
-    console.log({
-        objectData:objectData,
-        classData:classData,
-        showAsset:showAsset,
-        routerParams:routerParams
-    })
-
+    const hasParams = routerParams.hasOwnProperty("PlantID")
 
     return (
         <div className="w-full h-full font-OpenSans">
@@ -213,7 +209,7 @@ export default function Objects() {
                             All Industries
                         </Link>
                     </li>
-                    
+
                     <li className="flex justify-start items-center">
                         <Image
                             src="/img/chevron-right.svg"
@@ -237,7 +233,14 @@ export default function Objects() {
                             height={28}
                             width={28}
                         />
-                        <span className="text-gray-967 capitalize">VIN: {routerParams.VIN}</span>
+                        <span className="text-gray-967 capitalize">
+                            {
+                                hasParams ?
+                                    <>Plant ID : {routerParams.PlantID}</>
+                                    :
+                                    <>VIN : {routerParams.VIN}</>
+                            }
+                        </span>
                     </li>
                 </ul>
             </div>
@@ -309,7 +312,7 @@ export default function Objects() {
                 {/* Top Section Ends */}
 
                 <Table
-                    data={objectData}
+                    tabledata={objectData}
                     classData={classData}
                     assetData={showAsset}
                     urlParams={routerParams}
