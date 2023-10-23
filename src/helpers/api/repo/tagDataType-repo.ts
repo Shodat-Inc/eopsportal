@@ -1,20 +1,35 @@
 import { db } from "../db";
 import sendResponseData from "../../constant";
 import { loggerInfo, loggerError } from "@/logger";
-import { info } from "console";
 
+// Repository for tagDataType-related operations.
 export const tagDataTypeRepo = {
   create,
 };
+
+/**
+ * Asynchronously creates a new tagDataType entry in the database.
+ *
+ * @param {Object} params - The parameters containing information to save the tagDataType.
+ * @returns {Object} - Response object indicating the success or failure of the operation.
+ */
 async function create(params: any) {
-  loggerInfo.info("tagDataType repo", info);
+  // Log the initiation of tagDataType creation.
+  loggerInfo.info("tagDataType repo");
+
   try {
+    // Create a new tagDataType instance using the provided parameters.
     const tagDataType = new db.tagDataType(params);
-    // save tagDatatype
+
+    // Save the new tagDataType to the database.
     const data = await tagDataType.save();
+
+    // Return a successful response indicating the tagDataType was added.
     return sendResponseData(true, "Tag DataType added successfully", data);
   } catch (error) {
+    // Log the error if there's an issue with the tagDataType creation.
     loggerError.error("Cant Save Tag Datatype", error);
+    // Return a response indicating the failure of the operation.
     return sendResponseData(false, "error", error);
   }
 }

@@ -5,6 +5,7 @@ import { db } from "../db";
 import sendResponseData from "../../constant";
 import { loggerInfo, loggerError } from "@/logger";
 import { info } from "console";
+import message from "@/util/responseMessage";
 
 const { serverRuntimeConfig } = getConfig();
 
@@ -24,7 +25,7 @@ async function authenticate(data: any) {
       where: { username },
     });
     if (!user) {
-      return sendResponseData(false, "User not found", {});
+      return sendResponseData(false, message.error.userNotFound, {});
     }
     if (!bcrypt.compareSync(String(password), String(user.password))) {
       return sendResponseData(false, "password is incorrect", {});
@@ -35,13 +36,15 @@ async function authenticate(data: any) {
     });
     // remove hash from return value
     const userJson = user.get();
-    delete userJson.hash;
-
+    delete userJson.password;
     // return user and jwt
-    return sendResponseData(true, "Login successfully", { ...userJson, token });
+    return sendResponseData(true, message.success.loginSuccess, {
+      ...userJson,
+      token,
+    });
   } catch (error) {
     loggerError.error("Authentication Error");
-    return sendResponseData(false, "error", error);
+    return sendResponseData(false, message.error.error, error);
   }
 }
 
@@ -116,15 +119,15 @@ async function create(params: any) {
       where: { username: params.username },
     });
     if (user_data) {
-      return sendResponseData(false, "User already exist", {});
+      return sendResponseData(false, message.error.alreadyExist, {});
     }
     if (params.roleId) {
       let role_data = await db.Role.findByPk(params.roleId);
       if (!role_data) {
-        return sendResponseData(false, "Role does not exist!", {});
+        return sendResponseData(false, message.error.roleError1, {});
       }
       if (!role_data.isActive) {
-        return sendResponseData(false, "Role is not active", {});
+        return sendResponseData(false, message.error.roleError2, {});
       }
     }
 
@@ -136,11 +139,11 @@ async function create(params: any) {
     }
     // save user
     const data = await user.save();
-    return sendResponseData(true, "User added successfully", data);
+    return sendResponseData(true, message.success.userCreated, data);
   } catch (error) {
     loggerError.error("Error in creating user :", error);
 
-    return sendResponseData(false, "error", error);
+    return sendResponseData(false, message.error.cantCreateUser, error);
   }
 }
 
@@ -200,6 +203,14 @@ async function update(id: any, params: any) {
 
   return await user.save();
 }
+
+/**
+ * Asynchronously delete a user by its ID.
+ *
+ * @param {number} id - The ID of the user to be deleted.
+ * @returns {Promise<void>} - A promise that resolves once the user is deleted.
+ * @throws {Error} - Throws an error if the
+ **/
 
 async function _delete(id: number) {
   const user = await db.User.findByPk(id);
