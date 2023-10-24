@@ -1011,3 +1011,16 @@ table.proSenseTable tbody tr td {
 .progessWrap .processBox:last-child:before {
     height: 85%;
 }
+
+.tableV4 thead tr {
+    border-top: 1px solid #EEEEEE;
+}
+.tableV4 thead th {
+    height: 35px;
+}
+.tableV4 tbody tr td {
+    height: 50px;
+}
+.tableV4 tbody tr:last-child {
+    border-bottom: 1px solid #EEEEEE;
+}
