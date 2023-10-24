@@ -46,9 +46,9 @@ export default function ObjectManagement(props: any) {
         setActions(false);
     }
     return (
-        <div className='px-4 py-3 font-OpenSans'>
+        <div className='py-3 font-OpenSans'>
             {/* Title, search and filters */}
-            <div className='flex justify-between items-center py-2'>
+            <div className='flex justify-between items-center py-2 px-4 '>
                 <div className='w-[350px]'>
                     <CustomDrop
                         data={classData}

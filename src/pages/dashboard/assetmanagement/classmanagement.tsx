@@ -23,9 +23,9 @@ export default function ClassManagement(props: any) {
         setActions(false);
     }
     return (
-        <div className='px-4 py-3 font-OpenSans'>
+        <div className='px-0 py-3 font-OpenSans'>
             {/* Title, search and filters */}
-            <div className='flex justify-between items-center'>
+            <div className='flex justify-between items-center px-4'>
                 <h2 className='font-semibold text-2xl'>Classes</h2>
                 <div className='flex justify-start items-center'>
                     <div className="flex relative">
@@ -70,7 +70,7 @@ export default function ClassManagement(props: any) {
             </div>
 
             {/* Table */}
-            <div className='w-full mt-6 min-h-[400px]'>
+            <div className='w-full mt-6 min-h-[400px] '>
                 <table className={`table-auto lg:min-w-full sm:w-full small:w-full text-left ${styles.tableV3} ${styles.tableV4}`}>
                     <thead className="text-sm font-normal">
                         <tr>

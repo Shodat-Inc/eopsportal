@@ -1024,3 +1024,9 @@ table.proSenseTable tbody tr td {
 .tableV4 tbody tr:last-child {
     border-bottom: 1px solid #EEEEEE;
 }
+.tableV4 thead tr th:first-child {
+    padding-left: 20px;
+}
+.tableV4 tbody tr td:first-child {
+    padding-left: 20px;
+}
