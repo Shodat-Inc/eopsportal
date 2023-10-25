@@ -1,6 +1,7 @@
 import { db } from "../db";
 import sendResponseData from "../../constant";
 import { loggerInfo, loggerError } from "@/logger";
+import message from "@/util/responseMessage";
 
 // Repository for Class-related operations.
 export const classRepo = {
@@ -129,6 +130,6 @@ async function update(params: any) {
     return await classes.save();
   } catch (error: any) {
     loggerError.error("Error in Updating class", error);
-    return sendResponseData(false, "error", error);
+    return sendResponseData(false, message.error, error);
   }
 }

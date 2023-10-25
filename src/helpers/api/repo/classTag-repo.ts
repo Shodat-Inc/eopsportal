@@ -6,6 +6,7 @@ import { loggerInfo, loggerError } from "@/logger";
 export const classTagRepo = {
   create,
   bulkCreate,
+  delete: _delete,
 };
 
 /**
@@ -63,4 +64,13 @@ async function bulkCreate(params: any[], classId: any) {
     // Log the error if there's an issue with the bulk class tag creation.
     loggerError.error("Error in bulk class Tag repo", error);
   }
+}
+//delete class tag
+async function _delete(id: any) {
+  // delete class tag
+  return await db.classTag.destroy({
+    where: {
+      id: id,
+    },
+  });
 }
