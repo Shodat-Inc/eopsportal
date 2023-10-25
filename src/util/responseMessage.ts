@@ -1,17 +1,38 @@
-const messages = {
-    success: {
-      userCreated: "User created successfully!",
-      classCreated: "Class created successfully!",
-      objectCreated: "Object created successfully!",
-      classTagCreated: "Class Tag created successfully!",
-      postPublished: "Post published successfully!"
-    },
-    error: {
-      userExists: "User already exists!",
-      serverError: "An error occurred on the server."
-    }
-    
-  };
-  
-  export default messages;
-  
+const message: any = {
+  success: {
+    loginSuccess: "User login Successfully.",
+    userCreated: "User created successfully.",
+    phoneRecordSaved: "Phone Record Saved SuccessFully.",
+    addressSaved: "Address Saved SuccessFully.",
+    companyRecordSaved: "Company Record Saved SuccessFully.",
+    classCreated: "Class created successfully.",
+    userUpdated: "User Updated SuccessFully.",
+    deleteUser: "User deleted successfully.",
+    objectCreated: "Object created successfully.",
+    classTagCreated: "Class Tag created successfully.",
+    objectValueSaved: "Object Values Saved Successfully.",
+    postPublished: "Post published successfully.",
+  },
+  error: {
+    error: "error",
+    userNotFound: "User Not Found.",
+    alreadyExist: "User Already Exist.",
+    cantFetchUser: "User not found.",
+    cantCreateUser: "Cannot Create User.",
+    roleError1: "Role does not exist.",
+    roleError2: "Role is not active.",
+    incorrectPassword: "Password is incorrect.",
+    authenticationError: "Can't Authenticate User.",
+    userExists: "User already exists.",
+    serverError: "An error occurred on the server.",
+    postMethodError: "Only Post Method Allowed.",
+    idError: "Id isn't in the databas.e",
+    idReq: "User ID is required.",
+    updatedDataError: "Update Data is Required.",
+    updateError: "Can't Update User.",
+    deleteIdError: "User ID is required for deletion.",
+    deleteError: "Can't Delete User.",
+  },
+};
+
+export default message;
