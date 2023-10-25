@@ -7,6 +7,7 @@ interface Tag {
 export interface CreateClass {
   className: string;
   parentId?: number;
+  parentJoinKey:any[];
   userId: number;
   tags: Tag[];
 }

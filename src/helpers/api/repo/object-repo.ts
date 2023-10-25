@@ -49,47 +49,36 @@ async function create(params: any) {
  * @param {Object} req - The request object containing the ID.
  * @returns {Array} - An array of objects, class tags, and values or an error response.
  */
-async function get(req: any) {
+async function get(id: any) {
   // Log the initiation of fetching Objects, ClassTags, and ObjectValues data.
   loggerInfo.info("Fetching Objects, ClassTags, and ObjectValues data");
 
   // Validate that an ID is provided.
-  if (!req.id) {
+  if (!id) {
     loggerError.error("NO Id is provided");
     return sendResponseData(false, "no id", error);
   }
 
   try {
     const result = await db.object.findAll({
-      attributes: [
-        ["id", "objectId"],
-        [Sequelize.col("ClassTags.tagName"), "tagName"],
-        [Sequelize.col("ObjectValues.values"), "values"],
-        [Sequelize.col("ObjectValues.createdAt"), "createdAt"],
-      ],
       include: [
         {
-          model: db.classTag,
-          attributes: [],
-          required: true,
-          where: {
-            classId: req.query.id,
-          },
+          model: db.AddClasses,
+          where: { id }, // This will filter by classId
+          attributes: ["id", "superParentId", "parentId"],
+          include: [
+            {
+              model: db.classTag,
+              attributes: ["tagName"],
+            },
+          ],
         },
         {
           model: db.AddValues,
-          on: {
-            classTagId: Sequelize.col("classTagId"),
-            objectId: Sequelize.col("objectId"),
-          },
-          attributes: [],
-          required: false,
+          attributes: ["values", "createdAt"],
         },
       ],
-      order: [["id", "ASC"]],
     });
-
-    // Return the transformed result array.
     return result.map((item: any, index: any) => ({
       S_No: index + 1,
       ...item.get(), // Convert Sequelize instance to plain JS object

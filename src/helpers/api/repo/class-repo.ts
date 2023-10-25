@@ -1,6 +1,9 @@
 import { db } from "../db";
 import sendResponseData from "../../constant";
 import { loggerInfo, loggerError } from "@/logger";
+import message from "@/util/responseMessage";
+import { Sequelize } from "sequelize";
+import { classTagRepo } from "./classTag-repo";
 
 // Repository for Class-related operations.
 export const classRepo = {
@@ -60,8 +63,18 @@ async function getClassData(req: any) {
       include: [
         {
           model: db.classTag,
-          attributes: ["tagName", "createdAt"],
+          attributes: ["tagName", "createdAt", "dataTypeId"],
           required: true, // Makes it an INNER JOIN
+          include: [
+            {
+              model: db.tagDataType,
+              attributes: ["name"],
+              required: true, // Makes it an INNER JOIN
+              where: {
+                id: Sequelize.col("dataTypeId"),
+              },
+            },
+          ],
         },
       ],
     });
@@ -79,32 +92,56 @@ async function getClassData(req: any) {
 /**
  * Fetch all subclasses and associated tags for a given user based on a parent class ID.
  *
- * @param {Object} req - The request object containing the user ID and query for the parent class ID.
+ * @param {Object} param - The request object containing the user ID and query for the parent class ID.
  * @returns {Array} - An array of subclasses and associated tags or an error response.
  */
-async function getSubClass(req: any) {
+async function getSubClass(param: any) {
   try {
     // Log the initiation of fetching subclasses and tags.
     loggerInfo.info("Fetching all class and classTags data");
-
     const result = await db.AddClasses.findAll({
       where: {
-        userId: req.id,
-        parentId: req.query.id,
+        userId: param.id,
+        parentId: param.query.id,
       },
       attributes: ["className"],
       include: [
         {
           model: db.classTag,
-          attributes: ["tagName", "createdAt"],
+          attributes: ["tagName", "createdAt", "dataTypeId"],
           required: true, // Makes it an INNER JOIN
+          include: [
+            {
+              model: db.tagDataType,
+              attributes: ["name"],
+              required: true, // Makes it an INNER JOIN
+              where: {
+                id: Sequelize.col("dataTypeId"),
+              },
+            },
+          ],
+        },
+        {
+          model: db.parentJoinKey,
+          attributes: ["parentTagId"],
+          required: true, // Makes it an INNER JOI
         },
       ],
     });
-    return result.map((item: any, index: any) => ({
+
+    // Get Parent Join Tag Name
+    for (let x of result) {
+      let parentKey = x.ParentJoinKeys;
+      for (let y of parentKey) {
+        let tagQuery = await classTagRepo.getParentJoinTags(y.parentTagId);
+        y.dataValues.tagname = tagQuery.tagName;
+      }
+    }
+    const response = result.map((item: any, index: any) => ({
       S_No: index + 1,
-      ...item.get(), // Convert Sequelize instance to plain JS object
+      ...item.get(),
     }));
+    return response;
   } catch (error) {
     // Log the error if fetching subclasses and tags fails.
     loggerError.error("Error fetching class and classTags data:", error);
@@ -129,6 +166,6 @@ async function update(params: any) {
     return await classes.save();
   } catch (error: any) {
     loggerError.error("Error in Updating class", error);
-    return sendResponseData(false, "error", error);
+    return sendResponseData(false, message.error, error);
   }
 }

@@ -1,5 +1,6 @@
 import { apiHandler, classTagRepo } from "@/helpers/api";
 import { classRepo } from "@/helpers/api/repo/class-repo";
+import { parentJoinKeyRepo } from "@/helpers/api/repo/parentJoinRepo";
 import { CreateClass } from "@/interface";
 import { loggerInfo, loggerError } from "@/logger";
 
@@ -47,7 +48,17 @@ async function handler(req: any, res: any) {
 
     // Bulk create class tags using the populated tag data.
     const classTags = await classTagRepo.bulkCreate(tagData, classId);
-
+    const tagIdArr: any = [];
+    if (reqData.parentJoinKey && reqData.parentJoinKey.length ) {
+      const classTagId = await classTagRepo.getClassTags(reqData.parentJoinKey);
+      classTagId.data.forEach((element: any) => {
+        tagIdArr.push({
+          classId,
+          parentTagId: element.id,
+        });
+      });
+      const values = await parentJoinKeyRepo.bulkCreate(tagIdArr, classId);
+    }
     // Send back a successful response with the class and tag data.
     res.send({ classData, classTags });
   } catch (error: any) {
