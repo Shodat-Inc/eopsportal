@@ -17,14 +17,15 @@ export default function TopBar({ showNav, setShowNav }) {
   const dispatch = useDispatch();
   const router = useRouter();
   const [userData, setUserData] = useState({});
-
+  const sampleListData = useSelector((state) => state.usersReducer);
+  let usr = () => dispatch(getSingleUser());
   useEffect(() => {
-    dispatch(getSingleUser());
+    usr()
   }, []);
 
-  const sampleListData = useSelector((state) => state.usersReducer);
   useEffect(() => {
     setUserData(sampleListData.singleUser)
+    localStorage.setItem("user",sampleListData.singleUser);
   }, [sampleListData])
 
   useEffect(() => {
@@ -54,6 +55,12 @@ export default function TopBar({ showNav, setShowNav }) {
       setShowNav(false)
     }
   }, [])
+
+
+  console.log({
+    sampleListData:sampleListData,
+    userData:userData
+  })
 
   return (
     <div

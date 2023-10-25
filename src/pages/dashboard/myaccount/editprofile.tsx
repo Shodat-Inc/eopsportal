@@ -44,10 +44,26 @@ export default function EditProfile(props: any) {
     const editContactInfo = () => {
         setContactInfo(false);
     }
+    let user = {} as any
+    // useEffect(() => {
+    //     // dispatch(getSingleUser() as any);
+    //     user = localStorage.getItem("user")
+    // }, []);
 
-    useEffect(() => {
-        dispatch(getSingleUser() as any);
-    }, []);
+    // useEffect(() => {
+    //     let users  = [] as any;
+    //     (async () => {
+    //      users  = await dispatch(getSingleUser() as any);
+          
+    //     })();
+      
+    //     return () => {
+    //         users
+
+    //     };
+    //   }, []);
+
+
     useEffect(() => {
         if (sampleListData) {
             setUserData(sampleListData.singleUser);
@@ -66,9 +82,10 @@ export default function EditProfile(props: any) {
         }
     }, [userData])
     console.log({
-        userData: userData,
-        authInfo:authInfo,
-        sampleListData: sampleListData
+        // userData: userData,
+        // authInfo:authInfo,
+        sampleListData: sampleListData,
+        // user:user
     })
     const handleInputField = (evt: any) => {
         let targetName = evt.target.name;
