@@ -126,7 +126,7 @@ async function initialize() {
     });
     for (let key in models) {
       db[key] = (models as any)[key](sequelize);
-      loggerInfo.error(key);
+      loggerInfo.info(key);
     }
 
     if (!db.initialized) {

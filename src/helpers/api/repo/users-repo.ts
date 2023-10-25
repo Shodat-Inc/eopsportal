@@ -152,9 +152,11 @@ async function update(id: any, params: any) {
   const user = await db.User.findByPk(id, {
     include: [db.Address, db.phoneRecord, db.companyRecord],
   });
+
   // validate
   if (!user) throw "User not found";
   if (
+    params.username &&
     user.username !== params.username &&
     (await db.User.findOne({ where: { username: params.username } }))
   ) {
