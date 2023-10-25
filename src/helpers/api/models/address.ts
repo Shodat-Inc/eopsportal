@@ -41,7 +41,7 @@ export function Address(sequelize: {
       allowNull: false,
       autoIncrement: true,
     },
-    address: { type: DataTypes.STRING, allowNull: false },
+    address: { type: DataTypes.STRING, allowNull: true },
     city: { type: DataTypes.STRING, allowNull: true },
     state: { type: DataTypes.STRING, allowNull: true },
     pincode: { type: DataTypes.INTEGER, allowNull: true },
