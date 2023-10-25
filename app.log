@@ -4744,3 +4744,173 @@
 {"level":"error","message":"tagDataType","timestamp":"2023-10-20T16:33:11.240Z"}
 {"level":"info","message":"JWT","timestamp":"2023-10-20T16:33:11.268Z"}
 {"level":"info","message":"JWT","timestamp":"2023-10-20T16:33:11.273Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-10-25T05:38:13.784Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-10-25T05:38:13.815Z"}
+{"level":"error","message":"AddClasses","timestamp":"2023-10-25T05:38:13.946Z"}
+{"level":"error","message":"AddValues","timestamp":"2023-10-25T05:38:13.949Z"}
+{"level":"error","message":"Address","timestamp":"2023-10-25T05:38:13.952Z"}
+{"level":"error","message":"Reason","timestamp":"2023-10-25T05:38:13.954Z"}
+{"level":"error","message":"Role","timestamp":"2023-10-25T05:38:13.957Z"}
+{"level":"error","message":"User","timestamp":"2023-10-25T05:38:13.959Z"}
+{"level":"error","message":"classTag","timestamp":"2023-10-25T05:38:13.960Z"}
+{"level":"error","message":"companyRecord","timestamp":"2023-10-25T05:38:13.962Z"}
+{"level":"error","message":"countryCodeModel","timestamp":"2023-10-25T05:38:13.963Z"}
+{"level":"error","message":"deleteRecord","timestamp":"2023-10-25T05:38:13.965Z"}
+{"level":"error","message":"object","timestamp":"2023-10-25T05:38:13.968Z"}
+{"level":"error","message":"parentJoinKey","timestamp":"2023-10-25T05:38:13.974Z"}
+{"level":"error","message":"phoneRecord","timestamp":"2023-10-25T05:38:13.976Z"}
+{"level":"error","message":"tagDataType","timestamp":"2023-10-25T05:38:13.978Z"}
+{"level":"info","message":"JWT","timestamp":"2023-10-25T05:38:14.007Z"}
+{"level":"error","message":"AddClasses","timestamp":"2023-10-25T05:38:14.022Z"}
+{"level":"error","message":"AddValues","timestamp":"2023-10-25T05:38:14.023Z"}
+{"level":"error","message":"Address","timestamp":"2023-10-25T05:38:14.025Z"}
+{"level":"error","message":"Reason","timestamp":"2023-10-25T05:38:14.026Z"}
+{"level":"error","message":"Role","timestamp":"2023-10-25T05:38:14.027Z"}
+{"level":"error","message":"User","timestamp":"2023-10-25T05:38:14.028Z"}
+{"level":"error","message":"classTag","timestamp":"2023-10-25T05:38:14.030Z"}
+{"level":"error","message":"companyRecord","timestamp":"2023-10-25T05:38:14.031Z"}
+{"level":"error","message":"countryCodeModel","timestamp":"2023-10-25T05:38:14.036Z"}
+{"level":"error","message":"deleteRecord","timestamp":"2023-10-25T05:38:14.038Z"}
+{"level":"error","message":"object","timestamp":"2023-10-25T05:38:14.039Z"}
+{"level":"error","message":"parentJoinKey","timestamp":"2023-10-25T05:38:14.041Z"}
+{"level":"error","message":"phoneRecord","timestamp":"2023-10-25T05:38:14.042Z"}
+{"level":"error","message":"tagDataType","timestamp":"2023-10-25T05:38:14.044Z"}
+{"level":"info","message":"JWT","timestamp":"2023-10-25T05:38:14.044Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-10-25T05:38:19.663Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-10-25T05:38:19.667Z"}
+{"level":"error","message":"AddClasses","timestamp":"2023-10-25T05:38:19.694Z"}
+{"level":"error","message":"AddValues","timestamp":"2023-10-25T05:38:19.696Z"}
+{"level":"error","message":"Address","timestamp":"2023-10-25T05:38:19.698Z"}
+{"level":"error","message":"Reason","timestamp":"2023-10-25T05:38:19.699Z"}
+{"level":"error","message":"Role","timestamp":"2023-10-25T05:38:19.700Z"}
+{"level":"error","message":"User","timestamp":"2023-10-25T05:38:19.702Z"}
+{"level":"error","message":"classTag","timestamp":"2023-10-25T05:38:19.703Z"}
+{"level":"error","message":"companyRecord","timestamp":"2023-10-25T05:38:19.704Z"}
+{"level":"error","message":"countryCodeModel","timestamp":"2023-10-25T05:38:19.706Z"}
+{"level":"error","message":"deleteRecord","timestamp":"2023-10-25T05:38:19.707Z"}
+{"level":"error","message":"object","timestamp":"2023-10-25T05:38:19.709Z"}
+{"level":"error","message":"parentJoinKey","timestamp":"2023-10-25T05:38:19.710Z"}
+{"level":"error","message":"phoneRecord","timestamp":"2023-10-25T05:38:19.712Z"}
+{"level":"error","message":"tagDataType","timestamp":"2023-10-25T05:38:19.713Z"}
+{"level":"info","message":"JWT","timestamp":"2023-10-25T05:38:19.734Z"}
+{"level":"error","message":"AddClasses","timestamp":"2023-10-25T05:38:19.779Z"}
+{"level":"error","message":"AddValues","timestamp":"2023-10-25T05:38:19.781Z"}
+{"level":"error","message":"Address","timestamp":"2023-10-25T05:38:19.784Z"}
+{"level":"error","message":"Reason","timestamp":"2023-10-25T05:38:19.785Z"}
+{"level":"error","message":"Role","timestamp":"2023-10-25T05:38:19.786Z"}
+{"level":"error","message":"User","timestamp":"2023-10-25T05:38:19.787Z"}
+{"level":"error","message":"classTag","timestamp":"2023-10-25T05:38:19.788Z"}
+{"level":"error","message":"companyRecord","timestamp":"2023-10-25T05:38:19.789Z"}
+{"level":"error","message":"countryCodeModel","timestamp":"2023-10-25T05:38:19.790Z"}
+{"level":"error","message":"deleteRecord","timestamp":"2023-10-25T05:38:19.791Z"}
+{"level":"error","message":"object","timestamp":"2023-10-25T05:38:19.792Z"}
+{"level":"error","message":"parentJoinKey","timestamp":"2023-10-25T05:38:19.794Z"}
+{"level":"error","message":"phoneRecord","timestamp":"2023-10-25T05:38:19.795Z"}
+{"level":"error","message":"tagDataType","timestamp":"2023-10-25T05:38:19.796Z"}
+{"level":"info","message":"JWT","timestamp":"2023-10-25T05:38:19.797Z"}
+{"level":"info","message":"JWT","timestamp":"2023-10-25T05:38:22.246Z"}
+{"level":"info","message":"JWT","timestamp":"2023-10-25T05:38:22.326Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-10-25T05:38:43.613Z"}
+{"level":"error","message":"AddClasses","timestamp":"2023-10-25T05:38:43.650Z"}
+{"level":"error","message":"AddValues","timestamp":"2023-10-25T05:38:43.651Z"}
+{"level":"error","message":"Address","timestamp":"2023-10-25T05:38:43.653Z"}
+{"level":"error","message":"Reason","timestamp":"2023-10-25T05:38:43.655Z"}
+{"level":"error","message":"Role","timestamp":"2023-10-25T05:38:43.656Z"}
+{"level":"error","message":"User","timestamp":"2023-10-25T05:38:43.658Z"}
+{"level":"error","message":"classTag","timestamp":"2023-10-25T05:38:43.664Z"}
+{"level":"error","message":"companyRecord","timestamp":"2023-10-25T05:38:43.666Z"}
+{"level":"error","message":"countryCodeModel","timestamp":"2023-10-25T05:38:43.668Z"}
+{"level":"error","message":"deleteRecord","timestamp":"2023-10-25T05:38:43.669Z"}
+{"level":"error","message":"object","timestamp":"2023-10-25T05:38:43.676Z"}
+{"level":"error","message":"parentJoinKey","timestamp":"2023-10-25T05:38:43.678Z"}
+{"level":"error","message":"phoneRecord","timestamp":"2023-10-25T05:38:43.682Z"}
+{"level":"error","message":"tagDataType","timestamp":"2023-10-25T05:38:43.685Z"}
+{"level":"info","message":"JWT","timestamp":"2023-10-25T05:38:43.717Z"}
+{"level":"info","message":"JWT","timestamp":"2023-10-25T05:38:43.802Z"}
+{"level":"info","message":"JWT","timestamp":"2023-10-25T05:38:50.958Z"}
+{"level":"info","message":"JWT","timestamp":"2023-10-25T05:38:50.978Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-10-25T05:38:56.737Z"}
+{"level":"error","message":"AddClasses","timestamp":"2023-10-25T05:38:56.743Z"}
+{"level":"error","message":"AddValues","timestamp":"2023-10-25T05:38:56.744Z"}
+{"level":"error","message":"Address","timestamp":"2023-10-25T05:38:56.745Z"}
+{"level":"error","message":"Reason","timestamp":"2023-10-25T05:38:56.746Z"}
+{"level":"error","message":"Role","timestamp":"2023-10-25T05:38:56.747Z"}
+{"level":"error","message":"User","timestamp":"2023-10-25T05:38:56.748Z"}
+{"level":"error","message":"classTag","timestamp":"2023-10-25T05:38:56.749Z"}
+{"level":"error","message":"companyRecord","timestamp":"2023-10-25T05:38:56.750Z"}
+{"level":"error","message":"countryCodeModel","timestamp":"2023-10-25T05:38:56.752Z"}
+{"level":"error","message":"deleteRecord","timestamp":"2023-10-25T05:38:56.753Z"}
+{"level":"error","message":"object","timestamp":"2023-10-25T05:38:56.754Z"}
+{"level":"error","message":"parentJoinKey","timestamp":"2023-10-25T05:38:56.756Z"}
+{"level":"error","message":"phoneRecord","timestamp":"2023-10-25T05:38:56.757Z"}
+{"level":"error","message":"tagDataType","timestamp":"2023-10-25T05:38:56.758Z"}
+{"level":"info","message":"JWT","timestamp":"2023-10-25T05:38:56.768Z"}
+{"level":"info","message":"Update User Info","timestamp":"2023-10-25T05:38:56.770Z"}
+{"level":"info","message":"JWT","timestamp":"2023-10-25T05:39:06.019Z"}
+{"level":"info","message":"JWT","timestamp":"2023-10-25T05:39:06.040Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-10-25T05:39:10.227Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-10-25T05:39:10.230Z"}
+{"level":"error","message":"AddClasses","timestamp":"2023-10-25T05:39:10.242Z"}
+{"level":"error","message":"AddValues","timestamp":"2023-10-25T05:39:10.244Z"}
+{"level":"error","message":"Address","timestamp":"2023-10-25T05:39:10.248Z"}
+{"level":"error","message":"Reason","timestamp":"2023-10-25T05:39:10.250Z"}
+{"level":"error","message":"Role","timestamp":"2023-10-25T05:39:10.253Z"}
+{"level":"error","message":"User","timestamp":"2023-10-25T05:39:10.256Z"}
+{"level":"error","message":"classTag","timestamp":"2023-10-25T05:39:10.257Z"}
+{"level":"error","message":"companyRecord","timestamp":"2023-10-25T05:39:10.259Z"}
+{"level":"error","message":"countryCodeModel","timestamp":"2023-10-25T05:39:10.260Z"}
+{"level":"error","message":"deleteRecord","timestamp":"2023-10-25T05:39:10.262Z"}
+{"level":"error","message":"object","timestamp":"2023-10-25T05:39:10.264Z"}
+{"level":"error","message":"parentJoinKey","timestamp":"2023-10-25T05:39:10.266Z"}
+{"level":"error","message":"phoneRecord","timestamp":"2023-10-25T05:39:10.267Z"}
+{"level":"error","message":"tagDataType","timestamp":"2023-10-25T05:39:10.269Z"}
+{"level":"info","message":"JWT","timestamp":"2023-10-25T05:39:10.287Z"}
+{"level":"info","message":"Error Handler","timestamp":"2023-10-25T05:39:10.289Z"}
+{"level":"error","message":"UnauthorizedError","timestamp":"2023-10-25T05:39:10.289Z"}
+{"level":"error","message":"AddClasses","timestamp":"2023-10-25T05:39:10.300Z"}
+{"level":"error","message":"AddValues","timestamp":"2023-10-25T05:39:10.303Z"}
+{"level":"error","message":"Address","timestamp":"2023-10-25T05:39:10.305Z"}
+{"level":"error","message":"Reason","timestamp":"2023-10-25T05:39:10.307Z"}
+{"level":"error","message":"Role","timestamp":"2023-10-25T05:39:10.308Z"}
+{"level":"error","message":"User","timestamp":"2023-10-25T05:39:10.318Z"}
+{"level":"error","message":"classTag","timestamp":"2023-10-25T05:39:10.337Z"}
+{"level":"error","message":"companyRecord","timestamp":"2023-10-25T05:39:10.339Z"}
+{"level":"error","message":"countryCodeModel","timestamp":"2023-10-25T05:39:10.344Z"}
+{"level":"error","message":"deleteRecord","timestamp":"2023-10-25T05:39:10.346Z"}
+{"level":"error","message":"object","timestamp":"2023-10-25T05:39:10.348Z"}
+{"level":"error","message":"parentJoinKey","timestamp":"2023-10-25T05:39:10.349Z"}
+{"level":"error","message":"phoneRecord","timestamp":"2023-10-25T05:39:10.354Z"}
+{"level":"error","message":"tagDataType","timestamp":"2023-10-25T05:39:10.419Z"}
+{"level":"info","message":"JWT","timestamp":"2023-10-25T05:39:10.419Z"}
+{"level":"info","message":"Error Handler","timestamp":"2023-10-25T05:39:10.424Z"}
+{"level":"error","message":"UnauthorizedError","timestamp":"2023-10-25T05:39:10.426Z"}
+{"level":"info","message":"JWT","timestamp":"2023-10-25T05:39:18.847Z"}
+{"level":"error","message":"Cant fetch User Address is not associated to User!","name":"SequelizeEagerLoadingError","stack":"SequelizeEagerLoadingError: Address is not associated to User!\n    at Function._getIncludedAssociation (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:717:13)\n    at Function._validateIncludedElement (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:621:53)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:516:37\n    at Array.map (<anonymous>)\n    at Function._validateIncludedElements (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:511:39)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1728:14\n    at processImmediate (node:internal/timers:466:21)\nFrom previous event:\n    at Function.findAll (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1722:8)\n    at Function.findOne (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1926:17)\n    at Function.findByPk (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1890:17)\n    at Object.getById (webpack-internal:///(api)/./src/helpers/api/repo/users-repo.ts:129:59)\n    at Object.handleGetRequest [as get] (webpack-internal:///(api)/./src/pages/api/getUsers.ts:28:84)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:33:34)","timestamp":"2023-10-25T05:39:18.857Z"}
+{"level":"info","message":"JWT","timestamp":"2023-10-25T05:39:18.873Z"}
+{"level":"error","message":"Cant fetch User Address is not associated to User!","name":"SequelizeEagerLoadingError","stack":"SequelizeEagerLoadingError: Address is not associated to User!\n    at Function._getIncludedAssociation (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:717:13)\n    at Function._validateIncludedElement (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:621:53)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:516:37\n    at Array.map (<anonymous>)\n    at Function._validateIncludedElements (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:511:39)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1728:14\n    at processImmediate (node:internal/timers:466:21)\nFrom previous event:\n    at Function.findAll (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1722:8)\n    at Function.findOne (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1926:17)\n    at Function.findByPk (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1890:17)\n    at Object.getById (webpack-internal:///(api)/./src/helpers/api/repo/users-repo.ts:129:59)\n    at Object.handleGetRequest [as get] (webpack-internal:///(api)/./src/pages/api/getUsers.ts:28:84)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:33:34)","timestamp":"2023-10-25T05:39:18.878Z"}
+{"level":"info","message":"JWT","timestamp":"2023-10-25T05:39:27.171Z"}
+{"level":"error","message":"Cant fetch User Address is not associated to User!","name":"SequelizeEagerLoadingError","stack":"SequelizeEagerLoadingError: Address is not associated to User!\n    at Function._getIncludedAssociation (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:717:13)\n    at Function._validateIncludedElement (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:621:53)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:516:37\n    at Array.map (<anonymous>)\n    at Function._validateIncludedElements (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:511:39)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1728:14\n    at processImmediate (node:internal/timers:466:21)\nFrom previous event:\n    at Function.findAll (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1722:8)\n    at Function.findOne (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1926:17)\n    at Function.findByPk (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1890:17)\n    at Object.getById (webpack-internal:///(api)/./src/helpers/api/repo/users-repo.ts:129:59)\n    at Object.handleGetRequest [as get] (webpack-internal:///(api)/./src/pages/api/getUsers.ts:28:84)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:33:34)","timestamp":"2023-10-25T05:39:27.175Z"}
+{"level":"info","message":"JWT","timestamp":"2023-10-25T05:39:27.196Z"}
+{"level":"error","message":"Cant fetch User Address is not associated to User!","name":"SequelizeEagerLoadingError","stack":"SequelizeEagerLoadingError: Address is not associated to User!\n    at Function._getIncludedAssociation (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:717:13)\n    at Function._validateIncludedElement (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:621:53)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:516:37\n    at Array.map (<anonymous>)\n    at Function._validateIncludedElements (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:511:39)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1728:14\n    at processImmediate (node:internal/timers:466:21)\nFrom previous event:\n    at Function.findAll (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1722:8)\n    at Function.findOne (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1926:17)\n    at Function.findByPk (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1890:17)\n    at Object.getById (webpack-internal:///(api)/./src/helpers/api/repo/users-repo.ts:129:59)\n    at Object.handleGetRequest [as get] (webpack-internal:///(api)/./src/pages/api/getUsers.ts:28:84)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:33:34)","timestamp":"2023-10-25T05:39:27.201Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-10-25T05:41:18.516Z"}
+{"level":"error","message":"AddClasses","timestamp":"2023-10-25T05:41:18.526Z"}
+{"level":"error","message":"AddValues","timestamp":"2023-10-25T05:41:18.527Z"}
+{"level":"error","message":"Address","timestamp":"2023-10-25T05:41:18.528Z"}
+{"level":"error","message":"Reason","timestamp":"2023-10-25T05:41:18.529Z"}
+{"level":"error","message":"Role","timestamp":"2023-10-25T05:41:18.530Z"}
+{"level":"error","message":"User","timestamp":"2023-10-25T05:41:18.534Z"}
+{"level":"error","message":"classTag","timestamp":"2023-10-25T05:41:18.535Z"}
+{"level":"error","message":"companyRecord","timestamp":"2023-10-25T05:41:18.536Z"}
+{"level":"error","message":"countryCodeModel","timestamp":"2023-10-25T05:41:18.538Z"}
+{"level":"error","message":"deleteRecord","timestamp":"2023-10-25T05:41:18.540Z"}
+{"level":"error","message":"object","timestamp":"2023-10-25T05:41:18.542Z"}
+{"level":"error","message":"parentJoinKey","timestamp":"2023-10-25T05:41:18.544Z"}
+{"level":"error","message":"phoneRecord","timestamp":"2023-10-25T05:41:18.545Z"}
+{"level":"error","message":"tagDataType","timestamp":"2023-10-25T05:41:18.548Z"}
+{"level":"info","message":"JWT","timestamp":"2023-10-25T05:41:18.584Z"}
+{"level":"info","message":"createUser API:","timestamp":"2023-10-25T05:41:18.585Z"}
+{"level":"info","message":{"companyName":"SHODAT","countryCodeId":98,"isPrimary":true,"phoneNumber":"9981153021"},"timestamp":"2023-10-25T05:41:18.586Z"}
+{"level":"info","message":"Create User","timestamp":"2023-10-25T05:41:18.591Z"}
+{"level":"info","message":"POST api/createUsers Save Address","timestamp":"2023-10-25T05:41:18.898Z"}
+{"level":"info","message":"POST api/createUsers Save Company records","timestamp":"2023-10-25T05:41:19.118Z"}
+{"level":"info","message":"POST api/createUsers Save Phone records","timestamp":"2023-10-25T05:41:19.176Z"}
