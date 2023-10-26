@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styles from '../../../styles/Common.module.css';
 import Image from "next/image";
-import CustomDrop from '@/common/customdrop';
+import CustomDropSubClass from './customdropsubclass';
 import axios from 'axios';
 import Link from 'next/dist/client/link';
-export default function ObjectManagement(props: any) {
+export default function SubObjectManagement(props: any) {
     const [toggleFilter, setToggleFilter] = useState(false);
     const [toggleArrow, setToggleArrow] = useState(false);
     const [toggleSort, setToggleSort] = useState(false);
@@ -12,7 +12,6 @@ export default function ObjectManagement(props: any) {
     const [chooseAsset, setChooseAsset] = useState('Vehicles');
     const [actions, setActions] = useState(false);
     const [actionCount, setActionCount] = useState(1);
-    const [objID, setObjID] = useState("");
     const toggleFilterFunction = () => {
         setToggleArrow(!toggleArrow);
         setToggleFilter(!toggleFilter);
@@ -46,16 +45,16 @@ export default function ObjectManagement(props: any) {
     const selectedAction = (item: any) => {
         setActions(false);
     }
-    const takeMeToSubObjectComponent = (item: any) => {
-        setObjID(item);
-        props.handelObject(item)
+    const backToObect = () => {
+        props.handleSubObject("Vehicles")
     }
     return (
         <div className='py-3 font-OpenSans'>
+            
             {/* Title, search and filters */}
             <div className='flex justify-between items-center py-2 px-4 '>
                 <div className='w-[350px]'>
-                    <CustomDrop
+                    <CustomDropSubClass
                         data={classData}
                         handleClick={handleDropDown}
                         defaultClass={classData && classData.length > 0 ? classData[0].assetName : ""}
@@ -104,6 +103,12 @@ export default function ObjectManagement(props: any) {
                 </div>
             </div>
 
+            <button 
+            onClick={backToObect}
+            className='text-sm mt-10 mb-10 px-10'>
+                Back To Object Management Component
+                </button>
+
             {/* Table */}
             <div className='w-full mt-6 min-h-[400px]'>
                 <table className={`table-auto lg:min-w-full sm:w-full small:w-full text-left ${styles.tableV3} ${styles.tableV4}`}>
@@ -113,34 +118,24 @@ export default function ObjectManagement(props: any) {
                             <th>
                                 <button className="flex justify-center items-center" onClick={sortByClassName}>
                                     <Image src="/img/arrow-up-gray.svg" alt="sort" height={17} width={17} className={`${toggleSort === true ? 'rotate-180' : 'rotate-0'}`} />
-                                    <span>VIN No</span>
+                                    <span>Serial ID</span>
                                 </button>
                             </th>
-                            <th>Mfd Date</th>
-                            <th>Model</th>
-                            <th>Assembly Plant</th>
-                            <th>Lot No</th>
-                            <th>Model Year</th>
-                            <th>Type</th>
+                            <th>VIN</th>
+                            <th>Manufacturer</th>
+                            <th>Capacity(AH)</th>
+                            <th>Voltage(V)</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td>1</td>
-                            <td>
-                                <button
-                                    onClick={() => takeMeToSubObjectComponent('5PVBE7AJ8R5T50001')}
-                                >
-                                    <span>5PVBE7AJ8R5T50001</span>
-                                </button>
-                            </td>
-                            <td>06/03/2022</td>
-                            <td>Mineral Wells</td>
-                            <td>ES350</td>
-                            <td>104CY5209</td>
-                            <td>2022</td>
-                            <td>ICE</td>
+                            <td>1S223</td>
+                            <td>5PVBE7AJ8R5T50001</td>
+                            <td>Cummins</td>
+                            <td>48</td>
+                            <td>12</td>
                             <td>
                                 <div className="flex justify-start items-center relative">
                                     <button onClick={() => toggleActions(1)}>
@@ -185,52 +180,6 @@ export default function ObjectManagement(props: any) {
                                             </Link>
                                         </div>
                                     }
-                                </div>
-
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>5PVBE7AJ8R5T50007</td>
-                            <td>06/03/2022</td>
-                            <td>Mineral Wells</td>
-                            <td>GS450</td>
-                            <td>104CY5209</td>
-                            <td>2022</td>
-                            <td>ICE</td>
-                            <td>
-                                <div className="flex justify-start items-center relative">
-                                    <button onClick={() => toggleActions(1)}>
-                                        <Image
-                                            src="/img/more-vertical.svg"
-                                            alt="more-vertical"
-                                            height={24}
-                                            width={24}
-                                        />
-                                    </button>
-                                </div>
-
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>5PVBN3TK3R6Y67222</td>
-                            <td>06/03/2022</td>
-                            <td>Virginia</td>
-                            <td>EX-F</td>
-                            <td>104FG2001</td>
-                            <td>2023</td>
-                            <td>EV</td>
-                            <td>
-                                <div className="flex justify-start items-center relative">
-                                    <button onClick={() => toggleActions(3)}>
-                                        <Image
-                                            src="/img/more-vertical.svg"
-                                            alt="more-vertical"
-                                            height={24}
-                                            width={24}
-                                        />
-                                    </button>
                                 </div>
 
                             </td>

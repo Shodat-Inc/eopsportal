@@ -3,11 +3,37 @@ import Layout from "../../../components/Layout";
 import Image from "next/dist/client/image";
 import ClassManagement from "./classmanagement";
 import ObjectManagement from "./objectmanagement";
+import SubObjectManagement from "./subobjectmanagement";
 
 export default function AssetManagement() {
     const [tab, setTab] = useState(1);
+    const [chkSubObj, setChkSubObj] = useState(false)
     const toggleTab = (item: any) => {
         setTab(item)
+    }
+    const [addClassModal, setAddClassModal] = useState(false);
+    const openAddClassModal = () => {
+        setAddClassModal(!addClassModal);
+    }
+    const handleaddClassModal = (item: any) => {
+        setAddClassModal(item)
+    }
+    const handelObject = (item:any) => {
+        console.log({
+            item:item
+        })
+        if(item!=="") {
+            setTab(3)
+        } else {
+            setTab(tab)
+        }
+    }
+    const handleSubObject = (item:any) => {
+        if(item!=="") {
+            setTab(2)
+        } else {
+            setTab(tab)
+        }
     }
     return (
         <div className="flex font-OpenSans">
@@ -53,6 +79,7 @@ export default function AssetManagement() {
                         <div className="flex justify-start items-center">
                             <button
                                 className="rounded rounded-xl bg-black h-[44px] px-4 flex justify-center items-center text-white text-sm hover:bg-[#303030] transition-all duration-[400ms] transition-opacity duration-300 outline-none transform active:scale-75 transition-transform"
+                                onClick={openAddClassModal}
                             >
                                 <Image
                                     src="/img/plus.svg"
@@ -82,8 +109,22 @@ export default function AssetManagement() {
                 {/* Tab Contect */}
                 <div className="w-full min-h-[500px] bg-white border border-gray-957 overflow-hidden1 rounded-tr-xl rounded-br-xl rounded-bl-xl">
                     <div className=" bg-white w-full h-full rounded-tr-xl rounded-br-xl rounded-bl-xl overflow-hidden">
-                        {tab === 1 && <ClassManagement />}
-                        {tab === 2 && <ObjectManagement />}
+                        {tab === 1 &&
+                            <ClassManagement
+                                handleaddClassModal={handleaddClassModal}
+                                addClassModal={addClassModal}
+                            />
+                        }
+                        {tab === 2 &&
+                            <ObjectManagement
+                                handelObject={handelObject}
+                            />
+                        }
+                        {tab === 3 &&
+                            <SubObjectManagement
+                                handleSubObject={handleSubObject} 
+                            />
+                        }
                     </div>
                 </div>
             </div>

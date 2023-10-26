@@ -2,12 +2,22 @@ import React, { useState, useEffect, useRef } from 'react';
 import styles from '../../../styles/Common.module.css';
 import Image from "next/image";
 import Link from 'next/dist/client/link';
+import AddNewClass from './addnewclass';
 export default function ClassManagement(props: any) {
     const [toggleFilter, setToggleFilter] = useState(false);
     const [toggleArrow, setToggleArrow] = useState(false);
     const [toggleSort, setToggleSort] = useState(false);
     const [actions, setActions] = useState(false);
     const [actionCount, setActionCount] = useState(1);
+    const [showModal, setShowModal] = useState(Boolean);
+    useEffect(()=> {
+        setShowModal(props.addClassModal)
+    }, [props.addClassModal])
+    console.log({
+        props:props,
+        showModal:showModal
+    })
+
     const toggleFilterFunction = () => {
         setToggleArrow(!toggleArrow);
         setToggleFilter(!toggleFilter);
@@ -22,6 +32,11 @@ export default function ClassManagement(props: any) {
     const selectedAction = (item: any) => {
         setActions(false);
     }
+    
+    const handleClick = (item:any) => {
+        setShowModal(false);
+        props.handleaddClassModal(item)
+    } 
     return (
         <div className='px-0 py-3 font-OpenSans'>
             {/* Title, search and filters */}
@@ -156,6 +171,11 @@ export default function ClassManagement(props: any) {
                     </tbody>
                 </table>
             </div>
+
+
+            {/* Add New Class */}            
+            {showModal && <AddNewClass handleClick={handleClick} /> }
+            
         </div>
     )
 }
