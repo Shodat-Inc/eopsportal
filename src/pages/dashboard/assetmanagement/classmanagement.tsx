@@ -13,10 +13,6 @@ export default function ClassManagement(props: any) {
     useEffect(()=> {
         setShowModal(props.addClassModal)
     }, [props.addClassModal])
-    console.log({
-        props:props,
-        showModal:showModal
-    })
 
     const toggleFilterFunction = () => {
         setToggleArrow(!toggleArrow);

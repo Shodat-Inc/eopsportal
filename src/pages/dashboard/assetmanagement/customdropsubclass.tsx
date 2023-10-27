@@ -2,9 +2,6 @@ import React, { useState, useRef, useEffect } from "react";
 import styles from '../../../styles/Common.module.css';
 import Image from "next/image";
 export default function CustomDropSubClass(props: any) {
-    // console.log({
-    //     props: props
-    // })
     const [toggleAsset, setToggleAsset] = useState(false);
     const [chooseAsset, setChooseAsset] = useState("");
     useEffect(()=>{

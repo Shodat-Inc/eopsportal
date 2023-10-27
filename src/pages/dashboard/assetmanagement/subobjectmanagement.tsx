@@ -1,10 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import styles from '../../../styles/Common.module.css';
 import Image from "next/image";
 import CustomDropSubClass from './customdropsubclass';
 import axios from 'axios';
 import Link from 'next/dist/client/link';
+import AddNewObject from './addnewobject';
 export default function SubObjectManagement(props: any) {
+    console.log({
+        "props in object management": props
+    })
     const [toggleFilter, setToggleFilter] = useState(false);
     const [toggleArrow, setToggleArrow] = useState(false);
     const [toggleSort, setToggleSort] = useState(false);
@@ -12,6 +17,8 @@ export default function SubObjectManagement(props: any) {
     const [chooseAsset, setChooseAsset] = useState('Vehicles');
     const [actions, setActions] = useState(false);
     const [actionCount, setActionCount] = useState(1);
+    const [showModal, setShowModal] = useState(false);
+    const addNewObject = useSelector((state: any) => state.classReducer)
     const toggleFilterFunction = () => {
         setToggleArrow(!toggleArrow);
         setToggleFilter(!toggleFilter);
@@ -19,11 +26,21 @@ export default function SubObjectManagement(props: any) {
     const sortByClassName = () => {
         setToggleSort(!toggleSort)
     }
+
+    useEffect(()=> {
+        setShowModal(addNewObject.toggleAddObject)
+    }, [addNewObject.toggleAddObject])
+
+    console.log({
+        addNewObject:addNewObject
+    })
+
+
     const fetchClassData = () => {
-        axios.get("/api/getAssets").then((response: any) => {
+        axios.get("/api/getSubAssets").then((response) => {
             if (response.data) {
                 const filtered = response.data.filter((item: any) => {
-                    return item.assetName
+                    return item.parentAssetName === props.defaultClass
                 });
                 if (filtered && filtered.length > 0) {
                     setClassData(filtered);
@@ -35,6 +52,7 @@ export default function SubObjectManagement(props: any) {
         fetchClassData();
         if (fetchClassData.length) return;
     }, [])
+
     const handleDropDown = (item: any) => {
         setChooseAsset(item)
     }
@@ -50,7 +68,7 @@ export default function SubObjectManagement(props: any) {
     }
     return (
         <div className='py-3 font-OpenSans'>
-            
+
             {/* Title, search and filters */}
             <div className='flex justify-between items-center py-2 px-4 '>
                 <div className='w-[350px]'>
@@ -103,11 +121,11 @@ export default function SubObjectManagement(props: any) {
                 </div>
             </div>
 
-            <button 
-            onClick={backToObect}
-            className='text-sm mt-10 mb-10 px-10'>
+            <button
+                onClick={backToObect}
+                className='text-sm mt-10 mb-10 px-10'>
                 Back To Object Management Component
-                </button>
+            </button>
 
             {/* Table */}
             <div className='w-full mt-6 min-h-[400px]'>
@@ -187,6 +205,8 @@ export default function SubObjectManagement(props: any) {
                     </tbody>
                 </table>
             </div>
+
+            {showModal && <AddNewObject  /> }
         </div>
     )
 }

@@ -1,18 +1,27 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import styles from '../../../styles/Common.module.css';
 import Image from "next/image";
 import CustomDrop from '@/common/customdrop';
 import axios from 'axios';
 import Link from 'next/dist/client/link';
+import { setSelectedClass } from '@/store/actions/classAction';
+
 export default function ObjectManagement(props: any) {
+    const dispatch = useDispatch<any>();
     const [toggleFilter, setToggleFilter] = useState(false);
     const [toggleArrow, setToggleArrow] = useState(false);
     const [toggleSort, setToggleSort] = useState(false);
     const [classData, setClassData] = useState([] as any);
-    const [chooseAsset, setChooseAsset] = useState('Vehicles');
+    const [chooseAsset, setChooseAsset] = useState('');
     const [actions, setActions] = useState(false);
     const [actionCount, setActionCount] = useState(1);
     const [objID, setObjID] = useState("");
+    // const getSelClass = useSelector((state:any) => state.classReducer)
+    // console.log({
+    //     getSelClass:getSelClass.selectedClass
+    // })
+ 
     const toggleFilterFunction = () => {
         setToggleArrow(!toggleArrow);
         setToggleFilter(!toggleFilter);
@@ -36,8 +45,15 @@ export default function ObjectManagement(props: any) {
         fetchClassData();
         if (fetchClassData.length) return;
     }, [])
-    const handleDropDown = (item: any) => {
-        setChooseAsset(item)
+
+    useEffect(()=> {
+        setChooseAsset(classData[0]?.assetName);
+        dispatch(setSelectedClass(classData[0]?.assetName))
+    }, [classData,dispatch])
+
+    const handleDropDown = (item: any) => {      
+        dispatch(setSelectedClass(item))
+        setChooseAsset(item);
     }
     const toggleActions = (item: any) => {
         setActionCount(item);

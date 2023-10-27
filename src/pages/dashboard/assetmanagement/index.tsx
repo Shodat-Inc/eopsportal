@@ -1,13 +1,43 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from 'react-redux';
 import Layout from "../../../components/Layout";
 import Image from "next/dist/client/image";
+import Link from "next/link";
+import axios from "axios";
 import ClassManagement from "./classmanagement";
 import ObjectManagement from "./objectmanagement";
 import SubObjectManagement from "./subobjectmanagement";
+import { setSelectedClass, toggleAddNewObjectModel } from "@/store/actions/classAction";
 
 export default function AssetManagement() {
+    const dispatch = useDispatch<any>();
     const [tab, setTab] = useState(1);
-    const [chkSubObj, setChkSubObj] = useState(false)
+    const [chkSubObj, setChkSubObj] = useState(false);
+    const [classData, setClassData] = useState([] as any);
+    const [defaultClass, setDefaultClass] = useState("");
+    const getSelClass = useSelector((state: any) => state.classReducer)
+    console.log({
+        "getSelClass in landingpage": getSelClass.selectedClass
+    })
+    const fetchData = () => {
+        axios.get("/api/getAssets").then((response) => {
+            if (response.data) {
+                setClassData(response.data);
+            }
+        });
+    };
+    useEffect(() => {
+        fetchData();
+        if (fetchData.length) return;
+    }, [])
+
+    useEffect(() => {
+        if (classData && classData.length > 0) {
+            setDefaultClass(classData[0]?.assetName)
+            dispatch(setSelectedClass(classData[0]?.assetName))
+        }
+    }, [classData, dispatch])
+
     const toggleTab = (item: any) => {
         setTab(item)
     }
@@ -18,22 +48,26 @@ export default function AssetManagement() {
     const handleaddClassModal = (item: any) => {
         setAddClassModal(item)
     }
-    const handelObject = (item:any) => {
+    const handelObject = (item: any) => {
         console.log({
-            item:item
+            "item - landing page": item
         })
-        if(item!=="") {
+        if (item !== "") {
             setTab(3)
         } else {
             setTab(tab)
         }
     }
-    const handleSubObject = (item:any) => {
-        if(item!=="") {
+    const handleSubObject = (item: any) => {
+        if (item !== "") {
             setTab(2)
         } else {
             setTab(tab)
         }
+    }
+
+    const openAddObjectModal = () => {
+        dispatch(toggleAddNewObjectModel(true));
     }
     return (
         <div className="flex font-OpenSans">
@@ -43,6 +77,66 @@ export default function AssetManagement() {
                 {/* Title */}
                 <div className="columns-2 flex justify-between items-center mb-7">
                     <p className="text-black text-xl font-semibold">Asset Management</p>
+                </div>
+
+                {/* Breadcrumb */}
+                <div className="flex relative bg-white rounded rounded-lg px-3 py-1 inline-flex border border-[#E3E3E3] mb-5">
+                    <ul className="flex justify-start items-center text-sm">
+                        <li className="flex justify-start items-center">
+                            <Link
+                                href="/dashboard/assetmanagement"
+                                className="font-semibold"
+                            >
+                                Object Management
+                            </Link>
+                        </li>
+
+                        <li className="flex justify-start items-center">
+                            <Image
+                                src="/img/chevron-right.svg"
+                                alt="chevron-right"
+                                height={28}
+                                width={28}
+                            />
+                            <Link
+                                href={{
+                                    pathname: '/dashboard/assetmanagement/',
+                                }}
+                                className="font-semibold"
+                            >
+                                <span>Class name: Vehicles</span>
+                            </Link>
+                        </li>
+
+                        <li className="flex justify-start items-center">
+                            <Image
+                                src="/img/chevron-right.svg"
+                                alt="chevron-right"
+                                height={28}
+                                width={28}
+                            />
+                            <Link
+                                href={{
+                                    pathname: '/dashboard/assetmanagement/',
+                                }}
+                                className="font-semibold"
+                            >
+                                <span>VIN: 5PVBE7AJ8R5T50001</span>
+                            </Link>
+                        </li>
+
+                        <li className="flex justify-start items-center">
+                            <Image
+                                src="/img/chevron-right.svg"
+                                alt="chevron-right"
+                                height={28}
+                                width={28}
+                            />
+                            <span className="text-gray-967 capitalize">
+                                Sub Class: Batteries
+                            </span>
+                        </li>
+                    </ul>
                 </div>
 
                 {/* Tabs */}
@@ -62,7 +156,7 @@ export default function AssetManagement() {
                         </button>
                         <button
                             onClick={() => toggleTab(2)}
-                            className={`rounded-tr-xl rounded-tl-xl mr-1 h-[56px] min-w-[100px] px-4 inline-flex jsutify-center items-center bg-white font-semibold ${tab === 2 ? "bg-white border border-[#E1E1E1] border-b-0" : "bg-yellow-951 bg-opacity-50 hover:bg-opacity-100"}`}>
+                            className={`rounded-tr-xl rounded-tl-xl mr-1 h-[56px] min-w-[100px] px-4 inline-flex jsutify-center items-center bg-white font-semibold ${tab === 2 || tab === 3 ? "bg-white border border-[#E1E1E1] border-b-0" : "bg-yellow-951 bg-opacity-50 hover:bg-opacity-100"}`}>
                             <Image
                                 src="/img/classmanagement/object.svg"
                                 alt="class"
@@ -104,6 +198,24 @@ export default function AssetManagement() {
                             </button>
                         </div>
                     }
+
+                    {tab === 3 &&
+                        <div className="flex justify-start items-center">
+                            <button
+                                className="rounded rounded-xl bg-black h-[44px] px-4 flex justify-center items-center text-white text-sm hover:bg-[#303030] transition-all duration-[400ms] transition-opacity duration-300 outline-none transform active:scale-75 transition-transform"
+                                onClick={openAddObjectModal}
+                            >
+                                <Image
+                                    src="/img/plus.svg"
+                                    alt="Add Class"
+                                    className="mr-2"
+                                    height={24}
+                                    width={24}
+                                />
+                                <span>Add Object</span>
+                            </button>
+                        </div>
+                    }
                 </div>
 
                 {/* Tab Contect */}
@@ -113,16 +225,19 @@ export default function AssetManagement() {
                             <ClassManagement
                                 handleaddClassModal={handleaddClassModal}
                                 addClassModal={addClassModal}
+                                classData={classData && classData.length > 0 ? classData : []}
                             />
                         }
                         {tab === 2 &&
                             <ObjectManagement
                                 handelObject={handelObject}
+                                defaultClass={defaultClass}
                             />
                         }
                         {tab === 3 &&
                             <SubObjectManagement
-                                handleSubObject={handleSubObject} 
+                                handleSubObject={handleSubObject}
+                                defaultClass={getSelClass.selectedClass}
                             />
                         }
                     </div>
