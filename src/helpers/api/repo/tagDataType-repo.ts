@@ -5,6 +5,7 @@ import { loggerInfo, loggerError } from "@/logger";
 // Repository for tagDataType-related operations.
 export const tagDataTypeRepo = {
   create,
+  get,
 };
 
 /**
@@ -31,5 +32,16 @@ async function create(params: any) {
     loggerError.error("Cant Save Tag Datatype", error);
     // Return a response indicating the failure of the operation.
     return sendResponseData(false, "error", error);
+  }
+}
+
+async function get(){
+  loggerInfo.info("Get All Tag DataTypes");
+  try {
+    const result = await db.tagDataType.findAll();
+    console.log(result, "------------");
+    return sendResponseData(true, "Tag Data Type Fetched Successfully", result);
+  } catch (error: any) {
+    return sendResponseData(false, "Cant Fetch Tag datatype", []);
   }
 }

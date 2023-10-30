@@ -7,6 +7,8 @@ export const classTagRepo = {
   create,
   bulkCreate,
   delete: _delete,
+  getClassTags,
+  getParentJoinTags,
 };
 
 /**
@@ -65,6 +67,33 @@ async function bulkCreate(params: any[], classId: any) {
     loggerError.error("Error in bulk class Tag repo", error);
   }
 }
+
+//get classTags
+async function getClassTags(id: any) {
+  try {
+    const result = await db.classTag.findAll({
+      where: { id },
+    });
+    return sendResponseData(true, "Class Tag id fetch successfully", result);
+  } catch (error: any) {
+    return sendResponseData(false, "Cant fetch Class Tag", error);
+  }
+}
+
+//get parent join tags
+async function getParentJoinTags(params: any) {
+  loggerInfo.info("get parent join tags");
+  try {
+    const result = await db.classTag.findOne({
+      where: { id: params },
+      attributes: ["tagName"],
+    });
+    return result;
+  } catch (error: any) {
+    return error;
+  }
+}
+
 //delete class tag
 async function _delete(id: any) {
   // delete class tag
