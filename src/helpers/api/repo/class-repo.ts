@@ -11,6 +11,7 @@ export const classRepo = {
   getClassData,
   getSubClass,
   update,
+  delete: _delete,
 };
 
 /**
@@ -168,4 +169,10 @@ async function update(params: any) {
     loggerError.error("Error in Updating class", error);
     return sendResponseData(false, message.error, error);
   }
+}
+
+async function _delete(params: any) {
+  const classes = await db.AddClasses.findByPk(params);
+  if (!classes) throw "Class doesn't exist";
+  return await classes.destroy();
 }

@@ -8,6 +8,7 @@ import { error } from "console";
 export const objectRepo = {
   create,
   get,
+  delete: _delete,
 };
 
 /**
@@ -92,4 +93,12 @@ async function get(id: any) {
     // Return a response indicating the failure of the operation.
     return sendResponseData(false, "error", error);
   }
+}
+
+async function _delete(params: any) {
+  return await db.object.destroy({
+    where: {
+      id: params,
+    },
+  });
 }

@@ -16,7 +16,6 @@ async function updateClass(req: any, res: any) {
     if (className) {
       const res = await classRepo.update({ id, className });
       //  resObj['updatedClass'] = {id:res}
-      console.log(res, "====>");
     }
     const { deleteTagId, addTag } = tagData;
     if (deleteTagId) {
