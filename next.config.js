@@ -15,8 +15,8 @@ const nextConfig = {
       database: process.env.DB_NAME,
     },
     secret: "97IoST9Ec8s5scvy49AMzT0TYArIInGZ",
-    env : process.env.ENV,
-    isDBSync: false
+    env: process.env.ENV,
+    isDBSync:false,
   },
   publicRuntimeConfig: {
     apiUrl:

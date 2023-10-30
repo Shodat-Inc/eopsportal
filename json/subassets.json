@@ -1,254 +1,204 @@
 [
-    {
-        "assetID": "2000000001",
-        "assetName": "Walls",
-        "slug": "Walls",
-        "parentAssetID": "Manufacturing Plants",
-        "parentAssetName": "Manufacturing Plants",
-        "tags": [
-            "ID",
-            "PlantID",
-            "Description",
-            "Floor",
-            "Room",
-            "Direction"
-        ],
-        "parentJoinKey": [
-            "PlantID"
-        ],
-        "dateCreated": "5/29/2023, 3:10:20 PM",
-        "dateModified": "5/29/2023, 3:10:20 PM",
-        "geoScopeLink": "",
-        "tagsWithDataType": [
-            {
-                "tagName": "ID",
-                "dataType": "int"
-            },
-            {
-                "tagName": "PlantID",
-                "dataType": "int"
-            },
-            {
-                "tagName": "Description",
-                "dataType": "string"
-            },
-            {
-                "tagName": "Floor",
-                "dataType": "string"
-            },
-            {
-                "tagName": "Room",
-                "dataType": "string"
-            },
-            {
-                "tagName": "Direction",
-                "dataType": "string"
-            }
-        ],
-        "assetTypes": [
-            "int",
-            "int",
-            "string",
-            "string",
-            "string",
-            "string"
-        ]
-    },
-    {
-        "assetID": "2000000002",
-        "assetName": "Pipes",
-        "slug": "Pipes",
-        "parentAssetID": "Manufacturing Plants",
-        "parentAssetName": "Manufacturing Plants",
-        "tags": [
-            "ID",
-            "PlantID",
-            "Description",
-            "Floor",
-            "Room",
-            "Direction",
-            "Material"
-        ],
-        "parentJoinKey": [
-            "PlantID",
-            "ID"
-        ],
-        "dateCreated": "5/29/2023, 3:25:29 PM",
-        "dateModified": "5/29/2023, 3:25:29 PM",
-        "geoScopeLink": "",
-        "tagsWithDataType": [
-            {
-                "tagName": "ID",
-                "dataType": "int"
-            },
-            {
-                "tagName": "PlantID",
-                "dataType": "int"
-            },
-            {
-                "tagName": "Description",
-                "dataType": "string"
-            },
-            {
-                "tagName": "Floor",
-                "dataType": "string"
-            },
-            {
-                "tagName": "Room",
-                "dataType": "string"
-            },
-            {
-                "tagName": "Direction",
-                "dataType": "string"
-            },
-            {
-                "tagName": "Material",
-                "dataType": "string"
-            }
-        ],
-        "assetTypes": [
-            "int",
-            "int",
-            "string",
-            "string",
-            "string",
-            "string",
-            "string"
-        ]
-    },
-    {
-        "assetID": "2000000003",
-        "assetName": "Battery",
-        "slug": "Battery",
-        "parentAssetID": "Vehicles",
-        "parentAssetName": "Vehicles",
-        "tags": [
-            "SerialNo",
-            "VIN",
-            "Manufacturer",
-            "Capacity(AH)",
-            "Voltage(V)"
-        ],
-        "parentJoinKey": [
-            "VIN"
-        ],
-        "dateCreated": "5/29/2023, 3:55:59 PM",
-        "dateModified": "5/29/2023, 3:55:59 PM",
-        "geoScopeLink": "",
-        "tagsWithDataType": [
-            {
-                "tagName": "SerialNo",
-                "dataType": "int"
-            },
-            {
-                "tagName": "VIN",
-                "dataType": "string"
-            },
-            {
-                "tagName": "Manufacturer",
-                "dataType": "string"
-            },
-            {
-                "tagName": "Capacity(AH)",
-                "dataType": "string"
-            },
-            {
-                "tagName": "Voltage(V)",
-                "dataType": "string"
-            }
-        ],
-        "assetTypes": [
-            "int",
-            "string",
-            "string",
-            "string",
-            "string"
-        ]
-    },
-    {
-        "assetID": "2000000004",
-        "assetName": "Tire",
-        "slug": "Tire",
-        "parentAssetID": "Vehicles",
-        "parentAssetName": "Vehicles",
-        "tags": [
-            "SerialID",
-            "VIN",
-            "Manufacturer",
-            "AxelNo",
-            "Type",
-            "WheelBase(MM)"
-        ],
-        "parentJoinKey": [
-            "VIN"
-        ],
-        "dateCreated": "5/29/2023, 4:01:10 PM",
-        "dateModified": "5/29/2023, 4:01:10 PM",
-        "geoScopeLink": "",
-        "tagsWithDataType": [
-            {
-                "tagName": "SerialID",
-                "dataType": "int"
-            },
-            {
-                "tagName": "VIN",
-                "dataType": "string"
-            },
-            {
-                "tagName": "Manufacturer",
-                "dataType": "string"
-            },
-            {
-                "tagName": "AxelNo",
-                "dataType": "string"
-            },
-            {
-                "tagName": "Type",
-                "dataType": "string"
-            },
-            {
-                "tagName": "WheelBase(MM)",
-                "dataType": "string"
-            }
-        ],
-        "assetTypes": [
-            "int",
-            "string",
-            "string",
-            "string",
-            "string",
-            "string"
-        ]
-    },
-    {
-        "assetID": "2000000002",
-        "assetName": "Sub Dummy",
-        "slug": "Sub Dummy",
-        "parentAssetID": "Dummy Class",
-        "parentAssetName": "Dummy Class",
-        "tags": [
-            "ID",
-            "Date"
-        ],
-        "parentJoinKey": [
-            "VIN"
-        ],
-        "dateCreated": "6/6/2023, 7:01:54 PM",
-        "dateModified": "6/6/2023, 7:01:54 PM",
-        "geoScopeLink": "",
-        "tagsWithDataType": [
-            {
-                "tagName": "ID",
-                "dataType": "int"
-            },
-            {
-                "tagName": "Date",
-                "dataType": "date"
-            }
-        ],
-        "assetTypes": [
-            "int",
-            "date"
-        ]
-    }
+  {
+    "assetID": "2000000001",
+    "assetName": "Walls",
+    "slug": "Walls",
+    "parentAssetID": "Manufacturing Plants",
+    "parentAssetName": "Manufacturing Plants",
+    "tags": ["ID", "PlantID", "Description", "Floor", "Room", "Direction"],
+    "parentJoinKey": ["PlantID"],
+    "dateCreated": "5/29/2023, 3:10:20 PM",
+    "dateModified": "5/29/2023, 3:10:20 PM",
+    "geoScopeLink": "",
+    "tagsWithDataType": [
+      { "tagName": "ID", "dataType": "int" },
+      { "tagName": "PlantID", "dataType": "int" },
+      { "tagName": "Description", "dataType": "string" },
+      { "tagName": "Floor", "dataType": "string" },
+      { "tagName": "Room", "dataType": "string" },
+      { "tagName": "Direction", "dataType": "string" }
+    ],
+    "assetTypes": ["int", "int", "string", "string", "string", "string"]
+  },
+  {
+    "assetID": "2000000002",
+    "assetName": "Pipes",
+    "slug": "Pipes",
+    "parentAssetID": "Manufacturing Plants",
+    "parentAssetName": "Manufacturing Plants",
+    "tags": [
+      "ID",
+      "PlantID",
+      "Description",
+      "Floor",
+      "Room",
+      "Direction",
+      "Material"
+    ],
+    "parentJoinKey": ["PlantID", "ID"],
+    "dateCreated": "5/29/2023, 3:25:29 PM",
+    "dateModified": "5/29/2023, 3:25:29 PM",
+    "geoScopeLink": "",
+    "tagsWithDataType": [
+      { "tagName": "ID", "dataType": "int" },
+      { "tagName": "PlantID", "dataType": "int" },
+      { "tagName": "Description", "dataType": "string" },
+      { "tagName": "Floor", "dataType": "string" },
+      { "tagName": "Room", "dataType": "string" },
+      { "tagName": "Direction", "dataType": "string" },
+      { "tagName": "Material", "dataType": "string" }
+    ],
+    "assetTypes": [
+      "int",
+      "int",
+      "string",
+      "string",
+      "string",
+      "string",
+      "string"
+    ]
+  },
+  {
+    "assetID": "2000000003",
+    "assetName": "Battery",
+    "slug": "Battery",
+    "parentAssetID": "Vehicles",
+    "parentAssetName": "Vehicles",
+    "tags": ["SerialNo", "VIN", "Manufacturer", "Capacity(AH)", "Voltage(V)"],
+    "parentJoinKey": ["VIN"],
+    "dateCreated": "5/29/2023, 3:55:59 PM",
+    "dateModified": "5/29/2023, 3:55:59 PM",
+    "geoScopeLink": "",
+    "tagsWithDataType": [
+      { "tagName": "SerialNo", "dataType": "int" },
+      { "tagName": "VIN", "dataType": "string" },
+      { "tagName": "Manufacturer", "dataType": "string" },
+      { "tagName": "Capacity(AH)", "dataType": "string" },
+      { "tagName": "Voltage(V)", "dataType": "string" }
+    ],
+    "assetTypes": ["int", "string", "string", "string", "string"]
+  },
+  {
+    "assetID": "2000000004",
+    "assetName": "Tire",
+    "slug": "Tire",
+    "parentAssetID": "Vehicles",
+    "parentAssetName": "Vehicles",
+    "tags": [
+      "SerialID",
+      "VIN",
+      "Manufacturer",
+      "AxelNo",
+      "Type",
+      "WheelBase(MM)"
+    ],
+    "parentJoinKey": ["VIN"],
+    "dateCreated": "5/29/2023, 4:01:10 PM",
+    "dateModified": "5/29/2023, 4:01:10 PM",
+    "geoScopeLink": "",
+    "tagsWithDataType": [
+      { "tagName": "SerialID", "dataType": "int" },
+      { "tagName": "VIN", "dataType": "string" },
+      { "tagName": "Manufacturer", "dataType": "string" },
+      { "tagName": "AxelNo", "dataType": "string" },
+      { "tagName": "Type", "dataType": "string" },
+      { "tagName": "WheelBase(MM)", "dataType": "string" }
+    ],
+    "assetTypes": ["int", "string", "string", "string", "string", "string"]
+  },
+  {
+    "assetID": "2000000002",
+    "assetName": "Sub Dummy",
+    "slug": "Sub Dummy",
+    "parentAssetID": "Dummy Class",
+    "parentAssetName": "Dummy Class",
+    "tags": ["ID", "Date"],
+    "parentJoinKey": ["VIN"],
+    "dateCreated": "6/6/2023, 7:01:54 PM",
+    "dateModified": "6/6/2023, 7:01:54 PM",
+    "geoScopeLink": "",
+    "tagsWithDataType": [
+      { "tagName": "ID", "dataType": "int" },
+      { "tagName": "Date", "dataType": "date" }
+    ],
+    "assetTypes": ["int", "date"]
+  },
+  {
+    "assetID": "2000000003",
+    "assetName": "Iron Pipes",
+    "slug": "Iron Pipes",
+    "parentAssetID": "Manufacturing Plants",
+    "parentAssetName": "Manufacturing Plants",
+    "tags": ["Size", "Demand Date", "Fees"],
+    "parentJoinKey": [
+      "State",
+      "Street",
+      "City",
+      "Country",
+      "Zipcode",
+      "Name",
+      "Description"
+    ],
+    "dateCreated": "06/10/2023, 11:10:08",
+    "dateModified": "06/10/2023, 11:10:08",
+    "geoScopeLink": "",
+    "tagsWithDataType": [
+      { "tagName": "Size", "dataType": "int" },
+      { "tagName": "Demand Date", "dataType": "date" },
+      { "tagName": "Fees", "dataType": "int" }
+    ],
+    "assetTypes": ["int", "date", "int"]
+  },
+  {
+    "assetID": "2000000004",
+    "assetName": "trdcf",
+    "slug": "trdcf",
+    "parentAssetID": "Manufacturing Plants",
+    "parentAssetName": "Manufacturing Plants",
+    "tags": ["gg", "jjjjj"],
+    "parentJoinKey": [
+      "PlantID",
+      "City",
+      "State",
+      "Zipcode",
+      "Country",
+      "Street"
+    ],
+    "dateCreated": "06/10/2023, 12:40:32",
+    "dateModified": "06/10/2023, 12:40:32",
+    "geoScopeLink": "",
+    "tagsWithDataType": [
+      { "tagName": "gg", "dataType": "int" },
+      { "tagName": "jjjjj", "dataType": "int" }
+    ],
+    "assetTypes": ["int", "int"]
+  },
+  {
+    "assetID": "2000000005",
+    "assetName": "Vehicle ka",
+    "slug": "Vehicle ka",
+    "parentAssetID": "Manufacturing Plants",
+    "parentAssetName": "Manufacturing Plants",
+    "tags": ["ff"],
+    "parentJoinKey": ["PlantID"],
+    "dateCreated": "12/10/2023, 19:35:30",
+    "dateModified": "12/10/2023, 19:35:30",
+    "geoScopeLink": "",
+    "tagsWithDataType": [{ "tagName": "ff", "dataType": "int" }],
+    "assetTypes": ["int"]
+  },
+  {
+    "assetID": "2000000006",
+    "assetName": "sub111",
+    "slug": "sub111",
+    "parentAssetID": "Manufacturing Plants",
+    "parentAssetName": "Manufacturing Plants",
+    "tags": ["subtag"],
+    "parentJoinKey": ["PlantID", "Zipcode"],
+    "dateCreated": "12/10/2023, 19:38:57",
+    "dateModified": "12/10/2023, 19:38:57",
+    "geoScopeLink": "",
+    "tagsWithDataType": [{ "tagName": "subtag", "dataType": "int" }],
+    "assetTypes": ["int"]
+  }
 ]
