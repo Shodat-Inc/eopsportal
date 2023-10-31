@@ -7,6 +7,7 @@ import axios from "axios";
 import Drop from "./drop";
 import Link from "next/link";
 import { useRouter } from 'next/router'
+import Breadcrumbs from "@/common/breadcrumbs";
 
 const classes = [
     "Manufacturing Plants",
@@ -195,7 +196,7 @@ export default function Objects() {
             <p className="text-black text-lg mb-4 font-semibold text-xl">eOps Watch</p>
 
             {/* Breadcrumb */}
-            <div className="flex relative bg-white rounded rounded-lg px-3 py-1 inline-flex border border-[#E3E3E3] mb-5">
+            <div className="flex relative bg-white rounded rounded-lg px-3 py-1 inline-flex border border-[#E3E3E3] mb-5 hidden">
                 <ul className="flex justify-start items-center text-sm">
                     <li className="flex justify-start items-center">
                         <Link
@@ -240,6 +241,8 @@ export default function Objects() {
                     </li>
                 </ul>
             </div>
+
+            <Breadcrumbs />
 
 
             <div className="bg-white min-h-[500px] rounded rounded-xl lg:p-4 md:p-4 sm:p-4">
@@ -314,7 +317,7 @@ export default function Objects() {
                     urlParams={routerParams}
                 />
 
-            </div>
+            Breadcrumbs</div>
         </div>
     )
 }

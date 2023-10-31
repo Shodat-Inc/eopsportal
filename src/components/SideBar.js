@@ -19,7 +19,7 @@ const SideBar = forwardRef(({ showNav, setShowNav }, ref) => {
   const splitPathName = arr.filter(n => n);
 
   return (
-    <div ref={ref} className={`fixed w-60 h-full  shadow-sm bg-black ${styles.sidebar}`}>
+    <div ref={ref} className={`font-OpenSans fixed w-60 h-full shadow-sm bg-black ${styles.sidebar}`}>
       <div className="flex items-center justify-left pl-6 pt-6 pb-6 bg-white h-20">
         <picture>
           <Image
@@ -35,10 +35,10 @@ const SideBar = forwardRef(({ showNav, setShowNav }, ref) => {
       </div>
 
       <div className="flex flex-col pt-1 font-OpenSans">
-        <Link href="/dashboard" className="hidden1">
+        <Link href="/dashboard" className="hidden1 px-3">
           <div
-            className={`pl-6 font-light font-OpenSans font-light py-3 mx-0 text-center cursor-pointer mb-3 flex text-sm items-center transition-colors ${router.pathname == "/dashboard"
-              ? "bg-white text-black"
+            className={`pl-3 text-sm font-OpenSans font-light py-3 px-3 rounded rounded-lg text-center cursor-pointer mb-3 flex items-center transition-colors ${router.pathname == "/dashboard"
+              ? "bg-[#2B2B2B] text-white"
               : "text-white hover:bg-yellow-951 hover:text-black"
               }`}
             onMouseOver={() => setDashboard(true)}
@@ -70,10 +70,10 @@ const SideBar = forwardRef(({ showNav, setShowNav }, ref) => {
           </div>
         </Link>
 
-        <Link href="/dashboard/assetmanagement">
+        <Link href="/dashboard/assetmanagement" className="px-3">
           <div
-            className={`pl-6 text-sm font-OpenSans font-light py-3 mx-0 text-center cursor-pointer mb-3 flex items-center transition-colors ${router.pathname == "/dashboard/assetmanagement" || splitPathName.includes("assetmanagement")
-              ? "bg-white text-black"
+            className={`pl-3 text-sm font-OpenSans font-light py-3 px-3 rounded rounded-lg text-center cursor-pointer mb-3 flex items-center transition-colors ${router.pathname == "/dashboard/assetmanagement" || splitPathName.includes("assetmanagement")
+              ? "bg-[#2B2B2B] text-white"
               : "text-white hover:bg-yellow-951 hover:text-black"
               }`}
             onMouseOver={() => setAsstMgmt(true)}
@@ -105,10 +105,10 @@ const SideBar = forwardRef(({ showNav, setShowNav }, ref) => {
           </div>
         </Link>
 
-        <Link href="/dashboard/eopswatch">
+        <Link href="/dashboard/eopswatch" className="px-3">
           <div
-            className={`pl-6 text-sm font-OpenSans font-light py-3 mx-0 text-center cursor-pointer mb-3 flex items-center transition-colors ${router.pathname == "/dashboard/eopswatch" || splitPathName.includes("eopswatch")
-              ? "bg-white text-black"
+            className={`pl-3 text-sm font-OpenSans font-light py-3 px-3 rounded rounded-lg text-center cursor-pointer mb-3 flex items-center transition-colors ${router.pathname == "/dashboard/eopswatch" || splitPathName.includes("eopswatch")
+              ? "bg-[#2B2B2B] text-white"
               : "text-white hover:bg-yellow-951 hover:text-black"
               }`}
             onMouseOver={() => setEopswatch(true)}
@@ -148,10 +148,10 @@ const SideBar = forwardRef(({ showNav, setShowNav }, ref) => {
           </div>
         </Link>
 
-        <Link href="/dashboard/eopstrace">
+        <Link href="/dashboard/eopstrace" className="px-3">
           <div
-            className={`pl-6 text-sm font-OpenSans font-light py-3 mx-0 text-center cursor-pointer mb-3 flex items-center  transition-colors ${router.pathname == "/dashboard/eopstrace" || splitPathName.includes("eopstrace")
-              ? "bg-white text-black"
+            className={`pl-3 text-sm font-OpenSans font-light py-3 px-3 rounded rounded-lg text-center cursor-pointer mb-3 flex items-center transition-colors ${router.pathname == "/dashboard/eopstrace" || splitPathName.includes("eopstrace")
+              ? "bg-[#2B2B2B] text-white"
               : "text-white hover:bg-yellow-951 hover:text-black"
               }`}
             onMouseOver={() => setEopstatch(true)}
@@ -183,10 +183,10 @@ const SideBar = forwardRef(({ showNav, setShowNav }, ref) => {
           </div>
         </Link>
 
-        <Link href="/dashboard/eopsprosense">
+        <Link href="/dashboard/eopsprosense" className="px-3">
           <div
-            className={`pl-6 text-sm font-OpenSans font-light py-3 mx-0 text-center cursor-pointer mb-3 flex items-center transition-colors ${router.pathname == "/dashboard/eopsprosense" || splitPathName.includes("eopsprosense")
-              ? "bg-white text-black"
+            className={`pl-3 text-sm font-OpenSans font-light py-3 px-3 rounded rounded-lg text-center cursor-pointer mb-3 flex items-center transition-colors ${router.pathname == "/dashboard/eopsprosense" || splitPathName.includes("eopsprosense")
+              ? "bg-[#2B2B2B] text-white"
               : "text-white hover:bg-yellow-951 hover:text-black"
               }`}
             onMouseOver={() => setEopspro(true)}
@@ -218,10 +218,10 @@ const SideBar = forwardRef(({ showNav, setShowNav }, ref) => {
           </div>
         </Link>
 
-        <Link href="/dashboard/eopsinsight">
+        <Link href="/dashboard/eopsinsight" className="px-3">
           <div
-            className={`pl-6 text-sm font-OpenSans font-light py-3 mx-0 text-center cursor-pointer mb-3 flex items-center  transition-colors ${router.pathname == "/dashboard/eopsinsight" || splitPathName.includes("eopsinsight")
-              ? "bg-white text-black"
+            className={`pl-3 text-sm font-OpenSans font-light py-3 px-3 rounded rounded-lg text-center cursor-pointer mb-3 flex items-center transition-colors ${router.pathname == "/dashboard/eopsinsight" || splitPathName.includes("eopsinsight")
+              ? "bg-[#2B2B2B] text-white"
               : "text-white hover:bg-yellow-951 hover:text-black"
               }`}
             onMouseOver={() => setEopinsight(true)}
@@ -254,10 +254,10 @@ const SideBar = forwardRef(({ showNav, setShowNav }, ref) => {
         </Link>
 
 
-        <Link href="/dashboard/modelcatalog">
+        <Link href="/dashboard/modelcatalog" className="px-3">
           <div
-            className={`pl-6 text-sm font-OpenSans font-light py-3 mx-0 text-center cursor-pointer mb-3 flex items-center  transition-colors ${router.pathname == "/dashboard/modelcatalog" || splitPathName.includes("modelcatalog")
-              ? "bg-white text-black"
+            className={`pl-3 text-sm font-OpenSans font-light py-3 px-3 rounded rounded-lg text-center cursor-pointer mb-3 flex items-center transition-colors ${router.pathname == "/dashboard/modelcatalog" || splitPathName.includes("modelcatalog")
+              ? "bg-[#2B2B2B] text-white"
               : "text-white hover:bg-yellow-951 hover:text-black"
               }`}
             onMouseOver={() => setModelCatalog(true)}

@@ -217,7 +217,7 @@ export default function TabData(props: any) {
         if (props.classes === "Vehicles") {
             return <Link
                 href={{
-                    pathname: '/dashboard/eopswatch/models',
+                    pathname: '/dashboard/eopstrace/models',
                     query: {
                         objectID: props.classes,
                         VIN: items?.subObjects.VIN
@@ -230,7 +230,7 @@ export default function TabData(props: any) {
         } else {
             return <Link
                 href={{
-                    pathname: '/dashboard/eopswatch/models',
+                    pathname: '/dashboard/eopstrace/models',
                     query: {
                         objectID: props.classes,
                         PlantID: items?.subObjects.PlantID
@@ -289,7 +289,7 @@ export default function TabData(props: any) {
                                                                 props.classes === "Manufacturing Plants" ?
                                                                     <Link
                                                                         href={{
-                                                                            pathname: '/dashboard/eopswatch/objects',
+                                                                            pathname: '/dashboard/eopstrace/objects',
                                                                             query: {
                                                                                 objectID: props.classes,
                                                                                 PlantID: items?.subObjects?.PlantID
@@ -301,7 +301,7 @@ export default function TabData(props: any) {
                                                                     :
                                                                     <Link
                                                                         href={{
-                                                                            pathname: '/dashboard/eopswatch/objects',
+                                                                            pathname: '/dashboard/eopstrace/objects',
                                                                             query: {
                                                                                 objectID: props.classes,
                                                                                 VIN: items?.subObjects?.VIN
