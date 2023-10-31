@@ -7,18 +7,20 @@ import axios from "axios";
 import ClassManagement from "./classmanagement";
 import ObjectManagement from "./objectmanagement";
 import SubObjectManagement from "./subobjectmanagement";
-import { setSelectedClass, toggleAddNewObjectModel } from "@/store/actions/classAction";
+import { setSelectedClass, toggleAddNewObjectModel, getSingleUser } from "@/store/actions/classAction";
 
 export default function AssetManagement() {
     const dispatch = useDispatch<any>();
     const [tab, setTab] = useState(1);
-    const [chkSubObj, setChkSubObj] = useState(false);
     const [classData, setClassData] = useState([] as any);
     const [defaultClass, setDefaultClass] = useState("");
-    const getSelClass = useSelector((state: any) => state.classReducer)
+    const getSelClass = useSelector((state: any) => state.classReducer);
     console.log({
-        "getSelClass in landingpage": getSelClass.selectedClass
+        "getSelClass in landingpage": getSelClass
     })
+    useEffect(()=> {
+        dispatch(getSingleUser())
+    }, [])
     const fetchData = () => {
         axios.get("/api/getAssets").then((response) => {
             if (response.data) {

@@ -1,7 +1,11 @@
 import { SET_CLASS_ERROR, SET_CLASS_SUCCESS } from "../types";
 import { TOGGLE_ADD_OBJECT_MODEL_ERROR, TOGGLE_ADD_OBJECT_MODEL_SUCCESS } from "../types";
+import { GET_ALL_CLASS_ERROR, GET_ALL_CLASS_SUCCESS } from "../types";
 import axios from "axios";
-
+let access_token = "" as any;
+if (typeof window !== 'undefined') {
+    access_token = localStorage.getItem('authenticationToken')
+}
 /*
 Function to set the selected class at Object Management Landing Page
 */
@@ -44,6 +48,38 @@ export const toggleAddNewObjectModel = (item:any) => async (dispatch: any) => {
                 payload: "Failed!"
             });
         }
+    } catch (err) {
+        console.log("err in action:", err)
+    }
+};
+
+
+/*
+Function to get all classes
+*/
+export const getSingleUser = () => async (dispatch: any) => {
+    let tokenStr = access_token;
+    try {
+        await axios({
+            method: 'GET',
+            url: `/api/getAssets`,
+            headers: {
+                "Authorization": `Bearer ${tokenStr}`,
+                "Content-Type": "application/json"
+            }
+        })
+            .then(function (response) {
+                dispatch({
+                    type: GET_ALL_CLASS_SUCCESS,
+                    payload: response.data,
+                });
+            })
+            .catch(function (error) {
+                dispatch({
+                    type: GET_ALL_CLASS_ERROR,
+                    payload: error,
+                });
+            })
     } catch (err) {
         console.log("err in action:", err)
     }

@@ -5,7 +5,7 @@ import Image from "next/image";
 import CustomDrop from '@/common/customdrop';
 import axios from 'axios';
 import Link from 'next/dist/client/link';
-import { setSelectedClass } from '@/store/actions/classAction';
+import { setSelectedClass, getSingleUser } from '@/store/actions/classAction';
 
 export default function ObjectManagement(props: any) {
     const dispatch = useDispatch<any>();
