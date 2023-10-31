@@ -170,7 +170,7 @@ export default function ClassManagement(props: any) {
 
 
             {/* Add New Class */}            
-            {showModal && <AddNewClass handleClick={handleClick} /> }
+            <AddNewClass handleClick={handleClick} show={showModal} /> 
             
         </div>
     )
