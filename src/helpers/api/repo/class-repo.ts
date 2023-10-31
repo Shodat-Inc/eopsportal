@@ -12,6 +12,7 @@ export const classRepo = {
   getSubClass,
   update,
   delete: _delete,
+  getClassDataByID,
 };
 
 /**
@@ -50,14 +51,14 @@ async function create(params: any) {
  * @param {Object} req - The request object containing the user ID.
  * @returns {Array} - An array of classes and associated tags or an error response.
  */
-async function getClassData(req: any) {
+async function getClassData(params: any) {
   try {
     // Log the initiation of fetching classes and tags.
     loggerInfo.info("Fetching all class and classTags data");
 
     const result = await db.AddClasses.findAll({
       where: {
-        userId: req.id,
+        userId: params.id,
         parentId: null,
       },
       attributes: ["className"],
@@ -90,6 +91,53 @@ async function getClassData(req: any) {
   }
 }
 
+//Fetch class By ID
+async function getClassDataByID(params: any) {
+  try {
+    // Log the initiation of fetching classes and tags.
+    loggerInfo.info("Fetching all class and classTags data on class ID");
+
+    if (!params.id) {
+      throw "NO ID exist";
+    }
+    const result = await db.AddClasses.findAll({
+      where: {
+        id: params.id,
+        parentId: null,
+      },
+      attributes: ["className"],
+      include: [
+        {
+          model: db.classTag,
+          attributes: ["tagName", "createdAt", "dataTypeId"],
+          required: true, // Makes it an INNER JOIN
+          include: [
+            {
+              model: db.tagDataType,
+              attributes: ["name"],
+              required: true, // Makes it an INNER JOIN
+              where: {
+                id: Sequelize.col("dataTypeId"),
+              },
+            },
+          ],
+        },
+      ],
+    });
+    if (result.length === 0) {
+      return sendResponseData(false, "No data found", []);
+    }
+
+    return result.map((item: any, index: any) => ({
+      serialNumber: index + 1,
+      ...item.get(), // Convert Sequelize instance to plain JS object
+    }));
+  } catch (error) {
+    // Log the error if fetching classes and tags fails.
+    loggerError.error("Error fetching class and classTags data by ID:", error);
+    return sendResponseData(false, "error", error);
+  }
+}
 /**
  * Fetch all subclasses and associated tags for a given user based on a parent class ID.
  *
