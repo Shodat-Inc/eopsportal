@@ -1,13 +1,13 @@
 import { db } from "../db";
 import sendResponseData from "../../constant";
 import { loggerInfo, loggerError } from "@/logger";
-import { Sequelize } from "sequelize";
 import { error } from "console";
 
 // Repository for object-related operations.
 export const objectRepo = {
   create,
   get,
+  getObjectById,
   delete: _delete,
 };
 
@@ -66,6 +66,50 @@ async function get(id: any) {
         {
           model: db.AddClasses,
           where: { id }, // This will filter by classId
+          attributes: ["id", "superParentId", "parentId"],
+          include: [
+            {
+              model: db.classTag,
+              attributes: ["tagName"],
+            },
+          ],
+        },
+        {
+          model: db.AddValues,
+          attributes: ["values", "createdAt"],
+        },
+      ],
+    });
+    return result.map((item: any, index: any) => ({
+      S_No: index + 1,
+      ...item.get(), // Convert Sequelize instance to plain JS object
+    }));
+  } catch (error) {
+    // Log the error if there's an issue with fetching data.
+    loggerError.error(
+      "Error fetching Objects, ClassTags, and ObjectValues data:",
+      error
+    );
+    // Return a response indicating the failure of the operation.
+    return sendResponseData(false, "error", error);
+  }
+}
+async function getObjectById(params: any) {
+  // Log the initiation of fetching Objects, ClassTags, and ObjectValues data By ObjectId.
+  loggerInfo.info("Fetching Objects, ClassTags, and ObjectValues data");
+  // Validate that an ID is provided.
+  if (!params.query.objectId && !params.query.classId) {
+    loggerError.error("No Id is provided");
+    return sendResponseData(false, "no id", error);
+  }
+
+  try {
+    const result = await db.object.findAll({
+      where: { id: params.query.objectId }, // This will filter by classId
+      include: [
+        {
+          model: db.AddClasses,
+          where: { id: params.query.classId },
           attributes: ["id", "superParentId", "parentId"],
           include: [
             {

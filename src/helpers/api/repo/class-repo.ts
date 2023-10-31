@@ -13,6 +13,7 @@ export const classRepo = {
   update,
   delete: _delete,
   getClassDataByID,
+  getSubClassByID,
 };
 
 /**
@@ -147,7 +148,7 @@ async function getClassDataByID(params: any) {
 async function getSubClass(param: any) {
   try {
     // Log the initiation of fetching subclasses and tags.
-    loggerInfo.info("Fetching all class and classTags data");
+    loggerInfo.info("Fetching all subclass and subclassTags data");
     const result = await db.AddClasses.findAll({
       where: {
         userId: param.id,
@@ -177,7 +178,65 @@ async function getSubClass(param: any) {
         },
       ],
     });
-
+    if (result.length === 0) {
+      return sendResponseData(false, "No data found", []);
+    }
+    // Get Parent Join Tag Name
+    for (let x of result) {
+      let parentKey = x.ParentJoinKeys;
+      for (let y of parentKey) {
+        let tagQuery = await classTagRepo.getParentJoinTags(y.parentTagId);
+        y.dataValues.tagname = tagQuery.tagName;
+      }
+    }
+    const response = result.map((item: any, index: any) => ({
+      S_No: index + 1,
+      ...item.get(),
+    }));
+    return response;
+  } catch (error) {
+    // Log the error if fetching subclasses and tags fails.
+    loggerError.error("Error fetching class and classTags data:", error);
+    return sendResponseData(false, "error", error);
+  }
+}
+async function getSubClassByID(param: any) {
+  console.log();
+  try {
+    // Log the initiation of fetching subclasses and tags.
+    loggerInfo.info("Fetching subclass and subclassTags data by ID");
+    const result = await db.AddClasses.findAll({
+      where: {
+        id: param.query.classId,
+        parentId: param.query.parentId,
+      },
+      attributes: ["className"],
+      include: [
+        {
+          model: db.classTag,
+          attributes: ["tagName", "createdAt", "dataTypeId"],
+          required: true, // Makes it an INNER JOIN
+          include: [
+            {
+              model: db.tagDataType,
+              attributes: ["name"],
+              required: true, // Makes it an INNER JOIN
+              where: {
+                id: Sequelize.col("dataTypeId"),
+              },
+            },
+          ],
+        },
+        {
+          model: db.parentJoinKey,
+          attributes: ["parentTagId"],
+          required: true, // Makes it an INNER JOI
+        },
+      ],
+    });
+    if (result.length === 0) {
+      return sendResponseData(false, "No data found", []);
+    }
     // Get Parent Join Tag Name
     for (let x of result) {
       let parentKey = x.ParentJoinKeys;
