@@ -4,7 +4,7 @@ import Image from "next/image";
 export default function CustomDropSubClass(props: any) {
     const [toggleAsset, setToggleAsset] = useState(false);
     const [chooseAsset, setChooseAsset] = useState("");
-    useEffect(()=>{
+    useEffect(() => {
         setChooseAsset(props.defaultClass);
     }, [props.defaultClass])
 
@@ -43,15 +43,32 @@ export default function CustomDropSubClass(props: any) {
                 <Image
                     src="/img/arrow-down-black.svg"
                     alt="arrow-down"
-                    height={20}
-                    width={20}
-                    className="absolute right-3 top-4"
+                    height={24}
+                    width={24}
+                    className={`absolute right-3 top-4 ${toggleAsset ? 'rotate-180' : 'rotate-0'}`}
                 />
                 <span className="text-lg text-black pl-2">{chooseAsset}</span>
             </div>
 
             {toggleAsset ?
-                <div className={`h-52 border rounded-xl border-gray-500 h-auto max-h-[250px] w-[400px]  absolute flex items-start justify-start mt-1 overflow-hidden overflow-y-auto bg-white ${styles.scroll} z-10`}>
+                <div className={`h-52 border rounded-xl border-gray-500 h-auto max-h-[250px] w-[400px]  absolute flex items-start justify-start flex-wrap flex-col mt-1 overflow-hidden overflow-y-auto bg-white ${styles.scroll} z-10`}>
+                    <div className="flex relative w-full mt-3 mb-3 pl-3 pr-3">
+                        <Image
+                            src="/img/search-icon-gray.svg"
+                            alt="search"
+                            height={22}
+                            width={22}
+                            className="absolute top-[11px] left-5"
+                        />
+                        <input
+                            type="text"
+                            placeholder={`Search`}
+                            id="searchobjects"
+                            name="searchobjects"
+                            className="border border-gray-969 rounded-lg h-[44px] w-full pl-10 pr-2"
+                            autoComplete="off"
+                        />
+                    </div>
                     <ul className="p-0 m-0 w-full">
                         {
                             props.data.map((item: any, index: any) => (

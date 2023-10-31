@@ -14,6 +14,10 @@ export default function TopBar({ showNav, setShowNav }) {
   const { push } = useRouter();
   const router = useRouter();
   const [username, setUsername] = useState("Amit");
+  const [user, setUser] = useState({
+    firstName:"Amit",
+    lastName:"Pandey"
+  })
   const [userData, setUserData] = useState([]);
 
   useEffect(() => {
@@ -196,7 +200,7 @@ export default function TopBar({ showNav, setShowNav }) {
                 {
                   username ?
                     <div className="flex justify-start items-start">
-                      <span className="bg-[#5B5A59] rounded rounded-full flex justify-center items-center text-white text-2xl font-semiboild h-[40px] w-[40px] relative">{username.charAt(0).toUpperCase()}</span>
+                      <span className="bg-[#5B5A59] rounded rounded-full flex justify-center items-center text-white text-lg font-semiboild h-[40px] w-[40px] relative">{user.firstName.charAt(0).toUpperCase()}{user.lastName.charAt(0).toUpperCase()}</span>
                       <div className="flex justify-start items-start flex-wrap flex-col ml-3">
                         <span className="text-sm font-semibold mb-1">Amit Pandey</span>
                         <span className="bg-[#E7E6E2] text-[#666666] text-[11px] rounded rounded-md flex justify-center items-center py-[2px] w-[60px]">Admin</span>
@@ -228,7 +232,7 @@ export default function TopBar({ showNav, setShowNav }) {
                 <div className="p-6">
                   <div className="flex justify-center items-center flex-wrap flex-row text-center">
                     <div className="relative w-[55px] mb-4">
-                      <span className="bg-blue-961 text-xl rounded rounded-full flex justify-center items-center text-white font-semiboild h-[50px] w-[50px]">{username.charAt(0).toUpperCase()}</span>
+                      <span className="bg-blue-961 text-xl rounded rounded-full flex justify-center items-center text-white font-semiboild h-[50px] w-[50px]">{user.firstName.charAt(0).toUpperCase()}{user.lastName.charAt(0).toUpperCase()}</span>
                       <button className="bg-white rounded rounded-full h-[21px] w-[21px] absolute right-[-3px] top-[25px] flex justify-center items-center">
                         <Image
                           src="/img/editpencil.svg"

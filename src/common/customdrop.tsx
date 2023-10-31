@@ -48,7 +48,7 @@ export default function CustomDrop(props: any) {
                     alt="arrow-down"
                     height={20}
                     width={20}
-                    className="absolute right-3 top-4"
+                    className={`absolute right-3 top-4 ${toggleAsset ? 'rotate-180' : 'rotate-0'}`}
                 />
                 <span className="text-lg text-black pl-2">{chooseAsset}</span>
             </div>
