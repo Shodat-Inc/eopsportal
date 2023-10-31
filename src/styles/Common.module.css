@@ -1032,6 +1032,11 @@ table.proSenseTable tbody tr td {
 }
 
 
-.scrollNew {
-    
+.objectContainer {
+    width: 45%;
+    transform: translateX(100%); 
+    transition: transform 0.3s ease-out;
+}
+.sliderShow {
+  transform: translateX(0%);  
 }

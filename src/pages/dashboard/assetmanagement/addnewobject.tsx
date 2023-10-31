@@ -10,7 +10,7 @@ export default function AddNewObject(props: any) {
         dispatch(toggleAddNewObjectModel(false));
     }
     return (
-        <div className="bg-white h-full w-[45%] z-[11] fixed top-0 right-0 p-5 shadow shadow-lg">
+        <div className={`bg-white h-full z-[11] fixed top-0 right-0 p-5 shadow shadow-lg ${props.show === true ? `${styles.objectContainer} ${styles.sliderShow}` : `${styles.objectContainer}`}`}>
             <div className="flex justify-between items-center w-full mb-3">
                 <h2 className="font-semibold text-lg">Add New Object</h2>
                 <button onClick={closeModel}>

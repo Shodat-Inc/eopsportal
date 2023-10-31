@@ -206,7 +206,7 @@ export default function SubObjectManagement(props: any) {
                 </table>
             </div>
 
-            {showModal && <AddNewObject  /> }
+            <AddNewObject show={addNewObject.toggleAddObject && addNewObject.toggleAddObject}  /> 
         </div>
     )
 }

@@ -28,7 +28,12 @@ Function to toggle "Add New Object" model
 */
 export const toggleAddNewObjectModel = (item:any) => async (dispatch: any) => {
     try {
-        if (item) {
+        if (item===true) {
+            dispatch({
+                type: TOGGLE_ADD_OBJECT_MODEL_SUCCESS,
+                payload: item
+            });
+        } else if (item===false) {
             dispatch({
                 type: TOGGLE_ADD_OBJECT_MODEL_SUCCESS,
                 payload: item
