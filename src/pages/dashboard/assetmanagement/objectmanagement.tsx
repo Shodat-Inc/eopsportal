@@ -77,7 +77,7 @@ export default function ObjectManagement(props: any) {
             "class":chooseAsset,
             "classObjKey": "VIN",
             "classObjValue":"5PVBE7AJ8R5T50001",
-            "subClass":"Batteries",
+            "subClass":"Battery",
             "subClassObjKey":"",
             "subClassObjValue":""
         }

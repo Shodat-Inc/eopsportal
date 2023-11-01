@@ -124,14 +124,15 @@ export default function AssetManagement() {
                                     height={28}
                                     width={28}
                                 />
-                                <Link
-                                    href={{
-                                        pathname: '/dashboard/assetmanagement/',
-                                    }}
+                                <button
+                                    // href={{
+                                    //     pathname: '/dashboard/assetmanagement/',
+                                    // }}
+                                    onClick={()=>setTab(3)}
                                     className="font-semibold"
                                 >
                                     <span>{nav.classObjKey}: {nav.classObjValue}</span>
-                                </Link>
+                                </button>
                             </li>
 
                             <li className="flex justify-start items-center">
