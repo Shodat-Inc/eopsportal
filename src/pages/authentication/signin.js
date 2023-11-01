@@ -11,6 +11,7 @@ import Head from 'next/head';
 import { getSampleData } from '../../store/actions/getPostAction'
 import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 import { auth } from './firebase.config';
+import { userSignIn } from '@/store/actions/loginAction';
 
 export default function SignIn() {
     const dispatch = useDispatch();

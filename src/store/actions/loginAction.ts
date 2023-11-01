@@ -4,14 +4,22 @@ import axios from "axios";
 /*
 Function for user signin
 */
-export const userLogin = () => async (dispatch: any) => {
+export const userSignIn = (username: any, password:any) => async (dispatch: any) => {
+    console.log({
+        password: password,
+        username: username
+    })
     try {
         await axios({
-            method: 'GET',
+            method: 'POST',
             url: `/api/signIn`,
-            headers: {                
+            data: {
+                username: username,
+                password : "12345"
+            },
+            headers: {
                 "Content-Type": "application/json"
-            }
+            }            
         })
             .then(function (response) {
                 dispatch({
@@ -26,6 +34,6 @@ export const userLogin = () => async (dispatch: any) => {
                 });
             })
     } catch (err) {
-        console.log("err in action:", err)
+        console.log("err in login action:", err)
     }
 };
