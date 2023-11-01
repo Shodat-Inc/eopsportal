@@ -1,37 +1,60 @@
-import fsPromises from 'fs/promises';
-import path from 'path';
-const dataFilePath = path.join(process.cwd(), 'json/objects.json')
+// Import necessary modules and utilities.
+import { apiHandler, objectRepo } from "@/helpers/api";
+import { valueRepo } from "@/helpers/api/repo/value-repo";
+import { loggerInfo, loggerError } from "@/logger";
 
-export default async function handler(req:any, res:any) {
-    try {
-        if (req.method !== 'POST') {
-            res.status(405).send({ message: 'Only POST requests allowed' })
-            return
-        }
-        // Read the existing data from the JSON file
-        const jsonData:any = await fsPromises.readFile(dataFilePath);
-        const objectData = JSON.parse(jsonData);
+// Define the default API handler for the POST method to handle object creation.
+export default apiHandler({
+  post: handler,
+});
 
-        // Get the data from the request body
-        const { assetID, parentAssetID, parentAssetName, dateCreated, dateModified, form_values, mfdDate, subObjects, subObjectName, subObjectID } = req.body;
+/**
+ * Handler function to process the object creation request.
+ *
+ * @param {Object} req - The incoming request object containing data for the object and its associated values.
+ * @param {Object} res - The response object to send back the results.
+ */
+async function handler(req: any, res: any) {
+  // Log the initiation of the object creation API.
+  loggerInfo.info("POST api/createObjects");
 
-        // Add the new data to the object
-        const newData = {
-            assetID, parentAssetID, parentAssetName, dateCreated, dateModified, form_values, mfdDate, subObjects, subObjectName, subObjectID
-        };
-        objectData.push(newData);
-
-        // Convert the object back to a JSON string
-        const updatedData = JSON.stringify(objectData);
-
-        // Write the updated data to the JSON file
-        await fsPromises.writeFile(dataFilePath, updatedData);
-
-        // Send a success response
-        res.status(200).json({ message: 'Data stored successfully' });
-    } catch (error) {
-        console.error(error);
-        // Send an error response
-        res.status(500).json({ message: 'Error storing data' });
+  try {
+    // Validate that the request method is POST. If not, return an error response.
+    if (req.method !== "POST") {
+      res.status(405).send({ message: "Only POST requests allowed" });
+      return;
     }
-};
+
+    // Extract the object data from the request.
+    const reqData = req.body;
+
+    // Create a new object entry using the provided data.
+    const objData = await objectRepo.create(reqData);
+    const objectId = objData.data.id;
+
+    // Create an array to store values for the object.
+    let valueData = [];
+
+    // Populate the value data from the request.
+    for (let key of reqData.values) {
+      valueData.push({
+        objectId: objectId,
+        classTagId: key.classTagId,
+        values: key.value,
+      });
+    }
+
+    // Bulk create values using the populated value data.
+    const value = await valueRepo.bulkCreate(valueData, objectId);
+
+    // Send back a successful response with the object and value data.
+    res.send({ objData, value });
+
+    // Alternate response could be sent back to confirm data storage.
+    // res.status(200).json({ message: "Data stored successfully" });
+  } catch (error: any) {
+    // If there's an error during the object and value creation process, log the error and send back an error response.
+    loggerError.error(error);
+    res.status(405).json({ message: "Cannot Store Data " });
+  }
+}

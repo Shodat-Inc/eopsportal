@@ -1,6 +1,6 @@
 import getConfig from "next/config";
 
-import { userService } from "./../services";
+import { userService } from "../services";
 
 const { publicRuntimeConfig } = getConfig();
 
@@ -10,12 +10,16 @@ export const fetchWrapper = {
   put: request("PUT"),
   delete: request("DELETE"),
 };
+type HeadersType = {
+  'Authorization'?: string;
+  'Content-Type'?: string;
+};
 
-function request(method) {
-  return (url, body) => {
-    const requestOptions = {
+function request(method: string) {
+  return (url: string, body?: any) => {
+    const requestOptions: { method: string, headers: HeadersType, body?: string } = {
       method,
-      headers: authHeader(url),
+      headers: authHeader(url) as HeadersType,
     };
     if (body) {
       requestOptions.headers["Content-Type"] = "application/json";
@@ -27,7 +31,7 @@ function request(method) {
 
 // helper functions
 
-function authHeader(url) {
+function authHeader(url:any) {
   // return auth header with jwt if user is logged in and request is to the api url
   const user = userService.userValue;
   const isLoggedIn = user?.token;
@@ -39,7 +43,7 @@ function authHeader(url) {
   }
 }
 
-async function handleResponse(response) {
+async function handleResponse(response:any) {
   const isJson = response.headers
     ?.get("content-type")
     ?.includes("application/json");

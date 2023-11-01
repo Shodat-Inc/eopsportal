@@ -1,16 +1,26 @@
-import fsPromises from 'fs/promises';
-import path from 'path';
+import { apiHandler, classRepo } from "@/helpers/api";
 
-const dataFilePath = path.join(process.cwd(), 'json/assets.json')
+// Default API handler for the GET method to handle retrieval of class data.
+export default apiHandler({
+  get: allhandler,
+});
 
-export default async function handler(req:any, res:any) {
-    try {
-        const jsonData:any = await fsPromises.readFile(dataFilePath);
-        const objectData = JSON.parse(jsonData);
-        res.status(200).json(objectData);
+/**
+ * Handler function to process GET requests for retrieving class data.
+ *
+ * @param {Object} req - The incoming request object which may contain filtering criteria.
+ * @param {Object} res - The response object to send back the results.
+ */
+async function allhandler(req: any, res: any) {
+  try {
+    // Retrieve class data using the classRepo and the provided request data.
+    const classes = await classRepo.getClassData(req);
 
-    } catch (error) {
-        res.status(405).send({ message: `{error.message}` })
-        return
-    }
-};
+    // If class data is successfully retrieved, send back a 200 OK response with the class data.
+    res.status(200).json({ message: "Success", classes });
+  } catch (error: any) {
+    // If there's an error during class data retrieval, send back a 500 Internal Server Error response with the error message.
+    res.status(500).send({ message: error.message });
+    return;
+  }
+}
