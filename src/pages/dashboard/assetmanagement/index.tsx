@@ -14,11 +14,12 @@ export default function AssetManagement() {
     const [tab, setTab] = useState(1);
     const [classData, setClassData] = useState([] as any);
     const [defaultClass, setDefaultClass] = useState("");
+    const [nav, setNav] = useState({} as any)
     const getSelClass = useSelector((state: any) => state.classReducer);
     console.log({
         "getSelClass in landingpage": getSelClass
     })
-    useEffect(()=> {
+    useEffect(() => {
         dispatch(getSingleUser())
     }, [])
     const fetchData = () => {
@@ -32,6 +33,10 @@ export default function AssetManagement() {
         fetchData();
         if (fetchData.length) return;
     }, [])
+
+    useEffect(() => {
+        setNav(getSelClass.classBreadcrumbs)
+    }, [getSelClass.classBreadcrumbs])
 
     useEffect(() => {
         if (classData && classData.length > 0) {
@@ -71,6 +76,7 @@ export default function AssetManagement() {
     const openAddObjectModal = () => {
         dispatch(toggleAddNewObjectModel(true));
     }
+
     return (
         <div className="flex font-OpenSans">
 
@@ -82,64 +88,66 @@ export default function AssetManagement() {
                 </div>
 
                 {/* Breadcrumb */}
-                <div className="flex relative bg-white rounded rounded-lg px-3 py-1 inline-flex border border-[#E3E3E3] mb-5">
-                    <ul className="flex justify-start items-center text-sm">
-                        <li className="flex justify-start items-center">
-                            <Link
-                                href="/dashboard/assetmanagement"
-                                className="font-semibold"
-                            >
-                                Object Management
-                            </Link>
-                        </li>
+                {nav && tab === 3 ?
+                    <div className="flex relative bg-white rounded rounded-lg px-3 py-1 inline-flex border border-[#E3E3E3] mb-5">
+                        <ul className="flex justify-start items-center text-sm">
+                            <li className="flex justify-start items-center">
+                                <Link
+                                    href="/dashboard/assetmanagement"
+                                    className="font-semibold"
+                                >
+                                    {nav.flow}
+                                </Link>
+                            </li>
 
-                        <li className="flex justify-start items-center">
-                            <Image
-                                src="/img/chevron-right.svg"
-                                alt="chevron-right"
-                                height={28}
-                                width={28}
-                            />
-                            <Link
-                                href={{
-                                    pathname: '/dashboard/assetmanagement/',
-                                }}
-                                className="font-semibold"
-                            >
-                                <span>Class name: Vehicles</span>
-                            </Link>
-                        </li>
+                            <li className="flex justify-start items-center">
+                                <Image
+                                    src="/img/chevron-right.svg"
+                                    alt="chevron-right"
+                                    height={28}
+                                    width={28}
+                                />
+                                <Link
+                                    href={{
+                                        pathname: '/dashboard/assetmanagement/',
+                                    }}
+                                    className="font-semibold"
+                                >
+                                    <span>Class name: {nav.class}</span>
+                                </Link>
+                            </li>
 
-                        <li className="flex justify-start items-center">
-                            <Image
-                                src="/img/chevron-right.svg"
-                                alt="chevron-right"
-                                height={28}
-                                width={28}
-                            />
-                            <Link
-                                href={{
-                                    pathname: '/dashboard/assetmanagement/',
-                                }}
-                                className="font-semibold"
-                            >
-                                <span>VIN: 5PVBE7AJ8R5T50001</span>
-                            </Link>
-                        </li>
+                            <li className="flex justify-start items-center">
+                                <Image
+                                    src="/img/chevron-right.svg"
+                                    alt="chevron-right"
+                                    height={28}
+                                    width={28}
+                                />
+                                <Link
+                                    href={{
+                                        pathname: '/dashboard/assetmanagement/',
+                                    }}
+                                    className="font-semibold"
+                                >
+                                    <span>{nav.classObjKey}: {nav.classObjValue}</span>
+                                </Link>
+                            </li>
 
-                        <li className="flex justify-start items-center">
-                            <Image
-                                src="/img/chevron-right.svg"
-                                alt="chevron-right"
-                                height={28}
-                                width={28}
-                            />
-                            <span className="text-gray-967 capitalize">
-                                Sub Class: Batteries
-                            </span>
-                        </li>
-                    </ul>
-                </div>
+                            <li className="flex justify-start items-center">
+                                <Image
+                                    src="/img/chevron-right.svg"
+                                    alt="chevron-right"
+                                    height={28}
+                                    width={28}
+                                />
+                                <span className="text-gray-967 capitalize">
+                                    Sub Class: {nav.subClass}
+                                </span>
+                            </li>
+                        </ul>
+                    </div>
+                    : null}
 
                 {/* Tabs */}
                 <div className="flex justify-between items-center w-full">
