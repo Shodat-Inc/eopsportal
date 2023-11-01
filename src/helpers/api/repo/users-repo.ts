@@ -34,6 +34,7 @@ async function authenticate(data: any) {
     const token = jwt.sign({ sub: user.id }, serverRuntimeConfig.secret, {
       expiresIn: "7d",
     });
+
     // remove hash from return value
     const userJson = user.get();
     delete userJson.password;

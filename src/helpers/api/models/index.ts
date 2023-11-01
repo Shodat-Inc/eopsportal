@@ -12,3 +12,4 @@ export * from "./parentJoinKey";
 export * from "./value";
 export * from "./deleteTableRecord";
 export * from "./reason";
+export * from "./otpverify";

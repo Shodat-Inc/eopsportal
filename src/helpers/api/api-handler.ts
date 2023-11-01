@@ -17,10 +17,17 @@ function apiHandler(handler: any) {
       // global middleware
       const data = await jwtMiddleware(req, res);
 
-      const path = ["/api/createUsers", "/api/signIn"];
-      if (!path.includes(req.url)) {
+      const path = [
+        "/api/createUsers",
+        "/api/signIn",
+        "/api/verifyOtp",
+        "/api/generateOtp",
+        "/api/forgetPassword",
+        "/api/updatePassword",
+      ];
+      const url = req.url.split("?")[0];
+      if (!path.includes(url)) {
         const tokenData = req.auth;
-
         if (tokenData) {
           req.id = tokenData.sub;
         } else {

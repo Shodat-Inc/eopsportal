@@ -14,6 +14,8 @@ export function User(sequelize: any) {
     lastName: { type: DataTypes.STRING, allowNull: false },
     password: { type: DataTypes.STRING, allowNull: false },
     parentId: { type: DataTypes.INTEGER, allowNull: true },
+    resetToken: { type: DataTypes.STRING, allowNull: true },
+    resetTokenExpires: { type: DataTypes.DATE, allowNull: true },
     roleId: {
       type: DataTypes.INTEGER,
       references: {
