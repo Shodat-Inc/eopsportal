@@ -39,22 +39,22 @@ export default function Objects(localData: any) {
 
 
     // Get JSON data on page load
-    const fetchDataForParent = () => {
-        axios.get("/api/getAssets").then((response) => {
-            if (response.data) {
-                const filtered = response.data.filter((item: any) => {
-                    return item.assetName === parentAsset.assets;
-                });
-                if (filtered && filtered.length > 0) {
-                    setGetParentData(filtered[0].assetkey);
-                }
-            }
-        });
-    };
-    useEffect(() => {
-        fetchDataForParent();
-        if (fetchDataForParent.length) return;
-    }, [parentAsset])
+    // const fetchDataForParent = () => {
+    //     axios.get("/api/getAssets").then((response) => {
+    //         if (response.data) {
+    //             const filtered = response.data.filter((item: any) => {
+    //                 return item.assetName === parentAsset.assets;
+    //             });
+    //             if (filtered && filtered.length > 0) {
+    //                 setGetParentData(filtered[0].assetkey);
+    //             }
+    //         }
+    //     });
+    // };
+    // useEffect(() => {
+    //     fetchDataForParent();
+    //     if (fetchDataForParent.length) return;
+    // }, [parentAsset])
 
 
     // Get JSON data on page load

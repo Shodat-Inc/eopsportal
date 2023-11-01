@@ -53,23 +53,23 @@ export default function SubAsset(localData: any) {
     })
 
 
-    // Get JSON data on page load
-    const fetchDataForParent = () => {
-        axios.get("/api/getAssets").then((response) => {
-            if (response.data) {
-                const filtered = response.data.filter((item: any) => {
-                    return item.assetName === parentAsset.assets;
-                });
-                if (filtered && filtered.length > 0) {
-                    setParentJoinKey(filtered[0].assetkey);
-                }
-            }
-        });
-    };
-    useEffect(() => {
-        fetchDataForParent();
-        if (fetchDataForParent.length) return;
-    }, [])
+    // // Get JSON data on page load
+    // const fetchDataForParent = () => {
+    //     axios.get("/api/getAssets").then((response) => {
+    //         if (response.data) {
+    //             const filtered = response.data.filter((item: any) => {
+    //                 return item.assetName === parentAsset.assets;
+    //             });
+    //             if (filtered && filtered.length > 0) {
+    //                 setParentJoinKey(filtered[0].assetkey);
+    //             }
+    //         }
+    //     });
+    // };
+    // useEffect(() => {
+    //     fetchDataForParent();
+    //     if (fetchDataForParent.length) return;
+    // }, [])
 
 
     // Remove duplicate element from array

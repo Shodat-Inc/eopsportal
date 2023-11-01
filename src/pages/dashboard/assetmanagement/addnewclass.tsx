@@ -76,17 +76,17 @@ export default function AddNewClass(props: any, localData: any) {
     useOutsideAlerter(wrapperRef);
 
     // Get JSON data on page load
-    const fetchData = () => {
-        axios.get("/api/getAssets").then((response) => {
-            if (response.data) {
-                setData(response.data);
-            }
-        });
-    };
-    useEffect(() => {
-        fetchData();
-        if (fetchData.length) return;
-    }, [localData.localData])
+    // const fetchData = () => {
+    //     axios.get("/api/getAssets").then((response) => {
+    //         if (response.data) {
+    //             setData(response.data);
+    //         }
+    //     });
+    // };
+    // useEffect(() => {
+    //     fetchData();
+    //     if (fetchData.length) return;
+    // }, [localData.localData])
 
 
     // Get Last Asset ID

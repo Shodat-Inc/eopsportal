@@ -7,7 +7,7 @@ import axios from "axios";
 import ClassManagement from "./classmanagement";
 import ObjectManagement from "./objectmanagement";
 import SubObjectManagement from "./subobjectmanagement";
-import { setSelectedClass, toggleAddNewObjectModel, getSingleUser } from "@/store/actions/classAction";
+import { setSelectedClass, toggleAddNewObjectModel, getAllClasses } from "@/store/actions/classAction";
 
 export default function AssetManagement() {
     const dispatch = useDispatch<any>();
@@ -15,23 +15,25 @@ export default function AssetManagement() {
     const [classData, setClassData] = useState([] as any);
     const [defaultClass, setDefaultClass] = useState("");
     const getSelClass = useSelector((state: any) => state.classReducer);
+    const getAllClass = useSelector((state: any) => state.classReducer.getAllClass    );
     console.log({
-        "getSelClass in landingpage": getSelClass
+        "getSelClass in landingpage": getSelClass,
+        "getAllClass ": getAllClass
     })
     useEffect(()=> {
-        dispatch(getSingleUser())
-    }, [])
-    const fetchData = () => {
-        axios.get("/api/getAssets").then((response) => {
-            if (response.data) {
-                setClassData(response.data);
-            }
-        });
-    };
-    useEffect(() => {
-        fetchData();
-        if (fetchData.length) return;
-    }, [])
+        dispatch(getAllClasses())
+    }, [dispatch])
+    // const fetchData = () => {
+    //     axios.get("/api/getAssets").then((response) => {
+    //         if (response.data) {
+    //             setClassData(response.data);
+    //         }
+    //     });
+    // };
+    // useEffect(() => {
+    //     fetchData();
+    //     if (fetchData.length) return;
+    // }, [])
 
     useEffect(() => {
         if (classData && classData.length > 0) {

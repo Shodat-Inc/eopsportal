@@ -5,7 +5,7 @@ import { BREADCRUMB_SUCCESS, BREADCRUMB_ERROR } from "../types";
 import axios from "axios";
 let access_token = "" as any;
 if (typeof window !== 'undefined') {
-    access_token = localStorage.getItem('authenticationToken')
+    access_token = localStorage.getItem('authToken')
 }
 /*
 Function to set the selected class at Object Management Landing Page
@@ -58,7 +58,7 @@ export const toggleAddNewObjectModel = (item:any) => async (dispatch: any) => {
 /*
 Function to get all classes
 */
-export const getSingleUser = () => async (dispatch: any) => {
+export const getAllClasses = () => async (dispatch: any) => {
     let tokenStr = access_token;
     try {
         await axios({

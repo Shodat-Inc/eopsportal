@@ -39,7 +39,13 @@ export default function SignIn() {
     const [otpError, setOtpError] = useState(false);
     const [loader, setLoader] = useState(false);
     const [otpSent, setOtpSent] = useState(false);
-    const [userPhone, setUserPhone] = useState("")
+    const [userPhone, setUserPhone] = useState("");
+    const [loginData, setLoginData] = useState();
+    // let loginReducerData = useSelector((state) => state.loginReducer.loginData)
+
+    // useEffect(() => {
+    //     setLoginData(loginReducerData);
+    // }, [loginReducerData])
 
     // Firebase OTP
     function onCaptchVerify() {
@@ -64,61 +70,79 @@ export default function SignIn() {
             setLoader(true)
             onCaptchVerify();
             const appVerifier = window.recaptchaVerifier;
-            
 
-            // const matched = userData.filter((item) => {
-            //     return item.username === formData.username && item.password === formData.password
-            // })
-            // if (matched && matched.length > 0) {
-            //     let phoneNumber = matched[0].phoneNumber;
-            //     console.log({
-            //         matched: matched[0].phoneNumber
-            //     })
-            //     setUserPhone(phoneNumber);
-            //     sessionStorage.setItem("authenticationUsername", matched[0].username);
-            //     localStorage.setItem("authenticationUsername", matched[0].username);
+            try {
+                axios({
+                    method: 'POST',
+                    url: `/api/signIn`,
+                    data: {
+                        username: formData.username,
+                        password: formData.password
+                    },
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                })
+                    .then(function (response) {
+                        console.log({ SUCCESS: response.data.data.firstName })
+                        if (response.data.success === true) {
+                            // Login Success
+                            let phoneNumber = "+919571373757";
+                            setUserPhone(phoneNumber);
+                            sessionStorage.setItem("authenticationUsername", response.data.data.username);
+                            localStorage.setItem("authenticationUsername", response.data.data.username);
+                            localStorage.setItem("userData", response.data.data);
+                            localStorage.setItem("authToken", response.data.data.token);
 
-            //     signInWithPhoneNumber(auth, phoneNumber, appVerifier)
-            //         .then((confirmationResult) => {
-            //             window.confirmationResult = confirmationResult;
-            //             console.log({
-            //                 message: "OTP sent successfully!"
-            //             })
-            //             setOtpSent(true);
-            //             setTimeout(() => {
-            //                 setOtpScreen(true);
-            //                 setLoader(false)
-            //             }, 1000)
-            //         })
-            //         .catch((error) => {
-            //             setOtpSent(false);
-            //             setResponseError(true);
-            //             console.log({
-            //                 message: error
-            //             })
-            //         });
+                            signInWithPhoneNumber(auth, phoneNumber, appVerifier)
+                                .then((confirmationResult) => {
+                                    window.confirmationResult = confirmationResult;
+                                    console.log({
+                                        message: "OTP sent successfully!"
+                                    })
+                                    setOtpSent(true);
+                                    setTimeout(() => {
+                                        setOtpScreen(true);
+                                        setLoader(false)
+                                    }, 1000)
+                                })
+                                .catch((error) => {
+                                    setOtpSent(false);
+                                    setResponseError(true);
+                                    console.log({
+                                        message: error
+                                    })
+                                });
 
-            //     setTimeout(() => {
-            //         setSuccess(true);
-            //         // setOtpScreen(true)
-            //     }, 1000)
-            // } else {
-            //     setOtpScreen(false)
-            //     setResponseError(true);
-            //     setTimeout(() => {
-            //         setFormData({
-            //             username: "",
-            //             password: ""
-            //         })
-            //         setErrors({
-            //             username: "",
-            //             password: ""
-            //         })
-            //     }, 100);
-            //     setTimeout(() => {
-            //         setResponseError(false)
-            //     }, 2000)
-            // }
+                            setTimeout(() => {
+                                setSuccess(true);
+                                // setOtpScreen(true)
+                            }, 1000)
+                        } else {
+                            // Login Failed
+                            setOtpScreen(false)
+                            setResponseError(true);
+                            setTimeout(() => {
+                                setFormData({
+                                    username: "",
+                                    password: ""
+                                })
+                                setErrors({
+                                    username: "",
+                                    password: ""
+                                })
+                            }, 100);
+                            setTimeout(() => {
+                                setResponseError(false)
+                            }, 2000)
+                        }
+                    })
+                    .catch(function (error) {
+                        console.log({ ERROR: error })
+                    })
+            } catch (err) {
+                console.log("err in login action:", err)
+            }            
         }
 
     }
@@ -221,7 +245,7 @@ export default function SignIn() {
     };
 
     const verifyOtpFunction = () => {
-        
+
         setLoader(true)
 
         let otp = code.join("");
@@ -307,47 +331,6 @@ export default function SignIn() {
 
         return formIsValid
     }
-
-    const submitForm1 = (evt) => {
-        evt.preventDefault()
-        if (handleValidation()) {
-            const matched = userData.filter((item) => {
-                return item.username === formData.username && item.password === formData.password
-            })
-            if (matched && matched.length > 0) {
-                sessionStorage.setItem("authenticationUsername", matched[0].username);
-                localStorage.setItem("authenticationUsername", matched[0].username);
-                // const token = Math.floor((Math.random() * 1000000000000000) + 1);
-                // sessionStorage.setItem("authenticationToken", token);
-                // localStorage.setItem("authenticationToken", token);
-                setTimeout(() => {
-                    setSuccess(true);
-                }, 1000)
-                setOtpScreen(true)
-                // setTimeout(() => {
-                //     push("/dashboard/");
-                // }, 1)
-
-            } else {
-                setOtpScreen(false)
-                setResponseError(true);
-                setTimeout(() => {
-                    setResponseError(false)
-                    setFormData({
-                        username: "",
-                        password: ""
-                    })
-                    setErrors({
-                        username: "",
-                        password: ""
-                    })
-                }, 100)
-            }
-        } else {
-            console.log("SOMETHING WENT WRONG !")
-        }
-    }
-
 
     return (
         <>

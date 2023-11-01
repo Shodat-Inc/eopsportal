@@ -22,16 +22,17 @@ export default function TopBar({ showNav, setShowNav }) {
   })
   const [userData, setUserData] = useState([]);
 
-  useEffect(() => {
-    setUserData(sampleListData.singleUser)
-    localStorage.setItem("user",sampleListData.singleUser);
-  }, [sampleListData])
+  // useEffect(() => {
+  //   setUserData(sampleListData.singleUser)
+  //   localStorage.setItem("user",sampleListData.singleUser);
+  // }, [sampleListData])
 
   useEffect(() => {
-    let access_token = localStorage.getItem('authenticationToken');
+    let access_token = localStorage.getItem('authToken');
     if (!access_token) {
       push("/authentication/signin");
     } else {
+      setUserData(localStorage.getItem('userData'))
       console.log({
         message: "valid auth token found!",
         authToken: access_token
@@ -57,8 +58,8 @@ export default function TopBar({ showNav, setShowNav }) {
 
 
   console.log({
-    sampleListData:sampleListData,
-    userData:userData
+    userData:userData,
+    // access_token:access_token
   })
 
   return (

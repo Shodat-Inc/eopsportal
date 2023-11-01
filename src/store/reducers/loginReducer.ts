@@ -1,7 +1,7 @@
 import { LOGIN_ERROR, LOGIN_SUCCESS } from "../types";
 
 const initialState = {
-    loginData: []
+    loginData: {}
 };
 
 const loginReducer = (state = initialState, action: any) => {
