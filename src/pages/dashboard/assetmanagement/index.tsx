@@ -9,14 +9,7 @@ import ObjectManagement from "./objectmanagement";
 import SubObjectManagement from "./subobjectmanagement";
 import { setSelectedClass, toggleAddNewObjectModel, getSingleUser } from "@/store/actions/classAction";
 
-<<<<<<< HEAD
-export default function AssetManagement(localData: any) {
-    console.log({
-        localData:localData
-    })
-=======
 export default function AssetManagement() {
->>>>>>> 0ac9f546f4f8825fcaedf57c7d1bceab3ee87193
     const dispatch = useDispatch<any>();
     const [tab, setTab] = useState(1);
     const [classData, setClassData] = useState([] as any);

@@ -5,9 +5,12 @@ import Image from "next/image";
 import CustomDrop from '@/common/customdrop';
 import axios from 'axios';
 import Link from 'next/dist/client/link';
-import { setSelectedClass, getSingleUser } from '@/store/actions/classAction';
+import { setSelectedClass, getSingleUser, setClassBreadcrumb } from '@/store/actions/classAction';
 
 export default function ObjectManagement(props: any) {
+    console.log({
+        "props in Object Management":props
+    })
     const dispatch = useDispatch<any>();
     const [toggleFilter, setToggleFilter] = useState(false);
     const [toggleArrow, setToggleArrow] = useState(false);
@@ -51,7 +54,10 @@ export default function ObjectManagement(props: any) {
         dispatch(setSelectedClass(classData[0]?.assetName))
     }, [classData,dispatch])
 
-    const handleDropDown = (item: any) => {      
+    const handleDropDown = (item: any) => {  
+        console.log({
+            "AMIT":item
+        })    
         dispatch(setSelectedClass(item))
         setChooseAsset(item);
     }
@@ -63,6 +69,19 @@ export default function ObjectManagement(props: any) {
         setActions(false);
     }
     const takeMeToSubObjectComponent = (item: any) => {
+        console.log({
+            "CHOOSEASSET":chooseAsset
+        })  
+        let abc = {
+            "flow":"Object Management",
+            "class":chooseAsset,
+            "classObjKey": "VIN",
+            "classObjValue":"5PVBE7AJ8R5T50001",
+            "subClass":"Battery",
+            "subClassObjKey":"",
+            "subClassObjValue":""
+        }
+        dispatch(setClassBreadcrumb(abc))
         setObjID(item);
         props.handelObject(item)
     }

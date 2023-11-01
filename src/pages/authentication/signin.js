@@ -60,76 +60,134 @@ export default function SignIn() {
     const submitForm = (event) => {
         event.preventDefault()
         if (handleValidation()) {
-
             setLoader(true)
-
             onCaptchVerify();
-
             const appVerifier = window.recaptchaVerifier;
+            
 
-            axios.post("/api/signIn", {
-                username: formData.username,
-                password: formData.password
-            })
-                .then((response) => {
-                    
-                    setUserData(response.data);
-                    if (response) {
-                        // let phoneNumber = response.data.data.phone;
-                        let phoneNumber = "+919571373757"
-                        setUserPhone(phoneNumber);
-                        localStorage.setItem("authenticationUsername", response.data.data.username);
-                        localStorage.setItem("authenticationUserID", response.data.data.id);
-                        localStorage.setItem("authenticationToken", response.data.data.token);
+            // const matched = userData.filter((item) => {
+            //     return item.username === formData.username && item.password === formData.password
+            // })
+            // if (matched && matched.length > 0) {
+            //     let phoneNumber = matched[0].phoneNumber;
+            //     console.log({
+            //         matched: matched[0].phoneNumber
+            //     })
+            //     setUserPhone(phoneNumber);
+            //     sessionStorage.setItem("authenticationUsername", matched[0].username);
+            //     localStorage.setItem("authenticationUsername", matched[0].username);
 
-                        signInWithPhoneNumber(auth, phoneNumber, appVerifier)
-                            .then((confirmationResult) => {
-                                window.confirmationResult = confirmationResult;
-                                setOtpSent(true);
-                                setTimeout(() => {
-                                    setOtpScreen(true);
-                                    setLoader(false)
-                                }, 1000)
-                            })
-                            .catch((error) => {
-                                setOtpSent(false);
-                                setResponseError(true);
-                                console.log({
-                                    message: error
-                                })
-                            });
+            //     signInWithPhoneNumber(auth, phoneNumber, appVerifier)
+            //         .then((confirmationResult) => {
+            //             window.confirmationResult = confirmationResult;
+            //             console.log({
+            //                 message: "OTP sent successfully!"
+            //             })
+            //             setOtpSent(true);
+            //             setTimeout(() => {
+            //                 setOtpScreen(true);
+            //                 setLoader(false)
+            //             }, 1000)
+            //         })
+            //         .catch((error) => {
+            //             setOtpSent(false);
+            //             setResponseError(true);
+            //             console.log({
+            //                 message: error
+            //             })
+            //         });
 
-                        setTimeout(() => {
-                            setSuccess(true);
-                            // setOtpScreen(true)
-                        }, 1000)
-                    } else {
-                        setOtpScreen(false)
-                        setResponseError(true);
-                        setTimeout(() => {
-                            setFormData({
-                                username: "",
-                                password: ""
-                            })
-                            setErrors({
-                                username: "",
-                                password: ""
-                            })
-                        }, 100);
-                        setTimeout(() => {
-                            setResponseError(false)
-                        }, 2000);
-                        localStorage.clear();
-                    }
-
-                })
-                .catch((error) => {
-                    alert(error)
-                })
-
+            //     setTimeout(() => {
+            //         setSuccess(true);
+            //         // setOtpScreen(true)
+            //     }, 1000)
+            // } else {
+            //     setOtpScreen(false)
+            //     setResponseError(true);
+            //     setTimeout(() => {
+            //         setFormData({
+            //             username: "",
+            //             password: ""
+            //         })
+            //         setErrors({
+            //             username: "",
+            //             password: ""
+            //         })
+            //     }, 100);
+            //     setTimeout(() => {
+            //         setResponseError(false)
+            //     }, 2000)
+            // }
         }
 
     }
+
+    // const submitForm = (event) => {
+    //     event.preventDefault()
+    //     if (handleValidation()) {
+
+    //         setLoader(true)
+
+    //         onCaptchVerify();
+
+    //         const appVerifier = window.recaptchaVerifier;
+
+    //         const matched = userData.filter((item) => {
+    //             return item.username === formData.username && item.password === formData.password
+    //         })
+    //         if (matched && matched.length > 0) {
+    //             let phoneNumber = matched[0].phoneNumber;
+    //             console.log({
+    //                 matched: matched[0].phoneNumber
+    //             })
+    //             setUserPhone(phoneNumber);
+    //             sessionStorage.setItem("authenticationUsername", matched[0].username);
+    //             localStorage.setItem("authenticationUsername", matched[0].username);
+
+    //             signInWithPhoneNumber(auth, phoneNumber, appVerifier)
+    //                 .then((confirmationResult) => {
+    //                     window.confirmationResult = confirmationResult;
+    //                     console.log({
+    //                         message: "OTP sent successfully!"
+    //                     })
+    //                     setOtpSent(true);
+    //                     setTimeout(() => {
+    //                         setOtpScreen(true);
+    //                         setLoader(false)
+    //                     }, 1000)
+    //                 })
+    //                 .catch((error) => {
+    //                     setOtpSent(false);
+    //                     setResponseError(true);
+    //                     console.log({
+    //                         message: error
+    //                     })
+    //                 });
+
+    //             setTimeout(() => {
+    //                 setSuccess(true);
+    //                 // setOtpScreen(true)
+    //             }, 1000)
+    //         } else {
+    //             setOtpScreen(false)
+    //             setResponseError(true);
+    //             setTimeout(() => {
+    //                 setFormData({
+    //                     username: "",
+    //                     password: ""
+    //                 })
+    //                 setErrors({
+    //                     username: "",
+    //                     password: ""
+    //                 })
+    //             }, 100);
+    //             setTimeout(() => {
+    //                 setResponseError(false)
+    //             }, 2000)
+    //         }
+    //     }
+
+    // }
 
     // Phone Number With Starts
     const phoneNumberWithStar = (phone) => {

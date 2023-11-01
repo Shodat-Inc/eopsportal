@@ -1,13 +1,14 @@
 import { db } from "../db";
 import sendResponseData from "../../constant";
 import { loggerInfo, loggerError } from "@/logger";
-import { Sequelize } from "sequelize";
 import { error } from "console";
 
 // Repository for object-related operations.
 export const objectRepo = {
   create,
   get,
+  getObjectById,
+  delete: _delete,
 };
 
 /**
@@ -49,47 +50,36 @@ async function create(params: any) {
  * @param {Object} req - The request object containing the ID.
  * @returns {Array} - An array of objects, class tags, and values or an error response.
  */
-async function get(req: any) {
+async function get(id: any) {
   // Log the initiation of fetching Objects, ClassTags, and ObjectValues data.
   loggerInfo.info("Fetching Objects, ClassTags, and ObjectValues data");
 
   // Validate that an ID is provided.
-  if (!req.id) {
+  if (!id) {
     loggerError.error("NO Id is provided");
     return sendResponseData(false, "no id", error);
   }
 
   try {
     const result = await db.object.findAll({
-      attributes: [
-        ["id", "objectId"],
-        [Sequelize.col("ClassTags.tagName"), "tagName"],
-        [Sequelize.col("ObjectValues.values"), "values"],
-        [Sequelize.col("ObjectValues.createdAt"), "createdAt"],
-      ],
       include: [
         {
-          model: db.classTag,
-          attributes: [],
-          required: true,
-          where: {
-            classId: req.query.id,
-          },
+          model: db.AddClasses,
+          where: { id }, // This will filter by classId
+          attributes: ["id", "superParentId", "parentId"],
+          include: [
+            {
+              model: db.classTag,
+              attributes: ["tagName"],
+            },
+          ],
         },
         {
           model: db.AddValues,
-          on: {
-            classTagId: Sequelize.col("classTagId"),
-            objectId: Sequelize.col("objectId"),
-          },
-          attributes: [],
-          required: false,
+          attributes: ["values", "createdAt"],
         },
       ],
-      order: [["id", "ASC"]],
     });
-
-    // Return the transformed result array.
     return result.map((item: any, index: any) => ({
       S_No: index + 1,
       ...item.get(), // Convert Sequelize instance to plain JS object
@@ -103,4 +93,56 @@ async function get(req: any) {
     // Return a response indicating the failure of the operation.
     return sendResponseData(false, "error", error);
   }
+}
+async function getObjectById(params: any) {
+  // Log the initiation of fetching Objects, ClassTags, and ObjectValues data By ObjectId.
+  loggerInfo.info("Fetching Objects, ClassTags, and ObjectValues data");
+  // Validate that an ID is provided.
+  if (!params.query.objectId && !params.query.classId) {
+    loggerError.error("No Id is provided");
+    return sendResponseData(false, "no id", error);
+  }
+
+  try {
+    const result = await db.object.findAll({
+      where: { id: params.query.objectId }, // This will filter by classId
+      include: [
+        {
+          model: db.AddClasses,
+          where: { id: params.query.classId },
+          attributes: ["id", "superParentId", "parentId"],
+          include: [
+            {
+              model: db.classTag,
+              attributes: ["tagName"],
+            },
+          ],
+        },
+        {
+          model: db.AddValues,
+          attributes: ["values", "createdAt"],
+        },
+      ],
+    });
+    return result.map((item: any, index: any) => ({
+      S_No: index + 1,
+      ...item.get(), // Convert Sequelize instance to plain JS object
+    }));
+  } catch (error) {
+    // Log the error if there's an issue with fetching data.
+    loggerError.error(
+      "Error fetching Objects, ClassTags, and ObjectValues data:",
+      error
+    );
+    // Return a response indicating the failure of the operation.
+    return sendResponseData(false, "error", error);
+  }
+}
+
+async function _delete(params: any) {
+  return await db.object.destroy({
+    where: {
+      id: params,
+    },
+  });
 }

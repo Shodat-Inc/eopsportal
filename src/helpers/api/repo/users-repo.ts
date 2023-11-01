@@ -190,6 +190,12 @@ async function update(id: any, params: any) {
       { where: { userId: id } }
     );
   }
+  if (params.countryId) {
+    await db.Address.update(
+      { countryId: params.countryId },
+      { where: { userId: id } }
+    );
+  }
   if (params.phoneNumber) {
     await db.phoneRecord.update(
       { phoneNumber: params.phoneNumber },

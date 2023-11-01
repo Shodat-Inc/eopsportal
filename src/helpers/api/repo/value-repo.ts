@@ -6,6 +6,8 @@ import { loggerInfo, loggerError } from "@/logger";
 export const valueRepo = {
   create,
   bulkCreate,
+  update,
+  delete: _delete,
 };
 
 /**
@@ -66,5 +68,33 @@ async function bulkCreate(params: any[], objectId: any) {
   } catch (error) {
     // Log the error if there's an issue with the bulk value creation.
     loggerError.error("Error in bulk Value repo", error);
+  }
+}
+
+async function update(params: any) {
+  loggerInfo.info("Update Object Value for a specific tagId");
+  try {
+    for (let x of params) {
+      const valueData = await db.AddValues.findOne({
+        where: { classTagId: x.classTagId },
+      });
+      if (!valueData) {
+        return sendResponseData(false, "Object Value Doesn't Exists", {});
+      }
+      valueData.values = x.values || valueData.values;
+      valueData.save();
+    }
+    return sendResponseData(true, "Updated successfully", {});
+  } catch (error: any) {
+    loggerError.error("error in updating objValue");
+    return sendResponseData(false, "Error in updating data", error);
+  }
+}
+
+async function _delete(params: any) {
+  loggerInfo.info("Delete Object Value for a specific tagId");
+  for (let x of params) {
+    const result = await db.AddValues.findByPk(x);
+    return result.destroy();
   }
 }

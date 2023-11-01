@@ -2,11 +2,11 @@ import { combineReducers } from "redux";
 import sampleReducer from "./getPostReducer";
 import prosenseReducer from "./prosenseReducer";
 import classReducer from "./classReducer";
-import usersReducer from "./usersReducer";
+import loginReducer from "./loginReducer";
 
 export default combineReducers({
   sampleData: sampleReducer,
-  prosenseData:prosenseReducer,
-  classReducer:classReducer,
-  usersReducer:usersReducer
+  prosenseData: prosenseReducer,
+  classReducer: classReducer,
+  loginReducer: loginReducer
 });

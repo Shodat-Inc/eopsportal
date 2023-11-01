@@ -13,9 +13,8 @@ export default apiHandler({
  */
 async function allhandler(req: any, res: any) {
   try {
-    const id = req.query.id;
     // Retrieve objects using the objectRepo and the provided request data.
-    const objects = await objectRepo.get(id);
+    const objects = await objectRepo.getObjectById(req);
 
     // Check if the retrieved objects are empty or if the response is an empty array.
     if (!objects || (Array.isArray(objects) && objects.length === 0)) {
@@ -25,7 +24,7 @@ async function allhandler(req: any, res: any) {
     }
 
     // If objects data is found, send back a 200 OK response with the objects data.
-    res.status(200).json({ message: "Success", objects });
+    res.status(200).json(objects);
   } catch (error: any) {
     // If there's an error during the retrieval, send back a 500 Internal Server Error response with the error message.
     res.status(500).send({ message: error.message });

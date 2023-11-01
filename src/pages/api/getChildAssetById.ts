@@ -14,7 +14,7 @@ export default apiHandler({
 async function allhandler(req: any, res: any) {
   try {
     // Retrieve subclasses using the classRepo and the provided request data.
-    const subClass = await classRepo.getSubClass(req);
+    const subClass = await classRepo.getSubClassByID(req);
 
     // If subclasses are successfully retrieved, send back a 200 OK response with the class data.
     res.status(200).json(subClass);

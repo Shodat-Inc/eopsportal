@@ -28,7 +28,9 @@ function relationship() {
   // Each Country code can be associated with multiple Phone records.
   db.countryCodeModel.hasMany(db.phoneRecord, { foreignKey: "countryCodeId" });
   // Each Phone record can have a single Country code.
-  db.phoneRecord.belongsTo(db.countryCodeModel, { foreignKey: "countryCodeId" });
+  db.phoneRecord.belongsTo(db.countryCodeModel, {
+    foreignKey: "countryCodeId",
+  });
 
   // Establishing relationships for the Classes:
 
@@ -63,8 +65,23 @@ function relationship() {
 
   // Each object can have multiple tags.
   db.object.hasMany(db.classTag, { foreignKey: "classId" });
-  // Each tag can be associated with multiple objects.
+  // Each tag can be associated with single objects.
   db.classTag.belongsTo(db.object, { foreignKey: "classId" });
+
+  //Each subclass can have multiple parent join key tags
+  db.AddClasses.hasMany(db.parentJoinKey, { foreignKey: "classId" });
+  // Each parent join key tags belongs to a class
+  db.parentJoinKey.belongsTo(db.AddClasses, { foreignKey: "classId" });
+
+  //Each parentJoinKey can have multiple classTag
+  db.parentJoinKey.hasMany(db.classTag, { foreignKey: "classId" });
+  // Each classTag belongs to a parentJoinKey
+  db.classTag.belongsTo(db.parentJoinKey, { foreignKey: "classId" });
+
+  //Each tagDataType can have multiple classTag
+  db.tagDataType.hasMany(db.classTag, { foreignKey: "dataTypeId" });
+  // Each classTag belongs to a tagDataType
+  db.classTag.belongsTo(db.tagDataType, { foreignKey: "dataTypeId" });
 }
 
 export default relationship;

@@ -14,7 +14,9 @@ import { auth } from './firebase.config';
 
 
 export default function Complete() {
+    console.log({
 
+    })
     const { push } = useRouter();
     const [showPassword, setShowPassword] = useState({
         pass: false,
@@ -138,25 +140,29 @@ export default function Complete() {
     // Form Submit
     const submitForm = async (evt) => {
         evt.preventDefault();
+        console.log({
+            phoneCode: phoneCode,
+            items:items
+        })
         if (handleValidation()) {
             let currentDate = new Date().toISOString().split('T')[0];
             let currentTime = new Date().toISOString().split('T')[1].split(".")[0];
             let currentDateTime = currentDate + " " + currentTime;
-            axios.post('/api/createUsers', {
-                userID: lastID + 1,
+            axios.post('http://localhost:3000/api/createUsers', {                
                 username: `${items.email}`,
-                email: `${items.email}`,
+                emailAddress: `${items.email}`,
                 firstName: `${items.firstName}`,
                 lastName: `${items.lastName}`,
                 companyName: `${formData.companyName}`,
-                phoneNumber: `${phoneCode}`,
+                phoneNumber: parseInt(phoneCode),
                 password: `${items.password}`,
-                parentId:0,
-                roleId:1,
                 terms: agreement,
-                dateCreated: currentDateTime,
-                dateModified: currentDateTime,
-                role: "admin"
+                role: "admin",
+                address:"",
+                city:"",
+                state:"",
+                pincode:"",
+                country:"",
             }, {
                 headers: {
                     'Content-Type': 'application/json'
