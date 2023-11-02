@@ -15,14 +15,63 @@ export default function AssetManagement() {
     const [classData, setClassData] = useState([] as any);
     const [defaultClass, setDefaultClass] = useState("");
     const getSelClass = useSelector((state: any) => state.classReducer);
-    const getAllClass = useSelector((state: any) => state.classReducer.getAllClass    );
+    const getAllClass = useSelector((state: any) => state.classReducer.getAllClass);
     console.log({
         "getSelClass in landingpage": getSelClass,
         "getAllClass ": getAllClass
     })
-    useEffect(()=> {
-        dispatch(getAllClasses())
-    }, [dispatch])
+    let access_token = "" as any;
+    if (typeof window !== 'undefined') {
+        access_token = localStorage.getItem('authToken')
+    }
+
+    // useEffect(() => {
+    //     let tokenStr = access_token;
+    //     setTimeout(() => {
+    //         try {
+    //             await axios({
+    //                 method: 'GET',
+    //                 url: `/api/getAssets`,
+    //                 headers: {
+    //                     "Authorization": `Bearer ${tokenStr}`,
+    //                     "Content-Type": "application/json"
+    //                 }
+    //             }).then(function (response) {
+    //                 setClassData(response.data.classes)
+    //             }).catch(function (error) {
+    //                 console.log(error)
+    //             })
+    //         } catch (err) {
+    //             console.log("err in action:", err)
+    //         }
+    //     }, 1000)
+    // }, [])
+
+    useEffect(() => {
+        let tokenStr = access_token;
+        (async function () {
+            try {
+                await axios({
+                    method: 'GET',
+                    url: `/api/getAssets`,
+                    headers: {
+                        "Authorization": `Bearer ${tokenStr}`,
+                        "Content-Type": "application/json"
+                    }
+                }).then(function (response) {
+                    setClassData(response.data.classes)
+                }).catch(function (error) {
+                    console.log(error)
+                })
+            } catch (err) {
+                console.log("err in action:", err)
+            }
+        })();
+    }, []);
+
+    console.log({
+        classData: classData
+    })
     // const fetchData = () => {
     //     axios.get("/api/getAssets").then((response) => {
     //         if (response.data) {
@@ -34,6 +83,11 @@ export default function AssetManagement() {
     //     fetchData();
     //     if (fetchData.length) return;
     // }, [])
+
+    // useEffect(() => {
+    //     if (getAllClass && getAllClass.classes)
+    //         setClassData(getAllClass.classes)
+    // }, [getAllClass])
 
     useEffect(() => {
         if (classData && classData.length > 0) {
@@ -229,7 +283,8 @@ export default function AssetManagement() {
                             <ClassManagement
                                 handleaddClassModal={handleaddClassModal}
                                 addClassModal={addClassModal}
-                                classData={classData && classData.length > 0 ? classData : []}
+                                classData={classData}
+                                data={classData}
                             />
                         }
                         {tab === 2 &&

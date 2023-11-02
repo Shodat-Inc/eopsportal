@@ -3,14 +3,18 @@ import styles from '../../../styles/Common.module.css';
 import Image from "next/image";
 import Link from 'next/dist/client/link';
 import AddNewClass from './addnewclass';
+import Spinner from "@/common/spinner";
 export default function ClassManagement(props: any) {
+    console.log({
+        props: props
+    })
     const [toggleFilter, setToggleFilter] = useState(false);
     const [toggleArrow, setToggleArrow] = useState(false);
     const [toggleSort, setToggleSort] = useState(false);
     const [actions, setActions] = useState(false);
     const [actionCount, setActionCount] = useState(1);
     const [showModal, setShowModal] = useState(Boolean);
-    useEffect(()=> {
+    useEffect(() => {
         setShowModal(props.addClassModal)
     }, [props.addClassModal])
 
@@ -28,11 +32,11 @@ export default function ClassManagement(props: any) {
     const selectedAction = (item: any) => {
         setActions(false);
     }
-    
-    const handleClick = (item:any) => {
+
+    const handleClick = (item: any) => {
         setShowModal(false);
         props.handleaddClassModal(item)
-    } 
+    }
     return (
         <div className='px-0 py-3 font-OpenSans'>
             {/* Title, search and filters */}
@@ -98,6 +102,62 @@ export default function ClassManagement(props: any) {
                         </tr>
                     </thead>
                     <tbody>
+                        {
+                            props.classData && props.classData.length >= 0 ?
+                                props.classData.map((item: any, index: any) => (
+                                    <tr key={index}>
+                                        <td>{index + 1}</td>
+                                        <td>{item.className}</td>
+                                        {/* <td>Plant ID,  Street, City, Zip, Country</td> */}
+                                        <td>
+                                            {
+                                                item.ClassTags.map((itms: any, i: any) => (
+                                                    <span key={i} className='mr-[10px]'>{itms.tagName},</span>
+                                                ))
+                                            }
+                                        </td>
+                                        <td>12-10-2023</td>
+                                        <td className='relative'>
+                                            <div className="flex justify-start items-center relative">
+                                                <button onClick={() => toggleActions(1)}>
+                                                    <Image
+                                                        src="/img/more-vertical.svg"
+                                                        alt="more-vertical"
+                                                        height={24}
+                                                        width={24}
+                                                    />
+                                                </button>
+                                                {(actions && actionCount === 1) &&
+                                                    <div className="bg-black text-white border overflow-hidden border-black rounded rounded-xl w-[100px] flex flex-col flex-wrap items-start justify-start shadow-sm absolute top-[30px] right-[75px] z-[1]">
+                                                        <Link
+                                                            href="#"
+                                                            className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[30px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
+                                                            <span>Edit</span>
+                                                        </Link>
+                                                        <Link
+                                                            href="#"
+                                                            className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[30px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
+                                                            <span>Delete</span>
+                                                        </Link>
+                                                    </div>
+                                                }
+                                            </div>
+
+                                        </td>
+                                    </tr>
+                                ))
+                                :
+                                <tr>
+                                    <td colSpan={5}>
+                                        <>
+                                            <Spinner height={16} width={16} />
+                                            <p className="text-xl text-center w-full">No Matched data found!!</p>
+                                        </>
+                                    </td>
+                                </tr>
+                        }
+                    </tbody>
+                    <tbody className='hidden'>
                         <tr>
                             <td>1</td>
                             <td>Manufacturing Plant</td>
@@ -169,9 +229,9 @@ export default function ClassManagement(props: any) {
             </div>
 
 
-            {/* Add New Class */}            
-            <AddNewClass handleClick={handleClick} show={showModal} /> 
-            
+            {/* Add New Class */}
+            <AddNewClass handleClick={handleClick} show={showModal} />
+
         </div>
     )
 }
