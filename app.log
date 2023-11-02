@@ -6957,3 +6957,26 @@
 {"level":"info","message":"JWT","timestamp":"2023-11-01T18:27:42.917Z"}
 {"level":"info","message":"Fetching all class and classTags data","timestamp":"2023-11-01T18:27:42.923Z"}
 {"level":"error","message":"Error fetching class and classTags data: ClassTag is not associated to Class!","name":"SequelizeEagerLoadingError","stack":"SequelizeEagerLoadingError: ClassTag is not associated to Class!\n    at Function._getIncludedAssociation (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:717:13)\n    at Function._validateIncludedElement (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:621:53)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:516:37\n    at Array.map (<anonymous>)\n    at Function._validateIncludedElements (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:511:39)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1728:14\n    at processImmediate (node:internal/timers:466:21)\nFrom previous event:\n    at Function.findAll (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1722:8)\n    at Object.getClassData (webpack-internal:///(api)/./src/helpers/api/repo/class-repo.ts:65:77)\n    at Object.allhandler [as get] (webpack-internal:///(api)/./src/pages/api/getAssets.ts:19:83)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:33:34)","timestamp":"2023-11-01T18:27:42.925Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-11-01T18:29:29.085Z"}
+{"level":"info","message":"AddClasses","timestamp":"2023-11-01T18:29:29.095Z"}
+{"level":"info","message":"AddValues","timestamp":"2023-11-01T18:29:29.097Z"}
+{"level":"info","message":"Address","timestamp":"2023-11-01T18:29:29.098Z"}
+{"level":"info","message":"Reason","timestamp":"2023-11-01T18:29:29.101Z"}
+{"level":"info","message":"Role","timestamp":"2023-11-01T18:29:29.105Z"}
+{"level":"info","message":"User","timestamp":"2023-11-01T18:29:29.107Z"}
+{"level":"info","message":"classTag","timestamp":"2023-11-01T18:29:29.108Z"}
+{"level":"info","message":"companyRecord","timestamp":"2023-11-01T18:29:29.109Z"}
+{"level":"info","message":"countryCodeModel","timestamp":"2023-11-01T18:29:29.110Z"}
+{"level":"info","message":"deleteRecord","timestamp":"2023-11-01T18:29:29.113Z"}
+{"level":"info","message":"object","timestamp":"2023-11-01T18:29:29.114Z"}
+{"level":"info","message":"parentJoinKey","timestamp":"2023-11-01T18:29:29.115Z"}
+{"level":"info","message":"phoneRecord","timestamp":"2023-11-01T18:29:29.117Z"}
+{"level":"info","message":"tagDataType","timestamp":"2023-11-01T18:29:29.118Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-01T18:29:29.147Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2023-11-01T18:29:29.149Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-01T18:29:29.152Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2023-11-01T18:29:29.166Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-02T04:04:46.980Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2023-11-02T04:04:46.982Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-02T04:04:47.022Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2023-11-02T04:04:47.024Z"}
