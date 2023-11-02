@@ -1,5 +1,5 @@
 # Use the official Node.js image from the DockerHub
-FROM node:18
+FROM node:20
 
 # Set the working directory in the Docker image
 WORKDIR /usr/src/app
@@ -13,11 +13,8 @@ RUN npm install
 # Copy the rest of the application code into the image
 COPY . .
 
-# Build the Next.js app
-RUN npm run dev
-
 # Expose port 3000 (or whichever port your app runs on)
 EXPOSE 3000
 
 # Command to run the application
-CMD ["npm","run dev"]
+CMD ["npm","run","dev"]
