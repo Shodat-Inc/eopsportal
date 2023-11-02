@@ -22,11 +22,17 @@ async function authenticate(data: any) {
   try {
     let { username, password } = data;
     const user = await db.User.scope("withHash").findOne({
-      where: { username },
-      include: {
-        model: db.phoneRecord,
-        attributes: ["phoneNumber"],
-      },
+      attributes: [
+        "id",
+        "username",
+        "password",
+        "email",
+        "firstName",
+        "lastName",
+        "roleId",
+        "parentId",
+      ],
+      where: { username: username },
     });
     if (!user) {
       return sendResponseData(false, message.error.userNotFound, {});
@@ -42,6 +48,17 @@ async function authenticate(data: any) {
     // remove hash from return value
     const userJson = user.get();
     delete userJson.password;
+    const phoneRecord = await db.phoneRecord.findOne({
+      where: { userId: user.id },
+      attributes: ["phoneNumber"],
+    });
+    const role = await db.Role.findOne({
+      where: { id: user.roleId },
+      attributes: ["name"],
+    });
+    user.dataValues["phoneNumber"] = phoneRecord.phoneNumber;
+    user.dataValues["roleName"] = role.name;
+
     // return user and jwt
     return sendResponseData(true, message.success.loginSuccess, {
       ...userJson,
