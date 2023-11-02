@@ -17,6 +17,10 @@ async function jwtMiddleware(req: any, res: any) {
       // public routes that don't require authentication
       "/api/createUsers",
       "/api/signIn",
+      "/api/verifyOtp",
+      "/api/generateOtp",
+      "/api/forgetPassword",
+      "/api/updatePassword",
     ],
   });
   return util.promisify(middleware)(req, res);

@@ -1,8 +1,23 @@
-version: '3'
+version: "3"
 services:
-  nextjs:
+  nextjs-eops:
     build:
       context: .
       dockerfile: Dockerfile
     ports:
-      - '3000:3000'
+      - "3000:3000"
+  
+  # Database
+  db:
+    image: mysql:8.0.35
+    restart: always
+    volumes:
+      - /var/lib/mysql
+    ports:
+      - 3307:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: root@123
+
+networks:
+  eops:
+    external: true
