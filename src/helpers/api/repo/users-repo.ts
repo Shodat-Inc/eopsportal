@@ -23,6 +23,10 @@ async function authenticate(data: any) {
     let { username, password } = data;
     const user = await db.User.scope("withHash").findOne({
       where: { username },
+      include: {
+        model: db.phoneRecord,
+        attributes: ["phoneNumber"],
+      },
     });
     if (!user) {
       return sendResponseData(false, message.error.userNotFound, {});
