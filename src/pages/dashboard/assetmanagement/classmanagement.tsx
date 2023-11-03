@@ -4,16 +4,20 @@ import Image from "next/image";
 import Link from 'next/dist/client/link';
 import AddNewClass from './addnewclass';
 import Spinner from "@/common/spinner";
+import axios from 'axios';
 export default function ClassManagement(props: any) {
-    console.log({
-        props: props
-    })
     const [toggleFilter, setToggleFilter] = useState(false);
     const [toggleArrow, setToggleArrow] = useState(false);
     const [toggleSort, setToggleSort] = useState(false);
     const [actions, setActions] = useState(false);
     const [actionCount, setActionCount] = useState(1);
     const [showModal, setShowModal] = useState(Boolean);
+    const [dataTypes, setDataTypes] = useState();
+    let access_token = "" as any;
+    if (typeof window !== 'undefined') {
+        access_token = localStorage.getItem('authToken')
+    }
+
     useEffect(() => {
         setShowModal(props.addClassModal)
     }, [props.addClassModal])
@@ -37,6 +41,31 @@ export default function ClassManagement(props: any) {
         setShowModal(false);
         props.handleaddClassModal(item)
     }
+
+    // Get All DataTypes
+    useEffect(() => {
+        let tokenStr = access_token;
+        (async function () {
+            try {
+                await axios({
+                    method: 'GET',
+                    url: `/api/getDataType`,
+                    headers: {
+                        "Authorization": `Bearer ${tokenStr}`,
+                        "Content-Type": "application/json"
+                    }
+                }).then(function (response) {
+                    if (response.data) {
+                        setDataTypes(response.data.data)
+                    }
+                }).catch(function (error) {
+                    console.log(error)
+                })
+            } catch (err) {
+                console.log("err in action:", err)
+            }
+        })();
+    }, []);
     return (
         <div className='px-0 py-3 font-OpenSans'>
             {/* Title, search and filters */}
@@ -229,7 +258,7 @@ export default function ClassManagement(props: any) {
 
 
             {/* Add New Class */}
-            <AddNewClass handleClick={handleClick} show={showModal} />
+            <AddNewClass handleClick={handleClick} show={showModal} dataTypes={dataTypes} />
 
         </div>
     )
