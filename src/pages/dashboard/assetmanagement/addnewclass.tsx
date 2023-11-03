@@ -165,6 +165,7 @@ export default function AddNewClass(props: any) {
             className: form_values.assetname,
             tags: dtObject
         };
+        
         // let json: any = CreateJSON(newTag, dataType);
         console.log({
             "YOU ARE HERE": form_values,

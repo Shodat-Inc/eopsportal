@@ -9574,3 +9574,25 @@
 {"level":"info","message":"tagDataType","timestamp":"2023-11-03T19:41:24.064Z"}
 {"level":"info","message":"JWT","timestamp":"2023-11-03T19:41:24.076Z"}
 {"level":"info","message":"Get All Tag DataTypes","timestamp":"2023-11-03T19:41:24.077Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-11-03T19:41:24.177Z"}
+{"level":"info","message":"AddClasses","timestamp":"2023-11-03T19:41:24.187Z"}
+{"level":"info","message":"AddValues","timestamp":"2023-11-03T19:41:24.188Z"}
+{"level":"info","message":"Address","timestamp":"2023-11-03T19:41:24.189Z"}
+{"level":"info","message":"Reason","timestamp":"2023-11-03T19:41:24.190Z"}
+{"level":"info","message":"Role","timestamp":"2023-11-03T19:41:24.191Z"}
+{"level":"info","message":"User","timestamp":"2023-11-03T19:41:24.192Z"}
+{"level":"info","message":"classTag","timestamp":"2023-11-03T19:41:24.193Z"}
+{"level":"info","message":"companyRecord","timestamp":"2023-11-03T19:41:24.194Z"}
+{"level":"info","message":"countryCodeModel","timestamp":"2023-11-03T19:41:24.195Z"}
+{"level":"info","message":"deleteRecord","timestamp":"2023-11-03T19:41:24.197Z"}
+{"level":"info","message":"object","timestamp":"2023-11-03T19:41:24.198Z"}
+{"level":"info","message":"otpVerify","timestamp":"2023-11-03T19:41:24.199Z"}
+{"level":"info","message":"parentJoinKey","timestamp":"2023-11-03T19:41:24.200Z"}
+{"level":"info","message":"phoneRecord","timestamp":"2023-11-03T19:41:24.202Z"}
+{"level":"info","message":"tagDataType","timestamp":"2023-11-03T19:41:24.203Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-03T19:41:24.211Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2023-11-03T19:41:24.213Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-03T19:41:24.231Z"}
+{"level":"info","message":"Get All Tag DataTypes","timestamp":"2023-11-03T19:41:24.234Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-03T19:41:24.324Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2023-11-03T19:41:24.325Z"}
