@@ -934,6 +934,9 @@ table.proSenseTable tbody tr td {
     border: 0;
     outline: none;
 }
+.tableV4 tbody tr td > span:last-child > i{
+    display: none;
+}
 
 
 

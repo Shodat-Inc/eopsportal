@@ -17,36 +17,10 @@ export default function AssetManagement() {
     const [nav, setNav] = useState({} as any)
     const getSelClass = useSelector((state: any) => state.classReducer);
     const getAllClass = useSelector((state: any) => state.classReducer.getAllClass);
-    console.log({
-        "getSelClass in landingpage": getSelClass,
-        "getAllClass ": getAllClass
-    })
     let access_token = "" as any;
     if (typeof window !== 'undefined') {
         access_token = localStorage.getItem('authToken')
     }
-
-    // useEffect(() => {
-    //     let tokenStr = access_token;
-    //     setTimeout(() => {
-    //         try {
-    //             await axios({
-    //                 method: 'GET',
-    //                 url: `/api/getAssets`,
-    //                 headers: {
-    //                     "Authorization": `Bearer ${tokenStr}`,
-    //                     "Content-Type": "application/json"
-    //                 }
-    //             }).then(function (response) {
-    //                 setClassData(response.data.classes)
-    //             }).catch(function (error) {
-    //                 console.log(error)
-    //             })
-    //         } catch (err) {
-    //             console.log("err in action:", err)
-    //         }
-    //     }, 1000)
-    // }, [])
 
     useEffect(() => {
         let tokenStr = access_token;
@@ -60,7 +34,12 @@ export default function AssetManagement() {
                         "Content-Type": "application/json"
                     }
                 }).then(function (response) {
-                    setClassData(response.data.classes)
+                    console.log({
+                        response:response
+                    })
+                    if(response.data && response.data.classes) {
+                        setClassData(response.data.classes)
+                    }
                 }).catch(function (error) {
                     console.log(error)
                 })
@@ -71,24 +50,8 @@ export default function AssetManagement() {
     }, []);
 
     console.log({
-        classData: classData
+        classData:classData[0]?.className
     })
-    // const fetchData = () => {
-    //     axios.get("/api/getAssets").then((response) => {
-    //         if (response.data) {
-    //             setClassData(response.data);
-    //         }
-    //     });
-    // };
-    // useEffect(() => {
-    //     fetchData();
-    //     if (fetchData.length) return;
-    // }, [])
-
-    // useEffect(() => {
-    //     if (getAllClass && getAllClass.classes)
-    //         setClassData(getAllClass.classes)
-    // }, [getAllClass])
 
     useEffect(() => {
         setNav(getSelClass.classBreadcrumbs)
@@ -96,8 +59,8 @@ export default function AssetManagement() {
 
     useEffect(() => {
         if (classData && classData.length > 0) {
-            setDefaultClass(classData[0]?.assetName)
-            dispatch(setSelectedClass(classData[0]?.assetName))
+            setDefaultClass(classData[0]?.className)
+            dispatch(setSelectedClass(classData[0]?.className))
         }
     }, [classData, dispatch])
 
@@ -112,9 +75,6 @@ export default function AssetManagement() {
         setAddClassModal(item)
     }
     const handelObject = (item: any) => {
-        console.log({
-            "item - landing page": item
-        })
         if (item !== "") {
             setTab(3)
         } else {
@@ -291,19 +251,20 @@ export default function AssetManagement() {
                                 handleaddClassModal={handleaddClassModal}
                                 addClassModal={addClassModal}
                                 classData={classData}
-                                data={classData}
                             />
                         }
                         {tab === 2 &&
                             <ObjectManagement
                                 handelObject={handelObject}
                                 defaultClass={defaultClass}
+                                classData={classData}
                             />
                         }
                         {tab === 3 &&
                             <SubObjectManagement
                                 handleSubObject={handleSubObject}
                                 defaultClass={getSelClass.selectedClass}
+                                classData={classData}
                             />
                         }
                     </div>

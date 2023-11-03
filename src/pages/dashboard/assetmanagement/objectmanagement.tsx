@@ -5,26 +5,19 @@ import Image from "next/image";
 import CustomDrop from '@/common/customdrop';
 import axios from 'axios';
 import Link from 'next/dist/client/link';
-import { setSelectedClass, setClassBreadcrumb  } from '@/store/actions/classAction';
+import { setSelectedClass, setClassBreadcrumb } from '@/store/actions/classAction';
 
 export default function ObjectManagement(props: any) {
-    console.log({
-        "props in Object Management":props
-    })
     const dispatch = useDispatch<any>();
     const [toggleFilter, setToggleFilter] = useState(false);
     const [toggleArrow, setToggleArrow] = useState(false);
     const [toggleSort, setToggleSort] = useState(false);
-    const [classData, setClassData] = useState([] as any);
+    const [classesData, setClassesData] = useState(props.classData && props.classData.length > 0 ? props.classData : []);
     const [chooseAsset, setChooseAsset] = useState('');
     const [actions, setActions] = useState(false);
     const [actionCount, setActionCount] = useState(1);
     const [objID, setObjID] = useState("");
-    // const getSelClass = useSelector((state:any) => state.classReducer)
-    // console.log({
-    //     getSelClass:getSelClass.selectedClass
-    // })
- 
+
     const toggleFilterFunction = () => {
         setToggleArrow(!toggleArrow);
         setToggleFilter(!toggleFilter);
@@ -32,32 +25,13 @@ export default function ObjectManagement(props: any) {
     const sortByClassName = () => {
         setToggleSort(!toggleSort)
     }
-    const fetchClassData = () => {
-        axios.get("/api/getAssets").then((response: any) => {
-            if (response.data) {
-                const filtered = response.data.filter((item: any) => {
-                    return item.assetName
-                });
-                if (filtered && filtered.length > 0) {
-                    setClassData(filtered);
-                }
-            }
-        });
-    };
+
     useEffect(() => {
-        fetchClassData();
-        if (fetchClassData.length) return;
-    }, [])
+        setChooseAsset(classesData[0]?.className);
+        dispatch(setSelectedClass(classesData[0]?.className))
+    }, [classesData, dispatch])
 
-    useEffect(()=> {
-        setChooseAsset(classData[0]?.assetName);
-        dispatch(setSelectedClass(classData[0]?.assetName))
-    }, [classData,dispatch])
-
-    const handleDropDown = (item: any) => {  
-        console.log({
-            "AMIT":item
-        })    
+    const handleDropDown = (item: any) => {
         dispatch(setSelectedClass(item))
         setChooseAsset(item);
     }
@@ -70,16 +44,16 @@ export default function ObjectManagement(props: any) {
     }
     const takeMeToSubObjectComponent = (item: any) => {
         console.log({
-            "CHOOSEASSET":chooseAsset
-        })  
+            "CHOOSEASSET": chooseAsset
+        })
         let abc = {
-            "flow":"Object Management",
-            "class":chooseAsset,
-            "classObjKey": "VIN",
-            "classObjValue":"5PVBE7AJ8R5T50001",
-            "subClass":"Battery",
-            "subClassObjKey":"",
-            "subClassObjValue":""
+            "flow": "Object Management",
+            "class": chooseAsset,
+            "classObjKey": chooseAsset === "Vehicles" ? "VIN" : "PlantID",
+            "classObjValue": item,
+            "subClass": "Battery",
+            "subClassObjKey": "",
+            "subClassObjValue": ""
         }
         dispatch(setClassBreadcrumb(abc))
         setObjID(item);
@@ -91,9 +65,9 @@ export default function ObjectManagement(props: any) {
             <div className='flex justify-between items-center py-2 px-4 '>
                 <div className='w-[350px]'>
                     <CustomDrop
-                        data={classData}
+                        data={classesData}
                         handleClick={handleDropDown}
-                        defaultClass={classData && classData.length > 0 ? classData[0].assetName : ""}
+                        defaultClass={classesData && classesData.length > 0 ? classesData[0].className : ""}
                     />
                 </div>
 

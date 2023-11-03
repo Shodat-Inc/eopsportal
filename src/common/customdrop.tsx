@@ -2,9 +2,6 @@ import React, { useState, useRef, useEffect } from "react";
 import styles from '../styles/Common.module.css';
 import Image from "next/image";
 export default function CustomDrop(props: any) {
-    // console.log({
-    //     props: props
-    // })
     const [toggleAsset, setToggleAsset] = useState(false);
     const [chooseAsset, setChooseAsset] = useState("");
     useEffect(()=>{
@@ -60,10 +57,10 @@ export default function CustomDrop(props: any) {
                             props.data.map((item: any, index: any) => (
                                 <li
                                     className="px-5 py-2 bg-white cursor-pointer hover:bg-yellow-951 w-full font-normal"
-                                    onClick={() => selectItemFunction(item.assetName)}
+                                    onClick={() => selectItemFunction(item.className)}
                                     key={index}
                                 >
-                                    <span>{item.assetName}</span>
+                                    <span>{item.className}</span>
                                 </li>
                             ))
                         }

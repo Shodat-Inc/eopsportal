@@ -108,18 +108,17 @@ export default function ClassManagement(props: any) {
                                     <tr key={index}>
                                         <td>{index + 1}</td>
                                         <td>{item.className}</td>
-                                        {/* <td>Plant ID,  Street, City, Zip, Country</td> */}
                                         <td>
                                             {
                                                 item.ClassTags.map((itms: any, i: any) => (
-                                                    <span key={i} className='mr-[10px]'>{itms.tagName},</span>
+                                                    <span key={i} className='mr-[10px]'>{itms.tagName}<i>,</i></span>
                                                 ))
                                             }
                                         </td>
                                         <td>12-10-2023</td>
                                         <td className='relative'>
                                             <div className="flex justify-start items-center relative">
-                                                <button onClick={() => toggleActions(1)}>
+                                                <button onClick={() => toggleActions(index+1)}>
                                                     <Image
                                                         src="/img/more-vertical.svg"
                                                         alt="more-vertical"
@@ -127,7 +126,7 @@ export default function ClassManagement(props: any) {
                                                         width={24}
                                                     />
                                                 </button>
-                                                {(actions && actionCount === 1) &&
+                                                {(actions && actionCount === index+1) &&
                                                     <div className="bg-black text-white border overflow-hidden border-black rounded rounded-xl w-[100px] flex flex-col flex-wrap items-start justify-start shadow-sm absolute top-[30px] right-[75px] z-[1]">
                                                         <Link
                                                             href="#"
