@@ -1,11 +1,13 @@
 import { SET_CLASS_ERROR, SET_CLASS_SUCCESS } from "../types";
 import { TOGGLE_ADD_OBJECT_MODEL_ERROR, TOGGLE_ADD_OBJECT_MODEL_SUCCESS } from "../types";
 import { GET_ALL_CLASS_ERROR, GET_ALL_CLASS_SUCCESS } from "../types";
+import { BREADCRUMB_SUCCESS, BREADCRUMB_ERROR } from "../types";
 
 const initialState = {
   selectedClass: '',
   toggleAddObject: false,
-  getAllClass: []
+  getAllClass: [],
+  classBreadcrumbs: {}
 };
 
 const classReducer = (state = initialState, action: any) => {
@@ -41,6 +43,17 @@ const classReducer = (state = initialState, action: any) => {
     case GET_ALL_CLASS_ERROR:
       return {
         getAllClass: action.payload,
+      };
+
+    case BREADCRUMB_SUCCESS:
+      return {
+        ...state,
+        classBreadcrumbs: action.payload,
+      };
+
+    case BREADCRUMB_ERROR:
+      return {
+        classBreadcrumbs: action.payload,
       };
 
     default:
