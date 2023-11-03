@@ -5,7 +5,7 @@ import Image from "next/image";
 import CustomDrop from '@/common/customdrop';
 import axios from 'axios';
 import Link from 'next/dist/client/link';
-import { setSelectedClass, getSingleUser, setClassBreadcrumb } from '@/store/actions/classAction';
+import { setSelectedClass, setClassBreadcrumb  } from '@/store/actions/classAction';
 
 export default function ObjectManagement(props: any) {
     console.log({
