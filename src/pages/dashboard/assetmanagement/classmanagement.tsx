@@ -6,6 +6,9 @@ import AddNewClass from './addnewclass';
 import Spinner from "@/common/spinner";
 import axios from 'axios';
 export default function ClassManagement(props: any) {
+    console.log({
+        "AMIT": props
+    })
     const [toggleFilter, setToggleFilter] = useState(false);
     const [toggleArrow, setToggleArrow] = useState(false);
     const [toggleSort, setToggleSort] = useState(false);
@@ -13,6 +16,9 @@ export default function ClassManagement(props: any) {
     const [actionCount, setActionCount] = useState(1);
     const [showModal, setShowModal] = useState(Boolean);
     const [dataTypes, setDataTypes] = useState();
+    const [deleteModal, setDeleteModal] = useState(false);
+    const [deleteID, setDeleteID] = useState(0);
+    const [deleteMessage, setDeleteMessage] = useState(false)
     let access_token = "" as any;
     if (typeof window !== 'undefined') {
         access_token = localStorage.getItem('authToken')
@@ -66,6 +72,56 @@ export default function ClassManagement(props: any) {
             }
         })();
     }, []);
+
+    // Show delete Model
+    const deleteModalFunction = (index: any) => {
+        setDeleteID(index);
+        setDeleteModal(true);
+        setActions(false);
+    }
+
+    // Close Delete Modal
+    const closeModalFunction = () => {
+        setDeleteModal(false);
+        setActions(false);
+    }
+
+    // Delete Function when click "YES" from delete modal
+    const deleteThisClassFunction = async (deleteID: any) => {
+        let tokenStr = access_token;
+        if (deleteID !== 0) {
+            try {
+                await axios({
+                    method: 'DELETE',
+                    url: `/api/deleteClasses?id=${deleteID}`,
+                    // data: deleteID,
+                    headers: {
+                        "Authorization": `Bearer ${tokenStr}`,
+                        "Content-Type": "application/json"
+                    }
+                }).then(function (response) {
+                    if (response.status===200) {
+                        setDeleteMessage(true);
+                        setDeleteModal(false);
+                        setTimeout(() => {
+                            setDeleteMessage(false)
+                        }, 2000)
+                    } else {
+                        
+                    }
+                }).catch(function (error) {
+                    console.log("err in delete action:", error)
+                })
+            } catch (err) {
+                console.log("err in delete catch block:", err)
+            }
+        }
+    }
+
+    // Edit Class Function 
+    const editClassfunction = (classID:any) => {
+        setActions(false);
+    }
     return (
         <div className='px-0 py-3 font-OpenSans'>
             {/* Title, search and filters */}
@@ -113,6 +169,23 @@ export default function ClassManagement(props: any) {
                 </div>
             </div>
 
+            {/* Success / Error Message */}
+            <div className='flex justify-start items-center px-4'>
+                {deleteMessage &&
+                    <div className={`bg-blue-957 border-blue-958 text-blue-959 mb-1 mt-1 border text-md px-4 py-3 rounded rounded-xl relative flex items-center justify-start`}>
+                        <Image
+                            src="/img/AlertInfo.svg"
+                            alt="Alert Success"
+                            height={24}
+                            width={24}
+                            className='mr-2'
+                        />
+                        <strong className="font-semibold">Success</strong>
+                        <span className="block sm:inline ml-2">Class has been deleted successfully!</span>
+                    </div>
+                }
+            </div>
+
             {/* Table */}
             <div className='w-full mt-6 min-h-[400px] '>
                 <table className={`table-auto lg:min-w-full sm:w-full small:w-full text-left ${styles.tableV3} ${styles.tableV4}`}>
@@ -147,7 +220,7 @@ export default function ClassManagement(props: any) {
                                         <td>12-10-2023</td>
                                         <td className='relative'>
                                             <div className="flex justify-start items-center relative">
-                                                <button onClick={() => toggleActions(index+1)}>
+                                                <button onClick={() => toggleActions(index + 1)}>
                                                     <Image
                                                         src="/img/more-vertical.svg"
                                                         alt="more-vertical"
@@ -155,18 +228,18 @@ export default function ClassManagement(props: any) {
                                                         width={24}
                                                     />
                                                 </button>
-                                                {(actions && actionCount === index+1) &&
-                                                    <div className="bg-black text-white border overflow-hidden border-black rounded rounded-xl w-[100px] flex flex-col flex-wrap items-start justify-start shadow-sm absolute top-[30px] right-[75px] z-[1]">
-                                                        <Link
-                                                            href="#"
+                                                {(actions && actionCount === index + 1) &&
+                                                    <div className="bg-black text-white border overflow-hidden border-black rounded rounded-xl w-[100px] flex flex-col flex-wrap items-start justify-start shadow-sm absolute top-[24px] right-[47px] z-[1]">
+                                                        <button
+                                                        onClick={()=>editClassfunction(item.serialNumber)}
                                                             className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[30px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
                                                             <span>Edit</span>
-                                                        </Link>
-                                                        <Link
-                                                            href="#"
+                                                        </button>
+                                                        <button
+                                                            onClick={() => deleteModalFunction(item.serialNumber)}
                                                             className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[30px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
                                                             <span>Delete</span>
-                                                        </Link>
+                                                        </button>
                                                     </div>
                                                 }
                                             </div>
@@ -185,80 +258,64 @@ export default function ClassManagement(props: any) {
                                 </tr>
                         }
                     </tbody>
-                    <tbody className='hidden'>
-                        <tr>
-                            <td>1</td>
-                            <td>Manufacturing Plant</td>
-                            <td>Plant ID,  Street, City, Zip, Country</td>
-                            <td>12-10-2023</td>
-                            <td className='relative'>
-                                <div className="flex justify-start items-center relative">
-                                    <button onClick={() => toggleActions(1)}>
-                                        <Image
-                                            src="/img/more-vertical.svg"
-                                            alt="more-vertical"
-                                            height={24}
-                                            width={24}
-                                        />
-                                    </button>
-                                    {(actions && actionCount === 1) &&
-                                        <div className="bg-black text-white border overflow-hidden border-black rounded rounded-xl w-[100px] flex flex-col flex-wrap items-start justify-start shadow-sm absolute top-[30px] right-[75px] z-[1]">
-                                            <Link
-                                                href="#"
-                                                className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[30px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
-                                                <span>Edit</span>
-                                            </Link>
-                                            <Link
-                                                href="#"
-                                                className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[30px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
-                                                <span>Delete</span>
-                                            </Link>
-                                        </div>
-                                    }
-                                </div>
-
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Vehicles</td>
-                            <td>VIN, MfdDate, Model, Assembly Plant</td>
-                            <td>12-10-2023</td>
-                            <td>
-                                <div className="flex justify-start items-center relative">
-                                    <button onClick={() => toggleActions(2)}>
-                                        <Image
-                                            src="/img/more-vertical.svg"
-                                            alt="more-vertical"
-                                            height={24}
-                                            width={24}
-                                        />
-                                    </button>
-                                    {(actions && actionCount === 2) &&
-                                        <div className="bg-black text-white border overflow-hidden border-black rounded rounded-xl w-[100px] flex flex-col flex-wrap items-start justify-start shadow-sm absolute top-[30px] right-[75px] z-[1]">
-                                            <Link
-                                                href="#"
-                                                className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[30px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
-                                                <span>Edit</span>
-                                            </Link>
-                                            <Link
-                                                href="#"
-                                                className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[30px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
-                                                <span>Delete</span>
-                                            </Link>
-                                        </div>
-                                    }
-                                </div>
-
-                            </td>
-                        </tr>
-                    </tbody>
                 </table>
             </div>
 
 
             {/* Add New Class */}
             <AddNewClass handleClick={handleClick} show={showModal} dataTypes={dataTypes} />
+
+            {/* Delete Modal */}
+            {
+                deleteModal &&
+                <>
+                    <div
+                        className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
+                    >
+                        <div className="relative my-6 w-[580px]">
+                            <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+                                {/*header*/}
+                                <div className="flex items-start justify-between p-2">
+                                    <h3 className="text-lg font-medium"></h3>
+                                    <button
+                                        className="p-1 ml-auto bg-transparent border-0 text-black float-right leading-none font-semibold outline-none focus:outline-none"
+                                        onClick={closeModalFunction}
+                                    >
+                                        <Image
+                                            src="/img/close.svg"
+                                            alt="close"
+                                            className="h-6"
+                                            height={24}
+                                            width={24}
+                                        />
+                                    </button>
+                                </div>
+                                {/*body*/}
+                                <div className="relative pt-2 pb-8 flex-auto">
+                                    <div className="flex justify-start items-center flex-wrap flex-col">
+                                        <p className="flex justify-center items-center text-lg">Are you sure want to <span className="text-[#EF0000] mx-1 font-semibold">Delete ({deleteID}) </span> this ?</p>
+                                        <div className="mt-10 relative flex justify-center items-center w-full">
+                                            <button
+                                                className="border border-black rounded-lg bg-black text-white text-lg w-[70px] h-[47px] mr-5 hover:bg-yellow-951 hover:text-white hover:border-yellow-951 ease-in-out duration-300 disabled:bg-gray-951 disabled:hover:border-gray-951 disabled:border-gray-951"
+                                                onClick={() => deleteThisClassFunction(deleteID)}
+                                            >
+                                                Yes
+                                            </button>
+                                            <button
+                                                className="border border-black rounded-lg bg-white text-black text-lg w-[70px] h-[47px] hover:text-white hover:bg-yellow-951 hover:border-yellow-951 ease-in-out duration-300"
+                                                onClick={closeModalFunction}
+                                            >
+                                                No
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="opacity-75 fixed inset-0 z-40 bg-black"></div>
+                </>
+            }
 
         </div>
     )

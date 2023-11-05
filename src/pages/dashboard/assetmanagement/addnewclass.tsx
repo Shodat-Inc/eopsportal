@@ -18,9 +18,6 @@ import DeleteModal from "@/common/deletemodal";
 import ObjectModal from "./objectmodal";
 
 export default function AddNewClass(props: any) {
-    console.log({
-        "props in add class": props
-    })
     const dispatch = useDispatch<any>();
     const [showModal, setShowModal] = useState(false);
     const [success, setSuccess] = useState(false);
@@ -165,56 +162,34 @@ export default function AddNewClass(props: any) {
             className: form_values.assetname,
             tags: dtObject
         };
-        
-        // let json: any = CreateJSON(newTag, dataType);
-        console.log({
-            "YOU ARE HERE": form_values,
-            "allTags": dtObject,
-            dataToSave: dataToSave
-        })
+        let tokenStr = access_token;
+        // dispatch(createNewClass(dataToSave))
+        try {
+            await axios({
+                method: 'POST',
+                url: `/api/createClasses`,
+                data: dataToSave,
+                headers: {
+                    "Authorization": `Bearer ${tokenStr}`,
+                    "Content-Type": "application/json"
+                }
+            }).then(function (response) {
+                if (response) {
+                    setShowModal(false);
+                    setSuccess(true)
+                    setAllTags([]);
 
-        dispatch(createNewClass(dataToSave))
-
-        setTimeout(() => {
-            props.handleClick(false);
-            setShowModal(false);
-            setAllTags([]);
-        }, 1000)
-        // const response = await fetch('/api/assets', {
-        //     // const response = await fetch('https://shodat.vercel.app/api/assets', {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json'
-        //     },
-        //     body: JSON.stringify(
-        //         {
-        //             assetID: `${form_values.assetid}`,
-        //             assetName: `${form_values.assetname}`,
-        //             slug: `${form_values.assetname}`,
-        //             assetkey: allTags,
-        //             dateCreated: new Date().toLocaleString() + "",
-        //             dateModified: new Date().toLocaleString() + "",
-        //             assetTypes: assetDataType,
-        //             tags: dtObject
-        //         }
-        //     )
-        // });
-        // const resdata = await response.json();
-        // if (resdata) {
-        //     router.replace(router.asPath);
-        //     // Updated state to close the modal
-        //     setShowModal(false);
-        //     // Update state to Show the success message
-        //     setSuccess(true);
-        //     // Update state to empty all tags 
-        //     setAllTags([]);
-        //     // Update state to hide the success message after 5 seconds
-        //     setTimeout(() => {
-        //         setSuccess(false);
-        //     }, 5000);
-        // } else {
-        //     console.log("FAILED")
-        // }
+                    setTimeout(() => {
+                        setSuccess(false)
+                        props.handleClick(false);
+                    }, 1500)
+                }
+            }).catch(function (error) {
+                console.log("err in action:", error)
+            })
+        } catch (err) {
+            console.log("err in action:", err)
+        }
     }
 
     // Delete Asset
@@ -275,6 +250,20 @@ export default function AddNewClass(props: any) {
                         />
                     </button>
                 </div>
+
+                {success &&
+                    <div className={`bg-green-957 border-green-958 text-green-959 mb-1 mt-1 border text-md px-4 py-3 rounded rounded-xl relative flex items-center justify-start`}>
+                        <Image
+                            src="/img/AlertSuccess.svg"
+                            alt="Alert Success"
+                            height={24}
+                            width={24}
+                            className='mr-2'
+                        />
+                        <strong className="font-semibold">Success</strong>
+                        <span className="block sm:inline ml-2">Class has been added successfully!</span>
+                    </div>
+                }
 
                 <div className={`flex justify-start items-start w-full overflow-auto h-full pb-10 ${styles.scroll} pr-3`}>
                     <form

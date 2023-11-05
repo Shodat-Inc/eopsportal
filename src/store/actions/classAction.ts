@@ -3,6 +3,7 @@ import { TOGGLE_ADD_OBJECT_MODEL_ERROR, TOGGLE_ADD_OBJECT_MODEL_SUCCESS } from "
 import { GET_ALL_CLASS_ERROR, GET_ALL_CLASS_SUCCESS } from "../types";
 import { BREADCRUMB_SUCCESS, BREADCRUMB_ERROR } from "../types";
 import { CREATE_NEW_CLASS_ERROR, CREATE_NEW_CLASS_SUCCESS } from "../types";
+import { CLASS_DELETE_MODAL_TOGGLE_ERROR,  CLASS_DELETE_MODAL_TOGGLE_SUCCESS} from "../types";
 import axios from "axios";
 let access_token = "" as any;
 if (typeof window !== 'undefined') {
@@ -137,6 +138,33 @@ export const createNewClass = (data: any) => async (dispatch: any) => {
                 payload: error,
             });
         })
+    } catch (err) {
+        console.log("err in action:", err)
+    }
+};
+
+
+/*
+Function to toggle "DELETE CLASS MODAL" model
+*/
+export const toogleDeleteClassModalAction = (item: any) => async (dispatch: any) => {
+    try {
+        if (item === true) {
+            dispatch({
+                type: CLASS_DELETE_MODAL_TOGGLE_SUCCESS,
+                payload: item
+            });
+        } else if (item === false) {
+            dispatch({
+                type: CLASS_DELETE_MODAL_TOGGLE_SUCCESS,
+                payload: item
+            });
+        } else {
+            dispatch({
+                type: CLASS_DELETE_MODAL_TOGGLE_ERROR,
+                payload: "Failed!"
+            });
+        }
     } catch (err) {
         console.log("err in action:", err)
     }
