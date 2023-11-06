@@ -35,9 +35,9 @@ export default function AssetManagement() {
                     }
                 }).then(function (response) {
                     console.log({
-                        "GET ALL CLASS":response.data.data
+                        "GET ALL CLASS": response.data.data
                     })
-                    if(response.data && response.data.data) {
+                    if (response.data && response.data.data) {
                         setClassData(response.data.data)
                     }
                 }).catch(function (error) {
@@ -50,7 +50,7 @@ export default function AssetManagement() {
     }, []);
 
     console.log({
-        classData:classData[0]?.className
+        classData: classData[0]?.className
     })
 
     useEffect(() => {

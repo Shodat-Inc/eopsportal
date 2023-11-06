@@ -5,10 +5,8 @@ import Link from 'next/dist/client/link';
 import AddNewClass from './addnewclass';
 import Spinner from "@/common/spinner";
 import axios from 'axios';
+import moment from 'moment';
 export default function ClassManagement(props: any) {
-    console.log({
-        "AMIT": props
-    })
     const [toggleFilter, setToggleFilter] = useState(false);
     const [toggleArrow, setToggleArrow] = useState(false);
     const [toggleSort, setToggleSort] = useState(false);
@@ -22,6 +20,11 @@ export default function ClassManagement(props: any) {
     let access_token = "" as any;
     if (typeof window !== 'undefined') {
         access_token = localStorage.getItem('authToken')
+    }
+
+    // String Reverse
+    function reverseString(str: any) {
+        return str.split("").reverse().join("");
     }
 
     useEffect(() => {
@@ -100,14 +103,14 @@ export default function ClassManagement(props: any) {
                         "Content-Type": "application/json"
                     }
                 }).then(function (response) {
-                    if (response.status===200) {
+                    if (response.status === 200) {
                         setDeleteMessage(true);
                         setDeleteModal(false);
                         setTimeout(() => {
                             setDeleteMessage(false)
                         }, 2000)
                     } else {
-                        
+
                     }
                 }).catch(function (error) {
                     console.log("err in delete action:", error)
@@ -119,7 +122,7 @@ export default function ClassManagement(props: any) {
     }
 
     // Edit Class Function 
-    const editClassfunction = (classID:any) => {
+    const editClassfunction = (classID: any) => {
         setActions(false);
     }
     return (
@@ -217,7 +220,7 @@ export default function ClassManagement(props: any) {
                                                 ))
                                             }
                                         </td>
-                                        <td>12-10-2023</td>
+                                        <td>{moment(item.createdAt.split("T")[0]).format('MM-DD-YYYY')}</td>
                                         <td className='relative'>
                                             <div className="flex justify-start items-center relative">
                                                 <button onClick={() => toggleActions(index + 1)}>
@@ -231,7 +234,7 @@ export default function ClassManagement(props: any) {
                                                 {(actions && actionCount === index + 1) &&
                                                     <div className="bg-black text-white border overflow-hidden border-black rounded rounded-xl w-[100px] flex flex-col flex-wrap items-start justify-start shadow-sm absolute top-[24px] right-[47px] z-[1]">
                                                         <button
-                                                        onClick={()=>editClassfunction(item.serialNumber)}
+                                                            onClick={() => editClassfunction(item.serialNumber)}
                                                             className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[30px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
                                                             <span>Edit</span>
                                                         </button>

@@ -11603,3 +11603,27 @@
 {"level":"info","message":"JWT","timestamp":"2023-11-06T10:04:36.039Z"}
 {"level":"info","message":"Error Handler","timestamp":"2023-11-06T10:04:36.039Z"}
 {"level":"error","message":"UnauthorizedError","timestamp":"2023-11-06T10:04:36.040Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-11-06T10:04:48.682Z"}
+{"level":"info","message":"AddClasses","timestamp":"2023-11-06T10:04:48.693Z"}
+{"level":"info","message":"AddValues","timestamp":"2023-11-06T10:04:48.694Z"}
+{"level":"info","message":"Address","timestamp":"2023-11-06T10:04:48.697Z"}
+{"level":"info","message":"Reason","timestamp":"2023-11-06T10:04:48.700Z"}
+{"level":"info","message":"Role","timestamp":"2023-11-06T10:04:48.701Z"}
+{"level":"info","message":"User","timestamp":"2023-11-06T10:04:48.703Z"}
+{"level":"info","message":"classTag","timestamp":"2023-11-06T10:04:48.703Z"}
+{"level":"info","message":"companyRecord","timestamp":"2023-11-06T10:04:48.704Z"}
+{"level":"info","message":"countryCodeModel","timestamp":"2023-11-06T10:04:48.705Z"}
+{"level":"info","message":"deleteRecord","timestamp":"2023-11-06T10:04:48.706Z"}
+{"level":"info","message":"object","timestamp":"2023-11-06T10:04:48.707Z"}
+{"level":"info","message":"otpVerify","timestamp":"2023-11-06T10:04:48.707Z"}
+{"level":"info","message":"parentJoinKey","timestamp":"2023-11-06T10:04:48.708Z"}
+{"level":"info","message":"phoneRecord","timestamp":"2023-11-06T10:04:48.709Z"}
+{"level":"info","message":"tagDataType","timestamp":"2023-11-06T10:04:48.709Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T10:04:48.727Z"}
+{"level":"info","message":"Get All Tag DataTypes","timestamp":"2023-11-06T10:04:48.738Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T10:04:48.752Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2023-11-06T10:04:48.753Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T10:04:48.758Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T10:04:48.760Z"}
+{"level":"info","message":"Get All Tag DataTypes","timestamp":"2023-11-06T10:04:48.765Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2023-11-06T10:04:48.766Z"}
