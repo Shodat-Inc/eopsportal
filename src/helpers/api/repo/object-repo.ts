@@ -140,9 +140,15 @@ async function getObjectById(params: any) {
 }
 
 async function _delete(params: any) {
-  return await db.object.destroy({
-    where: {
-      id: params,
-    },
-  });
+  try {
+    const response = await db.object.destroy({
+      where: {
+        id: params,
+      },
+    });
+    return sendResponseData(true, "Object Deleted Successfully", response);
+  } catch (error: any) {
+    loggerError.error(error);
+    return sendResponseData(false, "Error in deleting object", error);
+  }
 }

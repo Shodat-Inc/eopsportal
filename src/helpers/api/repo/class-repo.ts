@@ -62,11 +62,11 @@ async function getClassData(params: any) {
         userId: params.id,
         parentId: null,
       },
-      attributes: ["className"],
+      attributes: ["id", "className", "createdAt"],
       include: [
         {
           model: db.classTag,
-          attributes: ["tagName", "createdAt", "dataTypeId"],
+          attributes: ["id", "tagName", "createdAt", "dataTypeId"],
           required: true, // Makes it an INNER JOIN
           include: [
             {
@@ -84,10 +84,11 @@ async function getClassData(params: any) {
     if (result.length === 0) {
       return sendResponseData(false, "No Class Data found", []);
     }
-    return result.map((item: any, index: any) => ({
+    const response = result.map((item: any, index: any) => ({
       serialNumber: index + 1,
       ...item.get(), // Convert Sequelize instance to plain JS object
     }));
+    return sendResponseData(true, "Class Fetched Successfully", response);
   } catch (error) {
     // Log the error if fetching classes and tags fails.
     loggerError.error("Error fetching class and classTags data:", error);
@@ -109,11 +110,11 @@ async function getClassDataByID(params: any) {
         id: params.id,
         parentId: null,
       },
-      attributes: ["className"],
+      attributes: ["id", "className", "createdAt"],
       include: [
         {
           model: db.classTag,
-          attributes: ["tagName", "createdAt", "dataTypeId"],
+          attributes: ["id", "tagName", "createdAt", "dataTypeId"],
           required: true, // Makes it an INNER JOIN
           include: [
             {
@@ -132,10 +133,11 @@ async function getClassDataByID(params: any) {
       return sendResponseData(false, "No data found", []);
     }
 
-    return result.map((item: any, index: any) => ({
+    const response = result.map((item: any, index: any) => ({
       serialNumber: index + 1,
       ...item.get(), // Convert Sequelize instance to plain JS object
     }));
+    return sendResponseData(true, "Class fetched Successfully", response);
   } catch (error) {
     // Log the error if fetching classes and tags fails.
     loggerError.error("Error fetching class and classTags data by ID:", error);
@@ -161,7 +163,7 @@ async function getSubClass(param: any) {
       include: [
         {
           model: db.classTag,
-          attributes: ["tagName", "createdAt", "dataTypeId"],
+          attributes: ["id", "tagName", "createdAt", "dataTypeId"],
           required: true, // Makes it an INNER JOIN
           include: [
             {
@@ -177,7 +179,7 @@ async function getSubClass(param: any) {
         {
           model: db.parentJoinKey,
           attributes: ["parentTagId"],
-          required: true, // Makes it an INNER JOI
+          required: false, // Makes it an INNER JOI
         },
       ],
     });
@@ -196,7 +198,7 @@ async function getSubClass(param: any) {
       S_No: index + 1,
       ...item.get(),
     }));
-    return response;
+    return sendResponseData(true, "Class fetched Successfully", response);
   } catch (error) {
     // Log the error if fetching subclasses and tags fails.
     loggerError.error("Error fetching class and classTags data:", error);
@@ -204,7 +206,6 @@ async function getSubClass(param: any) {
   }
 }
 async function getSubClassByID(param: any) {
-  console.log();
   try {
     // Log the initiation of fetching subclasses and tags.
     loggerInfo.info("Fetching subclass and subclassTags data by ID");
@@ -213,11 +214,11 @@ async function getSubClassByID(param: any) {
         id: param.query.classId,
         parentId: param.query.parentId,
       },
-      attributes: ["className"],
+      attributes: ["id", "className", "createdAt"],
       include: [
         {
           model: db.classTag,
-          attributes: ["tagName", "createdAt", "dataTypeId"],
+          attributes: ["id", "tagName", "createdAt", "dataTypeId"],
           required: true, // Makes it an INNER JOIN
           include: [
             {
@@ -233,7 +234,7 @@ async function getSubClassByID(param: any) {
         {
           model: db.parentJoinKey,
           attributes: ["parentTagId"],
-          required: true, // Makes it an INNER JOI
+          required: false, // Makes it an INNER JOI
         },
       ],
     });
@@ -252,7 +253,7 @@ async function getSubClassByID(param: any) {
       S_No: index + 1,
       ...item.get(),
     }));
-    return response;
+    return sendResponseData(true, "Sub Class Fetched Sucessfully", response);
   } catch (error) {
     // Log the error if fetching subclasses and tags fails.
     loggerError.error("Error fetching class and classTags data:", error);
@@ -282,7 +283,18 @@ async function update(params: any) {
 }
 
 async function _delete(params: any) {
-  const classes = await db.AddClasses.findByPk(params);
-  if (!classes) throw "Class doesn't exist";
-  return await classes.destroy();
+  try {
+    const classes = await db.AddClasses.findOne({
+      where: { id: params },
+    });
+    if (!classes) throw "Class doesn't exist";
+    await classes.destroy();
+    return sendResponseData(
+      true,
+      "Class Deleted Successfully",
+      classes.className
+    );
+  } catch (error: any) {
+    return sendResponseData(false, "Error in  Deleting Class", error);
+  }
 }
