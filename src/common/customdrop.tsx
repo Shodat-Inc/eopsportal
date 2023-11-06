@@ -1,12 +1,23 @@
 import React, { useState, useRef, useEffect } from "react";
+import { useDispatch } from 'react-redux';
 import styles from '../styles/Common.module.css';
 import Image from "next/image";
+import { selectedClassDataAction } from "@/store/actions/classAction";
 export default function CustomDrop(props: any) {
+    const dispatch = useDispatch<any>();
     const [toggleAsset, setToggleAsset] = useState(false);
-    const [chooseAsset, setChooseAsset] = useState("");
+    const [chooseAsset, setChooseAsset] = useState();
+    const [selClass, setSelClass] = useState([] as any);
     useEffect(()=>{
         setChooseAsset(props.defaultClass);
-    }, [props.defaultClass])
+        
+        const filter  = (props.data && props.data.length >=0) && props.data?.filter((item:any)=> {
+            return item.id === props.defaultClass
+        })
+        setSelClass(filter);
+        dispatch(selectedClassDataAction(filter))
+
+    }, [props.defaultClass, chooseAsset])
 
     const toggleDropdownFunction = () => {
         setToggleAsset(!toggleAsset)
@@ -17,6 +28,7 @@ export default function CustomDrop(props: any) {
         setToggleAsset(false);
         props.handleClick(item)
     }
+
 
     function useOutsideAlerter(ref: any) {
         useEffect(() => {
@@ -47,7 +59,7 @@ export default function CustomDrop(props: any) {
                     width={20}
                     className={`absolute right-3 top-4 ${toggleAsset ? 'rotate-180' : 'rotate-0'}`}
                 />
-                <span className="text-lg text-black pl-2">{chooseAsset}</span>
+                <span className="text-lg text-black pl-2">{selClass && selClass.length >=0 ? selClass[0]?.className : "-Select Class-"}</span>
             </div>
 
             {toggleAsset ?
@@ -57,7 +69,7 @@ export default function CustomDrop(props: any) {
                             props.data.map((item: any, index: any) => (
                                 <li
                                     className="px-5 py-2 bg-white cursor-pointer hover:bg-yellow-951 w-full font-normal"
-                                    onClick={() => selectItemFunction(item.className)}
+                                    onClick={() => selectItemFunction(item.id)}
                                     key={index}
                                 >
                                     <span>{item.className}</span>

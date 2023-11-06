@@ -4,6 +4,7 @@ import { GET_ALL_CLASS_ERROR, GET_ALL_CLASS_SUCCESS } from "../types";
 import { BREADCRUMB_SUCCESS, BREADCRUMB_ERROR } from "../types";
 import { CREATE_NEW_CLASS_ERROR, CREATE_NEW_CLASS_SUCCESS } from "../types";
 import { CLASS_DELETE_MODAL_TOGGLE_ERROR,  CLASS_DELETE_MODAL_TOGGLE_SUCCESS} from "../types";
+import { SELECTED_CLASS_DATA_ERROR, SELECTED_CLASS_DATA_SUCCESS } from "../types";
 import axios from "axios";
 let access_token = "" as any;
 if (typeof window !== 'undefined') {
@@ -22,6 +23,27 @@ export const setSelectedClass = (selClass: any) => async (dispatch: any) => {
         } else {
             dispatch({
                 type: SET_CLASS_ERROR,
+                payload: "No Class Found!"
+            });
+        }
+    } catch (err) {
+        console.log("err in action:", err)
+    }
+};
+
+/*
+Function to set the selected class whole Data at Object Management 
+*/
+export const selectedClassDataAction = (data: any) => async (dispatch: any) => {
+    try {
+        if (data) {
+            dispatch({
+                type: SELECTED_CLASS_DATA_SUCCESS,
+                payload: data
+            });
+        } else {
+            dispatch({
+                type: SELECTED_CLASS_DATA_ERROR,
                 payload: "No Class Found!"
             });
         }

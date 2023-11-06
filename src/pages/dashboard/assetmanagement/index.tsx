@@ -14,6 +14,7 @@ export default function AssetManagement() {
     const [tab, setTab] = useState(1);
     const [classData, setClassData] = useState([] as any);
     const [defaultClass, setDefaultClass] = useState("");
+    const [defaultClassID, setDefaultClassID] = useState(0);
     const [nav, setNav] = useState({} as any)
     const getSelClass = useSelector((state: any) => state.classReducer);
     const getAllClass = useSelector((state: any) => state.classReducer.getAllClass);
@@ -34,9 +35,6 @@ export default function AssetManagement() {
                         "Content-Type": "application/json"
                     }
                 }).then(function (response) {
-                    console.log({
-                        "GET ALL CLASS": response.data.data
-                    })
                     if (response.data && response.data.data) {
                         setClassData(response.data.data)
                     }
@@ -49,9 +47,9 @@ export default function AssetManagement() {
         })();
     }, []);
 
-    console.log({
-        classData: classData[0]?.className
-    })
+    // console.log({
+    //     classData: classData[0]?.className
+    // })
 
     useEffect(() => {
         setNav(getSelClass.classBreadcrumbs)
@@ -60,6 +58,7 @@ export default function AssetManagement() {
     useEffect(() => {
         if (classData && classData.length > 0) {
             setDefaultClass(classData[0]?.className)
+            setDefaultClassID(classData[0]?.id)
             dispatch(setSelectedClass(classData[0]?.className))
         }
     }, [classData, dispatch])
@@ -87,6 +86,10 @@ export default function AssetManagement() {
         } else {
             setTab(tab)
         }
+    }
+
+    const redirectToObjects = () => {
+        setTab(2);
     }
 
     const openAddObjectModal = () => {
@@ -122,14 +125,12 @@ export default function AssetManagement() {
                                     height={28}
                                     width={28}
                                 />
-                                <Link
-                                    href={{
-                                        pathname: '/dashboard/assetmanagement/',
-                                    }}
+                                <button
+                                    onClick={redirectToObjects}
                                     className="font-semibold"
                                 >
                                     <span>Class name: {nav.class}</span>
-                                </Link>
+                                </button>
                             </li>
 
                             <li className="flex justify-start items-center">
@@ -139,14 +140,12 @@ export default function AssetManagement() {
                                     height={28}
                                     width={28}
                                 />
-                                <Link
-                                    href={{
-                                        pathname: '/dashboard/assetmanagement/',
-                                    }}
+                                <button
+                                    onClick={redirectToObjects}
                                     className="font-semibold"
                                 >
                                     <span>{nav.classObjKey}: {nav.classObjValue}</span>
-                                </Link>
+                                </button>
                             </li>
 
                             <li className="flex justify-start items-center">
@@ -257,6 +256,7 @@ export default function AssetManagement() {
                             <ObjectManagement
                                 handelObject={handelObject}
                                 defaultClass={defaultClass}
+                                defaultClassID={defaultClass}
                                 classData={classData}
                             />
                         }

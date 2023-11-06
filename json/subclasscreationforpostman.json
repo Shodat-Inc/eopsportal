@@ -1,0 +1,147 @@
+{
+  "className": "Battery",
+  "superParentId": 1,
+  "parentId": 1,
+  "parentJoinKey": [
+    1,
+    2
+  ],
+  "tags": [
+    {
+      "tagName": "SerialNo",
+      "dataTypeId": 1
+    },
+    {
+      "tagName": "VIN",
+      "dataTypeId": 6
+    },
+    {
+      "tagName": "Manufacturer",
+      "dataTypeId": 6
+    },
+    {
+      "tagName": "Capacity",
+      "dataTypeId": 6
+    },
+    {
+      "tagName": "Voltage",
+      "dataTypeId": 6
+    }
+  ]
+}
+
+
+{
+  "className": "Tire",
+  "superParentId": 1,
+  "parentId": 1,
+  "parentJoinKey": [
+    1,
+    2
+  ],
+  "tags": [
+    {
+      "tagName": "SerialNo",
+      "dataTypeId": 1
+    },
+    {
+      "tagName": "VIN",
+      "dataTypeId": 6
+    },
+    {
+      "tagName": "Manufacturer",
+      "dataTypeId": 6
+    },
+    {
+      "tagName": "AxelNo",
+      "dataTypeId": 6
+    },
+    {
+      "tagName": "Type",
+      "dataTypeId": 6
+    },
+    {
+      "tagName": "WheelBase",
+      "dataTypeId": 6
+    }
+  ]
+}
+
+
+{
+  "className": "Walls",
+  "superParentId": 2,
+  "parentId": 2,
+  "parentJoinKey": [
+    7
+  ],
+  "tags": [
+    {
+      "tagName": "ID",
+      "dataTypeId": 1
+    },
+    {
+      "tagName": "PlantID",
+      "dataTypeId": 1
+    },
+    {
+      "tagName": "Description",
+      "dataTypeId": 6
+    },
+    {
+      "tagName": "Floor",
+      "dataTypeId": 6
+    },
+    {
+      "tagName": "Room",
+      "dataTypeId": 6
+    },
+    {
+      "tagName": "Direction",
+      "dataTypeId": 6
+    }
+  ]
+}
+
+
+
+
+{
+  "className": "Pipes",
+  "superParentId": 2,
+  "parentId": 2,
+  "parentJoinKey": [
+    7
+  ],
+  "tags": [
+    {
+      "tagName": "ID",
+      "dataTypeId": 1
+    },
+    {
+      "tagName": "PlantID",
+      "dataTypeId": 1
+    },
+    {
+      "tagName": "Description",
+      "dataTypeId": 6
+    },
+    {
+      "tagName": "Floor",
+      "dataTypeId": 6
+    },
+    {
+      "tagName": "Room",
+      "dataTypeId": 6
+    },
+    {
+      "tagName": "Direction",
+      "dataTypeId": 6
+    },
+    {
+      "tagName": "Material",
+      "dataTypeId": 6
+    }
+  ]
+}
+

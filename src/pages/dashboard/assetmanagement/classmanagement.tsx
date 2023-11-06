@@ -234,12 +234,12 @@ export default function ClassManagement(props: any) {
                                                 {(actions && actionCount === index + 1) &&
                                                     <div className="bg-black text-white border overflow-hidden border-black rounded rounded-xl w-[100px] flex flex-col flex-wrap items-start justify-start shadow-sm absolute top-[24px] right-[47px] z-[1]">
                                                         <button
-                                                            onClick={() => editClassfunction(item.serialNumber)}
+                                                            onClick={() => editClassfunction(item.id)}
                                                             className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[30px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
                                                             <span>Edit</span>
                                                         </button>
                                                         <button
-                                                            onClick={() => deleteModalFunction(item.serialNumber)}
+                                                            onClick={() => deleteModalFunction(item.id)}
                                                             className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[30px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
                                                             <span>Delete</span>
                                                         </button>

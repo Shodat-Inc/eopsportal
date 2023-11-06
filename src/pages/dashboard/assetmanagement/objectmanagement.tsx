@@ -5,18 +5,21 @@ import Image from "next/image";
 import CustomDrop from '@/common/customdrop';
 import axios from 'axios';
 import Link from 'next/dist/client/link';
-import { setSelectedClass, setClassBreadcrumb } from '@/store/actions/classAction';
+import { setSelectedClass, setClassBreadcrumb, selectedClassDataAction } from '@/store/actions/classAction';
 
 export default function ObjectManagement(props: any) {
+    // console.log({
+    //     "OBJECT MANAGEMENT": props
+    // })
     const dispatch = useDispatch<any>();
     const [toggleFilter, setToggleFilter] = useState(false);
     const [toggleArrow, setToggleArrow] = useState(false);
     const [toggleSort, setToggleSort] = useState(false);
-    const [classesData, setClassesData] = useState(props.classData && props.classData.length > 0 ? props.classData : []);
-    const [chooseAsset, setChooseAsset] = useState('');
+    const [chooseAssetName, setChooseAssetName] = useState("");
     const [actions, setActions] = useState(false);
     const [actionCount, setActionCount] = useState(1);
     const [objID, setObjID] = useState("");
+    const [defaultClass, setDefaultClass] = useState(0)
 
     const toggleFilterFunction = () => {
         setToggleArrow(!toggleArrow);
@@ -27,13 +30,27 @@ export default function ObjectManagement(props: any) {
     }
 
     useEffect(() => {
-        setChooseAsset(classesData[0]?.className);
-        dispatch(setSelectedClass(classesData[0]?.className))
-    }, [classesData, dispatch])
+        setChooseAssetName(props.classData[0]?.className);
+        setDefaultClass(props.classData[0]?.id)
+        dispatch(setSelectedClass(props.classData[0]?.id))
+        dispatch(selectedClassDataAction(props.classData[0]))
+    }, [props.classData, dispatch])
 
     const handleDropDown = (item: any) => {
         dispatch(setSelectedClass(item))
-        setChooseAsset(item);
+        // setChooseAssetName(item);
+        setDefaultClass(item);
+        const filter = props.classData && props.classData.length >=0 && props.classData.filter((item: any) => {
+            return item.id === item
+        })
+        // console.log({
+        //     "FILTERED ITEM": filter,
+        //     "props.classData":props.classData,
+        //     "ITEMS HERE": item
+        // })
+        if (filter) {
+            setChooseAssetName(filter[0]?.className)
+        }
     }
     const toggleActions = (item: any) => {
         setActionCount(item);
@@ -43,13 +60,10 @@ export default function ObjectManagement(props: any) {
         setActions(false);
     }
     const takeMeToSubObjectComponent = (item: any) => {
-        console.log({
-            "CHOOSEASSET": chooseAsset
-        })
         let abc = {
             "flow": "Object Management",
-            "class": chooseAsset,
-            "classObjKey": chooseAsset === "Vehicles" ? "VIN" : "PlantID",
+            "class": chooseAssetName,
+            "classObjKey": chooseAssetName === "Vehicles" ? "VIN" : "PlantID",
             "classObjValue": item,
             "subClass": "Battery",
             "subClassObjKey": "",
@@ -65,9 +79,9 @@ export default function ObjectManagement(props: any) {
             <div className='flex justify-between items-center py-2 px-4 '>
                 <div className='w-[350px]'>
                     <CustomDrop
-                        data={classesData}
+                        data={props.classData}
                         handleClick={handleDropDown}
-                        defaultClass={classesData && classesData.length > 0 ? classesData[0].className : ""}
+                        defaultClass={defaultClass}
                     />
                 </div>
 

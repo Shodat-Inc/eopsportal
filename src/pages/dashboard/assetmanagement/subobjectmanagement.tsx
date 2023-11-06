@@ -8,7 +8,7 @@ import Link from 'next/dist/client/link';
 import AddNewObject from './addnewobject';
 export default function SubObjectManagement(props: any) {
     console.log({
-        "props in object management": props
+        "PROPS IN SUB-OBJECT": props
     })
     const [toggleFilter, setToggleFilter] = useState(false);
     const [toggleArrow, setToggleArrow] = useState(false);
@@ -18,7 +18,10 @@ export default function SubObjectManagement(props: any) {
     const [actions, setActions] = useState(false);
     const [actionCount, setActionCount] = useState(1);
     const [showModal, setShowModal] = useState(false);
-    const addNewObject = useSelector((state: any) => state.classReducer)
+
+    const [subClassData, setSubClassData] = useState([] as any)
+
+    const classSelector = useSelector((state: any) => state.classReducer);
     const toggleFilterFunction = () => {
         setToggleArrow(!toggleArrow);
         setToggleFilter(!toggleFilter);
@@ -27,31 +30,50 @@ export default function SubObjectManagement(props: any) {
         setToggleSort(!toggleSort)
     }
 
-    useEffect(()=> {
-        setShowModal(addNewObject.toggleAddObject)
-    }, [addNewObject.toggleAddObject])
+    // Get Sub Classes
+    let access_token = "" as any;
+    if (typeof window !== 'undefined') {
+        access_token = localStorage.getItem('authToken')
+    }
+    useEffect(() => {
+        let tokenStr = access_token;
+        (async function () {
+            try {
+                await axios({
+                    method: 'GET',
+                    url: `/api/getChildAssets?id=${props.defaultClass}`,
+                    headers: {
+                        "Authorization": `Bearer ${tokenStr}`,
+                        "Content-Type": "application/json"
+                    }
+                }).then(function (response) {
+                    if (response.status === 200) {
+                        console.log({
+                            "RESPONSE DATA": response.data
+                        })
+                        setSubClassData(response.data)
+                    } else {
+
+                    }
+                }).catch(function (error) {
+                    console.log("ERROR IN DELETE AXIOS CATCH:", error)
+                })
+            } catch (err) {
+                console.log("ERROR IN DELETE TRY CATCH:", err)
+            }
+        })();
+    }, [props.defaultClass]);
+
+
+    useEffect(() => {
+        setShowModal(classSelector.toggleAddObject)
+    }, [classSelector.toggleAddObject])
 
     console.log({
-        addNewObject:addNewObject
+        "CLASS SELECTOR": classSelector
     })
 
 
-    const fetchClassData = () => {
-        axios.get("/api/getSubAssets").then((response) => {
-            if (response.data) {
-                const filtered = response.data.filter((item: any) => {
-                    return item.parentAssetName === props.defaultClass
-                });
-                if (filtered && filtered.length > 0) {
-                    setClassData(filtered);
-                }
-            }
-        });
-    };
-    useEffect(() => {
-        fetchClassData();
-        if (fetchClassData.length) return;
-    }, [])
 
     const handleDropDown = (item: any) => {
         setChooseAsset(item)
@@ -121,11 +143,11 @@ export default function SubObjectManagement(props: any) {
                 </div>
             </div>
 
-            <button
+            {/* <button
                 onClick={backToObect}
                 className='text-sm mt-10 mb-10 px-10'>
                 Back To Object Management Component
-            </button>
+            </button> */}
 
             {/* Table */}
             <div className='w-full mt-6 min-h-[400px]'>
@@ -206,7 +228,7 @@ export default function SubObjectManagement(props: any) {
                 </table>
             </div>
 
-            <AddNewObject show={addNewObject.toggleAddObject && addNewObject.toggleAddObject}  /> 
+            <AddNewObject show={classSelector.toggleAddObject && classSelector.toggleAddObject} />
         </div>
     )
 }

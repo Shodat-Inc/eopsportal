@@ -48,9 +48,9 @@ export default function SubAsset(localData: any) {
         chooseAsset
     }
 
-    console.log({
-        props:props
-    })
+    // console.log({
+    //     props:props
+    // })
 
 
     // // Get JSON data on page load

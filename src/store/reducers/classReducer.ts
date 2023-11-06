@@ -4,6 +4,7 @@ import { GET_ALL_CLASS_ERROR, GET_ALL_CLASS_SUCCESS } from "../types";
 import { BREADCRUMB_SUCCESS, BREADCRUMB_ERROR } from "../types";
 import { CREATE_NEW_CLASS_ERROR, CREATE_NEW_CLASS_SUCCESS } from "../types";
 import { CLASS_DELETE_MODAL_TOGGLE_ERROR, CLASS_DELETE_MODAL_TOGGLE_SUCCESS } from "../types";
+import { SELECTED_CLASS_DATA_ERROR, SELECTED_CLASS_DATA_SUCCESS } from "../types";
 
 const initialState = {
   selectedClass: '',
@@ -11,7 +12,8 @@ const initialState = {
   getAllClass: [],
   classBreadcrumbs: {},
   createClassRes: {},
-  toggleClassDeleteModal: false
+  toggleClassDeleteModal: false,
+  selectedClassData:[]
 };
 
 const classReducer = (state = initialState, action: any) => {
@@ -80,6 +82,17 @@ const classReducer = (state = initialState, action: any) => {
     case CLASS_DELETE_MODAL_TOGGLE_ERROR:
       return {
         toggleClassDeleteModal: action.payload,
+      };
+
+      case SELECTED_CLASS_DATA_SUCCESS:
+      return {
+        ...state,
+        selectedClassData: action.payload,
+      };
+
+    case SELECTED_CLASS_DATA_ERROR:
+      return {
+        selectedClassData: action.payload,
       };
 
     default:
