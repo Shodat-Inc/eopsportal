@@ -8,9 +8,9 @@ async function _delete(req: any, res: any) {
   try {
     const id = req.query.id;
     const deleteClass = await classRepo.delete(id);
-    res.status(200).json("Class Deleted Successfully");
+    res.status(200).json(deleteClass);
   } catch (error: any) {
     loggerError.error("error in deleting class");
-    res.status(400).json("Error in deleting class", error);
+    res.status(400).json(error);
   }
 }

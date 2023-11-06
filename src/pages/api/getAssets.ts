@@ -17,7 +17,7 @@ async function allhandler(req: any, res: any) {
     const classes = await classRepo.getClassData(req);
 
     // If class data is successfully retrieved, send back a 200 OK response with the class data.
-    res.status(200).json({ message: "Success", classes });
+    res.status(200).json(classes);
   } catch (error: any) {
     // If there's an error during class data retrieval, send back a 500 Internal Server Error response with the error message.
     res.status(500).send({ message: error.message });
