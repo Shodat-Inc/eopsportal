@@ -15,7 +15,6 @@ async function create(params: any) {
       where: { email: params.email },
     });
     if (findEmail) {
-      
       let resendOtp = await db.otpVerify.update(
         {
           otp: params.otp,
@@ -33,7 +32,7 @@ async function create(params: any) {
     const data = await result.save();
     sendVerificationEmail(params.email, params.otp);
 
-    return sendResponseData(true, "Added SuccessFully", data);
+    return sendResponseData(true, "OTP sended SuccessFully", []);
   } catch (error: any) {
     loggerError.error("Error in Generate OTP repo");
     return sendResponseData(false, "Error in Service", error);

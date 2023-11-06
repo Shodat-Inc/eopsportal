@@ -39,7 +39,6 @@ async function get(){
   loggerInfo.info("Get All Tag DataTypes");
   try {
     const result = await db.tagDataType.findAll();
-    console.log(result, "------------");
     return sendResponseData(true, "Tag Data Type Fetched Successfully", result);
   } catch (error: any) {
     return sendResponseData(false, "Cant Fetch Tag datatype", []);

@@ -81,6 +81,9 @@ async function getClassData(params: any) {
         },
       ],
     });
+    if (result.length === 0) {
+      return sendResponseData(false, "No Class Data found", []);
+    }
     return result.map((item: any, index: any) => ({
       serialNumber: index + 1,
       ...item.get(), // Convert Sequelize instance to plain JS object
