@@ -35,10 +35,10 @@ export default function AssetManagement() {
                     }
                 }).then(function (response) {
                     console.log({
-                        response:response
+                        "GET ALL CLASS":response.data.data
                     })
-                    if(response.data && response.data.classes) {
-                        setClassData(response.data.classes)
+                    if(response.data && response.data.data) {
+                        setClassData(response.data.data)
                     }
                 }).catch(function (error) {
                     console.log(error)

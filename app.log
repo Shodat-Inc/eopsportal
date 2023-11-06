@@ -11044,3 +11044,562 @@
 {"level":"info","message":"Get All Tag DataTypes","timestamp":"2023-11-06T09:55:52.840Z"}
 {"level":"info","message":"JWT","timestamp":"2023-11-06T09:55:52.851Z"}
 {"level":"info","message":"Fetching all class and classTags data","timestamp":"2023-11-06T09:55:52.852Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-11-06T09:56:01.326Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-11-06T09:56:01.351Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-11-06T09:56:01.357Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-11-06T09:56:01.359Z"}
+{"level":"info","message":"AddClasses","timestamp":"2023-11-06T09:56:01.374Z"}
+{"level":"info","message":"AddValues","timestamp":"2023-11-06T09:56:01.377Z"}
+{"level":"info","message":"Address","timestamp":"2023-11-06T09:56:01.379Z"}
+{"level":"info","message":"Reason","timestamp":"2023-11-06T09:56:01.382Z"}
+{"level":"info","message":"Role","timestamp":"2023-11-06T09:56:01.386Z"}
+{"level":"info","message":"User","timestamp":"2023-11-06T09:56:01.388Z"}
+{"level":"info","message":"classTag","timestamp":"2023-11-06T09:56:01.390Z"}
+{"level":"info","message":"companyRecord","timestamp":"2023-11-06T09:56:01.392Z"}
+{"level":"info","message":"countryCodeModel","timestamp":"2023-11-06T09:56:01.393Z"}
+{"level":"info","message":"deleteRecord","timestamp":"2023-11-06T09:56:01.397Z"}
+{"level":"info","message":"object","timestamp":"2023-11-06T09:56:01.401Z"}
+{"level":"info","message":"otpVerify","timestamp":"2023-11-06T09:56:01.403Z"}
+{"level":"info","message":"parentJoinKey","timestamp":"2023-11-06T09:56:01.404Z"}
+{"level":"info","message":"phoneRecord","timestamp":"2023-11-06T09:56:01.405Z"}
+{"level":"info","message":"tagDataType","timestamp":"2023-11-06T09:56:01.407Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T09:56:01.423Z"}
+{"level":"info","message":"Error Handler","timestamp":"2023-11-06T09:56:01.426Z"}
+{"level":"error","message":"UnauthorizedError","timestamp":"2023-11-06T09:56:01.426Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T09:56:01.476Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T09:56:01.478Z"}
+{"level":"info","message":"Error Handler","timestamp":"2023-11-06T09:56:01.488Z"}
+{"level":"error","message":"UnauthorizedError","timestamp":"2023-11-06T09:56:01.500Z"}
+{"level":"info","message":"Error Handler","timestamp":"2023-11-06T09:56:01.509Z"}
+{"level":"error","message":"UnauthorizedError","timestamp":"2023-11-06T09:56:01.533Z"}
+{"level":"info","message":"AddClasses","timestamp":"2023-11-06T09:56:01.540Z"}
+{"level":"info","message":"AddValues","timestamp":"2023-11-06T09:56:01.544Z"}
+{"level":"info","message":"Address","timestamp":"2023-11-06T09:56:01.592Z"}
+{"level":"info","message":"Reason","timestamp":"2023-11-06T09:56:01.594Z"}
+{"level":"info","message":"Role","timestamp":"2023-11-06T09:56:01.602Z"}
+{"level":"info","message":"User","timestamp":"2023-11-06T09:56:01.606Z"}
+{"level":"info","message":"classTag","timestamp":"2023-11-06T09:56:01.608Z"}
+{"level":"info","message":"companyRecord","timestamp":"2023-11-06T09:56:01.611Z"}
+{"level":"info","message":"countryCodeModel","timestamp":"2023-11-06T09:56:01.618Z"}
+{"level":"info","message":"deleteRecord","timestamp":"2023-11-06T09:56:01.619Z"}
+{"level":"info","message":"object","timestamp":"2023-11-06T09:56:01.622Z"}
+{"level":"info","message":"otpVerify","timestamp":"2023-11-06T09:56:01.623Z"}
+{"level":"info","message":"parentJoinKey","timestamp":"2023-11-06T09:56:01.625Z"}
+{"level":"info","message":"phoneRecord","timestamp":"2023-11-06T09:56:01.626Z"}
+{"level":"info","message":"tagDataType","timestamp":"2023-11-06T09:56:01.629Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T09:56:01.631Z"}
+{"level":"info","message":"AddClasses","timestamp":"2023-11-06T09:56:01.635Z"}
+{"level":"info","message":"AddValues","timestamp":"2023-11-06T09:56:01.637Z"}
+{"level":"info","message":"Address","timestamp":"2023-11-06T09:56:01.638Z"}
+{"level":"info","message":"Reason","timestamp":"2023-11-06T09:56:01.640Z"}
+{"level":"info","message":"Role","timestamp":"2023-11-06T09:56:01.642Z"}
+{"level":"info","message":"User","timestamp":"2023-11-06T09:56:01.644Z"}
+{"level":"info","message":"classTag","timestamp":"2023-11-06T09:56:01.676Z"}
+{"level":"info","message":"companyRecord","timestamp":"2023-11-06T09:56:01.677Z"}
+{"level":"info","message":"countryCodeModel","timestamp":"2023-11-06T09:56:01.682Z"}
+{"level":"info","message":"deleteRecord","timestamp":"2023-11-06T09:56:01.685Z"}
+{"level":"info","message":"object","timestamp":"2023-11-06T09:56:01.686Z"}
+{"level":"info","message":"otpVerify","timestamp":"2023-11-06T09:56:01.687Z"}
+{"level":"info","message":"parentJoinKey","timestamp":"2023-11-06T09:56:01.688Z"}
+{"level":"info","message":"phoneRecord","timestamp":"2023-11-06T09:56:01.689Z"}
+{"level":"info","message":"tagDataType","timestamp":"2023-11-06T09:56:01.690Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T09:56:01.690Z"}
+{"level":"info","message":"AddClasses","timestamp":"2023-11-06T09:56:01.693Z"}
+{"level":"info","message":"AddValues","timestamp":"2023-11-06T09:56:01.693Z"}
+{"level":"info","message":"Address","timestamp":"2023-11-06T09:56:01.699Z"}
+{"level":"info","message":"Reason","timestamp":"2023-11-06T09:56:01.700Z"}
+{"level":"info","message":"Role","timestamp":"2023-11-06T09:56:01.702Z"}
+{"level":"info","message":"User","timestamp":"2023-11-06T09:56:01.704Z"}
+{"level":"info","message":"classTag","timestamp":"2023-11-06T09:56:01.707Z"}
+{"level":"info","message":"companyRecord","timestamp":"2023-11-06T09:56:01.708Z"}
+{"level":"info","message":"countryCodeModel","timestamp":"2023-11-06T09:56:01.708Z"}
+{"level":"info","message":"deleteRecord","timestamp":"2023-11-06T09:56:01.709Z"}
+{"level":"info","message":"object","timestamp":"2023-11-06T09:56:01.710Z"}
+{"level":"info","message":"otpVerify","timestamp":"2023-11-06T09:56:01.716Z"}
+{"level":"info","message":"parentJoinKey","timestamp":"2023-11-06T09:56:01.717Z"}
+{"level":"info","message":"phoneRecord","timestamp":"2023-11-06T09:56:01.720Z"}
+{"level":"info","message":"tagDataType","timestamp":"2023-11-06T09:56:01.726Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T09:56:01.727Z"}
+{"level":"info","message":"Error Handler","timestamp":"2023-11-06T09:56:01.739Z"}
+{"level":"error","message":"UnauthorizedError","timestamp":"2023-11-06T09:56:01.740Z"}
+{"level":"info","message":"Error Handler","timestamp":"2023-11-06T09:56:01.743Z"}
+{"level":"error","message":"UnauthorizedError","timestamp":"2023-11-06T09:56:01.743Z"}
+{"level":"info","message":"Error Handler","timestamp":"2023-11-06T09:56:01.773Z"}
+{"level":"error","message":"UnauthorizedError","timestamp":"2023-11-06T09:56:01.774Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T09:56:01.849Z"}
+{"level":"info","message":"Error Handler","timestamp":"2023-11-06T09:56:01.849Z"}
+{"level":"error","message":"UnauthorizedError","timestamp":"2023-11-06T09:56:01.849Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T09:56:01.893Z"}
+{"level":"info","message":"Error Handler","timestamp":"2023-11-06T09:56:01.959Z"}
+{"level":"error","message":"UnauthorizedError","timestamp":"2023-11-06T09:56:01.959Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T09:56:01.982Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T09:56:01.984Z"}
+{"level":"info","message":"Error Handler","timestamp":"2023-11-06T09:56:01.985Z"}
+{"level":"error","message":"UnauthorizedError","timestamp":"2023-11-06T09:56:01.985Z"}
+{"level":"info","message":"Error Handler","timestamp":"2023-11-06T09:56:01.986Z"}
+{"level":"error","message":"UnauthorizedError","timestamp":"2023-11-06T09:56:01.986Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T09:56:04.854Z"}
+{"level":"info","message":"Get All Tag DataTypes","timestamp":"2023-11-06T09:56:04.856Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T09:56:04.890Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2023-11-06T09:56:04.893Z"}
+{"level":"error","message":"Error fetching class and classTags data: ClassTag is not associated to Class!","name":"SequelizeEagerLoadingError","stack":"SequelizeEagerLoadingError: ClassTag is not associated to Class!\n    at Function._getIncludedAssociation (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:717:13)\n    at Function._validateIncludedElement (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:621:53)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:516:37\n    at Array.map (<anonymous>)\n    at Function._validateIncludedElements (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:511:39)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1728:14\n    at processImmediate (node:internal/timers:466:21)\nFrom previous event:\n    at Function.findAll (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1722:8)\n    at Object.getClassData (webpack-internal:///(api)/./src/helpers/api/repo/class-repo.ts:65:77)\n    at Object.allhandler [as get] (webpack-internal:///(api)/./src/pages/api/getAssets.ts:19:83)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:38:34)","timestamp":"2023-11-06T09:56:04.909Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T09:56:04.934Z"}
+{"level":"info","message":"Get All Tag DataTypes","timestamp":"2023-11-06T09:56:04.935Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T09:56:04.944Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2023-11-06T09:56:04.949Z"}
+{"level":"error","message":"Error fetching class and classTags data: ClassTag is not associated to Class!","name":"SequelizeEagerLoadingError","stack":"SequelizeEagerLoadingError: ClassTag is not associated to Class!\n    at Function._getIncludedAssociation (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:717:13)\n    at Function._validateIncludedElement (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:621:53)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:516:37\n    at Array.map (<anonymous>)\n    at Function._validateIncludedElements (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:511:39)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1728:14\n    at processImmediate (node:internal/timers:466:21)\nFrom previous event:\n    at Function.findAll (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1722:8)\n    at Object.getClassData (webpack-internal:///(api)/./src/helpers/api/repo/class-repo.ts:65:77)\n    at Object.allhandler [as get] (webpack-internal:///(api)/./src/pages/api/getAssets.ts:19:83)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:38:34)","timestamp":"2023-11-06T09:56:04.956Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T09:56:14.036Z"}
+{"level":"info","message":"Get All Tag DataTypes","timestamp":"2023-11-06T09:56:14.037Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T09:56:14.074Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2023-11-06T09:56:14.075Z"}
+{"level":"error","message":"Error fetching class and classTags data: ClassTag is not associated to Class!","name":"SequelizeEagerLoadingError","stack":"SequelizeEagerLoadingError: ClassTag is not associated to Class!\n    at Function._getIncludedAssociation (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:717:13)\n    at Function._validateIncludedElement (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:621:53)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:516:37\n    at Array.map (<anonymous>)\n    at Function._validateIncludedElements (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:511:39)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1728:14\n    at processImmediate (node:internal/timers:466:21)\nFrom previous event:\n    at Function.findAll (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1722:8)\n    at Object.getClassData (webpack-internal:///(api)/./src/helpers/api/repo/class-repo.ts:65:77)\n    at Object.allhandler [as get] (webpack-internal:///(api)/./src/pages/api/getAssets.ts:19:83)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:38:34)","timestamp":"2023-11-06T09:56:14.078Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T09:56:14.142Z"}
+{"level":"info","message":"Get All Tag DataTypes","timestamp":"2023-11-06T09:56:14.143Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T09:56:14.179Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2023-11-06T09:56:14.180Z"}
+{"level":"error","message":"Error fetching class and classTags data: ClassTag is not associated to Class!","name":"SequelizeEagerLoadingError","stack":"SequelizeEagerLoadingError: ClassTag is not associated to Class!\n    at Function._getIncludedAssociation (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:717:13)\n    at Function._validateIncludedElement (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:621:53)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:516:37\n    at Array.map (<anonymous>)\n    at Function._validateIncludedElements (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:511:39)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1728:14\n    at processImmediate (node:internal/timers:466:21)\nFrom previous event:\n    at Function.findAll (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1722:8)\n    at Object.getClassData (webpack-internal:///(api)/./src/helpers/api/repo/class-repo.ts:65:77)\n    at Object.allhandler [as get] (webpack-internal:///(api)/./src/pages/api/getAssets.ts:19:83)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:38:34)","timestamp":"2023-11-06T09:56:14.197Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T09:59:46.361Z"}
+{"level":"info","message":"Get All Tag DataTypes","timestamp":"2023-11-06T09:59:46.362Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T09:59:46.489Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2023-11-06T09:59:46.491Z"}
+{"level":"error","message":"Error fetching class and classTags data: ClassTag is not associated to Class!","name":"SequelizeEagerLoadingError","stack":"SequelizeEagerLoadingError: ClassTag is not associated to Class!\n    at Function._getIncludedAssociation (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:717:13)\n    at Function._validateIncludedElement (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:621:53)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:516:37\n    at Array.map (<anonymous>)\n    at Function._validateIncludedElements (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:511:39)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1728:14\n    at processImmediate (node:internal/timers:466:21)\nFrom previous event:\n    at Function.findAll (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1722:8)\n    at Object.getClassData (webpack-internal:///(api)/./src/helpers/api/repo/class-repo.ts:65:77)\n    at Object.allhandler [as get] (webpack-internal:///(api)/./src/pages/api/getAssets.ts:19:83)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:38:34)","timestamp":"2023-11-06T09:59:46.494Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T09:59:46.501Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2023-11-06T09:59:46.503Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T09:59:46.506Z"}
+{"level":"error","message":"Error fetching class and classTags data: ClassTag is not associated to Class!","name":"SequelizeEagerLoadingError","stack":"SequelizeEagerLoadingError: ClassTag is not associated to Class!\n    at Function._getIncludedAssociation (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:717:13)\n    at Function._validateIncludedElement (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:621:53)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:516:37\n    at Array.map (<anonymous>)\n    at Function._validateIncludedElements (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:511:39)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1728:14\n    at processImmediate (node:internal/timers:466:21)\nFrom previous event:\n    at Function.findAll (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1722:8)\n    at Object.getClassData (webpack-internal:///(api)/./src/helpers/api/repo/class-repo.ts:65:77)\n    at Object.allhandler [as get] (webpack-internal:///(api)/./src/pages/api/getAssets.ts:19:83)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:38:34)","timestamp":"2023-11-06T09:59:46.510Z"}
+{"level":"info","message":"Get All Tag DataTypes","timestamp":"2023-11-06T09:59:46.511Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T09:59:52.265Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2023-11-06T09:59:52.266Z"}
+{"level":"error","message":"Error fetching class and classTags data: ClassTag is not associated to Class!","name":"SequelizeEagerLoadingError","stack":"SequelizeEagerLoadingError: ClassTag is not associated to Class!\n    at Function._getIncludedAssociation (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:717:13)\n    at Function._validateIncludedElement (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:621:53)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:516:37\n    at Array.map (<anonymous>)\n    at Function._validateIncludedElements (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:511:39)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1728:14\n    at processImmediate (node:internal/timers:466:21)\nFrom previous event:\n    at Function.findAll (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1722:8)\n    at Object.getClassData (webpack-internal:///(api)/./src/helpers/api/repo/class-repo.ts:65:77)\n    at Object.allhandler [as get] (webpack-internal:///(api)/./src/pages/api/getAssets.ts:19:83)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:38:34)","timestamp":"2023-11-06T09:59:52.269Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T09:59:58.003Z"}
+{"level":"info","message":"Error Handler","timestamp":"2023-11-06T09:59:58.004Z"}
+{"level":"error","message":"UnauthorizedError","timestamp":"2023-11-06T09:59:58.004Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T09:59:58.062Z"}
+{"level":"info","message":"Error Handler","timestamp":"2023-11-06T09:59:58.063Z"}
+{"level":"error","message":"UnauthorizedError","timestamp":"2023-11-06T09:59:58.063Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T09:59:58.067Z"}
+{"level":"info","message":"Error Handler","timestamp":"2023-11-06T09:59:58.068Z"}
+{"level":"error","message":"UnauthorizedError","timestamp":"2023-11-06T09:59:58.068Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T09:59:58.123Z"}
+{"level":"info","message":"Error Handler","timestamp":"2023-11-06T09:59:58.124Z"}
+{"level":"error","message":"UnauthorizedError","timestamp":"2023-11-06T09:59:58.124Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T09:59:58.134Z"}
+{"level":"info","message":"Error Handler","timestamp":"2023-11-06T09:59:58.136Z"}
+{"level":"error","message":"UnauthorizedError","timestamp":"2023-11-06T09:59:58.136Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T09:59:58.280Z"}
+{"level":"info","message":"Error Handler","timestamp":"2023-11-06T09:59:58.282Z"}
+{"level":"error","message":"UnauthorizedError","timestamp":"2023-11-06T09:59:58.282Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T09:59:58.287Z"}
+{"level":"info","message":"Error Handler","timestamp":"2023-11-06T09:59:58.287Z"}
+{"level":"error","message":"UnauthorizedError","timestamp":"2023-11-06T09:59:58.287Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T09:59:58.358Z"}
+{"level":"info","message":"Error Handler","timestamp":"2023-11-06T09:59:58.359Z"}
+{"level":"error","message":"UnauthorizedError","timestamp":"2023-11-06T09:59:58.359Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T09:59:58.380Z"}
+{"level":"info","message":"Error Handler","timestamp":"2023-11-06T09:59:58.381Z"}
+{"level":"error","message":"UnauthorizedError","timestamp":"2023-11-06T09:59:58.381Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T09:59:58.404Z"}
+{"level":"info","message":"Error Handler","timestamp":"2023-11-06T09:59:58.405Z"}
+{"level":"error","message":"UnauthorizedError","timestamp":"2023-11-06T09:59:58.405Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T10:00:01.181Z"}
+{"level":"info","message":"Get All Tag DataTypes","timestamp":"2023-11-06T10:00:01.182Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T10:00:01.235Z"}
+{"level":"info","message":"Get All Tag DataTypes","timestamp":"2023-11-06T10:00:01.236Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T10:00:01.246Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2023-11-06T10:00:01.248Z"}
+{"level":"error","message":"Error fetching class and classTags data: ClassTag is not associated to Class!","name":"SequelizeEagerLoadingError","stack":"SequelizeEagerLoadingError: ClassTag is not associated to Class!\n    at Function._getIncludedAssociation (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:717:13)\n    at Function._validateIncludedElement (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:621:53)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:516:37\n    at Array.map (<anonymous>)\n    at Function._validateIncludedElements (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:511:39)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1728:14\n    at processImmediate (node:internal/timers:466:21)\nFrom previous event:\n    at Function.findAll (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1722:8)\n    at Object.getClassData (webpack-internal:///(api)/./src/helpers/api/repo/class-repo.ts:65:77)\n    at Object.allhandler [as get] (webpack-internal:///(api)/./src/pages/api/getAssets.ts:19:83)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:38:34)","timestamp":"2023-11-06T10:00:01.250Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T10:00:01.272Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2023-11-06T10:00:01.273Z"}
+{"level":"error","message":"Error fetching class and classTags data: ClassTag is not associated to Class!","name":"SequelizeEagerLoadingError","stack":"SequelizeEagerLoadingError: ClassTag is not associated to Class!\n    at Function._getIncludedAssociation (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:717:13)\n    at Function._validateIncludedElement (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:621:53)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:516:37\n    at Array.map (<anonymous>)\n    at Function._validateIncludedElements (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:511:39)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1728:14\n    at processImmediate (node:internal/timers:466:21)\nFrom previous event:\n    at Function.findAll (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1722:8)\n    at Object.getClassData (webpack-internal:///(api)/./src/helpers/api/repo/class-repo.ts:65:77)\n    at Object.allhandler [as get] (webpack-internal:///(api)/./src/pages/api/getAssets.ts:19:83)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:38:34)","timestamp":"2023-11-06T10:00:01.277Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T10:00:10.728Z"}
+{"level":"info","message":"Get All Tag DataTypes","timestamp":"2023-11-06T10:00:10.729Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T10:00:10.734Z"}
+{"level":"info","message":"Get All Tag DataTypes","timestamp":"2023-11-06T10:00:10.735Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T10:00:15.133Z"}
+{"level":"info","message":"Get All Tag DataTypes","timestamp":"2023-11-06T10:00:15.134Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T10:00:15.160Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2023-11-06T10:00:15.161Z"}
+{"level":"error","message":"Error fetching class and classTags data: ClassTag is not associated to Class!","name":"SequelizeEagerLoadingError","stack":"SequelizeEagerLoadingError: ClassTag is not associated to Class!\n    at Function._getIncludedAssociation (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:717:13)\n    at Function._validateIncludedElement (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:621:53)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:516:37\n    at Array.map (<anonymous>)\n    at Function._validateIncludedElements (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:511:39)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1728:14\n    at processImmediate (node:internal/timers:466:21)\nFrom previous event:\n    at Function.findAll (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1722:8)\n    at Object.getClassData (webpack-internal:///(api)/./src/helpers/api/repo/class-repo.ts:65:77)\n    at Object.allhandler [as get] (webpack-internal:///(api)/./src/pages/api/getAssets.ts:19:83)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:38:34)","timestamp":"2023-11-06T10:00:15.165Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T10:00:15.253Z"}
+{"level":"info","message":"Get All Tag DataTypes","timestamp":"2023-11-06T10:00:15.257Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T10:00:15.381Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2023-11-06T10:00:15.384Z"}
+{"level":"error","message":"Error fetching class and classTags data: ClassTag is not associated to Class!","name":"SequelizeEagerLoadingError","stack":"SequelizeEagerLoadingError: ClassTag is not associated to Class!\n    at Function._getIncludedAssociation (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:717:13)\n    at Function._validateIncludedElement (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:621:53)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:516:37\n    at Array.map (<anonymous>)\n    at Function._validateIncludedElements (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:511:39)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1728:14\n    at processImmediate (node:internal/timers:466:21)\nFrom previous event:\n    at Function.findAll (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1722:8)\n    at Object.getClassData (webpack-internal:///(api)/./src/helpers/api/repo/class-repo.ts:65:77)\n    at Object.allhandler [as get] (webpack-internal:///(api)/./src/pages/api/getAssets.ts:19:83)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:38:34)","timestamp":"2023-11-06T10:00:15.404Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T10:00:25.220Z"}
+{"level":"info","message":"Error Handler","timestamp":"2023-11-06T10:00:25.221Z"}
+{"level":"error","message":"UnauthorizedError","timestamp":"2023-11-06T10:00:25.221Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T10:00:25.231Z"}
+{"level":"info","message":"Error Handler","timestamp":"2023-11-06T10:00:25.232Z"}
+{"level":"error","message":"UnauthorizedError","timestamp":"2023-11-06T10:00:25.232Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T10:00:25.267Z"}
+{"level":"info","message":"Error Handler","timestamp":"2023-11-06T10:00:25.272Z"}
+{"level":"error","message":"UnauthorizedError","timestamp":"2023-11-06T10:00:25.273Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T10:00:25.301Z"}
+{"level":"info","message":"Error Handler","timestamp":"2023-11-06T10:00:25.303Z"}
+{"level":"error","message":"UnauthorizedError","timestamp":"2023-11-06T10:00:25.304Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T10:00:25.328Z"}
+{"level":"info","message":"Error Handler","timestamp":"2023-11-06T10:00:25.328Z"}
+{"level":"error","message":"UnauthorizedError","timestamp":"2023-11-06T10:00:25.329Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T10:00:25.371Z"}
+{"level":"info","message":"Error Handler","timestamp":"2023-11-06T10:00:25.372Z"}
+{"level":"error","message":"UnauthorizedError","timestamp":"2023-11-06T10:00:25.373Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T10:00:25.395Z"}
+{"level":"info","message":"Error Handler","timestamp":"2023-11-06T10:00:25.395Z"}
+{"level":"error","message":"UnauthorizedError","timestamp":"2023-11-06T10:00:25.395Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T10:00:25.419Z"}
+{"level":"info","message":"Error Handler","timestamp":"2023-11-06T10:00:25.421Z"}
+{"level":"error","message":"UnauthorizedError","timestamp":"2023-11-06T10:00:25.421Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T10:00:25.459Z"}
+{"level":"info","message":"Error Handler","timestamp":"2023-11-06T10:00:25.459Z"}
+{"level":"error","message":"UnauthorizedError","timestamp":"2023-11-06T10:00:25.459Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T10:00:25.481Z"}
+{"level":"info","message":"Error Handler","timestamp":"2023-11-06T10:00:25.482Z"}
+{"level":"error","message":"UnauthorizedError","timestamp":"2023-11-06T10:00:25.482Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T10:00:59.090Z"}
+{"level":"info","message":"Get All Tag DataTypes","timestamp":"2023-11-06T10:00:59.091Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T10:00:59.093Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2023-11-06T10:00:59.097Z"}
+{"level":"error","message":"Error fetching class and classTags data: ClassTag is not associated to Class!","name":"SequelizeEagerLoadingError","stack":"SequelizeEagerLoadingError: ClassTag is not associated to Class!\n    at Function._getIncludedAssociation (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:717:13)\n    at Function._validateIncludedElement (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:621:53)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:516:37\n    at Array.map (<anonymous>)\n    at Function._validateIncludedElements (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:511:39)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1728:14\n    at processImmediate (node:internal/timers:466:21)\nFrom previous event:\n    at Function.findAll (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1722:8)\n    at Object.getClassData (webpack-internal:///(api)/./src/helpers/api/repo/class-repo.ts:65:77)\n    at Object.allhandler [as get] (webpack-internal:///(api)/./src/pages/api/getAssets.ts:19:83)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:38:34)","timestamp":"2023-11-06T10:00:59.099Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T10:00:59.175Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2023-11-06T10:00:59.176Z"}
+{"level":"error","message":"Error fetching class and classTags data: ClassTag is not associated to Class!","name":"SequelizeEagerLoadingError","stack":"SequelizeEagerLoadingError: ClassTag is not associated to Class!\n    at Function._getIncludedAssociation (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:717:13)\n    at Function._validateIncludedElement (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:621:53)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:516:37\n    at Array.map (<anonymous>)\n    at Function._validateIncludedElements (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:511:39)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1728:14\n    at processImmediate (node:internal/timers:466:21)\nFrom previous event:\n    at Function.findAll (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1722:8)\n    at Object.getClassData (webpack-internal:///(api)/./src/helpers/api/repo/class-repo.ts:65:77)\n    at Object.allhandler [as get] (webpack-internal:///(api)/./src/pages/api/getAssets.ts:19:83)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:38:34)","timestamp":"2023-11-06T10:00:59.179Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T10:00:59.182Z"}
+{"level":"info","message":"Get All Tag DataTypes","timestamp":"2023-11-06T10:00:59.183Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T10:01:02.714Z"}
+{"level":"info","message":"Get All Tag DataTypes","timestamp":"2023-11-06T10:01:02.717Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T10:01:02.723Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2023-11-06T10:01:02.724Z"}
+{"level":"error","message":"Error fetching class and classTags data: ClassTag is not associated to Class!","name":"SequelizeEagerLoadingError","stack":"SequelizeEagerLoadingError: ClassTag is not associated to Class!\n    at Function._getIncludedAssociation (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:717:13)\n    at Function._validateIncludedElement (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:621:53)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:516:37\n    at Array.map (<anonymous>)\n    at Function._validateIncludedElements (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:511:39)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1728:14\n    at processImmediate (node:internal/timers:466:21)\nFrom previous event:\n    at Function.findAll (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1722:8)\n    at Object.getClassData (webpack-internal:///(api)/./src/helpers/api/repo/class-repo.ts:65:77)\n    at Object.allhandler [as get] (webpack-internal:///(api)/./src/pages/api/getAssets.ts:19:83)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:38:34)","timestamp":"2023-11-06T10:01:02.728Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T10:01:02.760Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2023-11-06T10:01:02.761Z"}
+{"level":"error","message":"Error fetching class and classTags data: ClassTag is not associated to Class!","name":"SequelizeEagerLoadingError","stack":"SequelizeEagerLoadingError: ClassTag is not associated to Class!\n    at Function._getIncludedAssociation (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:717:13)\n    at Function._validateIncludedElement (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:621:53)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:516:37\n    at Array.map (<anonymous>)\n    at Function._validateIncludedElements (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:511:39)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1728:14\n    at processImmediate (node:internal/timers:466:21)\nFrom previous event:\n    at Function.findAll (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1722:8)\n    at Object.getClassData (webpack-internal:///(api)/./src/helpers/api/repo/class-repo.ts:65:77)\n    at Object.allhandler [as get] (webpack-internal:///(api)/./src/pages/api/getAssets.ts:19:83)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:38:34)","timestamp":"2023-11-06T10:01:02.765Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T10:01:02.770Z"}
+{"level":"info","message":"Get All Tag DataTypes","timestamp":"2023-11-06T10:01:02.771Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T10:01:03.762Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2023-11-06T10:01:03.763Z"}
+{"level":"error","message":"Error fetching class and classTags data: ClassTag is not associated to Class!","name":"SequelizeEagerLoadingError","stack":"SequelizeEagerLoadingError: ClassTag is not associated to Class!\n    at Function._getIncludedAssociation (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:717:13)\n    at Function._validateIncludedElement (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:621:53)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:516:37\n    at Array.map (<anonymous>)\n    at Function._validateIncludedElements (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:511:39)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1728:14\n    at processImmediate (node:internal/timers:466:21)\nFrom previous event:\n    at Function.findAll (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1722:8)\n    at Object.getClassData (webpack-internal:///(api)/./src/helpers/api/repo/class-repo.ts:65:77)\n    at Object.allhandler [as get] (webpack-internal:///(api)/./src/pages/api/getAssets.ts:19:83)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:38:34)","timestamp":"2023-11-06T10:01:03.766Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T10:01:10.662Z"}
+{"level":"info","message":"Get All Tag DataTypes","timestamp":"2023-11-06T10:01:10.663Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T10:01:10.693Z"}
+{"level":"info","message":"Get All Tag DataTypes","timestamp":"2023-11-06T10:01:10.694Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-11-06T10:02:44.745Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-11-06T10:02:44.758Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-11-06T10:02:44.761Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-11-06T10:02:44.765Z"}
+{"level":"info","message":"AddClasses","timestamp":"2023-11-06T10:02:44.780Z"}
+{"level":"info","message":"AddValues","timestamp":"2023-11-06T10:02:44.784Z"}
+{"level":"info","message":"Address","timestamp":"2023-11-06T10:02:44.785Z"}
+{"level":"info","message":"Reason","timestamp":"2023-11-06T10:02:44.789Z"}
+{"level":"info","message":"Role","timestamp":"2023-11-06T10:02:44.792Z"}
+{"level":"info","message":"User","timestamp":"2023-11-06T10:02:44.794Z"}
+{"level":"info","message":"classTag","timestamp":"2023-11-06T10:02:44.795Z"}
+{"level":"info","message":"companyRecord","timestamp":"2023-11-06T10:02:44.796Z"}
+{"level":"info","message":"countryCodeModel","timestamp":"2023-11-06T10:02:44.798Z"}
+{"level":"info","message":"deleteRecord","timestamp":"2023-11-06T10:02:44.799Z"}
+{"level":"info","message":"object","timestamp":"2023-11-06T10:02:44.800Z"}
+{"level":"info","message":"otpVerify","timestamp":"2023-11-06T10:02:44.802Z"}
+{"level":"info","message":"parentJoinKey","timestamp":"2023-11-06T10:02:44.804Z"}
+{"level":"info","message":"phoneRecord","timestamp":"2023-11-06T10:02:44.805Z"}
+{"level":"info","message":"tagDataType","timestamp":"2023-11-06T10:02:44.806Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T10:02:44.825Z"}
+{"level":"info","message":"Get All Tag DataTypes","timestamp":"2023-11-06T10:02:44.827Z"}
+{"level":"info","message":"AddClasses","timestamp":"2023-11-06T10:02:44.835Z"}
+{"level":"info","message":"AddValues","timestamp":"2023-11-06T10:02:44.836Z"}
+{"level":"info","message":"Address","timestamp":"2023-11-06T10:02:44.837Z"}
+{"level":"info","message":"Reason","timestamp":"2023-11-06T10:02:44.838Z"}
+{"level":"info","message":"Role","timestamp":"2023-11-06T10:02:44.839Z"}
+{"level":"info","message":"User","timestamp":"2023-11-06T10:02:44.841Z"}
+{"level":"info","message":"classTag","timestamp":"2023-11-06T10:02:44.842Z"}
+{"level":"info","message":"companyRecord","timestamp":"2023-11-06T10:02:44.842Z"}
+{"level":"info","message":"countryCodeModel","timestamp":"2023-11-06T10:02:44.843Z"}
+{"level":"info","message":"deleteRecord","timestamp":"2023-11-06T10:02:44.844Z"}
+{"level":"info","message":"object","timestamp":"2023-11-06T10:02:44.845Z"}
+{"level":"info","message":"otpVerify","timestamp":"2023-11-06T10:02:44.846Z"}
+{"level":"info","message":"parentJoinKey","timestamp":"2023-11-06T10:02:44.847Z"}
+{"level":"info","message":"phoneRecord","timestamp":"2023-11-06T10:02:44.848Z"}
+{"level":"info","message":"tagDataType","timestamp":"2023-11-06T10:02:44.849Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T10:02:44.849Z"}
+{"level":"info","message":"AddClasses","timestamp":"2023-11-06T10:02:44.851Z"}
+{"level":"info","message":"AddValues","timestamp":"2023-11-06T10:02:44.853Z"}
+{"level":"info","message":"Address","timestamp":"2023-11-06T10:02:44.853Z"}
+{"level":"info","message":"Reason","timestamp":"2023-11-06T10:02:44.854Z"}
+{"level":"info","message":"Role","timestamp":"2023-11-06T10:02:44.855Z"}
+{"level":"info","message":"User","timestamp":"2023-11-06T10:02:44.857Z"}
+{"level":"info","message":"classTag","timestamp":"2023-11-06T10:02:44.859Z"}
+{"level":"info","message":"companyRecord","timestamp":"2023-11-06T10:02:44.860Z"}
+{"level":"info","message":"countryCodeModel","timestamp":"2023-11-06T10:02:44.861Z"}
+{"level":"info","message":"deleteRecord","timestamp":"2023-11-06T10:02:44.862Z"}
+{"level":"info","message":"object","timestamp":"2023-11-06T10:02:44.863Z"}
+{"level":"info","message":"otpVerify","timestamp":"2023-11-06T10:02:44.864Z"}
+{"level":"info","message":"parentJoinKey","timestamp":"2023-11-06T10:02:44.865Z"}
+{"level":"info","message":"phoneRecord","timestamp":"2023-11-06T10:02:44.866Z"}
+{"level":"info","message":"tagDataType","timestamp":"2023-11-06T10:02:44.866Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T10:02:44.867Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2023-11-06T10:02:44.868Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2023-11-06T10:02:44.869Z"}
+{"level":"info","message":"AddClasses","timestamp":"2023-11-06T10:02:44.872Z"}
+{"level":"info","message":"AddValues","timestamp":"2023-11-06T10:02:44.897Z"}
+{"level":"info","message":"Address","timestamp":"2023-11-06T10:02:44.900Z"}
+{"level":"info","message":"Reason","timestamp":"2023-11-06T10:02:44.902Z"}
+{"level":"info","message":"Role","timestamp":"2023-11-06T10:02:44.907Z"}
+{"level":"info","message":"User","timestamp":"2023-11-06T10:02:44.908Z"}
+{"level":"info","message":"classTag","timestamp":"2023-11-06T10:02:44.909Z"}
+{"level":"info","message":"companyRecord","timestamp":"2023-11-06T10:02:44.910Z"}
+{"level":"info","message":"countryCodeModel","timestamp":"2023-11-06T10:02:44.911Z"}
+{"level":"info","message":"deleteRecord","timestamp":"2023-11-06T10:02:44.911Z"}
+{"level":"info","message":"object","timestamp":"2023-11-06T10:02:44.912Z"}
+{"level":"info","message":"otpVerify","timestamp":"2023-11-06T10:02:44.914Z"}
+{"level":"info","message":"parentJoinKey","timestamp":"2023-11-06T10:02:44.915Z"}
+{"level":"info","message":"phoneRecord","timestamp":"2023-11-06T10:02:44.916Z"}
+{"level":"info","message":"tagDataType","timestamp":"2023-11-06T10:02:44.917Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T10:02:44.917Z"}
+{"level":"error","message":"Error fetching class and classTags data: ClassTag is not associated to Class!","name":"SequelizeEagerLoadingError","stack":"SequelizeEagerLoadingError: ClassTag is not associated to Class!\n    at Function._getIncludedAssociation (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:717:13)\n    at Function._validateIncludedElement (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:621:53)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:516:37\n    at Array.map (<anonymous>)\n    at Function._validateIncludedElements (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:511:39)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1728:14\n    at processImmediate (node:internal/timers:466:21)\nFrom previous event:\n    at Function.findAll (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1722:8)\n    at Object.getClassData (webpack-internal:///(api)/./src/helpers/api/repo/class-repo.ts:65:77)\n    at Object.allhandler [as get] (webpack-internal:///(api)/./src/pages/api/getAssets.ts:19:83)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:38:34)\n    at runNextTicks (node:internal/process/task_queues:61:5)\n    at processImmediate (node:internal/timers:437:9)","timestamp":"2023-11-06T10:02:44.956Z"}
+{"level":"error","message":"Error fetching class and classTags data: ClassTag is not associated to Class!","name":"SequelizeEagerLoadingError","stack":"SequelizeEagerLoadingError: ClassTag is not associated to Class!\n    at Function._getIncludedAssociation (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:717:13)\n    at Function._validateIncludedElement (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:621:53)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:516:37\n    at Array.map (<anonymous>)\n    at Function._validateIncludedElements (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:511:39)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1728:14\n    at processImmediate (node:internal/timers:466:21)\nFrom previous event:\n    at Function.findAll (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1722:8)\n    at Object.getClassData (webpack-internal:///(api)/./src/helpers/api/repo/class-repo.ts:65:77)\n    at Object.allhandler [as get] (webpack-internal:///(api)/./src/pages/api/getAssets.ts:19:83)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:38:34)","timestamp":"2023-11-06T10:02:44.959Z"}
+{"level":"info","message":"Get All Tag DataTypes","timestamp":"2023-11-06T10:02:44.964Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-11-06T10:03:06.363Z"}
+{"level":"info","message":"AddClasses","timestamp":"2023-11-06T10:03:06.376Z"}
+{"level":"info","message":"AddValues","timestamp":"2023-11-06T10:03:06.377Z"}
+{"level":"info","message":"Address","timestamp":"2023-11-06T10:03:06.379Z"}
+{"level":"info","message":"Reason","timestamp":"2023-11-06T10:03:06.380Z"}
+{"level":"info","message":"Role","timestamp":"2023-11-06T10:03:06.381Z"}
+{"level":"info","message":"User","timestamp":"2023-11-06T10:03:06.383Z"}
+{"level":"info","message":"classTag","timestamp":"2023-11-06T10:03:06.385Z"}
+{"level":"info","message":"companyRecord","timestamp":"2023-11-06T10:03:06.386Z"}
+{"level":"info","message":"countryCodeModel","timestamp":"2023-11-06T10:03:06.389Z"}
+{"level":"info","message":"deleteRecord","timestamp":"2023-11-06T10:03:06.391Z"}
+{"level":"info","message":"object","timestamp":"2023-11-06T10:03:06.393Z"}
+{"level":"info","message":"otpVerify","timestamp":"2023-11-06T10:03:06.395Z"}
+{"level":"info","message":"parentJoinKey","timestamp":"2023-11-06T10:03:06.397Z"}
+{"level":"info","message":"phoneRecord","timestamp":"2023-11-06T10:03:06.399Z"}
+{"level":"info","message":"tagDataType","timestamp":"2023-11-06T10:03:06.402Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T10:03:06.490Z"}
+{"level":"info","message":"Get All Tag DataTypes","timestamp":"2023-11-06T10:03:06.494Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T10:03:06.504Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2023-11-06T10:03:06.511Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T10:03:06.570Z"}
+{"level":"info","message":"Get All Tag DataTypes","timestamp":"2023-11-06T10:03:06.583Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T10:03:06.596Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2023-11-06T10:03:06.597Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-11-06T10:03:35.739Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-11-06T10:03:35.748Z"}
+{"level":"info","message":"AddClasses","timestamp":"2023-11-06T10:03:35.752Z"}
+{"level":"info","message":"AddValues","timestamp":"2023-11-06T10:03:35.753Z"}
+{"level":"info","message":"Address","timestamp":"2023-11-06T10:03:35.755Z"}
+{"level":"info","message":"Reason","timestamp":"2023-11-06T10:03:35.756Z"}
+{"level":"info","message":"Role","timestamp":"2023-11-06T10:03:35.757Z"}
+{"level":"info","message":"User","timestamp":"2023-11-06T10:03:35.758Z"}
+{"level":"info","message":"classTag","timestamp":"2023-11-06T10:03:35.759Z"}
+{"level":"info","message":"companyRecord","timestamp":"2023-11-06T10:03:35.760Z"}
+{"level":"info","message":"countryCodeModel","timestamp":"2023-11-06T10:03:35.761Z"}
+{"level":"info","message":"deleteRecord","timestamp":"2023-11-06T10:03:35.762Z"}
+{"level":"info","message":"object","timestamp":"2023-11-06T10:03:35.763Z"}
+{"level":"info","message":"otpVerify","timestamp":"2023-11-06T10:03:35.765Z"}
+{"level":"info","message":"parentJoinKey","timestamp":"2023-11-06T10:03:35.768Z"}
+{"level":"info","message":"phoneRecord","timestamp":"2023-11-06T10:03:35.770Z"}
+{"level":"info","message":"tagDataType","timestamp":"2023-11-06T10:03:35.771Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T10:03:35.789Z"}
+{"level":"info","message":"Get All Tag DataTypes","timestamp":"2023-11-06T10:03:35.791Z"}
+{"level":"info","message":"AddClasses","timestamp":"2023-11-06T10:03:35.815Z"}
+{"level":"info","message":"AddValues","timestamp":"2023-11-06T10:03:35.818Z"}
+{"level":"info","message":"Address","timestamp":"2023-11-06T10:03:35.819Z"}
+{"level":"info","message":"Reason","timestamp":"2023-11-06T10:03:35.821Z"}
+{"level":"info","message":"Role","timestamp":"2023-11-06T10:03:35.823Z"}
+{"level":"info","message":"User","timestamp":"2023-11-06T10:03:35.824Z"}
+{"level":"info","message":"classTag","timestamp":"2023-11-06T10:03:35.825Z"}
+{"level":"info","message":"companyRecord","timestamp":"2023-11-06T10:03:35.826Z"}
+{"level":"info","message":"countryCodeModel","timestamp":"2023-11-06T10:03:35.827Z"}
+{"level":"info","message":"deleteRecord","timestamp":"2023-11-06T10:03:35.829Z"}
+{"level":"info","message":"object","timestamp":"2023-11-06T10:03:35.830Z"}
+{"level":"info","message":"otpVerify","timestamp":"2023-11-06T10:03:35.831Z"}
+{"level":"info","message":"parentJoinKey","timestamp":"2023-11-06T10:03:35.832Z"}
+{"level":"info","message":"phoneRecord","timestamp":"2023-11-06T10:03:35.836Z"}
+{"level":"info","message":"tagDataType","timestamp":"2023-11-06T10:03:35.838Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T10:03:35.838Z"}
+{"level":"info","message":"Get All Tag DataTypes","timestamp":"2023-11-06T10:03:35.839Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-11-06T10:03:35.988Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-11-06T10:03:35.997Z"}
+{"level":"info","message":"AddClasses","timestamp":"2023-11-06T10:03:36.010Z"}
+{"level":"info","message":"AddValues","timestamp":"2023-11-06T10:03:36.011Z"}
+{"level":"info","message":"Address","timestamp":"2023-11-06T10:03:36.013Z"}
+{"level":"info","message":"Reason","timestamp":"2023-11-06T10:03:36.014Z"}
+{"level":"info","message":"Role","timestamp":"2023-11-06T10:03:36.015Z"}
+{"level":"info","message":"User","timestamp":"2023-11-06T10:03:36.019Z"}
+{"level":"info","message":"classTag","timestamp":"2023-11-06T10:03:36.021Z"}
+{"level":"info","message":"companyRecord","timestamp":"2023-11-06T10:03:36.024Z"}
+{"level":"info","message":"countryCodeModel","timestamp":"2023-11-06T10:03:36.025Z"}
+{"level":"info","message":"deleteRecord","timestamp":"2023-11-06T10:03:36.027Z"}
+{"level":"info","message":"object","timestamp":"2023-11-06T10:03:36.028Z"}
+{"level":"info","message":"otpVerify","timestamp":"2023-11-06T10:03:36.030Z"}
+{"level":"info","message":"parentJoinKey","timestamp":"2023-11-06T10:03:36.031Z"}
+{"level":"info","message":"phoneRecord","timestamp":"2023-11-06T10:03:36.034Z"}
+{"level":"info","message":"tagDataType","timestamp":"2023-11-06T10:03:36.037Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T10:03:36.061Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2023-11-06T10:03:36.064Z"}
+{"level":"info","message":"AddClasses","timestamp":"2023-11-06T10:03:36.080Z"}
+{"level":"info","message":"AddValues","timestamp":"2023-11-06T10:03:36.082Z"}
+{"level":"info","message":"Address","timestamp":"2023-11-06T10:03:36.086Z"}
+{"level":"info","message":"Reason","timestamp":"2023-11-06T10:03:36.088Z"}
+{"level":"info","message":"Role","timestamp":"2023-11-06T10:03:36.090Z"}
+{"level":"info","message":"User","timestamp":"2023-11-06T10:03:36.092Z"}
+{"level":"info","message":"classTag","timestamp":"2023-11-06T10:03:36.094Z"}
+{"level":"info","message":"companyRecord","timestamp":"2023-11-06T10:03:36.095Z"}
+{"level":"info","message":"countryCodeModel","timestamp":"2023-11-06T10:03:36.097Z"}
+{"level":"info","message":"deleteRecord","timestamp":"2023-11-06T10:03:36.098Z"}
+{"level":"info","message":"object","timestamp":"2023-11-06T10:03:36.100Z"}
+{"level":"info","message":"otpVerify","timestamp":"2023-11-06T10:03:36.105Z"}
+{"level":"info","message":"parentJoinKey","timestamp":"2023-11-06T10:03:36.107Z"}
+{"level":"info","message":"phoneRecord","timestamp":"2023-11-06T10:03:36.108Z"}
+{"level":"info","message":"tagDataType","timestamp":"2023-11-06T10:03:36.110Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T10:03:36.110Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2023-11-06T10:03:36.125Z"}
+{"level":"error","message":"Error fetching class and classTags data: ClassTag is not associated to Class!","name":"SequelizeEagerLoadingError","stack":"SequelizeEagerLoadingError: ClassTag is not associated to Class!\n    at Function._getIncludedAssociation (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:717:13)\n    at Function._validateIncludedElement (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:621:53)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:516:37\n    at Array.map (<anonymous>)\n    at Function._validateIncludedElements (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:511:39)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1728:14\n    at processImmediate (node:internal/timers:466:21)\nFrom previous event:\n    at Function.findAll (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1722:8)\n    at Object.getClassData (webpack-internal:///(api)/./src/helpers/api/repo/class-repo.ts:65:77)\n    at Object.allhandler [as get] (webpack-internal:///(api)/./src/pages/api/getAssets.ts:19:83)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:38:34)","timestamp":"2023-11-06T10:03:36.130Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-11-06T10:03:52.190Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-11-06T10:03:52.197Z"}
+{"level":"info","message":"AddClasses","timestamp":"2023-11-06T10:03:52.201Z"}
+{"level":"info","message":"AddValues","timestamp":"2023-11-06T10:03:52.202Z"}
+{"level":"info","message":"Address","timestamp":"2023-11-06T10:03:52.204Z"}
+{"level":"info","message":"Reason","timestamp":"2023-11-06T10:03:52.205Z"}
+{"level":"info","message":"Role","timestamp":"2023-11-06T10:03:52.206Z"}
+{"level":"info","message":"User","timestamp":"2023-11-06T10:03:52.207Z"}
+{"level":"info","message":"classTag","timestamp":"2023-11-06T10:03:52.208Z"}
+{"level":"info","message":"companyRecord","timestamp":"2023-11-06T10:03:52.209Z"}
+{"level":"info","message":"countryCodeModel","timestamp":"2023-11-06T10:03:52.210Z"}
+{"level":"info","message":"deleteRecord","timestamp":"2023-11-06T10:03:52.211Z"}
+{"level":"info","message":"object","timestamp":"2023-11-06T10:03:52.212Z"}
+{"level":"info","message":"otpVerify","timestamp":"2023-11-06T10:03:52.213Z"}
+{"level":"info","message":"parentJoinKey","timestamp":"2023-11-06T10:03:52.215Z"}
+{"level":"info","message":"phoneRecord","timestamp":"2023-11-06T10:03:52.215Z"}
+{"level":"info","message":"tagDataType","timestamp":"2023-11-06T10:03:52.216Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T10:03:52.225Z"}
+{"level":"info","message":"Error Handler","timestamp":"2023-11-06T10:03:52.227Z"}
+{"level":"error","message":"UnauthorizedError","timestamp":"2023-11-06T10:03:52.227Z"}
+{"level":"info","message":"AddClasses","timestamp":"2023-11-06T10:03:52.237Z"}
+{"level":"info","message":"AddValues","timestamp":"2023-11-06T10:03:52.239Z"}
+{"level":"info","message":"Address","timestamp":"2023-11-06T10:03:52.241Z"}
+{"level":"info","message":"Reason","timestamp":"2023-11-06T10:03:52.242Z"}
+{"level":"info","message":"Role","timestamp":"2023-11-06T10:03:52.243Z"}
+{"level":"info","message":"User","timestamp":"2023-11-06T10:03:52.246Z"}
+{"level":"info","message":"classTag","timestamp":"2023-11-06T10:03:52.248Z"}
+{"level":"info","message":"companyRecord","timestamp":"2023-11-06T10:03:52.252Z"}
+{"level":"info","message":"countryCodeModel","timestamp":"2023-11-06T10:03:52.253Z"}
+{"level":"info","message":"deleteRecord","timestamp":"2023-11-06T10:03:52.255Z"}
+{"level":"info","message":"object","timestamp":"2023-11-06T10:03:52.258Z"}
+{"level":"info","message":"otpVerify","timestamp":"2023-11-06T10:03:52.261Z"}
+{"level":"info","message":"parentJoinKey","timestamp":"2023-11-06T10:03:52.262Z"}
+{"level":"info","message":"phoneRecord","timestamp":"2023-11-06T10:03:52.262Z"}
+{"level":"info","message":"tagDataType","timestamp":"2023-11-06T10:03:52.264Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T10:03:52.265Z"}
+{"level":"info","message":"Error Handler","timestamp":"2023-11-06T10:03:52.266Z"}
+{"level":"error","message":"UnauthorizedError","timestamp":"2023-11-06T10:03:52.267Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T10:03:52.283Z"}
+{"level":"info","message":"Error Handler","timestamp":"2023-11-06T10:03:52.284Z"}
+{"level":"error","message":"UnauthorizedError","timestamp":"2023-11-06T10:03:52.284Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T10:03:52.307Z"}
+{"level":"info","message":"Error Handler","timestamp":"2023-11-06T10:03:52.308Z"}
+{"level":"error","message":"UnauthorizedError","timestamp":"2023-11-06T10:03:52.308Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T10:03:52.329Z"}
+{"level":"info","message":"Error Handler","timestamp":"2023-11-06T10:03:52.329Z"}
+{"level":"error","message":"UnauthorizedError","timestamp":"2023-11-06T10:03:52.330Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T10:03:52.358Z"}
+{"level":"info","message":"Error Handler","timestamp":"2023-11-06T10:03:52.360Z"}
+{"level":"error","message":"UnauthorizedError","timestamp":"2023-11-06T10:03:52.360Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T10:03:52.382Z"}
+{"level":"info","message":"Error Handler","timestamp":"2023-11-06T10:03:52.383Z"}
+{"level":"error","message":"UnauthorizedError","timestamp":"2023-11-06T10:03:52.383Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T10:03:52.408Z"}
+{"level":"info","message":"Error Handler","timestamp":"2023-11-06T10:03:52.408Z"}
+{"level":"error","message":"UnauthorizedError","timestamp":"2023-11-06T10:03:52.408Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T10:03:52.435Z"}
+{"level":"info","message":"Error Handler","timestamp":"2023-11-06T10:03:52.436Z"}
+{"level":"error","message":"UnauthorizedError","timestamp":"2023-11-06T10:03:52.436Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T10:03:52.453Z"}
+{"level":"info","message":"Error Handler","timestamp":"2023-11-06T10:03:52.454Z"}
+{"level":"error","message":"UnauthorizedError","timestamp":"2023-11-06T10:03:52.454Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T10:03:55.674Z"}
+{"level":"info","message":"Get All Tag DataTypes","timestamp":"2023-11-06T10:03:55.675Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T10:03:55.679Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2023-11-06T10:03:55.681Z"}
+{"level":"error","message":"Error fetching class and classTags data: ClassTag is not associated to Class!","name":"SequelizeEagerLoadingError","stack":"SequelizeEagerLoadingError: ClassTag is not associated to Class!\n    at Function._getIncludedAssociation (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:717:13)\n    at Function._validateIncludedElement (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:621:53)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:516:37\n    at Array.map (<anonymous>)\n    at Function._validateIncludedElements (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:511:39)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1728:14\n    at processImmediate (node:internal/timers:466:21)\nFrom previous event:\n    at Function.findAll (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1722:8)\n    at Object.getClassData (webpack-internal:///(api)/./src/helpers/api/repo/class-repo.ts:65:77)\n    at Object.allhandler [as get] (webpack-internal:///(api)/./src/pages/api/getAssets.ts:19:83)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:38:34)","timestamp":"2023-11-06T10:03:55.684Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T10:03:55.715Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2023-11-06T10:03:55.717Z"}
+{"level":"error","message":"Error fetching class and classTags data: ClassTag is not associated to Class!","name":"SequelizeEagerLoadingError","stack":"SequelizeEagerLoadingError: ClassTag is not associated to Class!\n    at Function._getIncludedAssociation (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:717:13)\n    at Function._validateIncludedElement (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:621:53)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:516:37\n    at Array.map (<anonymous>)\n    at Function._validateIncludedElements (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:511:39)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1728:14\n    at processImmediate (node:internal/timers:466:21)\nFrom previous event:\n    at Function.findAll (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1722:8)\n    at Object.getClassData (webpack-internal:///(api)/./src/helpers/api/repo/class-repo.ts:65:77)\n    at Object.allhandler [as get] (webpack-internal:///(api)/./src/pages/api/getAssets.ts:19:83)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:38:34)","timestamp":"2023-11-06T10:03:55.719Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T10:03:55.733Z"}
+{"level":"info","message":"Get All Tag DataTypes","timestamp":"2023-11-06T10:03:55.734Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T10:04:05.212Z"}
+{"level":"info","message":"Get All Tag DataTypes","timestamp":"2023-11-06T10:04:05.213Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T10:04:05.214Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2023-11-06T10:04:05.216Z"}
+{"level":"error","message":"Error fetching class and classTags data: ClassTag is not associated to Class!","name":"SequelizeEagerLoadingError","stack":"SequelizeEagerLoadingError: ClassTag is not associated to Class!\n    at Function._getIncludedAssociation (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:717:13)\n    at Function._validateIncludedElement (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:621:53)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:516:37\n    at Array.map (<anonymous>)\n    at Function._validateIncludedElements (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:511:39)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1728:14\n    at processImmediate (node:internal/timers:466:21)\nFrom previous event:\n    at Function.findAll (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1722:8)\n    at Object.getClassData (webpack-internal:///(api)/./src/helpers/api/repo/class-repo.ts:65:77)\n    at Object.allhandler [as get] (webpack-internal:///(api)/./src/pages/api/getAssets.ts:19:83)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:38:34)","timestamp":"2023-11-06T10:04:05.220Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T10:04:05.240Z"}
+{"level":"info","message":"Get All Tag DataTypes","timestamp":"2023-11-06T10:04:05.240Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T10:04:05.242Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2023-11-06T10:04:05.244Z"}
+{"level":"error","message":"Error fetching class and classTags data: ClassTag is not associated to Class!","name":"SequelizeEagerLoadingError","stack":"SequelizeEagerLoadingError: ClassTag is not associated to Class!\n    at Function._getIncludedAssociation (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:717:13)\n    at Function._validateIncludedElement (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:621:53)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:516:37\n    at Array.map (<anonymous>)\n    at Function._validateIncludedElements (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:511:39)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1728:14\n    at processImmediate (node:internal/timers:466:21)\nFrom previous event:\n    at Function.findAll (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1722:8)\n    at Object.getClassData (webpack-internal:///(api)/./src/helpers/api/repo/class-repo.ts:65:77)\n    at Object.allhandler [as get] (webpack-internal:///(api)/./src/pages/api/getAssets.ts:19:83)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:38:34)","timestamp":"2023-11-06T10:04:05.248Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T10:04:14.381Z"}
+{"level":"info","message":"Get All Tag DataTypes","timestamp":"2023-11-06T10:04:14.381Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T10:04:14.385Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2023-11-06T10:04:14.388Z"}
+{"level":"error","message":"Error fetching class and classTags data: ClassTag is not associated to Class!","name":"SequelizeEagerLoadingError","stack":"SequelizeEagerLoadingError: ClassTag is not associated to Class!\n    at Function._getIncludedAssociation (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:717:13)\n    at Function._validateIncludedElement (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:621:53)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:516:37\n    at Array.map (<anonymous>)\n    at Function._validateIncludedElements (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:511:39)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1728:14\n    at processImmediate (node:internal/timers:466:21)\nFrom previous event:\n    at Function.findAll (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1722:8)\n    at Object.getClassData (webpack-internal:///(api)/./src/helpers/api/repo/class-repo.ts:65:77)\n    at Object.allhandler [as get] (webpack-internal:///(api)/./src/pages/api/getAssets.ts:19:83)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:38:34)","timestamp":"2023-11-06T10:04:14.390Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T10:04:14.417Z"}
+{"level":"info","message":"Get All Tag DataTypes","timestamp":"2023-11-06T10:04:14.418Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T10:04:14.483Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2023-11-06T10:04:14.484Z"}
+{"level":"error","message":"Error fetching class and classTags data: ClassTag is not associated to Class!","name":"SequelizeEagerLoadingError","stack":"SequelizeEagerLoadingError: ClassTag is not associated to Class!\n    at Function._getIncludedAssociation (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:717:13)\n    at Function._validateIncludedElement (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:621:53)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:516:37\n    at Array.map (<anonymous>)\n    at Function._validateIncludedElements (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:511:39)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1728:14\n    at processImmediate (node:internal/timers:466:21)\nFrom previous event:\n    at Function.findAll (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1722:8)\n    at Object.getClassData (webpack-internal:///(api)/./src/helpers/api/repo/class-repo.ts:65:77)\n    at Object.allhandler [as get] (webpack-internal:///(api)/./src/pages/api/getAssets.ts:19:83)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:38:34)","timestamp":"2023-11-06T10:04:14.487Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T10:04:20.643Z"}
+{"level":"info","message":"Get All Tag DataTypes","timestamp":"2023-11-06T10:04:20.644Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T10:04:20.664Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2023-11-06T10:04:20.665Z"}
+{"level":"error","message":"Error fetching class and classTags data: ClassTag is not associated to Class!","name":"SequelizeEagerLoadingError","stack":"SequelizeEagerLoadingError: ClassTag is not associated to Class!\n    at Function._getIncludedAssociation (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:717:13)\n    at Function._validateIncludedElement (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:621:53)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:516:37\n    at Array.map (<anonymous>)\n    at Function._validateIncludedElements (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:511:39)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1728:14\n    at processImmediate (node:internal/timers:466:21)\nFrom previous event:\n    at Function.findAll (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1722:8)\n    at Object.getClassData (webpack-internal:///(api)/./src/helpers/api/repo/class-repo.ts:65:77)\n    at Object.allhandler [as get] (webpack-internal:///(api)/./src/pages/api/getAssets.ts:19:83)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:38:34)","timestamp":"2023-11-06T10:04:20.670Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T10:04:20.692Z"}
+{"level":"info","message":"Get All Tag DataTypes","timestamp":"2023-11-06T10:04:20.694Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T10:04:20.701Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2023-11-06T10:04:20.702Z"}
+{"level":"error","message":"Error fetching class and classTags data: ClassTag is not associated to Class!","name":"SequelizeEagerLoadingError","stack":"SequelizeEagerLoadingError: ClassTag is not associated to Class!\n    at Function._getIncludedAssociation (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:717:13)\n    at Function._validateIncludedElement (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:621:53)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:516:37\n    at Array.map (<anonymous>)\n    at Function._validateIncludedElements (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:511:39)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1728:14\n    at processImmediate (node:internal/timers:466:21)\nFrom previous event:\n    at Function.findAll (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1722:8)\n    at Object.getClassData (webpack-internal:///(api)/./src/helpers/api/repo/class-repo.ts:65:77)\n    at Object.allhandler [as get] (webpack-internal:///(api)/./src/pages/api/getAssets.ts:19:83)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:38:34)","timestamp":"2023-11-06T10:04:20.704Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T10:04:28.451Z"}
+{"level":"info","message":"Get All Tag DataTypes","timestamp":"2023-11-06T10:04:28.452Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T10:04:28.460Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2023-11-06T10:04:28.463Z"}
+{"level":"error","message":"Error fetching class and classTags data: ClassTag is not associated to Class!","name":"SequelizeEagerLoadingError","stack":"SequelizeEagerLoadingError: ClassTag is not associated to Class!\n    at Function._getIncludedAssociation (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:717:13)\n    at Function._validateIncludedElement (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:621:53)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:516:37\n    at Array.map (<anonymous>)\n    at Function._validateIncludedElements (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:511:39)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1728:14\n    at processImmediate (node:internal/timers:466:21)\nFrom previous event:\n    at Function.findAll (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1722:8)\n    at Object.getClassData (webpack-internal:///(api)/./src/helpers/api/repo/class-repo.ts:65:77)\n    at Object.allhandler [as get] (webpack-internal:///(api)/./src/pages/api/getAssets.ts:19:83)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:38:34)","timestamp":"2023-11-06T10:04:28.468Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T10:04:28.553Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2023-11-06T10:04:28.554Z"}
+{"level":"error","message":"Error fetching class and classTags data: ClassTag is not associated to Class!","name":"SequelizeEagerLoadingError","stack":"SequelizeEagerLoadingError: ClassTag is not associated to Class!\n    at Function._getIncludedAssociation (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:717:13)\n    at Function._validateIncludedElement (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:621:53)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:516:37\n    at Array.map (<anonymous>)\n    at Function._validateIncludedElements (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:511:39)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1728:14\n    at processImmediate (node:internal/timers:466:21)\nFrom previous event:\n    at Function.findAll (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1722:8)\n    at Object.getClassData (webpack-internal:///(api)/./src/helpers/api/repo/class-repo.ts:65:77)\n    at Object.allhandler [as get] (webpack-internal:///(api)/./src/pages/api/getAssets.ts:19:83)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:38:34)","timestamp":"2023-11-06T10:04:28.557Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T10:04:28.562Z"}
+{"level":"info","message":"Get All Tag DataTypes","timestamp":"2023-11-06T10:04:28.563Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-11-06T10:04:35.806Z"}
+{"level":"info","message":"AddClasses","timestamp":"2023-11-06T10:04:35.813Z"}
+{"level":"info","message":"AddValues","timestamp":"2023-11-06T10:04:35.814Z"}
+{"level":"info","message":"Address","timestamp":"2023-11-06T10:04:35.815Z"}
+{"level":"info","message":"Reason","timestamp":"2023-11-06T10:04:35.816Z"}
+{"level":"info","message":"Role","timestamp":"2023-11-06T10:04:35.817Z"}
+{"level":"info","message":"User","timestamp":"2023-11-06T10:04:35.818Z"}
+{"level":"info","message":"classTag","timestamp":"2023-11-06T10:04:35.819Z"}
+{"level":"info","message":"companyRecord","timestamp":"2023-11-06T10:04:35.820Z"}
+{"level":"info","message":"countryCodeModel","timestamp":"2023-11-06T10:04:35.821Z"}
+{"level":"info","message":"deleteRecord","timestamp":"2023-11-06T10:04:35.822Z"}
+{"level":"info","message":"object","timestamp":"2023-11-06T10:04:35.823Z"}
+{"level":"info","message":"otpVerify","timestamp":"2023-11-06T10:04:35.825Z"}
+{"level":"info","message":"parentJoinKey","timestamp":"2023-11-06T10:04:35.827Z"}
+{"level":"info","message":"phoneRecord","timestamp":"2023-11-06T10:04:35.829Z"}
+{"level":"info","message":"tagDataType","timestamp":"2023-11-06T10:04:35.830Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T10:04:35.839Z"}
+{"level":"info","message":"Error Handler","timestamp":"2023-11-06T10:04:35.840Z"}
+{"level":"error","message":"UnauthorizedError","timestamp":"2023-11-06T10:04:35.840Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-11-06T10:04:35.933Z"}
+{"level":"info","message":"AddClasses","timestamp":"2023-11-06T10:04:35.990Z"}
+{"level":"info","message":"AddValues","timestamp":"2023-11-06T10:04:35.993Z"}
+{"level":"info","message":"Address","timestamp":"2023-11-06T10:04:35.994Z"}
+{"level":"info","message":"Reason","timestamp":"2023-11-06T10:04:35.996Z"}
+{"level":"info","message":"Role","timestamp":"2023-11-06T10:04:36.000Z"}
+{"level":"info","message":"User","timestamp":"2023-11-06T10:04:36.002Z"}
+{"level":"info","message":"classTag","timestamp":"2023-11-06T10:04:36.006Z"}
+{"level":"info","message":"companyRecord","timestamp":"2023-11-06T10:04:36.007Z"}
+{"level":"info","message":"countryCodeModel","timestamp":"2023-11-06T10:04:36.010Z"}
+{"level":"info","message":"deleteRecord","timestamp":"2023-11-06T10:04:36.012Z"}
+{"level":"info","message":"object","timestamp":"2023-11-06T10:04:36.014Z"}
+{"level":"info","message":"otpVerify","timestamp":"2023-11-06T10:04:36.016Z"}
+{"level":"info","message":"parentJoinKey","timestamp":"2023-11-06T10:04:36.017Z"}
+{"level":"info","message":"phoneRecord","timestamp":"2023-11-06T10:04:36.019Z"}
+{"level":"info","message":"tagDataType","timestamp":"2023-11-06T10:04:36.021Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-06T10:04:36.039Z"}
+{"level":"info","message":"Error Handler","timestamp":"2023-11-06T10:04:36.039Z"}
+{"level":"error","message":"UnauthorizedError","timestamp":"2023-11-06T10:04:36.040Z"}
