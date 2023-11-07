@@ -7,9 +7,9 @@ import axios from 'axios';
 import Link from 'next/dist/client/link';
 import AddNewObject from './addnewobject';
 export default function SubObjectManagement(props: any) {
-    console.log({
-        "PROPS IN SUB-OBJECT": props
-    })
+    // console.log({
+    //     "PROPS IN SUB-OBJECT": props
+    // })
     const [toggleFilter, setToggleFilter] = useState(false);
     const [toggleArrow, setToggleArrow] = useState(false);
     const [toggleSort, setToggleSort] = useState(false);
@@ -41,17 +41,18 @@ export default function SubObjectManagement(props: any) {
             try {
                 await axios({
                     method: 'GET',
-                    url: `/api/getChildAssets?id=${props.defaultClass}`,
+                    // url: `/api/getChildAssets?id=${props.defaultClass}`,
+                    url: `/api/getChildAssets?id=2`,
                     headers: {
                         "Authorization": `Bearer ${tokenStr}`,
                         "Content-Type": "application/json"
                     }
                 }).then(function (response) {
                     if (response.status === 200) {
-                        console.log({
-                            "RESPONSE DATA": response.data
-                        })
-                        setSubClassData(response.data)
+                        // console.log({
+                        //     "RESPONSE DATA": response.data
+                        // })
+                        setSubClassData(response.data.data)
                     } else {
 
                     }
@@ -69,9 +70,10 @@ export default function SubObjectManagement(props: any) {
         setShowModal(classSelector.toggleAddObject)
     }, [classSelector.toggleAddObject])
 
-    console.log({
-        "CLASS SELECTOR": classSelector
-    })
+    // console.log({
+    //     "CLASS SELECTOR": classSelector,
+    //     "SUBCLASSDATA":subClassData
+    // })
 
 
 
@@ -95,9 +97,9 @@ export default function SubObjectManagement(props: any) {
             <div className='flex justify-between items-center py-2 px-4 '>
                 <div className='w-[350px]'>
                     <CustomDropSubClass
-                        data={classData}
+                        data={subClassData}
                         handleClick={handleDropDown}
-                        defaultClass={classData && classData.length > 0 ? classData[0].assetName : ""}
+                        defaultClass={subClassData && subClassData.length > 0 ? subClassData[0].S_No : 0}
                     />
                 </div>
 
