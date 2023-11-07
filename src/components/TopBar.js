@@ -22,11 +22,6 @@ export default function TopBar({ showNav, setShowNav }) {
   })
   const [userData, setUserData] = useState([]);
 
-  // useEffect(() => {
-  //   setUserData(sampleListData.singleUser)
-  //   localStorage.setItem("user",sampleListData.singleUser);
-  // }, [sampleListData])
-
   useEffect(() => {
     let access_token = localStorage.getItem('authToken');
     if (!access_token) {
@@ -56,11 +51,6 @@ export default function TopBar({ showNav, setShowNav }) {
     }
   }, [])
 
-
-  console.log({
-    userData:userData,
-    // access_token:access_token
-  })
 
   return (
     <div

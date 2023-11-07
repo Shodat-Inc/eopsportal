@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import Link from "next/link";
 import Image from "next/image";
 import axios from 'axios';
@@ -8,15 +8,11 @@ import styles from '../../styles/Common.module.css';
 import AlertMessage from '@/common/alertMessage';
 import FabricInfo from './fabricInfo';
 import Head from 'next/head';
-import { getSampleData } from '../../store/actions/getPostAction'
 import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 import { auth } from './firebase.config';
-import { userSignIn } from '@/store/actions/loginAction';
 
 export default function SignIn() {
-    const dispatch = useDispatch();
     const { push } = useRouter();
-    const [userData, setUserData] = useState([]);
     const [showPassword, setShowPassword] = useState({
         password: false
     });
@@ -28,24 +24,15 @@ export default function SignIn() {
         username: "",
         password: ""
     })
-    const [formIsValid, setFormIsValid] = useState(true);
     const [success, setSuccess] = useState(false);
     const [responseError, setResponseError] = useState(false);
-
     const [otpScreen, setOtpScreen] = useState(false);
     const [code, setcode] = useState(new Array(6).fill(""));
-    const [verified, setVerified] = useState(false);
     const [showTick, setShowTick] = useState(false);
     const [otpError, setOtpError] = useState(false);
     const [loader, setLoader] = useState(false);
     const [otpSent, setOtpSent] = useState(false);
     const [userPhone, setUserPhone] = useState("");
-    const [loginData, setLoginData] = useState();
-    // let loginReducerData = useSelector((state) => state.loginReducer.loginData)
-
-    // useEffect(() => {
-    //     setLoginData(loginReducerData);
-    // }, [loginReducerData])
 
     // Firebase OTP
     function onCaptchVerify() {
@@ -82,139 +69,69 @@ export default function SignIn() {
                     headers: {
                         "Content-Type": "application/json"
                     }
+                }).then(function (response) {
+                    console.log({ 
+                        "SUCCESS": response.data.data.firstName,
+                        "RESPONSE": response.data.success
+                     })
+                    if (response.data.success === true) {
+                        // Login Success
+                        let phoneNumber = response.data.data.phoneNumber;
+                        setUserPhone(phoneNumber);
+                        sessionStorage.setItem("authenticationUsername", response.data.data.username);
+                        localStorage.setItem("authenticationUsername", response.data.data.username);
+                        localStorage.setItem("userData", response.data.data);
+                        localStorage.setItem("authToken", response.data.data.token);
+
+                        signInWithPhoneNumber(auth, phoneNumber, appVerifier)
+                            .then((confirmationResult) => {
+                                window.confirmationResult = confirmationResult;
+                                console.log({
+                                    message: "OTP sent successfully!"
+                                })
+                                setOtpSent(true);
+                                setTimeout(() => {
+                                    setOtpScreen(true);
+                                    setLoader(false)
+                                }, 1000)
+                            })
+                            .catch((error) => {
+                                setOtpSent(false);
+                                setResponseError(true);
+                                console.log({
+                                    message: error
+                                })
+                            });
+
+                        setTimeout(() => {
+                            setSuccess(true);
+                        }, 1000)
+                    } else {
+                        setOtpScreen(false)
+                        setResponseError(true);
+                        setTimeout(() => {
+                            setFormData({
+                                username: "",
+                                password: ""
+                            })
+                            setErrors({
+                                username: "",
+                                password: ""
+                            })
+                        }, 100);
+                        setTimeout(() => {
+                            setResponseError(false)
+                        }, 2000)
+                    }
+                }).catch(function (error) {
+                    console.log({ ERROR: error })
                 })
-                    .then(function (response) {
-                        console.log({ SUCCESS: response.data.data.firstName })
-                        if (response.data.success === true) {
-                            // Login Success
-                            let phoneNumber = "+919571373757";
-                            setUserPhone(phoneNumber);
-                            sessionStorage.setItem("authenticationUsername", response.data.data.username);
-                            localStorage.setItem("authenticationUsername", response.data.data.username);
-                            localStorage.setItem("userData", response.data.data);
-                            localStorage.setItem("authToken", response.data.data.token);
-
-                            signInWithPhoneNumber(auth, phoneNumber, appVerifier)
-                                .then((confirmationResult) => {
-                                    window.confirmationResult = confirmationResult;
-                                    console.log({
-                                        message: "OTP sent successfully!"
-                                    })
-                                    setOtpSent(true);
-                                    setTimeout(() => {
-                                        setOtpScreen(true);
-                                        setLoader(false)
-                                    }, 1000)
-                                })
-                                .catch((error) => {
-                                    setOtpSent(false);
-                                    setResponseError(true);
-                                    console.log({
-                                        message: error
-                                    })
-                                });
-
-                            setTimeout(() => {
-                                setSuccess(true);
-                                // setOtpScreen(true)
-                            }, 1000)
-                        } else {
-                            // Login Failed
-                            setOtpScreen(false)
-                            setResponseError(true);
-                            setTimeout(() => {
-                                setFormData({
-                                    username: "",
-                                    password: ""
-                                })
-                                setErrors({
-                                    username: "",
-                                    password: ""
-                                })
-                            }, 100);
-                            setTimeout(() => {
-                                setResponseError(false)
-                            }, 2000)
-                        }
-                    })
-                    .catch(function (error) {
-                        console.log({ ERROR: error })
-                    })
             } catch (err) {
                 console.log("err in login action:", err)
-            }            
+            }
         }
-
     }
 
-    // const submitForm = (event) => {
-    //     event.preventDefault()
-    //     if (handleValidation()) {
-
-    //         setLoader(true)
-
-    //         onCaptchVerify();
-
-    //         const appVerifier = window.recaptchaVerifier;
-
-    //         const matched = userData.filter((item) => {
-    //             return item.username === formData.username && item.password === formData.password
-    //         })
-    //         if (matched && matched.length > 0) {
-    //             let phoneNumber = matched[0].phoneNumber;
-    //             console.log({
-    //                 matched: matched[0].phoneNumber
-    //             })
-    //             setUserPhone(phoneNumber);
-    //             sessionStorage.setItem("authenticationUsername", matched[0].username);
-    //             localStorage.setItem("authenticationUsername", matched[0].username);
-
-    //             signInWithPhoneNumber(auth, phoneNumber, appVerifier)
-    //                 .then((confirmationResult) => {
-    //                     window.confirmationResult = confirmationResult;
-    //                     console.log({
-    //                         message: "OTP sent successfully!"
-    //                     })
-    //                     setOtpSent(true);
-    //                     setTimeout(() => {
-    //                         setOtpScreen(true);
-    //                         setLoader(false)
-    //                     }, 1000)
-    //                 })
-    //                 .catch((error) => {
-    //                     setOtpSent(false);
-    //                     setResponseError(true);
-    //                     console.log({
-    //                         message: error
-    //                     })
-    //                 });
-
-    //             setTimeout(() => {
-    //                 setSuccess(true);
-    //                 // setOtpScreen(true)
-    //             }, 1000)
-    //         } else {
-    //             setOtpScreen(false)
-    //             setResponseError(true);
-    //             setTimeout(() => {
-    //                 setFormData({
-    //                     username: "",
-    //                     password: ""
-    //                 })
-    //                 setErrors({
-    //                     username: "",
-    //                     password: ""
-    //                 })
-    //             }, 100);
-    //             setTimeout(() => {
-    //                 setResponseError(false)
-    //             }, 2000)
-    //         }
-    //     }
-
-    // }
-
-    // Phone Number With Starts
     const phoneNumberWithStar = (phone) => {
         let last4Digit = phone.substr(phone.length - 4);
         let lengthOfPhone = phone.length - 4;
@@ -254,7 +171,6 @@ export default function SignIn() {
             .confirm(otp)
             .then(async (res) => {
                 setTimeout(() => {
-                    setVerified(true);
                     setLoader(false);
                     setOtpScreen(false);
                     setTimeout(() => {
@@ -272,10 +188,6 @@ export default function SignIn() {
                 });
             });
     }
-
-    useEffect(() => {
-        dispatch(getSampleData());
-    }, [dispatch]);
 
     // Show Hide Eye Icon
     const hideShow = () => {
@@ -299,7 +211,6 @@ export default function SignIn() {
             [targetName]: ""
 
         })
-        setFormIsValid(false);
     };
 
     // Check for validations
@@ -325,7 +236,6 @@ export default function SignIn() {
 
         // if any field is invalid - then we need to update our state
         if (!formIsValid) {
-            setFormIsValid(false);
             setErrors(newErrorsState);
         }
 
