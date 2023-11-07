@@ -14,6 +14,7 @@ const SideBar = forwardRef(({ showNav, setShowNav }, ref) => {
   const [eopspro, setEopspro] = useState(false);
   const [eopsinsight, setEopinsight] = useState(false);
   const [modelCatalog, setModelCatalog] = useState(false);
+  const [aiModelDetection, setAiModelDetection] = useState(false);
 
   const arr = router.pathname.split("/");
   const splitPathName = arr.filter(n => n);
@@ -105,7 +106,50 @@ const SideBar = forwardRef(({ showNav, setShowNav }, ref) => {
           </div>
         </Link>
 
-        <Link href="/dashboard/eopswatch" className="px-3">
+        <Link href="/dashboard/aimodaldetection" className="px-3">
+          <div
+            className={`pl-3 text-sm font-OpenSans font-light py-3 px-3 rounded rounded-lg text-center cursor-pointer mb-3 flex items-center transition-colors ${router.pathname == "/dashboard/eopswatch" || splitPathName.includes("aimodaldetection")
+              ? "bg-[#2B2B2B] text-white"
+              : "text-white hover:bg-yellow-951 hover:text-black"
+              }`}
+            onMouseOver={() => setAiModelDetection(true)}
+            onMouseOut={() => setAiModelDetection(false)}
+          >
+            <div className="mr-2">
+              {
+                aiModelDetection ?
+                  <Image
+                    src={
+                      router.pathname == "/dashboard/aimodaldetection" || splitPathName.includes("aimodaldetection")
+                        ? '/img/eops-watch-black-3.svg'
+                        : '/img/eops-watch-black-3.svg'
+                    }
+                    alt="clock"
+                    className={`w-32 h-auto ${styles.sideicons}`}
+                    height={25}
+                    width={25}
+                  />
+                  :
+                  <Image
+                    src={
+                      router.pathname == "/dashboard/aimodaldetection" || splitPathName.includes("aimodaldetection")
+                        ? '/img/eops-watch-black-3.svg'
+                        : '/img/eops-watch-white-3.svg'
+                    }
+                    alt="clock"
+                    className={`w-32 h-auto ${styles.sideicons}`}
+                    height={25}
+                    width={25}
+                  />
+              }
+            </div>
+            <div className="ml-3">
+              <p>AI Model Detection</p>
+            </div>
+          </div>
+        </Link>
+
+        <Link href="/dashboard/eopswatch" className="px-3 hidden">
           <div
             className={`pl-3 text-sm font-OpenSans font-light py-3 px-3 rounded rounded-lg text-center cursor-pointer mb-3 flex items-center transition-colors ${router.pathname == "/dashboard/eopswatch" || splitPathName.includes("eopswatch")
               ? "bg-[#2B2B2B] text-white"
@@ -148,7 +192,7 @@ const SideBar = forwardRef(({ showNav, setShowNav }, ref) => {
           </div>
         </Link>
 
-        <Link href="/dashboard/eopstrace" className="px-3">
+        <Link href="/dashboard/eopstrace" className="px-3 hidden">
           <div
             className={`pl-3 text-sm font-OpenSans font-light py-3 px-3 rounded rounded-lg text-center cursor-pointer mb-3 flex items-center transition-colors ${router.pathname == "/dashboard/eopstrace" || splitPathName.includes("eopstrace")
               ? "bg-[#2B2B2B] text-white"
