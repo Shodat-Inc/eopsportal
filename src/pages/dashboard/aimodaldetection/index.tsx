@@ -34,6 +34,7 @@ export default function AiModelDetection() {
         setSelectClass('');
         setShowObject(false);
         setShowSubClass(false)
+        setSelectObject('')
     }
     const handleObjectFunction = (e: any) => {
         setSelectObject(e.target.value);
