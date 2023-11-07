@@ -1,23 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import Layout from "../../../components/Layout";
-import Image from "next/dist/client/image";
+import Image from "next/image";
 import Link from "next/link";
 import axios from "axios";
 import ClassManagement from "./classmanagement";
 import ObjectManagement from "./objectmanagement";
 import SubObjectManagement from "./subobjectmanagement";
-import { setSelectedClass, toggleAddNewObjectModel, getAllClasses } from "@/store/actions/classAction";
+import { setSelectedClass, toggleAddNewObjectModel } from "@/store/actions/classAction";
 
 export default function AssetManagement() {
     const dispatch = useDispatch<any>();
     const [tab, setTab] = useState(1);
     const [classData, setClassData] = useState([] as any);
     const [defaultClass, setDefaultClass] = useState("");
-    const [defaultClassID, setDefaultClassID] = useState(0);
     const [nav, setNav] = useState({} as any)
-    const getSelClass = useSelector((state: any) => state.classReducer);
-    const getAllClass = useSelector((state: any) => state.classReducer.getAllClass);
+    const getSelClass = useSelector((state: any) => state.classReducer);;
     let access_token = "" as any;
     if (typeof window !== 'undefined') {
         access_token = localStorage.getItem('authToken')
@@ -39,17 +37,13 @@ export default function AssetManagement() {
                         setClassData(response.data.data)
                     }
                 }).catch(function (error) {
-                    console.log(error)
+                    console.log("ERROR IN AXIOS CATCH BLOCK")
                 })
             } catch (err) {
-                console.log("err in action:", err)
+                console.log("ERROR IN TRY CATCH BLOCK:", err)
             }
         })();
     }, []);
-
-    // console.log({
-    //     classData: classData[0]?.className
-    // })
 
     useEffect(() => {
         setNav(getSelClass.classBreadcrumbs)
@@ -58,7 +52,6 @@ export default function AssetManagement() {
     useEffect(() => {
         if (classData && classData.length > 0) {
             setDefaultClass(classData[0]?.className)
-            setDefaultClassID(classData[0]?.id)
             dispatch(setSelectedClass(classData[0]?.className))
         }
     }, [classData, dispatch])

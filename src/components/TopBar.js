@@ -28,10 +28,6 @@ export default function TopBar({ showNav, setShowNav }) {
       push("/authentication/signin");
     } else {
       setUserData(localStorage.getItem('userData'))
-      console.log({
-        message: "valid auth token found!",
-        authToken: access_token
-      })
     }
   }, [])
 

@@ -37,26 +37,6 @@ export default function Objects(localData: any) {
     const [subObj, setSebObj] = useState({} as any);
     const [deleteModal, setDeleteModal] = useState(false);
 
-
-    // Get JSON data on page load
-    // const fetchDataForParent = () => {
-    //     axios.get("/api/getAssets").then((response) => {
-    //         if (response.data) {
-    //             const filtered = response.data.filter((item: any) => {
-    //                 return item.assetName === parentAsset.assets;
-    //             });
-    //             if (filtered && filtered.length > 0) {
-    //                 setGetParentData(filtered[0].assetkey);
-    //             }
-    //         }
-    //     });
-    // };
-    // useEffect(() => {
-    //     fetchDataForParent();
-    //     if (fetchDataForParent.length) return;
-    // }, [parentAsset])
-
-
     // Get JSON data on page load
     const fetchData = () => {
         axios.get("/api/getObjects").then((response) => {
