@@ -22,7 +22,6 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     }
     const reqData: CreateUser = req.body;
     const {
-      username,
       email,
       firstName,
       lastName,
@@ -40,6 +39,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     //company record
     const { companyName } = recordData1;
     //user Data
+    const username = firstName.concat(lastName);
     const userData = await usersRepo.create({
       username,
       email,
@@ -49,10 +49,8 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       roleId,
       parentId,
     });
-    if(!userData.success){
-      return res.send(
-        sendResponseData(false, userData.message, [])
-      );
+    if (!userData.success) {
+      return res.send(sendResponseData(false, userData.message, []));
     }
     //address data
     const addressData = await addressRepo.create({
@@ -77,9 +75,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       isActive,
       userId: userData.data.id,
     });
-    return res.send(
-      sendResponseData(true, message.success.userCreated, [])
-    );
+    return res.send(sendResponseData(true, message.success.userCreated, []));
   } catch (error: any) {
     loggerError.error("error in createUsers API ", error);
     res.status(error.response.status).json(message.error.cantCreateUser);

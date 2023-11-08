@@ -7,7 +7,6 @@ export default apiHandler({
 async function updateClass(req: any, res: any) {
   loggerInfo.info("Update Class and Class Tags");
   const reqData = req.body;
-  const resObj = {};
   if (!reqData) {
     return res.status(400).send({ message: "Update Data is required" });
   }

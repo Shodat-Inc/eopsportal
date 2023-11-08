@@ -20,7 +20,7 @@ export const usersRepo = {
 
 async function authenticate(data: any) {
   try {
-    let { username, password } = data;
+    let { email, password } = data;
     const user = await db.User.scope("withHash").findOne({
       attributes: [
         "id",
@@ -32,7 +32,7 @@ async function authenticate(data: any) {
         "roleId",
         "parentId",
       ],
-      where: { username: username },
+      where: { email: email },
     });
     if (!user) {
       return sendResponseData(false, message.error.userNotFound, {});
@@ -138,7 +138,7 @@ async function create(params: any) {
   try {
     // validate
     let user_data = await db.User.findOne({
-      where: { username: params.username },
+      where: { email: params.email },
     });
     if (user_data) {
       return sendResponseData(false, message.error.alreadyExist, {});

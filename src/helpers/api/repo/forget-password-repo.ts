@@ -35,7 +35,7 @@ async function verifyUser(params: any) {
     return sendResponseData(true, "Token Send", result);
   } catch (error: any) {
     loggerError.error("Error in Forget Password Repo");
-    return sendResponseData(false, "Error in Service", error);
+    return sendResponseData(false, "Incorrect Email", error);
   }
 }
 
