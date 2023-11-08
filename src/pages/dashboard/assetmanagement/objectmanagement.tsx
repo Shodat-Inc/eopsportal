@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import styles from '../../../styles/Common.module.css';
 import Image from "next/image";
-import CustomDrop from '@/common/customdrop';
 import axios from 'axios';
 import Link from 'next/dist/client/link';
 import { setSelectedClass, setClassBreadcrumb, selectedClassDataAction } from '@/store/actions/classAction';
@@ -12,15 +11,34 @@ export default function ObjectManagement(props: any) {
     //     "OBJECT MANAGEMENT": props
     // })
     const dispatch = useDispatch<any>();
+    const [chooseAsset, setChooseAsset] = useState(0);
+
     const [toggleFilter, setToggleFilter] = useState(false);
     const [toggleArrow, setToggleArrow] = useState(false);
     const [toggleSort, setToggleSort] = useState(false);
-    const [chooseAssetName, setChooseAssetName] = useState("");
     const [actions, setActions] = useState(false);
     const [actionCount, setActionCount] = useState(1);
-    const [objID, setObjID] = useState("");
-    const [defaultClass, setDefaultClass] = useState(0)
+    const [toggleAsset, setToggleAsset] = useState(false);
 
+    // Use Effect to set default dropdown selector
+    useEffect(() => {
+        if (props.classData && props.classData.length >= 0) {
+            setChooseAsset(props.classData[0].id);
+        }
+    }, [props.classData])
+
+    // Function to get className based on ID
+    function getClassNameFunction(id: any) {
+        let data = [] as any;
+        if (props.classData && props.classData.length >= 0) {
+            data = props.classData.filter(function(item:any){
+                return item.id === id;
+             })
+        }
+        return data;
+    }
+
+    // Toggle filters
     const toggleFilterFunction = () => {
         setToggleArrow(!toggleArrow);
         setToggleFilter(!toggleFilter);
@@ -29,60 +47,95 @@ export default function ObjectManagement(props: any) {
         setToggleSort(!toggleSort)
     }
 
+    // UseEffect to dispatch an action
     useEffect(() => {
-        setChooseAssetName(props.classData[0]?.className);
-        setDefaultClass(props.classData[0]?.id)
         dispatch(setSelectedClass(props.classData[0]?.id))
         dispatch(selectedClassDataAction(props.classData[0]))
     }, [props.classData, dispatch])
 
-    const handleDropDown = (item: any) => {
-        dispatch(setSelectedClass(item))
-        // setChooseAssetName(item);
-        setDefaultClass(item);
-        const filter = props.classData && props.classData.length >=0 && props.classData.filter((item: any) => {
-            return item.id === item
-        })
-        // console.log({
-        //     "FILTERED ITEM": filter,
-        //     "props.classData":props.classData,
-        //     "ITEMS HERE": item
-        // })
-        if (filter) {
-            setChooseAssetName(filter[0]?.className)
-        }
-    }
+
+    // Toggle dropdown options to open in table
     const toggleActions = (item: any) => {
         setActionCount(item);
         setActions(!actions);
     }
-    const selectedAction = (item: any) => {
-        setActions(false);
-    }
+
+    // function to create breadcrumb
     const takeMeToSubObjectComponent = (item: any) => {
         let abc = {
             "flow": "Object Management",
-            "class": chooseAssetName,
-            "classObjKey": chooseAssetName === "Vehicles" ? "VIN" : "PlantID",
+            "class": getClassNameFunction(chooseAsset)[0]?.className,
+            "classObjKey": getClassNameFunction(chooseAsset)[0]?.className === "Vehicles" ? "VIN" : "PlantID",
             "classObjValue": item,
             "subClass": "Battery",
             "subClassObjKey": "",
             "subClassObjValue": ""
         }
         dispatch(setClassBreadcrumb(abc))
-        setObjID(item);
         props.handelObject(item)
     }
+
+    // Function to toggle the class dropdown
+    const toggleDropdownFunction = () => {
+        setToggleAsset(!toggleAsset)
+    }
+    const selectItemFunction = (item: any) => {
+        setChooseAsset(item);
+        setToggleAsset(false);
+        // dispatch(setSelectedClass(item))
+    }
+
+    useEffect(()=>{
+        dispatch(setSelectedClass(chooseAsset))
+    }, [chooseAsset, dispatch])
+
     return (
         <div className='py-3 font-OpenSans'>
             {/* Title, search and filters */}
             <div className='flex justify-between items-center py-2 px-4 '>
                 <div className='w-[350px]'>
-                    <CustomDrop
-                        data={props.classData}
-                        handleClick={handleDropDown}
-                        defaultClass={defaultClass}
-                    />
+
+                    {/* Class dropdown */}
+                    <div>
+                        <div
+                            className="border rounded-xl border-gray-500 h-[55px] pl-2 pr-5 relative flex items-center justify-start bg-white w-[80%] cursor-pointer"
+                            onClick={toggleDropdownFunction}
+                        >
+                            <label className="absolute text-sm top-[-10px] left-2 pl-2 pr-2 bg-white">Choose Industry type</label>
+                            <Image
+                                src="/img/arrow-down-black.svg"
+                                alt="arrow-down"
+                                height={20}
+                                width={20}
+                                className={`absolute right-3 top-4 ${toggleAsset ? 'rotate-180' : 'rotate-0'}`}
+                            />
+                            <span className="text-lg text-black pl-2">
+                                {getClassNameFunction(chooseAsset)[0]?.className}
+                            </span>
+                        </div>
+
+                        {toggleAsset ?
+                            <div className={`h-52 border rounded-xl border-gray-500 h-auto max-h-[250px] w-[400px]  absolute flex items-start justify-start mt-1 overflow-hidden overflow-y-auto bg-white ${styles.scroll} z-10`}>
+                                    <ul className="p-0 m-0 w-full">
+                                        {
+                                            props.classData && props.classData.length >= 0 && props.classData.map((item: any, index: any) => (
+                                                <li
+                                                    className="px-5 py-2 bg-white cursor-pointer hover:bg-yellow-951 w-full font-normal"
+                                                    onClick={() => selectItemFunction(item.id)}
+                                                    key={index}
+                                                >
+                                                    <span>{item.className}</span>
+                                                </li>
+                                            ))
+                                        }
+                                    </ul>
+                                
+                            </div>
+                            :
+                            null
+                        }
+                    </div>
+
                 </div>
 
                 <div className='flex justify-start items-center'>

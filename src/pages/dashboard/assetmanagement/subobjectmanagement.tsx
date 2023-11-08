@@ -1,25 +1,26 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import styles from '../../../styles/Common.module.css';
 import Image from "next/image";
-import CustomDropSubClass from './customdropsubclass';
 import axios from 'axios';
 import Link from 'next/dist/client/link';
 import AddNewObject from './addnewobject';
 export default function SubObjectManagement(props: any) {
+
+    const getClassStates = useSelector((state: any) => state.classReducer);
     // console.log({
-    //     "PROPS IN SUB-OBJECT": props
+    //     "PROPS IN SUB-OBJECT": props,
+    //     "GET CLASS STATES": getClassStates.selectedClass,
     // })
     const [toggleFilter, setToggleFilter] = useState(false);
     const [toggleArrow, setToggleArrow] = useState(false);
     const [toggleSort, setToggleSort] = useState(false);
-    const [classData, setClassData] = useState([] as any);
-    const [chooseAsset, setChooseAsset] = useState('Vehicles');
+    const [chooseAsset, setChooseAsset] = useState(0);
     const [actions, setActions] = useState(false);
     const [actionCount, setActionCount] = useState(1);
-    const [showModal, setShowModal] = useState(false);
 
-    const [subClassData, setSubClassData] = useState([] as any)
+    const [subClassData, setSubClassData] = useState([] as any);
+    const [toggleAsset, setToggleAsset] = useState(false);
 
     const classSelector = useSelector((state: any) => state.classReducer);
     const toggleFilterFunction = () => {
@@ -41,8 +42,8 @@ export default function SubObjectManagement(props: any) {
             try {
                 await axios({
                     method: 'GET',
-                    // url: `/api/getChildAssets?id=${props.defaultClass}`,
-                    url: `/api/getChildAssets?id=2`,
+                    url: `/api/getChildAssets?id=${getClassStates.selectedClass}`,
+                    // url: `/api/getChildAssets?id=2`,
                     headers: {
                         "Authorization": `Bearer ${tokenStr}`,
                         "Content-Type": "application/json"
@@ -52,6 +53,7 @@ export default function SubObjectManagement(props: any) {
                         // console.log({
                         //     "RESPONSE DATA": response.data
                         // })
+                        setChooseAsset(response.data.data[0]?.S_No)
                         setSubClassData(response.data.data)
                     } else {
 
@@ -65,42 +67,100 @@ export default function SubObjectManagement(props: any) {
         })();
     }, [props.defaultClass]);
 
-
-    useEffect(() => {
-        setShowModal(classSelector.toggleAddObject)
-    }, [classSelector.toggleAddObject])
-
-    // console.log({
-    //     "CLASS SELECTOR": classSelector,
-    //     "SUBCLASSDATA":subClassData
-    // })
-
-
-
-    const handleDropDown = (item: any) => {
-        setChooseAsset(item)
+    // Function to get className based on ID
+    function getClassNameFunction(id: any) {
+        let data = [] as any;
+        if (subClassData && subClassData.length >= 0) {
+            data = subClassData.filter(function (item: any) {
+                return item.S_No === id;
+            })
+        }
+        return data;
     }
+
+
+    // Toogle table option actions
     const toggleActions = (item: any) => {
         setActionCount(item);
         setActions(!actions);
     }
-    const selectedAction = (item: any) => {
-        setActions(false);
+
+
+    // Dropdown Function
+    const toggleDropdownFunction = () => {
+        setToggleAsset(!toggleAsset)
     }
-    const backToObect = () => {
-        props.handleSubObject("Vehicles")
+    const selectItemFunction = (item: any) => {
+        setChooseAsset(item);
+        setToggleAsset(false);
     }
+
+    // console.log({
+    //     "CHOOSE ASSET": chooseAsset,
+    //     "SUB CLASS DATA": subClassData
+    // })
     return (
         <div className='py-3 font-OpenSans'>
 
             {/* Title, search and filters */}
             <div className='flex justify-between items-center py-2 px-4 '>
                 <div className='w-[350px]'>
-                    <CustomDropSubClass
-                        data={subClassData}
-                        handleClick={handleDropDown}
-                        defaultClass={subClassData && subClassData.length > 0 ? subClassData[0].S_No : 0}
-                    />
+                    {/* Dropdown for subclasses */}
+                    <div>
+                        <div
+                            className="border rounded-xl border-gray-500 h-[55px] pl-2 pr-5 relative flex items-center justify-start bg-white w-[80%] cursor-pointer"
+                            onClick={toggleDropdownFunction}
+                        >
+                            <label className="absolute text-sm top-[-10px] left-2 pl-2 pr-2 bg-white">Choose Sub Class</label>
+                            <Image
+                                src="/img/arrow-down-black.svg"
+                                alt="arrow-down"
+                                height={24}
+                                width={24}
+                                className={`absolute right-3 top-4 ${toggleAsset ? 'rotate-180' : 'rotate-0'}`}
+                            />
+                            <span className="text-lg text-black pl-2">
+                                {getClassNameFunction(chooseAsset)[0]?.className}
+                            </span>
+                        </div>
+
+                        {toggleAsset ?
+                            <div className={`h-52 border rounded-xl border-gray-500 h-auto max-h-[250px] w-[400px]  absolute flex items-start justify-start flex-wrap flex-col mt-1 overflow-hidden overflow-y-auto bg-white ${styles.scroll} z-10`}>
+                                <div className="flex relative w-full mt-3 mb-3 pl-3 pr-3">
+                                    <Image
+                                        src="/img/search-icon-gray.svg"
+                                        alt="search"
+                                        height={22}
+                                        width={22}
+                                        className="absolute top-[11px] left-5"
+                                    />
+                                    <input
+                                        type="text"
+                                        placeholder={`Search`}
+                                        id="searchobjects"
+                                        name="searchobjects"
+                                        className="border border-gray-969 rounded-lg h-[44px] w-full pl-10 pr-2"
+                                        autoComplete="off"
+                                    />
+                                </div>
+                                <ul className="p-0 m-0 w-full">
+                                    {
+                                        subClassData.map((item: any, index: any) => (
+                                            <li
+                                                className="px-5 py-2 bg-white cursor-pointer hover:bg-yellow-951 w-full font-normal"
+                                                onClick={() => selectItemFunction(item.S_No)}
+                                                key={index}
+                                            >
+                                                <span>{item.className}</span>
+                                            </li>
+                                        ))
+                                    }
+                                </ul>
+                            </div>
+                            :
+                            null
+                        }
+                    </div>
                 </div>
 
                 <div className='flex justify-start items-center'>

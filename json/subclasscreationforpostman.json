@@ -1,7 +1,7 @@
 {
   "className": "Battery",
-  "superParentId": 1,
-  "parentId": 1,
+  "superParentId": 2,
+  "parentId": 2,
   "parentJoinKey": [
     1,
     2
@@ -33,8 +33,8 @@
 
 {
   "className": "Tire",
-  "superParentId": 1,
-  "parentId": 1,
+  "superParentId": 2,
+  "parentId": 2,
   "parentJoinKey": [
     1,
     2
@@ -70,8 +70,8 @@
 
 {
   "className": "Walls",
-  "superParentId": 2,
-  "parentId": 2,
+  "superParentId": 1,
+  "parentId": 1,
   "parentJoinKey": [
     7
   ],
@@ -108,8 +108,8 @@
 
 {
   "className": "Pipes",
-  "superParentId": 2,
-  "parentId": 2,
+  "superParentId": 1,
+  "parentId": 1,
   "parentJoinKey": [
     7
   ],
@@ -145,3 +145,84 @@
   ]
 }
 
+
+
+
+
+
+
+
+{
+  "className": "Manufacturing Plant",
+  "tags": [
+    {
+      "tagName": "PlantID",
+      "dataTypeId": 1
+    },
+    {
+      "tagName": "Street",
+      "dataTypeId": 6
+    },
+    {
+      "tagName": "City",
+      "dataTypeId": 6
+    },
+    {
+      "tagName": "State",
+      "dataTypeId": 6
+    },
+    {
+      "tagName": "Zipcode",
+      "dataTypeId": 6
+    },
+    {
+      "tagName": "Country",
+      "dataTypeId": 6
+    },
+    {
+      "tagName": "Name",
+      "dataTypeId": 6
+    },
+    {
+      "tagName": "Description",
+      "dataTypeId": 6
+    }
+  ]
+}
+
+
+
+
+{
+  "className": "Vehicles",
+  "tags": [
+    {
+      "tagName": "VIN",
+      "dataTypeId": 6
+    },
+    {
+      "tagName": "MfgDate",
+      "dataTypeId": 6
+    },
+    {
+      "tagName": "Model",
+      "dataTypeId": 6
+    },
+    {
+      "tagName": "AssemblyPlant",
+      "dataTypeId": 6
+    },
+    {
+      "tagName": "LotNo",
+      "dataTypeId": 6
+    },
+    {
+      "tagName": "ModelYear",
+      "dataTypeId": 6
+    },
+    {
+      "tagName": "Type",
+      "dataTypeId": 6
+    }
+  ]
+}

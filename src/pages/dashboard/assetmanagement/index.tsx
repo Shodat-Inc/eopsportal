@@ -15,7 +15,7 @@ export default function AssetManagement() {
     const [classData, setClassData] = useState([] as any);
     const [defaultClass, setDefaultClass] = useState("");
     const [nav, setNav] = useState({} as any)
-    const getSelClass = useSelector((state: any) => state.classReducer);;
+    const getSelClass = useSelector((state: any) => state.classReducer);
     let access_token = "" as any;
     if (typeof window !== 'undefined') {
         access_token = localStorage.getItem('authToken')
@@ -52,7 +52,7 @@ export default function AssetManagement() {
     useEffect(() => {
         if (classData && classData.length > 0) {
             setDefaultClass(classData[0]?.className)
-            dispatch(setSelectedClass(classData[0]?.className))
+            dispatch(setSelectedClass(classData[0]?.id))
         }
     }, [classData, dispatch])
 
@@ -88,6 +88,7 @@ export default function AssetManagement() {
     const openAddObjectModal = () => {
         dispatch(toggleAddNewObjectModel(true));
     }
+
     return (
         <div className="flex font-OpenSans">
 

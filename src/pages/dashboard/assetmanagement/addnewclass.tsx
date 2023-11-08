@@ -1,16 +1,16 @@
 import React, { useState, useRef, useEffect } from "react";
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import styles from '../../../styles/Common.module.css';
-import { useRouter } from 'next/router'
 import Router from 'next/router'
 import Image from "next/image";
+import axios from 'axios';
+import { useRouter } from 'next/router'
 import { createNewClass } from "@/store/actions/classAction";
 import Layout from "../../../components/Layout";
 import NoDataFound from "../../../common/nodatafound";
 import { getAssetsData } from "../../../lib/getassets";
 import Link from "next/link";
 import Template from "../template";
-import axios from 'axios';
 import AlertMessage from "@/common/alertMessage";
 import moment from "moment";
 import { setSelectedClass } from "@/store/actions/classAction";
@@ -19,11 +19,11 @@ import ObjectModal from "./objectmodal";
 
 export default function AddNewClass(props: any) {
     const dispatch = useDispatch<any>();
-    const [showModal, setShowModal] = useState(false);
+    // const [showModal, setShowModal] = useState(false);
     const [success, setSuccess] = useState(false);
     const assetname = useRef("");
-    const [dataTypes, setDataTypes] = useState<any[]>([]);
-    const router = useRouter();
+    // const [dataTypes, setDataTypes] = useState<any[]>([]);
+    // const router = useRouter();
     const [allTags, setAllTags] = useState<any[]>([]);
     const [newTag, setNewTag] = useState<string>("");
     const [showInput, setShowInput] = useState(false);
@@ -31,18 +31,17 @@ export default function AddNewClass(props: any) {
     const [toggleDT, setToggleDT] = useState(false);
     const [dataType, setDataType] = useState("");
     const [assetDataType, setAssetDataType] = useState<any[]>([]);
-    const [showObjectModal, setShowObjectModal] = useState(false);
     const [chooseAsset, setChooseAsset] = useState("");
     const [toggleAsset, setToggleAsset] = useState(false);
     const [dtObject, setDtObject] = useState<any[]>([]);
-    const [deleteModal, setDeleteModal] = useState(false);
+    // const [deleteModal, setDeleteModal] = useState(false);
     let access_token = "" as any;
     if (typeof window !== 'undefined') {
         access_token = localStorage.getItem('authToken')
     }
     const closeModal = () => {
         props.handleClick(false);
-        setShowModal(false);
+        // setShowModal(false);
         setShowInput(false);
         setShowHideAddTagButton(false)
         setToggleDT(false);
@@ -52,7 +51,7 @@ export default function AddNewClass(props: any) {
     }
     const cancelModal = () => {
         props.handleClick(false);
-        setShowModal(false);
+        // setShowModal(false);
         setAllTags([]);
     }
 
@@ -175,7 +174,7 @@ export default function AddNewClass(props: any) {
                 }
             }).then(function (response) {
                 if (response) {
-                    setShowModal(false);
+                    // setShowModal(false);
                     setSuccess(true)
                     setAllTags([]);
 
@@ -193,9 +192,9 @@ export default function AddNewClass(props: any) {
     }
 
     // Delete Asset
-    const deleteAsset = (assetID: any) => {
-        setDeleteModal(true);
-    }
+    // const deleteAsset = (assetID: any) => {
+    //     setDeleteModal(true);
+    // }
 
 
     // Show Choose Asset List
@@ -230,9 +229,9 @@ export default function AddNewClass(props: any) {
     }
 
 
-    const handleDeleteFunction = () => {
-        setDeleteModal(false)
-    }
+    // const handleDeleteFunction = () => {
+    //     setDeleteModal(false)
+    // }
 
 
     return (
