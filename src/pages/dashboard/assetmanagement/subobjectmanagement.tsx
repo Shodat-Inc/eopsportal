@@ -95,10 +95,10 @@ export default function SubObjectManagement(props: any) {
         setToggleAsset(false);
     }
 
-    // console.log({
-    //     "CHOOSE ASSET": chooseAsset,
-    //     "SUB CLASS DATA": subClassData
-    // })
+    console.log({
+        "CHOOSE ASSET": chooseAsset,
+        "SUB CLASS DATA": subClassData
+    })
     return (
         <div className='py-3 font-OpenSans'>
 
@@ -290,7 +290,12 @@ export default function SubObjectManagement(props: any) {
                 </table>
             </div>
 
-            <AddNewObject show={classSelector.toggleAddObject && classSelector.toggleAddObject} />
+            <AddNewObject
+                show={classSelector.toggleAddObject && classSelector.toggleAddObject}
+                parentClassID={getClassStates.selectedClass}
+                subClassID={chooseAsset}
+                subClassData={subClassData}
+            />
         </div>
     )
 }
