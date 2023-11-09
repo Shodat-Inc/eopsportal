@@ -68,82 +68,81 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
  ## Here is the filesystem of the project:
 
-📦EOPSPORTAL
- ┣ 📂.next  
- ┣ 📂node_modules
- ┣ 📂public
-    ┣ 📂font
-    ┣ 📂img
-    ┣ 📜next.svg
-    ┣ 📜vercel.svg
-┣ 📂src
-┃ ┣ 📂app
-  ┃ ┣ 📜favicon.ico
-    ┣ 📜global.css
-  ┃ ┣ 📜layout.tsx    
-  ┣ 📂common
-    ┣ 📜alertMessage.tsx
-    ┣ 📜nodatafound.tsx
-    ┣ 📜rangeSlider.tsx
-  ┃ ┣ 📜textInput.tsx        
-  ┣ 📂component
-    ┣ 📜Layout.js
-    ┣ 📜SideBar.js
-    ┣ 📜Sidebar.module.css
-    ┣ 📜TopBar.js
-  ┃ ┣ 📜TopBar.module.css
-  ┣ 📂config
-    ┣ 📜index.js
-  ┣ 📂helpers
-    ┣ 📂api
-      ┣ 📂models
-      ┣ 📂relation
-      ┣ 📂repo
-      ┣ 📜api-handler.ts
-      ┣ 📜db.ts
-      ┣ 📜error-handler.ts
-      ┣ 📜index.ts
-      ┣ 📜jwt-middleware.ts
-    ┣ 📜constant.ts
-    ┣ 📜countryCode.ts
-    ┣ 📜fetch-wrapper.ts
-    ┣ 📜index.ts    
-  ┣ 📂interface
-    ┣ 📜createClass.interface.ts
-    ┣ 📜createObjects.interface.ts
-    ┣ 📜createUser.interface.ts
-    ┣ 📜index.ts
-  ┣ 📂lib
-  ┣ 📂pages
-    ┣ 📂api
-      ┣ 📂auth
-      ┣ 📜createUsers.ts
-      ┣ 📜UpdateUsers.ts
-      ┣ 📜getUsers.ts
-      ┣ 📜deleteUser.ts
-      .........
-    ┣ 📂authentication
-      ┣ 📂admin
-    ┣ 📂dashboard
-      ┣ 📂assetmanagement
-      ┣ 📂eopsinsight
-      ┣ 📂eopsprosense
-      ┣ 📂eopstrace
-      ┣ 📂eopswatch
-      ┣ 📂manageproducts
-      ┣ 📂modelcatalog
-      ┣ 📂myaccount
-      ┣ 📂pricing
-      ┣ 📜dummyPage.tsx
-      ┣ 📜index.tsx
-      ┣ 📜template.tsx
-    ┣ 📜_app.tsx
-    ┣ 📜_document.tsx
-    ┣ 📜_api_docs.tsx
-    ┣ 📜index.tsx
-  ┣ 📂services
-    ┣ 📜index.js
-    ┣ 📜user.service.js
+         📦EOPSPORTAL
+          ┣ 📂.next  
+          ┣ 📂node_modules
+          ┣ 📂public
+             ┣ 📂font
+             ┣ 📂img
+             ┣ 📜next.svg
+             ┣ 📜vercel.svg
+          ┣ 📂src
+          ┃ ┣ 📂app
+          ┃ ┣ 📜favicon.ico
+            ┣ 📜global.css
+          ┃ ┣ 📜layout.tsx    
+            ┣ 📂common
+              ┣ 📜alertMessage.tsx
+              ┣ 📜nodatafound.tsx
+              ┣ 📜rangeSlider.tsx
+            ┃ ┣ 📜textInput.tsx        
+            ┣ 📂component
+              ┣ 📜Layout.js
+              ┣ 📜SideBar.js
+              ┣ 📜Sidebar.module.css
+              ┣ 📜TopBar.js
+            ┃ ┣ 📜TopBar.module.css
+            ┣ 📂config
+              ┣ 📜index.js
+            ┣ 📂helpers
+              ┣ 📂api
+                ┣ 📂models
+                ┣ 📂relation
+                ┣ 📂repo
+                ┣ 📜api-handler.ts
+                ┣ 📜db.ts
+                ┣ 📜error-handler.ts
+                ┣ 📜index.ts
+                ┣ 📜jwt-middleware.ts
+              ┣ 📜constant.ts
+              ┣ 📜countryCode.ts
+              ┣ 📜fetch-wrapper.ts
+              ┣ 📜index.ts    
+            ┣ 📂interface
+              ┣ 📜createClass.interface.ts
+              ┣ 📜createObjects.interface.ts
+              ┣ 📜createUser.interface.ts
+              ┣ 📜index.ts
+            ┣ 📂lib
+            ┣ 📂pages
+              ┣ 📂api
+                ┣ 📂auth
+                ┣ 📜createUsers.ts
+                ┣ 📜UpdateUsers.ts
+                ┣ 📜getUsers.ts
+                ┣ 📜deleteUser.ts.........
+              ┣ 📂authentication
+                ┣ 📂admin
+              ┣ 📂dashboard
+                ┣ 📂assetmanagement
+                ┣ 📂eopsinsight
+                ┣ 📂eopsprosense
+                ┣ 📂eopstrace
+                ┣ 📂eopswatch
+                ┣ 📂manageproducts
+                ┣ 📂modelcatalog
+                ┣ 📂myaccount
+                ┣ 📂pricing
+                ┣ 📜dummyPage.tsx
+                ┣ 📜index.tsx
+                ┣ 📜template.tsx
+              ┣ 📜_app.tsx
+              ┣ 📜_document.tsx
+              ┣ 📜_api_docs.tsx
+              ┣ 📜index.tsx
+            ┣ 📂services
+              ┣ 📜index.js
+              ┣ 📜user.service.js
   ┣ 📂store
     ┣ 📂actions
     ┣ 📂reducers

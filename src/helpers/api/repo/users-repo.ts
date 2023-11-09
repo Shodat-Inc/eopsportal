@@ -159,7 +159,7 @@ async function create(params: any) {
     if (params.password) {
       user.password = bcrypt.hashSync(params.password, 10);
     }
-    // save user
+    // save user  
     const data = await user.save();
     return sendResponseData(true, message.success.userCreated, data);
   } catch (error) {

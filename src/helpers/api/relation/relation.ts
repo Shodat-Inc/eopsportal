@@ -1,7 +1,7 @@
 import { db } from "../db";
 
 function relationship() {
-  // Establishing relationships for the User model:
+  // Establishing relationships for the User models:
 
   // Each User can have multiple Address records.
   db.User.hasMany(db.Address, { foreignKey: "userId" });
