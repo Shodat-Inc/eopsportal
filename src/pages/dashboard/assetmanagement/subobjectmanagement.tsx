@@ -8,10 +8,10 @@ import AddNewObject from './addnewobject';
 export default function SubObjectManagement(props: any) {
 
     const getClassStates = useSelector((state: any) => state.classReducer);
-    // console.log({
-    //     "PROPS IN SUB-OBJECT": props,
-    //     "GET CLASS STATES": getClassStates.selectedClass,
-    // })
+    console.log({
+        "PROPS IN SUB-OBJECT": props,
+        "GET CLASS STATES": getClassStates.selectedClass,
+    })
     const [toggleFilter, setToggleFilter] = useState(false);
     const [toggleArrow, setToggleArrow] = useState(false);
     const [toggleSort, setToggleSort] = useState(false);
@@ -21,6 +21,7 @@ export default function SubObjectManagement(props: any) {
 
     const [subClassData, setSubClassData] = useState([] as any);
     const [toggleAsset, setToggleAsset] = useState(false);
+    const [objects, setObjects] = useState([] as any);
 
     const classSelector = useSelector((state: any) => state.classReducer);
     const toggleFilterFunction = () => {
@@ -42,7 +43,7 @@ export default function SubObjectManagement(props: any) {
             try {
                 await axios({
                     method: 'GET',
-                    url: `/api/getChildAssets?id=${getClassStates.selectedClass}`,
+                    url: `/api/getChildAssets?id=${props.defaultClass}`,
                     // url: `/api/getChildAssets?id=2`,
                     headers: {
                         "Authorization": `Bearer ${tokenStr}`,
@@ -50,9 +51,9 @@ export default function SubObjectManagement(props: any) {
                     }
                 }).then(function (response) {
                     if (response.status === 200) {
-                        // console.log({
-                        //     "RESPONSE DATA": response.data
-                        // })
+                        console.log({
+                            "RESPONSE DATA -1 ": response.data
+                        })
                         setChooseAsset(response.data.data[0]?.S_No)
                         setSubClassData(response.data.data)
                     } else {
@@ -78,13 +79,11 @@ export default function SubObjectManagement(props: any) {
         return data;
     }
 
-
     // Toogle table option actions
     const toggleActions = (item: any) => {
         setActionCount(item);
         setActions(!actions);
     }
-
 
     // Dropdown Function
     const toggleDropdownFunction = () => {
@@ -95,9 +94,44 @@ export default function SubObjectManagement(props: any) {
         setToggleAsset(false);
     }
 
+
+    // Get all object for selected sub class 
+    useEffect(() => {
+        let tokenStr = access_token;
+        (async function () {
+            try {
+                await axios({
+                    method: 'GET',
+                    // url: `/api/getObjects?id=${chooseAsset}`,
+                    url: `/api/getObjects?id=3`,
+                    headers: {
+                        "Authorization": `Bearer ${tokenStr}`,
+                        "Content-Type": "application/json"
+                    }
+                }).then(function (response) {
+                    if (response.status === 200) {
+                        console.log({
+                            "RESPONSE DATA": response.data
+                        }) 
+                        
+                        setObjects(response.data)
+                    } else {
+
+                    }
+                }).catch(function (error) {
+                    console.log("ERROR IN DELETE AXIOS CATCH:", error)
+                })
+            } catch (err) {
+                console.log("ERROR IN DELETE TRY CATCH:", err)
+            }
+        })();
+    }, [chooseAsset]);
+
+    
     console.log({
         "CHOOSE ASSET": chooseAsset,
-        "SUB CLASS DATA": subClassData
+        "SUB CLASS DATA": subClassData,
+        "OBJECTS":objects
     })
     return (
         <div className='py-3 font-OpenSans'>
@@ -145,7 +179,7 @@ export default function SubObjectManagement(props: any) {
                                 </div>
                                 <ul className="p-0 m-0 w-full">
                                     {
-                                        subClassData.map((item: any, index: any) => (
+                                        subClassData && subClassData.length >= 0 && subClassData.map((item: any, index: any) => (
                                             <li
                                                 className="px-5 py-2 bg-white cursor-pointer hover:bg-yellow-951 w-full font-normal"
                                                 onClick={() => selectItemFunction(item.S_No)}
@@ -204,12 +238,6 @@ export default function SubObjectManagement(props: any) {
                     </div>
                 </div>
             </div>
-
-            {/* <button
-                onClick={backToObect}
-                className='text-sm mt-10 mb-10 px-10'>
-                Back To Object Management Component
-            </button> */}
 
             {/* Table */}
             <div className='w-full mt-6 min-h-[400px]'>
