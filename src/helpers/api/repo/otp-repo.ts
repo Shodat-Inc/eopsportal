@@ -1,7 +1,7 @@
 import sendResponseData from "@/helpers/constant";
 import { db } from "../db";
 import { loggerError, loggerInfo } from "@/logger";
-import sendVerificationEmail from "../constant/nodemailer";
+import {sendVerificationEmail} from "../constant/nodemailer";
 
 export const otpRepo = {
   create,
