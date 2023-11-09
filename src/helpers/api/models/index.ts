@@ -13,4 +13,3 @@ export * from "./value";
 export * from "./deleteTableRecord";
 export * from "./reason";
 export * from "./otpverify";
-export * from "./contactSales";
