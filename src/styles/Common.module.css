@@ -935,6 +935,10 @@ table.proSenseTable tbody tr td {
     outline: none;
 }
 
+.phoneField > .PhoneInput {
+    padding: 0 !important;
+}
+
 
 
 
