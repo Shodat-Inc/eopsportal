@@ -159,7 +159,7 @@ async function getSubClass(param: any) {
         userId: param.id,
         parentId: param.query.id,
       },
-      attributes: ["className"],
+      attributes: ["id","className"],
       include: [
         {
           model: db.classTag,
