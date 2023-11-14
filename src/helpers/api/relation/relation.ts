@@ -82,6 +82,14 @@ function relationship() {
   db.tagDataType.hasMany(db.classTag, { foreignKey: "dataTypeId" });
   // Each classTag belongs to a tagDataType
   db.classTag.belongsTo(db.tagDataType, { foreignKey: "dataTypeId" });
+
+  //<-------------------------------------------------- Enterprise Relations ------------------------------------------------------------------------------------------->
+
+  db.Enterprise.hasMany(db.EnterpriseAddress, { foreignKey: "enterpriseId" });
+  db.EnterpriseAddress.belongsTo(db.Enterprise, { foreignKey: "enterpriseId" });
+
+  db.Role.hasMany(db.Routes, { foreignKey: "roleId" });
+  db.Routes.belongsTo(db.Role, { foreignKey: "roleId" });
 }
 
 export default relationship;

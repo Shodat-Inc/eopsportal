@@ -1,6 +1,6 @@
 import { DataTypes } from "sequelize";
 
-export function EnterpriseUser(sequelize: any) {
+export function EnterpriseAddress(sequelize: any) {
   const attributes = {
     id: {
       type: DataTypes.INTEGER,
@@ -12,7 +12,14 @@ export function EnterpriseUser(sequelize: any) {
     state: { type: DataTypes.STRING, allowNull: false },
     pincode: { type: DataTypes.STRING, allowNull: false },
     address: { type: DataTypes.STRING, allowNull: false },
+    enterpriseId: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: "Enterprises",
+        id: "id",
+      },
+    },
   };
 
-  return sequelize.define("EnterpriseUser", attributes);
+  return sequelize.define("EnterpriseAddress", attributes);
 }
