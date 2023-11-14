@@ -77,10 +77,11 @@ export default function Home() {
             <div className="relative w-[62%]">
               <h2 className="flex justify-start items-center font-semibold">
                 Have an account?
-                <button
+                <Link
+                href="/authentication/signin"
                   className="text-black text-sm h-[28px] px-4 bg-yellow-951 flex justify-center items-center rounded rounded-lg ml-4">
                   Sign in
-                </button>
+                </Link>
               </h2>
               <div className="h-[1px] w-full bg-[#C4C1C1] my-6"></div>
               <div className="flex justify-start items-center font-semibold mb-5">New Customers</div>
