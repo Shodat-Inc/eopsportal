@@ -1,6 +1,7 @@
 import { db } from "../db";
 import sendResponseData from "../../constant";
 import { loggerInfo, loggerError } from "@/logger";
+import message from "@/util/responseMessage";
 
 // Repository for reason-related operations.
 export const reasonRepo = {
@@ -25,11 +26,11 @@ async function create(params: any) {
     const data = await reason.save();
 
     // Return a successful response indicating the reason was added.
-    return sendResponseData(true, "Reason added successfully", data);
+    return sendResponseData(true, message.success.reasonAdded, data);
   } catch (error) {
     // Log the error if there's an issue with the reason creation.
     loggerError.error("Cant Save Reason", error);
     // Return a response indicating the failure of the operation.
-    return sendResponseData(false, "error", error);
+    return sendResponseData(false, message.error.error, error);
   }
 }

@@ -2,6 +2,7 @@ import { db } from "../db";
 import sendResponseData from "../../constant";
 import { loggerInfo, loggerError } from "@/logger";
 import {salesTeamMail} from "../constant/nodemailer";
+import message from "@/util/responseMessage";
 
 
 // Repository for CompanyRecord-related operations.
@@ -19,17 +20,17 @@ async function create(params: any) {
     if (existData) {
       return sendResponseData(
         false,
-        "Please Wait Sales Team will contact Soon,pls wait",
+        message.error.salesTeamContact,
         []
       );
     }
     const SalesData = new db.ContactSale(params);
     const response = await SalesData.save();
     salesTeamMail('kapilsharma@shodat.com',params.email)
-    return sendResponseData(true, "Sales Team will contact you soon", response);
+    return sendResponseData(true, message.success.salesTeamContact, response);
   } catch (error) {
     loggerError.error("ContactSales", error);
 
-    return sendResponseData(false, "error", error);
+    return sendResponseData(false, message.error.error, error);
   }
 }

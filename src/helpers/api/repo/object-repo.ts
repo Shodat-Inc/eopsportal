@@ -2,6 +2,7 @@ import { db } from "../db";
 import sendResponseData from "../../constant";
 import { loggerInfo, loggerError } from "@/logger";
 import { error } from "console";
+import message from "@/util/responseMessage";
 
 // Repository for object-related operations.
 export const objectRepo = {
@@ -24,7 +25,7 @@ async function create(params: any) {
   // Validate that a class ID is provided.
   if (!params.classId) {
     loggerError.error("No Class id Provided");
-    return sendResponseData(false, "No Class ID", {});
+    return sendResponseData(false, message.error.noClassID, {});
   }
 
   try {
@@ -35,12 +36,12 @@ async function create(params: any) {
     const data = await object.save();
 
     // Return a successful response indicating the object was added.
-    return sendResponseData(true, "Object added successfully", data);
+    return sendResponseData(true, message.success.objectAdded, data);
   } catch (error) {
     // Log the error if there's an issue with the object creation.
     loggerError.error("Error in Object Repo", error);
     // Return a response indicating the failure of the operation.
-    return sendResponseData(false, "error", error);
+    return sendResponseData(false, message.error.error, error);
   }
 }
 
@@ -57,7 +58,7 @@ async function get(id: any) {
   // Validate that an ID is provided.
   if (!id) {
     loggerError.error("NO Id is provided");
-    return sendResponseData(false, "no id", error);
+    return sendResponseData(false, message.error.noID, error);
   }
 
   try {
@@ -91,7 +92,7 @@ async function get(id: any) {
       error
     );
     // Return a response indicating the failure of the operation.
-    return sendResponseData(false, "error", error);
+    return sendResponseData(false, message.error.error, error);
   }
 }
 async function getObjectById(params: any) {
@@ -100,7 +101,7 @@ async function getObjectById(params: any) {
   // Validate that an ID is provided.
   if (!params.query.objectId && !params.query.classId) {
     loggerError.error("No Id is provided");
-    return sendResponseData(false, "no id", error);
+    return sendResponseData(false, message.error.noID, error);
   }
 
   try {
@@ -135,7 +136,7 @@ async function getObjectById(params: any) {
       error
     );
     // Return a response indicating the failure of the operation.
-    return sendResponseData(false, "error", error);
+    return sendResponseData(false, message.error.error, error);
   }
 }
 
@@ -146,9 +147,9 @@ async function _delete(params: any) {
         id: params,
       },
     });
-    return sendResponseData(true, "Object Deleted Successfully", response);
+    return sendResponseData(true, message.success.objectDeleted, response);
   } catch (error: any) {
     loggerError.error(error);
-    return sendResponseData(false, "Error in deleting object", error);
+    return sendResponseData(false, message.error.errorDeleteObject, error);
   }
 }

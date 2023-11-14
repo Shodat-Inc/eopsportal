@@ -1,6 +1,7 @@
 import { db } from "../db";
 import sendResponseData from "../../constant";
 import { loggerInfo, loggerError } from "@/logger";
+import message from "@/util/responseMessage";
 
 // Repository for role-related operations.
 export const roleRepo = {
@@ -25,11 +26,11 @@ async function create(params: any) {
     const data = await role.save();
 
     // Return a successful response indicating the role was added.
-    return sendResponseData(true, "Role added successfully", data);
+    return sendResponseData(true, message.success.roleAdded, data);
   } catch (error) {
     // Log the error if there's an issue with the role creation.
     loggerError.error("Cant Save Role", error);
     // Return a response indicating the failure of the operation.
-    return sendResponseData(false, "error", error);
+    return sendResponseData(false, message.error.error, error);
   }
 }

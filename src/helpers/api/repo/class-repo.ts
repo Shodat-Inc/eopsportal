@@ -32,17 +32,17 @@ async function create(params: any) {
       where: { className: params.className },
     });
     if (class_data) {
-      return sendResponseData(false, "Class already exist", {});
+      return sendResponseData(false, message.error.classExist, {});
     }
 
     // Create and save the new class instance.
     const classes = new db.AddClasses(params);
     const data = await classes.save();
-    return sendResponseData(true, "Class added successfully", data);
+    return sendResponseData(true, message.success.classAdded, data);
   } catch (error) {
     // Log the error if there's an issue with the class creation.
     loggerError.error("Error in class repo", error);
-    return sendResponseData(false, "error", error);
+    return sendResponseData(false, message.error.error, error);
   }
 }
 
@@ -82,17 +82,17 @@ async function getClassData(params: any) {
       ],
     });
     if (result.length === 0) {
-      return sendResponseData(false, "No Class Data found", []);
+      return sendResponseData(false, message.error.classData, []);
     }
     const response = result.map((item: any, index: any) => ({
       serialNumber: index + 1,
       ...item.get(), // Convert Sequelize instance to plain JS object
     }));
-    return sendResponseData(true, "Class Fetched Successfully", response);
+    return sendResponseData(true, message.success.fetchClass, response);
   } catch (error) {
     // Log the error if fetching classes and tags fails.
     loggerError.error("Error fetching class and classTags data:", error);
-    return sendResponseData(false, "error", error);
+    return sendResponseData(false, message.error.error, error);
   }
 }
 
@@ -130,18 +130,18 @@ async function getClassDataByID(params: any) {
       ],
     });
     if (result.length === 0) {
-      return sendResponseData(false, "No data found", []);
+      return sendResponseData(false, message.error.noDataFound, []);
     }
 
     const response = result.map((item: any, index: any) => ({
       serialNumber: index + 1,
       ...item.get(), // Convert Sequelize instance to plain JS object
     }));
-    return sendResponseData(true, "Class fetched Successfully", response);
+    return sendResponseData(true, message.success.fetchClass, response);
   } catch (error) {
     // Log the error if fetching classes and tags fails.
     loggerError.error("Error fetching class and classTags data by ID:", error);
-    return sendResponseData(false, "error", error);
+    return sendResponseData(false, message.error.error, error);
   }
 }
 /**
@@ -184,7 +184,7 @@ async function getSubClass(param: any) {
       ],
     });
     if (result.length === 0) {
-      return sendResponseData(false, "No data found", []);
+      return sendResponseData(false, message.error.noDataFound, []);
     }
     // Get Parent Join Tag Name
     for (let x of result) {
@@ -198,11 +198,11 @@ async function getSubClass(param: any) {
       S_No: index + 1,
       ...item.get(),
     }));
-    return sendResponseData(true, "Class fetched Successfully", response);
+    return sendResponseData(true, message.success.fetchClass, response);
   } catch (error) {
     // Log the error if fetching subclasses and tags fails.
     loggerError.error("Error fetching class and classTags data:", error);
-    return sendResponseData(false, "error", error);
+    return sendResponseData(false, message.error.error, error);
   }
 }
 async function getSubClassByID(param: any) {
@@ -253,11 +253,11 @@ async function getSubClassByID(param: any) {
       S_No: index + 1,
       ...item.get(),
     }));
-    return sendResponseData(true, "Sub Class Fetched Sucessfully", response);
+    return sendResponseData(true, message.success.fetchSubClass, response);
   } catch (error) {
     // Log the error if fetching subclasses and tags fails.
     loggerError.error("Error fetching class and classTags data:", error);
-    return sendResponseData(false, "error", error);
+    return sendResponseData(false, message.error.error, error);
   }
 }
 
@@ -278,7 +278,7 @@ async function update(params: any) {
     return await classes.save();
   } catch (error: any) {
     loggerError.error("Error in Updating class", error);
-    return sendResponseData(false, message.error, error);
+    return sendResponseData(false, message.error.error, error);
   }
 }
 
@@ -291,10 +291,10 @@ async function _delete(params: any) {
     await classes.destroy();
     return sendResponseData(
       true,
-      "Class Deleted Successfully",
+      message.success.deleteClass,
       classes.className
     );
   } catch (error: any) {
-    return sendResponseData(false, "Error in  Deleting Class", error);
+    return sendResponseData(false, message.error.errorDeleteClass, error);
   }
 }

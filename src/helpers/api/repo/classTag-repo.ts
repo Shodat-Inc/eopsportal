@@ -1,6 +1,7 @@
 import { db } from "../db";
 import sendResponseData from "../../constant";
 import { loggerInfo, loggerError } from "@/logger";
+import message from "@/util/responseMessage";
 
 // Repository for classTag-related operations.
 export const classTagRepo = {
@@ -25,7 +26,7 @@ async function create(params: any, classId: any) {
   // Validate classId presence.
   if (!classId) {
     loggerError.error("ClassId Is not provided, Tag not saved.");
-    return sendResponseData(false, "ClassId Is not provided!", {});
+    return sendResponseData(false, message.error.classIdError, {});
   }
 
   try {
@@ -34,10 +35,10 @@ async function create(params: any, classId: any) {
 
     // Save the new class tag to the database.
     const data = await tags.save();
-    return sendResponseData(true, "Class Tag added successfully", data);
+    return sendResponseData(true, message.success.classTag, data);
   } catch (error) {
     // Log the error if there's an issue with the class tag creation.
-    loggerError.error("Error in class Tag repo", error);
+    loggerError.error(message.error.errorClassTag, error);
   }
 }
 
@@ -55,16 +56,16 @@ async function bulkCreate(params: any[], classId: any) {
   // Validate classId presence.
   if (!classId) {
     loggerError.error("ClassId Is not provided, Tag not saved.");
-    return sendResponseData(false, "ClassId Is not provided!", {});
+    return sendResponseData(false, message.error.classIdError, {});
   }
 
   try {
     // Create multiple class tag entries in the database using the provided parameters.
     const data = await db.classTag.bulkCreate(params);
-    return sendResponseData(true, "Class Tags added successfully", data);
+    return sendResponseData(true, message.success.classTag, data);
   } catch (error) {
     // Log the error if there's an issue with the bulk class tag creation.
-    loggerError.error("Error in bulk class Tag repo", error);
+    loggerError.error(message.error.errorBulkClassTag, error);
   }
 }
 
@@ -74,9 +75,9 @@ async function getClassTags(id: any) {
     const result = await db.classTag.findAll({
       where: { id },
     });
-    return sendResponseData(true, "Class Tag id fetch successfully", result);
+    return sendResponseData(true, message.success.fetchClassTag, result);
   } catch (error: any) {
-    return sendResponseData(false, "Cant fetch Class Tag", error);
+    return sendResponseData(false, message.error.fetchClassTag, error);
   }
 }
 

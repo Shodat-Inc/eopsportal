@@ -4,6 +4,7 @@ import bcrypt from "bcryptjs";
 import { db } from "../db";
 import sendResponseData from "@/helpers/constant";
 import sendPasswordResetEmail from "../constant/forgotPasswordMail";
+import message from "@/util/responseMessage";
 
 export const forgetPasswordRepo = {
   verifyUser,
@@ -17,7 +18,7 @@ async function verifyUser(params: any) {
       attributes: ["email"],
     });
     if (result.email !== params.email) {
-      return sendResponseData(false, "User Doesn't Exist", []);
+      return sendResponseData(false, message.error.userNotExist, []);
     }
     const token = jwt.sign({ email: result.email }, "Forget Password", {
       expiresIn: "15m",
@@ -32,10 +33,10 @@ async function verifyUser(params: any) {
       }
     );
     sendPasswordResetEmail(params.email, token);
-    return sendResponseData(true, "Token Send", result);
+    return sendResponseData(true, message.success.tokenSent, result);
   } catch (error: any) {
     loggerError.error("Error in Forget Password Repo");
-    return sendResponseData(false, "Incorrect Email", error);
+    return sendResponseData(false, message.error.incorrectMail, error);
   }
 }
 
@@ -46,7 +47,7 @@ async function updatePassword(params: any) {
   });
 
   if (!user) {
-    return sendResponseData(false, "Invalid token", []);
+    return sendResponseData(false, message.error.invalidToken, []);
   }
   const verify: any = jwt.verify(params.query.token, "Forget Password");
 
@@ -62,5 +63,5 @@ async function updatePassword(params: any) {
     { where: { email: verify.email } }
   );
 
-  return sendResponseData(true, "Password updated successfully", []);
+  return sendResponseData(true, message.success.passwordUpdated, []);
 }

@@ -1,6 +1,7 @@
 import { db } from "../db";
 import sendResponseData from "../../constant";
 import { loggerInfo, loggerError } from "@/logger";
+import message from "@/util/responseMessage";
 
 // Repository for value-related operations.
 export const valueRepo = {
@@ -24,7 +25,7 @@ async function create(params: any, objectId: any) {
   // Validate the presence of the object ID.
   if (!objectId) {
     loggerError.error("No object Id provided");
-    return sendResponseData(false, "Object ID not provided!", {});
+    return sendResponseData(false, message.error.objectIdError, {});
   }
 
   try {
@@ -35,7 +36,7 @@ async function create(params: any, objectId: any) {
     const data = await AddValues.save();
 
     // Return a successful response indicating the value was added.
-    return sendResponseData(true, "Value added successfully", data);
+    return sendResponseData(true, message.success.valueAdded, data);
   } catch (error) {
     // Log the error if there's an issue with the value creation.
     loggerError.error("Error in Value repo", error);
@@ -56,7 +57,7 @@ async function bulkCreate(params: any[], objectId: any) {
   // Validate the presence of the object ID.
   if (!objectId) {
     loggerError.error("No Object Id provided");
-    return sendResponseData(false, "ObjectId is not provided!", {});
+    return sendResponseData(false, message.error.objectIdError, {});
   }
 
   try {
@@ -64,7 +65,7 @@ async function bulkCreate(params: any[], objectId: any) {
     const data = await db.AddValues.bulkCreate(params);
 
     // Return a successful response indicating the values were added.
-    return sendResponseData(true, "Values added successfully", data);
+    return sendResponseData(true, message.success.valuesAdded, data);
   } catch (error) {
     // Log the error if there's an issue with the bulk value creation.
     loggerError.error("Error in bulk Value repo", error);
@@ -79,15 +80,15 @@ async function update(params: any) {
         where: { classTagId: x.classTagId },
       });
       if (!valueData) {
-        return sendResponseData(false, "Object Value Doesn't Exists", {});
+        return sendResponseData(false, message.error.objectValueNotExist, {});
       }
       valueData.values = x.values || valueData.values;
       valueData.save();
     }
-    return sendResponseData(true, "Updated successfully", {});
+    return sendResponseData(true, message.success.updated, {});
   } catch (error: any) {
     loggerError.error("error in updating objValue");
-    return sendResponseData(false, "Error in updating data", error);
+    return sendResponseData(false, message.error.errorUpdation, error);
   }
 }
 

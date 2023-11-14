@@ -1,6 +1,7 @@
 import { db } from "../db";
 import sendResponseData from "../../constant";
 import { loggerInfo, loggerError } from "@/logger";
+import message from "@/util/responseMessage";
 
 // Repository for tagDataType-related operations.
 export const tagDataTypeRepo = {
@@ -26,12 +27,12 @@ async function create(params: any) {
     const data = await tagDataType.save();
 
     // Return a successful response indicating the tagDataType was added.
-    return sendResponseData(true, "Tag DataType added successfully", data);
+    return sendResponseData(true, message.success.tagDatatypeAdded, data);
   } catch (error) {
     // Log the error if there's an issue with the tagDataType creation.
     loggerError.error("Cant Save Tag Datatype", error);
     // Return a response indicating the failure of the operation.
-    return sendResponseData(false, "error", error);
+    return sendResponseData(false, message.error.error, error);
   }
 }
 

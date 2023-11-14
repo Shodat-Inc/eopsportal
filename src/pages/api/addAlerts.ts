@@ -1,10 +1,10 @@
 import fsPromises from "fs/promises";
 import path from "path";
-import { logger } from "@/logger";
+import { loggerInfo, loggerError } from "@/logger";
 const dataFilePath = path.join(process.cwd(), "json/parentAlerts.json");
 
 export default async function handler(req: any, res: any) {
-  logger.info(`addAlert`);
+  loggerInfo.info(`addAlert`);
 
   try {
     if (req.method !== "POST") {
@@ -61,7 +61,7 @@ export default async function handler(req: any, res: any) {
     // Send a success response
     res.status(200).json({ message: "Alert data stored successfully" });
   } catch (error) {
-    logger.error(error);
+    loggerError.error(error);
     // Send an error response
     res.status(500).json({ message: "Error storing data" });
   }

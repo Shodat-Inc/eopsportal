@@ -1,6 +1,7 @@
 import { db } from "../db";
 import sendResponseData from "../../constant";
 import { loggerInfo, loggerError } from "@/logger";
+import message from "@/util/responseMessage";
 
 // Repository for CompanyRecord-related operations.
 export const CompanyRecordRepo = {
@@ -25,11 +26,11 @@ async function create(params: any) {
 
       // If no user is found with the given ID, return an error response.
       if (!user) {
-        return sendResponseData(false, "User doesn't exist", {});
+        return sendResponseData(false, message.error.userNotExist, {});
       }
     } else {
       // If userId isn't provided, return an error response.
-      return sendResponseData(false, "UserId not provided", {});
+      return sendResponseData(false, message.error.idReq, {});
     }
 
     // Create a new companyRecord instance using the provided parameters.
@@ -39,11 +40,11 @@ async function create(params: any) {
     const data = await companyRecord.save();
 
     // Return a successful response indicating the company record was added.
-    return sendResponseData(true, "Company Record added successfully", data);
+    return sendResponseData(true, message.success.companyRecordAdded, data);
   } catch (error) {
     // Log the error if saving the company record fails.
     loggerError.error("Cant Save Company Record", error);
     // Return a response indicating the failure of the operation.
-    return sendResponseData(false, "error", error);
+    return sendResponseData(false, message.error.error, error);
   }
 }

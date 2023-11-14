@@ -38,7 +38,7 @@ async function authenticate(data: any) {
       return sendResponseData(false, message.error.userNotFound, {});
     }
     if (!bcrypt.compareSync(String(password), String(user.password))) {
-      return sendResponseData(false, "password is incorrect", {});
+      return sendResponseData(false, message.error.incorrectPassword, {});
     }
     // create a jwt token that is valid for 7 days
     const token = jwt.sign({ sub: user.id }, serverRuntimeConfig.secret, {

@@ -2,6 +2,7 @@ import sendResponseData from "@/helpers/constant";
 import { db } from "../db";
 import { loggerError, loggerInfo } from "@/logger";
 import {sendVerificationEmail} from "../constant/nodemailer";
+import message from "@/util/responseMessage";
 
 export const otpRepo = {
   create,
@@ -24,7 +25,7 @@ async function create(params: any) {
       sendVerificationEmail(params.email, params.otp);
       return sendResponseData(
         true,
-        "Email Already Exist, Resend OTP",
+        message.success.resendOtp,
         resendOtp
       );
     }
@@ -32,10 +33,10 @@ async function create(params: any) {
     const data = await result.save();
     sendVerificationEmail(params.email, params.otp);
 
-    return sendResponseData(true, "OTP sended SuccessFully", []);
+    return sendResponseData(true, message.success.otpSent, []);
   } catch (error: any) {
     loggerError.error("Error in Generate OTP repo");
-    return sendResponseData(false, "Error in Service", error);
+    return sendResponseData(false, message.error.errorService, error);
   }
 }
 
@@ -52,7 +53,7 @@ async function verifyOtp(params: any) {
       },
       { where: { email: params.email } }
     );
-    return sendResponseData(true, "OTP Verified Successfully", findEmail.otp);
+    return sendResponseData(true, message.success.otpVerified, findEmail.otp);
   }
-  return sendResponseData(false, "Invalid OTP", []);
+  return sendResponseData(false, message.error.invalidOtp, []);
 }
