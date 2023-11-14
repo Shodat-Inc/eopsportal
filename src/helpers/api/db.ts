@@ -3,8 +3,11 @@ import mysql from "mysql2/promise";
 import { Sequelize } from "sequelize";
 import * as models from "./models/index";
 import { loggerInfo, loggerError } from "@/logger";
-import { dialData } from "../countryCode";
+import { dialData } from "../seedData/countryCode";
 import relationship from "./relation/relation";
+import { roles } from "../seedData/role";
+import { Reasons } from "../seedData/reason";
+import { TagDataType } from "../seedData/datatype";
 const { serverRuntimeConfig } = getConfig();
 export const db: any = {
   initialized: false,
@@ -15,15 +18,9 @@ export interface Models {
   // ... other model typings
 }
 
-//demo roll
+//Roles Model
 async function seedDemoRoles(Role: any) {
-  const demoRoles = [
-    { name: "Admin", isActive: true },
-    { name: "User", isActive: true },
-    { name: "Guest", isActive: false },
-  ];
-
-  for (let role of demoRoles) {
+  for (let role of roles) {
     // Using findOrCreate to ensure the demo roles aren't duplicated
     await Role.findOrCreate({
       where: { name: role.name },
@@ -32,16 +29,10 @@ async function seedDemoRoles(Role: any) {
   }
 }
 
-//reason model
+//Reason model
 
 async function seedDemoReasons(Reason: any) {
-  const demoReason = [
-    { Reason: "Reason 1", isActive: true },
-    { Reason: "Reason 2", isActive: true },
-    { Reason: "Reason 3", isActive: false },
-  ];
-
-  for (let a of demoReason) {
+  for (let a of Reasons) {
     // Using findOrCreate to ensure the demo reason aren't duplicated
     await Reason.findOrCreate({
       where: { reason: a.Reason },
@@ -50,39 +41,10 @@ async function seedDemoReasons(Reason: any) {
   }
 }
 
-//demo Tag data
+//Tag datatype Model
 async function seedDemoTagDataType(tagDataType: any) {
-  const demoTagDataType = [
-    { name: "int", type: "int", description: "This is int", isActive: true },
-    {
-      name: "float",
-      type: "float",
-      description: "This is float",
-      isActive: true,
-    },
-    { name: "bool", type: "bool", description: "This is bool", isActive: true },
-    { name: "char", type: "char", description: "This is char", isActive: true },
-    {
-      name: "varchar",
-      type: "varchar",
-      description: "This is varchar",
-      isActive: true,
-    },
-    {
-      name: "string",
-      type: "string",
-      description: "This is string",
-      isActive: true,
-    },
-    {
-      name: "json",
-      type: "json",
-      description: "This is json",
-      isActive: false,
-    },
-  ];
-  for (let type of demoTagDataType) {
-    // Using findOrCreate to ensure the demo roles aren't duplicated
+  for (let type of TagDataType) {
+    // Using findOrCreate to ensure the Dataypes aren't duplicated
     await tagDataType.findOrCreate({
       where: { name: type.name },
       defaults: type,
@@ -90,10 +52,11 @@ async function seedDemoTagDataType(tagDataType: any) {
   }
 }
 
-//country code data model
+//Country code data Model
 
 async function seedCountryCodeData(countryCodeModel: any) {
   for (let country of dialData) {
+    // Using findOrCreate to ensure the Country Codes aren't duplicated
     await countryCodeModel.findOrCreate({
       where: { countryCode: country.countryCode },
       defaults: country,

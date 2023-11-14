@@ -1,13 +1,13 @@
 import { apiHandler, usersRepo } from "../../helpers/api";
 import { loggerInfo, loggerError } from "@/logger";
 import { NextApiRequest, NextApiResponse } from "next";
-import { CreateUser } from "../../interface/createUser.interface";
 import { info } from "console";
 import { addressRepo } from "@/helpers/api/repo/address-repo";
 import { phoneRecordRepo } from "@/helpers/api/repo/phone-record-repo";
 import { CompanyRecordRepo } from "@/helpers/api/repo/company-record-repo";
 import message from "@/util/responseMessage";
 import sendResponseData from "@/helpers/constant";
+import { createUserValidation } from "../../../validateSchema";
 
 export default apiHandler({
   post: handler,
@@ -20,7 +20,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       res.status(405).send(message.error.postMethodError);
       return;
     }
-    const reqData: CreateUser = req.body;
+    const reqData = req.body;
     const {
       email,
       firstName,
@@ -30,6 +30,19 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       parentId,
       ...objData
     } = reqData;
+    const username = firstName.concat(lastName);
+    const validation = createUserValidation(reqData);
+    console.log(validation, "_________");
+    if (validation.error) {
+      // Handle validation errors
+      res.status(400).json({
+        success: false,
+        message: "Validation error",
+        errors: validation.error.details.map((detail) => detail.message),
+      });
+      return;
+    }
+
     const { address, city, state, pincode, countryId, primary, ...recordData } =
       objData;
     //phone record
@@ -39,7 +52,6 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     //company record
     const { companyName } = recordData1;
     //user Data
-    const username = firstName.concat(lastName);
     const userData = await usersRepo.create({
       username,
       email,
