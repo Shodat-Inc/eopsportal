@@ -17,17 +17,17 @@ export default function Header() {
             <ul className="flex justify-start items-center space-x-9">
                 <li>
                     <Link
-                        href=""
+                        href="/"
                         className="text-black h-[37px] px-4 bg-yellow-951 flex justify-center items-center rounded rounded-lg"
                     >
                         <span>Plans and pricing</span>
                     </Link>
                 </li>
                 <li>
-                    <Link href="">Help</Link>
+                    <Link href="/authentication/help">Help</Link>
                 </li>
                 <li>
-                    <Link href="">Sign in</Link>
+                    <Link href="/authentication/signin">Sign in</Link>
                 </li>
             </ul>
         </div>

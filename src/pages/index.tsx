@@ -75,7 +75,7 @@ export default function Home() {
           {/* Content section */}
           <div className="flex justify-center items-start w-full mt-16">
             <div className="relative w-[62%]">
-              <h2 className="flex justify-start items-center font-semibold">
+              <h2 className="flex justify-start text-2xl items-center font-semibold">
                 Have an account?
                 <Link
                 href="/authentication/signin"
@@ -84,7 +84,7 @@ export default function Home() {
                 </Link>
               </h2>
               <div className="h-[1px] w-full bg-[#C4C1C1] my-6"></div>
-              <div className="flex justify-start items-center font-semibold mb-5">New Customers</div>
+              <div className="flex justify-start items-center font-semibold mb-5 text-lg">New Customers</div>
               <div className="text-sm text-[#8692A6] mb-8">To begin this journey, tell us what type of account you would be opening.</div>
 
               {/* Individual */}
@@ -110,7 +110,7 @@ export default function Home() {
               </Link>
 
               {/* Enterprises */}
-              <div className="rounded rounded-lg shadow shadow-lg p-3 min-h-[100px] flex justify-between items-center border border-white hover:border-yellow-951 cursor-pointer">
+              <Link href="/authentication/enterprise" className="rounded rounded-lg shadow shadow-lg p-3 min-h-[100px] flex justify-between items-center border border-white hover:border-yellow-951 cursor-pointer">
                 <div className="relative flex w-[60%]">
                   <Image
                     alt="Enterprises"
@@ -129,7 +129,7 @@ export default function Home() {
                     <span>Contact</span>
                   </button>
                 </div>
-              </div>
+              </Link>
 
             </div>
           </div>

@@ -1068,3 +1068,23 @@ table.proSenseTable tbody tr td {
     width: 100%;
     z-index: 9;
 }
+
+.overflowScroll {
+    height: 400px;
+    overflow-y: scroll;
+    padding-right: 15px;
+}
+.overflowScroll::-webkit-scrollbar {
+    width: 8px;
+}
+
+.overflowScroll::-webkit-scrollbar-track {
+    background: #efefef;
+    border-radius: 5px;
+}
+
+.overflowScroll::-webkit-scrollbar-thumb {
+    background-color: #BDBDBD;
+    border-radius: 14px;
+    border: 3px solid #BDBDBD;
+}
