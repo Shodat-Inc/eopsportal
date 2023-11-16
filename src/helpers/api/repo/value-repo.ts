@@ -96,6 +96,9 @@ async function _delete(params: any) {
   loggerInfo.info("Delete Object Value for a specific tagId");
   for (let x of params) {
     const result = await db.AddValues.findByPk(x);
-    return result.destroy();
+    if (result) {
+      result.destroy();
+    }
   }
+  return sendResponseData(true, "Tag Deleted Successfully", []);
 }
