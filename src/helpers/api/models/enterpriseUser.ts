@@ -1,6 +1,6 @@
 import { DataTypes } from "sequelize";
 
-export function User(sequelize: any) {
+export function EnterpriseUser(sequelize: any) {
   const attributes = {
     id: {
       type: DataTypes.INTEGER,
@@ -13,8 +13,21 @@ export function User(sequelize: any) {
     firstName: { type: DataTypes.STRING, allowNull: false },
     lastName: { type: DataTypes.STRING, allowNull: false },
     password: { type: DataTypes.STRING, allowNull: false },
-    resetToken: { type: DataTypes.STRING, allowNull: true },
-    resetTokenExpires: { type: DataTypes.DATE, allowNull: true },
+    parentId: { type: DataTypes.INTEGER, allowNull: true },
+    enterpriseId: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: "Enterprises",
+        id: "id",
+      },
+    },
+    roleId:{
+      type:DataTypes.INTEGER,
+      references: {
+        model: "Roles",
+        id: "id",
+      }
+    }
   };
 
   const options = {
@@ -28,5 +41,5 @@ export function User(sequelize: any) {
     },
   };
 
-  return sequelize.define("User", attributes, options);
+  return sequelize.define("EnterpriseUser", attributes, options);
 }

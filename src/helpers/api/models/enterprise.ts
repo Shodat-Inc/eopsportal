@@ -18,7 +18,7 @@ export function Enterprise(sequelize: {
         allowNull: boolean;
       };
       founderYear: {
-          allowNull: boolean;
+        allowNull: boolean;
         type: DataTypes.IntegerDataTypeConstructor;
       };
       website: {
@@ -31,6 +31,10 @@ export function Enterprise(sequelize: {
       };
       employeeCount: {
         type: DataTypes.IntegerDataTypeConstructor;
+        allowNull: boolean;
+      };
+      superAdminName: {
+        type: DataTypes.StringDataTypeConstructor;
         allowNull: boolean;
       };
     }
@@ -54,6 +58,10 @@ export function Enterprise(sequelize: {
     employeeCount: {
       type: DataTypes.INTEGER,
       allowNull: true,
+    },
+    superAdminName: {
+      type: DataTypes.STRING,
+      allowNull: false,
     },
   };
   return sequelize.define("Enterprise", attributes);

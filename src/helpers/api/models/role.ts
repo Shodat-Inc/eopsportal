@@ -15,6 +15,10 @@ export function Role(sequelize: {
         type: DataTypes.AbstractDataTypeConstructor;
         allowNull: boolean;
       };
+      routeId: {
+        type: DataTypes.IntegerDataTypeConstructor;
+        references: { model: any; id: any };
+      };
     }
   ) => any;
 }) {
@@ -29,6 +33,13 @@ export function Role(sequelize: {
     isActive: {
       type: DataTypes.BOOLEAN,
       allowNull: true,
+    },
+    routeId: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: "Routes",
+        id: "id",
+      },
     },
   };
 

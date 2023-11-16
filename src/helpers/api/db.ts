@@ -5,9 +5,9 @@ import * as models from "./models/index";
 import { loggerInfo, loggerError } from "@/logger";
 import { dialData } from "../seedData/countryCode";
 import relationship from "./relation/relation";
-import { roles } from "../seedData/role";
 import { Reasons } from "../seedData/reason";
 import { TagDataType } from "../seedData/datatype";
+import { routes } from "../seedData/route";
 const { serverRuntimeConfig } = getConfig();
 export const db: any = {
   initialized: false,
@@ -18,13 +18,14 @@ export interface Models {
   // ... other model typings
 }
 
-//Roles Model
-async function seedDemoRoles(Role: any) {
-  for (let role of roles) {
+//Route Model
+
+async function seedDemoRoutes(Routes: any) {
+  for (let route of routes) {
     // Using findOrCreate to ensure the demo roles aren't duplicated
-    await Role.findOrCreate({
-      where: { name: role.name },
-      defaults: role,
+    await Routes.findOrCreate({
+      where: { routeName: route.name },
+      defaults: route,
     });
   }
 }
@@ -42,6 +43,7 @@ async function seedDemoReasons(Reason: any) {
 }
 
 //Tag datatype Model
+
 async function seedDemoTagDataType(tagDataType: any) {
   for (let type of TagDataType) {
     // Using findOrCreate to ensure the Dataypes aren't duplicated
@@ -65,7 +67,7 @@ async function seedCountryCodeData(countryCodeModel: any) {
 }
 // initialize db and models, called on first api request from /helpers/api/api-handler.js
 async function initialize() {
-  loggerInfo.info("<----db connection----->");
+  loggerInfo.info("<----DB connection----->");
 
   try {
     // create db if it doesn't already exist
@@ -98,8 +100,8 @@ async function initialize() {
 
       if (isDBSync) {
         await sequelize.sync({ alter: true });
-        if (db.Role) {
-          await seedDemoRoles(db.Role);
+        if (db.Routes) {
+          await seedDemoRoutes(db.Routes);
         }
         //demo tagDatatype
         if (db.tagDataType) {

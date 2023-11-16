@@ -23,6 +23,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/common/nodatafound.js", "src/lib/getwatchalerts.js", "src/pages/authentication/firebase.config.js", "src/pages/authentication/verifyphone.js", "src/pages/authentication/complete.js", "src/pages/authentication/signin.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/common/nodatafound.js", "src/lib/getwatchalerts.js", "src/pages/authentication/firebase.config.js", "src/pages/authentication/verifyphone.js", "src/pages/authentication/complete.js", "src/pages/authentication/signin.js", "validateSchema.js"],
   "exclude": ["node_modules"]
 }
