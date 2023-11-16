@@ -36,7 +36,7 @@ export default function CustomDropSubClass(props: any) {
     return (
         <div ref={wrapperRef}>
             <div
-                className="border rounded-xl border-gray-500 h-[55px] pl-2 pr-5 relative flex items-center justify-start bg-white w-[80%] cursor-pointer"
+                className="border rounded-xl border-gray-969 h-[55px] pl-2 pr-5 relative flex items-center justify-start bg-white w-[80%] cursor-pointer"
                 onClick={toggleDropdownFunction}
             >
                 <label className="absolute text-sm top-[-10px] left-2 pl-2 pr-2 bg-white">Choose Sub Class</label>
@@ -51,7 +51,7 @@ export default function CustomDropSubClass(props: any) {
             </div>
 
             {toggleAsset ?
-                <div className={`h-52 border rounded-xl border-gray-500 h-auto max-h-[250px] w-[400px]  absolute flex items-start justify-start flex-wrap flex-col mt-1 overflow-hidden overflow-y-auto bg-white ${styles.scroll} z-10`}>
+                <div className={`h-52 border rounded-xl border-gray-969 h-auto max-h-[250px] w-[400px]  absolute flex items-start justify-start flex-wrap flex-col mt-1 overflow-hidden overflow-y-auto bg-white ${styles.scroll} z-10`}>
                     <div className="flex relative w-full mt-3 mb-3 pl-3 pr-3">
                         <Image
                             src="/img/search-icon-gray.svg"

@@ -112,7 +112,7 @@ export default function SubObjectManagement(props: any) {
                     <div className="relative ml-3">
                         <button
                             className={`bg-white border  rounded-xl h-[44px] transition-all duration-[400ms] h-[44px] rounded rounded-lg px-2 py-2 flex items-center justify-start ${toggleFilter === true ? 'border-black' : 'border-gray-969'}`}
-                            onClick={toggleFilterFunction}
+                            onClick={toggleFilterFunction}  
                         >
                             <Image
                                 src="/img/filter-icon.svg"

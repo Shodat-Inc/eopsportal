@@ -242,8 +242,10 @@ export default function TopBar({ showNav, setShowNav }) {
                         />
                       </button>
                     </div>
-                    <div className="text-sm text-black w-full">{userData.firstName} {userData.lastName}</div>
-                    <div className="text-gray-968 text-[13px] w-full">{username}</div>
+                    {/* <div className="text-sm text-black w-full">{userData.firstName} {userData.lastName}</div> */}
+                    <div className="text-sm text-black w-full">Shodhat Software Engineer</div>
+                    {/* <div className="text-gray-968 text-[13px] w-full">{username}</div> */}
+                    <div className="text-gray-968 text-[13px] w-full">amit.pandey@shodat.com</div>
                   </div>
 
                   <div className="relative mt-5">
