@@ -7,6 +7,7 @@ import axios from "axios";
 import ClassManagement from "./classmanagement";
 import ObjectManagement from "./objectmanagement";
 import SubObjectManagement from "./subobjectmanagement";
+import SubClassManagement from "./subclassmanagement";
 import { setSelectedClass, toggleAddNewObjectModel, getSingleUser } from "@/store/actions/classAction";
 
 export default function AssetManagement() {
@@ -52,6 +53,12 @@ export default function AssetManagement() {
     const openAddClassModal = () => {
         setAddClassModal(!addClassModal);
     }
+
+    const [addSubClassModal, setAddSubClassModal] = useState(false);
+    const openAddSubClassModal = () => {
+        setAddSubClassModal(!addSubClassModal)
+    }
+
     const handleaddClassModal = (item: any) => {
         setAddClassModal(item)
     }
@@ -68,6 +75,17 @@ export default function AssetManagement() {
     const handleSubObject = (item: any) => {
         if (item !== "") {
             setTab(2)
+        } else {
+            setTab(tab)
+        }
+    }
+
+    const handleaddSubClassModal = (item: any) => {
+        setAddSubClassModal(item)
+    }
+    const handelsubClass = (item: any) => {
+        if (item !== "") {
+            setTab(4)
         } else {
             setTab(tab)
         }
@@ -153,7 +171,7 @@ export default function AssetManagement() {
                     <div className="flex justify-start items-center z-[1] relative top-[1px] text-sm">
                         <button
                             onClick={() => toggleTab(1)}
-                            className={`rounded-tr-xl rounded-tl-xl mr-1 h-[56px] min-w-[100px] px-4 inline-flex jsutify-center items-center bg-white font-semibold ${tab === 1 ? "bg-white border border-[#E1E1E1] border-b-0" : "bg-yellow-951 bg-opacity-50 hover:bg-opacity-100"}`}>
+                            className={`rounded-tr-xl rounded-tl-xl mr-1 h-[56px] min-w-[100px] px-4 inline-flex jsutify-center items-center bg-white font-semibold ${tab === 1 || tab === 4 ? "bg-white border border-[#E1E1E1] border-b-0" : "bg-yellow-951 bg-opacity-50 hover:bg-opacity-100"}`}>
                             <Image
                                 src="/img/classmanagement/class.svg"
                                 alt="class"
@@ -208,6 +226,25 @@ export default function AssetManagement() {
                         </div>
                     }
 
+                    {
+                        tab === 4 &&
+                        <div className="flex justify-start items-center">
+                            <button
+                                className="rounded rounded-xl bg-black h-[44px] px-4 flex justify-center items-center text-white text-sm hover:bg-[#303030] transition-all duration-[400ms] transition-opacity duration-300 outline-none transform active:scale-75 transition-transform"
+                                onClick={openAddSubClassModal}
+                            >
+                                <Image
+                                    src="/img/plus.svg"
+                                    alt="Add Class"
+                                    className="mr-2"
+                                    height={24}
+                                    width={24}
+                                />
+                                <span>Add Sub Class</span>
+                            </button>
+                        </div>
+                    }
+
                     {tab === 3 &&
                         <div className="flex justify-start items-center">
                             <button
@@ -235,6 +272,14 @@ export default function AssetManagement() {
                                 handleaddClassModal={handleaddClassModal}
                                 addClassModal={addClassModal}
                                 classData={classData && classData.length > 0 ? classData : []}
+                                handelsubClass={handelsubClass}
+                            />
+                        }
+                        {
+                            tab === 4 &&
+                            <SubClassManagement
+                            handleaddSubClassModal={handleaddSubClassModal}
+                            addSubClassModal={addSubClassModal}
                             />
                         }
                         {tab === 2 &&

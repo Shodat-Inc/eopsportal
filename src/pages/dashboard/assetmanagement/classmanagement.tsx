@@ -43,6 +43,11 @@ export default function ClassManagement(props: any) {
     const closeDeleteModal = () => {
         setDeleteModal(false)
     }
+
+    const takeMeToClassComponent = (item: any) => {
+        props.handelsubClass(item)
+    }
+    
     return (
         <div className='px-0 py-3 font-OpenSans'>
             {/* Title, search and filters */}
@@ -110,7 +115,13 @@ export default function ClassManagement(props: any) {
                     <tbody>
                         <tr>
                             <td>1</td>
-                            <td>Manufacturing Plant</td>
+                            <td>
+                                <button
+                                    onClick={() => takeMeToClassComponent('Manufacturing Plant')}
+                                >
+                                    <span>Manufacturing Plant</span>
+                                </button>
+                            </td>
                             <td>Plant ID,  Street, City, Zip, Country</td>
                             <td>12-10-2023</td>
                             <td className='relative'>
