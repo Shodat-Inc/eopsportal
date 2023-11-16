@@ -1,6 +1,8 @@
 import { apiHandler, usersRepo } from "@/helpers/api";
 import { deleteRecordRepo } from "@/helpers/api/repo/delete-record-repo";
 import { loggerError } from "@/logger";
+import { deleteUserValidation } from "../../../validateSchema";
+
 
 // Default API handler for the POST method to handle user deletion.
 export default apiHandler({
@@ -27,6 +29,17 @@ async function _delete(req: any, res: any) {
     // Fetch user data for the provided ID.
     const user = await usersRepo.getById(id);
     const data = req.body;
+    const validation = deleteUserValidation(data);
+
+    if (validation.error) {
+      // Handle validation errors
+      res.status(400).json({
+        success: false,
+        message: "Validation error",
+        errors: validation.error.details.map((detail) => detail.message),
+      });
+      return;
+    }
 
     // If no user is found for the given ID, send back a 404 Not Found response.
     if (!user) {
@@ -35,14 +48,13 @@ async function _delete(req: any, res: any) {
 
     // Delete the user using the provided ID.
     await usersRepo.delete(id);
-
-    // Record the deletion in the deleteRecordRepo for auditing or tracking purposes.
+    
     await deleteRecordRepo.create({
-      email: data.email,
+      email: validation.value.email,
       userId: id,
-      deleteAction: data.deleteAction,
-      message: data.message,
-      reasonId: data.reasonId,
+      deleteAction: validation.value.deleteAction,
+      message: validation.value.message,
+      reasonId: validation.value.reasonId,
     });
 
     // Send a success response indicating that the user was deleted.

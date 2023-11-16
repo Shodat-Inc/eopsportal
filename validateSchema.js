@@ -1,9 +1,16 @@
 import Joi from "joi";
 
+const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
 export const signInValidation = (data) => {
   const schema = Joi.object({
     email: Joi.string().email().required(),
-    password: Joi.string().min(6).required(),
+    password: Joi.string().regex(passwordRegex)
+      .min(6).max(10).required().messages({
+        "string.pattern.base": "Password should be between 6 to 10 characters long and must contain atleast one uppercase character, lowercase character and digit.",
+        "string.empty": "Password cannot be empty",
+        "any.required": "Password is required",
+      }),
   });
 
   return schema.validate(data);
@@ -15,7 +22,12 @@ export const createUserValidation = (data) => {
     email: Joi.string().email().required(),
     firstName: Joi.string().required(),
     lastName: Joi.string().required(),
-    password: Joi.string().min(10).required(),
+    password: Joi.string().regex(passwordRegex)
+      .min(6).max(10).required().messages({
+        "string.pattern.base": "Password should be between 6 to 10 characters long and must contain atleast one uppercase character, lowercase character and digit.",
+        "string.empty": "Password cannot be empty",
+        "any.required": "Password is required",
+      }),
     companyName: Joi.string().required(),
     countryCodeId: Joi.number().required(),
     phoneNumber: Joi.number().required(),
@@ -67,7 +79,12 @@ export const forgetPasswordValidation = (data) => {
 
 export const updatePasswordValidation = (data) => {
   const schema = Joi.object({
-    email: Joi.string().email().required(),
+    password: Joi.string().regex(passwordRegex)
+      .min(6).max(10).required().messages({
+        "string.pattern.base": "Password should be between 6 to 10 characters long and must contain atleast one uppercase character, lowercase character and digit.",
+        "string.empty": "Password cannot be empty",
+        "any.required": "Password is required",
+      }),
   });
 
   return schema.validate(data);
@@ -79,6 +96,61 @@ export const deleteUserValidation = (data) => {
     message: Joi.string().required(),
     reasonId: Joi.number().required(),
     deleteAction: Joi.boolean().required(),
+  });
+
+  return schema.validate(data);
+};
+
+export const createClassValidation = (data) => {
+  const schema = Joi.object({
+    className: Joi.string().required(),
+    tags: Joi.array()
+      .items({
+        tagName: Joi.string().required(),
+        dataTypeId: Joi.number().required(),
+      })
+  });
+
+  return schema.validate(data);
+};
+
+export const createObjectValidation = (data) => {
+  const schema = Joi.object({
+    classId: Joi.number().required(),
+    values: Joi.array()
+      .items({
+        classTagId: Joi.number().required(),
+        value: Joi.string().required(),
+      })
+  });
+
+  return schema.validate(data);
+};
+
+export const updateClassValidation = (data) => {
+  const schema = Joi.object({
+    id: Joi.number().required(),
+    className: Joi.string().required(),
+    deleteTagId: Joi.array().items(Joi.number()),
+    addTag: Joi.array()
+      .items({
+        tagName: Joi.string().required(),
+        dataTypeId: Joi.number().required(),
+      })
+  });
+
+  return schema.validate(data);
+};
+
+export const updateObjectValidation = (data) => {
+  const schema = Joi.object({
+    objectId: Joi.number().required(),
+    deleteValueId: Joi.array().items(Joi.number()),
+    updatedValues: Joi.array()
+      .items({
+        classTagId: Joi.number().required(),
+        values: Joi.string().required(),
+      })
   });
 
   return schema.validate(data);

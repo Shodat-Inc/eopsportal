@@ -32,7 +32,6 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     } = reqData;
     const username = firstName.concat(lastName);
     const validation = createUserValidation(reqData);
-    console.log(validation, "_________");
     if (validation.error) {
       // Handle validation errors
       res.status(400).json({
