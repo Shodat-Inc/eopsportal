@@ -100,5 +100,5 @@ async function _delete(params: any) {
       result.destroy();
     }
   }
-  return
+  return sendResponseData(true, "Tag Deleted Successfully", []);
 }

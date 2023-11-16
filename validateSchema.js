@@ -31,8 +31,6 @@ export const createUserValidation = (data) => {
     companyName: Joi.string().required(),
     countryCodeId: Joi.number().required(),
     phoneNumber: Joi.number().required(),
-    roleId: Joi.number().required(),
-    parentId: Joi.number().required(),
     isPrimary: Joi.boolean().required(),
     primary: Joi.boolean().required(),
   });

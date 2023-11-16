@@ -10,7 +10,7 @@ export function EnterpriseAddress(sequelize: any) {
     },
     city: { type: DataTypes.STRING, allowNull: true },
     state: { type: DataTypes.STRING, allowNull: false },
-    pincode: { type: DataTypes.STRING, allowNull: false },
+    pincode: { type: DataTypes.INTEGER, allowNull: false },
     address: { type: DataTypes.STRING, allowNull: false },
     enterpriseId: {
       type: DataTypes.INTEGER,

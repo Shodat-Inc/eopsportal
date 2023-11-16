@@ -64,7 +64,7 @@ async function create(params: any) {
   loggerInfo.info("Create User", info);
   try {
     // validate
-    let user_data = await db.User.findOne({
+    let user_data = await db.EnterpriseUser.findOne({
       where: { email: params.email },
     });
     if (user_data) {
@@ -80,16 +80,16 @@ async function create(params: any) {
       }
     }
 
-    const user = new db.User(params);
+    const enterpriseUser = new db.EnterpriseUser(params);
 
     // hash password
     if (params.password) {
-      user.password = bcrypt.hashSync(params.password, 10);
+      enterpriseUser.password = bcrypt.hashSync(params.password, 10);
     }
-    // save user  
-    const data = await user.save();
+    // save user
+    const data = await enterpriseUser.save();
     return sendResponseData(true, message.success.userCreated, data);
-    } catch (error) {
+  } catch (error) {
     loggerError.error("Error in creating user :", error);
 
     return sendResponseData(false, message.error.cantCreateUser, error);

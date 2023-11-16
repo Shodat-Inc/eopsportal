@@ -26,8 +26,6 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       firstName,
       lastName,
       password,
-      roleId,
-      parentId,
       ...objData
     } = reqData;
     const username = firstName.concat(lastName);
@@ -57,8 +55,6 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       firstName,
       lastName,
       password,
-      roleId,
-      parentId,
     });
     if (!userData.success) {
       return res.send(sendResponseData(false, userData.message, []));
