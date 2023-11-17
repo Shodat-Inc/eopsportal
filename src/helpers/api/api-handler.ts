@@ -24,7 +24,12 @@ function apiHandler(handler: any) {
         "/api/generateOtp",
         "/api/forgetPassword",
         "/api/updatePassword",
-        "/api/createEnterprise"
+        "/api/createEnterprise",
+        "/api/createEnterpriseUser",
+        "/api/createRole",
+        "/api/getRoles",
+        "/api/updateRole",
+        "/api/deleteRole",
       ];
       const url = req.url.split("?")[0];
       if (!path.includes(url)) {
