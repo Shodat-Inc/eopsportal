@@ -1,13 +1,16 @@
 // validateMiddleware.js
 import { createClassValidation,
   createObjectValidation,
+  createRoleValidation,
   createUserValidation,
+  deleteRoleValidation,
   deleteUserValidation,
   forgetPasswordValidation, 
   generateOTPValidation,
   updateClassValidation,
   updateObjectValidation,
   updatePasswordValidation,
+  updateRoleValidation,
   updateUserValidation, 
   verifyOTPValidation 
 } from "../../validateSchema";
@@ -76,5 +79,23 @@ export function updateClass(req: any, res: any, next: any) {
 export function updateObject(req: any, res: any, next: any) {
   const reqData = req.body;
   updateObjectValidation(reqData);
+  next();
+}
+
+export function createRole(req: any, res: any, next: any) {
+  const reqData = req.body;
+  createRoleValidation(reqData);
+  next();
+}
+
+export function updateRole(req: any, res: any, next: any) {
+  const reqData = req.body;
+  updateRoleValidation(reqData);
+  next();
+}
+
+export function deleteRole(req: any, res: any, next: any) {
+  const reqData = req.body;
+  deleteRoleValidation(reqData);
   next();
 }

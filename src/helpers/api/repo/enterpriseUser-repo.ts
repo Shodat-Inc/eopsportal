@@ -1,97 +1,39 @@
-import getConfig from "next/config";
-import jwt from "jsonwebtoken";
-import bcrypt from "bcryptjs";
+import { loggerError, loggerInfo } from "@/logger";
 import { db } from "../db";
-import sendResponseData from "../../constant";
-import { loggerInfo, loggerError } from "@/logger";
-import { info } from "console";
+import sendResponseData from "@/helpers/constant";
 import message from "@/util/responseMessage";
 
-const { serverRuntimeConfig } = getConfig();
-
 export const EnterpriseUsersRepo = {
-  authenticate,
   create,
 };
 
-async function authenticate(data: any) {
-  try {
-    let { email, password } = data;
-    const user = await db.User.scope("withHash").findOne({
-      attributes: [
-        "id",
-        "email",
-        "firstName",
-        "lastName",
-        "password",
-        "confirmPassword",
-        "enterpriseId",
-      ],
-      where: { email: email },
-    });
-    if (!user) {
-      return sendResponseData(false, message.error.userNotFound, {});
-    }
-    if (!bcrypt.compareSync(String(password), String(user.password))) {
-      return sendResponseData(false, message.error.incorrectPassword, {});
-    }
-    // create a jwt token that is valid for 7 days
-    const token = jwt.sign({ sub: user.id }, serverRuntimeConfig.secret, {
-      expiresIn: "7d",
-    });
-
-    // remove hash from return value
-    const userJson = user.get();
-    delete userJson.password;
-    const phoneRecord = await db.phoneRecord.findOne({
-      where: { userId: user.id },
-      attributes: ["phoneNumber"],
-    });
-    user.dataValues["phoneNumber"] = phoneRecord.phoneNumber;
-
-    // return user and jwt
-    return sendResponseData(true, message.success.loginSuccess, {
-      ...userJson,
-      token,
-    });
-  } catch (error) {
-    loggerError.error("Authentication Error");
-    return sendResponseData(false, message.error.error, error);
-  }
-}
+/**
+ * Asynchronously creates a new enterprise user entry in the database.
+ *
+ * @param {Object} params - The parameters containing information to save the enterprise user.
+ * @returns {Object} - Response object indicating the success or failure of the operation.
+ */
 
 async function create(params: any) {
-  loggerInfo.info("Create User", info);
+
+  loggerInfo.info("Create User Enterprise Repo");
   try {
-    // validate
-    let user_data = await db.EnterpriseUser.findOne({
-      where: { email: params.email },
+    const enterprise = await db.EnterpriseUser.findOne({
+      where: { username: params.username },
     });
-    if (user_data) {
-      return sendResponseData(false, message.error.alreadyExist, {});
+    if (enterprise) {
+      return sendResponseData(false, message.error.enterpriseUserExist, []);
     }
-    if (params.roleId) {
-      let role_data = await db.Role.findByPk(params.roleId);
-      if (!role_data) {
-        return sendResponseData(false, message.error.roleError1, {});
-      }
-      if (!role_data.isActive) {
-        return sendResponseData(false, message.error.roleError2, {});
-      }
-    }
-
-    const enterpriseUser = new db.EnterpriseUser(params);
-
-    // hash password
-    if (params.password) {
-      enterpriseUser.password = bcrypt.hashSync(params.password, 10);
-    }
-    // save user
-    const data = await enterpriseUser.save();
-    return sendResponseData(true, message.success.userCreated, data);
-  } catch (error) {
-    loggerError.error("Error in creating user :", error);
-
-    return sendResponseData(false, message.error.cantCreateUser, error);
+    const newEnterpriseUser = new db.EnterpriseUser(params);
+    const save = await newEnterpriseUser.save();
+    return sendResponseData(
+      true,
+      message.success.enterpriseUserCreated,
+      newEnterpriseUser
+    );
+  } catch (error: any) {
+    loggerError.error("Error in User Enterprise Repo");
+    return sendResponseData(false, message.error.errorCreateEnterpriseUser, []);
   }
 }
+

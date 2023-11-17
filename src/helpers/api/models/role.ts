@@ -16,8 +16,8 @@ export function Role(sequelize: {
         allowNull: boolean;
       };
       routeId: {
-        type: DataTypes.IntegerDataTypeConstructor;
-        references: { model: any; id: any };
+        type: DataTypes.AbstractDataTypeConstructor;
+        allowNull: boolean;
       };
     }
   ) => any;
@@ -35,11 +35,8 @@ export function Role(sequelize: {
       allowNull: true,
     },
     routeId: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: "Routes",
-        id: "id",
-      },
+      type: DataTypes.JSON,
+      allowNull: false
     },
   };
 

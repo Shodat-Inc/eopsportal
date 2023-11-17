@@ -101,6 +101,7 @@ export const deleteUserValidation = (data) => {
 
 export const createClassValidation = (data) => {
   const schema = Joi.object({
+    userId: Joi.number(),
     className: Joi.string().required(),
     tags: Joi.array()
       .items({
@@ -149,6 +150,55 @@ export const updateObjectValidation = (data) => {
         classTagId: Joi.number().required(),
         values: Joi.string().required(),
       })
+  });
+
+  return schema.validate(data);
+};
+
+export const createRoleValidation = (data) => {
+  const schema = Joi.object({
+    name: Joi.string().required(),
+    isActive: Joi.boolean().required(),
+    routeId: Joi.array().items(Joi.number()),
+  });
+
+  return schema.validate(data);
+};
+
+export const updateRoleValidation = (data) => {
+  const schema = Joi.object({
+    id: Joi.number().required(),
+    name: Joi.string(),
+    routeId: Joi.array().items(Joi.number()),
+    isActive: Joi.boolean(),
+  });
+
+  return schema.validate(data);
+};
+
+export const deleteRoleValidation = (data) => {
+  const schema = Joi.object({
+    id: Joi.number().required(),
+  });
+
+  return schema.validate(data);
+};
+
+export const createEnterpriseUserValidation = (data) => {
+  const schema = Joi.object({
+    username: Joi.string().required(),
+    email: Joi.string().email().required(),
+    firstName: Joi.string().required(),
+    lastName: Joi.string().required(),
+    password: Joi.string().regex(passwordRegex)
+      .min(6).max(10).required().messages({
+        "string.pattern.base": "Password should be between 6 to 10 characters long and must contain atleast one uppercase character, lowercase character and digit.",
+        "string.empty": "Password cannot be empty",
+        "any.required": "Password is required",
+      }),
+    parentId: Joi.number().required(),
+    enterpriseId: Joi.number(),
+    roleId: Joi.number()
   });
 
   return schema.validate(data);
