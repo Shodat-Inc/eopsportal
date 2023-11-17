@@ -6,6 +6,9 @@ import message from "@/util/responseMessage";
 // Repository for role-related operations.
 export const roleRepo = {
   create,
+  getAllRoles,
+  update,
+  delete: _delete,
 };
 
 /**
@@ -19,6 +22,12 @@ async function create(params: any) {
   loggerInfo.info("Role repo");
 
   try {
+    const check = await db.Role.findOne({
+      where: { name: params.name }
+    })
+    if (check) {
+      return sendResponseData(false, message.error.roleExist, {});
+    }
     // Create a new Role instance using the provided parameters.
     const role = new db.Role(params);
 
@@ -32,5 +41,50 @@ async function create(params: any) {
     loggerError.error("Cant Save Role", error);
     // Return a response indicating the failure of the operation.
     return sendResponseData(false, message.error.error, error);
+  }
+}
+
+async function getAllRoles() {
+  loggerInfo.info("GET all roles");
+
+  return await db.Role.findAll({
+    attributes: ["id", "name", "isActive", "routeId"]
+  });
+}
+
+async function update(params: any) {
+  try {
+    const roles = await db.Role.findOne({
+      where: { id: params.id, }
+    })
+    if (!roles) {
+      return sendResponseData(false, "No Role Exits", [])
+    }
+    roles.name = params.name
+    roles.routeId = params.routeId
+    roles.isActive = params.isActive
+    const response = await roles.save()
+    return sendResponseData(true, message.success.roleUpdated, response)
+  } catch (error: any) {
+    return sendResponseData(false, message.error.errorUpdation, [])
+  }
+}
+
+async function _delete(params: any) {
+  try {
+    const role = await db.Role.findOne({
+      where: { id: params.id },
+    });
+    if (!role) {
+      return sendResponseData(false, "Role doesn't Exits", [])
+    }
+    await role.destroy();
+    return sendResponseData(
+      true,
+      message.success.deleteRole,
+      role.className
+    );
+  } catch (error: any) {
+    return sendResponseData(false, message.error.errorDeleteRole, error);
   }
 }

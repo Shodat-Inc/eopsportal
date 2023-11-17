@@ -13,8 +13,6 @@ async function updateObject(req: any, res: any) {
   //   return res.status(400).send({ message: "Update Data is required" });
   // }
   const validation = updateObjectValidation(reqData);
-  console.log(validation,"==validation")
-  console.log(validation.error,"==validation.error")
     if (validation.error) {
       // Handle validation errors
       res.status(400).json({
@@ -28,11 +26,9 @@ async function updateObject(req: any, res: any) {
   try {
     const { deleteValueId, ...restData } = validation.value;
     if (deleteValueId) {
-      console.log(deleteValueId,"==ppp")
       await valueRepo.delete(deleteValueId);
     }
     const updateData = await valueRepo.update(restData.updatedValues);
-    console.log(updateData,"==updateData")
     return res.status(200).json("Updated successfully");
   } catch (error: any) {
     loggerError.error("error in updateValuse API ", error);

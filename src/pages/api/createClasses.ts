@@ -27,7 +27,7 @@ async function handler(req: any, res: any) {
     // Construct the request data object, ensuring the user ID is added.
     const reqData = {
       ...req.body,
-      // userId: req.id,
+      userId: req.id,
     };
     const validation = createClassValidation(reqData);
     if (validation.error) {
