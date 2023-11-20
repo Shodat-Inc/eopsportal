@@ -29,6 +29,7 @@ async function authenticate(data: any) {
         "email",
         "firstName",
         "lastName",
+        "roleId",
       ],
       where: { email: email },
     });
@@ -39,9 +40,13 @@ async function authenticate(data: any) {
       return sendResponseData(false, message.error.incorrectPassword, {});
     }
     // create a jwt token that is valid for 7 days
-    const token = jwt.sign({ sub: user.id }, serverRuntimeConfig.secret, {
-      expiresIn: "7d",
-    });
+    const token = jwt.sign(
+      { sub: user.id, role: user.roleId },
+      serverRuntimeConfig.secret,
+      {
+        expiresIn: "7d",
+      }
+    );
 
     // remove hash from return value
     const userJson = user.get();
@@ -51,7 +56,6 @@ async function authenticate(data: any) {
       attributes: ["phoneNumber"],
     });
     user.dataValues["phoneNumber"] = phoneRecord.phoneNumber;
-
 
     // return user and jwt
     return sendResponseData(true, message.success.loginSuccess, {
@@ -153,7 +157,7 @@ async function create(params: any) {
     if (params.password) {
       user.password = bcrypt.hashSync(params.password, 10);
     }
-    // save user  
+    // save user
     const data = await user.save();
     return sendResponseData(true, message.success.userCreated, data);
   } catch (error) {

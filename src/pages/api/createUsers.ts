@@ -21,13 +21,8 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       return;
     }
     const reqData = req.body;
-    const {
-      email,
-      firstName,
-      lastName,
-      password,
-      ...objData
-    } = reqData;
+    const { email, firstName, lastName, password, roleId, ...objData } =
+      reqData;
     const username = firstName.concat(lastName);
     const validation = createUserValidation(reqData);
     if (validation.error) {
@@ -55,6 +50,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       firstName,
       lastName,
       password,
+      roleId,
     });
     if (!userData.success) {
       return res.send(sendResponseData(false, userData.message, []));
