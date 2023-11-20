@@ -2,6 +2,7 @@ import { apiHandler } from "@/helpers/api";
 import { EnterpriseUsersRepo } from "@/helpers/api/repo/enterpriseUser-repo";
 import { loggerError, loggerInfo } from "@/logger";
 import { createEnterpriseUserValidation } from "../../../validateSchema";
+import message from "@/util/responseMessage";
 
 export default apiHandler({
     post: handler,
@@ -10,6 +11,10 @@ export default apiHandler({
 async function handler(req: any, res: any) {
     loggerInfo.info("Post Class");
     try {
+        if (req.method !== "POST") {
+            res.status(405).send(message.error.postMethodError);
+            return;
+          }
         const data = req.body;
         const validation = createEnterpriseUserValidation(data);
         if (validation.error) {
