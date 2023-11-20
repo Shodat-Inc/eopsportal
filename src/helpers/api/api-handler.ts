@@ -24,7 +24,12 @@ function apiHandler(handler: any) {
         "/api/generateOtp",
         "/api/forgetPassword",
         "/api/updatePassword",
-        "/api/createEnterprise"
+        "/api/createEnterprise",
+        "/api/createEnterpriseUser",
+        "/api/createRole",
+        "/api/getRoles",
+        "/api/updateRole",
+        "/api/deleteRole",
       ];
       const url = req.url.split("?")[0];
       if (!path.includes(url)) {
@@ -33,6 +38,42 @@ function apiHandler(handler: any) {
           req.id = tokenData.sub;
         } else {
           return res.status(405).json({ message: "Unauthorised Operation!!" });
+        }
+      }
+
+      if (req.id) {
+        let flag = true;
+        const data = await db.EnterpriseUser.findOne({
+          include: [
+            {
+              model: db.Role,
+              attributes: ["routeId"],
+              where: { id: req.id },
+            },
+          ],
+        });
+        const routeId = data?.Role?.routeId; // Use optional chaining to avoid errors if data or Role is undefined
+        if (!routeId) {
+          return res.status(500).json({ message: "Invalid data structure" });
+        }
+
+        const routeArray = await db.Routes.findAll({
+          attributes: ["routeName"],
+          where: { id: routeId },
+          raw: true,
+        });
+
+        const incomingURL = req.url;
+        for (const route of routeArray) {
+          console.log(routeArray, incomingURL);
+          if (route.routeName === incomingURL) {
+            flag = false;
+            break;
+          }
+        }
+        if (flag) {
+          // return false;
+          return res.status(500).json({ message: "Operation Unauthrized!!" });
         }
       }
       // route handler
