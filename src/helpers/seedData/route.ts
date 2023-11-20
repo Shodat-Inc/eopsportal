@@ -1,9 +1,5 @@
 export const routes = [
-  { name: "/api/createUsers", isActive: true },
-  { name: "/api/updateUsers", isActive: true },
-  { name: "/api/deleteUser", isActive: true },
-  { name: "/api/getUsers", isActive: true },
-  { name: "/api/createClasses", isActive: true },
+
   { name: "/api/createUsers", isActive: true },
   { name: "/api/signIn", isActive: true },
   { name: "/api/generateOtp", isActive: true },
@@ -17,22 +13,6 @@ export const routes = [
   { name: "/api/createClasses", isActive: true }, //create classes and subclasses
   { name: "/api/createObjects", isActive: true },
   { name: "/api/getAssets", isActive: true },
-  { name: "/api/getAssetById", isActive: true },
-  { name: "/api/createObjects", isActive: true },
-  { name: "/api/getChildAssets", isActive: true },
-  { name: "/api/getChildAssetById", isActive: true },
-  { name: "/api/getDataType", isActive: true },
-  { name: "/api/getObjects", isActive: true },
-  { name: "/api/updateAssets", isActive: true },
-  { name: "/api/updateObjects", isActive: true },
-  { name: "/api/deleteClasses", isActive: true },
-  { name: "/api/deleteObject", isActive: true },
-  { name: "/api/createEnterpriseUser", isActive: true },
-  { name: "/api/createEnterprise", isActive: true },
-  { name: "/api/createRole", isActive: true },
-  { name: "/api/getRoles", isActive: true },
-  { name: "/api/updateRole", isActive: true },
-  { name: "/api/deleteRole", isActive: true },  
   { name: "/api/getAssetById", isActive: true },
   { name: "/api/getChildAssets", isActive: true }, //get child assests and child assets by id
   { name: "/api/getDataType", isActive: true },
