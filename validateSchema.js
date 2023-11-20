@@ -1,6 +1,7 @@
 import Joi from "joi";
 
 const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+const usernameRegex = /^([a-zA-Z0-9]|[-._](?![-._])){4,14}$/;
 
 export const signInValidation = (data) => {
   const schema = Joi.object({
@@ -186,7 +187,11 @@ export const deleteRoleValidation = (data) => {
 
 export const createEnterpriseUserValidation = (data) => {
   const schema = Joi.object({
-    username: Joi.string().required(),
+    username: Joi.string().regex(usernameRegex)
+      .min(4).max(10).messages({
+        "string.pattern.base": "Username should be atleast 4 and maximum 10 characters long.",
+        "string.empty": "Username cannot be empty",
+      }),
     email: Joi.string().email().required(),
     firstName: Joi.string().required(),
     lastName: Joi.string().required(),
@@ -203,3 +208,35 @@ export const createEnterpriseUserValidation = (data) => {
 
   return schema.validate(data);
 };
+
+export const updateEnterpriseUserValidation = (data) => {
+  const schema = Joi.object({
+    id: Joi.number().required(),
+    username: Joi.string().regex(usernameRegex)
+      .min(4).max(10).messages({
+        "string.pattern.base": "Username should be atleast 4 and maximum 10 characters long.",
+        "string.empty": "Username cannot be empty",
+      }),
+    firstName: Joi.string(),
+    lastName: Joi.string(),
+    password: Joi.string().regex(passwordRegex)
+      .min(6).max(10).required().messages({
+        "string.pattern.base": "Password should be between 6 to 10 characters long and must contain atleast one uppercase character, lowercase character and digit.",
+        "string.empty": "Password cannot be empty",
+        "any.required": "Password is required",
+      }),
+    parentId: Joi.number(),
+    enterpriseId: Joi.number(),
+    roleId: Joi.number()
+  });
+
+  return schema.validate(data);
+}
+
+export const deleteEnterpriseUserValidation = (data) => {
+  const schema = Joi.object({
+    id: Joi.number().required()
+  })
+
+  return schema.validate(data);
+}

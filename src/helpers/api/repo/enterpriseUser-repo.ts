@@ -5,6 +5,9 @@ import message from "@/util/responseMessage";
 
 export const EnterpriseUsersRepo = {
   create,
+  getAllEnterpriseUser,
+  update,
+  delete: _delete,
 };
 
 /**
@@ -37,3 +40,50 @@ async function create(params: any) {
   }
 }
 
+async function getAllEnterpriseUser() {
+  loggerInfo.info("GET all the Enterprise Users");
+  return await db.EnterpriseUser.findAll({
+    attributes: ["username", "email", "firstName", "lastName", "parentId", "enterpriseId", "roleId"]
+  })
+}
+
+async function update(params: any) {
+  try {
+    const data = await db.EnterpriseUser.findOne({
+      where: { id: params.id, }
+    })
+    if (!data) {
+      return sendResponseData(false, "No Enterprise User Exits", [])
+    }
+    data.username = params.username
+    data.firstName = params.firstName
+    data.lastName = params.lastName
+    data.password = params.password
+    data.parentId = params.parentId
+    data.enterpriseId = params.enterpriseId
+    data.roleId = params.roleId
+    const response = await data.save()
+    return sendResponseData(true, message.success.enterpriseUserUpdated, response)
+  } catch (error: any) {
+    return sendResponseData(false, message.error.errorUpdationMessage, [])
+  }
+}
+
+async function _delete(params: any) {
+  try {
+    const delData = await db.EnterpriseUser.findOne({
+      where: { id: params.id },
+    });
+    if (!delData) {
+      return sendResponseData(false, "Enterprise User doesn't Exits", [])
+    }
+    await delData.destroy();
+    return sendResponseData(
+      true,
+      message.success.enterpriseUserDeleted,
+      []
+    );
+  } catch (error: any) {
+    return sendResponseData(false, message.error.errorDeletionEnterpriseUser, error);
+  }
+}
