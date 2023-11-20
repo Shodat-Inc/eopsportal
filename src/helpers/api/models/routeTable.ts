@@ -34,5 +34,5 @@ export function Routes(sequelize: {
     },
   };
 
-  return sequelize.define("Routes", attributes);
+  return sequelize.define("Route", attributes);
 }

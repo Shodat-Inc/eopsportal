@@ -21,12 +21,7 @@ async function jwtMiddleware(req: any, res: any) {
       "/api/generateOtp",
       "/api/forgetPassword",
       "/api/updatePassword",
-      "/api/createEnterprise",
-      "/api/createEnterpriseUser",
-      "/api/createRole",
-      "/api/getRoles",
-      "/api/updateRole",
-      "/api/deleteRole",
+      "/api/contactSales",
     ],
   });
   return util.promisify(middleware)(req, res);

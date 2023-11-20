@@ -7,7 +7,6 @@ function relationship() {
   db.User.hasMany(db.Address, { foreignKey: "userId" });
   // Each Address is associated with a single User.
   db.Address.belongsTo(db.User, { foreignKey: "userId" });
-
   // Each User can have multiple Phone records.
   db.User.hasMany(db.phoneRecord, { foreignKey: "userId" });
   // Each Phone record is associated with a single User.

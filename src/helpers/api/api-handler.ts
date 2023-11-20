@@ -24,56 +24,34 @@ function apiHandler(handler: any) {
         "/api/generateOtp",
         "/api/forgetPassword",
         "/api/updatePassword",
-        "/api/createEnterprise",
-        "/api/createEnterpriseUser",
-        "/api/createRole",
-        "/api/getRoles",
-        "/api/updateRole",
-        "/api/deleteRole",
+        "/api/contactSales",
       ];
       const url = req.url.split("?")[0];
       if (!path.includes(url)) {
         const tokenData = req.auth;
         if (tokenData) {
           req.id = tokenData.sub;
+          req.role = tokenData.role;
         } else {
           return res.status(405).json({ message: "Unauthorised Operation!!" });
         }
       }
-
       if (req.id) {
-        let flag = true;
-        const data = await db.EnterpriseUser.findOne({
-          include: [
-            {
-              model: db.Role,
-              attributes: ["routeId"],
-              where: { id: req.id },
-            },
-          ],
+        const validateUser = await db.Role.findOne({
+          where: { id: req.role },
         });
-        const routeId = data?.Role?.routeId; // Use optional chaining to avoid errors if data or Role is undefined
-        if (!routeId) {
-          return res.status(500).json({ message: "Invalid data structure" });
-        }
-
-        const routeArray = await db.Routes.findAll({
-          attributes: ["routeName"],
-          where: { id: routeId },
+        const routes = validateUser.dataValues.routeId;
+        const valideRoute = await db.Routes.findAll({
+          where: { id: routes },
           raw: true,
         });
-
-        const incomingURL = req.url;
-        for (const route of routeArray) {
-          console.log(routeArray, incomingURL);
-          if (route.routeName === incomingURL) {
-            flag = false;
-            break;
-          }
+        const paths: any[] = [];
+        for (let a of valideRoute) {
+          paths.push(a.routeName);
         }
-        if (flag) {
-          // return false;
-          return res.status(500).json({ message: "Operation Unauthrized!!" });
+        const incomingRoute = req.url;
+        if (!paths.includes(incomingRoute)) {
+          return res.status(400).json({ message: "Unauthorized Operation" });
         }
       }
       // route handler
