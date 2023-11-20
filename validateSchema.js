@@ -2,6 +2,7 @@ import Joi from "joi";
 
 const passwordRegex =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+const usernameRegex = /^([a-zA-Z0-9]|[-._](?![-._])){4,14}$/;
 
 export const signInValidation = (data) => {
   const schema = Joi.object({
@@ -202,7 +203,11 @@ export const deleteRoleValidation = (data) => {
 
 export const createEnterpriseUserValidation = (data) => {
   const schema = Joi.object({
-    username: Joi.string().required(),
+    username: Joi.string().regex(usernameRegex)
+      .min(4).max(10).messages({
+        "string.pattern.base": "Username should be atleast 4 and maximum 10 characters long.",
+        "string.empty": "Username cannot be empty",
+      }),
     email: Joi.string().email().required(),
     firstName: Joi.string().required(),
     lastName: Joi.string().required(),
