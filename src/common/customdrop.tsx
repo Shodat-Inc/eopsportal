@@ -48,7 +48,7 @@ export default function CustomDrop(props: any) {
     return (
         <div ref={wrapperRef}>
             <div
-                className="border rounded-xl border-gray-500 h-[55px] pl-2 pr-5 relative flex items-center justify-start bg-white w-[80%] cursor-pointer"
+                className="border rounded-xl border-gray-969 h-[55px] pl-2 pr-5 relative flex items-center justify-start bg-white w-[80%] cursor-pointer"
                 onClick={toggleDropdownFunction}
             >
                 <label className="absolute text-sm top-[-10px] left-2 pl-2 pr-2 bg-white">Choose Industry type</label>
@@ -63,7 +63,7 @@ export default function CustomDrop(props: any) {
             </div>
 
             {toggleAsset ?
-                <div className={`h-52 border rounded-xl border-gray-500 h-auto max-h-[250px] w-[400px]  absolute flex items-start justify-start mt-1 overflow-hidden overflow-y-auto bg-white ${styles.scroll} z-10`}>
+                <div className={`h-52 border rounded-xl border-gray-969 h-auto max-h-[250px] w-[400px]  absolute flex items-start justify-start mt-1 overflow-hidden overflow-y-auto bg-white ${styles.scroll} z-10`}>
                     <ul className="p-0 m-0 w-full">
                         {
                             props.data.map((item: any, index: any) => (

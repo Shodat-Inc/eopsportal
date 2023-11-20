@@ -47,12 +47,12 @@ export default function Layout({ children }) {
         <SideBar showNav={showNav} setShowNav={setShowNav} />
       </Transition>
       <main
-        className={`h-screen h-[100%] ${splitPathName.includes("eopswatch") || splitPathName.includes("assetmanagement") || splitPathName.includes("eopsprosense") || splitPathName.includes("eopstrace") ||  splitPathName.includes("eopsinsight") || splitPathName.includes("myaccount")? 'bg-gray-966' : 'bg-white'} pt-24 transition-all duration-[400ms] ${showNav && !isMobile ? "pl-64" : ""
+        className={`h-screen h-[100%] ${splitPathName.includes("eopswatch") || splitPathName.includes("assetmanagement") || splitPathName.includes("eopsprosense") || splitPathName.includes("eopstrace") || splitPathName.includes("eopsinsight") || splitPathName.includes("myaccount") || splitPathName.includes("aimodaldetection") ? 'bg-gray-966' : 'bg-white'} pt-24 transition-all duration-[400ms] ${showNav && !isMobile ? "pl-64" : ""
           }`}
       >
         <div className="pb-5 pr-4">{children}</div>
 
-        <div className="text-sm py-2 text-gray-967 mt-4">Copyright 2023 eOps Fabric <span className="ml-4">Version 1.0</span> </div> 
+        <div className="text-sm py-2 text-gray-967 mt-4">Copyright 2023 eOps Fabric <span className="ml-4">Version 1.0</span> </div>
       </main>
     </>
   );
