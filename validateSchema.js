@@ -120,6 +120,7 @@ export const deleteUserValidation = (data) => {
 export const createClassValidation = (data) => {
   const schema = Joi.object({
     userId: Joi.number(),
+    enterpriseId: Joi.number(),
     enterpriseUserId: Joi.number(),
     superParentId: Joi.number(),
     parentId: Joi.number(),

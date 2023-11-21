@@ -28,6 +28,7 @@ async function handler(req: any, res: any) {
       ...req.body,
       userId: req.id,
       enterpriseUserId: req.enterpriseUserId,
+      enterpriseId: req.enterpriseId,
     };
     const validation = createClassValidation(reqData);
     if (validation.error) {
