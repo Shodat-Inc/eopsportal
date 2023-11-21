@@ -242,14 +242,11 @@ export const updateEnterpriseUserValidation = (data) => {
     enterpriseId: Joi.number(),
     roleId: Joi.number(),
   });
-
   return schema.validate(data);
 };
-
 export const deleteEnterpriseUserValidation = (data) => {
   const schema = Joi.object({
     id: Joi.number().required(),
   });
-
   return schema.validate(data);
 };
