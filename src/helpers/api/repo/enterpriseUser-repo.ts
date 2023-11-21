@@ -74,8 +74,8 @@ async function create(params: any) {
       return sendResponseData(false, message.error.enterpriseUserExist, []);
     }
     const newEnterpriseUser = new db.EnterpriseUser(params);
-     // hash password
-     if (params.password) {
+    // hash password
+    if (params.password) {
       newEnterpriseUser.password = bcrypt.hashSync(params.password, 10);
     }
     const save = await newEnterpriseUser.save();

@@ -229,3 +229,26 @@ export const createEnterpriseUserValidation = (data) => {
 
   return schema.validate(data);
 };
+
+export const updateEnterpriseUserValidation = (data) => {
+  const schema = Joi.object({
+    id: Joi.number().required(),
+    username: Joi.string(),
+    firstName: Joi.string(),
+    lastName: Joi.string(),
+    password: Joi.string(),
+    parentId: Joi.number(),
+    enterpriseId: Joi.number(),
+    roleId: Joi.number(),
+  });
+
+  return schema.validate(data);
+};
+
+export const deleteEnterpriseUserValidation = (data) => {
+  const schema = Joi.object({
+    id: Joi.number().required(),
+  });
+
+  return schema.validate(data);
+};
