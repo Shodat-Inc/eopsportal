@@ -16,7 +16,7 @@ async function create(params: any) {
     }
     const newEnterprise = new db.Enterprise(params);
     const save = await newEnterprise.save();
-    return sendResponseData(true, "Enterprise Created Successfully", []);
+    return sendResponseData(true, "Enterprise Created Successfully", save);
   } catch (error: any) {
     loggerError.error("Error in Enterprise Repo");
     return sendResponseData(false, "Error In Creating Enterprise", []);

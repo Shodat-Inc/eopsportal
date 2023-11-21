@@ -34,6 +34,8 @@ async function authenticate(data: any) {
         "email",
         "firstName",
         "lastName",
+        "roleId",
+        "enterpriseId",
       ],
       where: { email: email },
     });
@@ -44,9 +46,17 @@ async function authenticate(data: any) {
       return sendResponseData(false, message.error.incorrectPassword, {});
     }
     // create a jwt token that is valid for 7 days
-    const token = jwt.sign({ sub: user.id }, serverRuntimeConfig.secret, {
-      expiresIn: "7d",
-    });
+    const token = jwt.sign(
+      {
+        enterpriseUserId: user.id,
+        role: user.roleId,
+        enterpriseId: user.enterpriseId,
+      },
+      serverRuntimeConfig.secret,
+      {
+        expiresIn: "7d",
+      }
+    );
 
     // remove hash from return value
     const userJson = user.get();
@@ -64,7 +74,6 @@ async function authenticate(data: any) {
 }
 
 async function create(params: any) {
-
   loggerInfo.info("Create User Enterprise Repo");
   try {
     const enterprise = await db.EnterpriseUser.findOne({
@@ -79,11 +88,7 @@ async function create(params: any) {
       newEnterpriseUser.password = bcrypt.hashSync(params.password, 10);
     }
     const save = await newEnterpriseUser.save();
-    return sendResponseData(
-      true,
-      message.success.enterpriseUserCreated,
-      save
-    );
+    return sendResponseData(true, message.success.enterpriseUserCreated, save);
   } catch (error: any) {
     loggerError.error("Error in User Enterprise Repo");
     return sendResponseData(false, message.error.errorCreateEnterpriseUser, []);
@@ -93,29 +98,41 @@ async function create(params: any) {
 async function getAllEnterpriseUser() {
   loggerInfo.info("GET all the Enterprise Users");
   return await db.EnterpriseUser.findAll({
-    attributes: ["username", "email", "firstName", "lastName", "parentId", "enterpriseId", "roleId"]
-  })
+    attributes: [
+      "username",
+      "email",
+      "firstName",
+      "lastName",
+      "parentId",
+      "enterpriseId",
+      "roleId",
+    ],
+  });
 }
 
 async function update(params: any) {
   try {
     const data = await db.EnterpriseUser.findOne({
-      where: { id: params.id, }
-    })
+      where: { id: params.id },
+    });
     if (!data) {
-      return sendResponseData(false, "No Enterprise User Exits", [])
+      return sendResponseData(false, "No Enterprise User Exits", []);
     }
-    data.username = params.username
-    data.firstName = params.firstName
-    data.lastName = params.lastName
-    data.password = params.password
-    data.parentId = params.parentId
-    data.enterpriseId = params.enterpriseId
-    data.roleId = params.roleId
-    const response = await data.save()
-    return sendResponseData(true, message.success.enterpriseUserUpdated, response)
+    data.username = params.username;
+    data.firstName = params.firstName;
+    data.lastName = params.lastName;
+    data.password = params.password;
+    data.parentId = params.parentId;
+    data.enterpriseId = params.enterpriseId;
+    data.roleId = params.roleId;
+    const response = await data.save();
+    return sendResponseData(
+      true,
+      message.success.enterpriseUserUpdated,
+      response
+    );
   } catch (error: any) {
-    return sendResponseData(false, message.error.errorUpdationMessage, [])
+    return sendResponseData(false, message.error.errorUpdationMessage, []);
   }
 }
 
@@ -125,15 +142,15 @@ async function _delete(params: any) {
       where: { id: params.id },
     });
     if (!delData) {
-      return sendResponseData(false, "Enterprise User doesn't Exits", [])
+      return sendResponseData(false, "Enterprise User doesn't Exits", []);
     }
     await delData.destroy();
-    return sendResponseData(
-      true,
-      message.success.enterpriseUserDeleted,
-      []
-    );
+    return sendResponseData(true, message.success.enterpriseUserDeleted, []);
   } catch (error: any) {
-    return sendResponseData(false, message.error.errorDeletionEnterpriseUser, error);
+    return sendResponseData(
+      false,
+      message.error.errorDeletionEnterpriseUser,
+      error
+    );
   }
 }

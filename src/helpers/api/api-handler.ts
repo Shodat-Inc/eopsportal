@@ -25,7 +25,8 @@ function apiHandler(handler: any) {
         "/api/forgetPassword",
         "/api/updatePassword",
         "/api/contactSales",
-        "/api/enterpriseUserSignIn"
+        "/api/entSigin",
+        "/api/createEnterpriseUser",
       ];
       const url = req.url.split("?")[0];
       if (!path.includes(url)) {
@@ -33,6 +34,8 @@ function apiHandler(handler: any) {
         if (tokenData) {
           req.id = tokenData.sub;
           req.role = tokenData.role;
+          req.enterpriseId = tokenData.enterpriseId;
+          req.enterpriseUserId = tokenData.enterpriseUserId;
         } else {
           return res.status(405).json({ message: "Unauthorised Operation!!" });
         }

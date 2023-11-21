@@ -23,11 +23,11 @@ async function handler(req: any, res: any) {
       res.status(405).send({ message: "Only POST requests allowed" });
       return;
     }
-
     // Construct the request data object, ensuring the user ID is added.
     const reqData = {
       ...req.body,
       userId: req.id,
+      enterpriseUserId: req.enterpriseUserId,
     };
     const validation = createClassValidation(reqData);
     if (validation.error) {
@@ -59,7 +59,7 @@ async function handler(req: any, res: any) {
     // Bulk create class tags using the populated tag data.
     const classTags = await classTagRepo.bulkCreate(tagData, classId);
     const tagIdArr: any = [];
-    if (reqData.parentJoinKey && reqData.parentJoinKey.length ) {
+    if (reqData.parentJoinKey && reqData.parentJoinKey.length) {
       const classTagId = await classTagRepo.getClassTags(reqData.parentJoinKey);
       classTagId.data.forEach((element: any) => {
         tagIdArr.push({

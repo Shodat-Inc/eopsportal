@@ -120,6 +120,7 @@ export const deleteUserValidation = (data) => {
 export const createClassValidation = (data) => {
   const schema = Joi.object({
     userId: Joi.number(),
+    enterpriseUserId: Joi.number(),
     superParentId: Joi.number(),
     parentId: Joi.number(),
     parentJoinKey: Joi.array(),
@@ -203,11 +204,11 @@ export const deleteRoleValidation = (data) => {
 
 export const createEnterpriseUserValidation = (data) => {
   const schema = Joi.object({
-    username: Joi.string().regex(usernameRegex)
-      .min(4).max(10).messages({
-        "string.pattern.base": "Username should be atleast 4 and maximum 10 characters long.",
-        "string.empty": "Username cannot be empty",
-      }),
+    username: Joi.string().regex(usernameRegex).min(4).max(10).messages({
+      "string.pattern.base":
+        "Username should be atleast 4 and maximum 10 characters long.",
+      "string.empty": "Username cannot be empty",
+    }),
     email: Joi.string().email().required(),
     firstName: Joi.string().required(),
     lastName: Joi.string().required(),

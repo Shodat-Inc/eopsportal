@@ -87,16 +87,16 @@ function relationship() {
   db.Enterprise.hasMany(db.EnterpriseAddress, { foreignKey: "enterpriseId" });
   db.EnterpriseAddress.belongsTo(db.Enterprise, { foreignKey: "enterpriseId" });
 
-  db.Role.hasMany(db.Routes)
+  db.Role.hasMany(db.Routes);
   db.Routes.belongsTo(db.Role);
 
   db.Role.hasMany(db.EnterpriseUser, { foreignKey: "roleId" });
   db.EnterpriseUser.belongsTo(db.Role, { foreignKey: "roleId" });
-  
+
   db.Enterprise.hasMany(db.EnterpriseUser, { foreignKey: "enterpriseId" });
   db.EnterpriseUser.belongsTo(db.Enterprise, { foreignKey: "enterpriseId" });
 
-
-
+  db.EnterpriseUser.hasMany(db.AddClasses, { foreignKey: "enterpriseUserId" });
+  db.AddClasses.belongsTo(db.EnterpriseUser, { foreignKey: "enterpriseUserId" });
 }
 export default relationship;

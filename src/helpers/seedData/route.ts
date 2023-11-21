@@ -1,5 +1,4 @@
 export const routes = [
-
   { name: "/api/createUsers", isActive: true },
   { name: "/api/signIn", isActive: true },
   { name: "/api/generateOtp", isActive: true },

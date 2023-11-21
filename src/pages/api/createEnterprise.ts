@@ -42,7 +42,7 @@ async function handler(req: any, res: any) {
       address,
       enterpriseId: enterprise.data.id,
     });
-    res.status(200).json({ message:enterprise  });
+    res.status(200).json({ message: enterprise });
   } catch (error: any) {
     loggerError.error("Error in Enterprise API");
     res.status(400).json({ message: "Error in Saving Enterprise" });
