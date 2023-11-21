@@ -50,15 +50,15 @@ export default function SignIn() {
     const [userPhone, setUserPhone] = useState("")
 
 
-    useEffect(() => {
-        axios.get("http://20.232.178.134:3000/api/getUsers")
-            .then((response) => {
-                // setUserData(response.data)
-                console.log({
-                    data: response.data
-                })
-            })
-    }, [])
+    // useEffect(() => {
+    //     axios.get("http://20.232.178.134:3000/api/getUsers")
+    //         .then((response) => {
+    //             // setUserData(response.data)
+    //             console.log({
+    //                 data: response.data
+    //             })
+    //         })
+    // }, [])
 
 
     // Firebase OTP
@@ -82,11 +82,11 @@ export default function SignIn() {
         event.preventDefault()
         if (handleValidation()) {
 
-            setLoader(true)
+            // setLoader(true)
 
-            onCaptchVerify();
+            // onCaptchVerify();
 
-            const appVerifier = window.recaptchaVerifier;
+            // const appVerifier = window.recaptchaVerifier;
 
             await axios.get("http://20.232.178.134:3000/api/signIn")
                 .then((response) => {
@@ -376,14 +376,14 @@ export default function SignIn() {
                                         <div className={`relative ${styles.form__group} font-OpenSans`}>
                                             <input
                                                 type="text"
-                                                id="emailAddress"
-                                                name="emailAddress"
+                                                id="username"
+                                                name="username"
                                                 className={`border border-[#A7A7A7] text-[#666666] ${styles.form__field}`}
                                                 placeholder="Enter email address"
                                                 value={formData.username}
                                                 onChange={(e) => handleInput(e)}
                                             />
-                                            <label htmlFor="emailAddress" className={`${styles.form__label} !text-[#666666]`}>Enter email address</label>
+                                            <label htmlFor="username" className={`${styles.form__label} !text-[#666666]`}>Enter email address</label>
                                         </div>
                                         <span className='text-red-952 text-sm flex items-center justify-start'>
                                             {
