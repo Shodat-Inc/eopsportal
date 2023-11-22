@@ -106,7 +106,7 @@ async function getObjectById(params: any) {
 
   try {
     const result = await db.object.findAll({
-      where: { id: params.query.objectId }, // This will filter by classId
+      where: { id: params.query.objectId }, // This will filter by ObjectId
       include: [
         {
           model: db.AddClasses,
