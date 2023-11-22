@@ -15,10 +15,9 @@ export default apiHandler({
  */
 async function allhandler(req: any, res: any) {
     try {
-        const id = req.query.id;
-        // Retrieve objects using the objectRepo and the provided request data.
-        const objects = await enterpriseDataRepo.getEnterpriseObject(id);
 
+        // Retrieve objects using the objectRepo and the provided request data.
+        const objects = await enterpriseDataRepo.getEnterpriseObject(req);
         // Check if the retrieved objects are empty or if the response is an empty array.
         if (!objects || (Array.isArray(objects) && objects.length === 0)) {
             // If empty, send back a 404 Not Found response indicating no data.
