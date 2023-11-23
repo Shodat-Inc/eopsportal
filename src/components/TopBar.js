@@ -1,15 +1,13 @@
 import React, { Fragment, useState, useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router'
-import {
-  PencilIcon,
-} from "@heroicons/react/24/solid";
+import { PencilIcon } from "@heroicons/react/24/solid";
 import { CheckIcon } from "@heroicons/react/24/outline";
 import { Menu, Transition, Popover } from "@headlessui/react";
 import Link from "next/link";
 import styles from './TopBar.module.css';
 import Image from "next/image";
-import { getSingleUser } from "@/store/actions/usersAction";
+import axios from "axios";
 
 export default function TopBar({ showNav, setShowNav }) {
   const { push } = useRouter();
@@ -17,9 +15,10 @@ export default function TopBar({ showNav, setShowNav }) {
   const router = useRouter();
   const [username, setUsername] = useState("Amit");
   const [user, setUser] = useState({
-    firstName:"Amit",
-    lastName:"Pandey"
+    firstName: "Amit",
+    lastName: "Pandey"
   })
+  const [userToken, setUserToken] = useState('');
   const [userData, setUserData] = useState([]);
 
   useEffect(() => {
@@ -27,7 +26,7 @@ export default function TopBar({ showNav, setShowNav }) {
     if (!access_token) {
       push("/authentication/signin");
     } else {
-      setUserData(localStorage.getItem('userData'))
+      setUserToken(access_token)
     }
   }, [])
 
@@ -46,6 +45,38 @@ export default function TopBar({ showNav, setShowNav }) {
       setShowNav(false)
     }
   }, [])
+
+  // Get Logged In User Info
+  async function fetchData() {
+    try {
+      await axios({
+        method: 'GET',
+        url: `http://20.232.178.134:3000/api/getUsers`,
+        headers: {
+          "Authorization": `Bearer ${userToken}`,
+          "Content-Type": "application/json"
+        }
+      }).then(function (response) {
+        console.log({
+          response:response.data
+        })
+        if(response) {
+          setUserData(response.data?.data);
+        }
+      }).catch(function (error) {
+        console.log({
+          "ERROR IN AXIOS CATCH": error
+        })
+      })
+    } catch (err) {
+      console.log({
+        "ERROR IN TRY CATCH": err
+      })
+    }
+  }
+  useEffect(() => {
+    fetchData();
+  }, [userToken])
 
 
   return (

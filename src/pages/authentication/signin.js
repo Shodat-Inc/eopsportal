@@ -73,11 +73,11 @@ export default function SignIn() {
                 formData: formData
             })
 
-            setLoader(true)
+            // setLoader(true)
 
-            onCaptchVerify();
+            // onCaptchVerify();
 
-            const appVerifier = window.recaptchaVerifier;
+            // const appVerifier = window.recaptchaVerifier;
 
             try {
                 await axios({
@@ -106,24 +106,40 @@ export default function SignIn() {
                         sessionStorage.setItem("authToken", response?.data?.data?.token);
                         localStorage.setItem("authToken", response?.data?.data?.token);
 
-                        signInWithPhoneNumber(auth, phoneNumber, appVerifier)
-                            .then((confirmationResult) => {
-                                window.confirmationResult = confirmationResult;
-                                console.log({
-                                    message: "OTP sent successfully!"
-                                })
-                                setOtpSent(true);
-                                setTimeout(() => {
-                                    setOtpScreen(true);
-                                    setLoader(false)
-                                }, 1000)
-                            }).catch((error) => {
-                                setOtpSent(false);
-                                setResponseError(true);
-                                console.log({
-                                    message: error
-                                })
-                            });
+                        setOtpSent(true);
+                        setTimeout(() => {
+                            setOtpScreen(false);
+                            setLoader(false)
+                        }, 1000);
+
+                        setTimeout(() => {
+                            setVerified(true);
+                            setLoader(false);
+                            setOtpScreen(false);
+                            setTimeout(() => {
+                                push("/dashboard/");
+                            }, 1)
+                        }, 100)
+                        setOtpError(false)
+
+                        // signInWithPhoneNumber(auth, phoneNumber, appVerifier)
+                        //     .then((confirmationResult) => {
+                        //         window.confirmationResult = confirmationResult;
+                        //         console.log({
+                        //             message: "OTP sent successfully!"
+                        //         })
+                        //         setOtpSent(true);
+                        //         setTimeout(() => {
+                        //             setOtpScreen(true);
+                        //             setLoader(false)
+                        //         }, 1000)
+                        //     }).catch((error) => {
+                        //         setOtpSent(false);
+                        //         setResponseError(true);
+                        //         console.log({
+                        //             message: error
+                        //         })
+                        //     });
 
                         setTimeout(() => {
                             setSuccess(true);

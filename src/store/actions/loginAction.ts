@@ -12,7 +12,7 @@ export const userSignIn = (username: any, password:any) => async (dispatch: any)
     try {
         await axios({
             method: 'POST',
-            url: `/api/signIn`,
+            url: `http://20.232.178.134:3000/api/signIn`,
             data: {
                 username: username,
                 password : "12345"

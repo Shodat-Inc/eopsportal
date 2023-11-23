@@ -87,7 +87,7 @@ export const getAllClasses = () => async (dispatch: any) => {
     try {
         await axios({
             method: 'GET',
-            url: `/api/getAssets`,
+            url: `http://20.232.178.134:3000/api/getAssets`,
             headers: {
                 "Authorization": `Bearer ${tokenStr}`,
                 "Content-Type": "application/json"
@@ -143,7 +143,7 @@ export const createNewClass = (data: any) => async (dispatch: any) => {
     try {
         await axios({
             method: 'POST',
-            url: `/api/createClasses`,
+            url: `http://20.232.178.134:3000/api/createClasses`,
             data: data,
             headers: {
                 "Authorization": `Bearer ${tokenStr}`,

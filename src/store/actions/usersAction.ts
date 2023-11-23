@@ -7,7 +7,7 @@ import {
 import axios from "axios";
 let access_token = "" as any;
 if (typeof window !== 'undefined') {
-    access_token = localStorage.getItem('authenticationToken')
+    access_token = localStorage.getItem('authToken')
 }
 
 export const getSingleUser = () => async (dispatch: any) => {
@@ -15,7 +15,7 @@ export const getSingleUser = () => async (dispatch: any) => {
     try {
         await axios({
             method: 'GET',
-            url: `/api/getUsers`,
+            url: `http://20.232.178.134:3000/api/getUsers`,
             headers: {
                 "Authorization": `Bearer ${tokenStr}`,
                 "Content-Type": "application/json"
@@ -47,7 +47,7 @@ export const updateUser = (data: any, username: any) => async (dispatch: any) =>
     try {
         await axios({
             method: 'PUT',
-            url: `/api/updateUsers`,
+            url: `http://20.232.178.134:3000/api/updateUsers`,
             data: {
                 username: `${username}`,
                 firstName: `${data.firstName}`,

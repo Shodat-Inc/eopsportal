@@ -22,6 +22,35 @@ export default function ClassManagement(props: any) {
         access_token = localStorage.getItem('authToken')
     }
 
+    // Get All Class Data
+    async function fetchData() {
+        try {
+            await axios({
+                method: 'GET',
+                url: `http://20.232.178.134:3000/api/getAssets`,
+                headers: {
+                    "Authorization": `Bearer ${access_token}`,
+                    "Content-Type": "application/json"
+                }
+            }).then(function (response) {
+                console.log({
+                    response: response.data
+                })
+            }).catch(function (error) {
+                console.log({
+                    "ERROR IN AXIOS CATCH": error
+                })
+            })
+        } catch (err) {
+            console.log({
+                "ERROR IN TRY CATCH": err
+            })
+        }
+    }
+    useEffect(() => {
+        fetchData();
+    }, [])
+
     // String Reverse
     function reverseString(str: any) {
         return str.split("").reverse().join("");
@@ -132,7 +161,7 @@ export default function ClassManagement(props: any) {
     const takeMeToClassComponent = (item: any) => {
         props.handelsubClass(item)
     }
-    
+
     return (
         <div className='px-0 py-3 font-OpenSans'>
             {/* Title, search and filters */}
