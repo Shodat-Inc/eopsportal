@@ -224,9 +224,9 @@ export const createEnterpriseUserValidation = (data) => {
         "string.empty": "Password cannot be empty",
         "any.required": "Password is required",
       }),
-    parentId: Joi.number().required(),
     enterpriseId: Joi.number(),
     roleId: Joi.number(),
+    status: Joi.number()
   });
 
   return schema.validate(data);
@@ -239,15 +239,31 @@ export const updateEnterpriseUserValidation = (data) => {
     firstName: Joi.string(),
     lastName: Joi.string(),
     password: Joi.string(),
-    parentId: Joi.number(),
     enterpriseId: Joi.number(),
     roleId: Joi.number(),
   });
   return schema.validate(data);
 };
+
 export const deleteEnterpriseUserValidation = (data) => {
   const schema = Joi.object({
     id: Joi.number().required(),
   });
   return schema.validate(data);
 };
+
+export const updateEnterpriseValidation = (data) => {
+  const schema = Joi.object({
+    id: Joi.number().required(),
+    enterpriseName: Joi.string(),
+    enterpriseIndustry: Joi.string(),
+    founderYear: Joi.number(),
+    website: Joi.string(),
+    description: Joi.string(),
+    employeeCount: Joi.number(),
+    superAdminName: Joi.string(),
+    status: Joi.number()
+  });
+  return schema.validate(data);
+};
+

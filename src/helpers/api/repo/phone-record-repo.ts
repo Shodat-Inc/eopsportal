@@ -3,7 +3,9 @@ import sendResponseData from "../../constant";
 import { loggerInfo, loggerError } from "@/logger";
 import message from "@/util/responseMessage";
 
-// Repository for phoneRecord-related operations.
+/**
+ * Repository for handling phoneRecord-related operations.
+ */
 export const phoneRecordRepo = {
   create,
 };
