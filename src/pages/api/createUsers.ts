@@ -16,14 +16,20 @@ export default apiHandler({
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   try {
     loggerInfo.info("createUser API:", info);
+
+    // Check if the request method is POST
     if (req.method !== "POST") {
       res.status(405).send(message.error.postMethodError);
       return;
     }
+
     const reqData = req.body;
-    const { email, firstName, lastName, password, roleId, ...objData } =
-      reqData;
+
+    // Extract data from the request body
+    const { email, firstName, lastName, password, roleId, ...objData } = reqData;
     const username = firstName.concat(lastName);
+
+    // Validate the request data
     const validation = createUserValidation(reqData);
     if (validation.error) {
       // Handle validation errors
@@ -35,15 +41,17 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       return;
     }
 
-    const { address, city, state, pincode, countryId, primary, ...recordData } =
-      objData;
-    //phone record
-    const { countryCodeId, phoneNumber, isPrimary, isActive, ...recordData1 } =
-      recordData;
+    // Extract data for address record
+    const { address, city, state, pincode, countryId, primary, ...recordData } = objData;
+
+    // Extract data for phone record
+    const { countryCodeId, phoneNumber, isPrimary, isActive, ...recordData1 } = recordData;
     loggerInfo.info(recordData);
-    //company record
+
+    // Extract data for company record
     const { companyName } = recordData1;
-    //user Data
+
+    // Create user data
     const userData = await usersRepo.create({
       username,
       email,
@@ -52,10 +60,12 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       password,
       roleId,
     });
+
     if (!userData.success) {
       return res.send(sendResponseData(false, userData.message, []));
     }
-    //address data
+
+    // Create address data
     const addressData = await addressRepo.create({
       address,
       city,
@@ -65,12 +75,14 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       primary,
       userId: userData.data.id,
     });
-    //company record
+
+    // Create company record
     const companyRecord = await CompanyRecordRepo.create({
       companyName,
       userId: userData.data.id,
     });
-    //phone Record
+
+    // Create phone record
     const phoneRecord = await phoneRecordRepo.create({
       countryCodeId,
       phoneNumber,
@@ -78,8 +90,11 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       isActive,
       userId: userData.data.id,
     });
+
+    // Send success response
     return res.send(sendResponseData(true, message.success.userCreated, []));
   } catch (error: any) {
+    // Handle errors
     loggerError.error("error in createUsers API ", error);
     res.status(error.response.status).json(message.error.cantCreateUser);
   }

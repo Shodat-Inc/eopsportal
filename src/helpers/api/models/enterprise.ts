@@ -37,6 +37,10 @@ export function Enterprise(sequelize: {
         type: DataTypes.StringDataTypeConstructor;
         allowNull: boolean;
       };
+      status: {
+        type: DataTypes.IntegerDataTypeConstructor;
+        allowNull: boolean;
+      }
     }
   ) => any;
 }) {
@@ -63,6 +67,10 @@ export function Enterprise(sequelize: {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    status: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    }
   };
   return sequelize.define("Enterprise", attributes);
 }

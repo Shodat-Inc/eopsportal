@@ -3,7 +3,9 @@ import sendResponseData from "../../constant";
 import { loggerInfo, loggerError } from "@/logger";
 import message from "@/util/responseMessage";
 
-// Repository for classTag-related operations.
+/**
+ * Repository for handling class tag related opertaions.
+ */
 export const parentJoinKeyRepo = {
   bulkCreate,
 };

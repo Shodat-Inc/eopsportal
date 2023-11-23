@@ -96,6 +96,12 @@ async function getClassData(params: any) {
   }
 }
 
+/**
+ * Fetch all classes and associated tags by id for a given user where the parentId is null.
+ *
+ * @param {Object} params - The request object containing the user ID.
+ * @returns {Object} - An array of classes and associated tags or an error response.
+ */
 //Fetch class By ID
 async function getClassDataByID(params: any) {
   try {
@@ -205,6 +211,12 @@ async function getSubClass(param: any) {
     return sendResponseData(false, message.error.error, error);
   }
 }
+/**
+ * Fetch all subclasses and associated tags by id for a given user based on a parent class ID.
+ *
+ * @param {Object} param - The request object containing the user ID and query for the parent class ID.
+ * @returns {Array} - An array of subclasses and associated tags or an error response.
+ */
 async function getSubClassByID(param: any) {
   try {
     // Log the initiation of fetching subclasses and tags.
@@ -261,6 +273,12 @@ async function getSubClassByID(param: any) {
   }
 }
 
+/**
+ * Update all classes, subclasses and associated tags.
+ *
+ * @param {Object} param - The request object containing the data to be updated
+ * @returns {Array} - An array of classes, subclasses and associated tags or an error response.
+ */
 async function update(params: any) {
   try {
     loggerInfo.info("Update Class Name");
@@ -282,6 +300,12 @@ async function update(params: any) {
   }
 }
 
+/**
+ * Delete classes, subclasses and associated tags.
+ *
+ * @param {Object} param - The request object containing the data to be deleted
+ * @returns {Array} - An array of classes, subclasses and associated tags or an error response.
+ */
 async function _delete(params: any) {
   try {
     const classes = await db.AddClasses.findOne({

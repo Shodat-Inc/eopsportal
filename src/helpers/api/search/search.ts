@@ -7,7 +7,7 @@ import { Op } from 'sequelize';
  * @param fields - Fields in the model to search. Can be a single field or an array of fields.
  * @param query - Search query.
  */
-export async function generalizedSearch(model: any, fields: string | string[], query: string) {
+export async function generalizedSearch(model: any, fields: string | string[], query: string | string[]) {
   // If fields is a string, convert it to an array for consistency.
   if (typeof fields === 'string') {
     fields = [fields];
