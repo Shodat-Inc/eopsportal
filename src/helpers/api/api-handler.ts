@@ -1,10 +1,21 @@
 import { db, errorHandler, jwtMiddleware } from "./index";
+import NextCors from 'nextjs-cors';
+
+
 
 export { apiHandler };
 
 function apiHandler(handler: any) {
   return async (req: any, res: any) => {
     const method = req.method.toLowerCase();
+    console.log(method,"method====>");
+    await NextCors(req, res, {
+      // Options
+      methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
+      origin: '*',
+      optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+      credentials: true, // If your requests include credentials
+   });
 
     // check handler supports HTTP method
     if (!handler[method])
@@ -13,7 +24,6 @@ function apiHandler(handler: any) {
     try {
       // init db if required
       if (!db.initialized) await db.initialize();
-
       // global middleware
       const data = await jwtMiddleware(req, res);
 

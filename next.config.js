@@ -1,11 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // reactStrictMode: true,
   swcMinify: true,
   eslint: {
     ignoreDuringBuilds: true,
   },
-  reactStrictMode: true,
+  reactStrictMode: false,
   serverRuntimeConfig: {
     dbConfig: {
       host: process.env.DB_HOST,
@@ -16,7 +15,7 @@ const nextConfig = {
     },
     secret: "97IoST9Ec8s5scvy49AMzT0TYArIInGZ",
     env: process.env.ENV,
-    isDBSync: true,
+    isDBSync: false,
   },
   publicRuntimeConfig: {
     apiUrl:
@@ -27,3 +26,4 @@ const nextConfig = {
 };
 
 module.exports = nextConfig;
+

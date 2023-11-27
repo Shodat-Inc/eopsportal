@@ -59,7 +59,7 @@ async function authenticate(data: any) {
       token,
     });
   } catch (error) {
-    loggerError.error("Authentication Error");
+    loggerError.error("Authentication Error",error);
     return sendResponseData(false, message.error.error, error);
   }
 }
