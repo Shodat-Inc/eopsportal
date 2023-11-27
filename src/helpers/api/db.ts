@@ -8,6 +8,7 @@ import relationship from "./relation/relation";
 import { Reasons } from "../seedData/reason";
 import { TagDataType } from "../seedData/datatype";
 import { routes } from "../seedData/route";
+import { individualRole } from "../seedData/indvidualRole";
 const { serverRuntimeConfig } = getConfig();
 export const db: any = {
   initialized: false,
@@ -55,7 +56,6 @@ async function seedDemoTagDataType(tagDataType: any) {
 }
 
 //Country code data Model
-
 async function seedCountryCodeData(countryCodeModel: any) {
   for (let country of dialData) {
     // Using findOrCreate to ensure the Country Codes aren't duplicated
@@ -65,6 +65,16 @@ async function seedCountryCodeData(countryCodeModel: any) {
     });
   }
 }
+async function seedDemoIndvidualRole(Role: any) {
+  // Using findOrCreate to ensure the Dataypes aren't duplicated
+  for (let a of individualRole) {
+    await Role.findOrCreate({
+      where: { name: a.name },
+      defaults: a
+    });
+  }
+}
+
 // initialize db and models, called on first api request from /helpers/api/api-handler.js
 async function initialize() {
   loggerInfo.info("<----DB connection----->");
@@ -103,6 +113,9 @@ async function initialize() {
         if (db.Routes) {
           await seedDemoRoutes(db.Routes);
         }
+        if (db.Role) {
+          await seedDemoIndvidualRole(db.Role);
+        }
         //demo tagDatatype
         if (db.tagDataType) {
           await seedDemoTagDataType(db.tagDataType);
@@ -116,7 +129,6 @@ async function initialize() {
         }
       }
     }
-
     db.initialized = true;
   } catch (e) {
     loggerError.error(`db.ts`, e);

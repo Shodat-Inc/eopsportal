@@ -4,7 +4,9 @@ import { loggerInfo, loggerError } from "@/logger";
 import { error } from "console";
 import message from "@/util/responseMessage";
 
-// Repository for object-related operations.
+/**
+ * Repository for handling object related operations.
+ */
 export const objectRepo = {
   create,
   get,
@@ -95,18 +97,30 @@ async function get(id: any) {
     return sendResponseData(false, message.error.error, error);
   }
 }
+
+/**
+ * Fetches Objects, ClassTags, and ObjectValues data by ObjectId and ClassId.
+ *
+ * @param {any} params - The parameters containing ObjectId and ClassId for fetching data.
+ * @returns {Promise<Array<object>>} A promise that resolves with an array of fetched data.
+ */
 async function getObjectById(params: any) {
   // Log the initiation of fetching Objects, ClassTags, and ObjectValues data By ObjectId.
   loggerInfo.info("Fetching Objects, ClassTags, and ObjectValues data");
-  // Validate that an ID is provided.
-  if (!params.query.objectId && !params.query.classId) {
+
+  // Validate that both ObjectId and ClassId are provided.
+  if (!params.query.objectId || !params.query.classId) {
+    // Log an error if either ObjectId or ClassId is missing.
     loggerError.error("No Id is provided");
-    return sendResponseData(false, message.error.noID, error);
+
+    // Return an error response if either ObjectId or ClassId is missing.
+    return sendResponseData(false, message.error.noID, []);
   }
 
   try {
+    // Fetch data from the database based on ObjectId and ClassId
     const result = await db.object.findAll({
-      where: { id: params.query.objectId }, // This will filter by classId
+      where: { id: params.query.objectId }, // This will filter by ObjectId
       include: [
         {
           model: db.AddClasses,
@@ -125,31 +139,49 @@ async function getObjectById(params: any) {
         },
       ],
     });
+
+    // Map the result to add serial numbers
     return result.map((item: any, index: any) => ({
       S_No: index + 1,
       ...item.get(), // Convert Sequelize instance to plain JS object
     }));
+
   } catch (error) {
     // Log the error if there's an issue with fetching data.
     loggerError.error(
       "Error fetching Objects, ClassTags, and ObjectValues data:",
       error
     );
-    // Return a response indicating the failure of the operation.
+
+    // Return an error response in case of an exception during data fetching.
     return sendResponseData(false, message.error.error, error);
   }
 }
 
+/**
+ * Deletes an object from the database based on the provided object ID.
+ *
+ * @param {any} params - The parameters containing the object ID for deletion.
+ * @returns {Promise<object>} A promise that resolves with the result of the database operation.
+ */
 async function _delete(params: any) {
   try {
+    // Use Sequelize's destroy method to delete the object from the database
     const response = await db.object.destroy({
       where: {
         id: params,
       },
     });
+
+    // Return a successful response after deleting the object
     return sendResponseData(true, message.success.objectDeleted, response);
+
   } catch (error: any) {
+    // Log the error if there's an issue with deleting the object.
     loggerError.error(error);
+
+    // Return an error response in case of an exception during object deletion.
     return sendResponseData(false, message.error.errorDeleteObject, error);
   }
 }
+

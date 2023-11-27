@@ -2,22 +2,25 @@ import fsPromises from 'fs/promises';
 import path from 'path';
 const dataFilePath = path.join(process.cwd(), 'json/childobjects.json')
 
-export default async function handler(req:any, res:any) {
+// Define the handler function for the API route
+export default async function handler(req: any, res: any) {
     try {
+        // Check if the request method is not POST
         if (req.method !== 'POST') {
-            res.status(405).send({ message: 'Only POST requests allowed' })
-            return
+            res.status(405).send({ message: 'Only POST requests allowed' });
+            return;
         }
+
         // Read the existing data from the JSON file
-        const jsonData:any = await fsPromises.readFile(dataFilePath);
+        const jsonData: any = await fsPromises.readFile(dataFilePath);  // Ensure dataFilePath is defined
         const objectData = JSON.parse(jsonData);
 
         // Get the data from the request body
-        const { className, object, subObject,  dateCreated, dateModified, tags    } = req.body;
+        const { className, object, subObject, dateCreated, dateModified, tags } = req.body;
 
         // Add the new data to the object
         const newData = {
-            className, object, subObject,  dateCreated, dateModified, tags
+            className, object, subObject, dateCreated, dateModified, tags
         };
         objectData.push(newData);
 
@@ -30,7 +33,9 @@ export default async function handler(req:any, res:any) {
         // Send a success response
         res.status(200).json({ message: 'Data stored successfully' });
     } catch (error) {
+        // Log the error to the console
         console.error(error);
+
         // Send an error response
         res.status(500).json({ message: 'Error storing data' });
     }

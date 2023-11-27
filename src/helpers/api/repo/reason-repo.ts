@@ -3,7 +3,9 @@ import sendResponseData from "../../constant";
 import { loggerInfo, loggerError } from "@/logger";
 import message from "@/util/responseMessage";
 
-// Repository for reason-related operations.
+/**
+ * Repository for handling reason-related operations.
+ */
 export const reasonRepo = {
   create,
 };

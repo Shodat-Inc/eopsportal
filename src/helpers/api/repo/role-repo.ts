@@ -3,7 +3,9 @@ import sendResponseData from "../../constant";
 import { loggerInfo, loggerError } from "@/logger";
 import message from "@/util/responseMessage";
 
-// Repository for role-related operations.
+/**
+ * Repository for handling role-related operations.
+ */
 export const roleRepo = {
   create,
   getAllRoles,
@@ -44,47 +46,107 @@ async function create(params: any) {
   }
 }
 
+/**
+ * Fetches all roles from the database.
+ *
+ * @returns {Promise<Array<object>>} A promise that resolves with an array of roles.
+ */
 async function getAllRoles() {
+  // Log information about the function execution
   loggerInfo.info("GET all roles");
 
-  return await db.Role.findAll({
-    attributes: ["id", "name", "isActive", "routeId"]
-  });
-}
-
-async function update(params: any) {
   try {
-    const roles = await db.Role.findOne({
-      where: { id: params.id, }
-    })
-    if (!roles) {
-      return sendResponseData(false, "No Role Exits", [])
-    }
-    roles.name = params.name
-    roles.routeId = params.routeId
-    roles.isActive = params.isActive
-    const response = await roles.save()
-    return sendResponseData(true, message.success.roleUpdated, response)
-  } catch (error: any) {
-    return sendResponseData(false, message.error.errorUpdation, [])
+    // Fetch all roles from the database
+    const roles = await db.Role.findAll({
+      attributes: ["id", "name", "isActive", "routeId"]
+    });
+
+    // Return the array of roles
+    return roles;
+
+  } catch (error) {
+    // Log error information in case of an exception during role fetching
+    loggerError.error("Error in fetching roles");
+
+    // Return an error response in case of an exception during role fetching
+    return sendResponseData(false, "Error in fetching roles", error);
   }
 }
 
+/**
+ * Updates a role in the database based on the provided parameters.
+ *
+ * @param {any} params - The parameters containing the role ID and properties to update.
+ * @returns {Promise<object>} A promise that resolves with the result of the database operation.
+ */
+async function update(params: any) {
+  try {
+    // Find the role in the database based on the provided role ID
+    const role = await db.Role.findOne({
+      where: { id: params.id }
+    });
+
+    // If the role doesn't exist, return an error response
+    if (!role) {
+      return sendResponseData(false, "No Role Exists", []);
+    }
+
+    // Define the properties to update
+    const propertiesToUpdate = [
+      "name",
+      "routeId",
+      "isActive"
+    ];
+
+    // Update the role properties based on the provided parameters
+    propertiesToUpdate.forEach((property) => {
+      if (params[property]) {
+        role[property] = params[property];
+      }
+    });
+
+    // Save the updated role data
+    const response = await role.save();
+
+    // Return a successful response with the updated role data
+    return sendResponseData(true, message.success.roleUpdated, response);
+
+  } catch (error: any) {
+    // Return an error response in case of an exception during role updating
+    return sendResponseData(false, message.error.errorUpdation, []);
+  }
+}
+
+/**
+ * Deletes a role from the database based on the provided role ID.
+ *
+ * @param {any} params - The parameters containing the role ID for deletion.
+ * @returns {Promise<object>} A promise that resolves with the result of the database operation.
+ */
 async function _delete(params: any) {
   try {
+    // Find the role in the database based on the provided role ID
     const role = await db.Role.findOne({
       where: { id: params.id },
     });
+
+    // If the role doesn't exist, return an error response
     if (!role) {
-      return sendResponseData(false, "Role doesn't Exits", [])
+      return sendResponseData(false, "Role doesn't Exist", []);
     }
+
+    // Delete the role from the database
     await role.destroy();
+
+    // Return a successful response after deleting the role
     return sendResponseData(
       true,
       message.success.deleteRole,
       role.className
     );
+
   } catch (error: any) {
+    // Return an error response in case of an exception during role deletion
     return sendResponseData(false, message.error.errorDeleteRole, error);
   }
 }

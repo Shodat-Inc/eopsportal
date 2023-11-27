@@ -39,6 +39,8 @@ const message: any = {
     deleteRole: "Role deleted successfully",
     roleUpdated: "Role Updated Successfully",
     enterpriseUserCreated: "Enterprise User Created Successfully",
+    enterpriseUserUpdated: "Enterprise User Updated Successfully",
+    enterpriseUserDeleted: "Enterprise User Deleted Successfully",
   },
   error: {
     error: "error",
@@ -84,6 +86,8 @@ const message: any = {
     roleExist: "Role name already exist",
     enterpriseUserExist: "Enterprise User Already Exists",
     errorCreateEnterpriseUser: "Error In Creating Enterprise",
+    errorUpdationMessage: "Error in Updating Enterprise User",
+    errorDeletionEnterpriseUser: "Error in deleting Enterprise User"
   },
 };
 
