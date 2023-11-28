@@ -58,9 +58,6 @@ export default function TopBar({ showNav, setShowNav }) {
           "Content-Type": "application/json"
         }
       }).then(function (response) {
-        console.log({
-          response:response.data
-        })
         if(response) {
           setUserData(response.data?.data);
         }
@@ -77,9 +74,6 @@ export default function TopBar({ showNav, setShowNav }) {
   }
   useEffect(() => {
     let access_token = localStorage.getItem('authToken');
-    console.log({
-      access_token:access_token
-    })
     fetchData();
   }, [])
 

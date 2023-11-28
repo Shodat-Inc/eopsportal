@@ -3,8 +3,8 @@ import styles from '../../../styles/Common.module.css';
 import Image from "next/image";
 import Link from 'next/dist/client/link';
 import AddNewClass from './addnewclass';
-import Spinner from "@/common/spinner";
 import axios from 'axios';
+import Spinner from "@/common/spinner";
 import moment from 'moment';
 export default function ClassManagement(props: any) {
     const [toggleFilter, setToggleFilter] = useState(false);
@@ -16,7 +16,8 @@ export default function ClassManagement(props: any) {
     const [dataTypes, setDataTypes] = useState();
     const [deleteModal, setDeleteModal] = useState(false);
     const [deleteID, setDeleteID] = useState(0);
-    const [deleteMessage, setDeleteMessage] = useState(false)
+    const [deleteMessage, setDeleteMessage] = useState(false);
+    const [allClass, setAllClass] = useState([] as any);
     let access_token = "" as any;
     if (typeof window !== 'undefined') {
         access_token = localStorage.getItem('authToken')
@@ -33,9 +34,9 @@ export default function ClassManagement(props: any) {
                     "Content-Type": "application/json"
                 }
             }).then(function (response) {
-                console.log({
-                    response: response.data
-                })
+                if (response) {
+                    setAllClass(response.data?.data)
+                }
             }).catch(function (error) {
                 console.log({
                     "ERROR IN AXIOS CATCH": error
@@ -49,7 +50,7 @@ export default function ClassManagement(props: any) {
     }
     useEffect(() => {
         fetchData();
-    }, [])
+    }, [access_token])
 
     // String Reverse
     function reverseString(str: any) {
@@ -157,6 +158,33 @@ export default function ClassManagement(props: any) {
     const closeDeleteModal = () => {
         setDeleteModal(false)
     }
+    const confirmDeleteClass = async (index: any) => {
+        setDeleteModal(false);
+        try {
+            await axios({
+                method: 'DELETE',
+                url: `http://20.232.178.134:3000/api/deleteClasses?id=${index}`,
+                headers: {
+                    "Authorization": `Bearer ${access_token}`,
+                    "Content-Type": "application/json"
+                }
+            }).then(function (response) {
+                console.log({
+                    response: response,
+                    message: "Class deleted successful!!"
+                })
+            }).catch(function (error) {
+                console.log({
+                    "ERROR IN AXIOS CATCH (DELETE)": error
+                })
+            })
+        } catch (err) {
+            console.log({
+                "ERROR IN TRY CATCH (DELETE)": err
+            })
+        }
+
+    }
 
     const takeMeToClassComponent = (item: any) => {
         props.handelsubClass(item)
@@ -228,96 +256,84 @@ export default function ClassManagement(props: any) {
 
             {/* Table */}
             <div className='w-full mt-6 min-h-[400px] '>
-                <table className={`table-auto lg:min-w-full sm:w-full small:w-full text-left ${styles.tableV3} ${styles.tableV4}`}>
-                    <thead className="text-sm font-normal">
-                        <tr>
-                            <th>S.No</th>
-                            <th>
-                                <button className="flex justify-center items-center" onClick={sortByClassName}>
-                                    <Image src="/img/arrow-up-gray.svg" alt="sort" height={17} width={17} className={`${toggleSort === true ? 'rotate-180' : 'rotate-0'}`} />
-                                    <span>Class name</span>
-                                </button>
-                            </th>
-                            <th>Tags</th>
-                            <th>Date of creation</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>
-                                <button
-                                    onClick={() => takeMeToClassComponent('Manufacturing Plant')}
-                                >
-                                    <span>Manufacturing Plant</span>
-                                </button>
-                            </td>
-                            <td>Plant ID,  Street, City, Zip, Country</td>
-                            <td>12-10-2023</td>
-                            <td className='relative'>
-                                <div className="flex justify-start items-center relative">
-                                    <button onClick={() => toggleActions(1)}>
-                                        <Image
-                                            src="/img/more-vertical.svg"
-                                            alt="more-vertical"
-                                            height={24}
-                                            width={24}
-                                        />
-                                    </button>
-                                    {(actions && actionCount === 1) &&
-                                        <div className="bg-black text-white border overflow-hidden border-black rounded rounded-xl w-[100px] flex flex-col flex-wrap items-start justify-start shadow-sm absolute top-[30px] right-[75px] z-[1]">
-                                            <Link
-                                                href="#"
-                                                className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[30px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
-                                                <span>Edit</span>
-                                            </Link>
-                                            <button
-                                                onClick={deleteModalFunction}
-                                                className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[30px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
-                                                <span>Delete</span>
-                                            </button>
-                                        </div>
-                                    }
-                                </div>
+                {
+                    allClass && allClass.length > 0 ?
+                        <table className={`table-auto lg:min-w-full sm:w-full small:w-full text-left ${styles.tableV3} ${styles.tableV4}`}>
+                            <thead className="text-sm font-normal">
+                                <tr>
+                                    <th>S.No</th>
+                                    <th>
+                                        <button className="flex justify-center items-center" onClick={sortByClassName}>
+                                            <Image src="/img/arrow-up-gray.svg" alt="sort" height={17} width={17} className={`${toggleSort === true ? 'rotate-180' : 'rotate-0'}`} />
+                                            <span>Class name</span>
+                                        </button>
+                                    </th>
+                                    <th>Tags</th>
+                                    <th>Date of creation</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {
+                                    allClass.map((item: any, index: any) => (
+                                        <tr key={index}>
+                                            <td>{index + 1}</td>
+                                            <td>
+                                                <button
+                                                    onClick={() => takeMeToClassComponent(item.className)}
+                                                >
+                                                    <span>{item.className}</span>
+                                                </button>
+                                            </td>
+                                            <td>
+                                                {
+                                                    item?.ClassTags.map((it: any, indx: any) => (
+                                                        <span key={indx}>
+                                                            {it.tagName}<em>, </em>
+                                                        </span>
+                                                    ))
 
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Vehicles</td>
-                            <td>VIN, MfdDate, Model, Assembly Plant</td>
-                            <td>12-10-2023</td>
-                            <td>
-                                <div className="flex justify-start items-center relative">
-                                    <button onClick={() => toggleActions(2)}>
-                                        <Image
-                                            src="/img/more-vertical.svg"
-                                            alt="more-vertical"
-                                            height={24}
-                                            width={24}
-                                        />
-                                    </button>
-                                    {(actions && actionCount === 2) &&
-                                        <div className="bg-black text-white border overflow-hidden border-black rounded rounded-xl w-[100px] flex flex-col flex-wrap items-start justify-start shadow-sm absolute top-[30px] right-[75px] z-[1]">
-                                            <Link
-                                                href="#"
-                                                className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[30px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
-                                                <span>Edit</span>
-                                            </Link>
-                                            <button
-                                                onClick={deleteModalFunction}
-                                                className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[30px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
-                                                <span>Delete</span>
-                                            </button>
-                                        </div>
-                                    }
-                                </div>
+                                                }
+                                            </td>
+                                            <td>{moment(item.createdAt).format('DD-MM-YYYY')}</td>
+                                            <td className='relative'>
+                                                <div className="flex justify-start items-center relative">
+                                                    <button onClick={() => toggleActions(index + 1)}>
+                                                        <Image
+                                                            src="/img/more-vertical.svg"
+                                                            alt="more-vertical"
+                                                            height={24}
+                                                            width={24}
+                                                        />
+                                                    </button>
+                                                    {(actions && actionCount === index + 1) &&
+                                                        <div className="bg-black text-white border overflow-hidden border-black rounded rounded-xl w-[100px] flex flex-col flex-wrap items-start justify-start shadow-sm absolute top-[30px] right-[75px] z-[1]">
+                                                            <Link
+                                                                href="#"
+                                                                className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[30px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
+                                                                <span>Edit</span>
+                                                            </Link>
+                                                            <button
+                                                                onClick={() => deleteModalFunction(item.id)}
+                                                                className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[30px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
+                                                                <span>Delete</span>
+                                                            </button>
+                                                        </div>
+                                                    }
+                                                </div>
 
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                                            </td>
+                                        </tr>
+                                    ))
+                                }
+                            </tbody>
+                        </table>
+                        :
+                        <div className='flex justify-center items-center flex-wrap'>
+                            <Spinner width="24" height="24" />
+                            <div className='text-lg font-semibold mt-2'>Please Wait ...</div>
+                        </div>
+                }
             </div>
 
 
@@ -356,7 +372,7 @@ export default function ClassManagement(props: any) {
                                         <div className="mt-10 relative flex justify-center items-center w-full">
                                             <button
                                                 className="border border-black rounded-lg bg-black text-white text-lg w-[70px] h-[47px] mr-5 hover:bg-yellow-951 hover:text-white hover:border-yellow-951 ease-in-out duration-300 disabled:bg-gray-951 disabled:hover:border-gray-951 disabled:border-gray-951"
-                                                onClick={closeDeleteModal}
+                                                onClick={() => confirmDeleteClass(deleteID)}
                                             >
                                                 Yes
                                             </button>
