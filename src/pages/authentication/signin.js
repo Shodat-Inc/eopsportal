@@ -393,9 +393,10 @@ export default function SignIn() {
                             }
                             {/* === Login Message Alert === */}
 
-                            {otpSent &&
+                            {/* {otpSent &&
                                 <AlertMessage alertType="success" title="" message={`An OTP is sent to you mobile number ${phoneNumberWithStar(userPhone)}`} />
                             }
+                        */ }
 
                             {
                                 !otpScreen ?
