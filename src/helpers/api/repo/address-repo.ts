@@ -1,6 +1,7 @@
 import { db } from "../db";
 import sendResponseData from "../../constant";
 import { loggerInfo, loggerError } from "@/logger";
+import message from "@/util/responseMessage";
 
 // Object to manage address-related database operations.
 export const addressRepo = {
@@ -24,11 +25,11 @@ async function create(params: any) {
 
       // If no user is found with the given ID, return an error response.
       if (!user) {
-        return sendResponseData(false, "User doesn't exist", {});
+        return sendResponseData(false, message.error.userNotFound, {});
       }
     } else {
       // If userId isn't provided, return an error response.
-      return sendResponseData(false, "UserId not provided", {});
+      return sendResponseData(false, message.error.idReq, {});
     }
 
     // Create a new address instance using the provided parameters.
@@ -38,11 +39,11 @@ async function create(params: any) {
     const data = await address.save();
 
     // Return a successful response indicating the address was added.
-    return sendResponseData(true, "Address added successfully", data);
+    return sendResponseData(true, message.success.addressSaved, data);
   } catch (error) {
     // Log the error if saving the address fails.
     loggerError.error("Cant Save Address", error);
     // Return a response indicating the failure of the operation.
-    return sendResponseData(false, "error", error);
+    return sendResponseData(false, message.error.error, error);
   }
 }

@@ -1,6 +1,7 @@
 import { db } from "../db";
 import sendResponseData from "../../constant";
 import { loggerInfo, loggerError } from "@/logger";
+import message from "@/util/responseMessage";
 
 // Repository for classTag-related operations.
 export const classTagRepo = {
@@ -25,7 +26,7 @@ async function create(params: any, classId: any) {
   // Validate classId presence.
   if (!classId) {
     loggerError.error("ClassId Is not provided, Tag not saved.");
-    return sendResponseData(false, "ClassId Is not provided!", {});
+    return sendResponseData(false, message.error.classIdError, {});
   }
 
   try {
@@ -34,10 +35,10 @@ async function create(params: any, classId: any) {
 
     // Save the new class tag to the database.
     const data = await tags.save();
-    return sendResponseData(true, "Class Tag added successfully", data);
+    return sendResponseData(true, message.success.classTag, data);
   } catch (error) {
     // Log the error if there's an issue with the class tag creation.
-    loggerError.error("Error in class Tag repo", error);
+    loggerError.error(message.error.errorClassTag, error);
   }
 }
 
@@ -55,51 +56,77 @@ async function bulkCreate(params: any[], classId: any) {
   // Validate classId presence.
   if (!classId) {
     loggerError.error("ClassId Is not provided, Tag not saved.");
-    return sendResponseData(false, "ClassId Is not provided!", {});
+    return sendResponseData(false, message.error.classIdError, {});
   }
 
   try {
     // Create multiple class tag entries in the database using the provided parameters.
     const data = await db.classTag.bulkCreate(params);
-    return sendResponseData(true, "Class Tags added successfully", data);
+    return sendResponseData(true, message.success.classTag, data);
   } catch (error) {
     // Log the error if there's an issue with the bulk class tag creation.
-    loggerError.error("Error in bulk class Tag repo", error);
+    loggerError.error(message.error.errorBulkClassTag, error);
   }
 }
 
-//get classTags
+/**
+ * Retrieves class tags based on the given ID from the database.
+ *
+ * @param {any} id - The ID used to filter class tags.
+ * @returns {Promise<object>} A promise that resolves with the result of the database query.
+ */
 async function getClassTags(id: any) {
   try {
+    // Fetch class tags from the database using Sequelize findAll method
     const result = await db.classTag.findAll({
       where: { id },
     });
-    return sendResponseData(true, "Class Tag id fetch successfully", result);
+    // Return successful response with fetched class tags
+    return sendResponseData(true, message.success.fetchClassTag, result);
   } catch (error: any) {
-    return sendResponseData(false, "Cant fetch Class Tag", error);
+    // Return error response if there's an issue with fetching class tags
+    return sendResponseData(false, message.error.fetchClassTag, error);
   }
 }
 
-//get parent join tags
+/**
+ * Retrieves parent join tags from the database based on the given parameters.
+ *
+ * @param {any} params - The parameters used to filter parent join tags.
+ * @returns {Promise<object>} A promise that resolves with the result of the database query.
+ */
 async function getParentJoinTags(params: any) {
+  // Log information about the function execution
   loggerInfo.info("get parent join tags");
+
   try {
+    // Fetch parent join tag from the database using Sequelize findOne method
     const result = await db.classTag.findOne({
       where: { id: params },
       attributes: ["tagName"],
     });
+
+    // Return the result of the database query
     return result;
   } catch (error: any) {
+    // Return any errors encountered during the database query
     return error;
   }
 }
 
-//delete class tag
+/**
+ * Deletes a class tag from the database based on the given ID.
+ *
+ * @param {any} id - The ID of the class tag to be deleted.
+ * @returns {Promise<number>} A promise that resolves with the number of rows deleted.
+ */
 async function _delete(id: any) {
-  // delete class tag
+  // Delete the class tag from the database using Sequelize destroy method
+  // The 'where' clause specifies the condition for deletion based on the provided ID
   return await db.classTag.destroy({
     where: {
       id: id,
     },
   });
 }
+

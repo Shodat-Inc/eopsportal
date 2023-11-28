@@ -1,8 +1,11 @@
 import { db } from "../db";
 import sendResponseData from "../../constant";
 import { loggerInfo, loggerError } from "@/logger";
+import message from "@/util/responseMessage";
 
-// Repository for phoneRecord-related operations.
+/**
+ * Repository for handling phoneRecord-related operations.
+ */
 export const phoneRecordRepo = {
   create,
 };
@@ -25,11 +28,11 @@ async function create(params: any) {
 
       // If no user is found with the given ID, return an error response.
       if (!user) {
-        return sendResponseData(false, "User doesn't exist", {});
+        return sendResponseData(false, message.error.userNotExist, {});
       }
     } else {
       // If userId isn't provided, return an error response.
-      return sendResponseData(false, "UserId not provided", {});
+      return sendResponseData(false, message.error.idReq, {});
     }
 
     // Create a new phoneRecord instance using the provided parameters.
@@ -39,11 +42,11 @@ async function create(params: any) {
     const data = await phoneRecord.save();
 
     // Return a successful response indicating the phone record was added.
-    return sendResponseData(true, "Phone Record added successfully", data);
+    return sendResponseData(true, message.success.phoneRecordAdded, data);
   } catch (error) {
     // Log the error if there's an issue with the phone record creation.
     loggerError.error("Cant Save Phone Record", error);
     // Return a response indicating the failure of the operation.
-    return sendResponseData(false, "error", error);
+    return sendResponseData(false, message.error.error, error);
   }
 }

@@ -1,8 +1,11 @@
 import { db } from "../db";
 import sendResponseData from "../../constant";
 import { loggerInfo, loggerError } from "@/logger";
+import message from "@/util/responseMessage";
 
-// Repository for tagDataType-related operations.
+/**
+ * Repository for handling tagDataType-related operations.
+ */
 export const tagDataTypeRepo = {
   create,
   get,
@@ -26,21 +29,36 @@ async function create(params: any) {
     const data = await tagDataType.save();
 
     // Return a successful response indicating the tagDataType was added.
-    return sendResponseData(true, "Tag DataType added successfully", data);
+    return sendResponseData(true, message.success.tagDatatypeAdded, data);
   } catch (error) {
     // Log the error if there's an issue with the tagDataType creation.
     loggerError.error("Cant Save Tag Datatype", error);
     // Return a response indicating the failure of the operation.
-    return sendResponseData(false, "error", error);
+    return sendResponseData(false, message.error.error, error);
   }
 }
 
-async function get(){
+/**
+ * Fetches all Tag DataTypes from the database.
+ *
+ * @returns {Promise<object>} A promise that resolves with the result of the Tag DataTypes fetching process.
+ */
+async function get() {
+  // Log information about the function execution
   loggerInfo.info("Get All Tag DataTypes");
+
   try {
+    // Fetch all Tag DataTypes from the database
     const result = await db.tagDataType.findAll();
+
+    // Return a successful response with the fetched Tag DataTypes
     return sendResponseData(true, "Tag Data Type Fetched Successfully", result);
+
   } catch (error: any) {
-    return sendResponseData(false, "Cant Fetch Tag datatype", []);
+    // Log error information in case of an exception during Tag DataTypes fetching
+    loggerError.error("Error in fetching Tag DataTypes");
+
+    // Return an error response in case of an exception during Tag DataTypes fetching
+    return sendResponseData(false, "Can't Fetch Tag DataTypes", []);
   }
 }

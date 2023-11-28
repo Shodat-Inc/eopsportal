@@ -2,6 +2,7 @@
 import { apiHandler, objectRepo } from "@/helpers/api";
 import { valueRepo } from "@/helpers/api/repo/value-repo";
 import { loggerInfo, loggerError } from "@/logger";
+import { createObjectValidation } from "../../../validateSchema";
 
 // Define the default API handler for the POST method to handle object creation.
 export default apiHandler({
@@ -27,9 +28,20 @@ async function handler(req: any, res: any) {
 
     // Extract the object data from the request.
     const reqData = req.body;
+    const validation = createObjectValidation(reqData);
+    if (validation.error) {
+      // Handle validation errors
+      res.status(400).json({
+        success: false,
+        message: "Validation error",
+        errors: validation.error.details.map((detail) => detail.message),
+      });
+      return;
+    }
+
 
     // Create a new object entry using the provided data.
-    const objData = await objectRepo.create(reqData);
+    const objData = await objectRepo.create(validation.value);
     const objectId = objData.data.id;
 
     // Create an array to store values for the object.

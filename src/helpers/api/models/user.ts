@@ -12,17 +12,10 @@ export function User(sequelize: any) {
     email: { type: DataTypes.STRING, allowNull: true },
     firstName: { type: DataTypes.STRING, allowNull: false },
     lastName: { type: DataTypes.STRING, allowNull: false },
+    roleId: { type: DataTypes.INTEGER, allowNull: true },
     password: { type: DataTypes.STRING, allowNull: false },
-    parentId: { type: DataTypes.INTEGER, allowNull: true },
     resetToken: { type: DataTypes.STRING, allowNull: true },
     resetTokenExpires: { type: DataTypes.DATE, allowNull: true },
-    roleId: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: "Roles",
-        id: "id",
-      },
-    },
   };
 
   const options = {

@@ -32,17 +32,17 @@ async function create(params: any) {
       where: { className: params.className },
     });
     if (class_data) {
-      return sendResponseData(false, "Class already exist", {});
+      return sendResponseData(false, message.error.classExist, {});
     }
 
     // Create and save the new class instance.
     const classes = new db.AddClasses(params);
     const data = await classes.save();
-    return sendResponseData(true, "Class added successfully", data);
+    return sendResponseData(true, message.success.classAdded, data);
   } catch (error) {
     // Log the error if there's an issue with the class creation.
     loggerError.error("Error in class repo", error);
-    return sendResponseData(false, "error", error);
+    return sendResponseData(false, message.error.error, error);
   }
 }
 
@@ -82,20 +82,26 @@ async function getClassData(params: any) {
       ],
     });
     if (result.length === 0) {
-      return sendResponseData(false, "No Class Data found", []);
+      return sendResponseData(false, message.error.classData, []);
     }
     const response = result.map((item: any, index: any) => ({
       serialNumber: index + 1,
       ...item.get(), // Convert Sequelize instance to plain JS object
     }));
-    return sendResponseData(true, "Class Fetched Successfully", response);
+    return sendResponseData(true, message.success.fetchClass, response);
   } catch (error) {
     // Log the error if fetching classes and tags fails.
     loggerError.error("Error fetching class and classTags data:", error);
-    return sendResponseData(false, "error", error);
+    return sendResponseData(false, message.error.error, error);
   }
 }
 
+/**
+ * Fetch all classes and associated tags by id for a given user where the parentId is null.
+ *
+ * @param {Object} params - The request object containing the user ID.
+ * @returns {Object} - An array of classes and associated tags or an error response.
+ */
 //Fetch class By ID
 async function getClassDataByID(params: any) {
   try {
@@ -130,18 +136,18 @@ async function getClassDataByID(params: any) {
       ],
     });
     if (result.length === 0) {
-      return sendResponseData(false, "No data found", []);
+      return sendResponseData(false, message.error.noDataFound, []);
     }
 
     const response = result.map((item: any, index: any) => ({
       serialNumber: index + 1,
       ...item.get(), // Convert Sequelize instance to plain JS object
     }));
-    return sendResponseData(true, "Class fetched Successfully", response);
+    return sendResponseData(true, message.success.fetchClass, response);
   } catch (error) {
     // Log the error if fetching classes and tags fails.
     loggerError.error("Error fetching class and classTags data by ID:", error);
-    return sendResponseData(false, "error", error);
+    return sendResponseData(false, message.error.error, error);
   }
 }
 /**
@@ -184,7 +190,7 @@ async function getSubClass(param: any) {
       ],
     });
     if (result.length === 0) {
-      return sendResponseData(false, "No data found", []);
+      return sendResponseData(false, message.error.noDataFound, []);
     }
     // Get Parent Join Tag Name
     for (let x of result) {
@@ -198,13 +204,19 @@ async function getSubClass(param: any) {
       S_No: index + 1,
       ...item.get(),
     }));
-    return sendResponseData(true, "Class fetched Successfully", response);
+    return sendResponseData(true, message.success.fetchClass, response);
   } catch (error) {
     // Log the error if fetching subclasses and tags fails.
     loggerError.error("Error fetching class and classTags data:", error);
-    return sendResponseData(false, "error", error);
+    return sendResponseData(false, message.error.error, error);
   }
 }
+/**
+ * Fetch all subclasses and associated tags by id for a given user based on a parent class ID.
+ *
+ * @param {Object} param - The request object containing the user ID and query for the parent class ID.
+ * @returns {Array} - An array of subclasses and associated tags or an error response.
+ */
 async function getSubClassByID(param: any) {
   try {
     // Log the initiation of fetching subclasses and tags.
@@ -253,14 +265,20 @@ async function getSubClassByID(param: any) {
       S_No: index + 1,
       ...item.get(),
     }));
-    return sendResponseData(true, "Sub Class Fetched Sucessfully", response);
+    return sendResponseData(true, message.success.fetchSubClass, response);
   } catch (error) {
     // Log the error if fetching subclasses and tags fails.
     loggerError.error("Error fetching class and classTags data:", error);
-    return sendResponseData(false, "error", error);
+    return sendResponseData(false, message.error.error, error);
   }
 }
 
+/**
+ * Update all classes, subclasses and associated tags.
+ *
+ * @param {Object} param - The request object containing the data to be updated
+ * @returns {Array} - An array of classes, subclasses and associated tags or an error response.
+ */
 async function update(params: any) {
   try {
     loggerInfo.info("Update Class Name");
@@ -278,10 +296,16 @@ async function update(params: any) {
     return await classes.save();
   } catch (error: any) {
     loggerError.error("Error in Updating class", error);
-    return sendResponseData(false, message.error, error);
+    return sendResponseData(false, message.error.error, error);
   }
 }
 
+/**
+ * Delete classes, subclasses and associated tags.
+ *
+ * @param {Object} param - The request object containing the data to be deleted
+ * @returns {Array} - An array of classes, subclasses and associated tags or an error response.
+ */
 async function _delete(params: any) {
   try {
     const classes = await db.AddClasses.findOne({
@@ -291,10 +315,10 @@ async function _delete(params: any) {
     await classes.destroy();
     return sendResponseData(
       true,
-      "Class Deleted Successfully",
+      message.success.deleteClass,
       classes.className
     );
   } catch (error: any) {
-    return sendResponseData(false, "Error in  Deleting Class", error);
+    return sendResponseData(false, message.error.errorDeleteClass, error);
   }
 }

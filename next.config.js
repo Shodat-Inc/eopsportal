@@ -1,11 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // reactStrictMode: true,
   swcMinify: true,
   eslint: {
     ignoreDuringBuilds: true,
   },
-  reactStrictMode: true,
+  reactStrictMode: false,
   serverRuntimeConfig: {
     dbConfig: {
       host: process.env.DB_HOST,
@@ -27,3 +26,4 @@ const nextConfig = {
 };
 
 module.exports = nextConfig;
+

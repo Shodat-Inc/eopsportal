@@ -1,13 +1,12 @@
 import { db } from "../db";
 
 function relationship() {
-  // Establishing relationships for the User model:
+  // Establishing relationships for the User models:
 
   // Each User can have multiple Address records.
   db.User.hasMany(db.Address, { foreignKey: "userId" });
   // Each Address is associated with a single User.
   db.Address.belongsTo(db.User, { foreignKey: "userId" });
-
   // Each User can have multiple Phone records.
   db.User.hasMany(db.phoneRecord, { foreignKey: "userId" });
   // Each Phone record is associated with a single User.
@@ -82,6 +81,27 @@ function relationship() {
   db.tagDataType.hasMany(db.classTag, { foreignKey: "dataTypeId" });
   // Each classTag belongs to a tagDataType
   db.classTag.belongsTo(db.tagDataType, { foreignKey: "dataTypeId" });
-}
 
+  //<-------------------------------------------------- Enterprise Relations ------------------------------------------------------------------------------------------->
+
+  db.Enterprise.hasMany(db.EnterpriseAddress, { foreignKey: "enterpriseId" });
+  db.EnterpriseAddress.belongsTo(db.Enterprise, { foreignKey: "enterpriseId" });
+
+  db.Role.hasMany(db.Routes);
+  db.Routes.belongsTo(db.Role);
+
+  db.Role.hasMany(db.EnterpriseUser, { foreignKey: "roleId" });
+  db.EnterpriseUser.belongsTo(db.Role, { foreignKey: "roleId" });
+
+  db.Enterprise.hasMany(db.EnterpriseUser, { foreignKey: "enterpriseId" });
+  db.EnterpriseUser.belongsTo(db.Enterprise, { foreignKey: "enterpriseId" });
+
+  db.Enterprise.hasMany(db.AddClasses, { foreignKey: "enterpriseId" });
+  db.AddClasses.belongsTo(db.Enterprise, { foreignKey: "enterpriseId" });
+
+  db.EnterpriseUser.hasMany(db.AddClasses, { foreignKey: "enterpriseUserId" });
+  db.AddClasses.belongsTo(db.EnterpriseUser, {
+    foreignKey: "enterpriseUserId",
+  });
+}
 export default relationship;

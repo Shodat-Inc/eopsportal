@@ -1,8 +1,8 @@
 import { apiHandler, classTagRepo } from "@/helpers/api";
 import { classRepo } from "@/helpers/api/repo/class-repo";
 import { parentJoinKeyRepo } from "@/helpers/api/repo/parentJoinRepo";
-import { CreateClass } from "@/interface";
 import { loggerInfo, loggerError } from "@/logger";
+import { createClassValidation } from "../../../validateSchema";
 
 // Default API handler for the POST method to handle class creation.
 export default apiHandler({
@@ -23,15 +23,26 @@ async function handler(req: any, res: any) {
       res.status(405).send({ message: "Only POST requests allowed" });
       return;
     }
-
     // Construct the request data object, ensuring the user ID is added.
-    const reqData: CreateClass = {
+    const reqData = {
       ...req.body,
       userId: req.id,
+      enterpriseUserId: req.enterpriseUserId,
+      enterpriseId: req.enterpriseId,
     };
+    const validation = createClassValidation(reqData);
+    if (validation.error) {
+      // Handle validation errors
+      res.status(400).json({
+        success: false,
+        message: "Validation error",
+        errors: validation.error.details.map((detail) => detail.message),
+      });
+      return;
+    }
 
     // Create a new class entry using the provided data.
-    const classData = await classRepo.create(reqData);
+    const classData = await classRepo.create(validation.value);
     const classId = classData.data.id;
 
     // Create a new array to store tags for the class.
@@ -49,7 +60,7 @@ async function handler(req: any, res: any) {
     // Bulk create class tags using the populated tag data.
     const classTags = await classTagRepo.bulkCreate(tagData, classId);
     const tagIdArr: any = [];
-    if (reqData.parentJoinKey && reqData.parentJoinKey.length ) {
+    if (reqData.parentJoinKey && reqData.parentJoinKey.length) {
       const classTagId = await classTagRepo.getClassTags(reqData.parentJoinKey);
       classTagId.data.forEach((element: any) => {
         tagIdArr.push({

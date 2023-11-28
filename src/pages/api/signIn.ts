@@ -1,6 +1,8 @@
 import message from "@/util/responseMessage";
 import { apiHandler, usersRepo } from "../../helpers/api";
 import sendResponseData from "../../helpers/constant";
+import { signInValidation } from "../../../validateSchema";
+
 
 // Default API handler for the POST method to handle user authentication.
 export default apiHandler({
@@ -21,9 +23,20 @@ async function handler(req: any, res: any) {
         .status(405)
         .send(sendResponseData(false, message.error.postMethodError, []));
     }
+    
+    const validation = signInValidation(req.body);
+    if (validation.error) {
+      // Handle validation errors
+      res.status(400).json({
+        success: false,
+        message: "Validation error",
+        errors: validation.error.details.map((detail) => detail.message),
+      });
+      return;
+    }
 
     // Attempt to authenticate the user using the usersRepo.
-    const data = await usersRepo.authenticate(req.body);
+    const data = await usersRepo.authenticate(validation.value);
 
     // If successful, return a 200 OK response with the authentication data.
     return res.status(200).send(data);

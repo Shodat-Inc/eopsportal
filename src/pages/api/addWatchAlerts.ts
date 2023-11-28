@@ -14,7 +14,7 @@ export default async function handler(req: any, res: any) {
 
         // Get the data from the request body
         const {
-            ID, 
+            ID,
             model,
             primaryClass,
             subObject,
@@ -34,7 +34,7 @@ export default async function handler(req: any, res: any) {
 
         // Add the new data to the object
         const newData = {
-            ID, 
+            ID,
             model,
             primaryClass,
             subObject,
