@@ -18,12 +18,12 @@ import DeleteModal from "@/common/deletemodal";
 import ObjectModal from "./objectmodal";
 
 export default function AddNewClass(props: any) {
+    // console.log({
+    //     props: props
+    // })
     const dispatch = useDispatch<any>();
-    // const [showModal, setShowModal] = useState(false);
     const [success, setSuccess] = useState(false);
     const assetname = useRef("");
-    // const [dataTypes, setDataTypes] = useState<any[]>([]);
-    // const router = useRouter();
     const [allTags, setAllTags] = useState<any[]>([]);
     const [newTag, setNewTag] = useState<string>("");
     const [showInput, setShowInput] = useState(false);
@@ -34,11 +34,42 @@ export default function AddNewClass(props: any) {
     const [chooseAsset, setChooseAsset] = useState("");
     const [toggleAsset, setToggleAsset] = useState(false);
     const [dtObject, setDtObject] = useState<any[]>([]);
-    // const [deleteModal, setDeleteModal] = useState(false);
+    const [allDataTypes, setAllDataTypes] = useState([] as any);
     let access_token = "" as any;
     if (typeof window !== 'undefined') {
         access_token = localStorage.getItem('authToken')
     }
+
+    // GET ALL DATATYPES
+    async function fetchData() {
+        try {
+            await axios({
+                method: 'GET',
+                url: `http://20.232.178.134:3000/api/getDataType`,
+                headers: {
+                    "Authorization": `Bearer ${access_token}`,
+                    "Content-Type": "application/json"
+                }
+            }).then(function (response) {
+                if (response) {
+                    setAllDataTypes(response.data?.data)
+                }
+            }).catch(function (error) {
+                console.log({
+                    "ERROR IN AXIOS CATCH (GET DT)": error
+                })
+            })
+        } catch (err) {
+            console.log({
+                "ERROR IN TRY CATCH (GET DT)": err
+            })
+        }
+    }
+    useEffect(() => {
+        fetchData();
+    }, [access_token])
+
+
     const closeModal = () => {
         props.handleClick(false);
         // setShowModal(false);
@@ -161,12 +192,15 @@ export default function AddNewClass(props: any) {
             className: form_values.assetname,
             tags: dtObject
         };
+        console.log({
+            dataToSave: dataToSave
+        })
         let tokenStr = access_token;
         // dispatch(createNewClass(dataToSave))
         try {
             await axios({
                 method: 'POST',
-                url: `/api/createClasses`,
+                url: `http://20.232.178.134:3000/api/createClasses`,
                 data: dataToSave,
                 headers: {
                     "Authorization": `Bearer ${tokenStr}`,
@@ -174,20 +208,18 @@ export default function AddNewClass(props: any) {
                 }
             }).then(function (response) {
                 if (response) {
-                    // setShowModal(false);
                     setSuccess(true)
                     setAllTags([]);
-
                     setTimeout(() => {
                         setSuccess(false)
                         props.handleClick(false);
                     }, 1500)
                 }
             }).catch(function (error) {
-                console.log("err in action:", error)
+                console.log("ERROR IN AXIOS CATCH (CREATE CLASS):", error)
             })
         } catch (err) {
-            console.log("err in action:", err)
+            console.log("ERROR IN TRY CATCH (CREATE CLASS):", err)
         }
     }
 
@@ -398,9 +430,9 @@ export default function AddNewClass(props: any) {
                                             </div>
 
                                             {
-                                                props.dataTypes && props.dataTypes.length >= 0 ?
-                                                    props.dataTypes.map((item: any, index: any) => (
-                                                        <>
+                                                allDataTypes && allDataTypes.length >= 0 ?
+                                                    allDataTypes.map((item: any, index: any) => (
+                                                        <div key={index}>
                                                             <div className="flex pt-1 pb-1">
                                                                 <div className={`${styles.customRadio} mr-2`}>
                                                                     <input
@@ -419,7 +451,7 @@ export default function AddNewClass(props: any) {
                                                                 </span>
                                                                 </label>
                                                             </div>
-                                                        </>
+                                                        </div>
                                                     ))
                                                     :
                                                     null

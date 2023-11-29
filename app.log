@@ -19628,3 +19628,464 @@
 {"level":"info","message":"JWT","timestamp":"2023-11-28T18:17:51.107Z"}
 {"level":"info","message":"Fetching all class and classTags data","timestamp":"2023-11-28T18:17:51.109Z"}
 {"level":"error","message":"Error fetching class and classTags data: Cannot read properties of undefined (reading 'findAll')","stack":"TypeError: Cannot read properties of undefined (reading 'findAll')\n    at Object.getClassData (webpack-internal:///(api)/./src/helpers/api/repo/class-repo.ts:65:77)\n    at Object.allhandler [as get] (webpack-internal:///(api)/./src/pages/api/getAssets.ts:19:83)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:38:34)","timestamp":"2023-11-28T18:17:51.110Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-11-28T18:18:26.932Z"}
+{"code":"ECONNREFUSED","errno":-4078,"level":"error","message":"db.ts connect ECONNREFUSED 127.0.0.1:3306","stack":"Error: connect ECONNREFUSED 127.0.0.1:3306\n    at Object.createConnection (D:\\WORK\\eopsportal\\node_modules\\mysql2\\promise.js:253:31)\n    at Object.initialize (webpack-internal:///(api)/./src/helpers/api/db.ts:153:88)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:15:115)\n    at D:\\WORK\\eopsportal\\node_modules\\next\\dist\\compiled\\next-server\\pages-api.runtime.dev.js:21:3039\n    at D:\\WORK\\eopsportal\\node_modules\\next\\dist\\server\\lib\\trace\\tracer.js:121:36\n    at NoopContextManager.with (D:\\WORK\\eopsportal\\node_modules\\next\\dist\\compiled\\@opentelemetry\\api\\index.js:1:7057)\n    at ContextAPI.with (D:\\WORK\\eopsportal\\node_modules\\next\\dist\\compiled\\@opentelemetry\\api\\index.js:1:516)\n    at NoopTracer.startActiveSpan (D:\\WORK\\eopsportal\\node_modules\\next\\dist\\compiled\\@opentelemetry\\api\\index.js:1:18086)\n    at ProxyTracer.startActiveSpan (D:\\WORK\\eopsportal\\node_modules\\next\\dist\\compiled\\@opentelemetry\\api\\index.js:1:18847)\n    at D:\\WORK\\eopsportal\\node_modules\\next\\dist\\server\\lib\\trace\\tracer.js:110:107\n    at NoopContextManager.with (D:\\WORK\\eopsportal\\node_modules\\next\\dist\\compiled\\@opentelemetry\\api\\index.js:1:7057)\n    at ContextAPI.with (D:\\WORK\\eopsportal\\node_modules\\next\\dist\\compiled\\@opentelemetry\\api\\index.js:1:516)\n    at NextTracerImpl.trace (D:\\WORK\\eopsportal\\node_modules\\next\\dist\\server\\lib\\trace\\tracer.js:110:32)\n    at K (D:\\WORK\\eopsportal\\node_modules\\next\\dist\\compiled\\next-server\\pages-api.runtime.dev.js:21:2970)\n    at processTicksAndRejections (node:internal/process/task_queues:96:5)","timestamp":"2023-11-28T18:18:26.942Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-28T18:18:26.951Z"}
+{"level":"info","message":"Get All Tag DataTypes","timestamp":"2023-11-28T18:18:26.969Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-11-28T18:18:26.978Z"}
+{"code":"ECONNREFUSED","errno":-4078,"level":"error","message":"db.ts connect ECONNREFUSED 127.0.0.1:3306","stack":"Error: connect ECONNREFUSED 127.0.0.1:3306\n    at Object.createConnection (D:\\WORK\\eopsportal\\node_modules\\mysql2\\promise.js:253:31)\n    at Object.initialize (webpack-internal:///(api)/./src/helpers/api/db.ts:153:88)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:15:115)\n    at D:\\WORK\\eopsportal\\node_modules\\next\\dist\\compiled\\next-server\\pages-api.runtime.dev.js:21:3039\n    at D:\\WORK\\eopsportal\\node_modules\\next\\dist\\server\\lib\\trace\\tracer.js:121:36\n    at NoopContextManager.with (D:\\WORK\\eopsportal\\node_modules\\next\\dist\\compiled\\@opentelemetry\\api\\index.js:1:7057)\n    at ContextAPI.with (D:\\WORK\\eopsportal\\node_modules\\next\\dist\\compiled\\@opentelemetry\\api\\index.js:1:516)\n    at NoopTracer.startActiveSpan (D:\\WORK\\eopsportal\\node_modules\\next\\dist\\compiled\\@opentelemetry\\api\\index.js:1:18086)\n    at ProxyTracer.startActiveSpan (D:\\WORK\\eopsportal\\node_modules\\next\\dist\\compiled\\@opentelemetry\\api\\index.js:1:18847)\n    at D:\\WORK\\eopsportal\\node_modules\\next\\dist\\server\\lib\\trace\\tracer.js:110:107\n    at NoopContextManager.with (D:\\WORK\\eopsportal\\node_modules\\next\\dist\\compiled\\@opentelemetry\\api\\index.js:1:7057)\n    at ContextAPI.with (D:\\WORK\\eopsportal\\node_modules\\next\\dist\\compiled\\@opentelemetry\\api\\index.js:1:516)\n    at NextTracerImpl.trace (D:\\WORK\\eopsportal\\node_modules\\next\\dist\\server\\lib\\trace\\tracer.js:110:32)\n    at K (D:\\WORK\\eopsportal\\node_modules\\next\\dist\\compiled\\next-server\\pages-api.runtime.dev.js:21:2970)\n    at processTicksAndRejections (node:internal/process/task_queues:96:5)","timestamp":"2023-11-28T18:18:26.986Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-28T18:18:26.989Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2023-11-28T18:18:26.990Z"}
+{"level":"error","message":"Error fetching class and classTags data: Cannot read properties of undefined (reading 'findAll')","stack":"TypeError: Cannot read properties of undefined (reading 'findAll')\n    at Object.getClassData (webpack-internal:///(api)/./src/helpers/api/repo/class-repo.ts:65:77)\n    at Object.allhandler [as get] (webpack-internal:///(api)/./src/pages/api/getAssets.ts:19:83)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:38:34)","timestamp":"2023-11-28T18:18:26.991Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-11-28T18:18:47.361Z"}
+{"code":"ECONNREFUSED","errno":-4078,"level":"error","message":"db.ts connect ECONNREFUSED 127.0.0.1:3306","stack":"Error: connect ECONNREFUSED 127.0.0.1:3306\n    at Object.createConnection (D:\\WORK\\eopsportal\\node_modules\\mysql2\\promise.js:253:31)\n    at Object.initialize (webpack-internal:///(api)/./src/helpers/api/db.ts:153:88)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:15:115)\n    at D:\\WORK\\eopsportal\\node_modules\\next\\dist\\compiled\\next-server\\pages-api.runtime.dev.js:21:3039\n    at D:\\WORK\\eopsportal\\node_modules\\next\\dist\\server\\lib\\trace\\tracer.js:121:36\n    at NoopContextManager.with (D:\\WORK\\eopsportal\\node_modules\\next\\dist\\compiled\\@opentelemetry\\api\\index.js:1:7057)\n    at ContextAPI.with (D:\\WORK\\eopsportal\\node_modules\\next\\dist\\compiled\\@opentelemetry\\api\\index.js:1:516)\n    at NoopTracer.startActiveSpan (D:\\WORK\\eopsportal\\node_modules\\next\\dist\\compiled\\@opentelemetry\\api\\index.js:1:18086)\n    at ProxyTracer.startActiveSpan (D:\\WORK\\eopsportal\\node_modules\\next\\dist\\compiled\\@opentelemetry\\api\\index.js:1:18847)\n    at D:\\WORK\\eopsportal\\node_modules\\next\\dist\\server\\lib\\trace\\tracer.js:110:107\n    at NoopContextManager.with (D:\\WORK\\eopsportal\\node_modules\\next\\dist\\compiled\\@opentelemetry\\api\\index.js:1:7057)\n    at ContextAPI.with (D:\\WORK\\eopsportal\\node_modules\\next\\dist\\compiled\\@opentelemetry\\api\\index.js:1:516)\n    at NextTracerImpl.trace (D:\\WORK\\eopsportal\\node_modules\\next\\dist\\server\\lib\\trace\\tracer.js:110:32)\n    at K (D:\\WORK\\eopsportal\\node_modules\\next\\dist\\compiled\\next-server\\pages-api.runtime.dev.js:21:2970)\n    at runMicrotasks (<anonymous>)","timestamp":"2023-11-28T18:18:47.367Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-28T18:18:47.375Z"}
+{"level":"info","message":"Get All Tag DataTypes","timestamp":"2023-11-28T18:18:47.377Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-11-28T18:18:47.381Z"}
+{"code":"ECONNREFUSED","errno":-4078,"level":"error","message":"db.ts connect ECONNREFUSED 127.0.0.1:3306","stack":"Error: connect ECONNREFUSED 127.0.0.1:3306\n    at Object.createConnection (D:\\WORK\\eopsportal\\node_modules\\mysql2\\promise.js:253:31)\n    at Object.initialize (webpack-internal:///(api)/./src/helpers/api/db.ts:153:88)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:15:115)\n    at D:\\WORK\\eopsportal\\node_modules\\next\\dist\\compiled\\next-server\\pages-api.runtime.dev.js:21:3039\n    at D:\\WORK\\eopsportal\\node_modules\\next\\dist\\server\\lib\\trace\\tracer.js:121:36\n    at NoopContextManager.with (D:\\WORK\\eopsportal\\node_modules\\next\\dist\\compiled\\@opentelemetry\\api\\index.js:1:7057)\n    at ContextAPI.with (D:\\WORK\\eopsportal\\node_modules\\next\\dist\\compiled\\@opentelemetry\\api\\index.js:1:516)\n    at NoopTracer.startActiveSpan (D:\\WORK\\eopsportal\\node_modules\\next\\dist\\compiled\\@opentelemetry\\api\\index.js:1:18086)\n    at ProxyTracer.startActiveSpan (D:\\WORK\\eopsportal\\node_modules\\next\\dist\\compiled\\@opentelemetry\\api\\index.js:1:18847)\n    at D:\\WORK\\eopsportal\\node_modules\\next\\dist\\server\\lib\\trace\\tracer.js:110:107\n    at NoopContextManager.with (D:\\WORK\\eopsportal\\node_modules\\next\\dist\\compiled\\@opentelemetry\\api\\index.js:1:7057)\n    at ContextAPI.with (D:\\WORK\\eopsportal\\node_modules\\next\\dist\\compiled\\@opentelemetry\\api\\index.js:1:516)\n    at NextTracerImpl.trace (D:\\WORK\\eopsportal\\node_modules\\next\\dist\\server\\lib\\trace\\tracer.js:110:32)\n    at K (D:\\WORK\\eopsportal\\node_modules\\next\\dist\\compiled\\next-server\\pages-api.runtime.dev.js:21:2970)\n    at runMicrotasks (<anonymous>)","timestamp":"2023-11-28T18:18:47.385Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-28T18:18:47.388Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2023-11-28T18:18:47.390Z"}
+{"level":"error","message":"Error fetching class and classTags data: Cannot read properties of undefined (reading 'findAll')","stack":"TypeError: Cannot read properties of undefined (reading 'findAll')\n    at Object.getClassData (webpack-internal:///(api)/./src/helpers/api/repo/class-repo.ts:65:77)\n    at Object.allhandler [as get] (webpack-internal:///(api)/./src/pages/api/getAssets.ts:19:83)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:38:34)","timestamp":"2023-11-28T18:18:47.391Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-11-28T18:24:33.124Z"}
+{"code":"ECONNREFUSED","errno":-4078,"level":"error","message":"db.ts connect ECONNREFUSED 127.0.0.1:3306","stack":"Error: connect ECONNREFUSED 127.0.0.1:3306\n    at Object.createConnection (D:\\WORK\\eopsportal\\node_modules\\mysql2\\promise.js:253:31)\n    at Object.initialize (webpack-internal:///(api)/./src/helpers/api/db.ts:153:88)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:15:115)\n    at D:\\WORK\\eopsportal\\node_modules\\next\\dist\\compiled\\next-server\\pages-api.runtime.dev.js:21:3039\n    at D:\\WORK\\eopsportal\\node_modules\\next\\dist\\server\\lib\\trace\\tracer.js:121:36\n    at NoopContextManager.with (D:\\WORK\\eopsportal\\node_modules\\next\\dist\\compiled\\@opentelemetry\\api\\index.js:1:7057)\n    at ContextAPI.with (D:\\WORK\\eopsportal\\node_modules\\next\\dist\\compiled\\@opentelemetry\\api\\index.js:1:516)\n    at NoopTracer.startActiveSpan (D:\\WORK\\eopsportal\\node_modules\\next\\dist\\compiled\\@opentelemetry\\api\\index.js:1:18086)\n    at ProxyTracer.startActiveSpan (D:\\WORK\\eopsportal\\node_modules\\next\\dist\\compiled\\@opentelemetry\\api\\index.js:1:18847)\n    at D:\\WORK\\eopsportal\\node_modules\\next\\dist\\server\\lib\\trace\\tracer.js:110:107\n    at NoopContextManager.with (D:\\WORK\\eopsportal\\node_modules\\next\\dist\\compiled\\@opentelemetry\\api\\index.js:1:7057)\n    at ContextAPI.with (D:\\WORK\\eopsportal\\node_modules\\next\\dist\\compiled\\@opentelemetry\\api\\index.js:1:516)\n    at NextTracerImpl.trace (D:\\WORK\\eopsportal\\node_modules\\next\\dist\\server\\lib\\trace\\tracer.js:110:32)\n    at K (D:\\WORK\\eopsportal\\node_modules\\next\\dist\\compiled\\next-server\\pages-api.runtime.dev.js:21:2970)\n    at runMicrotasks (<anonymous>)","timestamp":"2023-11-28T18:24:33.128Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-28T18:24:33.131Z"}
+{"level":"info","message":"Get All Tag DataTypes","timestamp":"2023-11-28T18:24:33.133Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-11-29T03:32:15.071Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-11-29T03:32:15.077Z"}
+{"code":"ECONNREFUSED","errno":-4078,"level":"error","message":"db.ts connect ECONNREFUSED 127.0.0.1:3306","stack":"Error: connect ECONNREFUSED 127.0.0.1:3306\n    at Object.createConnection (D:\\WORK\\eopsportal\\node_modules\\mysql2\\promise.js:253:31)\n    at Object.initialize (webpack-internal:///(api)/./src/helpers/api/db.ts:153:88)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:15:115)\n    at D:\\WORK\\eopsportal\\node_modules\\next\\dist\\compiled\\next-server\\pages-api.runtime.dev.js:21:3039\n    at D:\\WORK\\eopsportal\\node_modules\\next\\dist\\server\\lib\\trace\\tracer.js:121:36\n    at NoopContextManager.with (D:\\WORK\\eopsportal\\node_modules\\next\\dist\\compiled\\@opentelemetry\\api\\index.js:1:7057)\n    at ContextAPI.with (D:\\WORK\\eopsportal\\node_modules\\next\\dist\\compiled\\@opentelemetry\\api\\index.js:1:516)\n    at NoopTracer.startActiveSpan (D:\\WORK\\eopsportal\\node_modules\\next\\dist\\compiled\\@opentelemetry\\api\\index.js:1:18086)\n    at ProxyTracer.startActiveSpan (D:\\WORK\\eopsportal\\node_modules\\next\\dist\\compiled\\@opentelemetry\\api\\index.js:1:18847)\n    at D:\\WORK\\eopsportal\\node_modules\\next\\dist\\server\\lib\\trace\\tracer.js:110:107\n    at NoopContextManager.with (D:\\WORK\\eopsportal\\node_modules\\next\\dist\\compiled\\@opentelemetry\\api\\index.js:1:7057)\n    at ContextAPI.with (D:\\WORK\\eopsportal\\node_modules\\next\\dist\\compiled\\@opentelemetry\\api\\index.js:1:516)\n    at NextTracerImpl.trace (D:\\WORK\\eopsportal\\node_modules\\next\\dist\\server\\lib\\trace\\tracer.js:110:32)\n    at K (D:\\WORK\\eopsportal\\node_modules\\next\\dist\\compiled\\next-server\\pages-api.runtime.dev.js:21:2970)\n    at runMicrotasks (<anonymous>)","timestamp":"2023-11-29T03:32:15.089Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-29T03:32:15.095Z"}
+{"code":"ECONNREFUSED","errno":-4078,"level":"error","message":"db.ts connect ECONNREFUSED 127.0.0.1:3306","stack":"Error: connect ECONNREFUSED 127.0.0.1:3306\n    at Object.createConnection (D:\\WORK\\eopsportal\\node_modules\\mysql2\\promise.js:253:31)\n    at Object.initialize (webpack-internal:///(api)/./src/helpers/api/db.ts:153:88)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:15:115)\n    at D:\\WORK\\eopsportal\\node_modules\\next\\dist\\compiled\\next-server\\pages-api.runtime.dev.js:21:3039\n    at D:\\WORK\\eopsportal\\node_modules\\next\\dist\\server\\lib\\trace\\tracer.js:121:36\n    at NoopContextManager.with (D:\\WORK\\eopsportal\\node_modules\\next\\dist\\compiled\\@opentelemetry\\api\\index.js:1:7057)\n    at ContextAPI.with (D:\\WORK\\eopsportal\\node_modules\\next\\dist\\compiled\\@opentelemetry\\api\\index.js:1:516)\n    at NoopTracer.startActiveSpan (D:\\WORK\\eopsportal\\node_modules\\next\\dist\\compiled\\@opentelemetry\\api\\index.js:1:18086)\n    at ProxyTracer.startActiveSpan (D:\\WORK\\eopsportal\\node_modules\\next\\dist\\compiled\\@opentelemetry\\api\\index.js:1:18847)\n    at D:\\WORK\\eopsportal\\node_modules\\next\\dist\\server\\lib\\trace\\tracer.js:110:107\n    at NoopContextManager.with (D:\\WORK\\eopsportal\\node_modules\\next\\dist\\compiled\\@opentelemetry\\api\\index.js:1:7057)\n    at ContextAPI.with (D:\\WORK\\eopsportal\\node_modules\\next\\dist\\compiled\\@opentelemetry\\api\\index.js:1:516)\n    at NextTracerImpl.trace (D:\\WORK\\eopsportal\\node_modules\\next\\dist\\server\\lib\\trace\\tracer.js:110:32)\n    at K (D:\\WORK\\eopsportal\\node_modules\\next\\dist\\compiled\\next-server\\pages-api.runtime.dev.js:21:2970)\n    at runMicrotasks (<anonymous>)","timestamp":"2023-11-29T03:32:15.111Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-29T03:32:15.115Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2023-11-29T03:32:15.124Z"}
+{"level":"error","message":"Error fetching class and classTags data: Cannot read properties of undefined (reading 'findAll')","stack":"TypeError: Cannot read properties of undefined (reading 'findAll')\n    at Object.getClassData (webpack-internal:///(api)/./src/helpers/api/repo/class-repo.ts:65:77)\n    at Object.allhandler [as get] (webpack-internal:///(api)/./src/pages/api/getAssets.ts:19:83)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:38:34)\n    at runNextTicks (node:internal/process/task_queues:61:5)\n    at processImmediate (node:internal/timers:437:9)\n    at process.callbackTrampoline (node:internal/async_hooks:130:17)","timestamp":"2023-11-29T03:32:15.129Z"}
+{"level":"info","message":"Get All Tag DataTypes","timestamp":"2023-11-29T03:32:15.136Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-11-29T03:33:59.645Z"}
+{"code":"ECONNREFUSED","errno":-4078,"level":"error","message":"db.ts connect ECONNREFUSED 127.0.0.1:3306","stack":"Error: connect ECONNREFUSED 127.0.0.1:3306\n    at Object.createConnection (D:\\WORK\\eopsportal\\node_modules\\mysql2\\promise.js:253:31)\n    at Object.initialize (webpack-internal:///(api)/./src/helpers/api/db.ts:153:88)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:15:115)\n    at D:\\WORK\\eopsportal\\node_modules\\next\\dist\\compiled\\next-server\\pages-api.runtime.dev.js:21:3039\n    at D:\\WORK\\eopsportal\\node_modules\\next\\dist\\server\\lib\\trace\\tracer.js:121:36\n    at NoopContextManager.with (D:\\WORK\\eopsportal\\node_modules\\next\\dist\\compiled\\@opentelemetry\\api\\index.js:1:7057)\n    at ContextAPI.with (D:\\WORK\\eopsportal\\node_modules\\next\\dist\\compiled\\@opentelemetry\\api\\index.js:1:516)\n    at NoopTracer.startActiveSpan (D:\\WORK\\eopsportal\\node_modules\\next\\dist\\compiled\\@opentelemetry\\api\\index.js:1:18086)\n    at ProxyTracer.startActiveSpan (D:\\WORK\\eopsportal\\node_modules\\next\\dist\\compiled\\@opentelemetry\\api\\index.js:1:18847)\n    at D:\\WORK\\eopsportal\\node_modules\\next\\dist\\server\\lib\\trace\\tracer.js:110:107\n    at NoopContextManager.with (D:\\WORK\\eopsportal\\node_modules\\next\\dist\\compiled\\@opentelemetry\\api\\index.js:1:7057)\n    at ContextAPI.with (D:\\WORK\\eopsportal\\node_modules\\next\\dist\\compiled\\@opentelemetry\\api\\index.js:1:516)\n    at NextTracerImpl.trace (D:\\WORK\\eopsportal\\node_modules\\next\\dist\\server\\lib\\trace\\tracer.js:110:32)\n    at K (D:\\WORK\\eopsportal\\node_modules\\next\\dist\\compiled\\next-server\\pages-api.runtime.dev.js:21:2970)\n    at processTicksAndRejections (node:internal/process/task_queues:96:5)","timestamp":"2023-11-29T03:33:59.656Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-29T03:33:59.659Z"}
+{"level":"info","message":"Get All Tag DataTypes","timestamp":"2023-11-29T03:33:59.664Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-11-29T03:38:20.461Z"}
+{"code":"ECONNREFUSED","errno":-4078,"level":"error","message":"db.ts connect ECONNREFUSED 127.0.0.1:3306","stack":"Error: connect ECONNREFUSED 127.0.0.1:3306\n    at Object.createConnection (D:\\WORK\\eopsportal\\node_modules\\mysql2\\promise.js:253:31)\n    at Object.initialize (webpack-internal:///(api)/./src/helpers/api/db.ts:153:88)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:15:115)\n    at D:\\WORK\\eopsportal\\node_modules\\next\\dist\\compiled\\next-server\\pages-api.runtime.dev.js:21:3039\n    at D:\\WORK\\eopsportal\\node_modules\\next\\dist\\server\\lib\\trace\\tracer.js:121:36\n    at NoopContextManager.with (D:\\WORK\\eopsportal\\node_modules\\next\\dist\\compiled\\@opentelemetry\\api\\index.js:1:7057)\n    at ContextAPI.with (D:\\WORK\\eopsportal\\node_modules\\next\\dist\\compiled\\@opentelemetry\\api\\index.js:1:516)\n    at NoopTracer.startActiveSpan (D:\\WORK\\eopsportal\\node_modules\\next\\dist\\compiled\\@opentelemetry\\api\\index.js:1:18086)\n    at ProxyTracer.startActiveSpan (D:\\WORK\\eopsportal\\node_modules\\next\\dist\\compiled\\@opentelemetry\\api\\index.js:1:18847)\n    at D:\\WORK\\eopsportal\\node_modules\\next\\dist\\server\\lib\\trace\\tracer.js:110:107\n    at NoopContextManager.with (D:\\WORK\\eopsportal\\node_modules\\next\\dist\\compiled\\@opentelemetry\\api\\index.js:1:7057)\n    at ContextAPI.with (D:\\WORK\\eopsportal\\node_modules\\next\\dist\\compiled\\@opentelemetry\\api\\index.js:1:516)\n    at NextTracerImpl.trace (D:\\WORK\\eopsportal\\node_modules\\next\\dist\\server\\lib\\trace\\tracer.js:110:32)\n    at K (D:\\WORK\\eopsportal\\node_modules\\next\\dist\\compiled\\next-server\\pages-api.runtime.dev.js:21:2970)\n    at runMicrotasks (<anonymous>)","timestamp":"2023-11-29T03:38:20.471Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-29T03:38:20.474Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2023-11-29T03:38:20.479Z"}
+{"level":"error","message":"Error fetching class and classTags data: Cannot read properties of undefined (reading 'findAll')","stack":"TypeError: Cannot read properties of undefined (reading 'findAll')\n    at Object.getClassData (webpack-internal:///(api)/./src/helpers/api/repo/class-repo.ts:65:77)\n    at Object.allhandler [as get] (webpack-internal:///(api)/./src/pages/api/getAssets.ts:19:83)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:38:34)","timestamp":"2023-11-29T03:38:20.480Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-11-29T04:03:11.535Z"}
+{"level":"info","message":"AddClasses","timestamp":"2023-11-29T04:03:12.794Z"}
+{"level":"info","message":"AddValues","timestamp":"2023-11-29T04:03:12.796Z"}
+{"level":"info","message":"Address","timestamp":"2023-11-29T04:03:12.798Z"}
+{"level":"info","message":"Reason","timestamp":"2023-11-29T04:03:12.800Z"}
+{"level":"info","message":"Role","timestamp":"2023-11-29T04:03:12.802Z"}
+{"level":"info","message":"User","timestamp":"2023-11-29T04:03:12.804Z"}
+{"level":"info","message":"classTag","timestamp":"2023-11-29T04:03:12.805Z"}
+{"level":"info","message":"companyRecord","timestamp":"2023-11-29T04:03:12.806Z"}
+{"level":"info","message":"countryCodeModel","timestamp":"2023-11-29T04:03:12.808Z"}
+{"level":"info","message":"deleteRecord","timestamp":"2023-11-29T04:03:12.811Z"}
+{"level":"info","message":"object","timestamp":"2023-11-29T04:03:12.813Z"}
+{"level":"info","message":"otpVerify","timestamp":"2023-11-29T04:03:12.814Z"}
+{"level":"info","message":"parentJoinKey","timestamp":"2023-11-29T04:03:12.816Z"}
+{"level":"info","message":"phoneRecord","timestamp":"2023-11-29T04:03:12.817Z"}
+{"level":"info","message":"tagDataType","timestamp":"2023-11-29T04:03:12.819Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-29T04:03:12.838Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2023-11-29T04:03:12.846Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-29T04:03:24.149Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2023-11-29T04:03:24.151Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-29T04:03:49.376Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2023-11-29T04:03:49.390Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-29T04:03:53.430Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2023-11-29T04:03:53.432Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-11-29T04:03:59.823Z"}
+{"level":"info","message":"AddClasses","timestamp":"2023-11-29T04:03:59.833Z"}
+{"level":"info","message":"AddValues","timestamp":"2023-11-29T04:03:59.834Z"}
+{"level":"info","message":"Address","timestamp":"2023-11-29T04:03:59.835Z"}
+{"level":"info","message":"Reason","timestamp":"2023-11-29T04:03:59.837Z"}
+{"level":"info","message":"Role","timestamp":"2023-11-29T04:03:59.838Z"}
+{"level":"info","message":"User","timestamp":"2023-11-29T04:03:59.839Z"}
+{"level":"info","message":"classTag","timestamp":"2023-11-29T04:03:59.841Z"}
+{"level":"info","message":"companyRecord","timestamp":"2023-11-29T04:03:59.842Z"}
+{"level":"info","message":"countryCodeModel","timestamp":"2023-11-29T04:03:59.843Z"}
+{"level":"info","message":"deleteRecord","timestamp":"2023-11-29T04:03:59.847Z"}
+{"level":"info","message":"object","timestamp":"2023-11-29T04:03:59.848Z"}
+{"level":"info","message":"otpVerify","timestamp":"2023-11-29T04:03:59.849Z"}
+{"level":"info","message":"parentJoinKey","timestamp":"2023-11-29T04:03:59.850Z"}
+{"level":"info","message":"phoneRecord","timestamp":"2023-11-29T04:03:59.851Z"}
+{"level":"info","message":"tagDataType","timestamp":"2023-11-29T04:03:59.853Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-29T04:03:59.867Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2023-11-29T04:03:59.869Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-29T04:04:04.440Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2023-11-29T04:04:04.443Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-29T04:04:30.405Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2023-11-29T04:04:30.411Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-29T04:04:39.268Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2023-11-29T04:04:39.278Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-11-29T04:06:21.112Z"}
+{"level":"info","message":"AddClasses","timestamp":"2023-11-29T04:06:21.142Z"}
+{"level":"info","message":"AddValues","timestamp":"2023-11-29T04:06:21.144Z"}
+{"level":"info","message":"Address","timestamp":"2023-11-29T04:06:21.146Z"}
+{"level":"info","message":"Reason","timestamp":"2023-11-29T04:06:21.148Z"}
+{"level":"info","message":"Role","timestamp":"2023-11-29T04:06:21.150Z"}
+{"level":"info","message":"User","timestamp":"2023-11-29T04:06:21.151Z"}
+{"level":"info","message":"classTag","timestamp":"2023-11-29T04:06:21.153Z"}
+{"level":"info","message":"companyRecord","timestamp":"2023-11-29T04:06:21.154Z"}
+{"level":"info","message":"countryCodeModel","timestamp":"2023-11-29T04:06:21.156Z"}
+{"level":"info","message":"deleteRecord","timestamp":"2023-11-29T04:06:21.159Z"}
+{"level":"info","message":"object","timestamp":"2023-11-29T04:06:21.160Z"}
+{"level":"info","message":"otpVerify","timestamp":"2023-11-29T04:06:21.162Z"}
+{"level":"info","message":"parentJoinKey","timestamp":"2023-11-29T04:06:21.163Z"}
+{"level":"info","message":"phoneRecord","timestamp":"2023-11-29T04:06:21.164Z"}
+{"level":"info","message":"tagDataType","timestamp":"2023-11-29T04:06:21.165Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-29T04:06:21.179Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2023-11-29T04:06:21.185Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-29T04:06:32.587Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2023-11-29T04:06:32.589Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-11-29T04:07:13.274Z"}
+{"level":"info","message":"AddClasses","timestamp":"2023-11-29T04:07:13.294Z"}
+{"level":"info","message":"AddValues","timestamp":"2023-11-29T04:07:13.297Z"}
+{"level":"info","message":"Address","timestamp":"2023-11-29T04:07:13.300Z"}
+{"level":"info","message":"Reason","timestamp":"2023-11-29T04:07:13.301Z"}
+{"level":"info","message":"Role","timestamp":"2023-11-29T04:07:13.304Z"}
+{"level":"info","message":"User","timestamp":"2023-11-29T04:07:13.310Z"}
+{"level":"info","message":"classTag","timestamp":"2023-11-29T04:07:13.313Z"}
+{"level":"info","message":"companyRecord","timestamp":"2023-11-29T04:07:13.315Z"}
+{"level":"info","message":"countryCodeModel","timestamp":"2023-11-29T04:07:13.318Z"}
+{"level":"info","message":"deleteRecord","timestamp":"2023-11-29T04:07:13.320Z"}
+{"level":"info","message":"object","timestamp":"2023-11-29T04:07:13.322Z"}
+{"level":"info","message":"otpVerify","timestamp":"2023-11-29T04:07:13.325Z"}
+{"level":"info","message":"parentJoinKey","timestamp":"2023-11-29T04:07:13.336Z"}
+{"level":"info","message":"phoneRecord","timestamp":"2023-11-29T04:07:13.345Z"}
+{"level":"info","message":"tagDataType","timestamp":"2023-11-29T04:07:13.347Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-29T04:07:13.386Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2023-11-29T04:07:13.399Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-29T04:10:00.888Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2023-11-29T04:10:00.893Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-29T04:59:53.186Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2023-11-29T04:59:53.188Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-29T07:04:20.186Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2023-11-29T07:04:20.188Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-29T07:30:16.887Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2023-11-29T07:30:16.889Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-29T07:32:15.915Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2023-11-29T07:32:15.919Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-29T07:34:38.134Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2023-11-29T07:34:38.136Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-11-29T07:34:53.212Z"}
+{"level":"info","message":"AddClasses","timestamp":"2023-11-29T07:34:53.242Z"}
+{"level":"info","message":"AddValues","timestamp":"2023-11-29T07:34:53.244Z"}
+{"level":"info","message":"Address","timestamp":"2023-11-29T07:34:53.247Z"}
+{"level":"info","message":"Reason","timestamp":"2023-11-29T07:34:53.252Z"}
+{"level":"info","message":"Role","timestamp":"2023-11-29T07:34:53.254Z"}
+{"level":"info","message":"User","timestamp":"2023-11-29T07:34:53.256Z"}
+{"level":"info","message":"classTag","timestamp":"2023-11-29T07:34:53.257Z"}
+{"level":"info","message":"companyRecord","timestamp":"2023-11-29T07:34:53.259Z"}
+{"level":"info","message":"countryCodeModel","timestamp":"2023-11-29T07:34:53.262Z"}
+{"level":"info","message":"deleteRecord","timestamp":"2023-11-29T07:34:53.268Z"}
+{"level":"info","message":"object","timestamp":"2023-11-29T07:34:53.270Z"}
+{"level":"info","message":"otpVerify","timestamp":"2023-11-29T07:34:53.272Z"}
+{"level":"info","message":"parentJoinKey","timestamp":"2023-11-29T07:34:53.273Z"}
+{"level":"info","message":"phoneRecord","timestamp":"2023-11-29T07:34:53.279Z"}
+{"level":"info","message":"tagDataType","timestamp":"2023-11-29T07:34:53.286Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-29T07:34:53.306Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2023-11-29T07:34:53.350Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-29T07:35:00.892Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2023-11-29T07:35:00.909Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-29T07:35:33.152Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2023-11-29T07:35:33.156Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-29T07:35:37.524Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2023-11-29T07:35:37.537Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-29T07:35:44.122Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2023-11-29T07:35:44.125Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-11-29T07:35:48.999Z"}
+{"level":"info","message":"AddClasses","timestamp":"2023-11-29T07:35:49.072Z"}
+{"level":"info","message":"AddValues","timestamp":"2023-11-29T07:35:49.167Z"}
+{"level":"info","message":"Address","timestamp":"2023-11-29T07:35:49.184Z"}
+{"level":"info","message":"Reason","timestamp":"2023-11-29T07:35:49.187Z"}
+{"level":"info","message":"Role","timestamp":"2023-11-29T07:35:49.217Z"}
+{"level":"info","message":"User","timestamp":"2023-11-29T07:35:49.238Z"}
+{"level":"info","message":"classTag","timestamp":"2023-11-29T07:35:49.241Z"}
+{"level":"info","message":"companyRecord","timestamp":"2023-11-29T07:35:49.250Z"}
+{"level":"info","message":"countryCodeModel","timestamp":"2023-11-29T07:35:49.255Z"}
+{"level":"info","message":"deleteRecord","timestamp":"2023-11-29T07:35:49.267Z"}
+{"level":"info","message":"object","timestamp":"2023-11-29T07:35:49.269Z"}
+{"level":"info","message":"otpVerify","timestamp":"2023-11-29T07:35:49.272Z"}
+{"level":"info","message":"parentJoinKey","timestamp":"2023-11-29T07:35:49.277Z"}
+{"level":"info","message":"phoneRecord","timestamp":"2023-11-29T07:35:49.279Z"}
+{"level":"info","message":"tagDataType","timestamp":"2023-11-29T07:35:49.282Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-29T07:35:49.307Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2023-11-29T07:35:49.311Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-29T07:35:51.044Z"}
+{"level":"info","message":"Error Handler","timestamp":"2023-11-29T07:35:51.045Z"}
+{"level":"error","message":"UnauthorizedError","timestamp":"2023-11-29T07:35:51.046Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-29T07:35:56.544Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2023-11-29T07:35:56.553Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-29T07:36:07.329Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2023-11-29T07:36:07.331Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-29T07:36:14.623Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2023-11-29T07:36:14.626Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-29T07:36:22.691Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2023-11-29T07:36:22.695Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-29T07:36:35.558Z"}
+{"level":"info","message":"Error Handler","timestamp":"2023-11-29T07:36:35.582Z"}
+{"level":"error","message":"UnauthorizedError","timestamp":"2023-11-29T07:36:35.588Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-29T07:36:40.141Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2023-11-29T07:36:40.145Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-29T07:36:53.133Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2023-11-29T07:36:53.139Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-29T07:37:11.022Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2023-11-29T07:37:11.051Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-29T09:24:10.704Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2023-11-29T09:24:10.707Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-29T11:28:10.475Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2023-11-29T11:28:10.484Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-11-29T11:29:12.429Z"}
+{"level":"info","message":"AddClasses","timestamp":"2023-11-29T11:29:12.478Z"}
+{"level":"info","message":"AddValues","timestamp":"2023-11-29T11:29:12.480Z"}
+{"level":"info","message":"Address","timestamp":"2023-11-29T11:29:12.481Z"}
+{"level":"info","message":"Reason","timestamp":"2023-11-29T11:29:12.483Z"}
+{"level":"info","message":"Role","timestamp":"2023-11-29T11:29:12.484Z"}
+{"level":"info","message":"User","timestamp":"2023-11-29T11:29:12.487Z"}
+{"level":"info","message":"classTag","timestamp":"2023-11-29T11:29:12.488Z"}
+{"level":"info","message":"companyRecord","timestamp":"2023-11-29T11:29:12.490Z"}
+{"level":"info","message":"countryCodeModel","timestamp":"2023-11-29T11:29:12.491Z"}
+{"level":"info","message":"deleteRecord","timestamp":"2023-11-29T11:29:12.492Z"}
+{"level":"info","message":"object","timestamp":"2023-11-29T11:29:12.494Z"}
+{"level":"info","message":"otpVerify","timestamp":"2023-11-29T11:29:12.496Z"}
+{"level":"info","message":"parentJoinKey","timestamp":"2023-11-29T11:29:12.498Z"}
+{"level":"info","message":"phoneRecord","timestamp":"2023-11-29T11:29:12.500Z"}
+{"level":"info","message":"tagDataType","timestamp":"2023-11-29T11:29:12.501Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-29T11:29:12.522Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2023-11-29T11:29:12.528Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-11-29T11:44:09.524Z"}
+{"level":"info","message":"AddClasses","timestamp":"2023-11-29T11:44:09.541Z"}
+{"level":"info","message":"AddValues","timestamp":"2023-11-29T11:44:09.542Z"}
+{"level":"info","message":"Address","timestamp":"2023-11-29T11:44:09.543Z"}
+{"level":"info","message":"Reason","timestamp":"2023-11-29T11:44:09.544Z"}
+{"level":"info","message":"Role","timestamp":"2023-11-29T11:44:09.545Z"}
+{"level":"info","message":"User","timestamp":"2023-11-29T11:44:09.547Z"}
+{"level":"info","message":"classTag","timestamp":"2023-11-29T11:44:09.548Z"}
+{"level":"info","message":"companyRecord","timestamp":"2023-11-29T11:44:09.549Z"}
+{"level":"info","message":"countryCodeModel","timestamp":"2023-11-29T11:44:09.550Z"}
+{"level":"info","message":"deleteRecord","timestamp":"2023-11-29T11:44:09.551Z"}
+{"level":"info","message":"object","timestamp":"2023-11-29T11:44:09.552Z"}
+{"level":"info","message":"otpVerify","timestamp":"2023-11-29T11:44:09.553Z"}
+{"level":"info","message":"parentJoinKey","timestamp":"2023-11-29T11:44:09.554Z"}
+{"level":"info","message":"phoneRecord","timestamp":"2023-11-29T11:44:09.556Z"}
+{"level":"info","message":"tagDataType","timestamp":"2023-11-29T11:44:09.557Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-29T11:44:09.568Z"}
+{"level":"info","message":"Error Handler","timestamp":"2023-11-29T11:44:09.570Z"}
+{"level":"error","message":"UnauthorizedError","timestamp":"2023-11-29T11:44:09.570Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-11-29T12:01:10.024Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-11-29T12:01:10.028Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-11-29T12:01:10.030Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-11-29T12:01:10.032Z"}
+{"level":"info","message":"AddClasses","timestamp":"2023-11-29T12:01:10.051Z"}
+{"level":"info","message":"AddValues","timestamp":"2023-11-29T12:01:10.052Z"}
+{"level":"info","message":"Address","timestamp":"2023-11-29T12:01:10.053Z"}
+{"level":"info","message":"Reason","timestamp":"2023-11-29T12:01:10.055Z"}
+{"level":"info","message":"Role","timestamp":"2023-11-29T12:01:10.056Z"}
+{"level":"info","message":"User","timestamp":"2023-11-29T12:01:10.057Z"}
+{"level":"info","message":"classTag","timestamp":"2023-11-29T12:01:10.059Z"}
+{"level":"info","message":"companyRecord","timestamp":"2023-11-29T12:01:10.060Z"}
+{"level":"info","message":"countryCodeModel","timestamp":"2023-11-29T12:01:10.062Z"}
+{"level":"info","message":"deleteRecord","timestamp":"2023-11-29T12:01:10.063Z"}
+{"level":"info","message":"object","timestamp":"2023-11-29T12:01:10.064Z"}
+{"level":"info","message":"otpVerify","timestamp":"2023-11-29T12:01:10.066Z"}
+{"level":"info","message":"parentJoinKey","timestamp":"2023-11-29T12:01:10.068Z"}
+{"level":"info","message":"phoneRecord","timestamp":"2023-11-29T12:01:10.070Z"}
+{"level":"info","message":"tagDataType","timestamp":"2023-11-29T12:01:10.071Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-29T12:01:10.084Z"}
+{"level":"info","message":"AddClasses","timestamp":"2023-11-29T12:01:10.090Z"}
+{"level":"info","message":"AddValues","timestamp":"2023-11-29T12:01:10.092Z"}
+{"level":"info","message":"Address","timestamp":"2023-11-29T12:01:10.093Z"}
+{"level":"info","message":"Reason","timestamp":"2023-11-29T12:01:10.094Z"}
+{"level":"info","message":"Role","timestamp":"2023-11-29T12:01:10.095Z"}
+{"level":"info","message":"User","timestamp":"2023-11-29T12:01:10.097Z"}
+{"level":"info","message":"classTag","timestamp":"2023-11-29T12:01:10.099Z"}
+{"level":"info","message":"companyRecord","timestamp":"2023-11-29T12:01:10.101Z"}
+{"level":"info","message":"countryCodeModel","timestamp":"2023-11-29T12:01:10.116Z"}
+{"level":"info","message":"deleteRecord","timestamp":"2023-11-29T12:01:10.119Z"}
+{"level":"info","message":"object","timestamp":"2023-11-29T12:01:10.120Z"}
+{"level":"info","message":"otpVerify","timestamp":"2023-11-29T12:01:10.122Z"}
+{"level":"info","message":"parentJoinKey","timestamp":"2023-11-29T12:01:10.123Z"}
+{"level":"info","message":"phoneRecord","timestamp":"2023-11-29T12:01:10.124Z"}
+{"level":"info","message":"tagDataType","timestamp":"2023-11-29T12:01:10.126Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-29T12:01:10.126Z"}
+{"level":"info","message":"AddClasses","timestamp":"2023-11-29T12:01:10.131Z"}
+{"level":"info","message":"AddValues","timestamp":"2023-11-29T12:01:10.133Z"}
+{"level":"info","message":"Address","timestamp":"2023-11-29T12:01:10.134Z"}
+{"level":"info","message":"Reason","timestamp":"2023-11-29T12:01:10.135Z"}
+{"level":"info","message":"Role","timestamp":"2023-11-29T12:01:10.136Z"}
+{"level":"info","message":"User","timestamp":"2023-11-29T12:01:10.138Z"}
+{"level":"info","message":"classTag","timestamp":"2023-11-29T12:01:10.139Z"}
+{"level":"info","message":"companyRecord","timestamp":"2023-11-29T12:01:10.140Z"}
+{"level":"info","message":"countryCodeModel","timestamp":"2023-11-29T12:01:10.141Z"}
+{"level":"info","message":"deleteRecord","timestamp":"2023-11-29T12:01:10.143Z"}
+{"level":"info","message":"object","timestamp":"2023-11-29T12:01:10.144Z"}
+{"level":"info","message":"otpVerify","timestamp":"2023-11-29T12:01:10.145Z"}
+{"level":"info","message":"parentJoinKey","timestamp":"2023-11-29T12:01:10.146Z"}
+{"level":"info","message":"phoneRecord","timestamp":"2023-11-29T12:01:10.148Z"}
+{"level":"info","message":"tagDataType","timestamp":"2023-11-29T12:01:10.149Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-29T12:01:10.149Z"}
+{"level":"info","message":"Fetching all subclass and subclassTags data","timestamp":"2023-11-29T12:01:10.152Z"}
+{"level":"error","message":"Error fetching class and classTags data: ClassTag is not associated to Class!","name":"SequelizeEagerLoadingError","stack":"SequelizeEagerLoadingError: ClassTag is not associated to Class!\n    at Function._getIncludedAssociation (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:565:13)\n    at Function._validateIncludedElement (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:502:53)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:421:37\n    at Array.map (<anonymous>)\n    at Function._validateIncludedElements (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:417:39)\n    at Function.findAll (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1124:12)\n    at runNextTicks (node:internal/process/task_queues:61:5)\n    at processImmediate (node:internal/timers:437:9)\n    at process.callbackTrampoline (node:internal/async_hooks:130:17)\n    at async Object.getSubClass (webpack-internal:///(api)/./src/helpers/api/repo/class-repo.ts:180:24)\n    at async Object.allhandler [as get] (webpack-internal:///(api)/./src/pages/api/getChildAssets.ts:19:26)\n    at async eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:38:13)","timestamp":"2023-11-29T12:01:10.156Z"}
+{"level":"info","message":"Fetching all subclass and subclassTags data","timestamp":"2023-11-29T12:01:10.160Z"}
+{"level":"error","message":"Error fetching class and classTags data: ClassTag is not associated to Class!","name":"SequelizeEagerLoadingError","stack":"SequelizeEagerLoadingError: ClassTag is not associated to Class!\n    at Function._getIncludedAssociation (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:565:13)\n    at Function._validateIncludedElement (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:502:53)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:421:37\n    at Array.map (<anonymous>)\n    at Function._validateIncludedElements (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:417:39)\n    at Function.findAll (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1124:12)\n    at runNextTicks (node:internal/process/task_queues:61:5)\n    at processImmediate (node:internal/timers:437:9)\n    at process.callbackTrampoline (node:internal/async_hooks:130:17)\n    at async Object.getSubClass (webpack-internal:///(api)/./src/helpers/api/repo/class-repo.ts:180:24)\n    at async Object.allhandler [as get] (webpack-internal:///(api)/./src/pages/api/getChildAssets.ts:19:26)\n    at async eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:38:13)","timestamp":"2023-11-29T12:01:10.164Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2023-11-29T12:01:10.190Z"}
+{"level":"error","message":"Error fetching Objects, ClassTags, and ObjectValues data: Class is not associated to Object!","name":"SequelizeEagerLoadingError","stack":"SequelizeEagerLoadingError: Class is not associated to Object!\n    at Function._getIncludedAssociation (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:565:13)\n    at Function._validateIncludedElement (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:502:53)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:421:37\n    at Array.map (<anonymous>)\n    at Function._validateIncludedElements (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:417:39)\n    at Function.findAll (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1124:12)\n    at async Object.get (webpack-internal:///(api)/./src/helpers/api/repo/object-repo.ts:62:24)\n    at async Object.allhandler [as get] (webpack-internal:///(api)/./src/pages/api/getObjects.ts:20:25)\n    at async eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:38:13)","timestamp":"2023-11-29T12:01:10.199Z"}
+{"level":"info","message":"AddClasses","timestamp":"2023-11-29T12:01:10.209Z"}
+{"level":"info","message":"AddValues","timestamp":"2023-11-29T12:01:10.223Z"}
+{"level":"info","message":"Address","timestamp":"2023-11-29T12:01:10.237Z"}
+{"level":"info","message":"Reason","timestamp":"2023-11-29T12:01:10.239Z"}
+{"level":"info","message":"Role","timestamp":"2023-11-29T12:01:10.240Z"}
+{"level":"info","message":"User","timestamp":"2023-11-29T12:01:10.243Z"}
+{"level":"info","message":"classTag","timestamp":"2023-11-29T12:01:10.246Z"}
+{"level":"info","message":"companyRecord","timestamp":"2023-11-29T12:01:10.249Z"}
+{"level":"info","message":"countryCodeModel","timestamp":"2023-11-29T12:01:10.250Z"}
+{"level":"info","message":"deleteRecord","timestamp":"2023-11-29T12:01:10.251Z"}
+{"level":"info","message":"object","timestamp":"2023-11-29T12:01:10.253Z"}
+{"level":"info","message":"otpVerify","timestamp":"2023-11-29T12:01:10.256Z"}
+{"level":"info","message":"parentJoinKey","timestamp":"2023-11-29T12:01:10.257Z"}
+{"level":"info","message":"phoneRecord","timestamp":"2023-11-29T12:01:10.258Z"}
+{"level":"info","message":"tagDataType","timestamp":"2023-11-29T12:01:10.259Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-29T12:01:10.260Z"}
+{"level":"info","message":"Fetching all subclass and subclassTags data","timestamp":"2023-11-29T12:01:10.261Z"}
+{"level":"error","message":"Error fetching class and classTags data: ClassTag is not associated to Class!","name":"SequelizeEagerLoadingError","stack":"SequelizeEagerLoadingError: ClassTag is not associated to Class!\n    at Function._getIncludedAssociation (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:565:13)\n    at Function._validateIncludedElement (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:502:53)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:421:37\n    at Array.map (<anonymous>)\n    at Function._validateIncludedElements (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:417:39)\n    at Function.findAll (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1124:12)\n    at async Object.getSubClass (webpack-internal:///(api)/./src/helpers/api/repo/class-repo.ts:180:24)\n    at async Object.allhandler [as get] (webpack-internal:///(api)/./src/pages/api/getChildAssets.ts:19:26)\n    at async eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:38:13)","timestamp":"2023-11-29T12:01:10.262Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-29T12:01:10.289Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2023-11-29T12:01:10.290Z"}
+{"level":"error","message":"Error fetching Objects, ClassTags, and ObjectValues data: Class is not associated to Object!","name":"SequelizeEagerLoadingError","stack":"SequelizeEagerLoadingError: Class is not associated to Object!\n    at Function._getIncludedAssociation (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:565:13)\n    at Function._validateIncludedElement (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:502:53)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:421:37\n    at Array.map (<anonymous>)\n    at Function._validateIncludedElements (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:417:39)\n    at Function.findAll (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1124:12)\n    at async Object.get (webpack-internal:///(api)/./src/helpers/api/repo/object-repo.ts:62:24)\n    at async Object.allhandler [as get] (webpack-internal:///(api)/./src/pages/api/getObjects.ts:20:25)\n    at async eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:38:13)","timestamp":"2023-11-29T12:01:10.291Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-29T12:01:56.432Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-29T12:01:56.434Z"}
+{"level":"info","message":"Fetching all subclass and subclassTags data","timestamp":"2023-11-29T12:01:56.437Z"}
+{"level":"error","message":"Error fetching class and classTags data: ClassTag is not associated to Class!","name":"SequelizeEagerLoadingError","stack":"SequelizeEagerLoadingError: ClassTag is not associated to Class!\n    at Function._getIncludedAssociation (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:565:13)\n    at Function._validateIncludedElement (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:502:53)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:421:37\n    at Array.map (<anonymous>)\n    at Function._validateIncludedElements (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:417:39)\n    at Function.findAll (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1124:12)\n    at runNextTicks (node:internal/process/task_queues:61:5)\n    at processImmediate (node:internal/timers:437:9)\n    at process.callbackTrampoline (node:internal/async_hooks:130:17)\n    at async Object.getSubClass (webpack-internal:///(api)/./src/helpers/api/repo/class-repo.ts:180:24)\n    at async Object.allhandler [as get] (webpack-internal:///(api)/./src/pages/api/getChildAssets.ts:19:26)\n    at async eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:38:13)","timestamp":"2023-11-29T12:01:56.439Z"}
+{"level":"info","message":"Fetching all subclass and subclassTags data","timestamp":"2023-11-29T12:01:56.445Z"}
+{"level":"error","message":"Error fetching class and classTags data: ClassTag is not associated to Class!","name":"SequelizeEagerLoadingError","stack":"SequelizeEagerLoadingError: ClassTag is not associated to Class!\n    at Function._getIncludedAssociation (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:565:13)\n    at Function._validateIncludedElement (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:502:53)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:421:37\n    at Array.map (<anonymous>)\n    at Function._validateIncludedElements (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:417:39)\n    at Function.findAll (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1124:12)\n    at async Object.getSubClass (webpack-internal:///(api)/./src/helpers/api/repo/class-repo.ts:180:24)\n    at async Object.allhandler [as get] (webpack-internal:///(api)/./src/pages/api/getChildAssets.ts:19:26)\n    at async eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:38:13)","timestamp":"2023-11-29T12:01:56.449Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-29T12:01:56.471Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-29T12:01:56.472Z"}
+{"level":"info","message":"Fetching all subclass and subclassTags data","timestamp":"2023-11-29T12:01:56.473Z"}
+{"level":"error","message":"Error fetching class and classTags data: ClassTag is not associated to Class!","name":"SequelizeEagerLoadingError","stack":"SequelizeEagerLoadingError: ClassTag is not associated to Class!\n    at Function._getIncludedAssociation (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:565:13)\n    at Function._validateIncludedElement (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:502:53)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:421:37\n    at Array.map (<anonymous>)\n    at Function._validateIncludedElements (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:417:39)\n    at Function.findAll (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1124:12)\n    at runNextTicks (node:internal/process/task_queues:61:5)\n    at processImmediate (node:internal/timers:437:9)\n    at process.callbackTrampoline (node:internal/async_hooks:130:17)\n    at async Object.getSubClass (webpack-internal:///(api)/./src/helpers/api/repo/class-repo.ts:180:24)\n    at async Object.allhandler [as get] (webpack-internal:///(api)/./src/pages/api/getChildAssets.ts:19:26)\n    at async eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:38:13)","timestamp":"2023-11-29T12:01:56.475Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2023-11-29T12:01:56.478Z"}
+{"level":"error","message":"Error fetching Objects, ClassTags, and ObjectValues data: Class is not associated to Object!","name":"SequelizeEagerLoadingError","stack":"SequelizeEagerLoadingError: Class is not associated to Object!\n    at Function._getIncludedAssociation (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:565:13)\n    at Function._validateIncludedElement (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:502:53)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:421:37\n    at Array.map (<anonymous>)\n    at Function._validateIncludedElements (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:417:39)\n    at Function.findAll (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1124:12)\n    at async Object.get (webpack-internal:///(api)/./src/helpers/api/repo/object-repo.ts:62:24)\n    at async Object.allhandler [as get] (webpack-internal:///(api)/./src/pages/api/getObjects.ts:20:25)\n    at async eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:38:13)","timestamp":"2023-11-29T12:01:56.485Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-29T12:01:56.540Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2023-11-29T12:01:56.542Z"}
+{"level":"error","message":"Error fetching Objects, ClassTags, and ObjectValues data: Class is not associated to Object!","name":"SequelizeEagerLoadingError","stack":"SequelizeEagerLoadingError: Class is not associated to Object!\n    at Function._getIncludedAssociation (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:565:13)\n    at Function._validateIncludedElement (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:502:53)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:421:37\n    at Array.map (<anonymous>)\n    at Function._validateIncludedElements (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:417:39)\n    at Function.findAll (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1124:12)\n    at async Object.get (webpack-internal:///(api)/./src/helpers/api/repo/object-repo.ts:62:24)\n    at async Object.allhandler [as get] (webpack-internal:///(api)/./src/pages/api/getObjects.ts:20:25)\n    at async eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:38:13)","timestamp":"2023-11-29T12:01:56.544Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-29T12:02:06.772Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-29T12:02:06.773Z"}
+{"level":"info","message":"Fetching all subclass and subclassTags data","timestamp":"2023-11-29T12:02:06.779Z"}
+{"level":"error","message":"Error fetching class and classTags data: ClassTag is not associated to Class!","name":"SequelizeEagerLoadingError","stack":"SequelizeEagerLoadingError: ClassTag is not associated to Class!\n    at Function._getIncludedAssociation (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:565:13)\n    at Function._validateIncludedElement (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:502:53)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:421:37\n    at Array.map (<anonymous>)\n    at Function._validateIncludedElements (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:417:39)\n    at Function.findAll (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1124:12)\n    at runNextTicks (node:internal/process/task_queues:61:5)\n    at processImmediate (node:internal/timers:437:9)\n    at process.callbackTrampoline (node:internal/async_hooks:130:17)\n    at async Object.getSubClass (webpack-internal:///(api)/./src/helpers/api/repo/class-repo.ts:180:24)\n    at async Object.allhandler [as get] (webpack-internal:///(api)/./src/pages/api/getChildAssets.ts:19:26)\n    at async eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:38:13)","timestamp":"2023-11-29T12:02:06.780Z"}
+{"level":"info","message":"Fetching all subclass and subclassTags data","timestamp":"2023-11-29T12:02:06.785Z"}
+{"level":"error","message":"Error fetching class and classTags data: ClassTag is not associated to Class!","name":"SequelizeEagerLoadingError","stack":"SequelizeEagerLoadingError: ClassTag is not associated to Class!\n    at Function._getIncludedAssociation (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:565:13)\n    at Function._validateIncludedElement (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:502:53)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:421:37\n    at Array.map (<anonymous>)\n    at Function._validateIncludedElements (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:417:39)\n    at Function.findAll (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1124:12)\n    at async Object.getSubClass (webpack-internal:///(api)/./src/helpers/api/repo/class-repo.ts:180:24)\n    at async Object.allhandler [as get] (webpack-internal:///(api)/./src/pages/api/getChildAssets.ts:19:26)\n    at async eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:38:13)","timestamp":"2023-11-29T12:02:06.797Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-29T12:02:06.838Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2023-11-29T12:02:06.841Z"}
+{"level":"error","message":"Error fetching Objects, ClassTags, and ObjectValues data: Class is not associated to Object!","name":"SequelizeEagerLoadingError","stack":"SequelizeEagerLoadingError: Class is not associated to Object!\n    at Function._getIncludedAssociation (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:565:13)\n    at Function._validateIncludedElement (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:502:53)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:421:37\n    at Array.map (<anonymous>)\n    at Function._validateIncludedElements (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:417:39)\n    at Function.findAll (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1124:12)\n    at async Object.get (webpack-internal:///(api)/./src/helpers/api/repo/object-repo.ts:62:24)\n    at async Object.allhandler [as get] (webpack-internal:///(api)/./src/pages/api/getObjects.ts:20:25)\n    at async eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:38:13)","timestamp":"2023-11-29T12:02:06.842Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-29T12:02:06.846Z"}
+{"level":"info","message":"Fetching all subclass and subclassTags data","timestamp":"2023-11-29T12:02:06.848Z"}
+{"level":"error","message":"Error fetching class and classTags data: ClassTag is not associated to Class!","name":"SequelizeEagerLoadingError","stack":"SequelizeEagerLoadingError: ClassTag is not associated to Class!\n    at Function._getIncludedAssociation (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:565:13)\n    at Function._validateIncludedElement (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:502:53)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:421:37\n    at Array.map (<anonymous>)\n    at Function._validateIncludedElements (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:417:39)\n    at Function.findAll (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1124:12)\n    at async Object.getSubClass (webpack-internal:///(api)/./src/helpers/api/repo/class-repo.ts:180:24)\n    at async Object.allhandler [as get] (webpack-internal:///(api)/./src/pages/api/getChildAssets.ts:19:26)\n    at async eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:38:13)","timestamp":"2023-11-29T12:02:06.903Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-29T12:02:07.018Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2023-11-29T12:02:07.020Z"}
+{"level":"error","message":"Error fetching Objects, ClassTags, and ObjectValues data: Class is not associated to Object!","name":"SequelizeEagerLoadingError","stack":"SequelizeEagerLoadingError: Class is not associated to Object!\n    at Function._getIncludedAssociation (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:565:13)\n    at Function._validateIncludedElement (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:502:53)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:421:37\n    at Array.map (<anonymous>)\n    at Function._validateIncludedElements (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:417:39)\n    at Function.findAll (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1124:12)\n    at async Object.get (webpack-internal:///(api)/./src/helpers/api/repo/object-repo.ts:62:24)\n    at async Object.allhandler [as get] (webpack-internal:///(api)/./src/pages/api/getObjects.ts:20:25)\n    at async eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:38:13)","timestamp":"2023-11-29T12:02:07.021Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-29T12:02:17.186Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-29T12:02:17.200Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-29T12:02:17.202Z"}
+{"level":"info","message":"Fetching all subclass and subclassTags data","timestamp":"2023-11-29T12:02:17.206Z"}
+{"level":"error","message":"Error fetching class and classTags data: ClassTag is not associated to Class!","name":"SequelizeEagerLoadingError","stack":"SequelizeEagerLoadingError: ClassTag is not associated to Class!\n    at Function._getIncludedAssociation (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:565:13)\n    at Function._validateIncludedElement (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:502:53)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:421:37\n    at Array.map (<anonymous>)\n    at Function._validateIncludedElements (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:417:39)\n    at Function.findAll (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1124:12)\n    at runNextTicks (node:internal/process/task_queues:61:5)\n    at processImmediate (node:internal/timers:437:9)\n    at process.callbackTrampoline (node:internal/async_hooks:130:17)\n    at async Object.getSubClass (webpack-internal:///(api)/./src/helpers/api/repo/class-repo.ts:180:24)\n    at async Object.allhandler [as get] (webpack-internal:///(api)/./src/pages/api/getChildAssets.ts:19:26)\n    at async eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:38:13)","timestamp":"2023-11-29T12:02:17.208Z"}
+{"level":"info","message":"Fetching all subclass and subclassTags data","timestamp":"2023-11-29T12:02:17.215Z"}
+{"level":"error","message":"Error fetching class and classTags data: ClassTag is not associated to Class!","name":"SequelizeEagerLoadingError","stack":"SequelizeEagerLoadingError: ClassTag is not associated to Class!\n    at Function._getIncludedAssociation (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:565:13)\n    at Function._validateIncludedElement (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:502:53)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:421:37\n    at Array.map (<anonymous>)\n    at Function._validateIncludedElements (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:417:39)\n    at Function.findAll (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1124:12)\n    at runNextTicks (node:internal/process/task_queues:61:5)\n    at processImmediate (node:internal/timers:437:9)\n    at process.callbackTrampoline (node:internal/async_hooks:130:17)\n    at async Object.getSubClass (webpack-internal:///(api)/./src/helpers/api/repo/class-repo.ts:180:24)\n    at async Object.allhandler [as get] (webpack-internal:///(api)/./src/pages/api/getChildAssets.ts:19:26)\n    at async eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:38:13)","timestamp":"2023-11-29T12:02:17.219Z"}
+{"level":"info","message":"Fetching all subclass and subclassTags data","timestamp":"2023-11-29T12:02:17.228Z"}
+{"level":"error","message":"Error fetching class and classTags data: ClassTag is not associated to Class!","name":"SequelizeEagerLoadingError","stack":"SequelizeEagerLoadingError: ClassTag is not associated to Class!\n    at Function._getIncludedAssociation (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:565:13)\n    at Function._validateIncludedElement (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:502:53)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:421:37\n    at Array.map (<anonymous>)\n    at Function._validateIncludedElements (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:417:39)\n    at Function.findAll (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1124:12)\n    at async Object.getSubClass (webpack-internal:///(api)/./src/helpers/api/repo/class-repo.ts:180:24)\n    at async Object.allhandler [as get] (webpack-internal:///(api)/./src/pages/api/getChildAssets.ts:19:26)\n    at async eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:38:13)","timestamp":"2023-11-29T12:02:17.233Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-29T12:02:17.244Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2023-11-29T12:02:17.253Z"}
+{"level":"error","message":"Error fetching Objects, ClassTags, and ObjectValues data: Class is not associated to Object!","name":"SequelizeEagerLoadingError","stack":"SequelizeEagerLoadingError: Class is not associated to Object!\n    at Function._getIncludedAssociation (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:565:13)\n    at Function._validateIncludedElement (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:502:53)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:421:37\n    at Array.map (<anonymous>)\n    at Function._validateIncludedElements (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:417:39)\n    at Function.findAll (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1124:12)\n    at async Object.get (webpack-internal:///(api)/./src/helpers/api/repo/object-repo.ts:62:24)\n    at async Object.allhandler [as get] (webpack-internal:///(api)/./src/pages/api/getObjects.ts:20:25)\n    at async eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:38:13)","timestamp":"2023-11-29T12:02:17.258Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-29T12:02:17.302Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2023-11-29T12:02:17.316Z"}
+{"level":"error","message":"Error fetching Objects, ClassTags, and ObjectValues data: Class is not associated to Object!","name":"SequelizeEagerLoadingError","stack":"SequelizeEagerLoadingError: Class is not associated to Object!\n    at Function._getIncludedAssociation (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:565:13)\n    at Function._validateIncludedElement (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:502:53)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:421:37\n    at Array.map (<anonymous>)\n    at Function._validateIncludedElements (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:417:39)\n    at Function.findAll (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1124:12)\n    at async Object.get (webpack-internal:///(api)/./src/helpers/api/repo/object-repo.ts:62:24)\n    at async Object.allhandler [as get] (webpack-internal:///(api)/./src/pages/api/getObjects.ts:20:25)\n    at async eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:38:13)","timestamp":"2023-11-29T12:02:17.323Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-11-29T12:04:05.485Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-11-29T12:04:05.488Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-11-29T12:04:05.489Z"}
+{"level":"info","message":"<----db connection----->","timestamp":"2023-11-29T12:04:05.493Z"}
+{"level":"info","message":"AddClasses","timestamp":"2023-11-29T12:04:05.505Z"}
+{"level":"info","message":"AddValues","timestamp":"2023-11-29T12:04:05.506Z"}
+{"level":"info","message":"Address","timestamp":"2023-11-29T12:04:05.507Z"}
+{"level":"info","message":"Reason","timestamp":"2023-11-29T12:04:05.509Z"}
+{"level":"info","message":"Role","timestamp":"2023-11-29T12:04:05.510Z"}
+{"level":"info","message":"User","timestamp":"2023-11-29T12:04:05.511Z"}
+{"level":"info","message":"classTag","timestamp":"2023-11-29T12:04:05.512Z"}
+{"level":"info","message":"companyRecord","timestamp":"2023-11-29T12:04:05.513Z"}
+{"level":"info","message":"countryCodeModel","timestamp":"2023-11-29T12:04:05.514Z"}
+{"level":"info","message":"deleteRecord","timestamp":"2023-11-29T12:04:05.515Z"}
+{"level":"info","message":"object","timestamp":"2023-11-29T12:04:05.516Z"}
+{"level":"info","message":"otpVerify","timestamp":"2023-11-29T12:04:05.517Z"}
+{"level":"info","message":"parentJoinKey","timestamp":"2023-11-29T12:04:05.518Z"}
+{"level":"info","message":"phoneRecord","timestamp":"2023-11-29T12:04:05.520Z"}
+{"level":"info","message":"tagDataType","timestamp":"2023-11-29T12:04:05.521Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-29T12:04:05.531Z"}
+{"level":"info","message":"AddClasses","timestamp":"2023-11-29T12:04:05.535Z"}
+{"level":"info","message":"AddValues","timestamp":"2023-11-29T12:04:05.535Z"}
+{"level":"info","message":"Address","timestamp":"2023-11-29T12:04:05.537Z"}
+{"level":"info","message":"Reason","timestamp":"2023-11-29T12:04:05.538Z"}
+{"level":"info","message":"Role","timestamp":"2023-11-29T12:04:05.539Z"}
+{"level":"info","message":"User","timestamp":"2023-11-29T12:04:05.545Z"}
+{"level":"info","message":"classTag","timestamp":"2023-11-29T12:04:05.550Z"}
+{"level":"info","message":"companyRecord","timestamp":"2023-11-29T12:04:05.553Z"}
+{"level":"info","message":"countryCodeModel","timestamp":"2023-11-29T12:04:05.554Z"}
+{"level":"info","message":"deleteRecord","timestamp":"2023-11-29T12:04:05.555Z"}
+{"level":"info","message":"object","timestamp":"2023-11-29T12:04:05.556Z"}
+{"level":"info","message":"otpVerify","timestamp":"2023-11-29T12:04:05.558Z"}
+{"level":"info","message":"parentJoinKey","timestamp":"2023-11-29T12:04:05.559Z"}
+{"level":"info","message":"phoneRecord","timestamp":"2023-11-29T12:04:05.560Z"}
+{"level":"info","message":"tagDataType","timestamp":"2023-11-29T12:04:05.562Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-29T12:04:05.562Z"}
+{"level":"info","message":"AddClasses","timestamp":"2023-11-29T12:04:05.566Z"}
+{"level":"info","message":"AddValues","timestamp":"2023-11-29T12:04:05.567Z"}
+{"level":"info","message":"Address","timestamp":"2023-11-29T12:04:05.568Z"}
+{"level":"info","message":"Reason","timestamp":"2023-11-29T12:04:05.569Z"}
+{"level":"info","message":"Role","timestamp":"2023-11-29T12:04:05.571Z"}
+{"level":"info","message":"User","timestamp":"2023-11-29T12:04:05.572Z"}
+{"level":"info","message":"classTag","timestamp":"2023-11-29T12:04:05.573Z"}
+{"level":"info","message":"companyRecord","timestamp":"2023-11-29T12:04:05.574Z"}
+{"level":"info","message":"countryCodeModel","timestamp":"2023-11-29T12:04:05.575Z"}
+{"level":"info","message":"deleteRecord","timestamp":"2023-11-29T12:04:05.576Z"}
+{"level":"info","message":"object","timestamp":"2023-11-29T12:04:05.577Z"}
+{"level":"info","message":"otpVerify","timestamp":"2023-11-29T12:04:05.578Z"}
+{"level":"info","message":"parentJoinKey","timestamp":"2023-11-29T12:04:05.580Z"}
+{"level":"info","message":"phoneRecord","timestamp":"2023-11-29T12:04:05.581Z"}
+{"level":"info","message":"tagDataType","timestamp":"2023-11-29T12:04:05.582Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-29T12:04:05.583Z"}
+{"level":"info","message":"Fetching all subclass and subclassTags data","timestamp":"2023-11-29T12:04:05.584Z"}
+{"level":"error","message":"Error fetching class and classTags data: ClassTag is not associated to Class!","name":"SequelizeEagerLoadingError","stack":"SequelizeEagerLoadingError: ClassTag is not associated to Class!\n    at Function._getIncludedAssociation (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:565:13)\n    at Function._validateIncludedElement (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:502:53)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:421:37\n    at Array.map (<anonymous>)\n    at Function._validateIncludedElements (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:417:39)\n    at Function.findAll (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1124:12)\n    at runNextTicks (node:internal/process/task_queues:61:5)\n    at processImmediate (node:internal/timers:437:9)\n    at process.callbackTrampoline (node:internal/async_hooks:130:17)\n    at async Object.getSubClass (webpack-internal:///(api)/./src/helpers/api/repo/class-repo.ts:180:24)\n    at async Object.allhandler [as get] (webpack-internal:///(api)/./src/pages/api/getChildAssets.ts:19:26)\n    at async eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:38:13)","timestamp":"2023-11-29T12:04:05.588Z"}
+{"level":"info","message":"Fetching all subclass and subclassTags data","timestamp":"2023-11-29T12:04:05.593Z"}
+{"level":"error","message":"Error fetching class and classTags data: ClassTag is not associated to Class!","name":"SequelizeEagerLoadingError","stack":"SequelizeEagerLoadingError: ClassTag is not associated to Class!\n    at Function._getIncludedAssociation (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:565:13)\n    at Function._validateIncludedElement (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:502:53)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:421:37\n    at Array.map (<anonymous>)\n    at Function._validateIncludedElements (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:417:39)\n    at Function.findAll (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1124:12)\n    at runNextTicks (node:internal/process/task_queues:61:5)\n    at processImmediate (node:internal/timers:437:9)\n    at process.callbackTrampoline (node:internal/async_hooks:130:17)\n    at async Object.getSubClass (webpack-internal:///(api)/./src/helpers/api/repo/class-repo.ts:180:24)\n    at async Object.allhandler [as get] (webpack-internal:///(api)/./src/pages/api/getChildAssets.ts:19:26)\n    at async eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:38:13)","timestamp":"2023-11-29T12:04:05.597Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2023-11-29T12:04:05.600Z"}
+{"level":"error","message":"Error fetching Objects, ClassTags, and ObjectValues data: Class is not associated to Object!","name":"SequelizeEagerLoadingError","stack":"SequelizeEagerLoadingError: Class is not associated to Object!\n    at Function._getIncludedAssociation (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:565:13)\n    at Function._validateIncludedElement (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:502:53)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:421:37\n    at Array.map (<anonymous>)\n    at Function._validateIncludedElements (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:417:39)\n    at Function.findAll (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1124:12)\n    at async Object.get (webpack-internal:///(api)/./src/helpers/api/repo/object-repo.ts:62:24)\n    at async Object.allhandler [as get] (webpack-internal:///(api)/./src/pages/api/getObjects.ts:20:25)\n    at async eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:38:13)","timestamp":"2023-11-29T12:04:05.614Z"}
+{"level":"info","message":"AddClasses","timestamp":"2023-11-29T12:04:05.627Z"}
+{"level":"info","message":"AddValues","timestamp":"2023-11-29T12:04:05.630Z"}
+{"level":"info","message":"Address","timestamp":"2023-11-29T12:04:05.633Z"}
+{"level":"info","message":"Reason","timestamp":"2023-11-29T12:04:05.635Z"}
+{"level":"info","message":"Role","timestamp":"2023-11-29T12:04:05.636Z"}
+{"level":"info","message":"User","timestamp":"2023-11-29T12:04:05.639Z"}
+{"level":"info","message":"classTag","timestamp":"2023-11-29T12:04:05.644Z"}
+{"level":"info","message":"companyRecord","timestamp":"2023-11-29T12:04:05.649Z"}
+{"level":"info","message":"countryCodeModel","timestamp":"2023-11-29T12:04:05.650Z"}
+{"level":"info","message":"deleteRecord","timestamp":"2023-11-29T12:04:05.652Z"}
+{"level":"info","message":"object","timestamp":"2023-11-29T12:04:05.656Z"}
+{"level":"info","message":"otpVerify","timestamp":"2023-11-29T12:04:05.660Z"}
+{"level":"info","message":"parentJoinKey","timestamp":"2023-11-29T12:04:05.661Z"}
+{"level":"info","message":"phoneRecord","timestamp":"2023-11-29T12:04:05.663Z"}
+{"level":"info","message":"tagDataType","timestamp":"2023-11-29T12:04:05.665Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-29T12:04:05.665Z"}
+{"level":"info","message":"Fetching all subclass and subclassTags data","timestamp":"2023-11-29T12:04:05.667Z"}
+{"level":"error","message":"Error fetching class and classTags data: ClassTag is not associated to Class!","name":"SequelizeEagerLoadingError","stack":"SequelizeEagerLoadingError: ClassTag is not associated to Class!\n    at Function._getIncludedAssociation (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:565:13)\n    at Function._validateIncludedElement (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:502:53)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:421:37\n    at Array.map (<anonymous>)\n    at Function._validateIncludedElements (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:417:39)\n    at Function.findAll (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1124:12)\n    at async Object.getSubClass (webpack-internal:///(api)/./src/helpers/api/repo/class-repo.ts:180:24)\n    at async Object.allhandler [as get] (webpack-internal:///(api)/./src/pages/api/getChildAssets.ts:19:26)\n    at async eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:38:13)","timestamp":"2023-11-29T12:04:05.669Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-29T12:04:05.704Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2023-11-29T12:04:05.708Z"}
+{"level":"error","message":"Error fetching Objects, ClassTags, and ObjectValues data: Class is not associated to Object!","name":"SequelizeEagerLoadingError","stack":"SequelizeEagerLoadingError: Class is not associated to Object!\n    at Function._getIncludedAssociation (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:565:13)\n    at Function._validateIncludedElement (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:502:53)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:421:37\n    at Array.map (<anonymous>)\n    at Function._validateIncludedElements (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:417:39)\n    at Function.findAll (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1124:12)\n    at async Object.get (webpack-internal:///(api)/./src/helpers/api/repo/object-repo.ts:62:24)\n    at async Object.allhandler [as get] (webpack-internal:///(api)/./src/pages/api/getObjects.ts:20:25)\n    at async eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:38:13)","timestamp":"2023-11-29T12:04:05.710Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-29T12:04:31.517Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-29T12:04:31.525Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-29T12:04:31.530Z"}
+{"level":"info","message":"Fetching all subclass and subclassTags data","timestamp":"2023-11-29T12:04:31.538Z"}
+{"level":"error","message":"Error fetching class and classTags data: ClassTag is not associated to Class!","name":"SequelizeEagerLoadingError","stack":"SequelizeEagerLoadingError: ClassTag is not associated to Class!\n    at Function._getIncludedAssociation (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:565:13)\n    at Function._validateIncludedElement (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:502:53)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:421:37\n    at Array.map (<anonymous>)\n    at Function._validateIncludedElements (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:417:39)\n    at Function.findAll (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1124:12)\n    at runNextTicks (node:internal/process/task_queues:61:5)\n    at processImmediate (node:internal/timers:437:9)\n    at process.callbackTrampoline (node:internal/async_hooks:130:17)\n    at async Object.getSubClass (webpack-internal:///(api)/./src/helpers/api/repo/class-repo.ts:180:24)\n    at async Object.allhandler [as get] (webpack-internal:///(api)/./src/pages/api/getChildAssets.ts:19:26)\n    at async eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:38:13)","timestamp":"2023-11-29T12:04:31.540Z"}
+{"level":"info","message":"Fetching all subclass and subclassTags data","timestamp":"2023-11-29T12:04:31.550Z"}
+{"level":"error","message":"Error fetching class and classTags data: ClassTag is not associated to Class!","name":"SequelizeEagerLoadingError","stack":"SequelizeEagerLoadingError: ClassTag is not associated to Class!\n    at Function._getIncludedAssociation (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:565:13)\n    at Function._validateIncludedElement (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:502:53)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:421:37\n    at Array.map (<anonymous>)\n    at Function._validateIncludedElements (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:417:39)\n    at Function.findAll (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1124:12)\n    at runNextTicks (node:internal/process/task_queues:61:5)\n    at processImmediate (node:internal/timers:437:9)\n    at process.callbackTrampoline (node:internal/async_hooks:130:17)\n    at async Object.getSubClass (webpack-internal:///(api)/./src/helpers/api/repo/class-repo.ts:180:24)\n    at async Object.allhandler [as get] (webpack-internal:///(api)/./src/pages/api/getChildAssets.ts:19:26)\n    at async eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:38:13)","timestamp":"2023-11-29T12:04:31.558Z"}
+{"level":"info","message":"Fetching all subclass and subclassTags data","timestamp":"2023-11-29T12:04:31.562Z"}
+{"level":"error","message":"Error fetching class and classTags data: ClassTag is not associated to Class!","name":"SequelizeEagerLoadingError","stack":"SequelizeEagerLoadingError: ClassTag is not associated to Class!\n    at Function._getIncludedAssociation (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:565:13)\n    at Function._validateIncludedElement (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:502:53)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:421:37\n    at Array.map (<anonymous>)\n    at Function._validateIncludedElements (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:417:39)\n    at Function.findAll (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1124:12)\n    at async Object.getSubClass (webpack-internal:///(api)/./src/helpers/api/repo/class-repo.ts:180:24)\n    at async Object.allhandler [as get] (webpack-internal:///(api)/./src/pages/api/getChildAssets.ts:19:26)\n    at async eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:38:13)","timestamp":"2023-11-29T12:04:31.572Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-29T12:04:31.590Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2023-11-29T12:04:31.592Z"}
+{"level":"error","message":"Error fetching Objects, ClassTags, and ObjectValues data: Class is not associated to Object!","name":"SequelizeEagerLoadingError","stack":"SequelizeEagerLoadingError: Class is not associated to Object!\n    at Function._getIncludedAssociation (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:565:13)\n    at Function._validateIncludedElement (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:502:53)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:421:37\n    at Array.map (<anonymous>)\n    at Function._validateIncludedElements (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:417:39)\n    at Function.findAll (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1124:12)\n    at async Object.get (webpack-internal:///(api)/./src/helpers/api/repo/object-repo.ts:62:24)\n    at async Object.allhandler [as get] (webpack-internal:///(api)/./src/pages/api/getObjects.ts:20:25)\n    at async eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:38:13)","timestamp":"2023-11-29T12:04:31.594Z"}
+{"level":"info","message":"JWT","timestamp":"2023-11-29T12:04:31.620Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2023-11-29T12:04:31.629Z"}
+{"level":"error","message":"Error fetching Objects, ClassTags, and ObjectValues data: Class is not associated to Object!","name":"SequelizeEagerLoadingError","stack":"SequelizeEagerLoadingError: Class is not associated to Object!\n    at Function._getIncludedAssociation (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:565:13)\n    at Function._validateIncludedElement (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:502:53)\n    at D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:421:37\n    at Array.map (<anonymous>)\n    at Function._validateIncludedElements (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:417:39)\n    at Function.findAll (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1124:12)\n    at async Object.get (webpack-internal:///(api)/./src/helpers/api/repo/object-repo.ts:62:24)\n    at async Object.allhandler [as get] (webpack-internal:///(api)/./src/pages/api/getObjects.ts:20:25)\n    at async eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:38:13)","timestamp":"2023-11-29T12:04:31.631Z"}

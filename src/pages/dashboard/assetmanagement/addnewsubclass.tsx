@@ -75,18 +75,9 @@ export default function AddNewSubClass(props: any, localData: any) {
     const wrapperRef = useRef(null);
     useOutsideAlerter(wrapperRef);
 
-    // Get JSON data on page load
-    const fetchData = () => {
-        axios.get("/api/getAssets").then((response) => {
-            if (response.data) {
-                setData(response.data);
-            }
-        });
-    };
     useEffect(() => {
-        fetchData();
-        if (fetchData.length) return;
-    }, [localData.localData])
+        setData(props.classData)
+    }, [props.classData])
 
 
     // Get Last Asset ID

@@ -7,9 +7,9 @@ import Link from 'next/dist/client/link';
 import { setSelectedClass, setClassBreadcrumb, selectedClassDataAction } from '@/store/actions/classAction';
 
 export default function ObjectManagement(props: any) {
-    // console.log({
-    //     "OBJECT MANAGEMENT": props
-    // })
+    console.log({
+        "OBJECT MANAGEMENT": props
+    })
     const dispatch = useDispatch<any>();
     const [chooseAsset, setChooseAsset] = useState(0);
 

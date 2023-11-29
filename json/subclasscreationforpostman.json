@@ -1,10 +1,10 @@
 {
   "className": "Battery",
-  "superParentId": 2,
-  "parentId": 2,
+  "superParentId": 6,
+  "parentId": 6,
   "parentJoinKey": [
-    1,
-    2
+    26,
+    27
   ],
   "tags": [
     {
@@ -33,11 +33,11 @@
 
 {
   "className": "Tire",
-  "superParentId": 2,
-  "parentId": 2,
+  "superParentId": 6,
+  "parentId": 6,
   "parentJoinKey": [
-    1,
-    2
+    26,
+    27
   ],
   "tags": [
     {
@@ -70,10 +70,10 @@
 
 {
   "className": "Walls",
-  "superParentId": 1,
-  "parentId": 1,
+  "superParentId": 4,
+  "parentId": 4,
   "parentJoinKey": [
-    7
+    11
   ],
   "tags": [
     {
@@ -108,10 +108,10 @@
 
 {
   "className": "Pipes",
-  "superParentId": 1,
-  "parentId": 1,
+  "superParentId": 4,
+  "parentId": 4,
   "parentJoinKey": [
-    7
+    11
   ],
   "tags": [
     {

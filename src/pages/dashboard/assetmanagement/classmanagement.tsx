@@ -13,49 +13,43 @@ export default function ClassManagement(props: any) {
     const [actions, setActions] = useState(false);
     const [actionCount, setActionCount] = useState(1);
     const [showModal, setShowModal] = useState(Boolean);
-    const [dataTypes, setDataTypes] = useState();
     const [deleteModal, setDeleteModal] = useState(false);
     const [deleteID, setDeleteID] = useState(0);
     const [deleteMessage, setDeleteMessage] = useState(false);
-    const [allClass, setAllClass] = useState([] as any);
+    // const [allClass, setAllClass] = useState([] as any);
     let access_token = "" as any;
     if (typeof window !== 'undefined') {
         access_token = localStorage.getItem('authToken')
     }
 
-    // Get All Class Data
-    async function fetchData() {
-        try {
-            await axios({
-                method: 'GET',
-                url: `http://20.232.178.134:3000/api/getAssets`,
-                headers: {
-                    "Authorization": `Bearer ${access_token}`,
-                    "Content-Type": "application/json"
-                }
-            }).then(function (response) {
-                if (response) {
-                    setAllClass(response.data?.data)
-                }
-            }).catch(function (error) {
-                console.log({
-                    "ERROR IN AXIOS CATCH": error
-                })
-            })
-        } catch (err) {
-            console.log({
-                "ERROR IN TRY CATCH": err
-            })
-        }
-    }
-    useEffect(() => {
-        fetchData();
-    }, [access_token])
-
-    // String Reverse
-    function reverseString(str: any) {
-        return str.split("").reverse().join("");
-    }
+    // // GET ALL CLASS DATA
+    // async function fetchData() {
+    //     try {
+    //         await axios({
+    //             method: 'GET',
+    //             url: `http://20.232.178.134:3000/api/getAssets`,
+    //             headers: {
+    //                 "Authorization": `Bearer ${access_token}`,
+    //                 "Content-Type": "application/json"
+    //             }
+    //         }).then(function (response) {
+    //             if (response) {
+    //                 setAllClass(response.data?.data)
+    //             }
+    //         }).catch(function (error) {
+    //             console.log({
+    //                 "ERROR IN AXIOS CATCH": error
+    //             })
+    //         })
+    //     } catch (err) {
+    //         console.log({
+    //             "ERROR IN TRY CATCH": err
+    //         })
+    //     }
+    // }
+    // useEffect(() => {
+    //     fetchData();
+    // }, [access_token])
 
     useEffect(() => {
         setShowModal(props.addClassModal)
@@ -72,92 +66,25 @@ export default function ClassManagement(props: any) {
         setActionCount(item);
         setActions(!actions);
     }
-    const selectedAction = (item: any) => {
-        setActions(false);
-    }
 
     const handleClick = (item: any) => {
         setShowModal(false);
         props.handleaddClassModal(item)
     }
 
-    // Get All DataTypes
-    useEffect(() => {
-        let tokenStr = access_token;
-        (async function () {
-            try {
-                await axios({
-                    method: 'GET',
-                    url: `/api/getDataType`,
-                    headers: {
-                        "Authorization": `Bearer ${tokenStr}`,
-                        "Content-Type": "application/json"
-                    }
-                }).then(function (response) {
-                    if (response.data) {
-                        setDataTypes(response.data.data)
-                    }
-                }).catch(function (error) {
-                    console.log(error)
-                })
-            } catch (err) {
-                console.log("err in action:", err)
-            }
-        })();
-    }, []);
-
-    // Show delete Model
+    // SHOW DELETE MODAL
     const deleteModalFunction = (index: any) => {
         setDeleteID(index);
         setDeleteModal(true);
         setActions(false);
     }
 
-    // Close Delete Modal
-    const closeModalFunction = () => {
-        setDeleteModal(false);
-        setActions(false);
-    }
-
-    // Delete Function when click "YES" from delete modal
-    const deleteThisClassFunction = async (deleteID: any) => {
-        let tokenStr = access_token;
-        if (deleteID !== 0) {
-            try {
-                await axios({
-                    method: 'DELETE',
-                    url: `/api/deleteClasses?id=${deleteID}`,
-                    // data: deleteID,
-                    headers: {
-                        "Authorization": `Bearer ${tokenStr}`,
-                        "Content-Type": "application/json"
-                    }
-                }).then(function (response) {
-                    if (response.status === 200) {
-                        setDeleteMessage(true);
-                        setDeleteModal(false);
-                        setTimeout(() => {
-                            setDeleteMessage(false)
-                        }, 2000)
-                    } else {
-
-                    }
-                }).catch(function (error) {
-                    console.log("err in delete action:", error)
-                })
-            } catch (err) {
-                console.log("err in delete catch block:", err)
-            }
-        }
-    }
-
-    // Edit Class Function 
-    const editClassfunction = (classID: any) => {
-        setActions(false);
-    }
+    // CLOSE DELETE MODAL
     const closeDeleteModal = () => {
         setDeleteModal(false)
     }
+
+    // CALLLING DELETE ASSET API WHEN CONFIRM 'YES' BUTTON CLICKED!
     const confirmDeleteClass = async (index: any) => {
         setDeleteModal(false);
         try {
@@ -173,6 +100,10 @@ export default function ClassManagement(props: any) {
                     response: response,
                     message: "Class deleted successful!!"
                 })
+                setDeleteMessage(true);
+                setTimeout(()=>{
+                    setDeleteMessage(false)
+                },2000)
             }).catch(function (error) {
                 console.log({
                     "ERROR IN AXIOS CATCH (DELETE)": error
@@ -257,7 +188,7 @@ export default function ClassManagement(props: any) {
             {/* Table */}
             <div className='w-full mt-6 min-h-[400px] '>
                 {
-                    allClass && allClass.length > 0 ?
+                    props.classData && props.classData.length > 0 ?
                         <table className={`table-auto lg:min-w-full sm:w-full small:w-full text-left ${styles.tableV3} ${styles.tableV4}`}>
                             <thead className="text-sm font-normal">
                                 <tr>
@@ -275,7 +206,7 @@ export default function ClassManagement(props: any) {
                             </thead>
                             <tbody>
                                 {
-                                    allClass.map((item: any, index: any) => (
+                                    props.classData.map((item: any, index: any) => (
                                         <tr key={index}>
                                             <td>{index + 1}</td>
                                             <td>
@@ -338,7 +269,11 @@ export default function ClassManagement(props: any) {
 
 
             {/* Add New Class */}
-            <AddNewClass handleClick={handleClick} show={showModal} />
+            <AddNewClass
+                handleClick={handleClick}
+                show={showModal}
+                claasses={props.classData}
+            />
 
 
             {/* Delete Modal */}

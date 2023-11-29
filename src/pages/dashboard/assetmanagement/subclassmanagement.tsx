@@ -4,6 +4,10 @@ import Image from "next/image";
 import Link from 'next/dist/client/link';
 import AddNewSubClass from './addnewsubclass';
 export default function SubClassManagement(props: any) {
+    // console.log({
+    //     props: props.classData
+
+    // })
     const [toggleFilter, setToggleFilter] = useState(false);
     const [toggleArrow, setToggleArrow] = useState(false);
     const [toggleSort, setToggleSort] = useState(false);
@@ -141,7 +145,11 @@ export default function SubClassManagement(props: any) {
 
 
             {/* Add New Class */}
-            <AddNewSubClass handleClick={handleClick} show={showModal} />
+            <AddNewSubClass
+                handleClick={handleClick}
+                show={showModal}
+                classData={props.classData}
+            />
 
 
 

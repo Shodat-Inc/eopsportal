@@ -22,29 +22,34 @@ export default function AssetManagement() {
         access_token = localStorage.getItem('authToken')
     }
 
-    useEffect(() => {
-        let tokenStr = access_token;
-        (async function () {
-            try {
-                await axios({
-                    method: 'GET',
-                    url: `/api/getAssets`,
-                    headers: {
-                        "Authorization": `Bearer ${tokenStr}`,
-                        "Content-Type": "application/json"
-                    }
-                }).then(function (response) {
-                    if (response.data && response.data.data) {
-                        setClassData(response.data.data)
-                    }
-                }).catch(function (error) {
-                    console.log("ERROR IN AXIOS CATCH BLOCK")
+    // GET ALL CLASS DATA
+    async function fetchData() {
+        try {
+            await axios({
+                method: 'GET',
+                url: `http://20.232.178.134:3000/api/getAssets`,
+                headers: {
+                    "Authorization": `Bearer ${access_token}`,
+                    "Content-Type": "application/json"
+                }
+            }).then(function (response) {
+                if (response) {
+                    setClassData(response.data.data)
+                }
+            }).catch(function (error) {
+                console.log({
+                    "ERROR IN AXIOS CATCH": error
                 })
-            } catch (err) {
-                console.log("ERROR IN TRY CATCH BLOCK:", err)
-            }
-        })();
-    }, []);
+            })
+        } catch (err) {
+            console.log({
+                "ERROR IN TRY CATCH": err
+            })
+        }
+    }
+    useEffect(() => {
+        fetchData();
+    }, [access_token])
 
     useEffect(() => {
         setNav(getSelClass.classBreadcrumbs)
@@ -279,7 +284,6 @@ export default function AssetManagement() {
                             <ClassManagement
                                 handleaddClassModal={handleaddClassModal}
                                 addClassModal={addClassModal}
-                                // classData={classData}
                                 classData={classData && classData.length > 0 ? classData : []}
                                 handelsubClass={handelsubClass}
                             />
@@ -287,8 +291,9 @@ export default function AssetManagement() {
                         {
                             tab === 4 &&
                             <SubClassManagement
-                            handleaddSubClassModal={handleaddSubClassModal}
-                            addSubClassModal={addSubClassModal}
+                                handleaddSubClassModal={handleaddSubClassModal}
+                                addSubClassModal={addSubClassModal}
+                                classData={classData && classData.length > 0 ? classData : []}
                             />
                         }
                         {tab === 2 &&
