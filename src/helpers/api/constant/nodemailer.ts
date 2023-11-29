@@ -45,7 +45,27 @@ export const salesTeamMail = (to: string, email: string): void => {
     from: process.env.MAIL,
     to,
     subject: "New User!",
-    text: `New User whose email is ${email} tried to connect you.`,
+    text: `New User whose email is ${email} tried to contact you.`,
+  };
+  transporter.sendMail(
+    mailOptions,
+    (error: Error | null, info: nodemailer.SentMessageInfo) => {
+      if (error) {
+        console.log("Error sending email: " + error);
+      } else {
+        console.log("Email sent: " + info.response);
+      }
+    }
+  );
+}
+
+export const enterpriseUserMail = (to: string): void => {
+  const transporter = mailTransporter();
+  const mailOptions: nodemailer.SendMailOptions = {
+    from: process.env.MAIL,
+    to,
+    subject: "New User!",
+    text: `Heyy, Enterprise User is successfully created with mail ${to}.`,
   };
   transporter.sendMail(
     mailOptions,

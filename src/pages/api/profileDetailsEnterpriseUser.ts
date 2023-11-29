@@ -1,6 +1,5 @@
 import { apiHandler } from "@/helpers/api";
-import { loggerError } from "@/logger";
-import { updateEnterpriseUserValidation } from "../../../validateSchema";
+import { loggerError, loggerInfo } from "@/logger";
 import { EnterpriseUsersRepo } from "@/helpers/api/repo/enterpriseUser-repo";
 
 
@@ -17,24 +16,14 @@ export default apiHandler({
  */
 async function handler(req: any, res: any) {
     try {
-
+        loggerInfo.info("Get profile details and update the profile")
         // Extract update data from the request body.
-        const reqAuth = req.auth;
-        const updateData = req.body;
-        const validation = updateEnterpriseUserValidation(updateData);
-        if (validation.error) {
-            // Handle validation errors
-            res.status(400).json({
-                success: false,
-                message: "Validation error",
-                errors: validation.error.details.map((detail) => detail.message),
-            });
-            return;
-        }
+        const updateData =req.auth;
+        const reqData = req.body;
 
         // Attempt to update the role using the roleRepo.
-        const updatedRole: any = await EnterpriseUsersRepo.update(validation.value, reqAuth);
-
+        const updatedRole: any = await EnterpriseUsersRepo.updateProfile(updateData,reqData);
+        
         // If successful, return a success response with the updated role data.
         res.status(200).json({ message: updatedRole });
     } catch (error: any) {

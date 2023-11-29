@@ -5,6 +5,7 @@ import message from "@/util/responseMessage";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import getConfig from "next/config";
+import {enterpriseUserMail} from "../constant/nodemailer"
 
 const { serverRuntimeConfig } = getConfig();
 
@@ -17,6 +18,8 @@ export const EnterpriseUsersRepo = {
   getAllEnterpriseUser,
   update,
   delete: _delete,
+  getEnterpriseUserById,
+  updateProfile
 };
 
 /**
@@ -81,7 +84,7 @@ async function authenticate(data: any) {
 
   } catch (error) {
     // Log error information in case of an exception during authentication
-    loggerError.error("Authentication Error");
+    loggerError.error("Authentication Error",error);
 
     // Return an error response in case of an exception during authentication
     return sendResponseData(false, message.error.error, error);
@@ -111,6 +114,10 @@ async function create(params: any) {
 
     // Create a new instance of EnterpriseUser model with the provided parameters
     const newEnterpriseUser = new db.EnterpriseUser(params);
+
+    //Fetching mail and sending mail to the enterprise user 
+    const userMail = newEnterpriseUser.dataValues.email
+    enterpriseUserMail(userMail)
 
     // Hash the password before saving it to the database
     if (params.password) {
@@ -161,11 +168,13 @@ async function getAllEnterpriseUser() {
  * @param {any} params - The parameters containing information for updating an enterprise user.
  * @returns {Promise<object>} A promise that resolves with the result of the database operation.
  */
-async function update(params: any) {
+// async function update(params: any,reqData:any) {
+async function update(params: any, reqAuth: any) {
+
   try {
     // Find the enterprise user in the database based on the provided ID
     const data = await db.EnterpriseUser.findOne({
-      where: { id: params.id },
+      where: { id: reqAuth.enterpriseUserId },
     });
 
     // If no enterprise user is found, return an error response
@@ -183,6 +192,7 @@ async function update(params: any) {
       "roleId",
     ];
 
+    let newObj: any = {}
     // Update the enterprise user data fields based on the provided parameters
     propertiesToUpdate.forEach((property) => {
       if (params[property]) {
@@ -236,5 +246,70 @@ async function _delete(params: any) {
       message.error.errorDeletionEnterpriseUser,
       error
     );
+  }
+}
+
+/**
+ * Retrieves information about an enterprise user based on the provided ID.
+ *
+ * @param {Object} params - The parameters object containing the user ID.
+ * @returns {Promise<Object>} A promise that resolves to the response data.
+ */
+async function getEnterpriseUserById(params: any) {
+  try {
+    // Log information about the operation.
+    loggerInfo.info("Get Enterprise User by ID");
+
+    // Check if the ID is provided in the parameters.
+    if (!params.id) {
+      // Return a response indicating that the ID is not provided.
+      return sendResponseData(false, "ID is not provided", []);
+    }
+
+    // Find the enterprise user in the database based on the provided ID.
+    const data = await db.EnterpriseUser.findOne({
+      where: { id: params.id },
+      attributes: ["username", "email", "firstName", "lastName", "enterpriseId", "roleId"]
+    });
+
+    // Check if the user data is available.
+    if (!data) {
+      // Return a response indicating that the enterprise user doesn't exist.
+      return sendResponseData(false, "Enterprise User doesn't Exist", []);
+    }
+
+    // Return a successful response with the fetched enterprise user data.
+    return sendResponseData(true, "Enterprise User fetched Successfully", data);
+  } catch (error: any) {
+    // Log an error message if an exception occurs during the operation.
+    loggerError.error("Error in enterprise user repo", error);
+
+    // Return an error response with details about the encountered error.
+    return sendResponseData(false, "Error in fetching Enterprise User", error);
+  }
+}
+
+async function updateProfile(params: any, reqData: any) {
+  try {
+    loggerInfo.info("Updating Enterprise User profile while viewing data")
+    const data = await db.EnterpriseUser.findOne({
+      where: { id: params.enterpriseUserId },
+    })
+    const profileToUpdate = [
+      "username",
+      "firstName",
+      "lastName"
+    ];
+    profileToUpdate.forEach((property) => {
+      if (reqData[property]) {
+        data[property] = reqData[property]
+      }
+    })
+    const response = await data.save();
+
+    return sendResponseData(true, "Profile Updated Successfully", response)
+  } catch (error: any) {
+    loggerError.error("Error in Enterprise user repo", error)
+    return sendResponseData(false, "Error in Updating data", error)
   }
 }

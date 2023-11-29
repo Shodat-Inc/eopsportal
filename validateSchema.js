@@ -53,11 +53,11 @@ export const createUserValidation = (data) => {
 
 export const updateUserValidation = (data) => {
   const schema = Joi.object({
-    address: Joi.string().required(),
-    city: Joi.string().required(),
-    state: Joi.string().required(),
-    pincode: Joi.number().required(),
-    countryId: Joi.number().required(),
+    address: Joi.string(),
+    city: Joi.string(),
+    state: Joi.string(),
+    pincode: Joi.number(),
+    countryId: Joi.number(),
   });
 
   return schema.validate(data);
@@ -234,7 +234,7 @@ export const createEnterpriseUserValidation = (data) => {
 
 export const updateEnterpriseUserValidation = (data) => {
   const schema = Joi.object({
-    id: Joi.number().required(),
+
     username: Joi.string(),
     firstName: Joi.string(),
     lastName: Joi.string(),
@@ -254,7 +254,7 @@ export const deleteEnterpriseUserValidation = (data) => {
 
 export const updateEnterpriseValidation = (data) => {
   const schema = Joi.object({
-    id: Joi.number().required(),
+
     enterpriseName: Joi.string(),
     enterpriseIndustry: Joi.string(),
     founderYear: Joi.number(),
@@ -263,6 +263,21 @@ export const updateEnterpriseValidation = (data) => {
     employeeCount: Joi.number(),
     superAdminName: Joi.string(),
     status: Joi.number()
+  });
+  return schema.validate(data);
+};
+
+export const contactSales = (data) => {
+  const schema = Joi.object({
+
+    email: Joi.string().required(),
+    firstName: Joi.string().required(),
+    lastName: Joi.string().required(),
+    message: Joi.string().required(),
+    companyName: Joi.string().required(),
+    CIN: Joi.number().required(),
+    numOfEmployee: Joi.number().required(),
+    phoneNumber: Joi.string().required()
   });
   return schema.validate(data);
 };

@@ -16,6 +16,12 @@ function relationship() {
   db.User.hasOne(db.companyRecord, { foreignKey: "userId" });
   // Each Company record is associated with a single User.
   db.companyRecord.belongsTo(db.User, { foreignKey: "userId" });
+  
+  //Each Role can have multiple users
+  db.Role.hasMany(db.User, { foreignKey: "roleId" })
+  
+  //Each User is aasociated with one role id 
+  db.User.belongsTo(db.Role, { foreignKey: "roleId" });
 
   // Establishing relationships for the Country Code model:
 

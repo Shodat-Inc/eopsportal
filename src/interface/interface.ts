@@ -3,6 +3,7 @@ import { createClassValidation,
   createObjectValidation,
   createRoleValidation,
   createUserValidation,
+  contactSales,
   deleteRoleValidation,
   deleteUserValidation,
   forgetPasswordValidation, 
@@ -97,5 +98,11 @@ export function updateRole(req: any, res: any, next: any) {
 export function deleteRole(req: any, res: any, next: any) {
   const reqData = req.body;
   deleteRoleValidation(reqData);
+  next();
+}
+
+export function contactSalesTeam(req: any, res: any, next: any) {
+  const reqData = req.body;
+  contactSales(reqData);
   next();
 }

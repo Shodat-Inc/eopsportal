@@ -127,14 +127,14 @@ async function getDataById(params: any) {
  * @param {any} params - The parameters containing information for updating enterprise data.
  * @returns {Promise<object>} A promise that resolves with the result of the database operation.
  */
-async function update(params: any) {
+async function update(params: any, reqAuth: any) {
   try {
     // Log information about the function execution
     loggerInfo.info("Updating Enterprise Data");
 
     // Find the enterprise data in the database based on the provided ID
     const data = await db.Enterprise.findOne({
-      where: { id: params.id }
+      where: { id: reqAuth.enterpriseId }
     });
 
     // Define the properties to update
