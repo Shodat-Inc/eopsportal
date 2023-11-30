@@ -30,7 +30,7 @@ async function handler(req: any, res: any) {
       enterpriseUserId: req.enterpriseUserId,
       enterpriseId: req.enterpriseId,
     };
-    const validation = createClassValidation(reqData);
+    const validation = createClassValidation(req.body);
     if (validation.error) {
       // Handle validation errors
       res.status(400).json({
@@ -42,7 +42,7 @@ async function handler(req: any, res: any) {
     }
 
     // Create a new class entry using the provided data.
-    const classData = await classRepo.create(validation.value);
+    const classData = await classRepo.create(reqData);
     const classId = classData.data.id;
 
     // Create a new array to store tags for the class.
