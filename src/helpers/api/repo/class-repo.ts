@@ -25,7 +25,7 @@ export const classRepo = {
 async function create(params: any) {
   // Log the initiation of class creation.
   loggerInfo.info("Create Class Repo:");
-
+  
   try {
     // Validate that the class name doesn't already exist.
     let class_data = await db.AddClasses.findOne({

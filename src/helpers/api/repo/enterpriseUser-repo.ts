@@ -5,7 +5,8 @@ import message from "@/util/responseMessage";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import getConfig from "next/config";
-import {enterpriseUserMail} from "../constant/nodemailer"
+import { enterpriseUserMail } from "../constant/nodemailer"
+import {inviteEnterpriseUserMail} from "../constant/nodemailer"
 
 const { serverRuntimeConfig } = getConfig();
 
@@ -19,7 +20,9 @@ export const EnterpriseUsersRepo = {
   update,
   delete: _delete,
   getEnterpriseUserById,
-  updateProfile
+  updateProfile,
+  inviteEnterpriseUser,
+  cancelInvite
 };
 
 /**
@@ -84,7 +87,7 @@ async function authenticate(data: any) {
 
   } catch (error) {
     // Log error information in case of an exception during authentication
-    loggerError.error("Authentication Error",error);
+    loggerError.error("Authentication Error", error);
 
     // Return an error response in case of an exception during authentication
     return sendResponseData(false, message.error.error, error);
@@ -311,5 +314,69 @@ async function updateProfile(params: any, reqData: any) {
   } catch (error: any) {
     loggerError.error("Error in Enterprise user repo", error)
     return sendResponseData(false, "Error in Updating data", error)
+  }
+}
+
+async function inviteEnterpriseUser(params: any, reqData: any) {
+  try {
+    loggerError.info("Inviting Enterprise User");
+    if (reqData.role !== 4) {
+      return sendResponseData(false, "Heyy, Only Enterprise Admins have access to send invitations", {});
+    }
+    // To identify that the user sending invitation is Admin
+    const adminData = await db.EnterpriseUser.findOne({
+      where: { roleId: reqData.role }
+    });
+
+    if (!adminData) {
+      return sendResponseData(false, "Apologies, Only Enterprise Admin have access to send Invitation", adminData);
+    }
+
+    const [invite, created] = await db.Invite.findOrCreate({
+      where: { email: params.email },
+      defaults: {
+        ...params,
+        enterpriseId: reqData.enterpriseId
+      }
+    });
+
+    // If the email already existed, update the record
+    if (!created) {
+      await invite.update({
+        ...params,
+        enterpriseId: reqData.enterpriseId
+      });
+    }
+    inviteEnterpriseUserMail(params.email)
+    return sendResponseData(true, "Email sent successfully", invite);
+
+  } catch (error: any) {
+    loggerError.error("Error in inviting Enterprise User", error);
+    return sendResponseData(false, "Error in inviting Enterprise User", {});
+  }
+}
+
+async function cancelInvite(params: any, reqData: any) {
+  try {
+    loggerInfo.info("Cancel Invite of Enterprise User")
+    const user = await db.Invite.findOne({
+      where: { email: params.email },
+    });
+    if (!user) {
+      return sendResponseData(false, "User not found for the given email", {});
+    }
+    const res = await user.update(
+      {
+        email: null,
+        userRole: null,
+        status: null,
+      },
+      {
+        where: { email: params.email },
+      })
+    return sendResponseData(true, "Invitation Canceled Successfully", res)
+  } catch (error: any) {
+    loggerError.error("Error in Inviting Enterprise User")
+    return sendResponseData(false, "Error in cancel Invite of Enterprise User", error.message)
   }
 }

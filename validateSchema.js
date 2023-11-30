@@ -282,3 +282,13 @@ export const contactSales = (data) => {
   return schema.validate(data);
 };
 
+export const inviteValidation = (data) => {
+  const schema = Joi.object({
+
+    email: Joi.string().required(),
+    userRole: Joi.string().required(),
+    status: Joi.number(),
+  });
+  return schema.validate(data);
+};
+

@@ -109,5 +109,8 @@ function relationship() {
   db.AddClasses.belongsTo(db.EnterpriseUser, {
     foreignKey: "enterpriseUserId",
   });
+
+  db.Enterprise.hasMany(db.Invite, { foreignKey: "enterpriseId" })
+  db.Invite.belongsTo(db.Enterprise, { foreignKey: "enterpriseId" });
 }
 export default relationship;

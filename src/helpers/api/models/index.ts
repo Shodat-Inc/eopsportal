@@ -18,4 +18,5 @@ export * from './routeTable'
 export * from './enterprise'
 export * from './enterpriseAddress'
 export * from './enterpriseUser'
+export * from './invite'
 

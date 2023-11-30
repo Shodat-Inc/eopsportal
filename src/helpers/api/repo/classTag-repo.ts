@@ -65,7 +65,8 @@ async function bulkCreate(params: any[], classId: any) {
     return sendResponseData(true, message.success.classTag, data);
   } catch (error) {
     // Log the error if there's an issue with the bulk class tag creation.
-    loggerError.error(message.error.errorBulkClassTag, error);
+    loggerError.error("Error in bulk class Tag repo");
+    return sendResponseData(false,message.error.errorBulkClassTag, error)
   }
 }
 

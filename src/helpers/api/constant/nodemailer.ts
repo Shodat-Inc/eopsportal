@@ -79,6 +79,23 @@ export const enterpriseUserMail = (to: string): void => {
   );
 }
 
-// export default sendVerificationEmail;
-// module.exports = { sendVerificationEmail, salesTeamMail };
+export const inviteEnterpriseUserMail = (to: string): void => {
+  const transporter = mailTransporter();
+  const mailOptions: nodemailer.SendMailOptions = {
+    from: process.env.MAIL,
+    to,
+    subject: "Invitation to join Enterprise!",
+    text: `Heyy, you are invited to join the Enterprise`,
+  };
+  transporter.sendMail(
+    mailOptions,
+    (error: Error | null, info: nodemailer.SentMessageInfo) => {
+      if (error) {
+        console.log("Error sending email: " + error);
+      } else {
+        console.log("Email sent: " + info.response);
+      }
+    }
+  );
+}
 

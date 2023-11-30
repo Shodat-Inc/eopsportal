@@ -8,6 +8,7 @@ import { createClassValidation,
   deleteUserValidation,
   forgetPasswordValidation, 
   generateOTPValidation,
+  inviteValidation,
   updateClassValidation,
   updateObjectValidation,
   updatePasswordValidation,
@@ -105,4 +106,10 @@ export function contactSalesTeam(req: any, res: any, next: any) {
   const reqData = req.body;
   contactSales(reqData);
   next();
+}
+
+export function inviteEnterpUser(req: any, res: any, next: any){
+  const reqData = req.body;
+  inviteValidation(reqData);
+  next();  
 }
