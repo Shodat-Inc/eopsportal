@@ -84,11 +84,11 @@ async function getClassData(params: any) {
     if (result.length === 0) {
       return sendResponseData(false, message.error.classData, []);
     }
-    const response = result.map((item: any, index: any) => ({
-      serialNumber: index + 1,
-      ...item.get(), // Convert Sequelize instance to plain JS object
-    }));
-    return sendResponseData(true, message.success.fetchClass, response);
+    // const response = result.map((item: any, index: any) => ({
+    //   serialNumber: index + 1,
+    //   ...item.get(), // Convert Sequelize instance to plain JS object
+    // }));
+    return sendResponseData(true, message.success.fetchClass, result);
   } catch (error) {
     // Log the error if fetching classes and tags fails.
     loggerError.error("Error fetching class and classTags data:", error);
@@ -139,11 +139,11 @@ async function getClassDataByID(params: any) {
       return sendResponseData(false, message.error.noDataFound, []);
     }
 
-    const response = result.map((item: any, index: any) => ({
-      serialNumber: index + 1,
-      ...item.get(), // Convert Sequelize instance to plain JS object
-    }));
-    return sendResponseData(true, message.success.fetchClass, response);
+    // const response = result.map((item: any, index: any) => ({
+    //   serialNumber: index + 1,
+    //   ...item.get(), // Convert Sequelize instance to plain JS object
+    // }));
+    return sendResponseData(true, message.success.fetchClass, result);
   } catch (error) {
     // Log the error if fetching classes and tags fails.
     loggerError.error("Error fetching class and classTags data by ID:", error);
@@ -165,7 +165,7 @@ async function getSubClass(param: any) {
         userId: param.id,
         parentId: param.query.id,
       },
-      attributes: ["className"],
+      attributes: ["id", "className", "createdAt"],
       include: [
         {
           model: db.classTag,
@@ -200,11 +200,11 @@ async function getSubClass(param: any) {
         y.dataValues.tagname = tagQuery.tagName;
       }
     }
-    const response = result.map((item: any, index: any) => ({
-      S_No: index + 1,
-      ...item.get(),
-    }));
-    return sendResponseData(true, message.success.fetchClass, response);
+    // const response = result.map((item: any, index: any) => ({
+    //   S_No: index + 1,
+    //   ...item.get(),
+    // }));
+    return sendResponseData(true, message.success.fetchClass, result);
   } catch (error) {
     // Log the error if fetching subclasses and tags fails.
     loggerError.error("Error fetching class and classTags data:", error);
@@ -261,11 +261,11 @@ async function getSubClassByID(param: any) {
         y.dataValues.tagname = tagQuery.tagName;
       }
     }
-    const response = result.map((item: any, index: any) => ({
-      S_No: index + 1,
-      ...item.get(),
-    }));
-    return sendResponseData(true, message.success.fetchSubClass, response);
+    // const response = result.map((item: any, index: any) => ({
+    //   S_No: index + 1,
+    //   ...item.get(),
+    // }));
+    return sendResponseData(true, message.success.fetchSubClass, result);
   } catch (error) {
     // Log the error if fetching subclasses and tags fails.
     loggerError.error("Error fetching class and classTags data:", error);
