@@ -6,7 +6,7 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import getConfig from "next/config";
 import { enterpriseUserMail } from "../constant/nodemailer"
-import {inviteEnterpriseUserMail} from "../constant/nodemailer"
+import { inviteEnterpriseUserMail, enterpriseAdminMail } from "../constant/nodemailer"
 
 const { serverRuntimeConfig } = getConfig();
 
@@ -359,22 +359,40 @@ async function inviteEnterpriseUser(params: any, reqData: any) {
 async function cancelInvite(params: any, reqData: any) {
   try {
     loggerInfo.info("Cancel Invite of Enterprise User")
+    //check if the enterprise user email exist in invite table
     const user = await db.Invite.findOne({
       where: { email: params.email },
     });
     if (!user) {
       return sendResponseData(false, "User not found for the given email", {});
     }
-    const res = await user.update(
-      {
-        email: null,
-        userRole: null,
-        status: null,
-      },
-      {
-        where: { email: params.email },
-      })
-    return sendResponseData(true, "Invitation Canceled Successfully", res)
+
+    // check if the enterprise user exist in enterpriseUser table too
+    const check = await db.EnterpriseUser.findOne({
+      where: { email: user.dataValues.email }
+    })
+
+    //fetching admin email
+    const adminMail = await db.EnterpriseUser.findOne({
+      where: { id: reqData.enterpriseUserId }
+    })
+    
+    if (check) {
+      //send mail to admin 
+      enterpriseAdminMail(adminMail.dataValues.email, check.dataValues.email)
+      return sendResponseData(true, "Email sent Successfully to Enterprise Admin", {})
+    } else {
+      const res = await user.update(
+        {
+          email: null,
+          userRole: null,
+          status: null,
+        },
+        {
+          where: { email: params.email },
+        })
+      return sendResponseData(true, "Invitation Canceled Successfully", res)
+    }
   } catch (error: any) {
     loggerError.error("Error in Inviting Enterprise User")
     return sendResponseData(false, "Error in cancel Invite of Enterprise User", error.message)

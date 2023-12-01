@@ -10,6 +10,10 @@ export function object(sequelize: {
         allowNull: boolean;
         autoIncrement: boolean;
       };
+      serialId: {
+        type: DataTypes.StringDataTypeConstructor;
+        allowNull: boolean;
+      };
       classId: {
         type: DataTypes.IntegerDataTypeConstructor;
         references: { model: string; id: string };
@@ -31,6 +35,10 @@ export function object(sequelize: {
       primaryKey: true,
       allowNull: false,
       autoIncrement: true,
+    },
+    serialId: {
+      type: DataTypes.STRING,
+      allowNull: false,
     },
     classId: {
       type: DataTypes.INTEGER,

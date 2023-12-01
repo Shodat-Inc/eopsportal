@@ -3,6 +3,7 @@ import sendResponseData from "../../constant";
 import { loggerInfo, loggerError } from "@/logger";
 import { error } from "console";
 import message from "@/util/responseMessage";
+import { generateRandomAlphaNumeric } from "../../../util/helper"
 
 /**
  * Repository for handling object related operations.
@@ -31,8 +32,13 @@ async function create(params: any) {
   }
 
   try {
+    const serialId = await generateRandomAlphaNumeric({ model: db.Object })
+    const updatedData = {
+      ...params,
+      serialId
+    }
     // Create a new object instance using the provided parameters.
-    const object = new db.object(params);
+    const object = new db.object(updatedData);
 
     // Save the new object to the database.
     const data = await object.save();
@@ -69,7 +75,7 @@ async function get(id: any) {
         {
           model: db.AddClasses,
           where: { id }, // This will filter by classId
-          attributes: ["id", "superParentId", "parentId"],
+          attributes: ["id", "superParentId", "parentId", "serialId"],
           include: [
             {
               model: db.classTag,
@@ -83,10 +89,14 @@ async function get(id: any) {
         },
       ],
     });
-    return result.map((item: any, index: any) => ({
-      S_No: index + 1,
-      ...item.get(), // Convert Sequelize instance to plain JS object
-    }));
+    if (!result) {
+      return sendResponseData(false, "Object Do not Exist", {})
+    }
+    return sendResponseData(true, "Object fetched Successfully", result)
+    // return result.map((item: any, index: any) => ({
+    //   S_No: index + 1,
+    //   ...item.get(), // Convert Sequelize instance to plain JS object
+    // }));
   } catch (error) {
     // Log the error if there's an issue with fetching data.
     loggerError.error(
@@ -125,7 +135,7 @@ async function getObjectById(params: any) {
         {
           model: db.AddClasses,
           where: { id: params.query.classId },
-          attributes: ["id", "superParentId", "parentId"],
+          attributes: ["id", "superParentId", "parentId", "serialId"],
           include: [
             {
               model: db.classTag,
@@ -139,12 +149,16 @@ async function getObjectById(params: any) {
         },
       ],
     });
+    if (!result) {
+      return sendResponseData(false, "Object Do not Exist", {})
+    }
+    return sendResponseData(true, "Object fetched Successfully", result)
 
     // Map the result to add serial numbers
-    return result.map((item: any, index: any) => ({
-      S_No: index + 1,
-      ...item.get(), // Convert Sequelize instance to plain JS object
-    }));
+    // return result.map((item: any, index: any) => ({
+    //   S_No: index + 1,
+    //   ...item.get(), // Convert Sequelize instance to plain JS object
+    // }));
 
   } catch (error) {
     // Log the error if there's an issue with fetching data.

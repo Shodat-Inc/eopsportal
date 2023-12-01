@@ -4,6 +4,7 @@ import { loggerInfo, loggerError } from "@/logger";
 import message from "@/util/responseMessage";
 import { Sequelize } from "sequelize";
 import { classTagRepo } from "./classTag-repo";
+import { generateRandomAlphaNumeric } from "../../../util/helper"
 
 // Repository for Class-related operations.
 export const classRepo = {
@@ -25,7 +26,7 @@ export const classRepo = {
 async function create(params: any) {
   // Log the initiation of class creation.
   loggerInfo.info("Create Class Repo:");
-  
+
   try {
     // Validate that the class name doesn't already exist.
     let class_data = await db.AddClasses.findOne({
@@ -34,9 +35,14 @@ async function create(params: any) {
     if (class_data) {
       return sendResponseData(false, message.error.classExist, {});
     }
+    const serialId = await generateRandomAlphaNumeric({ model: db.AddClasses })
+    const updatedData = {
+      ...params,
+      serialId
+    }
 
     // Create and save the new class instance.
-    const classes = new db.AddClasses(params);
+    const classes = new db.AddClasses(updatedData);
     const data = await classes.save();
     return sendResponseData(true, message.success.classAdded, data);
   } catch (error) {
@@ -62,7 +68,7 @@ async function getClassData(params: any) {
         userId: params.id,
         parentId: null,
       },
-      attributes: ["id", "className", "createdAt"],
+      attributes: ["id", "className", "createdAt", "serialId"],
       include: [
         {
           model: db.classTag,
@@ -116,7 +122,7 @@ async function getClassDataByID(params: any) {
         id: params.id,
         parentId: null,
       },
-      attributes: ["id", "className", "createdAt"],
+      attributes: ["id", "className", "createdAt", "serialId"],
       include: [
         {
           model: db.classTag,
@@ -165,7 +171,7 @@ async function getSubClass(param: any) {
         userId: param.id,
         parentId: param.query.id,
       },
-      attributes: ["id", "className", "createdAt"],
+      attributes: ["id", "className", "createdAt", "serialId"],
       include: [
         {
           model: db.classTag,
@@ -226,7 +232,7 @@ async function getSubClassByID(param: any) {
         id: param.query.classId,
         parentId: param.query.parentId,
       },
-      attributes: ["id", "className", "createdAt"],
+      attributes: ["id", "className", "createdAt", "serialId"],
       include: [
         {
           model: db.classTag,

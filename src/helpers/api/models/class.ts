@@ -10,6 +10,10 @@ export function AddClasses(sequelize: {
         allowNull: boolean;
         autoIncrement: boolean;
       };
+      serialId: {
+        type: DataTypes.StringDataTypeConstructor;
+        allowNull: boolean;
+      };
       className: {
         type: DataTypes.StringDataTypeConstructor;
         allowNull: boolean;
@@ -43,6 +47,10 @@ export function AddClasses(sequelize: {
       primaryKey: true,
       allowNull: false,
       autoIncrement: true,
+    },
+    serialId: {
+      type: DataTypes.STRING, 
+      allowNull: false,
     },
     className: {
       type: DataTypes.STRING,
