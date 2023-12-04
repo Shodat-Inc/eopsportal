@@ -49,8 +49,7 @@ export default function SubObjectManagement(props: any) {
             try {
                 await axios({
                     method: 'GET',
-                    url: `/api/getChildAssets?id=${props.defaultClass}`,
-                    // url: `/api/getChildAssets?id=2`,
+                    url: `http://20.232.178.134:3000/api/getChildAssets?id=${props.defaultClass}`,
                     headers: {
                         "Authorization": `Bearer ${tokenStr}`,
                         "Content-Type": "application/json"
@@ -60,7 +59,7 @@ export default function SubObjectManagement(props: any) {
                         console.log({
                             "RESPONSE DATA -1 ": response.data
                         })
-                        setChooseAsset(response.data.data[0]?.S_No)
+                        setChooseAsset(response.data.data[0]?.id)
                         setSubClassData(response.data.data)
                     } else {
 
@@ -79,7 +78,7 @@ export default function SubObjectManagement(props: any) {
         let data = [] as any;
         if (subClassData && subClassData.length >= 0) {
             data = subClassData.filter(function (item: any) {
-                return item.S_No === id;
+                return item.id === id;
             })
         }
         return data;
@@ -109,17 +108,16 @@ export default function SubObjectManagement(props: any) {
                 await axios({
                     method: 'GET',
                     // url: `/api/getObjects?id=${chooseAsset}`,
-                    url: `/api/getObjects?id=3`,
+                    url: `http://20.232.178.134:3000/api/getObjects?id=12`,
                     headers: {
                         "Authorization": `Bearer ${tokenStr}`,
                         "Content-Type": "application/json"
                     }
                 }).then(function (response) {
-                    if (response.status === 200) {
+                    if (response) {
                         console.log({
                             "RESPONSE DATA": response.data
-                        }) 
-                        
+                        })                         
                         setObjects(response.data)
                     } else {
 
@@ -197,10 +195,10 @@ export default function SubObjectManagement(props: any) {
                                         subClassData && subClassData.length >= 0 && subClassData.map((item: any, index: any) => (
                                             <li
                                                 className="px-5 py-2 bg-white cursor-pointer hover:bg-yellow-951 w-full font-normal"
-                                                onClick={() => selectItemFunction(item.S_No)}
+                                                onClick={() => selectItemFunction(item.id)}
                                                 key={index}
                                             >
-                                                <span>{item.className}</span>
+                                                <span>{item.className} {item.id}</span>
                                             </li>
                                         ))
                                     }

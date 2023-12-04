@@ -6,6 +6,12 @@ import axios from "axios";
 import { toggleAddNewObjectModel } from "@/store/actions/classAction";
 
 export default function AddNewObject(props: any) {
+
+    console.log({
+        "PROPS IN ADD NEW OBJECT": props,
+        // "SELECTED SUB CLASS DATA": subClass
+    })
+
     const dispatch = useDispatch<any>();
     const [allSubClass, setAllSubClass] = useState([] as any);
     const [subClass, setSubClass] = useState([] as any);
@@ -22,20 +28,27 @@ export default function AddNewObject(props: any) {
             try {
                 await axios({
                     method: 'GET',
-                    url: `/api/getChildAssets?id=${props.parentClassID}`,
+                    url: `http://20.232.178.134:3000/api/getChildAssets?id=${props.parentClassID}`,
                     headers: {
                         "Authorization": `Bearer ${tokenStr}`,
                         "Content-Type": "application/json"
                     }
                 }).then(function (response) {
                     if (response.data) {
-                        setAllSubClass(response.data.data)
+                        setAllSubClass(response.data.data);
+
+                        if (response) {
+                            const filtered = response.data.data.filter((item: any) => {
+                                return item.S_No === props.subClassID
+                            })
+                            setSubClass(filtered)
+                        }
                         console.log({
                             "RESPONSE": response.data.data
                         })
                     }
                 }).catch(function (error) {
-                    console.log("ERROR IN AXIOS CATCH BLOCK")
+                    console.log("ERROR IN AXIOS CATCH BLOCK",error)
                 })
             } catch (err) {
                 console.log("ERROR IN TRY CATCH BLOCK:", err)
@@ -43,14 +56,14 @@ export default function AddNewObject(props: any) {
         })();
     }, [props.parentClassID]);
     // Get the exact sub class data 
-    useEffect(() => {
-        if (allSubClass && allSubClass.length > 0) {
-            const filtered = allSubClass.filter((item: any) => {
-                return item.S_No === props.subClassID
-            })
-            setSubClass(filtered)
-        }
-    }, [allSubClass]);
+    // useEffect(() => {
+    //     if (allSubClass && allSubClass.length > 0) {
+    //         const filtered = allSubClass.filter((item: any) => {
+    //             return item.S_No === props.subClassID
+    //         })
+    //         setSubClass(filtered)
+    //     }
+    // }, [allSubClass]);
 
     const closeModel = () => {
         dispatch(toggleAddNewObjectModel(false));
@@ -86,7 +99,7 @@ export default function AddNewObject(props: any) {
         try {
             await axios({
                 method: 'POST',
-                url: `/api/createObjects`,
+                url: `http://20.232.178.134:3000/api/createObjects`,
                 data: dataToSave,
                 headers: {
                     "Authorization": `Bearer ${tokenStr}`,
@@ -117,10 +130,7 @@ export default function AddNewObject(props: any) {
 
     }
 
-    console.log({
-        "PROPS IN ADD NEW OBJECT": props,
-        "SELECTED SUB CLASS DATA": subClass
-    })
+    
     return (
         <>
             <div className={`bg-white h-full z-[11] fixed top-0 right-0 p-5 shadow shadow-lg ${props.show === true ? `${styles.objectContainer} ${styles.sliderShow}` : `${styles.objectContainer}`}`}>
