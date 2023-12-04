@@ -263,7 +263,10 @@ export default function AddNewClass(props: any, localData: any) {
 
                 <div className="flex justify-between items-center w-full mb-3">
                     <h2 className="font-semibold text-lg">Add New Class</h2>
-                    <button onClick={closeModal}>
+                    <button 
+                    onClick={closeModal}
+                    className="transition-all duration-[100ms] transition-opacity duration-100 outline-none transform active:scale-75 transition-transform"
+                    >
                         <Image
                             src="/img/x.svg"
                             alt="close"
@@ -321,7 +324,7 @@ export default function AddNewClass(props: any, localData: any) {
                                                             className="rounded-lg inline-flex justify-center items-center h-8 pl-2 pr-2 bg-[#F2F1F1] text-black text-[14px] mr-2 mb-2">
                                                             {items}
                                                             <button
-                                                                className="rounded-full border-2 border-white h-[24px] w-[24px] inline-flex justify-center items-center ml-3"
+                                                                className="rounded-full border-2 border-white h-[24px] w-[24px] inline-flex justify-center items-center ml-3 transition-all duration-[100ms] transition-opacity duration-100 outline-none transform active:scale-75 transition-transform"
                                                                 onClick={() => removeElement(items)}
                                                             >
                                                                 <Image
@@ -348,14 +351,14 @@ export default function AddNewClass(props: any, localData: any) {
                                                         required
                                                     />
                                                     <button
-                                                        className={`text-black border border-transparent rounded inline-flex justify-center items-center text-sm h-8 px-2 ml-1 bg-yellow-951 ${dataType && (dataType != null || dataType != "") ? 'okay' : 'disabled disabled:bg-gray-300'}`}
+                                                        className={`transition-all duration-[100ms] transition-opacity duration-100 outline-none transform active:scale-75 transition-transform text-black border border-transparent rounded inline-flex justify-center items-center text-sm h-8 px-2 ml-1 bg-yellow-951 ${dataType && (dataType != null || dataType != "") ? 'okay' : 'disabled disabled:bg-gray-300'}`}
                                                         onClick={saveNewTag}
                                                         disabled={dataType && (dataType != null || dataType != "") ? false : true}
                                                     >
                                                         Add
                                                     </button>
                                                     <button
-                                                        className="text-white border border-transparent rounded inline-flex justify-center items-center text-sm h-8 px-2 ml-1 bg-red-600"
+                                                        className="transition-all duration-[100ms] transition-opacity duration-100 outline-none transform active:scale-75 transition-transform text-white border border-transparent rounded inline-flex justify-center items-center text-sm h-8 px-2 ml-1 bg-red-600"
                                                         onClick={cancelAddingTag}
                                                     >
                                                         Cancel
@@ -367,7 +370,7 @@ export default function AddNewClass(props: any, localData: any) {
 
 
                                         <button
-                                            className={`text-black text-sm inline-flex justify-center items-center text-lg h-8 mb-2 px-2 mt-0 rounded rounded-lg font-semibold ${showHideAddTagButton ? 'bg-gray-951' : 'bg-yellow-951'}`}
+                                            className={`transition-all duration-[100ms] transition-opacity duration-100 outline-none transform active:scale-75 transition-transform text-black text-sm inline-flex justify-center items-center text-lg h-8 mb-2 px-2 mt-0 rounded rounded-lg font-semibold ${showHideAddTagButton ? 'bg-gray-951' : 'bg-yellow-951'}`}
                                             onClick={addTags}
                                             disabled={showHideAddTagButton}
                                         >
@@ -382,7 +385,7 @@ export default function AddNewClass(props: any, localData: any) {
 
 
                                         <button
-                                            className={`absolute right-1 top-5 ${allTags && allTags.length > 0 ? 'hidden' : ''} `}
+                                            className={`transition-all duration-[100ms] transition-opacity duration-100 outline-none transform active:scale-75 transition-transform absolute right-1 top-5 ${allTags && allTags.length > 0 ? 'hidden' : ''} `}
                                             onClick={addTags}
                                         >
                                             <Image
@@ -529,13 +532,13 @@ export default function AddNewClass(props: any, localData: any) {
 
                             <div className="mb-0 relative flex justify-end items-center w-full">
                                 <button
-                                    className="border border-black rounded-lg bg-black text-white text-lg w-20 h-12 mr-5 hover:bg-yellow-951 hover:text-white hover:border-yellow-951 ease-in-out duration-300 disabled:bg-gray-951 disabled:hover:border-gray-951 disabled:border-gray-951"
+                                    className="border border-black rounded-lg bg-black text-white text-lg w-20 h-12 mr-5 hover:bg-yellow-951 hover:text-white hover:border-yellow-951 ease-in-out duration-300 disabled:bg-gray-951 disabled:hover:border-gray-951 disabled:border-gray-951 transition-all duration-[100ms] transition-opacity duration-100 outline-none transform active:scale-75 transition-transform"
                                     disabled={(allTags && allTags.length > 0) ? false : true}
                                 >
                                     Save
                                 </button>
                                 <button
-                                    className="border border-black rounded-lg bg-white text-black text-lg w-24 h-12 hover:text-white hover:bg-yellow-951 hover:border-yellow-951 ease-in-out duration-300"
+                                    className="border border-black rounded-lg bg-white text-black text-lg w-24 h-12 hover:text-white hover:bg-yellow-951 hover:border-yellow-951 ease-in-out duration-300 transition-all duration-[100ms] transition-opacity duration-100 outline-none transform active:scale-75 transition-transform"
                                     onClick={cancelModal}
                                 >
                                     Cancel

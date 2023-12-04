@@ -199,7 +199,7 @@ export default function AssetManagement() {
                         tab === 1 &&
                         <div className="flex justify-start items-center">
                             <button
-                                className="rounded rounded-xl bg-black h-[44px] px-4 flex justify-center items-center text-white text-sm hover:bg-[#303030] transition-all duration-[400ms] transition-opacity duration-300 outline-none transform active:scale-75 transition-transform"
+                                className="rounded rounded-xl bg-black h-[44px] px-4 flex justify-center items-center text-white text-sm hover:bg-[#303030] transition-all duration-[100ms] transition-opacity duration-100 outline-none transform active:scale-75 transition-transform "
                                 onClick={openAddClassModal}
                             >
                                 <Image
@@ -212,7 +212,7 @@ export default function AssetManagement() {
                                 <span>Add Class</span>
                             </button>
                             <button
-                                className="rounded rounded-xl bg-black h-[44px] px-4 flex justify-center items-center text-white text-sm hover:bg-[#303030] transition-all duration-[400ms] transition-opacity duration-300 outline-none transform active:scale-75 transition-transform ml-4"
+                                className="rounded rounded-xl bg-black h-[44px] px-4 flex justify-center items-center text-white text-sm hover:bg-[#303030] transition-all duration-[100ms] transition-opacity duration-100 outline-none transform active:scale-75 transition-transform ml-4"
                             >
                                 <Image
                                     src="/img/download.svg"
@@ -230,7 +230,7 @@ export default function AssetManagement() {
                         tab === 4 &&
                         <div className="flex justify-start items-center">
                             <button
-                                className="rounded rounded-xl bg-black h-[44px] px-4 flex justify-center items-center text-white text-sm hover:bg-[#303030] transition-all duration-[400ms] transition-opacity duration-300 outline-none transform active:scale-75 transition-transform"
+                                className="rounded rounded-xl bg-black h-[44px] px-4 flex justify-center items-center text-white text-sm hover:bg-[#303030] transition-all duration-[100ms] transition-opacity duration-100 outline-none transform active:scale-75 transition-transform"
                                 onClick={openAddSubClassModal}
                             >
                                 <Image
@@ -248,7 +248,7 @@ export default function AssetManagement() {
                     {tab === 3 &&
                         <div className="flex justify-start items-center">
                             <button
-                                className="rounded rounded-xl bg-black h-[44px] px-4 flex justify-center items-center text-white text-sm hover:bg-[#303030] transition-all duration-[400ms] transition-opacity duration-300 outline-none transform active:scale-75 transition-transform"
+                                className="rounded rounded-xl bg-black h-[44px] px-4 flex justify-center items-center text-white text-sm hover:bg-[#303030] transition-all duration-[100ms] transition-opacity duration-100 outline-none transform active:scale-75 transition-transform"
                                 onClick={openAddObjectModal}
                             >
                                 <Image

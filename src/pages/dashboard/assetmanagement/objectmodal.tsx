@@ -69,7 +69,7 @@ export default function ObjectModal(props: any) {
                                         <span className="text-lg text-black pl-2">Vehicals</span>
                                     </div>
                                     {toggleAsset ?
-                                        <div className={`h-52 border rounded-xl border-gray-500 h-[155px] w-[400px]  relative flex items-start justify-start mt-1 overflow-hidden overflow-y-scroll ${styles.scroll} transition-opacity duration-300 outline-none transform active:scale-75 transition-transform`}>
+                                        <div className={`h-52 border rounded-xl border-gray-500 h-[155px] w-[400px]  relative flex items-start justify-start mt-1 overflow-hidden overflow-y-scroll ${styles.scroll} transition-opacity duration-[100ms] outline-none transform active:scale-75 transition-transform`}>
                                             {data && data.length > 0 ?
                                                 <ul className="p-0 m-0 w-full">
                                                     {
@@ -91,7 +91,7 @@ export default function ObjectModal(props: any) {
                                 <div className="w-[400px] mt-10 flex justify-end items-end">
                                     <button
                                         onClick={continueToNext}
-                                        className="rounded-xl bg-black border-[2px] border-black text-white flex h-12 justify-center items-center pl-2 pr-2 hover:bg-yellow-951 hover:text-black hover:border-yellow-951 w-[120px] transition-all duration-[400ms] transition-opacity duration-300 outline-none transform active:scale-75 transition-transform"
+                                        className="rounded-xl bg-black border-[2px] border-black text-white flex h-12 justify-center items-center pl-2 pr-2 hover:bg-yellow-951 hover:text-black hover:border-yellow-951 w-[120px] transition-all duration-[400ms] transition-opacity duration-[100ms] outline-none transform active:scale-75 transition-transform"
                                     >
                                         <span className="font-normal">Continue</span>
                                     </button>
