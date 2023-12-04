@@ -27,7 +27,8 @@ export default function AssetManagement() {
         try {
             await axios({
                 method: 'GET',
-                url: `http://20.232.178.134:3000/api/getAssets`,
+                // url: `http://20.232.178.134:3000/api/getAssets`,
+                url: `/api/getAssets`,
                 headers: {
                     "Authorization": `Bearer ${access_token}`,
                     "Content-Type": "application/json"

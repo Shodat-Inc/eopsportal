@@ -82,7 +82,8 @@ export default function SignIn() {
             try {
                 await axios({
                     method: 'POST',
-                    url: `http://20.232.178.134:3000/api/signIn`,
+                    // url: `http://20.232.178.134:3000/api/signIn`,
+                    url: `/api/signIn`,
                     withCredentials: false,
                     data: {
                         email: formData.username,
@@ -93,7 +94,8 @@ export default function SignIn() {
                     }
                 }).then(function (response) {
                     console.log({
-                        res: response.data.data
+                        "SIGN RES": response,
+                        "TOKEN": response.data
                     })
 
                     if (response.data) {

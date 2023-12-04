@@ -20,6 +20,7 @@ export const usersRepo = {
 
 async function authenticate(data: any) {
   try {
+    console.log(data,"_________user repo");
     let { username, password } = data;
     const user = await db.User.scope("withHash").findOne({
       attributes: [
@@ -52,12 +53,12 @@ async function authenticate(data: any) {
       where: { userId: user.id },
       attributes: ["phoneNumber"],
     });
-    const role = await db.Role.findOne({
-      where: { id: user.roleId },
-      attributes: ["name"],
-    });
-    user.dataValues["phoneNumber"] = phoneRecord.phoneNumber;
-    user.dataValues["roleName"] = role.name;
+    // const role = await db.Role.findOne({
+    //   where: { id: user.roleId },
+    //   attributes: ["name"],
+    // });
+    // user.dataValues["phoneNumber"] = phoneRecord.phoneNumber;
+    // user.dataValues["roleName"] = role.name;
 
     // return user and jwt
     return sendResponseData(true, message.success.loginSuccess, {

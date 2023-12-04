@@ -26,6 +26,7 @@ async function handler(req: any, res: any) {
     const data = await usersRepo.authenticate(req.body);
 
     // If successful, return a 200 OK response with the authentication data.
+    console.log(data,"_________api console");
     return res.status(200).send(data);
   } catch (error: any) {
     // If there's an error during the authentication process, return the error's status and message.
