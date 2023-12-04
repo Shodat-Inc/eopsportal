@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import Layout from "../../../components/Layout";
-import Image from "next/dist/client/image";
+import Image from "next/image";
 import Link from "next/link";
 import axios from "axios";
 import ClassManagement from "./classmanagement";
