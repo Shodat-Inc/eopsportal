@@ -901,6 +901,14 @@ table.proSenseTable tbody tr td {
     border-bottom: 1px solid #EEEEEE;
 }
 
+.tableV4 tbody tr td {
+    height: 70px;
+}
+
+.tableV4 tbody tr {
+    border-bottom: 1px solid #E1E1E1;
+}
+
 .tableV3 {
     border-collapse: collpase;
 }
@@ -925,6 +933,13 @@ table.proSenseTable tbody tr td {
 .phoneField input[type="tel"]:focus-visible {
     border: 0;
     outline: none;
+}
+.tableV4 tbody tr td > span:last-child > i{
+    display: none;
+}
+
+.phoneField > .PhoneInput {
+    padding: 0 !important;
 }
 
 
@@ -979,14 +994,17 @@ table.proSenseTable tbody tr td {
 .progessWrap span {
     margin-top: 2px;
 }
-.progessWrap span img, 
+
+.progessWrap span img,
 .progessWrap span {
     position: relative;
     z-index: 1;
 }
+
 .progessWrap .processBox {
     position: relative;
 }
+
 .progessWrap .processBox::before {
     content: '';
     position: absolute;
@@ -996,12 +1014,82 @@ table.proSenseTable tbody tr td {
     left: 16px;
     top: 0;
 }
+
 .progessWrap .completed.processBox::before {
     background: #6bb560;
 }
+
 .progessWrap .processBox:first-child:before {
     top: 2px;
 }
+
 .progessWrap .processBox:last-child:before {
     height: 85%;
+}
+
+.tableV4 thead tr {
+    border-top: 1px solid #EEEEEE;
+}
+
+.tableV4 thead th {
+    height: 35px;
+}
+
+.tableV4 tbody tr td {
+    height: 50px;
+}
+
+.tableV4 tbody tr:last-child {
+    border-bottom: 1px solid #EEEEEE;
+}
+
+.tableV4 thead tr th:first-child {
+    padding-left: 20px;
+}
+
+.tableV4 tbody tr td:first-child {
+    padding-left: 20px;
+}
+
+
+.objectContainer {
+    width: 52%;
+    padding-left: 4% ;
+    padding-right: 3%;
+    transform: translateX(100%);
+    transition: transform 0.3s ease-out;
+}
+
+.sliderShow {
+    transform: translateX(0%);
+}
+
+.backdrop {
+    background: rgba(0, 0, 0, 0.7);
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 9;
+}
+
+.overflowScroll {
+    height: 400px;
+    overflow-y: scroll;
+    padding-right: 15px;
+}
+.overflowScroll::-webkit-scrollbar {
+    width: 8px;
+}
+
+.overflowScroll::-webkit-scrollbar-track {
+    background: #efefef;
+    border-radius: 5px;
+}
+
+.overflowScroll::-webkit-scrollbar-thumb {
+    background-color: #BDBDBD;
+    border-radius: 14px;
+    border: 3px solid #BDBDBD;
 }

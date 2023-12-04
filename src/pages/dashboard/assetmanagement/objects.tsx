@@ -1,6 +1,4 @@
 import React, { useState, useRef, useEffect } from "react";
-import { useDispatch, useSelector } from 'react-redux';
-import Router from 'next/router'
 import Layout from "../../../components/Layout";
 import NoDataFound from "../../../common/nodatafound";
 import styles from '../../../styles/Common.module.css';
@@ -24,76 +22,30 @@ export async function getServerSideProps() {
 
 export default function Objects(localData: any) {
     const router = useRouter();
-    // Getting Props
-    const {  query : {chooseAsset}} = router
-    const props = {chooseAsset}
-  
     const parentAsset = router.query;
-    const [showModal, setShowModal] = useState(false);
     const [success, setSuccess] = useState(false);
     const [data, setData] = useState<any[]>([]);
-    const [allTags, setAllTags] = useState<any[]>([]);
-    const [newTag, setNewTag] = useState("");
-    const [showInput, setShowInput] = useState(false);
-    const [hide, setHide] = useState(false);
-    const [showHideAddTagButton, setShowHideAddTagButton] = useState(false);
-    const [selParentTags, setSelParentTags] = useState<any[]>([]);
-    const getClass = useSelector((state: any) => state.classReducer);
     const filtered = localData.localData.filter((item: any) => {
-        return item.parentAssetName === props.chooseAsset;
+        return item.parentAssetName === parentAsset.assets;
     });
-    const [filteredList, setFilteredList] = useState(filtered);
-    const [checkIcon, setCheckIcon] = useState("/img/blank_check_box_icon_white.svg");
-    const [tag, setTag] = useState<any[]>([]);
-
     const [getParentData, setGetParentData] = useState<any[]>([]);
     const VIN = useRef("");
-    const ModalType = useRef("");
-    const Color = useRef("");
-    const CapacityInCC = useRef("");
-    const Cylinders = useRef("");
     const [calDate, setCalDate] = useState({
         startDate: null,
         endDate: null
     });
-    const [mfdDate, setMfdDate] = useState();
     const [subObj, setSebObj] = useState({} as any);
     const [deleteModal, setDeleteModal] = useState(false);
-
-    
-    // Get JSON data on page load
-    const fetchDataForParent = () => {
-        axios.get("/api/getAssets").then((response) => {
-            if (response.data) {
-                const filtered = response.data.filter((item: any) => {
-                    // return item.assetName === parentAsset.assets;
-                    // return item.assetName === getClass.selectedClass;
-                    return item.assetName === props.chooseAsset;
-                });
-                if (filtered && filtered.length > 0) {
-                    setGetParentData(filtered[0].assetkey);
-                }
-            }
-        });
-    };
-    useEffect(() => {
-        fetchDataForParent();
-        if (fetchDataForParent.length) return;
-    }, [getClass])
-
 
     // Get JSON data on page load
     const fetchData = () => {
         axios.get("/api/getObjects").then((response) => {
             if (response.data) {
                 const filtered = response.data.filter((item: any) => {
-                    // return item.parentAssetID === getClass.selectedClass;
-                    return item.parentAssetID === props.chooseAsset;
+                    return item.parentAssetID === parentAsset.assets;
                 });
                 if (filtered && filtered.length > 0) {
-                    // update state and store data
                     setData(filtered);
-                    // Filter the array with subObject Items                   
                     setSebObj(filtered[0]);
                 }
             }
@@ -105,14 +57,9 @@ export default function Objects(localData: any) {
     }, [localData.localData])
 
 
-    // Check if array contains an item
-    const isInArray = (value: any, array: any) => {
-        return array.indexOf(value) > -1;
-    }
-
     const handleValueChange = (newValue: any) => {
         setCalDate(newValue);
-        setMfdDate(newValue.startDate)
+        // setMfdDate(newValue.startDate)
     }
 
     // Get Last Asset ID
@@ -136,8 +83,8 @@ export default function Objects(localData: any) {
             },
             body: JSON.stringify(
                 {
-                    parentAssetID: props.chooseAsset,
-                    parentAssetName: props.chooseAsset,
+                    parentAssetID: parentAsset.assets,
+                    parentAssetName: parentAsset.assets,
                     subObjectName: `${form_values.Name ? form_values.Name : ''}`,
                     subObjectID: `${form_values.PlantID ? form_values.PlantID : ''}`,
                     subObjects: form_values,
@@ -149,7 +96,6 @@ export default function Objects(localData: any) {
         const resdata = await response.json();
         if (resdata) {
             router.replace(router.asPath);
-            setShowModal(false);
             setSuccess(true);
             setTimeout(() => {
                 setSuccess(false);
@@ -174,7 +120,7 @@ export default function Objects(localData: any) {
         }
     ]
 
-    var linkKey = joinKey.filter(function (items: any) { return items.objectName === props.chooseAsset; });
+    var linkKey = joinKey.filter(function (items: any) { return items.objectName === parentAsset.assets; });
 
     // Delete Asset
     const deleteAsset = (assetID: any) => {
@@ -215,7 +161,7 @@ export default function Objects(localData: any) {
                                     </li>
                                     <li>
                                         <div className="flex items-center">
-                                            <span className="ml-1 text-sm font-medium text-black hover:text-yellow-950 md:ml-1">{props.chooseAsset}</span>
+                                            <span className="ml-1 text-sm font-medium text-black hover:text-yellow-950 md:ml-1">{parentAsset.assets}</span>
                                         </div>
                                     </li>
                                 </ol>
@@ -350,7 +296,7 @@ export default function Objects(localData: any) {
                                                                                 pathname: '/dashboard/assetmanagement/subobject',
                                                                                 query: {
                                                                                     object: items?.subObjects?.PlantID || items?.subObjects?.VIN,
-                                                                                    parentObject: props.chooseAsset,
+                                                                                    parentObject: parentAsset.assets,
                                                                                     key: linkKey[0].key
                                                                                 }
                                                                             }}
@@ -371,8 +317,8 @@ export default function Objects(localData: any) {
                                                                     />
                                                                 </button>
                                                                 <button
-                                                                className="transition-opacity duration-300 outline-none transform active:scale-75 transition-transform" 
-                                                                onClick={() => deleteAsset(items)}>
+                                                                    className="transition-opacity duration-300 outline-none transform active:scale-75 transition-transform"
+                                                                    onClick={() => deleteAsset(items)}>
                                                                     <Image
                                                                         src="/img/trash.svg"
                                                                         alt="Trash"

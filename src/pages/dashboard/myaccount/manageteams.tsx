@@ -1,20 +1,70 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styles from '../../../styles/Common.module.css';
 import Image from "next/image";
+import DeleteModal from '@/common/deletemodal';
+import SuspendModal from '@/common/suspendmodal';
+import ActiveModal from '@/common/activemodal';
 export default function ManageTeams(props: any) {
     const [toggleText, setToggleText] = useState(false)
+    const [toggleDrop, setToggleDrop] = useState(false);
+    const [selectedOption, setSelectedOption] = useState(1);
+    const [deleteModal, setDeleteModal] = useState(false);
+    const [suspendModal, setSuspendModal] = useState(false);
+    const [activeModal, setActiveModal] = useState(false);
 
     // Toggle Text
     const toggleChecked = () => {
         setToggleText(!toggleText)
     }
+    const toggleDropFunction = (item: any) => {
+        setToggleDrop(!toggleDrop);
+        setSelectedOption(item)
+    }
+    // Hook that alerts clicks outside of the passed ref
+    function useOutsideAlerter(ref: any) {
+        useEffect(() => {
+            function handleClickOutside(event: any) {
+                if (ref.current && !ref.current.contains(event.target)) {
+                    setToggleDrop(false)
+                }
+            }
+            document.addEventListener("mousedown", handleClickOutside);
+            return () => {
+                document.removeEventListener("mousedown", handleClickOutside);
+            };
+        }, [ref]);
+    }
+    const wrapperRef = useRef(null);
+    useOutsideAlerter(wrapperRef);
+
+    const handleDeleteFunction = () => {
+        setDeleteModal(false)
+    }
+    const deleteUser = () => {
+        setDeleteModal(true);
+    }
+
+    const handleSuspendFunction = () => {
+        setSuspendModal(false)
+    }
+    const suspendUser = () => {
+        setSuspendModal(true);
+    }
+
+
+    const handleActiveFunction = () => {
+        setActiveModal(false)
+    }
+    const activeUser = () => {
+        setActiveModal(true);
+    }
     return (
         <div className="relative bg-white p-5 min-h-[430px]">
 
             {/* Manage Team */}
-            <div className="flex justify-between items-start mb-7">
-                <div className="text-lg font-semibold text-black w-[33%]">Manage Team</div>
-                <div className="text-right inline-flex justify-start items-end">
+            <div className="flex justify-between items-start mb-5">
+                <div className="text-lg font-semibold text-black w-[33%]">Invite New Users</div>
+                <div className="text-right inline-flex justify-start items-end hidden">
                     <div className='flex justify-start items-start flex-wrap flex-col mr-2'>
                         <p className='text-lg font-semibold text-black'>Add New User</p>
                         <p className='text-sm text-black'>You are able to add more 8 users out of 10.</p>
@@ -37,7 +87,7 @@ export default function ManageTeams(props: any) {
 
             {/* Invite User  */}
             <div className='flex justify-between items-start w-full mb-6'>
-                <div className='rounded rounded-lg border border-gray-962 h-[60px] w-[82%] py-1 px-3 flex justify-start items-center'>
+                <div className='rounded rounded-lg border border-gray-962 h-[60px] w-[85%] py-1 px-3 flex justify-start items-center'>
                     <span className='bg-gray-957 rounded rounded-lg p-1 mr-2 inline-flex justify-between items-center text-sm'>
                         amitpandey@shodat.com
                         <button className='ml-2'>
@@ -51,19 +101,26 @@ export default function ManageTeams(props: any) {
                         </button>
                     </span>
                 </div>
-                <div className='w-[18%] flex justify-end items-start'>
+                <div className='w-[15%] flex justify-end items-start'>
                     <button className='h-[60px] text-white bg-black flex justify-center items-center text-sm font-[300] rounded rounded-lg px-5'>
+                        <Image
+                            src="/img/user-white.svg"
+                            alt='user-white'
+                            height={21}
+                            width={21}
+                            className='mr-2'
+                        />
                         <span>Invite User</span>
                     </button>
                 </div>
             </div>
 
 
-            {/* Active Users */}
+            {/* All Users */}
             <div className='flex justify-start items-start flex-wrap w-full mb-6'>
-                <p className='text-black font-semibold text-lg mb-4'>Active Users</p>
-                <div className='border border-gray-962 min-h-[100px] w-full '>
-                    <div className='relative border border-t-0 border-l-0 border-r-0 border-b-1 border-gray-962 flex justify-start items-center py-4 px-2'>
+                <p className='text-black font-semibold text-lg mb-4'>All Users</p>
+                <div className='min-h-[100px] w-full '>
+                    <div className='relative border border-t-0 border-l-0 border-r-0 border-b-1 border-gray-962 flex justify-start items-center py-4 px-2 hidden'>
                         <div className='w-[50%] flex justify-start items-center'>
                             <div className='rounded rounded-full bg-medium w-[45px] h-[45px] inline-flex justify-center items-center text-white text-2xl font-[400] mr-4'>V</div>
                             <div className='flex flex-wrap flex-col'>
@@ -97,12 +154,168 @@ export default function ManageTeams(props: any) {
                         </div>
                     </div>
 
-                    <div className='relative border border-t-0 border-l-0 border-r-0 border-b-0 border-gray-962 flex justify-start items-center py-4 px-2'>
+                    <div className="flex flex-wrap flex-col justify-start items-start w-full">
+                        <table className={`table-auto lg:min-w-full sm:w-full small:w-full text-left ${styles.tableV3} ${styles.tableV4}`}>
+                            <thead className="text-sm font-normal">
+                                <tr>
+                                    <th>Name</th>
+                                    <th>User Role</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div className='w-full flex justify-start items-center'>
+                                            <div className='rounded rounded-full bg-medium w-[45px] h-[45px] inline-flex justify-center items-center text-white text-2xl font-[400] mr-4'>J</div>
+                                            <div className='flex flex-wrap flex-col'>
+                                                <p className='text-md font-semibold'>John</p>
+                                                <p className='text-sm'>John@companyemail.com</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <span className='bg-[#FED136] h-[30px] min-w-[71px] rounded rounded-xl inline-flex justify-center items-center text-sm px-3'>Manager</span>
+                                    </td>
+                                    <td>
+                                        <span className='bg-[#57954D] h-[30px] min-w-[71px] rounded rounded-xl inline-flex justify-center items-center text-sm px-3 text-white'>Active</span>
+                                    </td>
+                                    <td>
+                                        <div className="flex justify-start items-center relative">
+                                            <button onClick={() => toggleDropFunction(1)}>
+                                                <Image
+                                                    src="/img/more-vertical.svg"
+                                                    alt="Upload"
+                                                    height={24}
+                                                    width={24}
+                                                />
+                                            </button>
+                                            {(toggleDrop && selectedOption === 1) &&
+                                                <div ref={wrapperRef} className="bg-white text-black overflow-hidden rounded rounded-xl w-[200px] flex flex-col flex-wrap items-start justify-start shadow-lg absolute top-[30px] right-[80px] z-[1] border border-[#E1E1E1] py-3">
+                                                    <button
+                                                        className="text-black text-[14px] hover:bg-white hover:text-black h-[45px] px-4 w-full text-left hover:bg-[#f8f8f8]">
+                                                        <span>Permissions & Settings</span>
+                                                    </button>
+                                                    <button
+                                                        onClick={suspendUser}
+                                                        className="text-black text-[14px] hover:bg-white hover:text-black h-[45px] px-4 w-full text-left hover:bg-[#f8f8f8]">
+                                                        <span>Suspend</span>
+                                                    </button>
+                                                    <button
+                                                        onClick={deleteUser}
+                                                        className="text-black text-[14px] hover:bg-white hover:text-black h-[45px] px-4 w-full text-left hover:bg-[#f8f8f8]">
+                                                        <span>Delete</span>
+                                                    </button>
+                                                </div>
+                                            }
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div className='w-full flex justify-start items-center'>
+                                            <div className='rounded rounded-full bg-resolved w-[45px] h-[45px] inline-flex justify-center items-center text-white text-2xl font-[400] mr-4'>R</div>
+                                            <div className='flex flex-wrap flex-col'>
+                                                <p className='text-md font-semibold'>Rosey</p>
+                                                <p className='text-sm'>rosey.s@companyemail.com</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <span className='bg-[#9FCCDC] h-[30px] min-w-[71px] rounded rounded-xl inline-flex justify-center items-center text-sm px-3'>User</span>
+                                    </td>
+                                    <td>
+                                        <span className='bg-[#EF0000] h-[30px] min-w-[71px] rounded rounded-xl inline-flex justify-center items-center text-sm px-3 text-white'>Suspended</span>
+                                    </td>
+                                    <td>
+                                        <div className="flex justify-start items-center relative">
+                                            <button onClick={() => toggleDropFunction(2)}>
+                                                <Image
+                                                    src="/img/more-vertical.svg"
+                                                    alt="Upload"
+                                                    height={24}
+                                                    width={24}
+                                                />
+                                            </button>
+                                            {(toggleDrop && selectedOption === 2) &&
+                                                <div ref={wrapperRef} className="bg-white text-black overflow-hidden rounded rounded-xl w-[200px] flex flex-col flex-wrap items-start justify-start shadow-lg absolute top-[30px] right-[80px] z-[1] border border-[#E1E1E1] py-3">
+                                                    <button
+                                                        className="text-black text-[14px] hover:bg-white hover:text-black h-[45px] px-4 w-full text-left hover:bg-[#f8f8f8]">
+                                                        <span>Permissions & Settings</span>
+                                                    </button>
+                                                    <button
+                                                        onClick={activeUser}
+                                                        className="text-black text-[14px] hover:bg-white hover:text-black h-[45px] px-4 w-full text-left hover:bg-[#f8f8f8]">
+                                                        <span>Active</span>
+                                                    </button>
+                                                    <button
+                                                        onClick={deleteUser}
+                                                        className="text-black text-[14px] hover:bg-white hover:text-black h-[45px] px-4 w-full text-left hover:bg-[#f8f8f8]">
+                                                        <span>Delete</span>
+                                                    </button>
+                                                </div>
+                                            }
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div className='w-full flex justify-start items-center'>
+                                            <div className='rounded rounded-full bg-low w-[45px] h-[45px] inline-flex justify-center items-center text-white text-2xl font-[400] mr-4'>N</div>
+                                            <div className='flex flex-wrap flex-col'>
+                                                <p className='text-md font-semibold'>Nicko Amand</p>
+                                                <p className='text-sm'>nickoamand@companyemail.com</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <span className='bg-[#A2D09B] h-[30px] min-w-[71px] rounded rounded-xl inline-flex justify-center items-center text-sm px-3'>Contributor</span>
+                                    </td>
+                                    <td>
+                                        <span className='bg-[#57954D] h-[30px] min-w-[71px] rounded rounded-xl inline-flex justify-center items-center text-sm px-3 text-white'>Active</span>
+                                    </td>
+                                    <td>
+                                        <div className="flex justify-start items-center relative">
+                                            <button onClick={() => toggleDropFunction(3)}>
+                                                <Image
+                                                    src="/img/more-vertical.svg"
+                                                    alt="Upload"
+                                                    height={24}
+                                                    width={24}
+                                                />
+                                            </button>
+                                            {(toggleDrop && selectedOption === 3) &&
+                                                <div ref={wrapperRef} className="bg-white text-black overflow-hidden rounded rounded-xl w-[200px] flex flex-col flex-wrap items-start justify-start shadow-lg absolute top-[30px] right-[80px] z-[1] border border-[#E1E1E1] py-3">
+                                                    <button
+                                                        className="text-black text-[14px] hover:bg-white hover:text-black h-[45px] px-4 w-full text-left hover:bg-[#f8f8f8]">
+                                                        <span>Permissions & Settings</span>
+                                                    </button>
+                                                    <button
+                                                        onClick={suspendUser}
+                                                        className="text-black text-[14px] hover:bg-white hover:text-black h-[45px] px-4 w-full text-left hover:bg-[#f8f8f8]">
+                                                        <span>Suspend</span>
+                                                    </button>
+                                                    <button
+                                                        onClick={deleteUser}
+                                                        className="text-black text-[14px] hover:bg-white hover:text-black h-[45px] px-4 w-full text-left hover:bg-[#f8f8f8]">
+                                                        <span>Delete</span>
+                                                    </button>
+                                                </div>
+                                            }
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div className='relative border border-t-0 border-l-0 border-r-0 border-b-0 border-gray-962 flex justify-start items-center py-4 px-2 hidden'>
                         <div className='w-[50%] flex justify-start items-center'>
-                            <div className='rounded rounded-full bg-high w-[45px] h-[45px] inline-flex justify-center items-center text-white text-2xl font-[400] mr-4'>A</div>
+                            <div className='rounded rounded-full bg-high w-[45px] h-[45px] inline-flex justify-center items-center text-white text-2xl font-[400] mr-4'>J</div>
                             <div className='flex flex-wrap flex-col'>
-                                <p className='text-md font-semibold'>Amit P</p>
-                                <p className='text-sm'>amitpandey@shodat.com</p>
+                                <p className='text-md font-semibold'>John</p>
+                                <p className='text-sm'>John@companyemail.com</p>
                             </div>
                         </div>
                         <div className='w-[25%]'>
@@ -132,7 +345,7 @@ export default function ManageTeams(props: any) {
                     </div>
                 </div>
 
-                <div className='flex justify-end items-center mt-5 w-full'>
+                <div className='flex justify-end items-center mt-5 w-full hidden'>
                     <button className='text-white text-md font-[400] bg-black rounded rounded-xl flex justify-center items-center h-[48px] px-4'>
                         <span>Save Changes</span>
                     </button>
@@ -263,6 +476,29 @@ export default function ManageTeams(props: any) {
                     </button>
                 </div>
             </div>
+
+
+            {/* ===== Delete Modal starts ===== */}
+            {
+                deleteModal &&
+                <DeleteModal handleClick={handleDeleteFunction} />
+            }
+            {/* ===== Delete Modal Ends ===== */}
+
+            {/* ===== Suspend Modal starts ===== */}
+            {
+                suspendModal &&
+                <SuspendModal handleClick={handleSuspendFunction} />
+            }
+            {/* ===== Suspend Modal Ends ===== */}
+
+            {/* ===== Suspend Modal starts ===== */}
+            {
+                activeModal &&
+                <ActiveModal handleClick={handleActiveFunction} />
+            }
+            {/* ===== Suspend Modal Ends ===== */}
+
         </div>
     )
 }

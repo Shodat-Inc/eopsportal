@@ -65,20 +65,24 @@ export default function DeleteAccount(props: any) {
                 />
             </div>
 
-            <div className="flex justify-start items-center mb-4 w-full">
-                <div className={`${styles.customCheck} mt-2`}>
-                    <input
-                        type='checkbox'
-                        name="agreement"
-                    />
-                    <span></span>
+            <div className='flex justify-between items-center mb-4 w-full'>
+                <div className="flex justify-start items-center ">
+                    <div className={`${styles.customCheck} mt-2`}>
+                        <input
+                            type='checkbox'
+                            name="agreement"
+                        />
+                        <span></span>
+                    </div>
+                    <label className="ml-2 text-sm text-black block relative top-[1px]">Yes, I want to permanently delete this account and all its data.</label>
                 </div>
-                <label className="ml-2 text-sm text-black block relative top-[1px]">Yes, I want to permanently delete this account and all its data.</label>
-            </div>
 
-            <div className="flex justify-center items-center pt-1 w-full">
-                <button
-                    className='h-[44px] rounded rounded-xl w-[280px] bg-yellow-951 text-black text-sm flex justify-center items-center'>Confirm</button>
+                <div className="flex justify-end items-center pt-1">
+                    <button
+                        className='h-[55px] rounded rounded-xl w-[180px] bg-yellow-951 text-black  font-semibold flex justify-center items-center'>
+                        <span>Confirm</span>
+                    </button>
+                </div>
             </div>
 
         </div>

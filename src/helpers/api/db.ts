@@ -89,7 +89,7 @@ async function initialize() {
       host,
       port,
       user,
-      password,
+      // password:"",
     });
     await connection.query(`CREATE DATABASE IF NOT EXISTS \`${database}\`;`);
 

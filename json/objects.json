@@ -7,14 +7,14 @@
         "subObjectName": "Tepco Natural Gas",
         "subObjectID": "TPC3305-01",
         "subObjects": {
-            "mfdDate": "2023-05-29",
             "PlantID": "TPC3305-01",
+            "Name": "Tepco Natural Gas",
             "Street": "3861 Scenic Hwy",
             "City": "Baton Rouge",
             "State": "Louisana",
             "Zipcode": "70805",
             "Country": "United States",
-            "Name": "Tepco Natural Gas",
+            "mfdDate": "2023-05-29",
             "Description": ""
         }
     },
@@ -26,14 +26,14 @@
         "subObjectName": "Tepco Petroleum",
         "subObjectID": "TPC3305-02",
         "subObjects": {
-            "mfdDate": "2023-05-29",
             "PlantID": "TPC3305-02",
+            "Name": "Tepco Petroleum",
             "Street": "3861 Scenic Hwy",
             "City": "Baton Rouge",
             "State": "Louisana",
             "Zipcode": "70805",
             "Country": "United States",
-            "Name": "Tepco Petroleum",
+            "mfdDate": "2023-05-29",
             "Description": ""
         }
     },
@@ -45,14 +45,14 @@
         "subObjectName": "Tepco Nuclear Energy",
         "subObjectID": "TPC71810-01",
         "subObjects": {
-            "mfdDate": "2023-05-29",
             "PlantID": "TPC71810-01",
+            "Name": "Tepco Nuclear Energy",
             "Street": "22712 206th Ave N",
             "City": "Cordova",
             "State": "Illinios",
             "Zipcode": "61242",
             "Country": "United States",
-            "Name": "Tepco Nuclear Energy",
+            "mfdDate": "2023-05-29",
             "Description": ""
         }
     },
@@ -63,8 +63,8 @@
         "dateCreated": "2023-05-29",
         "subObjects": {
             "VIN": "5PVBE7AJ8R5T50001",
-            "Model": "ES350",
             "AssemblyPlant": "Mineral Wells",
+            "Model": "ES350",
             "LotNo": "104CY5209",
             "ModelYear": "2022",
             "Type": "ICE"
@@ -79,8 +79,8 @@
         "dateCreated": "2023-05-29",
         "subObjects": {
             "VIN": "5PVBE7AJ8R5T50007",
-            "Model": "GS450",
             "AssemblyPlant": "Mineral Wells",
+            "Model": "GS450",
             "LotNo": "104CY2231",
             "ModelYear": "2022",
             "Type": "ICE"
@@ -95,8 +95,8 @@
         "dateCreated": "2023-05-29",
         "subObjects": {
             "VIN": "5PVBN3TK3R6Y67222",
-            "Model": "EX-F",
             "AssemblyPlant": "Virginia",
+            "Model": "EX-F",
             "LotNo": "104FG2001",
             "ModelYear": "2023",
             "Type": "EV"

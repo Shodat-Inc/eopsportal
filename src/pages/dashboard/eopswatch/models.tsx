@@ -75,10 +75,13 @@ export default function Models() {
                 subObject: routerParams.subObject,
                 key: routerParams.key,
                 id: routerParams.id,
-                model:data.name
+                model: data.name,
+                industryID: routerParams.id
             }
         })
     }
+    const hasParams = routerParams.hasOwnProperty("PlantID");
+    const hasObjectParams = routerParams.hasOwnProperty("subObject")
     return (
         <div className="w-full h-full font-OpenSans">
             <p className="text-black text-lg mb-4 font-semibold text-xl">eOps Watch</p>
@@ -90,7 +93,7 @@ export default function Models() {
                             href="/dashboard/eopswatch"
                             className="font-semibold"
                         >
-                            {routerParams.key}
+                            Home
                         </Link>
                     </li>
                     <li className="flex justify-start items-center">
@@ -100,7 +103,87 @@ export default function Models() {
                             height={28}
                             width={28}
                         />
-                        <span className="text-gray-967">Models</span>
+                        <Link
+                            href={{
+                                pathname: '/dashboard/eopswatch/',
+                                query: {
+                                    objectID: routerParams.objectID
+                                }
+                            }}
+                            className="font-semibold"
+                        >
+                            {routerParams.objectID}
+                        </Link>
+                    </li>
+                    <li className="flex justify-start items-center">
+                        <Image
+                            src="/img/chevron-right.svg"
+                            alt="chevron-right"
+                            height={28}
+                            width={28}
+                        />
+                        {
+                            hasParams
+                                ?
+                                <Link
+                                    href={{
+                                        pathname: '/dashboard/eopswatch/objects/',
+                                        query: {
+                                            objectID: routerParams.objectID,
+                                            PlantID: routerParams.PlantID
+                                        }
+                                    }}
+                                    className="font-semibold"
+                                >
+                                    <span className="capitalize">Plant ID : {routerParams.PlantID}</span>
+                                </Link>
+                                :
+                                <Link
+                                    href={{
+                                        pathname: '/dashboard/eopswatch/objects/',
+                                        query: {
+                                            objectID: routerParams.objectID,
+                                            VIN: routerParams.VIN
+                                        }
+                                    }}
+                                    className="font-semibold"
+                                >
+                                    <span className="capitalize">VIN : {routerParams.VIN}</span>
+                                </Link>
+                        }
+                    </li>
+                    {
+                        routerParams.subObject &&
+
+                        <li className="flex justify-start items-center">
+                            <Image
+                                src="/img/chevron-right.svg"
+                                alt="chevron-right"
+                                height={28}
+                                width={28}
+                            />
+                            <Link
+                                href={{
+                                    pathname: '/dashboard/eopswatch/objects/',
+                                    query: {
+                                        objectID: routerParams.objectID,
+                                        VIN: routerParams.VIN
+                                    }
+                                }}
+                                className="font-semibold"
+                            >
+                                <span>{routerParams.subObject}</span> : <span>{routerParams.key}</span>
+                            </Link>
+                        </li>
+                    }
+                    <li className="flex justify-start items-center">
+                        <Image
+                            src="/img/chevron-right.svg"
+                            alt="chevron-right"
+                            height={28}
+                            width={28}
+                        />
+                        <span className="text-gray-967">AI Models</span>
                     </li>
                 </ul>
             </div>

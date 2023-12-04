@@ -1,33 +1,40 @@
 import React, { useState, useRef, useEffect } from "react";
-import styles from '../../../styles/Common.module.css';
 import Layout from "../../../components/Layout";
-import Template from "../template";
+import styles from '../../../styles/Common.module.css';
 import Image from "next/image";
-import Link from "next/link";
-import axios from 'axios';
-import TabData from "../eopswatch/tabData";
+import Link from "next/dist/client/link";
+import Table from "./table";
+import Filter from "./filters";
+import axios from "axios";
+import Drop from "./drop";
+import CustomDrop from "@/common/customdrop";
+import TabData from "./tabData";
 
-export default function EopsWatch() {
+export default function EopsTrace(props: any) {
+    const [chooseAsset, setChooseAsset] = useState('Vehicles');
+    const [actions, setActions] = useState(false);
+    const [classData, setClassData] = useState([] as any);
+    const [tabData, setTabData] = useState();
+    const [subClassData, setSubClassData] = useState<any[]>([]);
+    const [count, setCount] = useState(0);
+    const [filter, setFilter] = useState({} as any);
     const [value, setValue] = useState("");
     const [data, setData] = useState([] as any);
-    const [subObj, setSebObj] = useState({} as any);
-    const [subClassData, setSubClassData] = useState<any[]>([]);
-    const [selectedTab, setSelectedTab] = useState(0);
-    const [tabData, setTabData] = useState();
-    const [search, setSearch] = useState([] as any)
+    const [toggleArrow, setToggleArrow] = useState(false);
+    const [toggleDrop, setToggleDrop] = useState(false);
+    const [toggleFilter, setToggleFilter] = useState(false);
 
-    // Fetch the JSON data of sub Asset
+
+    // Fetch the JSON data of Classes
     const fetchClassData = () => {
-        axios.get("/api/getSubAssets").then((response) => {
+        axios.get("/api/getAssets").then((response) => {
             if (response.data) {
                 const filtered = response.data.filter((item: any) => {
-                    return item.parentAssetName === "Manufacturing Plants";
+                    return item.assetName
                 });
                 if (filtered && filtered.length > 0) {
-                    setSubClassData(filtered);
-                    setTabData(filtered[0].assetName)
+                    setClassData(filtered);
                 }
-
             }
         });
     };
@@ -36,247 +43,163 @@ export default function EopsWatch() {
         if (fetchClassData.length) return;
     }, [])
 
+
+
+    // Fetch the JSON data of sub Asset
+    const fetchSubAssets = () => {
+        axios.get("/api/getObjects").then((response) => {
+            if (response.data) {
+                const filtered = response.data.filter((item: any) => {
+                    return item.parentAssetName === chooseAsset;
+                });
+                if (filtered && filtered.length > 0) {
+                    setSubClassData(filtered);
+                    setTabData(filtered[0].parentAssetName)
+                }
+            }
+        });
+    };
+    useEffect(() => {
+        fetchSubAssets();
+        if (fetchSubAssets.length) return;
+    }, [chooseAsset])
+
+    const handleCounter = (item: any) => {
+        setCount(item)
+    }
+
+    const handleDropDown = (item: any) => {
+        setChooseAsset(item)
+    }
+
+    const handleFilterFunction = (data: any) => {
+        setToggleFilter(false)
+    }
+    
+    // Hook that alerts clicks outside of the passed ref
+    function useOutsideAlerter(ref: any) {
+        useEffect(() => {
+            function handleClickOutside(event: any) {
+                if (ref.current && !ref.current.contains(event.target)) {
+                    setActions(false);
+                    setToggleFilter(false)
+                }
+            }
+            document.addEventListener("mousedown", handleClickOutside);
+            return () => {
+                document.removeEventListener("mousedown", handleClickOutside);
+            };
+        }, [ref]);
+    }
+    const wrapperRef = useRef(null);
+    useOutsideAlerter(wrapperRef);
+
+    const toggleFilterFunction = () => {
+        setToggleArrow(!toggleArrow);
+        setToggleFilter(!toggleFilter);
+    }
+
     const onChange = (event: any) => {
-        setValue(event.target.value)
-        axios.get("/api/getChildObject").then((response) => {
-            if (response.data) {
-
-                if (event.target.value === "") {
-                    setData([]); return;
-                }
-                
-                const filtered = response.data.filter((item: any) => {
-                    if (item.tags.hasOwnProperty("VIN")) {
-                        if (item.tags.VIN.toString().toLowerCase().includes(event.target.value.toString().toLowerCase())) {
-                            return item;
-                        }
-                    } else {
-                        if (item.tags.PlantID.toString().toLowerCase().includes(event.target.value.toString().toLowerCase())) {
-                            return item;
-                        }
-                    }
-                });
-
-                if (filtered && filtered.length > 0) {
-                    setData(filtered);
-                }
-
-            }
-        });
+        setValue(event.target.value);
     }
 
-    const subObjectSelected = (obj: any) => {
-        setData([]);
-        setValue("");
-        setSearch(obj)
-        axios.get("/api/getChildObject").then((response) => {
-            if (response.data) {
-
-                if (obj === "") {
-                    return;
-                }
-                const filtered = response.data.filter((item: any) => {
-                    if (item.tags.hasOwnProperty("VIN")) {
-                        if (item.tags.VIN.toString().toLowerCase().includes(obj.toString().toLowerCase())) {
-                            return item;
-                        }
-                    } else {
-                        if (item.tags.PlantID.toString().toLowerCase().includes(obj.toString().toLowerCase())) {
-                            return item;
-                        }
-                    }
-                });
-                if (filtered && filtered.length > 0) {
-                    setSebObj(filtered[0]);
-                }
-            }
-        });
+    const handleApplyFunction = (data:any) => {
+        setFilter(data)
     }
-
-    
-
-    const tabSelection = (index:any, item:any) => {
-        setSelectedTab(index);
-        setTabData(item)
-    }
-    
-    // Getting the filtered list if VIN || PlantID from search bar
-    const filteredData = data && data.map((items:any) => {
-        if(items.className === "Manufacturing Plants") {
-           return items.tags?.PlantID
-        } else {
-            return items.tags?.VIN
-        }
-    })
-
-    // remove duplicate items in array
-    function removeDuplicates(arr:any) {
-        return arr.filter((item:any, index:any) => arr.indexOf(item) === index);
-    }
-    // New Array after removing duplicate items
-    const arr = removeDuplicates(filteredData)
-    console.log({
-        subClassData: subClassData,
-        filteredData:filteredData,
-        arr : arr
-    })
 
     return (
-        <div className="flex font-OpenSans">
+        <div className="w-full h-full font-OpenSans">
+            <p className="text-black text-lg mb-4 font-semibold text-xl">eOps Trace</p>
 
-            <div className="w-[100%]">
-                <div className="columns-2 flex justify-between items-center">
-                    <p className="text-black text-lg mb-0 font-semibold">eOps Trace</p>
+            {/* Top Information */}
+            <div className="bg-white rounded rounded-xl min-h-[120px] px-3 py-4 flex justify-between items-center mb-4">
+                <div className="w-[34%] border border-[#EEEEEE] border-l-0 border-t-0 border-b-0 border-r-1">
+                    <CustomDrop
+                        data={classData}
+                        handleClick={handleDropDown}
+                        defaultClass={classData && classData.length > 0 ? classData[1].assetName : ""}
+                    />
                 </div>
-
-                <div className="border border-gray-957 bg-gray-953 min-h-full rounded-xl mt-3 px-4 py-4">
-                    <div className="flex justify-start items-start">
-                        <nav className="flex" aria-label="Breadcrumb">
-                            <ol className="inline-flex items-center space-x-1 md:space-x-1">
-                                <li className="inline-flex items-center">
-                                    <Link href="/dashboard/eopswatch"
-                                        className="inline-flex items-center text-sm font-medium text-black hover:text-yellow-950">
-                                        <Image
-                                            src="/img/home.svg"
-                                            alt="home"
-                                            className="h-6"
-                                            height={24}
-                                            width={24}
-                                        />
-                                    </Link>
-                                </li>
-                            </ol>
-                        </nav>
+                <div className="w-[34%] border border-[#EEEEEE] border-l-0 border-t-0 border-b-0 border-r-1">
+                    <div className="text-center flex justify-center items-center w-full flex-wrap flex-col">
+                        <p className="mb-2">Total {chooseAsset}</p>
+                        <p className="text-2xl font-semibold">{count}</p>
                     </div>
+                </div>
+                <div className="w-[34%]">
+                    <div className="text-center flex justify-center items-center w-full flex-wrap flex-col">
+                        <p className="mb-2">Total Objects</p>
+                        <p className="text-2xl font-semibold">-</p>
+                    </div>
+                </div>
+            </div>
 
-                    {/* Search Bar */}
-                    <div className="flex w-full mt-5 justify-center items-center flex-wrap relative">
-                        <div className="flex relative w-[480px] flex-wrap">
-                            <input
-                                type="text"
-                                placeholder="Search"
-                                id="searchobjects"
-                                name="searchobjects"
-                                className="rounded rounded-lg border border-gray-962 pl-10 pr-2 w-[480px] h-12"
-                                onChange={onChange}
-                                value={value}
-                            />
+            {/* Table Information */}
+
+            <div className="mb-4 flex justify-between items-center">
+                <p className="text-black text-md font-semibold">{chooseAsset} </p>
+                <div className="flex justify-start items-center">
+                    <div className="flex relative">
+                        <Image src="/img/search-icon-gray.svg" alt="search" height={22} width={22} className="absolute top-[11px] left-3" />
+                        <input
+                            type="text"
+                            placeholder={`${chooseAsset === "Vehicles" ? "Search on VIN" : "Search on Plant ID"}`}
+                            id="searchobjects"
+                            name="searchobjects"
+                            className="border-2 border-gray-969 rounded-xl h-[44px] w-[300px] pl-10 pr-2"
+                            onChange={onChange}
+                            value={value}
+                            autoComplete="off"
+                        />
+                    </div>
+                    <div className="relative ml-3">
+                        <button
+                            className={`bg-white border-2  rounded-xl h-[44px] transition-all duration-[400ms] h-[44px] rounded rounded-xl px-2 py-2 flex items-center justify-start ${toggleFilter === true ? 'border-black' : 'border-gray-969'}`}
+                            onClick={toggleFilterFunction}
+                        >
                             <Image
-                                src="/img/search.svg"
-                                alt="search"
-                                height={18}
-                                width={18}
-                                className="absolute left-3 top-[14px]"
+                                src="/img/filter-icon.svg"
+                                alt="calendar"
+                                height={22}
+                                width={22}
                             />
-                        </div>
+                            <span className="mr-2 ml-1">Filters</span>
+                            <Image
+                                src="/img/arrow-down-black.svg"
+                                alt="Arrow Down"
+                                height={24}
+                                width={24}
+                                className={`${toggleArrow === true ? 'rotate-180' : 'rotate-0'}`}
+                            />
+                        </button>
 
                         {
-                            data && data.length > 0 ?
-                                <div className="bg-white shadow-lg rounded rounded-xl w-[480px] overflow-hidden overflow-y-auto min-h-[200px] absolute top-[100%] z-10">
-                                    {
-                                        arr.map((items: any, index: any) => (
-                                            <button
-                                                className="text-left px-4 py-3 hover:bg-yellow-951 w-full"
-                                                key={index}
-                                                onClick={() => subObjectSelected(items)}
-                                            >
-                                                {items}
-
-                                            </button>
-                                        ))
-                                    }
-                                </div>
-                                :
-                                null
+                            toggleFilter &&
+                            <div ref={wrapperRef}>
+                                <Filter
+                                    handleClick={handleFilterFunction}
+                                    handleApply={handleApplyFunction}
+                                    selectedClass={chooseAsset}
+                                    classData={classData}
+                                />
+                            </div>
                         }
 
                     </div>
-
-
-                    {/* =========== TABS ============= */}
-                    <div className="text-black font-semibold text-md mb-5">Objects</div>
-                    <div className="mt-2 flex w-full flex-wrap justify-start item-center flex-col">
-                        <div className="relative border-l-[1px]">
-                            {
-                                subClassData && subClassData.length > 0 ?
-                                    subClassData.map((item: any, index: any) => (
-                                        <button  
-                                        key={index}
-                                        onClick={() => tabSelection(index, item.assetName)}
-                                        className={`rounded rounded-tr-lg rounded-tl-lg rounded-bl-[0px] rounded-br-[0px] h-[44px] flex-inline justify-center items-center min-w-[70px] px-3 mr-2 font-semibold border-b-[0px] ${selectedTab === index ? 'bg-black text-white border border-black': 'bg-gray-964 border border-gray-963 text-black'}`}>
-                                            <span>{item.assetName}</span>
-                                        </button>
-                                    ))
-                                : null
-                            }
-                        </div>
-                        <div className="relative">
-                            <TabData objData={tabData} searchData={search} />
-                        </div>
-                    </div>
-
-                    {/* =========== ENDS TABS ============= */}
-
-                    {/* Table */}
-                    {subObj ?
-                        <div className="flex w-full flex-wrap mt-10 hidden">
-                            <div className="text-black font-semibold text-md mb-2">Objects</div>
-                            <div className="overflow-hidden border rounded-xl w-full">
-                                <table className={`table-auto min-w-full text-left ${styles.table}`}>
-                                    <thead className="bg-black text-white rounded-xl h-10 text-sm font-light">
-                                        {
-                                            subObj && Object.keys(subObj).length != 0 ?
-                                                Object.keys(subObj?.tags).map((item: any, i: any) => (
-                                                    <th key={i}>
-                                                        {
-                                                            item.split(/(?=[A-Z])/).join(" ").toUpperCase()
-                                                        }
-                                                    </th>
-                                                ))
-                                                : null
-                                        }
-                                    </thead>
-                                    <tbody className="cursor-pointer">
-                                        <tr>
-                                            {
-                                                subObj && Object.keys(subObj).length != 0 ?
-                                                    Object.values(subObj?.tags).map((item: any, i: any) => (
-
-                                                        <td key={i}>
-                                                            <Link
-                                                                href={{
-                                                                    pathname: '/dashboard/eopswatch/eopswatchmodel',
-                                                                    query: {
-                                                                        key: item
-                                                                    }
-                                                                }}
-                                                            >
-                                                                {item}
-                                                            </Link>
-                                                        </td>
-
-                                                    ))
-                                                    : null
-                                            }
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        : null}
-
                 </div>
             </div>
-
-            <div className="w-[16%] pl-5 hidden">
-                <Template />
-            </div>
-
+            <TabData
+                objData={tabData}
+                searchData={value}
+                classes={chooseAsset}
+                handleClick={handleCounter}
+                filterData={filter}
+            />
         </div>
     )
 }
 
-EopsWatch.getLayout = function getLayout(page: any) {
+EopsTrace.getLayout = function getLayout(page: any) {
     return (
         <Layout>{page}</Layout>
     )

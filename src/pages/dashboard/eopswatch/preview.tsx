@@ -115,11 +115,14 @@ export default function Preview() {
         return item.folder === "Production"
     })
 
-    console.log({
-        data:data,
-        filteredDataTest:filteredDataTest,
-        filteredDataProduction:filteredDataProduction
-    })
+    // console.log({
+    //     data:data,
+    //     filteredDataTest:filteredDataTest,
+    //     filteredDataProduction:filteredDataProduction
+    // })
+
+    const hasParams = routerParams.hasOwnProperty("PlantID");
+    const hasObjectParams = routerParams.hasOwnProperty("subObject")
 
     return (
         <div className="w-full h-full font-OpenSans">
@@ -127,12 +130,12 @@ export default function Preview() {
             {/* Breadcrumb */}
             <div className="flex relative bg-white rounded rounded-lg px-3 py-1 inline-flex border border-[#E3E3E3]">
                 <ul className="flex justify-start items-center text-sm">
-                    <li className="flex justify-start items-center">
+                <li className="flex justify-start items-center">
                         <Link
                             href="/dashboard/eopswatch"
                             className="font-semibold"
                         >
-                            {routerParams.key}
+                            Home
                         </Link>
                     </li>
                     <li className="flex justify-start items-center">
@@ -144,17 +147,53 @@ export default function Preview() {
                         />
                         <Link
                             href={{
-                                pathname: '/dashboard/eopswatch/models',
-                                query: {
-                                    objectID: routerParams.objectID,
-                                    subObject: routerParams.subObject,
-                                    key: routerParams.key,
-                                    id: routerParams.id,
+                                pathname: '/dashboard/eopswatch/',
+                                query:{
+                                    objectID:routerParams.objectID
                                 }
                             }}
                             className="font-semibold"
                         >
-                            Models
+                            {routerParams.objectID}
+                        </Link>
+                    </li>
+                    <li className="flex justify-start items-center">
+                        <Image
+                            src="/img/chevron-right.svg"
+                            alt="chevron-right"
+                            height={28}
+                            width={28}
+                        />
+                        <Link
+                            href={{
+                                pathname: '/dashboard/eopswatch/',
+                            }}
+                            className="font-semibold"
+                        >
+                            {
+                                routerParams.objectID === "Manufacturing Plants"
+                                ?
+                                <span>Plant ID : {routerParams.id}</span>
+                                :
+                                <span>VIN : {routerParams.id}</span>
+                            }
+                            
+                        </Link>
+                    </li>
+                    <li className="flex justify-start items-center hidden">
+                        <Image
+                            src="/img/chevron-right.svg"
+                            alt="chevron-right"
+                            height={28}
+                            width={28}
+                        />
+                        <Link
+                            href={{
+                                pathname: '/dashboard/eopswatch/',
+                            }}
+                            className="font-semibold"
+                        >
+                            <span>{routerParams.subObject}</span> : <span>{routerParams.key}</span>
                         </Link>
                     </li>
                     <li className="flex justify-start items-center">
@@ -172,6 +211,30 @@ export default function Preview() {
                                     subObject: routerParams.subObject,
                                     key: routerParams.key,
                                     id: routerParams.id,
+                                    industryID:routerParams.industryID
+                                }
+                            }}
+                            className="font-semibold"
+                        >
+                            <span>{routerParams.subObject}</span> : <span>{routerParams.key}</span>
+                        </Link>
+                    </li>                 
+                    <li className="flex justify-start items-center">
+                        <Image
+                            src="/img/chevron-right.svg"
+                            alt="chevron-right"
+                            height={28}
+                            width={28}
+                        />
+                        <Link
+                            href={{
+                                pathname: '/dashboard/eopswatch/models',
+                                query: {
+                                    objectID: routerParams.objectID,
+                                    subObject: routerParams.subObject,
+                                    key: routerParams.key,
+                                    id: routerParams.id,
+                                    industryID:routerParams.industryID
                                 }
                             }}
                             className="font-semibold"

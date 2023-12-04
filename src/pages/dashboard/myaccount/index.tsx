@@ -7,6 +7,8 @@ import Notification from "./notification";
 import ChangePassword from "./changepassword";
 import ChangePhone from "./changePhone";
 import DeleteAccount from "./deleteaccount";
+import RoleManagement from "./rolemanagement";
+
 export default function MyAccount() {
     const [tab, setTab] = useState(1);
     // Toggle Tab function
@@ -17,132 +19,72 @@ export default function MyAccount() {
     return (
         <div className="flex font-OpenSans">
 
-            <div className="w-[100%]">
-                <div className="columns-2 flex justify-between items-center">
-                    <p className="text-black text-lg mb-0 font-semibold">Manage my account</p>
+            <div className="w-[100%] min-h-full rounded-xl mt-3 px-4 py-4 bg-gray-966">
+
+                {/* Title */}
+                <div className="columns-2 flex justify-between items-center mb-7">
+                    <p className="text-black text-lg font-semibold">Manage My Account</p>
                 </div>
 
-                <div className="border border-gray-957 min-h-full rounded-xl mt-3 px-4 py-4 bg-gray-953">
-                    <div className="w-full flex justify-start items-start">
-                        <div className="w-[25%]">
-                            {/* Tabs Buttons */}
-                            <div className="border-gray-957 border-l-[1px] border-t-[1px] border-b-[1px] rounded-tl-xl rounded-bl-xl w-full h-full overflow-hidden">
-                                <button
-                                    onClick={() => toggleTab(1)}
-                                    className={`h-[56px] px-4 text-left relative w-full border-gray-957 border-b-[1px] ${tab === 1 ? 'bg-white' : 'bg-transparent'} `}>
-                                    <span>Edit Profile</span>
-                                    {tab === 1 &&
-                                        <Image
-                                            src="/img/angle_right_icon_black.svg"
-                                            alt="angle_right_icon"
-                                            height={8}
-                                            width={8}
-                                            className="absolute right-2 top-5"
-                                        />
-                                    }
-                                </button>
-                                <button
-                                    onClick={() => toggleTab(2)}
-                                    className={`h-[56px] px-4 text-left relative w-full border-gray-957 border-b-[1px] ${tab === 2 ? 'bg-white' : 'bg-transparent'} `}>
-                                    <span>Manage Team</span>
-                                    {tab === 2 &&
-                                        <Image
-                                            src="/img/angle_right_icon_black.svg"
-                                            alt="angle_right_icon"
-                                            height={8}
-                                            width={8}
-                                            className="absolute right-2 top-5"
-                                        />
-                                    }
-                                </button>                                
-                                <button
-                                    onClick={() => toggleTab(4)}
-                                    className={`h-[56px] px-4 text-left relative w-full ${tab === 4 ? 'bg-white' : 'bg-transparent'} `}>
-                                    <span>Change Password</span>
-                                    {tab === 4 &&
-                                        <Image
-                                            src="/img/angle_right_icon_black.svg"
-                                            alt="angle_right_icon"
-                                            height={8}
-                                            width={8}
-                                            className="absolute right-2 top-5"
-                                        />
-                                    }
-                                </button>
-                                <button
-                                    onClick={() => toggleTab(5)}
-                                    className={`h-[56px] px-4 text-left relative w-full ${tab === 5 ? 'bg-white' : 'bg-transparent'} `}>
-                                    <span>Change Phone Number</span>
-                                    {tab === 5 &&
-                                        <Image
-                                            src="/img/angle_right_icon_black.svg"
-                                            alt="angle_right_icon"
-                                            height={8}
-                                            width={8}
-                                            className="absolute right-2 top-5"
-                                        />
-                                    }
-                                </button>
-                                <button
-                                    onClick={() => toggleTab(6)}
-                                    className={`h-[56px] px-4 text-left relative w-full ${tab === 6 ? 'bg-white' : 'bg-transparent'} `}>
-                                    <span>Change Email Address</span>
-                                    {tab === 6 &&
-                                        <Image
-                                            src="/img/angle_right_icon_black.svg"
-                                            alt="angle_right_icon"
-                                            height={8}
-                                            width={8}
-                                            className="absolute right-2 top-5"
-                                        />
-                                    }
-                                </button>
-                                <button
-                                    onClick={() => toggleTab(7)}
-                                    className={`h-[56px] px-4 text-left relative w-full ${tab === 7 ? 'bg-white' : 'bg-transparent'} `}>
-                                    <span>Delete My Account</span>
-                                    {tab === 7 &&
-                                        <Image
-                                            src="/img/angle_right_icon_black.svg"
-                                            alt="angle_right_icon"
-                                            height={8}
-                                            width={8}
-                                            className="absolute right-2 top-5"
-                                        />
-                                    }
-                                </button>
-                                <button
-                                    onClick={() => toggleTab(3)}
-                                    className={`h-[56px] px-4 text-left relative w-full ${tab === 3 ? 'bg-white' : 'bg-transparent'} `}>
-                                    <span>Notification</span>
-                                    {tab === 3 &&
-                                        <Image
-                                            src="/img/angle_right_icon_black.svg"
-                                            alt="angle_right_icon"
-                                            height={8}
-                                            width={8}
-                                            className="absolute right-2 top-5"
-                                        />
-                                    }
-                                </button>
-                            </div>
-                        </div>
+                {/* Tabs */}
+                <div className="flex justify-start items-center z-[1] relative top-[1px] text-sm">
+                    <button
+                        onClick={() => toggleTab(1)}
+                        className={`rounded-tr-xl rounded-tl-xl mr-1 h-[48px] min-w-[100px] px-4 inline-flex jsutify-center items-center bg-white font-semibold ${tab === 1 ? "bg-white border border-[#E1E1E1] border-b-0" : "bg-yellow-951 bg-opacity-50 hover:bg-opacity-100"}`}>
+                        Manage Team
+                    </button>
+                    <button
+                        onClick={() => toggleTab(6)}
+                        className={`rounded-tr-xl rounded-tl-xl mr-1 h-[48px] min-w-[100px] px-4 inline-flex jsutify-center items-center bg-white font-semibold ${tab === 6 ? "bg-white border border-[#E1E1E1] border-b-0" : "bg-yellow-951 bg-opacity-50 hover:bg-opacity-100"}`}>
+                        Role Management
+                    </button>
+                    <button
+                        onClick={() => toggleTab(2)}
+                        className={`rounded-tr-xl rounded-tl-xl mr-1 h-[48px] min-w-[100px] px-4 inline-flex jsutify-center items-center bg-white font-semibold ${tab === 2 ? "bg-white border border-[#E1E1E1] border-b-0" : "bg-yellow-951 bg-opacity-50 hover:bg-opacity-100"}`}>
+                        My Profile
+                    </button>
+                    <button
+                        onClick={() => toggleTab(8)}
+                        className={`rounded-tr-xl rounded-tl-xl mr-1 h-[48px] min-w-[100px] px-4 inline-flex jsutify-center items-center bg-white font-semibold ${tab === 8 ? "bg-white border border-[#E1E1E1] border-b-0" : "bg-yellow-951 bg-opacity-50 hover:bg-opacity-100"}`}>
+                        Notification
+                    </button>
 
-                        <div className="w-[70%] min-h-[500px] bg-white border border-gray-957 overflow-hidden rounded-tr-xl rounded-br-xl rounded-bl-xl">
-                            {/* Tab Contents */}
-                            <div className=" bg-white w-full h-full rounded-tr-xl rounded-br-xl rounded-bl-xl overflow-hidden">
-                                {tab === 1 && <EditProfile />}
-                                {tab === 2 && <ManageTeams />}
-                                {tab === 3 && <Notification />}
-                                {tab === 4 && <ChangePassword />}
-                                {tab === 5 && <ChangePhone />}
-                                {tab === 7 && <DeleteAccount />}
-                            </div>
-                        </div>
+                    {/* <button
+                        onClick={() => toggleTab(3)}
+                        className={`rounded-tr-xl rounded-tl-xl mr-1 h-[48px] min-w-[100px] px-4 inline-flex jsutify-center items-center bg-white font-semibold ${tab === 3 ? "bg-white border border-[#E1E1E1] border-b-0" : "bg-yellow-951 bg-opacity-50 hover:bg-opacity-100"}`}>
+                        Change Password
+                    </button>
+                    <button
+                        onClick={() => toggleTab(4)}
+                        className={`rounded-tr-xl rounded-tl-xl mr-1 h-[48px] min-w-[100px] px-4 inline-flex jsutify-center items-center bg-white font-semibold ${tab === 4 ? "bg-white border border-[#E1E1E1] border-b-0" : "bg-yellow-951 bg-opacity-50 hover:bg-opacity-100"}`}>
+                        Change Phone Number
+                    </button>
+                    <button
+                        onClick={() => toggleTab(5)}
+                        className={`rounded-tr-xl rounded-tl-xl mr-1 h-[48px] min-w-[100px] px-4 inline-flex jsutify-center items-center bg-white font-semibold ${tab === 4 ? "bg-white border border-[#E1E1E1] border-b-0" : "bg-yellow-951 bg-opacity-50 hover:bg-opacity-100"}`}>
+                        Change Email Address
+                    </button> */}
+
+                    <button
+                        onClick={() => toggleTab(7)}
+                        className={`rounded-tr-xl rounded-tl-xl mr-1 h-[48px] min-w-[100px] px-4 inline-flex jsutify-center items-center bg-white font-semibold ${tab === 4 ? "bg-white border border-[#E1E1E1] border-b-0" : "bg-yellow-951 bg-opacity-50 hover:bg-opacity-100"}`}>
+                        Delete My Account
+                    </button>
+                </div>
+
+                {/* Tab Contect */}
+                <div className="w-full min-h-[500px] bg-white border border-gray-957 overflow-hidden1 rounded-tr-xl rounded-br-xl rounded-bl-xl">
+                    <div className=" bg-white w-full h-full rounded-tr-xl rounded-br-xl rounded-bl-xl overflow-hidden">
+                        {tab === 1 && <ManageTeams />}
+                        {tab === 2 && <EditProfile />}
+                        {tab === 3 && <Notification />}
+                        {tab === 4 && <ChangePassword />}
+                        {tab === 5 && <ChangePhone />}
+                        {tab === 6 && <RoleManagement />}
+                        {tab === 7 && <DeleteAccount />}
+                        {tab === 8 && <Notification />}
                     </div>
-
                 </div>
-
             </div>
 
         </div>
