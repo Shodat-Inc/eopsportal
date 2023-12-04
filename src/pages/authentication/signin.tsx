@@ -44,6 +44,7 @@ export default function SignIn() {
                                         className={`border border-[#A7A7A7] text-[#666666] ${styles.form__field}`}
                                         placeholder=""
                                         required
+                                        value="chinmaynaik@shodat.com"
                                     />
                                     <label htmlFor="emailAddress" className={`${styles.form__label} !text-[#666666]`}>Enter email address</label>
                                 </div>
@@ -58,6 +59,7 @@ export default function SignIn() {
                                         className={`border border-[#A7A7A7] text-[#666666] !pr-12 ${styles.form__field}`}
                                         placeholder=""
                                         required
+                                        value="123456"
                                     />
                                     <label htmlFor="password" className={`${styles.form__label} !text-[#666666]`}>Password</label>
                                     <button className='absolute right-2 top-7' onClick={showHidePasswordFunction}>
@@ -88,7 +90,7 @@ export default function SignIn() {
                                 <div>
                                     <p className='text-black text-sm mb-2 font-semibold'>Create an account</p>
                                 </div>
-                                <Link href="/authentication/complete-individual" className='bg-yellow-951 min-w-[111px] flex justify-center items-center rounded rounded-xl py-4 px-2 font-semibold'>
+                                <Link href="/dashboard/" className='bg-yellow-951 min-w-[111px] flex justify-center items-center rounded rounded-xl py-4 px-2 font-semibold'>
                                     <span>Next</span>
                                 </Link>
                             </div>

@@ -55,7 +55,7 @@ export default function CompleteIndividual() {
                                                     countryCallingCodeEditable={false}
                                                     defaultCountry="IN"
                                                     className='rounded rounded-lg border border-gray-972 h-[46px] pl-4 pr-16 w-full'
-                                                    value={phoneCode}
+                                                    value="+14088001155"
                                                     onChange={(inputValue: any) => setPhoneCode(inputValue)}
                                                 />
                                                 <label htmlFor="phoneNumber" className='font-[500] text-md text-gray-971 mb-3'>Phone Number <span>*</span></label>
@@ -87,6 +87,7 @@ export default function CompleteIndividual() {
                                                 className={`border border-[#A7A7A7] text-[#666666] ${styles.form__field}`}
                                                 placeholder=""
                                                 required
+                                                value="SHODAT"
                                             />
                                             <label htmlFor="companyName" className={`${styles.form__label} !text-[#666666]`}>Company Name (Optional)</label>
                                         </div>
@@ -99,6 +100,7 @@ export default function CompleteIndividual() {
                                                     <input
                                                         type='checkbox'
                                                         name="agreement"
+                                                        checked
                                                     />
                                                     <span></span>
                                                 </div>
