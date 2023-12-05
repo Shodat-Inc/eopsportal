@@ -10,6 +10,8 @@ import { TagDataType } from "../seedData/datatype";
 import { routes } from "../seedData/route";
 import { individualRole } from "../seedData/indvidualRole";
 const { serverRuntimeConfig } = getConfig();
+
+
 export const db: any = {
   initialized: false,
   initialize,
@@ -70,14 +72,14 @@ async function seedDemoIndvidualRole(Role: any) {
   for (let a of individualRole) {
     await Role.findOrCreate({
       where: { name: a.name },
-      defaults: a
+      defaults: a,
     });
   }
 }
 
 // initialize db and models, called on first api request from /helpers/api/api-handler.js
-async function initialize() {
-  loggerInfo.info("<----DB connection----->");
+export async function initialize() {
+  loggerInfo.info("<+----|| DB connection ||-----+>");
 
   try {
     // create db if it doesn't already exist
@@ -89,7 +91,7 @@ async function initialize() {
       host,
       port,
       user,
-      password
+      password,
     });
     await connection.query(`CREATE DATABASE IF NOT EXISTS \`${database}\`;`);
 
@@ -99,14 +101,45 @@ async function initialize() {
       port,
       host,
     });
-    for (let key in models) {
-      db[key] = (models as any)[key](sequelize);
-      loggerInfo.info(key);
-    }
+    // for (let key in models) {
+    //   db[key] = (models as any)[key](sequelize);
+    //   loggerInfo.info(key);
+    // }\
+    const modelArray: any = {
+      tagDataType: "tagDataType",
+      countryData: "countryCodeModel",
+      routeTable: "Routes",
+      role: "Role",
+      address: "Address",
+      phoneRecords: "phoneRecord",
+      companyRecords: "companyRecord",
+      user: "User",
+      value: "AddValues",
+      object: "object",
+      classTag: "classTag",
+      parentJoinKey: "parentJoinKey",
+      class: "AddClasses",
+      enterpriseUser: "EnterpriseUser",
+      enterprise: "Enterprise",
+      deleteTableRecord: "deleteRecord",
+      reason: "Reason",
+      otpverify: "otpVerify",
+      contactSales: "ContactSale",
+      enterpriseAddress: "EnterpriseAddress",
+      invite: "Invite",
+    };
 
+    
     if (!db.initialized) {
+      for (let key in modelArray) {
+        const modelName = modelArray[key];
+        const modelModule = await import(`./models/${key}.ts`);
+        const model = modelModule[modelName](sequelize);
+        db[modelName] = model;
+        // loggerInfo.info(key, "Reached AT END");
+      }
       // sync all models with database
-      relationship();
+      await relationship(db);
 
       if (isDBSync) {
         await sequelize.sync({ alter: true });

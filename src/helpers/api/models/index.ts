@@ -18,10 +18,5 @@ export * from './enterprise'
 export * from "./deleteTableRecord";
 export * from "./reason";
 export * from "./otpverify";
-export * from "./contactSales"
-export * from './routeTable'
-export * from './enterprise'
-export * from './enterpriseAddress'
-export * from './enterpriseUser'
 export * from './invite'
 

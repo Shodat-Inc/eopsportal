@@ -40,7 +40,6 @@ function apiHandler(handler: any) {
       if (!path.includes(url)) {
         const tokenData = req.auth;
         if (tokenData) {
-          console.log("reached 2");
           req.id = tokenData.sub;
           req.role = tokenData.role;
           req.enterpriseId = tokenData.enterpriseId;

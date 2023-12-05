@@ -6,6 +6,7 @@ import { Sequelize } from "sequelize";
 import { classTagRepo } from "./classTag-repo";
 import { generateRandomAlphaNumeric } from "../../../util/helper"
 
+
 // Repository for Class-related operations.
 export const classRepo = {
   create,
