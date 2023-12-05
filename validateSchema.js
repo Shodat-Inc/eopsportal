@@ -254,7 +254,7 @@ export const deleteEnterpriseUserValidation = (data) => {
 
 export const updateEnterpriseValidation = (data) => {
   const schema = Joi.object({
-
+    id: Joi.number().required(),
     enterpriseName: Joi.string(),
     enterpriseIndustry: Joi.string(),
     founderYear: Joi.number(),

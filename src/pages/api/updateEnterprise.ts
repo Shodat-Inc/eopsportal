@@ -18,7 +18,7 @@ export default apiHandler({
 async function handler(req: any, res: any) {
     try {
         // Extract update data from the request body.
-        const reqAuth = req.auth
+
         const updateData = req.body;
         const validation = updateEnterpriseValidation(updateData);
         if (validation.error) {
@@ -31,7 +31,7 @@ async function handler(req: any, res: any) {
             return;
         }
         // Attempt to update the enterprise using the enterprise repo.
-        const updatedData = await enterpriseRepo.update(validation.value, reqAuth);
+        const updatedData = await enterpriseRepo.update(validation.value);
 
         // If successful, return a success response with the updated enterprise data.
         res.status(200).json({ message: updatedData });

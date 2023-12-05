@@ -18,7 +18,7 @@ export default apiHandler({
 async function handler(req: any, res: any) {
     try {
         // Extract data to be deleted from the params.
-        const reqData = req.query.id;
+        const reqData = req.query;
         // Attempt to delete the enterprise using the enterprise repo.
         const deleteData = await enterpriseRepo.delete(reqData);
 

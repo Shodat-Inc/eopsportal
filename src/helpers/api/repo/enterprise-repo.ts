@@ -62,6 +62,7 @@ async function getAllData() {
   // The 'attributes' option specifies the fields to be included in the result
   return await db.Enterprise.findAll({
     attributes: [
+      "id",
       "enterpriseName",
       "enterpriseIndustry",
       "founderYear",
@@ -127,14 +128,14 @@ async function getDataById(params: any) {
  * @param {any} params - The parameters containing information for updating enterprise data.
  * @returns {Promise<object>} A promise that resolves with the result of the database operation.
  */
-async function update(params: any, reqAuth: any) {
+async function update(params: any) {
   try {
     // Log information about the function execution
     loggerInfo.info("Updating Enterprise Data");
 
     // Find the enterprise data in the database based on the provided ID
     const data = await db.Enterprise.findOne({
-      where: { id: reqAuth.enterpriseId }
+      where: { id: params.id }
     });
 
     // Define the properties to update
