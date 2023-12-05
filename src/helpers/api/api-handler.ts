@@ -25,7 +25,6 @@ function apiHandler(handler: any) {
       if (!db.initialized) await db.initialize();
       // global middleware
       const data = await jwtMiddleware(req, res);
-      console.log("reached 4");
       const path = [
         "/api/createUsers",
         "/api/signIn",
@@ -69,10 +68,8 @@ function apiHandler(handler: any) {
       //   }
       // }
       // route handler
-      console.log(await handler[method](req, res),"_______");
       await handler[method](req, res);
     } catch (err) {
-      console.log("reached 3");
       // global error handler
       errorHandler(err, res);
     }

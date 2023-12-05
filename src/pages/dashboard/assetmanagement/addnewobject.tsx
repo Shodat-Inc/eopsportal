@@ -28,7 +28,8 @@ export default function AddNewObject(props: any) {
             try {
                 await axios({
                     method: 'GET',
-                    url: `http://20.232.178.134:3000/api/getChildAssets?id=${props.parentClassID}`,
+                    // url: `http://20.232.178.134:3000/api/getChildAssets?id=${props.parentClassID}`,
+                    url: `/api/getChildAssets?id=${props.parentClassID}`,
                     headers: {
                         "Authorization": `Bearer ${tokenStr}`,
                         "Content-Type": "application/json"
@@ -99,7 +100,8 @@ export default function AddNewObject(props: any) {
         try {
             await axios({
                 method: 'POST',
-                url: `http://20.232.178.134:3000/api/createObjects`,
+                // url: `http://20.232.178.134:3000/api/createObjects`,
+                url: `api/createObjects`,
                 data: dataToSave,
                 headers: {
                     "Authorization": `Bearer ${tokenStr}`,
