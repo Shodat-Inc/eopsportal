@@ -18,9 +18,9 @@ import DeleteModal from "@/common/deletemodal";
 import ObjectModal from "./objectmodal";
 
 export default function AddNewClass(props: any) {
-    // console.log({
-    //     props: props
-    // })
+    console.log({
+        "PROPS IN ADD NEW CLASS": props
+    })
     const dispatch = useDispatch<any>();
     const [success, setSuccess] = useState(false);
     const assetname = useRef("");
@@ -201,7 +201,7 @@ export default function AddNewClass(props: any) {
             await axios({
                 method: 'POST',
                 // url: `http://20.232.178.134:3000/api/createClasses`,
-                url: `api/createClasses`,
+                url: `/api/createClasses`,
                 data: dataToSave,
                 headers: {
                     "Authorization": `Bearer ${tokenStr}`,

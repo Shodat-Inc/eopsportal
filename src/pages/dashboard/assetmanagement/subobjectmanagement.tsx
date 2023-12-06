@@ -119,7 +119,7 @@ export default function SubObjectManagement(props: any) {
                     if (response) {
                         console.log({
                             "RESPONSE DATA": response.data
-                        })                         
+                        })
                         setObjects(response.data)
                     } else {
 
@@ -133,11 +133,11 @@ export default function SubObjectManagement(props: any) {
         })();
     }, [chooseAsset]);
 
-    
+
     console.log({
         "CHOOSE ASSET": chooseAsset,
         "SUB CLASS DATA": subClassData,
-        "OBJECTS":objects
+        "OBJECTS": objects
     })
     const deleteModalFunction = () => {
         setDeleteModal(true);
@@ -147,7 +147,7 @@ export default function SubObjectManagement(props: any) {
     const closeDeleteModal = () => {
         setDeleteModal(false)
     }
-    
+
     return (
         <div className='py-3 font-OpenSans'>
 
@@ -233,7 +233,7 @@ export default function SubObjectManagement(props: any) {
                     <div className="relative ml-3">
                         <button
                             className={`bg-white border  rounded-xl h-[44px] transition-all duration-[400ms] h-[44px] rounded rounded-lg px-2 py-2 flex items-center justify-start ${toggleFilter === true ? 'border-black' : 'border-gray-969'}`}
-                            onClick={toggleFilterFunction}  
+                            onClick={toggleFilterFunction}
                         >
                             <Image
                                 src="/img/filter-icon.svg"
@@ -345,9 +345,11 @@ export default function SubObjectManagement(props: any) {
                 subClassID={chooseAsset}
                 subClassData={subClassData}
             />
-            
+
             {/* Add New Object */}
-            <AddNewObject show={addNewObject.toggleAddObject && addNewObject.toggleAddObject}  /> 
+            {/* <AddNewObject
+                show={addNewObject.toggleAddObject && addNewObject.toggleAddObject}
+            /> */}
 
             {/* Delete Modal */}
             {deleteModal &&

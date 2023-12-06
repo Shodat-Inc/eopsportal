@@ -8,7 +8,7 @@ import { toggleAddNewObjectModel } from "@/store/actions/classAction";
 export default function AddNewObject(props: any) {
 
     console.log({
-        "PROPS IN ADD NEW OBJECT": props,
+        "PROPS IN ADD NEW OBJECT COMPONENT": props,
         // "SELECTED SUB CLASS DATA": subClass
     })
 
@@ -29,14 +29,18 @@ export default function AddNewObject(props: any) {
                 await axios({
                     method: 'GET',
                     // url: `http://20.232.178.134:3000/api/getChildAssets?id=${props.parentClassID}`,
-                    url: `/api/getChildAssets?id=${props.parentClassID}`,
+                    // url: `/api/getChildAssets?id=${props.parentClassID}`,
+                    url: `/api/getChildAssetById?classId=${props.subClassID}&parentId=${props.parentClassID}`,
                     headers: {
                         "Authorization": `Bearer ${tokenStr}`,
                         "Content-Type": "application/json"
                     }
                 }).then(function (response) {
-                    if (response.data) {
-                        setAllSubClass(response.data.data);
+                    if (response) {
+                        console.log({
+                            "RESPONSE HERE": response.data.data[0]
+                        })
+                        setAllSubClass(response.data?.data[0]?.ClassTags);
 
                         if (response) {
                             const filtered = response.data.data.filter((item: any) => {
@@ -44,18 +48,15 @@ export default function AddNewObject(props: any) {
                             })
                             setSubClass(filtered)
                         }
-                        console.log({
-                            "RESPONSE": response.data.data
-                        })
                     }
                 }).catch(function (error) {
-                    console.log("ERROR IN AXIOS CATCH BLOCK",error)
+                    console.log("ERROR IN AXIOS CATCH BLOCK", error)
                 })
             } catch (err) {
                 console.log("ERROR IN TRY CATCH BLOCK:", err)
             }
         })();
-    }, [props.parentClassID]);
+    }, [props]);
     // Get the exact sub class data 
     // useEffect(() => {
     //     if (allSubClass && allSubClass.length > 0) {
@@ -80,17 +81,17 @@ export default function AddNewObject(props: any) {
         Object.keys(form_values).map((item: any) => {
             let tagID = item.split("_")[1];
             objectKey.push({
-                "classTagId": tagID                
+                "classTagId": tagID
             })
         })
         const objectValue = [] as any;
-        Object.values(form_values).map((item: any) => {            
-            objectValue.push({                
+        Object.values(form_values).map((item: any) => {
+            objectValue.push({
                 "value": item
             })
         })
 
-        let finalArray = objectKey.map((item:any, i:any) => Object.assign({}, item, objectValue[i]));
+        let finalArray = objectKey.map((item: any, i: any) => Object.assign({}, item, objectValue[i]));
         const dataToSave = {
             "classId": 3, //Static id of Sub Class for Battery
             "values": finalArray
@@ -111,7 +112,7 @@ export default function AddNewObject(props: any) {
                 if (response) {
                     console.log({
                         MESSAGE: "SUCCESS: Stored successfully!"
-                    })                   
+                    })
                 }
             }).catch(function (error) {
                 console.log("ERROR IN AXIOS CATCH BLOCK:", error)
@@ -132,7 +133,30 @@ export default function AddNewObject(props: any) {
 
     }
 
-    
+    console.log({
+        allSubClass: allSubClass
+    })
+
+    const dataTypeFunction = (id:any) => {
+        let dt = "text";
+        if(id===1) {
+            dt = "number"
+        } else if (id===2) {
+            dt = "number"
+        } else if (id===3) {
+            dt = "text"
+        } else if (id===4) {
+            dt = "text"
+        } else if (id===5) {
+            dt = "text"
+        } else if (id===6) {
+            dt = "text"
+        } else if (id===7) {
+            dt = "text"
+        }
+        return dt;
+    }
+
     return (
         <>
             <div className={`bg-white h-full z-[11] fixed top-0 right-0 p-5 shadow shadow-lg ${props.show === true ? `${styles.objectContainer} ${styles.sliderShow}` : `${styles.objectContainer}`}`}>
@@ -155,13 +179,13 @@ export default function AddNewObject(props: any) {
                         className="w-full flex justify-start items-start flex-wrap flex-col"
                     >
                         {
-                            subClass && subClass.length >= 0 ?
-                                subClass[0]?.ClassTags.map((item: any, index: any) => (
+                            allSubClass && allSubClass.length >= 0 ?
+                                allSubClass.map((item: any, index: any) => (
                                     <div key={index} className="w-full flex justify-start items-start flex-wrap flex-col">
                                         <div className={`mb-5 lg:w-full small:w-full small:w-full ${styles.form__wrap}`}>
                                             <div className={`relative ${styles.form__group} font-OpenSans`}>
                                                 <input
-                                                    type="text"
+                                                    type={dataTypeFunction(item.dataTypeId)}
                                                     id={`${item.tagName}`}
                                                     name={`${item.tagName}_${item.id}`}
                                                     className={`border border-gray-961 ${styles.form__field}`}
