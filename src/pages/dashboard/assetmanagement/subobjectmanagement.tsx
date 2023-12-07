@@ -8,12 +8,9 @@ import AddNewObject from './addnewobject';
 export default function SubObjectManagement(props: any) {
 
     const getClassStates = useSelector((state: any) => state.classReducer);
-    console.log({
-        "PROPS IN SUB-OBJECT": props,
-        "GET CLASS STATES": getClassStates.selectedClass,
-    })
     // console.log({
-    //     "props in object management": props
+    //     "PROPS IN SUB-OBJECT": props,
+    //     "GET CLASS STATES": getClassStates.selectedClass,
     // })
     const [toggleFilter, setToggleFilter] = useState(false);
     const [toggleArrow, setToggleArrow] = useState(false);
@@ -27,9 +24,12 @@ export default function SubObjectManagement(props: any) {
     const [objects, setObjects] = useState([] as any);
 
     const classSelector = useSelector((state: any) => state.classReducer);
-    const [showModal, setShowModal] = useState(false);
     const [deleteModal, setDeleteModal] = useState(false);
-    const addNewObject = useSelector((state: any) => state.classReducer)
+
+    const [tableHeader, setTableHeader] = useState([] as any);
+    const [tableData, setTableData] = useState([] as any);
+
+    const addNewObject = useSelector((state: any) => state.classReducer);
     const toggleFilterFunction = () => {
         setToggleArrow(!toggleArrow);
         setToggleFilter(!toggleFilter);
@@ -57,9 +57,9 @@ export default function SubObjectManagement(props: any) {
                     }
                 }).then(function (response) {
                     if (response.status === 200) {
-                        console.log({
-                            "RESPONSE DATA -1 ": response.data
-                        })
+                        // console.log({
+                        //     "RESPONSE DATA -1 ": response.data
+                        // })
                         setChooseAsset(response.data.data[0]?.id)
                         setSubClassData(response.data.data)
                     } else {
@@ -110,19 +110,22 @@ export default function SubObjectManagement(props: any) {
                     method: 'GET',
                     // url: `/api/getObjects?id=${chooseAsset}`,
                     // url: `http://20.232.178.134:3000/api/getObjects?id=12`,
-                    url: `/api/getObjects?id=12`,
+                    url: `/api/getObjects?id=${chooseAsset}`,
                     headers: {
                         "Authorization": `Bearer ${tokenStr}`,
                         "Content-Type": "application/json"
                     }
                 }).then(function (response) {
                     if (response) {
-                        console.log({
-                            "RESPONSE DATA": response.data
-                        })
-                        setObjects(response.data)
-                    } else {
-
+                        let headArray = response.data?.objects?.data[0]?.Class?.ClassTags;
+                        let dataArray = response.data?.objects?.data;
+                        // console.log({
+                        //     "RESPONSE DATA 123": response.data?.objects?.data,
+                        //     headArray: headArray
+                        // })
+                        setObjects(response.data?.objects?.data);
+                        setTableHeader(headArray);
+                        setTableData(dataArray)
                     }
                 }).catch(function (error) {
                     console.log("ERROR IN DELETE AXIOS CATCH:", error)
@@ -134,11 +137,13 @@ export default function SubObjectManagement(props: any) {
     }, [chooseAsset]);
 
 
-    console.log({
-        "CHOOSE ASSET": chooseAsset,
-        "SUB CLASS DATA": subClassData,
-        "OBJECTS": objects
-    })
+    // console.log({
+    //     "CHOOSE ASSET": chooseAsset,
+    //     "SUB CLASS DATA": subClassData,
+    //     "OBJECTS": objects,
+    //     tableHeader: tableHeader,
+    //     tableData: tableData
+    // })
     const deleteModalFunction = () => {
         setDeleteModal(true);
         setActions(false);
@@ -200,7 +205,7 @@ export default function SubObjectManagement(props: any) {
                                                 onClick={() => selectItemFunction(item.id)}
                                                 key={index}
                                             >
-                                                <span>{item.className} {item.id}</span>
+                                                <span>{item.className}</span>
                                             </li>
                                         ))
                                     }
@@ -263,7 +268,95 @@ export default function SubObjectManagement(props: any) {
             {/* Table */}
             <div className='w-full mt-6 min-h-[400px]'>
                 <table className={`table-auto lg:min-w-full sm:w-full small:w-full text-left ${styles.tableV3} ${styles.tableV4}`}>
-                    <thead className="text-sm font-normal">
+                    {
+                        tableHeader && tableHeader.length > 0 &&
+                        <thead className="text-sm font-normal">
+                            <tr>
+                                {
+                                    tableHeader.map((item: any, index: any) => (
+                                        <th key={index}>{item.tagName}</th>
+                                    ))
+                                }
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                    }
+
+                    {
+                        tableData && tableData.length > 0 ?
+
+                            <tbody>
+
+                                {
+                                    tableData.map((item: any, index: any) => (
+                                        <tr key={index}>
+                                            {
+                                                item.ObjectValues.map((items: any, index: any) => (
+                                                    <td key={index}>{items.values}</td>
+                                                ))
+                                            }
+                                            <td>
+                                                <div className="flex justify-start items-center relative">
+                                                    <button onClick={() => toggleActions(1)}>
+                                                        <Image
+                                                            src="/img/more-vertical.svg"
+                                                            alt="more-vertical"
+                                                            height={24}
+                                                            width={24}
+                                                        />
+                                                    </button>
+                                                    {(actions && actionCount === 1) &&
+                                                        <div className="bg-black text-white border overflow-hidden border-black rounded rounded-lg w-[200px] flex flex-col flex-wrap items-start justify-start shadow-sm absolute top-[30px] right-[75px] z-[1]">
+                                                            <Link
+                                                                href="#"
+                                                                className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
+                                                                <span>Edit</span>
+                                                            </Link>
+                                                            <button
+                                                                onClick={deleteModalFunction}
+                                                                className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
+                                                                <span>Delete</span>
+                                                            </button>
+                                                            <Link
+                                                                href="#"
+                                                                className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
+                                                                <span>eOps Watch</span>
+                                                            </Link>
+                                                            <Link
+                                                                href="#"
+                                                                className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
+                                                                <span>eOps Trace</span>
+                                                            </Link>
+                                                            <Link
+                                                                href="#"
+                                                                className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
+                                                                <span>eOps Prosense</span>
+                                                            </Link>
+                                                            <Link
+                                                                href="#"
+                                                                className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
+                                                                <span>eOps Insights/Reports</span>
+                                                            </Link>
+                                                        </div>
+                                                    }
+                                                </div>
+
+                                            </td>
+                                        </tr>
+                                    ))
+                                }
+
+                            </tbody>
+                            :
+                            <tbody>
+                                <tr>
+                                    <td><span className='text-lg text-center'>No Data Found!</span></td>
+                                </tr>
+                            </tbody>
+
+                    }
+
+                    {/* <thead className="text-sm font-normal">
                         <tr>
                             <th>S.No</th>
                             <th>
@@ -278,8 +371,8 @@ export default function SubObjectManagement(props: any) {
                             <th>Voltage(V)</th>
                             <th>Actions</th>
                         </tr>
-                    </thead>
-                    <tbody>
+                    </thead> */}
+                    {/* <tbody >
                         <tr>
                             <td>1</td>
                             <td>1S223</td>
@@ -335,7 +428,7 @@ export default function SubObjectManagement(props: any) {
 
                             </td>
                         </tr>
-                    </tbody>
+                    </tbody> */}
                 </table>
             </div>
 
@@ -345,11 +438,6 @@ export default function SubObjectManagement(props: any) {
                 subClassID={chooseAsset}
                 subClassData={subClassData}
             />
-
-            {/* Add New Object */}
-            {/* <AddNewObject
-                show={addNewObject.toggleAddObject && addNewObject.toggleAddObject}
-            /> */}
 
             {/* Delete Modal */}
             {deleteModal &&
@@ -401,7 +489,6 @@ export default function SubObjectManagement(props: any) {
                     <div className="opacity-75 fixed inset-0 z-40 bg-black"></div>
                 </>
             }
-
 
         </div>
     )

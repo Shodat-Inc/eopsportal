@@ -9,14 +9,14 @@ export default function AddNewObject(props: any) {
 
     console.log({
         "PROPS IN ADD NEW OBJECT COMPONENT": props,
-        // "SELECTED SUB CLASS DATA": subClass
     })
 
     const dispatch = useDispatch<any>();
     const [allSubClass, setAllSubClass] = useState([] as any);
     const [subClass, setSubClass] = useState([] as any);
-    const [data, setData] = useState([] as any);
+    const [fields, setFields] = useState({});
     const formData = useRef("");
+    const [success, setSuccess] = useState(false);
     let access_token = "" as any;
     if (typeof window !== 'undefined') {
         access_token = localStorage.getItem('authToken')
@@ -38,7 +38,7 @@ export default function AddNewObject(props: any) {
                 }).then(function (response) {
                     if (response) {
                         console.log({
-                            "RESPONSE HERE": response.data.data[0]
+                            "RESPONSE HERE ": response.data.data[0]
                         })
                         setAllSubClass(response.data?.data[0]?.ClassTags);
 
@@ -71,6 +71,14 @@ export default function AddNewObject(props: any) {
         dispatch(toggleAddNewObjectModel(false));
     }
 
+    const formRef = useRef();
+    const handleReset = () => {
+        Array.from(document.querySelectorAll("input")).forEach(
+            input => (input.value = "")
+        );
+        setFields: [{}]
+    };
+
     // Save Data for subclass
     const handleSubmit = async (e: any) => {
         e.preventDefault();
@@ -78,10 +86,15 @@ export default function AddNewObject(props: any) {
         let currentDate = new Date().toISOString().split('T')[0];
         const form_values = Object.fromEntries(formData);
         const objectKey = [] as any;
+        const objVal = [] as any;
         Object.keys(form_values).map((item: any) => {
             let tagID = item.split("_")[1];
+            let tagName = item.split("_")[0];
             objectKey.push({
                 "classTagId": tagID
+            })
+            objVal.push({
+                tagName: tagName
             })
         })
         const objectValue = [] as any;
@@ -93,33 +106,44 @@ export default function AddNewObject(props: any) {
 
         let finalArray = objectKey.map((item: any, i: any) => Object.assign({}, item, objectValue[i]));
         const dataToSave = {
-            "classId": 3, //Static id of Sub Class for Battery
+            "classId": props.subClassID, //Static id of Sub Class for Battery
             "values": finalArray
         }
 
+        console.log({
+            dataToSave: dataToSave
+        })
+
+
         let tokenStr = access_token;
-        try {
-            await axios({
-                method: 'POST',
-                // url: `http://20.232.178.134:3000/api/createObjects`,
-                url: `api/createObjects`,
-                data: dataToSave,
-                headers: {
-                    "Authorization": `Bearer ${tokenStr}`,
-                    "Content-Type": "application/json"
-                }
-            }).then(function (response) {
-                if (response) {
-                    console.log({
-                        MESSAGE: "SUCCESS: Stored successfully!"
-                    })
-                }
-            }).catch(function (error) {
-                console.log("ERROR IN AXIOS CATCH BLOCK:", error)
-            })
-        } catch (err) {
-            console.log("ERROR IN TRY CATCH BLOCK:", err)
-        }
+        // try {
+        //     await axios({
+        //         method: 'POST',
+        //         // url: `http://20.232.178.134:3000/api/createObjects`,
+        //         url: `/api/createObjects`,
+        //         data: dataToSave,
+        //         headers: {
+        //             "Authorization": `Bearer ${tokenStr}`,
+        //             "Content-Type": "application/json"
+        //         }
+        //     }).then(function (response) {
+        //         if (response) {
+        //             console.log({
+        //                 RESPONSE: response,
+        //                 MESSAGE: "SUCCESS: Stored successfully!"
+        //             })
+
+        //             setSuccess(true);
+        //             setTimeout(() => {
+        //                 setSuccess(false);
+        //             }, 3000)
+        //         }
+        //     }).catch(function (error) {
+        //         console.log("ERROR IN AXIOS CATCH BLOCK:", error)
+        //     })
+        // } catch (err) {
+        //     console.log("ERROR IN TRY CATCH BLOCK:", err)
+        // }
 
         // console.log({
         //     "FORM DATA": formData,
@@ -137,21 +161,21 @@ export default function AddNewObject(props: any) {
         allSubClass: allSubClass
     })
 
-    const dataTypeFunction = (id:any) => {
+    const dataTypeFunction = (id: any) => {
         let dt = "text";
-        if(id===1) {
+        if (id === 1) {
             dt = "number"
-        } else if (id===2) {
+        } else if (id === 2) {
             dt = "number"
-        } else if (id===3) {
+        } else if (id === 3) {
             dt = "text"
-        } else if (id===4) {
+        } else if (id === 4) {
             dt = "text"
-        } else if (id===5) {
+        } else if (id === 5) {
             dt = "text"
-        } else if (id===6) {
+        } else if (id === 6) {
             dt = "text"
-        } else if (id===7) {
+        } else if (id === 7) {
             dt = "text"
         }
         return dt;
@@ -171,6 +195,21 @@ export default function AddNewObject(props: any) {
                         />
                     </button>
                 </div>
+
+                {
+                    success &&
+                    <div className={`bg-green-957 border-green-958 text-green-959 mb-1 mt-1 border text-md px-4 py-3 rounded rounded-xl relative flex items-center justify-start`}>
+                        <Image
+                            src="/img/AlertSuccess.svg"
+                            alt="Alert Success"
+                            height={24}
+                            width={24}
+                            className='mr-2'
+                        />
+                        <strong className="font-semibold">Success</strong>
+                        <span className="block sm:inline ml-2">New Object has been created successfuly!</span>
+                    </div>
+                }
 
                 <div className={`flex justify-start items-start w-full overflow-auto h-full pb-10 ${styles.scroll} pr-3`}>
                     <form
