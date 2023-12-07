@@ -52,7 +52,8 @@ export default function TopBar({ showNav, setShowNav }) {
     try {
       await axios({
         method: 'GET',
-        url: `http://20.232.178.134:3000/api/getUsers`,
+        // url: `http://20.232.178.134:3000/api/getUsers`,
+        url: `/api/getUsers`,
         headers: {
           "Authorization": `Bearer ${access_token}`,
           "Content-Type": "application/json"

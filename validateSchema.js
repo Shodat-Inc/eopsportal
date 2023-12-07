@@ -44,8 +44,6 @@ export const createUserValidation = (data) => {
     companyName: Joi.string().required(),
     countryCodeId: Joi.number().required(),
     phoneNumber: Joi.number().required(),
-    isPrimary: Joi.boolean().required(),
-    primary: Joi.boolean().required(),
   });
 
   return schema.validate(data);
@@ -226,7 +224,7 @@ export const createEnterpriseUserValidation = (data) => {
       }),
     enterpriseId: Joi.number(),
     roleId: Joi.number(),
-    status: Joi.number()
+    status: Joi.number(),
   });
 
   return schema.validate(data);
@@ -234,7 +232,6 @@ export const createEnterpriseUserValidation = (data) => {
 
 export const updateEnterpriseUserValidation = (data) => {
   const schema = Joi.object({
-
     username: Joi.string(),
     firstName: Joi.string(),
     lastName: Joi.string(),
@@ -254,7 +251,6 @@ export const deleteEnterpriseUserValidation = (data) => {
 
 export const updateEnterpriseValidation = (data) => {
   const schema = Joi.object({
-
     enterpriseName: Joi.string(),
     enterpriseIndustry: Joi.string(),
     founderYear: Joi.number(),
@@ -262,14 +258,13 @@ export const updateEnterpriseValidation = (data) => {
     description: Joi.string(),
     employeeCount: Joi.number(),
     superAdminName: Joi.string(),
-    status: Joi.number()
+    status: Joi.number(),
   });
   return schema.validate(data);
 };
 
 export const contactSales = (data) => {
   const schema = Joi.object({
-
     email: Joi.string().required(),
     firstName: Joi.string().required(),
     lastName: Joi.string().required(),
@@ -277,14 +272,13 @@ export const contactSales = (data) => {
     companyName: Joi.string().required(),
     CIN: Joi.number().required(),
     numOfEmployee: Joi.number().required(),
-    phoneNumber: Joi.string().required()
+    phoneNumber: Joi.string().required(),
   });
   return schema.validate(data);
 };
 
 export const inviteValidation = (data) => {
   const schema = Joi.object({
-
     email: Joi.string().required(),
     userRole: Joi.string().required(),
     status: Joi.number(),
@@ -292,3 +286,10 @@ export const inviteValidation = (data) => {
   return schema.validate(data);
 };
 
+export const createModelValidation = (data) => {
+  const schema = Joi.object({
+    modelName: Joi.string().required(),
+    objectId: Joi.number(),
+  });
+  return schema.validate(data);
+};

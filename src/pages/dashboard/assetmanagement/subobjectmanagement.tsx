@@ -49,7 +49,8 @@ export default function SubObjectManagement(props: any) {
             try {
                 await axios({
                     method: 'GET',
-                    url: `http://20.232.178.134:3000/api/getChildAssets?id=${props.defaultClass}`,
+                    // url: `http://20.232.178.134:3000/api/getChildAssets?id=${props.defaultClass}`,
+                    url: `/api/getChildAssets?id=${props.defaultClass}`,
                     headers: {
                         "Authorization": `Bearer ${tokenStr}`,
                         "Content-Type": "application/json"
@@ -108,7 +109,8 @@ export default function SubObjectManagement(props: any) {
                 await axios({
                     method: 'GET',
                     // url: `/api/getObjects?id=${chooseAsset}`,
-                    url: `http://20.232.178.134:3000/api/getObjects?id=12`,
+                    // url: `http://20.232.178.134:3000/api/getObjects?id=12`,
+                    url: `/api/getObjects?id=12`,
                     headers: {
                         "Authorization": `Bearer ${tokenStr}`,
                         "Content-Type": "application/json"

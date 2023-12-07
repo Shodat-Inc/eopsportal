@@ -22,11 +22,11 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       res.status(405).send(message.error.postMethodError);
       return;
     }
-
     const reqData = req.body;
 
     // Extract data from the request body
-    const { email, firstName, lastName, password, roleId, ...objData } = reqData;
+    const { email, firstName, lastName, password, roleId, ...objData } =
+      reqData;
     const username = firstName.concat(lastName);
 
     // Validate the request data
@@ -41,15 +41,9 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       return;
     }
 
-    // Extract data for address record
-    const { address, city, state, pincode, countryId, primary, ...recordData } = objData;
-
     // Extract data for phone record
-    const { countryCodeId, phoneNumber, isPrimary, isActive, ...recordData1 } = recordData;
-    loggerInfo.info(recordData);
-
+    const { countryCodeId, phoneNumber, companyName } = objData;
     // Extract data for company record
-    const { companyName } = recordData1;
 
     // Create user data
     const userData = await usersRepo.create({
@@ -65,17 +59,6 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       return res.send(sendResponseData(false, userData.message, []));
     }
 
-    // Create address data
-    const addressData = await addressRepo.create({
-      address,
-      city,
-      state,
-      pincode,
-      countryId,
-      primary,
-      userId: userData.data.id,
-    });
-
     // Create company record
     const companyRecord = await CompanyRecordRepo.create({
       companyName,
@@ -86,13 +69,13 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     const phoneRecord = await phoneRecordRepo.create({
       countryCodeId,
       phoneNumber,
-      isPrimary,
-      isActive,
       userId: userData.data.id,
     });
 
     // Send success response
-    return res.send(sendResponseData(true, message.success.userCreated, []));
+    return res
+      .status(200)
+      .json(sendResponseData(true, message.success.userCreated, []));
   } catch (error: any) {
     // Handle errors
     loggerError.error("error in createUsers API ", error);
