@@ -3,7 +3,6 @@ import { apiHandler, usersRepo } from "../../helpers/api";
 import sendResponseData from "../../helpers/constant";
 import { signInValidation } from "../../../validateSchema";
 
-
 // Default API handler for the POST method to handle user authentication.
 export default apiHandler({
   post: handler,
@@ -23,7 +22,7 @@ async function handler(req: any, res: any) {
         .status(405)
         .send(sendResponseData(false, message.error.postMethodError, []));
     }
-    
+
     const validation = signInValidation(req.body);
     if (validation.error) {
       // Handle validation errors
@@ -39,7 +38,6 @@ async function handler(req: any, res: any) {
     const data = await usersRepo.authenticate(validation.value);
 
     // If successful, return a 200 OK response with the authentication data.
-    console.log(data,"_________api console");
     return res.status(200).send(data);
   } catch (error: any) {
     // If there's an error during the authentication process, return the error's status and message.
