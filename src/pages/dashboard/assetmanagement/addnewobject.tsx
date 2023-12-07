@@ -7,9 +7,9 @@ import { toggleAddNewObjectModel } from "@/store/actions/classAction";
 
 export default function AddNewObject(props: any) {
 
-    console.log({
-        "PROPS IN ADD NEW OBJECT COMPONENT": props,
-    })
+    // console.log({
+    //     "PROPS IN ADD NEW OBJECT COMPONENT": props,
+    // })
 
     const dispatch = useDispatch<any>();
     const [allSubClass, setAllSubClass] = useState([] as any);
@@ -37,9 +37,9 @@ export default function AddNewObject(props: any) {
                     }
                 }).then(function (response) {
                     if (response) {
-                        console.log({
-                            "RESPONSE HERE ": response.data.data[0]
-                        })
+                        // console.log({
+                        //     "RESPONSE HERE ": response.data.data[0]
+                        // })
                         setAllSubClass(response.data?.data[0]?.ClassTags);
 
                         if (response) {
@@ -106,44 +106,44 @@ export default function AddNewObject(props: any) {
 
         let finalArray = objectKey.map((item: any, i: any) => Object.assign({}, item, objectValue[i]));
         const dataToSave = {
-            "classId": props.subClassID, //Static id of Sub Class for Battery
+            "classId": props.subClassID, 
             "values": finalArray
         }
 
-        console.log({
-            dataToSave: dataToSave
-        })
+        // console.log({
+        //     dataToSave: dataToSave
+        // })
 
 
         let tokenStr = access_token;
-        // try {
-        //     await axios({
-        //         method: 'POST',
-        //         // url: `http://20.232.178.134:3000/api/createObjects`,
-        //         url: `/api/createObjects`,
-        //         data: dataToSave,
-        //         headers: {
-        //             "Authorization": `Bearer ${tokenStr}`,
-        //             "Content-Type": "application/json"
-        //         }
-        //     }).then(function (response) {
-        //         if (response) {
-        //             console.log({
-        //                 RESPONSE: response,
-        //                 MESSAGE: "SUCCESS: Stored successfully!"
-        //             })
+        try {
+            await axios({
+                method: 'POST',
+                // url: `http://20.232.178.134:3000/api/createObjects`,
+                url: `/api/createObjects`,
+                data: dataToSave,
+                headers: {
+                    "Authorization": `Bearer ${tokenStr}`,
+                    "Content-Type": "application/json"
+                }
+            }).then(function (response) {
+                if (response) {
+                    // console.log({
+                    //     RESPONSE: response,
+                    //     MESSAGE: "SUCCESS: Stored successfully!"
+                    // })
 
-        //             setSuccess(true);
-        //             setTimeout(() => {
-        //                 setSuccess(false);
-        //             }, 3000)
-        //         }
-        //     }).catch(function (error) {
-        //         console.log("ERROR IN AXIOS CATCH BLOCK:", error)
-        //     })
-        // } catch (err) {
-        //     console.log("ERROR IN TRY CATCH BLOCK:", err)
-        // }
+                    setSuccess(true);
+                    setTimeout(() => {
+                        setSuccess(false);
+                    }, 3000)
+                }
+            }).catch(function (error) {
+                console.log("ERROR IN AXIOS CATCH BLOCK:", error)
+            })
+        } catch (err) {
+            console.log("ERROR IN TRY CATCH BLOCK:", err)
+        }
 
         // console.log({
         //     "FORM DATA": formData,
@@ -157,9 +157,9 @@ export default function AddNewObject(props: any) {
 
     }
 
-    console.log({
-        allSubClass: allSubClass
-    })
+    // console.log({
+    //     allSubClass: allSubClass
+    // })
 
     const dataTypeFunction = (id: any) => {
         let dt = "text";

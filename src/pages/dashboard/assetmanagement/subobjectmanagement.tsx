@@ -28,6 +28,7 @@ export default function SubObjectManagement(props: any) {
 
     const [tableHeader, setTableHeader] = useState([] as any);
     const [tableData, setTableData] = useState([] as any);
+    const [searchObjects, setSearchObjects] = useState("");
 
     const addNewObject = useSelector((state: any) => state.classReducer);
     const toggleFilterFunction = () => {
@@ -153,6 +154,32 @@ export default function SubObjectManagement(props: any) {
         setDeleteModal(false)
     }
 
+    const handleSearchObjectFunction = (e: any) => {
+        setSearchObjects(e.target.value);
+    }
+    useEffect(() => {
+        let data = [] as any;
+        let allData = subClassData;
+        if (searchObjects != "") {
+            data = subClassData.filter((items: any) => {
+                // return items.className === searchObjects;
+                if ( items.className.toString().toLowerCase().includes(searchObjects) ) {
+                    return items;
+                }
+            })
+            console.log({
+                data: data
+            }) 
+            setSubClassData(data);           
+        } else {
+            setSubClassData(allData);
+        }
+    }, [searchObjects])
+
+    console.log({
+        searchObjects: searchObjects,
+        subClassData: subClassData
+    })
     return (
         <div className='py-3 font-OpenSans'>
 
@@ -190,11 +217,13 @@ export default function SubObjectManagement(props: any) {
                                     />
                                     <input
                                         type="text"
-                                        placeholder={`Search`}
+                                        placeholder="Search"
                                         id="searchobjects"
                                         name="searchobjects"
                                         className="border border-gray-969 rounded-lg h-[44px] w-full pl-10 pr-2"
                                         autoComplete="off"
+                                        value={searchObjects}
+                                        onChange={handleSearchObjectFunction}
                                     />
                                 </div>
                                 <ul className="p-0 m-0 w-full">
@@ -229,8 +258,8 @@ export default function SubObjectManagement(props: any) {
                         <input
                             type="text"
                             placeholder={`Search`}
-                            id="searchobjects"
-                            name="searchobjects"
+                            id="search"
+                            name="search"
                             className="border border-gray-969 rounded-lg h-[44px] w-[310px] pl-10 pr-2"
                             autoComplete="off"
                         />

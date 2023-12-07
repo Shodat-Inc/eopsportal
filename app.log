@@ -22672,3 +22672,717 @@
 {"level":"info","message":"JWT","timestamp":"2023-12-07T16:37:22.534Z"}
 {"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T16:37:22.537Z"}
 {"level":"info","message":"get parent join tags","timestamp":"2023-12-07T16:37:22.544Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2023-12-07T16:40:05.733Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2023-12-07T16:40:05.737Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2023-12-07T16:40:05.738Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T16:40:05.791Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T16:40:05.795Z"}
+{"level":"info","message":"Fetching all subclass and subclassTags data","timestamp":"2023-12-07T16:40:05.797Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2023-12-07T16:40:05.802Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T16:40:05.805Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T16:40:05.808Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T16:40:05.828Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T16:40:05.835Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T16:40:05.838Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T16:40:05.857Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T16:40:05.860Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T16:40:05.866Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T16:40:05.885Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T16:40:05.888Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T16:40:05.894Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T16:40:17.853Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T16:40:17.856Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T16:40:17.868Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:06:36.265Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:06:36.268Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:06:36.284Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:06:40.106Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:06:40.109Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:06:40.115Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:08:08.618Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:08:08.622Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:08:08.635Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2023-12-07T17:12:16.106Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2023-12-07T17:12:16.108Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2023-12-07T17:12:16.109Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:12:16.154Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:12:16.159Z"}
+{"level":"info","message":"Fetching all subclass and subclassTags data","timestamp":"2023-12-07T17:12:16.163Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2023-12-07T17:12:16.169Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:12:16.173Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:12:16.177Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:12:16.202Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:12:16.206Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:12:16.245Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:12:16.248Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:12:16.256Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:12:16.263Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2023-12-07T17:12:16.265Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:12:16.353Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:12:16.356Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:12:16.363Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2023-12-07T17:12:26.766Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:12:26.821Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:12:26.824Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:12:26.837Z"}
+{"level":"info","message":"Fetching all subclass and subclassTags data","timestamp":"2023-12-07T17:12:26.845Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:12:26.853Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2023-12-07T17:12:26.855Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:12:26.873Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:12:26.883Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:12:26.895Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:12:26.946Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:12:26.949Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:12:26.962Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:12:26.978Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:12:26.981Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:12:26.989Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:12:31.315Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:12:31.319Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:12:31.335Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:12:38.331Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:12:38.333Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:12:38.349Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:12:39.038Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:12:39.043Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:12:39.056Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:12:40.075Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:12:40.078Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:12:40.085Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:12:40.289Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:12:40.291Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:12:40.297Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:12:40.479Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:12:40.482Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:12:40.488Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:12:41.985Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:12:41.988Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:12:41.998Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2023-12-07T17:14:02.717Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:14:02.768Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:14:02.770Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:14:03.044Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:14:05.629Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:14:05.632Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:14:05.651Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:14:05.660Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:14:05.667Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:14:05.670Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:14:06.101Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:14:06.106Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:14:06.116Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:14:06.339Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:14:06.342Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:14:06.350Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:14:06.595Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:14:06.597Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:14:06.603Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:14:06.960Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:14:06.962Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:14:06.968Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2023-12-07T17:20:25.828Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2023-12-07T17:20:25.829Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2023-12-07T17:20:25.830Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:20:25.880Z"}
+{"level":"info","message":"Fetching all subclass and subclassTags data","timestamp":"2023-12-07T17:20:25.882Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:20:25.886Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:20:25.889Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2023-12-07T17:20:25.891Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:20:25.896Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:20:25.915Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:20:25.920Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:20:25.958Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:20:25.962Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:20:25.972Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:20:25.974Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:20:25.983Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:20:25.989Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2023-12-07T17:20:25.991Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:20:26.039Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:20:26.041Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:20:26.048Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2023-12-07T17:21:52.427Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2023-12-07T17:21:52.429Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2023-12-07T17:21:52.430Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2023-12-07T17:21:52.432Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:21:52.482Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:21:52.485Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:21:52.488Z"}
+{"level":"info","message":"Fetching all subclass and subclassTags data","timestamp":"2023-12-07T17:21:52.494Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:21:52.498Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:21:52.500Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2023-12-07T17:21:52.504Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:21:52.508Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:21:52.533Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:21:52.537Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:21:52.559Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:21:52.578Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:21:52.594Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:21:52.600Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:21:52.607Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:21:52.619Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:21:52.622Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:21:52.628Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:21:53.450Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:21:53.453Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:21:53.462Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:21:55.825Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:21:55.828Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:21:55.838Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:21:55.848Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:21:55.850Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:21:55.855Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:21:56.918Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:21:56.921Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:21:56.933Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:21:56.944Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:21:56.947Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:21:56.952Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:21:57.108Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:21:57.111Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:21:57.119Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:21:57.131Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:21:57.134Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:21:57.140Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:21:57.387Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:21:57.392Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:21:57.398Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:21:57.407Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:21:57.408Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:21:57.413Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:21:57.579Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:21:57.584Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:21:57.591Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:21:57.601Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:21:57.604Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:21:57.611Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:21:58.155Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:21:58.159Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:21:58.167Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:21:58.179Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:21:58.181Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:21:58.187Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:21:58.326Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:21:58.328Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:21:58.334Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:21:58.346Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:21:58.348Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:21:58.354Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:21:58.471Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:21:58.473Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:21:58.481Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:21:58.488Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:21:58.490Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:21:58.496Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:21:58.611Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:21:58.615Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:21:58.622Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:21:58.631Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:21:58.633Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:21:58.639Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:21:58.808Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:21:58.814Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:21:58.826Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:21:58.834Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:21:58.836Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:21:58.841Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:21:59.680Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:21:59.686Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:21:59.693Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:21:59.701Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:21:59.703Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:21:59.709Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:22:00.244Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:22:00.247Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:22:00.254Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:22:00.265Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:22:00.267Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:22:00.276Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:22:01.265Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:22:01.268Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:22:01.278Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:22:01.286Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:22:01.288Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:22:01.294Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:22:01.673Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:22:01.677Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:22:01.683Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:22:01.692Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:22:01.694Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:22:01.699Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:22:01.901Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:22:01.906Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:22:01.916Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:22:01.925Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:22:01.927Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:22:01.932Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2023-12-07T17:22:21.934Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2023-12-07T17:22:21.944Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:22:22.007Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:22:22.010Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:22:22.016Z"}
+{"level":"info","message":"Fetching all subclass and subclassTags data","timestamp":"2023-12-07T17:22:22.019Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:22:22.027Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2023-12-07T17:22:22.030Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:22:22.042Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:22:22.045Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:22:22.054Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:22:22.076Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:22:22.079Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:22:22.090Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:22:22.103Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:22:22.106Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:22:22.111Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:22:25.418Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:22:25.422Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:22:25.429Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:22:25.698Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:22:25.702Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:22:25.710Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:22:25.890Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:22:25.892Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:22:25.899Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:22:26.697Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:22:26.699Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:22:26.705Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:22:26.875Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:22:26.878Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:22:26.886Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:22:28.510Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:22:28.514Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:22:28.522Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:22:28.620Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:22:28.623Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:22:28.630Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:22:29.167Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:22:29.170Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:22:29.180Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:22:29.718Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:22:29.721Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:22:29.731Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:22:30.135Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:22:30.138Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:22:30.148Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:22:30.931Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:22:30.933Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:22:30.940Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:22:31.091Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:22:31.097Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:22:31.108Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:22:31.757Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:22:31.761Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:22:31.768Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2023-12-07T17:22:40.852Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2023-12-07T17:22:40.860Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:22:40.912Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:22:40.915Z"}
+{"level":"info","message":"Fetching all subclass and subclassTags data","timestamp":"2023-12-07T17:22:40.918Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2023-12-07T17:22:40.922Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:22:40.948Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:22:40.956Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2023-12-07T17:22:41.070Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2023-12-07T17:22:41.071Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2023-12-07T17:22:41.072Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2023-12-07T17:22:41.073Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:22:41.111Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:22:41.114Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:22:41.116Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:22:41.119Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:22:41.122Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:22:41.124Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:22:41.126Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:22:41.128Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:22:41.146Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:22:41.149Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:22:41.152Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:22:41.154Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:22:42.899Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:22:42.902Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:22:42.911Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:22:42.921Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:22:42.923Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:22:42.928Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:22:43.544Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:22:43.545Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:22:43.552Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:22:43.559Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:22:43.561Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:22:43.567Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:22:43.870Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:22:43.874Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:22:43.883Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:22:43.892Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:22:43.893Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:22:43.900Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:22:44.622Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:22:44.624Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:22:44.628Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:22:44.639Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:22:44.640Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:22:44.646Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:22:44.771Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:22:44.774Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:22:44.779Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:22:44.790Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:22:44.793Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:22:44.799Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:22:44.923Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:22:44.925Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:22:44.932Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:22:44.939Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:22:44.941Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:22:44.948Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:22:46.024Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:22:46.027Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:22:46.037Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:22:46.046Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:22:46.048Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:22:46.054Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:22:46.133Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:22:46.136Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:22:46.141Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:22:46.152Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:22:46.154Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:22:46.159Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:22:46.267Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:22:46.270Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:22:46.277Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:22:46.288Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:22:46.290Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:22:46.298Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:22:46.411Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:22:46.415Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:22:46.421Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:22:46.432Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:22:46.434Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:22:46.440Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:22:46.572Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:22:46.575Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:22:46.585Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:22:46.592Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:22:46.595Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:22:46.600Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2023-12-07T17:23:00.960Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:23:01.005Z"}
+{"level":"info","message":"Error Handler","timestamp":"2023-12-07T17:23:01.006Z"}
+{"level":"error","message":"UnauthorizedError","timestamp":"2023-12-07T17:23:01.006Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2023-12-07T17:26:44.750Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2023-12-07T17:26:44.751Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2023-12-07T17:26:44.753Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:26:44.822Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:26:44.828Z"}
+{"level":"info","message":"Get All Tag DataTypes","timestamp":"2023-12-07T17:26:44.832Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2023-12-07T17:26:44.834Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:26:44.838Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2023-12-07T17:26:48.661Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2023-12-07T17:26:48.663Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2023-12-07T17:26:48.663Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:26:48.695Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:26:48.698Z"}
+{"level":"info","message":"Fetching all subclass and subclassTags data","timestamp":"2023-12-07T17:26:48.699Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2023-12-07T17:26:48.702Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:26:48.705Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:26:48.707Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:26:48.724Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:26:48.729Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:26:48.745Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:26:48.748Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:26:48.779Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:26:48.781Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:26:48.785Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:26:48.788Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:26:48.793Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:26:48.799Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2023-12-07T17:26:48.801Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:26:48.822Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:26:48.824Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:26:48.831Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:26:50.447Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:26:50.449Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:26:50.455Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:26:52.246Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:26:52.251Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:26:52.260Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:26:52.269Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:26:52.272Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:26:52.277Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:26:53.308Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:26:53.311Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:26:53.318Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:26:53.331Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:26:53.334Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:26:53.340Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:26:53.519Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:26:53.523Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:26:53.530Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:26:53.543Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:26:53.546Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:26:53.552Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:26:54.106Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:26:54.110Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:26:54.120Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:26:54.131Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:26:54.133Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:26:54.141Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:26:54.327Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:26:54.329Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:26:54.336Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:26:54.345Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:26:54.347Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:26:54.353Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:26:57.477Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:26:57.480Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:26:57.488Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:26:57.500Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:26:57.502Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:26:57.507Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:26:57.617Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:26:57.619Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:26:57.625Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:26:57.635Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:26:57.637Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:26:57.643Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:26:58.179Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:26:58.184Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:26:58.195Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:26:58.208Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:26:58.212Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:26:58.223Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:26:58.234Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:26:58.236Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:26:58.242Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:26:58.252Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:26:58.254Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:26:58.259Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:26:58.377Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:26:58.379Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:26:58.385Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:27:01.009Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:27:01.011Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:27:01.020Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:27:01.503Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:27:01.505Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:27:01.517Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:27:02.066Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:27:02.067Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:27:02.072Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:27:02.392Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:27:02.395Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:27:02.402Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:27:02.773Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:27:02.776Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:27:02.787Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:27:03.123Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:27:03.125Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:27:03.133Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:27:23.195Z"}
+{"level":"info","message":"Get All Tag DataTypes","timestamp":"2023-12-07T17:27:23.199Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:27:27.926Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:27:27.930Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:27:27.944Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:27:27.948Z"}
+{"level":"info","message":"Fetching all subclass and subclassTags data","timestamp":"2023-12-07T17:27:27.952Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2023-12-07T17:27:27.958Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:27:27.967Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:27:27.973Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:27:28.008Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:27:28.012Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:27:28.031Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:27:28.031Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:27:28.040Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:27:28.047Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:27:28.057Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:27:28.062Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2023-12-07T17:27:28.065Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:27:28.105Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:27:28.108Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:27:28.116Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:27:34.101Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:27:34.105Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:27:34.111Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:27:36.147Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:27:36.150Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:27:36.156Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:27:36.167Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:27:36.169Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:27:36.174Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:27:37.435Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:27:37.437Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:27:37.445Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:27:37.450Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:27:37.453Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:27:37.458Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:27:38.284Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:27:38.287Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:27:38.296Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:27:38.301Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:27:38.304Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:27:38.312Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:27:38.386Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:27:38.389Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:27:38.396Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:27:38.405Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:27:38.407Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:27:38.413Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:27:39.902Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:27:39.902Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:27:39.905Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:27:39.910Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:27:39.917Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:27:39.922Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2023-12-07T17:28:18.553Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:28:18.618Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:28:18.623Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:28:18.645Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:28:18.648Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:28:18.660Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:28:18.664Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:28:18.678Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:28:18.684Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2023-12-07T17:28:18.688Z"}
+{"level":"info","message":"Fetching all subclass and subclassTags data","timestamp":"2023-12-07T17:28:18.692Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:28:18.730Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:28:18.739Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:28:18.763Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:28:18.767Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:28:18.773Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:28:18.786Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:28:18.788Z"}
+{"level":"info","message":"get parent join tags","timestamp":"2023-12-07T17:28:18.795Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2023-12-07T17:28:26.683Z"}
+{"code":"ER_CON_COUNT_ERROR","errno":1040,"level":"error","message":"db.ts Too many connections","sqlState":"","stack":"Error: Too many connections\n    at Object.createConnection (D:\\WORK\\eopsportal\\node_modules\\mysql2\\promise.js:253:31)\n    at Object.initialize (webpack-internal:///(api)/./src/helpers/api/db.ts:100:88)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:32:115)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)","timestamp":"2023-12-07T17:28:26.692Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:28:26.697Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:28:26.701Z"}
+{"level":"error","message":"Error fetching class and classTags data: Cannot read properties of undefined (reading 'findAll')","stack":"TypeError: Cannot read properties of undefined (reading 'findAll')\n    at Object.getSubClassByID (webpack-internal:///(api)/./src/helpers/api/repo/class-repo.ts:270:77)\n    at Object.allhandler [as get] (webpack-internal:///(api)/./src/pages/api/getChildAssetById.ts:19:84)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:79:34)","timestamp":"2023-12-07T17:28:26.703Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2023-12-07T17:28:26.726Z"}
+{"code":"ER_CON_COUNT_ERROR","errno":1040,"level":"error","message":"db.ts Too many connections","sqlState":"","stack":"Error: Too many connections\n    at Object.createConnection (D:\\WORK\\eopsportal\\node_modules\\mysql2\\promise.js:253:31)\n    at Object.initialize (webpack-internal:///(api)/./src/helpers/api/db.ts:100:88)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:32:115)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)","timestamp":"2023-12-07T17:28:26.729Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:28:26.730Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:28:26.732Z"}
+{"level":"error","message":"Error fetching class and classTags data: Cannot read properties of undefined (reading 'findAll')","stack":"TypeError: Cannot read properties of undefined (reading 'findAll')\n    at Object.getSubClassByID (webpack-internal:///(api)/./src/helpers/api/repo/class-repo.ts:270:77)\n    at Object.allhandler [as get] (webpack-internal:///(api)/./src/pages/api/getChildAssetById.ts:19:84)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:79:34)","timestamp":"2023-12-07T17:28:26.733Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2023-12-07T17:28:26.742Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2023-12-07T17:28:26.748Z"}
+{"code":"ER_CON_COUNT_ERROR","errno":1040,"level":"error","message":"db.ts Too many connections","sqlState":"","stack":"Error: Too many connections\n    at Object.createConnection (D:\\WORK\\eopsportal\\node_modules\\mysql2\\promise.js:253:31)\n    at Object.initialize (webpack-internal:///(api)/./src/helpers/api/db.ts:100:88)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:32:115)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)","timestamp":"2023-12-07T17:28:26.751Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:28:26.752Z"}
+{"code":"ER_CON_COUNT_ERROR","errno":1040,"level":"error","message":"db.ts Too many connections","sqlState":"","stack":"Error: Too many connections\n    at Object.createConnection (D:\\WORK\\eopsportal\\node_modules\\mysql2\\promise.js:253:31)\n    at Object.initialize (webpack-internal:///(api)/./src/helpers/api/db.ts:100:88)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:32:115)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)","timestamp":"2023-12-07T17:28:26.755Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:28:26.756Z"}
+{"level":"info","message":"Fetching all subclass and subclassTags data","timestamp":"2023-12-07T17:28:26.759Z"}
+{"level":"error","message":"Error fetching class and classTags data: Cannot read properties of undefined (reading 'findAll')","stack":"TypeError: Cannot read properties of undefined (reading 'findAll')\n    at Object.getSubClass (webpack-internal:///(api)/./src/helpers/api/repo/class-repo.ts:196:77)\n    at Object.allhandler [as get] (webpack-internal:///(api)/./src/pages/api/getChildAssets.ts:19:84)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:79:34)\n    at runNextTicks (node:internal/process/task_queues:60:5)\n    at process.processImmediate (node:internal/timers:449:9)\n    at process.callbackTrampoline (node:internal/async_hooks:130:17)","timestamp":"2023-12-07T17:28:26.760Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2023-12-07T17:28:26.764Z"}
+{"level":"error","message":"Error fetching Objects, ClassTags, and ObjectValues data: Cannot read properties of undefined (reading 'findAll')","stack":"TypeError: Cannot read properties of undefined (reading 'findAll')\n    at Object.get (webpack-internal:///(api)/./src/helpers/api/repo/object-repo.ts:74:73)\n    at Object.allhandler [as get] (webpack-internal:///(api)/./src/pages/api/getObjects.ts:20:84)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:79:34)","timestamp":"2023-12-07T17:28:26.793Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2023-12-07T17:28:26.825Z"}
+{"code":"ER_CON_COUNT_ERROR","errno":1040,"level":"error","message":"db.ts Too many connections","sqlState":"","stack":"Error: Too many connections\n    at Object.createConnection (D:\\WORK\\eopsportal\\node_modules\\mysql2\\promise.js:253:31)\n    at Object.initialize (webpack-internal:///(api)/./src/helpers/api/db.ts:100:88)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:32:115)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)","timestamp":"2023-12-07T17:28:26.829Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:28:26.830Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:28:26.833Z"}
+{"level":"error","message":"Error fetching class and classTags data: Cannot read properties of undefined (reading 'findAll')","stack":"TypeError: Cannot read properties of undefined (reading 'findAll')\n    at Object.getSubClassByID (webpack-internal:///(api)/./src/helpers/api/repo/class-repo.ts:270:77)\n    at Object.allhandler [as get] (webpack-internal:///(api)/./src/pages/api/getChildAssetById.ts:19:84)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:79:34)","timestamp":"2023-12-07T17:28:26.834Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2023-12-07T17:28:26.837Z"}
+{"code":"ER_CON_COUNT_ERROR","errno":1040,"level":"error","message":"db.ts Too many connections","sqlState":"","stack":"Error: Too many connections\n    at Object.createConnection (D:\\WORK\\eopsportal\\node_modules\\mysql2\\promise.js:253:31)\n    at Object.initialize (webpack-internal:///(api)/./src/helpers/api/db.ts:100:88)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:32:115)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)","timestamp":"2023-12-07T17:28:26.840Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:28:26.841Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2023-12-07T17:28:26.844Z"}
+{"level":"error","message":"Error fetching Objects, ClassTags, and ObjectValues data: Cannot read properties of undefined (reading 'findAll')","stack":"TypeError: Cannot read properties of undefined (reading 'findAll')\n    at Object.get (webpack-internal:///(api)/./src/helpers/api/repo/object-repo.ts:74:73)\n    at Object.allhandler [as get] (webpack-internal:///(api)/./src/pages/api/getObjects.ts:20:84)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:79:34)","timestamp":"2023-12-07T17:28:26.847Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2023-12-07T17:28:26.851Z"}
+{"code":"ER_CON_COUNT_ERROR","errno":1040,"level":"error","message":"db.ts Too many connections","sqlState":"","stack":"Error: Too many connections\n    at Object.createConnection (D:\\WORK\\eopsportal\\node_modules\\mysql2\\promise.js:253:31)\n    at Object.initialize (webpack-internal:///(api)/./src/helpers/api/db.ts:100:88)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:32:115)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)","timestamp":"2023-12-07T17:28:26.867Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:28:26.871Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:28:26.874Z"}
+{"level":"error","message":"Error fetching class and classTags data: Cannot read properties of undefined (reading 'findAll')","stack":"TypeError: Cannot read properties of undefined (reading 'findAll')\n    at Object.getSubClassByID (webpack-internal:///(api)/./src/helpers/api/repo/class-repo.ts:270:77)\n    at Object.allhandler [as get] (webpack-internal:///(api)/./src/pages/api/getChildAssetById.ts:19:84)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:79:34)","timestamp":"2023-12-07T17:28:26.874Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2023-12-07T17:28:26.886Z"}
+{"code":"ER_CON_COUNT_ERROR","errno":1040,"level":"error","message":"db.ts Too many connections","sqlState":"","stack":"Error: Too many connections\n    at Object.createConnection (D:\\WORK\\eopsportal\\node_modules\\mysql2\\promise.js:253:31)\n    at Object.initialize (webpack-internal:///(api)/./src/helpers/api/db.ts:100:88)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:32:115)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)","timestamp":"2023-12-07T17:28:26.889Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:28:26.890Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:28:26.893Z"}
+{"level":"error","message":"Error fetching class and classTags data: Cannot read properties of undefined (reading 'findAll')","stack":"TypeError: Cannot read properties of undefined (reading 'findAll')\n    at Object.getSubClassByID (webpack-internal:///(api)/./src/helpers/api/repo/class-repo.ts:270:77)\n    at Object.allhandler [as get] (webpack-internal:///(api)/./src/pages/api/getChildAssetById.ts:19:84)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:79:34)","timestamp":"2023-12-07T17:28:26.897Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2023-12-07T17:28:29.887Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:28:29.980Z"}
+{"level":"info","message":"Fetching subclass and subclassTags data by ID","timestamp":"2023-12-07T17:28:29.983Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2023-12-07T17:28:47.953Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2023-12-07T17:28:47.958Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2023-12-07T17:28:47.964Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:28:48.032Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:28:48.036Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:28:48.040Z"}
+{"level":"info","message":"Get All Tag DataTypes","timestamp":"2023-12-07T17:28:48.083Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2023-12-07T17:28:48.121Z"}
+{"level":"error","message":"Error in fetching user by ID","timestamp":"2023-12-07T17:28:48.253Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2023-12-07T17:28:58.123Z"}
+{"code":"ER_CON_COUNT_ERROR","errno":1040,"level":"error","message":"db.ts Too many connections","sqlState":"","stack":"Error: Too many connections\n    at Object.createConnection (D:\\WORK\\eopsportal\\node_modules\\mysql2\\promise.js:253:31)\n    at Object.initialize (webpack-internal:///(api)/./src/helpers/api/db.ts:100:88)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:32:115)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)","timestamp":"2023-12-07T17:28:58.139Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:28:58.145Z"}
+{"level":"error","message":"Error in fetching user by ID","timestamp":"2023-12-07T17:28:58.160Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2023-12-07T17:28:58.256Z"}
+{"code":"ER_CON_COUNT_ERROR","errno":1040,"level":"error","message":"db.ts Too many connections","sqlState":"","stack":"Error: Too many connections\n    at Object.createConnection (D:\\WORK\\eopsportal\\node_modules\\mysql2\\promise.js:253:31)\n    at Object.initialize (webpack-internal:///(api)/./src/helpers/api/db.ts:100:88)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:32:115)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)","timestamp":"2023-12-07T17:28:58.261Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:28:58.269Z"}
+{"level":"info","message":"Get All Tag DataTypes","timestamp":"2023-12-07T17:28:58.273Z"}
+{"level":"error","message":"Error in fetching Tag DataTypes","timestamp":"2023-12-07T17:28:58.274Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2023-12-07T17:28:58.289Z"}
+{"code":"ER_CON_COUNT_ERROR","errno":1040,"level":"error","message":"db.ts Too many connections","sqlState":"","stack":"Error: Too many connections\n    at Object.createConnection (D:\\WORK\\eopsportal\\node_modules\\mysql2\\promise.js:253:31)\n    at Object.initialize (webpack-internal:///(api)/./src/helpers/api/db.ts:100:88)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:32:115)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)","timestamp":"2023-12-07T17:28:58.302Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:28:58.316Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2023-12-07T17:28:58.322Z"}
+{"level":"error","message":"Error fetching class and classTags data: Cannot read properties of undefined (reading 'findAll')","stack":"TypeError: Cannot read properties of undefined (reading 'findAll')\n    at Object.getClassData (webpack-internal:///(api)/./src/helpers/api/repo/class-repo.ts:74:77)\n    at Object.allhandler [as get] (webpack-internal:///(api)/./src/pages/api/getAssets.ts:19:83)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:79:34)","timestamp":"2023-12-07T17:28:58.324Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2023-12-07T17:29:04.497Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:29:04.579Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:29:04.594Z"}
+{"level":"error","message":"Error in fetching user by ID","timestamp":"2023-12-07T17:29:04.604Z"}
+{"level":"info","message":"Get All Tag DataTypes","timestamp":"2023-12-07T17:29:04.609Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:29:04.617Z"}
+{"level":"error","message":"Error in fetching Tag DataTypes","timestamp":"2023-12-07T17:29:04.626Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2023-12-07T17:29:04.629Z"}
+{"level":"error","message":"Error fetching class and classTags data: Too many connections","name":"SequelizeConnectionError","original":{"code":"ER_CON_COUNT_ERROR","errno":1040,"sqlMessage":"Too many connections","sqlState":""},"parent":{"code":"ER_CON_COUNT_ERROR","errno":1040,"sqlMessage":"Too many connections","sqlState":""},"stack":"SequelizeConnectionError: Too many connections\n    at ConnectionManager.connect (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\dialects\\mysql\\connection-manager.js:102:17)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async ConnectionManager._connect (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\dialects\\abstract\\connection-manager.js:222:24)\n    at async D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\dialects\\abstract\\connection-manager.js:174:32\n    at async ConnectionManager.getConnection (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\dialects\\abstract\\connection-manager.js:197:7)\n    at async D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\sequelize.js:305:26\n    at async MySQLQueryInterface.select (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\dialects\\abstract\\query-interface.js:407:12)\n    at async Class.findAll (D:\\WORK\\eopsportal\\node_modules\\sequelize\\lib\\model.js:1140:21)\n    at async Object.getClassData (webpack-internal:///(api)/./src/helpers/api/repo/class-repo.ts:74:24)\n    at async Object.allhandler [as get] (webpack-internal:///(api)/./src/pages/api/getAssets.ts:19:25)\n    at async eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:79:13)","timestamp":"2023-12-07T17:29:04.635Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2023-12-07T17:29:14.846Z"}
+{"code":"ER_CON_COUNT_ERROR","errno":1040,"level":"error","message":"db.ts Too many connections","sqlState":"","stack":"Error: Too many connections\n    at Object.createConnection (D:\\WORK\\eopsportal\\node_modules\\mysql2\\promise.js:253:31)\n    at Object.initialize (webpack-internal:///(api)/./src/helpers/api/db.ts:100:88)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:32:115)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)","timestamp":"2023-12-07T17:29:14.853Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:29:14.856Z"}
+{"level":"error","message":"Error in fetching user by ID","timestamp":"2023-12-07T17:29:14.907Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2023-12-07T17:29:14.975Z"}
+{"code":"ER_CON_COUNT_ERROR","errno":1040,"level":"error","message":"db.ts Too many connections","sqlState":"","stack":"Error: Too many connections\n    at Object.createConnection (D:\\WORK\\eopsportal\\node_modules\\mysql2\\promise.js:253:31)\n    at Object.initialize (webpack-internal:///(api)/./src/helpers/api/db.ts:100:88)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:32:115)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)","timestamp":"2023-12-07T17:29:14.985Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:29:14.987Z"}
+{"level":"info","message":"Get All Tag DataTypes","timestamp":"2023-12-07T17:29:14.991Z"}
+{"level":"error","message":"Error in fetching Tag DataTypes","timestamp":"2023-12-07T17:29:14.992Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2023-12-07T17:29:15.000Z"}
+{"code":"ER_CON_COUNT_ERROR","errno":1040,"level":"error","message":"db.ts Too many connections","sqlState":"","stack":"Error: Too many connections\n    at Object.createConnection (D:\\WORK\\eopsportal\\node_modules\\mysql2\\promise.js:253:31)\n    at Object.initialize (webpack-internal:///(api)/./src/helpers/api/db.ts:100:88)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:32:115)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)","timestamp":"2023-12-07T17:29:15.004Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:29:15.005Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2023-12-07T17:29:15.008Z"}
+{"level":"error","message":"Error fetching class and classTags data: Cannot read properties of undefined (reading 'findAll')","stack":"TypeError: Cannot read properties of undefined (reading 'findAll')\n    at Object.getClassData (webpack-internal:///(api)/./src/helpers/api/repo/class-repo.ts:74:77)\n    at Object.allhandler [as get] (webpack-internal:///(api)/./src/pages/api/getAssets.ts:19:83)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:79:34)","timestamp":"2023-12-07T17:29:15.010Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2023-12-07T17:29:30.058Z"}
+{"code":"ER_CON_COUNT_ERROR","errno":1040,"level":"error","message":"db.ts Too many connections","sqlState":"","stack":"Error: Too many connections\n    at Object.createConnection (D:\\WORK\\eopsportal\\node_modules\\mysql2\\promise.js:253:31)\n    at Object.initialize (webpack-internal:///(api)/./src/helpers/api/db.ts:100:88)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:32:115)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)","timestamp":"2023-12-07T17:29:30.072Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:29:30.074Z"}
+{"level":"error","message":"Error in fetching user by ID","timestamp":"2023-12-07T17:29:30.105Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2023-12-07T17:29:30.134Z"}
+{"code":"ER_CON_COUNT_ERROR","errno":1040,"level":"error","message":"db.ts Too many connections","sqlState":"","stack":"Error: Too many connections\n    at Object.createConnection (D:\\WORK\\eopsportal\\node_modules\\mysql2\\promise.js:253:31)\n    at Object.initialize (webpack-internal:///(api)/./src/helpers/api/db.ts:100:88)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:32:115)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)","timestamp":"2023-12-07T17:29:30.142Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:29:30.144Z"}
+{"level":"info","message":"Get All Tag DataTypes","timestamp":"2023-12-07T17:29:30.148Z"}
+{"level":"error","message":"Error in fetching Tag DataTypes","timestamp":"2023-12-07T17:29:30.149Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2023-12-07T17:29:30.153Z"}
+{"code":"ER_CON_COUNT_ERROR","errno":1040,"level":"error","message":"db.ts Too many connections","sqlState":"","stack":"Error: Too many connections\n    at Object.createConnection (D:\\WORK\\eopsportal\\node_modules\\mysql2\\promise.js:253:31)\n    at Object.initialize (webpack-internal:///(api)/./src/helpers/api/db.ts:100:88)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:32:115)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)","timestamp":"2023-12-07T17:29:30.160Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:29:30.165Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2023-12-07T17:29:30.173Z"}
+{"level":"error","message":"Error fetching class and classTags data: Cannot read properties of undefined (reading 'findAll')","stack":"TypeError: Cannot read properties of undefined (reading 'findAll')\n    at Object.getClassData (webpack-internal:///(api)/./src/helpers/api/repo/class-repo.ts:74:77)\n    at Object.allhandler [as get] (webpack-internal:///(api)/./src/pages/api/getAssets.ts:19:83)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:79:34)","timestamp":"2023-12-07T17:29:30.174Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2023-12-07T17:29:35.962Z"}
+{"code":"ER_CON_COUNT_ERROR","errno":1040,"level":"error","message":"db.ts Too many connections","sqlState":"","stack":"Error: Too many connections\n    at Object.createConnection (D:\\WORK\\eopsportal\\node_modules\\mysql2\\promise.js:253:31)\n    at Object.initialize (webpack-internal:///(api)/./src/helpers/api/db.ts:100:88)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:32:115)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)","timestamp":"2023-12-07T17:29:35.964Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:29:35.965Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2023-12-07T17:29:35.967Z"}
+{"level":"error","message":"Error fetching class and classTags data: Cannot read properties of undefined (reading 'findAll')","stack":"TypeError: Cannot read properties of undefined (reading 'findAll')\n    at Object.getClassData (webpack-internal:///(api)/./src/helpers/api/repo/class-repo.ts:74:77)\n    at Object.allhandler [as get] (webpack-internal:///(api)/./src/pages/api/getAssets.ts:19:83)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:79:34)","timestamp":"2023-12-07T17:29:35.968Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2023-12-07T17:29:39.002Z"}
+{"code":"ER_CON_COUNT_ERROR","errno":1040,"level":"error","message":"db.ts Too many connections","sqlState":"","stack":"Error: Too many connections\n    at Object.createConnection (D:\\WORK\\eopsportal\\node_modules\\mysql2\\promise.js:253:31)\n    at Object.initialize (webpack-internal:///(api)/./src/helpers/api/db.ts:100:88)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:32:115)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)","timestamp":"2023-12-07T17:29:39.004Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:29:39.005Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2023-12-07T17:29:39.007Z"}
+{"level":"error","message":"Error fetching class and classTags data: Cannot read properties of undefined (reading 'findAll')","stack":"TypeError: Cannot read properties of undefined (reading 'findAll')\n    at Object.getClassData (webpack-internal:///(api)/./src/helpers/api/repo/class-repo.ts:74:77)\n    at Object.allhandler [as get] (webpack-internal:///(api)/./src/pages/api/getAssets.ts:19:83)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:79:34)","timestamp":"2023-12-07T17:29:39.008Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2023-12-07T17:29:40.079Z"}
+{"code":"ER_CON_COUNT_ERROR","errno":1040,"level":"error","message":"db.ts Too many connections","sqlState":"","stack":"Error: Too many connections\n    at Object.createConnection (D:\\WORK\\eopsportal\\node_modules\\mysql2\\promise.js:253:31)\n    at Object.initialize (webpack-internal:///(api)/./src/helpers/api/db.ts:100:88)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:32:115)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)","timestamp":"2023-12-07T17:29:40.083Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:29:40.084Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2023-12-07T17:29:40.087Z"}
+{"level":"error","message":"Error fetching class and classTags data: Cannot read properties of undefined (reading 'findAll')","stack":"TypeError: Cannot read properties of undefined (reading 'findAll')\n    at Object.getClassData (webpack-internal:///(api)/./src/helpers/api/repo/class-repo.ts:74:77)\n    at Object.allhandler [as get] (webpack-internal:///(api)/./src/pages/api/getAssets.ts:19:83)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:79:34)","timestamp":"2023-12-07T17:29:40.088Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2023-12-07T17:29:41.208Z"}
+{"code":"ER_CON_COUNT_ERROR","errno":1040,"level":"error","message":"db.ts Too many connections","sqlState":"","stack":"Error: Too many connections\n    at Object.createConnection (D:\\WORK\\eopsportal\\node_modules\\mysql2\\promise.js:253:31)\n    at Object.initialize (webpack-internal:///(api)/./src/helpers/api/db.ts:100:88)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:32:115)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)","timestamp":"2023-12-07T17:29:41.211Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:29:41.212Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2023-12-07T17:29:41.216Z"}
+{"level":"error","message":"Error fetching class and classTags data: Cannot read properties of undefined (reading 'findAll')","stack":"TypeError: Cannot read properties of undefined (reading 'findAll')\n    at Object.getClassData (webpack-internal:///(api)/./src/helpers/api/repo/class-repo.ts:74:77)\n    at Object.allhandler [as get] (webpack-internal:///(api)/./src/pages/api/getAssets.ts:19:83)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:79:34)","timestamp":"2023-12-07T17:29:41.217Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2023-12-07T17:29:51.546Z"}
+{"code":"ER_CON_COUNT_ERROR","errno":1040,"level":"error","message":"db.ts Too many connections","sqlState":"","stack":"Error: Too many connections\n    at Object.createConnection (D:\\WORK\\eopsportal\\node_modules\\mysql2\\promise.js:253:31)\n    at Object.initialize (webpack-internal:///(api)/./src/helpers/api/db.ts:100:88)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:32:115)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)","timestamp":"2023-12-07T17:29:51.602Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:29:51.604Z"}
+{"level":"error","message":"Error in fetching user by ID","timestamp":"2023-12-07T17:29:51.608Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2023-12-07T17:29:51.649Z"}
+{"code":"ER_CON_COUNT_ERROR","errno":1040,"level":"error","message":"db.ts Too many connections","sqlState":"","stack":"Error: Too many connections\n    at Object.createConnection (D:\\WORK\\eopsportal\\node_modules\\mysql2\\promise.js:253:31)\n    at Object.initialize (webpack-internal:///(api)/./src/helpers/api/db.ts:100:88)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:32:115)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)","timestamp":"2023-12-07T17:29:51.656Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:29:51.659Z"}
+{"level":"info","message":"Get All Tag DataTypes","timestamp":"2023-12-07T17:29:51.663Z"}
+{"level":"error","message":"Error in fetching Tag DataTypes","timestamp":"2023-12-07T17:29:51.664Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2023-12-07T17:29:51.672Z"}
+{"code":"ER_CON_COUNT_ERROR","errno":1040,"level":"error","message":"db.ts Too many connections","sqlState":"","stack":"Error: Too many connections\n    at Object.createConnection (D:\\WORK\\eopsportal\\node_modules\\mysql2\\promise.js:253:31)\n    at Object.initialize (webpack-internal:///(api)/./src/helpers/api/db.ts:100:88)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:32:115)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)","timestamp":"2023-12-07T17:29:51.677Z"}
+{"level":"info","message":"JWT","timestamp":"2023-12-07T17:29:51.678Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2023-12-07T17:29:51.681Z"}
+{"level":"error","message":"Error fetching class and classTags data: Cannot read properties of undefined (reading 'findAll')","stack":"TypeError: Cannot read properties of undefined (reading 'findAll')\n    at Object.getClassData (webpack-internal:///(api)/./src/helpers/api/repo/class-repo.ts:74:77)\n    at Object.allhandler [as get] (webpack-internal:///(api)/./src/pages/api/getAssets.ts:19:83)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:79:34)","timestamp":"2023-12-07T17:29:51.681Z"}
