@@ -285,3 +285,11 @@ export const inviteValidation = (data) => {
   });
   return schema.validate(data);
 };
+
+export const createModelValidation = (data) => {
+  const schema = Joi.object({
+    modelName: Joi.string().required(),
+    objectId: Joi.number(),
+  });
+  return schema.validate(data);
+};

@@ -19,4 +19,6 @@ export * from "./deleteTableRecord";
 export * from "./reason";
 export * from "./otpverify";
 export * from './invite'
+export * from './aiModel'
+export * from './aiModelData'
 

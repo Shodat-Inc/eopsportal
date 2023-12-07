@@ -127,9 +127,11 @@ export async function initialize() {
       contactSales: "ContactSale",
       enterpriseAddress: "EnterpriseAddress",
       invite: "Invite",
+      aiModel: "Model",
+      aiModelData: "ModelData"
     };
 
-    
+
     if (!db.initialized) {
       for (let key in modelArray) {
         const modelName = modelArray[key];
