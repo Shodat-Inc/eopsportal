@@ -1,6 +1,6 @@
 // import { db } from "../db";
 
-async function relationship(db:any) {
+async function relationship(db: any) {
   // Establishing relationships for the User models:
   return new Promise((resolve, reject) => {
     // Each User can have multiple Address records.
@@ -118,6 +118,10 @@ async function relationship(db:any) {
 
     db.Enterprise.hasMany(db.Invite, { foreignKey: "enterpriseId" });
     db.Invite.belongsTo(db.Enterprise, { foreignKey: "enterpriseId" });
+
+    db.object.hasMany(db.Model, { foreignKey: "objectId" })
+    db.Model.belongsTo(db.object, { foreignKey: "objectId" })
+
     resolve("Imported");
   });
 }
