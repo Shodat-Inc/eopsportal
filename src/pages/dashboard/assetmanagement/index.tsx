@@ -9,7 +9,7 @@ import ClassManagement from "./classmanagement";
 import ObjectManagement from "./objectmanagement";
 import SubObjectManagement from "./subobjectmanagement";
 import SubClassManagement from "./subclassmanagement";
-import { setSelectedClass, toggleAddNewObjectModel } from "@/store/actions/classAction";
+import { setSelectedClass, toggleAddNewObjectModel, toggleAddNewClassObjectModel } from "@/store/actions/classAction";
 
 export default function AssetManagement() {
     const dispatch = useDispatch<any>();
@@ -111,6 +111,10 @@ export default function AssetManagement() {
 
     const openAddObjectModal = () => {
         dispatch(toggleAddNewObjectModel(true));
+    }
+
+    const openAddClassObjectModal = () => {
+        dispatch(toggleAddNewClassObjectModel(true));
     }
 
     return (
@@ -273,7 +277,25 @@ export default function AssetManagement() {
                                     height={24}
                                     width={24}
                                 />
-                                <span>Add Object</span>
+                                <span>Add Sub Class Object</span>
+                            </button>
+                        </div>
+                    }
+
+                    {tab === 2 &&
+                        <div className="flex justify-start items-center">
+                            <button
+                                className="rounded rounded-xl bg-black h-[44px] px-4 flex justify-center items-center text-white text-sm hover:bg-[#303030] transition-all duration-[400ms] transition-opacity duration-300 outline-none transform active:scale-75 transition-transform"
+                                onClick={openAddClassObjectModal}
+                            >
+                                <Image
+                                    src="/img/plus.svg"
+                                    alt="Add Class"
+                                    className="mr-2"
+                                    height={24}
+                                    width={24}
+                                />
+                                <span>Add Class Object</span>
                             </button>
                         </div>
                     }

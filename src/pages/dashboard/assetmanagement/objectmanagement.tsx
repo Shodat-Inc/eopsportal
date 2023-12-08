@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import styles from '../../../styles/Common.module.css';
 import Image from "next/image";
 import axios from 'axios';
 import Link from 'next/dist/client/link';
 import { setSelectedClass, setClassBreadcrumb, selectedClassDataAction } from '@/store/actions/classAction';
+import AddNewClassObject from './addnewclassobject';
 
 export default function ObjectManagement(props: any) {
     console.log({
@@ -12,6 +14,7 @@ export default function ObjectManagement(props: any) {
     })
     const dispatch = useDispatch<any>();
     const [chooseAsset, setChooseAsset] = useState(0);
+    const classSelector = useSelector((state: any) => state.classReducer);
 
     const [toggleFilter, setToggleFilter] = useState(false);
     const [toggleArrow, setToggleArrow] = useState(false);
@@ -327,6 +330,13 @@ export default function ObjectManagement(props: any) {
                 </table>
             </div>
 
+                                    {/* Add New Class Object */}
+            <AddNewClassObject
+                show={classSelector.toggleAddClassObject && classSelector.toggleAddClassObject}
+                // parentClassID={getClassStates.selectedClass}
+                // subClassID={chooseAsset}
+                // subClassData={subClassData}
+            />
 
             {/* Delete Modal */}
             {deleteModal &&
