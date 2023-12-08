@@ -21,4 +21,4 @@ export * from "./otpverify";
 export * from './invite'
 export * from './aiModel'
 export * from './aiModelData'
-
+export * from './responseData'

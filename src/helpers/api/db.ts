@@ -128,7 +128,8 @@ export async function initialize() {
       enterpriseAddress: "EnterpriseAddress",
       invite: "Invite",
       aiModel: "Model",
-      aiModelData: "ModelData"
+      aiModelData: "ModelData",
+      responseData: "Response"
     };
 
 

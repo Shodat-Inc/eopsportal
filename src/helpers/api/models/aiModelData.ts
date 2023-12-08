@@ -16,6 +16,22 @@ export function ModelData(sequelize: any) {
             },
             allowNull: false
         },
+        modelId: {
+            type: DataTypes.INTEGER,
+            references: {
+                model: "Models",
+                id: "id",
+            },
+            allowNull: false
+        },
+        type: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        url: {
+            type: DataTypes.STRING,
+            allowNull: false
+        }
     };
     return sequelize.define("ModelData", attributes);
 }

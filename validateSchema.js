@@ -44,6 +44,8 @@ export const createUserValidation = (data) => {
     companyName: Joi.string().required(),
     countryCodeId: Joi.number().required(),
     phoneNumber: Joi.number().required(),
+    isPrimary: Joi.boolean(),
+    primary: Joi.boolean()
   });
 
   return schema.validate(data);
@@ -290,6 +292,7 @@ export const createModelValidation = (data) => {
   const schema = Joi.object({
     modelName: Joi.string().required(),
     objectId: Joi.number(),
+    classId: Joi.number()
   });
   return schema.validate(data);
 };
