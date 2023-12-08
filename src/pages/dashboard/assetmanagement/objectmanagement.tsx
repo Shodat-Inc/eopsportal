@@ -333,7 +333,7 @@ export default function ObjectManagement(props: any) {
                                     {/* Add New Class Object */}
             <AddNewClassObject
                 show={classSelector.toggleAddClassObject && classSelector.toggleAddClassObject}
-                // parentClassID={getClassStates.selectedClass}
+                parentClassID={chooseAsset}
                 // subClassID={chooseAsset}
                 // subClassData={subClassData}
             />

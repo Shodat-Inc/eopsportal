@@ -7,14 +7,13 @@ import { toggleAddNewClassObjectModel } from "@/store/actions/classAction";
 
 export default function AddNewClassObject(props: any) {
 
-    // console.log({
-    //     "PROPS IN ADD NEW OBJECT COMPONENT": props,
-    // })
+    console.log({
+        "PROPS IN ADD NEW CLASS OBJECT COMPONENT": props,
+    })
 
     const dispatch = useDispatch<any>();
-    const [allSubClass, setAllSubClass] = useState([] as any);
-    const [subClass, setSubClass] = useState([] as any);
-    const [fields, setFields] = useState({});
+    const [classData, setClassData] = useState([] as any);
+    const [resData, setResData] = useState([] as any);
     const formData = useRef("");
     const [success, setSuccess] = useState(false);
     let access_token = "" as any;
@@ -28,26 +27,19 @@ export default function AddNewClassObject(props: any) {
             try {
                 await axios({
                     method: 'GET',
-                    // url: `http://20.232.178.134:3000/api/getChildAssets?id=${props.parentClassID}`,
-                    // url: `/api/getChildAssets?id=${props.parentClassID}`,
-                    url: `/api/getChildAssetById?classId=${props.subClassID}&parentId=${props.parentClassID}`,
+                    // url: `http://20.232.178.134:3000/api/getAssetById?id=${props.parentClassID}`,
+                    url: `/api/getAssetById?id=${props.parentClassID}`,
                     headers: {
                         "Authorization": `Bearer ${tokenStr}`,
                         "Content-Type": "application/json"
                     }
                 }).then(function (response) {
                     if (response) {
-                        // console.log({
-                        //     "RESPONSE HERE ": response.data.data[0]
-                        // })
-                        setAllSubClass(response.data?.data[0]?.ClassTags);
-
-                        if (response) {
-                            const filtered = response.data.data.filter((item: any) => {
-                                return item.S_No === props.subClassID
-                            })
-                            setSubClass(filtered)
-                        }
+                        console.log({
+                            "RESPONSE HERE CREATE NEW CLASS OBJECT ": response.data.data[0]
+                        })
+                        setResData(response.data?.data[0]);
+                        setClassData(response.data?.data[0]?.ClassTags);
                     }
                 }).catch(function (error) {
                     console.log("ERROR IN AXIOS CATCH BLOCK", error)
@@ -57,15 +49,6 @@ export default function AddNewClassObject(props: any) {
             }
         })();
     }, [props]);
-    // Get the exact sub class data 
-    // useEffect(() => {
-    //     if (allSubClass && allSubClass.length > 0) {
-    //         const filtered = allSubClass.filter((item: any) => {
-    //             return item.S_No === props.subClassID
-    //         })
-    //         setSubClass(filtered)
-    //     }
-    // }, [allSubClass]);
 
     const closeModel = () => {
         dispatch(toggleAddNewClassObjectModel(false));
@@ -115,35 +98,35 @@ export default function AddNewClassObject(props: any) {
         // })
 
 
-        let tokenStr = access_token;
-        try {
-            await axios({
-                method: 'POST',
-                // url: `http://20.232.178.134:3000/api/createObjects`,
-                url: `/api/createObjects`,
-                data: dataToSave,
-                headers: {
-                    "Authorization": `Bearer ${tokenStr}`,
-                    "Content-Type": "application/json"
-                }
-            }).then(function (response) {
-                if (response) {
-                    // console.log({
-                    //     RESPONSE: response,
-                    //     MESSAGE: "SUCCESS: Stored successfully!"
-                    // })
+        // let tokenStr = access_token;
+        // try {
+        //     await axios({
+        //         method: 'POST',
+        //         // url: `http://20.232.178.134:3000/api/createObjects`,
+        //         url: `/api/createObjects`,
+        //         data: dataToSave,
+        //         headers: {
+        //             "Authorization": `Bearer ${tokenStr}`,
+        //             "Content-Type": "application/json"
+        //         }
+        //     }).then(function (response) {
+        //         if (response) {
+        //             // console.log({
+        //             //     RESPONSE: response,
+        //             //     MESSAGE: "SUCCESS: Stored successfully!"
+        //             // })
 
-                    setSuccess(true);
-                    setTimeout(() => {
-                        setSuccess(false);
-                    }, 3000)
-                }
-            }).catch(function (error) {
-                console.log("ERROR IN AXIOS CATCH BLOCK:", error)
-            })
-        } catch (err) {
-            console.log("ERROR IN TRY CATCH BLOCK:", err)
-        }
+        //             setSuccess(true);
+        //             setTimeout(() => {
+        //                 setSuccess(false);
+        //             }, 3000)
+        //         }
+        //     }).catch(function (error) {
+        //         console.log("ERROR IN AXIOS CATCH BLOCK:", error)
+        //     })
+        // } catch (err) {
+        //     console.log("ERROR IN TRY CATCH BLOCK:", err)
+        // }
 
         // console.log({
         //     "FORM DATA": formData,
@@ -185,7 +168,7 @@ export default function AddNewClassObject(props: any) {
         <>
             <div className={`bg-white h-full z-[11] fixed top-0 right-0 p-5 shadow shadow-lg ${props.show === true ? `${styles.objectContainer} ${styles.sliderShow}` : `${styles.objectContainer}`}`}>
                 <div className="flex justify-between items-center w-full mb-3">
-                    <h2 className="font-semibold text-lg">Add New Class Object</h2>
+                    <h2 className="font-semibold text-lg">Add New Object (<span className="text-sm text-gray-800">{resData?.className}</span>)</h2>
                     <button onClick={closeModel}>
                         <Image
                             src="/img/x.svg"
@@ -217,9 +200,9 @@ export default function AddNewClassObject(props: any) {
                         onSubmit={handleSubmit}
                         className="w-full flex justify-start items-start flex-wrap flex-col"
                     >
-                        {/* {
-                            allSubClass && allSubClass.length >= 0 ?
-                                allSubClass.map((item: any, index: any) => (
+                        {
+                            classData && classData.length >= 0 ?
+                                classData.map((item: any, index: any) => (
                                     <div key={index} className="w-full flex justify-start items-start flex-wrap flex-col">
                                         <div className={`mb-5 lg:w-full small:w-full small:w-full ${styles.form__wrap}`}>
                                             <div className={`relative ${styles.form__group} font-OpenSans`}>
@@ -239,7 +222,7 @@ export default function AddNewClassObject(props: any) {
                                 ))
                                 :
                                 <h2>No sub class tags found!!</h2>
-                        } */}
+                        }
 
 
                          <div className="w-full flex justify-start items-start flex-wrap flex-col hidden">
