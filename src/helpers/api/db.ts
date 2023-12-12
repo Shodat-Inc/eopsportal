@@ -106,8 +106,8 @@ export async function initialize() {
     //   loggerInfo.info(key);
     // }\
     const modelArray: any = {
-      tagDataType: "tagDataType",
       countryData: "countryCodeModel",
+      tagDataType: "tagDataType",
       routeTable: "Routes",
       role: "Role",
       address: "Address",
@@ -127,9 +127,10 @@ export async function initialize() {
       contactSales: "ContactSale",
       enterpriseAddress: "EnterpriseAddress",
       invite: "Invite",
+      association: "Association",
       aiModel: "Model",
       aiModelData: "ModelData",
-      responseData: "Response"
+      responseData: "Response",
     };
 
 

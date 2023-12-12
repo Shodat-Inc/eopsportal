@@ -13,7 +13,8 @@ export const ModelRepo = {
   getObjectBySerialId,
   getClassObjectBySerialId,
   getSubClassObjectBySerialId,
-  getModels,
+  getAllModels,
+  getModelById
 };
 
 async function create(params: any) {
@@ -152,12 +153,11 @@ async function getSubClassObjectBySerialId(params: any) {
     );
   }
 }
-async function getModels(params: any) {
+async function getAllModels() {
   loggerInfo.info("Get Models");
   try {
     const data = await db.Model.findAll({
-      where: { classId: params.classId },
-      attributes: ["modelName", "id", "classId", "objectId"],
+      attributes: ["id", "modelName", "description", "associationId"],
     });
     if (!data) {
       return sendResponseData(false, "No data Found", []);
@@ -166,4 +166,11 @@ async function getModels(params: any) {
   } catch (error: any) {
     return sendResponseData(false, "Error", error);
   }
+}
+
+async function getModelById(params:any) {
+  try{}catch(error:any){
+    loggerError.error("Error in Model Repo")
+    return sendResponseData(false,"Error in getting Model By ID",error)
+  }  
 }

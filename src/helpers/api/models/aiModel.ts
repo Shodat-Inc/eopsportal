@@ -9,17 +9,11 @@ export function Model(sequelize: any) {
       autoIncrement: true,
     },
     modelName: { type: DataTypes.STRING, allowNull: false },
-    classId: {
+    description: { type: DataTypes.JSON, allowNull: true },
+    associationId: {
       type: DataTypes.INTEGER,
       references: {
-        model: "Classes",
-        id: "id",
-      },
-    },
-    objectId: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: "Objects",
+        model: "ModelClassAssociations",
         id: "id",
       },
     },
