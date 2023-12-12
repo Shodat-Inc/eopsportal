@@ -5,7 +5,8 @@ import Image from "next/image";
 import CustomDrop from '@/common/customdrop';
 import axios from 'axios';
 import Link from 'next/dist/client/link';
-import { setSelectedClass, getSingleUser, setClassBreadcrumb  } from '@/store/actions/classAction';
+import { setSelectedClass, getSingleUser, setClassBreadcrumb } from '@/store/actions/classAction';
+import AddNewClassObject from './addnewclassobject';
 
 export default function ObjectManagement(props: any) {
     const dispatch = useDispatch<any>();
@@ -18,7 +19,9 @@ export default function ObjectManagement(props: any) {
     const [actionCount, setActionCount] = useState(1);
     const [objID, setObjID] = useState("");
     const [deleteModal, setDeleteModal] = useState(false);
- 
+    
+    const classSelector = useSelector((state: any) => state.classReducer);
+
     const toggleFilterFunction = () => {
         setToggleArrow(!toggleArrow);
         setToggleFilter(!toggleFilter);
@@ -43,15 +46,15 @@ export default function ObjectManagement(props: any) {
         if (fetchClassData.length) return;
     }, [])
 
-    useEffect(()=> {
+    useEffect(() => {
         setChooseAsset(classData[0]?.assetName);
         dispatch(setSelectedClass(classData[0]?.assetName))
-    }, [classData,dispatch])
+    }, [classData, dispatch])
 
-    const handleDropDown = (item: any) => {  
+    const handleDropDown = (item: any) => {
         console.log({
-            "AMIT":item
-        })     
+            "AMIT": item
+        })
         dispatch(setSelectedClass(item))
         setChooseAsset(item);
     }
@@ -64,16 +67,16 @@ export default function ObjectManagement(props: any) {
     }
     const takeMeToSubObjectComponent = (item: any) => {
         console.log({
-            "CHOOSEASSET":chooseAsset
-        })  
+            "CHOOSEASSET": chooseAsset
+        })
         let abc = {
-            "flow":"Object Management",
-            "class":chooseAsset,
+            "flow": "Object Management",
+            "class": chooseAsset,
             "classObjKey": "VIN",
-            "classObjValue":"5PVBE7AJ8R5T50001",
-            "subClass":"Batteries",
-            "subClassObjKey":"",
-            "subClassObjValue":""
+            "classObjValue": "5PVBE7AJ8R5T50001",
+            "subClass": "Batteries",
+            "subClassObjKey": "",
+            "subClassObjValue": ""
         }
         dispatch(setClassBreadcrumb(abc))
         setObjID(item);
@@ -330,8 +333,14 @@ export default function ObjectManagement(props: any) {
                     <div className="opacity-75 fixed inset-0 z-40 bg-black"></div>
                 </>
             }
-
-
+            {/* Add New Class Object */}
+            <AddNewClassObject
+                show={classSelector.toggleAddClassObject && classSelector.toggleAddClassObject}
+                // parentClassID={getClassStates.selectedClass}
+                parentClassID={chooseAsset}
+            // subClassID={chooseAsset}
+            // subClassData={subClassData}
+            />
 
         </div>
     )
