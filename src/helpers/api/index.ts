@@ -10,3 +10,6 @@ export * from "./repo/classTag-repo";
 export * from "./repo/tagDataType-repo";
 export * from "./repo/delete-record-repo";
 export * from "./repo/reason-repo";
+export * from "./repo/response-data-repo";
+export * from "./repo/model-data-repo";
+export * from "./repo/model-repo";
