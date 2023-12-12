@@ -35,6 +35,7 @@ function apiHandler(handler: any) {
         "/api/contactSales",
         "/api/entSigin",
         "/api/createEnterpriseUser",
+        "/api/etlService"
       ];
       const url = req.url.split("?")[0];
       if (!path.includes(url)) {
