@@ -5,6 +5,7 @@ import { GET_ALL_CLASS_ERROR, GET_ALL_CLASS_SUCCESS } from "../types";
 import { BREADCRUMB_SUCCESS, BREADCRUMB_ERROR } from "../types";
 import { OBJ_SELECT_DEFAULT_CLASS_ERROR, OBJ_SELECT_DEFAULT_CLASS_SUCCESS } from "../types";
 import { OBJ_SELECT_DEFAULT_SUB_CLASS_ERROR, OBJ_SELECT_DEFAULT_SUB_CLASS_SUCCESS } from "../types";
+import { SUCCESS_MESSAGE_ERROR, SUCCESS_MESSAGE_SUCCESS } from "../types";
 import axios from "axios";
 let access_token = "" as any;
 if (typeof window !== 'undefined') {
@@ -176,6 +177,25 @@ export const objDefaultSubClassSelectorFunction = (selClass: any) => async (disp
             dispatch({
                 type: OBJ_SELECT_DEFAULT_SUB_CLASS_ERROR,
                 payload: "No sub class Found!"
+            });
+        }
+    } catch (err) {
+        console.log("err in action:", err)
+    }
+};
+
+// Function to toggle the success message
+export const successMessageAction = (action:any) => async (dispatch: any) => {
+    try {
+        if (action) {
+            dispatch({
+                type: SUCCESS_MESSAGE_SUCCESS,
+                payload: action
+            });
+        } else {
+            dispatch({
+                type: SUCCESS_MESSAGE_ERROR,
+                payload: action
             });
         }
     } catch (err) {

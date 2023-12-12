@@ -6,6 +6,7 @@ import axios from 'axios';
 import Link from 'next/dist/client/link';
 import { setClassBreadcrumb, objDefaultClassSelectorFunction } from '@/store/actions/classAction';
 import AddNewClassObject from './addnewclassobject';
+import { successMessageAction } from '@/store/actions/classAction';
 
 export default function ObjectManagement(props: any) {
 
@@ -22,9 +23,21 @@ export default function ObjectManagement(props: any) {
     const [objectData, setObjectData] = useState([] as any);
     const [tableHeader, setTableHeader] = useState({} as any);
 
+
     // All class reducer states
     const classSelector = useSelector((state: any) => state.classReducer);
 
+    // Close Success message after 5 second if true
+    useEffect(() => {
+        if (classSelector && classSelector.successMessageReducer === true) {
+            setTimeout(() => {
+                dispatch(successMessageAction(false))
+            }, 5000)
+        }
+
+    }, [classSelector.successMessageReducer])
+
+    // Toggle the filters dropdown
     const toggleFilterFunction = () => {
         setToggleArrow(!toggleArrow);
         setToggleFilter(!toggleFilter);
@@ -33,6 +46,7 @@ export default function ObjectManagement(props: any) {
         setToggleSort(!toggleSort)
     }
 
+    // Set the choose asset on page load
     useEffect(() => {
         setChooseAsset(props.classData[0]?.assetName);
         dispatch(objDefaultClassSelectorFunction(props.classData[0]?.assetName))
@@ -42,6 +56,7 @@ export default function ObjectManagement(props: any) {
         dispatch(objDefaultClassSelectorFunction(item))
         setChooseAsset(item);
     }
+
     const toggleActions = (item: any) => {
         setActionCount(item);
         setActions(!actions);
@@ -112,11 +127,10 @@ export default function ObjectManagement(props: any) {
 
             }).then(function (response) {
                 if (response) {
-                    let headArray = response.data[0]?.subObjects;
                     let filtered = response.data.filter((item: any) => {
                         return item.parentAssetName === chooseAsset
                     })
-                    if (filtered && filtered.length > 0) {
+                    if (filtered && filtered.length >= 0) {
                         let headArray = filtered[0]?.subObjects;
                         setTableHeader(headArray)
                         setObjectData(filtered);
@@ -222,6 +236,24 @@ export default function ObjectManagement(props: any) {
                     </div>
                 </div>
             </div>
+
+
+            {/* Response Messages */}
+            {
+                classSelector.successMessageReducer === true &&
+
+                <div className={`bg-green-957 border-green-958 text-green-959 mb-1 mt-1 border text-md px-4 py-3 rounded rounded-xl relative flex items-center justify-start`}>
+                    <Image
+                        src="/img/AlertSuccess.svg"
+                        alt="Alert Success"
+                        height={24}
+                        width={24}
+                        className='mr-2'
+                    />
+                    <strong className="font-semibold">Success</strong>
+                    <span className="block sm:inline ml-2">Object stored successfully!</span>
+                </div>
+            }
 
             {/* Table */}
             <div className='w-full mt-6 min-h-[400px]'>
@@ -390,8 +422,7 @@ export default function ObjectManagement(props: any) {
                 show={classSelector.toggleAddClassObject && classSelector.toggleAddClassObject}
                 objectData={objectData}
                 selectedParentClass={chooseAsset}
-            // subClassID={chooseAsset}
-            // subClassData={subClassData}
+                classData={props.classData}
             />
 
         </div>

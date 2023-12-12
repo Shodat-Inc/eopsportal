@@ -7,9 +7,9 @@ import { toggleAddNewObjectModel } from "@/store/actions/classAction";
 export default function AddNewObject(props: any) {
     const [selectedObjectData, setSelectedObjectData] = useState([] as any);
     const formData = useRef("");
-    console.log({
-        "AK PROPS": props
-    })
+    // console.log({
+    //     "AK PROPS": props
+    // })
 
     useEffect(() => {
         if (props.subClassData && props.subClassData.length > 0) {
@@ -33,10 +33,10 @@ export default function AddNewObject(props: any) {
     }
     var myJsonString = JSON.stringify(selectedObjectData);
 
-    console.log({
-        selectedObjectData: selectedObjectData,
-        myJsonString: myJsonString
-    })
+    // console.log({
+    //     selectedObjectData: selectedObjectData,
+    //     myJsonString: myJsonString
+    // })
     return (
         <>
             <div className={`bg-white h-full z-[11] fixed top-0 right-0 p-5 shadow shadow-lg ${props.show === true ? `${styles.objectContainer} ${styles.sliderShow}` : `${styles.objectContainer}`}`}>

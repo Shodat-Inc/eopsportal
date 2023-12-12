@@ -5,6 +5,7 @@ import { BREADCRUMB_SUCCESS, BREADCRUMB_ERROR } from "../types";
 import { TOGGLE_ADD_CLASS_OBJECT_MODEL_ERROR, TOGGLE_ADD_CLASS_OBJECT_MODEL_SUCCESS } from "../types";
 import { OBJ_SELECT_DEFAULT_CLASS_ERROR, OBJ_SELECT_DEFAULT_CLASS_SUCCESS } from "../types";
 import { OBJ_SELECT_DEFAULT_SUB_CLASS_ERROR, OBJ_SELECT_DEFAULT_SUB_CLASS_SUCCESS } from "../types";
+import { SUCCESS_MESSAGE_ERROR, SUCCESS_MESSAGE_SUCCESS } from "../types";
 
 const initialState = {
   selectedClass: '',
@@ -14,6 +15,7 @@ const initialState = {
   toggleAddClassObject: false,
   objDefaultClassSelector: '',
   objDefaultSubClassSelector: '',
+  successMessageReducer: false,
 };
 
 const classReducer = (state = initialState, action: any) => {
@@ -40,7 +42,7 @@ const classReducer = (state = initialState, action: any) => {
         error: action.payload,
       };
 
-      case OBJ_SELECT_DEFAULT_SUB_CLASS_SUCCESS:
+    case OBJ_SELECT_DEFAULT_SUB_CLASS_SUCCESS:
       return {
         ...state,
         objDefaultSubClassSelector: action.payload,
@@ -93,6 +95,17 @@ const classReducer = (state = initialState, action: any) => {
     case BREADCRUMB_ERROR:
       return {
         classBreadcrumbs: action.payload,
+      };
+
+    case SUCCESS_MESSAGE_SUCCESS:
+      return {
+        ...state,
+        successMessageReducer: action.payload,
+      };
+
+    case SUCCESS_MESSAGE_ERROR:
+      return {
+        successMessageReducer: action.payload,
       };
 
     default:

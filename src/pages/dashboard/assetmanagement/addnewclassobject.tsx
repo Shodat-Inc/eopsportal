@@ -1,60 +1,28 @@
 import React, { useState, useRef, useEffect } from "react";
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import styles from '../../../styles/Common.module.css';
 import Image from "next/image";
-import axios from "axios";
 import { toggleAddNewClassObjectModel } from "@/store/actions/classAction";
+import { successMessageAction } from '@/store/actions/classAction';
 
 export default function AddNewClassObject(props: any) {
-
-    // console.log({
-    //     "PROPS ADD": props,
-    // })
 
     const dispatch = useDispatch<any>();
     const [classData, setClassData] = useState([] as any);
     const formData = useRef("");
     const [success, setSuccess] = useState(false);
-    let access_token = "" as any;
-    if (typeof window !== 'undefined') {
-        access_token = localStorage.getItem('authToken')
-    }
 
+    // Filter the selected class data from class data array
     useEffect(() => {
-        if (props.objectData && props.objectData.length > 0) {
-            setClassData(props.objectData[0].subObjects)
+        if (props.classData && props.classData.length >= 0) {
+            let filtered = props.classData.filter((item:any)=> {
+                return item.assetName === props.selectedParentClass
+            })
+            setClassData(filtered[0].tags)
         }
-    }, [props.objectData])
-    // UseEffect to get Sub Class from parent Class ID
-    // useEffect(() => {
-    //     let tokenStr = access_token;
-    //     (async function () {
-    //         try {
-    //             await axios({
-    //                 method: 'GET',
-    //                 // url: `http://20.232.178.134:3000/api/getAssetById?id=${props.selectedParentClass}`,
-    //                 url: `/api/getAssetById?id=${props.selectedParentClass}`,
-    //                 headers: {
-    //                     "Authorization": `Bearer ${tokenStr}`,
-    //                     "Content-Type": "application/json"
-    //                 }
-    //             }).then(function (response) {
-    //                 if (response) {
-    //                     console.log({
-    //                         "RESPONSE HERE CREATE NEW CLASS OBJECT ": response.data.data[0]
-    //                     })
-    //                     setResData(response.data?.data[0]);
-    //                     setClassData(response.data?.data[0]?.ClassTags);
-    //                 }
-    //             }).catch(function (error) {
-    //                 console.log("ERROR IN AXIOS CATCH BLOCK", error)
-    //             })
-    //         } catch (err) {
-    //             console.log("ERROR IN TRY CATCH BLOCK:", err)
-    //         }
-    //     })();
-    // }, [props]);
-
+    }, [props.selectedParentClass, props.classData])
+    
+    // Close modal action - redux
     const closeModel = () => {
         dispatch(toggleAddNewClassObjectModel(false));
     }
@@ -88,82 +56,39 @@ export default function AddNewClassObject(props: any) {
         const dataToSave = {
             "classId": props.subClassID,
             "values": finalArray
+        } 
+        let allTags = {};
+        const response = await fetch('/api/createObjects', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(
+                {
+                    assetID: `2000000011`,
+                    parentAssetID: `${props.selectedParentClass}`,
+                    parentAssetName: `${props.selectedParentClass}`,
+                    dateCreated: currentDate,
+                    subObjectName: `${form_values.PlantID || form_values.VIN}`,
+                    subObjectID: `${form_values.PlantID || form_values.VIN}`,
+                    subObjects: form_values,
+                }
+            )
+        });
+        const resdata = await response.json();
+        if (resdata) {
+            setSuccess(true);
+            dispatch(successMessageAction(true))
+            setTimeout(() => {
+                setSuccess(false);
+                dispatch(toggleAddNewClassObjectModel(false));
+            }, 50);
+        } else {
+            console.log("FAILED")
         }
-
-        // console.log({
-        //     dataToSave: dataToSave
-        // })
-
-
-        // let tokenStr = access_token;
-        // try {
-        //     await axios({
-        //         method: 'POST',
-        //         // url: `http://20.232.178.134:3000/api/createObjects`,
-        //         url: `/api/createObjects`,
-        //         data: dataToSave,
-        //         headers: {
-        //             "Authorization": `Bearer ${tokenStr}`,
-        //             "Content-Type": "application/json"
-        //         }
-        //     }).then(function (response) {
-        //         if (response) {
-        //             // console.log({
-        //             //     RESPONSE: response,
-        //             //     MESSAGE: "SUCCESS: Stored successfully!"
-        //             // })
-
-        //             setSuccess(true);
-        //             setTimeout(() => {
-        //                 setSuccess(false);
-        //             }, 3000)
-        //         }
-        //     }).catch(function (error) {
-        //         console.log("ERROR IN AXIOS CATCH BLOCK:", error)
-        //     })
-        // } catch (err) {
-        //     console.log("ERROR IN TRY CATCH BLOCK:", err)
-        // }
-
-        // console.log({
-        //     "FORM DATA": formData,
-        //     "FORM VALUE": form_values,
-        //     "INDIVIDUAL": Object.keys(form_values),
-        //     "objectValue": objectValue,
-        //     "objectKey":objectKey,
-        //     "finalArray":finalArray,
-        //     "dataToSave":dataToSave
-        // })
 
     }
 
-    // console.log({
-    //     allSubClass: allSubClass
-    // })
-
-    const dataTypeFunction = (id: any) => {
-        let dt = "text";
-        if (id === 1) {
-            dt = "number"
-        } else if (id === 2) {
-            dt = "number"
-        } else if (id === 3) {
-            dt = "text"
-        } else if (id === 4) {
-            dt = "text"
-        } else if (id === 5) {
-            dt = "text"
-        } else if (id === 6) {
-            dt = "text"
-        } else if (id === 7) {
-            dt = "text"
-        }
-        return dt;
-    }
-
-    // console.log({
-    //     classData: classData
-    // })
 
     return (
         <>
@@ -202,21 +127,21 @@ export default function AddNewClassObject(props: any) {
                         className="w-full flex justify-start items-start flex-wrap flex-col"
                     >
                         {
-                            classData && Object.keys(classData).length != 0 ?
-                                Object.keys(classData).map((item: any, index: any) => (
+                            classData && classData.length != 0 ?
+                                classData.map((item: any, index: any) => (
                                     <div key={index} className="w-full flex justify-start items-start flex-wrap flex-col">
                                         <div className={`mb-5 lg:w-full small:w-full small:w-full ${styles.form__wrap}`}>
                                             <div className={`relative ${styles.form__group} font-OpenSans`}>
                                                 <input
                                                     type="text"
-                                                    id={`${item}`}
-                                                    name={`${item}`}
+                                                    id={`${item.tagName}`}
+                                                    name={`${item.tagName}`}
                                                     className={`border border-gray-961 ${styles.form__field}`}
-                                                    placeholder={`${item}`}
+                                                    placeholder={`${item.tagName}`}
                                                     onChange={(e) => (formData.current = e.target.value)}
                                                     required
                                                 />
-                                                <label htmlFor={`${item}`} className={`${styles.form__label}`}>{item}</label>
+                                                <label htmlFor={`${item.tagName}`} className={`${styles.form__label}`}>{item.tagName}</label>
                                             </div>
                                         </div>
                                     </div>
@@ -235,107 +160,6 @@ export default function AddNewClassObject(props: any) {
                                     <p className="text-black text-xl mt-8 font-semibold">No data found!!</p>
                                 </div>
                         }
-
-
-                        <div className="w-full flex justify-start items-start flex-wrap flex-col hidden">
-                            <div className={`mb-5 lg:w-full small:w-full small:w-full ${styles.form__wrap}`}>
-                                <div className={`relative ${styles.form__group} font-OpenSans`}>
-                                    <input
-                                        type="text"
-                                        id="serialID"
-                                        name="serialID"
-                                        className={`border border-gray-961 ${styles.form__field}`}
-                                        placeholder="Enter class name"
-                                        required
-                                    />
-                                    <label htmlFor="serialID" className={`${styles.form__label}`}>Enter Serial ID</label>
-                                </div>
-                            </div>
-
-                            <div className={`mb-5 lg:w-full small:w-full small:w-full ${styles.form__wrap}`}>
-                                <div className={`relative ${styles.form__group} font-OpenSans`}>
-                                    <input
-                                        type="text"
-                                        id="VIN"
-                                        name="VIN"
-                                        className={`border border-gray-961 ${styles.form__field}`}
-                                        placeholder="Enter class name"
-                                        required
-                                    />
-                                    <label htmlFor="VIN" className={`${styles.form__label}`}>Enter VIN No</label>
-                                </div>
-                            </div>
-
-                            <div className={`mb-5 lg:w-full small:w-full small:w-full ${styles.form__wrap}`}>
-                                <div className={`relative ${styles.form__group} font-OpenSans`}>
-                                    <input
-                                        type="text"
-                                        id="manufacturer"
-                                        name="manufacturer"
-                                        className={`border border-gray-961 ${styles.form__field}`}
-                                        placeholder="Enter class name"
-                                        required
-                                    />
-                                    <label htmlFor="manufacturer" className={`${styles.form__label}`}>Enter Manufacturer</label>
-                                </div>
-                            </div>
-
-                            <div className={`mb-5 lg:w-full small:w-full small:w-full ${styles.form__wrap}`}>
-                                <div className={`relative ${styles.form__group} font-OpenSans`}>
-                                    <input
-                                        type="text"
-                                        id="capacity"
-                                        name="capacity"
-                                        className={`border border-gray-961 ${styles.form__field}`}
-                                        placeholder="Enter class name"
-                                        required
-                                    />
-                                    <label htmlFor="capacity" className={`${styles.form__label}`}>Enter Capacity (AH)</label>
-                                </div>
-                            </div>
-
-                            <div className={`mb-5 lg:w-full small:w-full small:w-full ${styles.form__wrap}`}>
-                                <div className={`relative ${styles.form__group} font-OpenSans`}>
-                                    <input
-                                        type="text"
-                                        id="voltage"
-                                        name="voltage"
-                                        className={`border border-gray-961 ${styles.form__field}`}
-                                        placeholder="Enter class name"
-                                        required
-                                    />
-                                    <label htmlFor="voltage" className={`${styles.form__label}`}>Enter Voltage (V)</label>
-                                </div>
-                            </div>
-
-                            <div className={`mb-5 lg:w-full small:w-full small:w-full ${styles.form__wrap}`}>
-                                <div className={`relative ${styles.form__group} font-OpenSans`}>
-                                    <input
-                                        type="text"
-                                        id="lotNo"
-                                        name="lotNo"
-                                        className={`border border-gray-961 ${styles.form__field}`}
-                                        placeholder="Enter class name"
-                                        required
-                                    />
-                                    <label htmlFor="lotNo" className={`${styles.form__label}`}>Enter Lot No</label>
-                                </div>
-                            </div>
-
-                            <div className={`mb-5 lg:w-full small:w-full small:w-full ${styles.form__wrap}`}>
-                                <div className={`relative ${styles.form__group} font-OpenSans`}>
-                                    <input
-                                        type="text"
-                                        id="type"
-                                        name="type"
-                                        className={`border border-gray-961 ${styles.form__field}`}
-                                        placeholder="Enter class name"
-                                        required
-                                    />
-                                    <label htmlFor="type" className={`${styles.form__label}`}>Enter Type</label>
-                                </div>
-                            </div>
-                        </div>
 
                         <div className="relative flex justify-end items-center w-full">
                             <button

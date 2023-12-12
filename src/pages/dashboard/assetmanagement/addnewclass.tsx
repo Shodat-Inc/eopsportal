@@ -15,20 +15,12 @@ import moment from "moment";
 import { setSelectedClass } from "@/store/actions/classAction";
 import DeleteModal from "@/common/deletemodal";
 import ObjectModal from "./objectmodal";
-export async function getServerSideProps() {
-    const localData = await getAssetsData()
-    return {
-        props: {
-            localData,
-        },
-    }
-}
-export default function AddNewClass(props: any, localData: any) {
+import { successMessageAction } from '@/store/actions/classAction';
+
+export default function AddNewClass(props: any) {
     const dispatch = useDispatch<any>();
-    const [showModal, setShowModal] = useState(false);
     const [success, setSuccess] = useState(false);
     const assetname = useRef("");
-    const [data, setData] = useState<any[]>([]);
     const router = useRouter();
     const [allTags, setAllTags] = useState<any[]>([]);
     const [newTag, setNewTag] = useState<string>("");
@@ -37,14 +29,16 @@ export default function AddNewClass(props: any, localData: any) {
     const [toggleDT, setToggleDT] = useState(false);
     const [dataType, setDataType] = useState("");
     const [assetDataType, setAssetDataType] = useState<any[]>([]);
-    const [showObjectModal, setShowObjectModal] = useState(false);
     const [chooseAsset, setChooseAsset] = useState("");
     const [toggleAsset, setToggleAsset] = useState(false);
     const [dtObject, setDtObject] = useState<any[]>([]);
     const [deleteModal, setDeleteModal] = useState(false);
+    
+    // All class reducer states
+    const allClassSelector = useSelector((state: any) => state.classReducer);
+
     const closeModal = () => {
         props.handleClick(false);
-        setShowModal(false);
         setShowInput(false);
         setShowHideAddTagButton(false)
         setToggleDT(false);
@@ -54,7 +48,6 @@ export default function AddNewClass(props: any, localData: any) {
     }
     const cancelModal = () => {
         props.handleClick(false);
-        setShowModal(false);
         setAllTags([]);
     }
 
@@ -75,22 +68,6 @@ export default function AddNewClass(props: any, localData: any) {
     const wrapperRef = useRef(null);
     useOutsideAlerter(wrapperRef);
 
-    // Get JSON data on page load
-    const fetchData = () => {
-        axios.get("/api/getAssets").then((response) => {
-            if (response.data) {
-                setData(response.data);
-            }
-        });
-    };
-    useEffect(() => {
-        fetchData();
-        if (fetchData.length) return;
-    }, [localData.localData])
-
-
-    // Get Last Asset ID
-    const getLastID = (data && data.length > 0) ? data.slice(-1)[0].assetID : '1000000001';
 
     // Adding New Tags
     const addTags = () => {
@@ -178,14 +155,13 @@ export default function AddNewClass(props: any, localData: any) {
         var formData = new FormData(e.target);
         const form_values = Object.fromEntries(formData);
         const response = await fetch('/api/assets', {
-            // const response = await fetch('https://shodat.vercel.app/api/assets', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(
                 {
-                    assetID: `${form_values.assetid}`,
+                    assetID: `1000000003`,
                     assetName: `${form_values.assetname}`,
                     slug: `${form_values.assetname}`,
                     assetkey: allTags,
@@ -198,17 +174,13 @@ export default function AddNewClass(props: any, localData: any) {
         });
         const resdata = await response.json();
         if (resdata) {
-            router.replace(router.asPath);
-            // Updated state to close the modal
-            setShowModal(false);
-            // Update state to Show the success message
             setSuccess(true);
-            // Update state to empty all tags 
             setAllTags([]);
-            // Update state to hide the success message after 5 seconds
+            dispatch(successMessageAction(true))
             setTimeout(() => {
                 setSuccess(false);
-            }, 5000);
+                props.handleClick(false);
+            }, 50);
         } else {
             console.log("FAILED")
         }

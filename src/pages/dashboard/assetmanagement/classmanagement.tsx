@@ -1,9 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import styles from '../../../styles/Common.module.css';
 import Image from "next/image";
 import Link from 'next/dist/client/link';
 import AddNewClass from './addnewclass';
+import { successMessageAction } from '@/store/actions/classAction';
+
 export default function ClassManagement(props: any) {
+    const dispatch = useDispatch<any>();
     const [toggleFilter, setToggleFilter] = useState(false);
     const [toggleArrow, setToggleArrow] = useState(false);
     const [toggleSort, setToggleSort] = useState(false);
@@ -11,6 +15,24 @@ export default function ClassManagement(props: any) {
     const [actionCount, setActionCount] = useState(1);
     const [showModal, setShowModal] = useState(Boolean);
     const [deleteModal, setDeleteModal] = useState(false);
+
+    // All class reducer states
+    const allClassSelector = useSelector((state: any) => state.classReducer);
+
+    console.log({
+        allClassSelector: allClassSelector.successMessageReducer
+    })
+
+    // Close Success message after 5 second if true
+    useEffect(()=> {
+        if(allClassSelector && allClassSelector.successMessageReducer === true ) {
+            setTimeout(()=>{
+                dispatch(successMessageAction(false))
+            }, 5000)
+        }
+
+    }, [allClassSelector.successMessageReducer])
+
     useEffect(() => {
         setShowModal(props.addClassModal)
     }, [props.addClassModal])
@@ -95,10 +117,30 @@ export default function ClassManagement(props: any) {
                 </div>
             </div>
 
+
+            {/* Response Messages */}
+            {
+                allClassSelector.successMessageReducer === true &&
+
+                <div className={`bg-green-957 border-green-958 text-green-959 mb-1 mt-1 border text-md px-4 py-3 rounded rounded-xl relative flex items-center justify-start`}>
+                    <Image
+                        src="/img/AlertSuccess.svg"
+                        alt="Alert Success"
+                        height={24}
+                        width={24}
+                        className='mr-2'
+                    />
+                    <strong className="font-semibold">Success</strong>
+                    <span className="block sm:inline ml-2">Class stored successfully!</span>
+                </div>
+            }
+
+
+
             {/* Table */}
             <div className='w-full mt-6 min-h-[400px]'>
                 {
-                 props.classData && props.classData.length > 0 ?
+                    props.classData && props.classData.length > 0 ?
                         <table className={`table-auto lg:min-w-full sm:w-full small:w-full text-left ${styles.tableV3} ${styles.tableV4}`}>
                             <thead className="text-sm font-normal">
                                 <tr>
@@ -139,7 +181,7 @@ export default function ClassManagement(props: any) {
                                             <td>{item.dateCreated}</td>
                                             <td className='relative'>
                                                 <div className="flex justify-start items-center relative">
-                                                    <button onClick={() => toggleActions(index+1)}>
+                                                    <button onClick={() => toggleActions(index + 1)}>
                                                         <Image
                                                             src="/img/more-vertical.svg"
                                                             alt="more-vertical"
@@ -147,7 +189,7 @@ export default function ClassManagement(props: any) {
                                                             width={24}
                                                         />
                                                     </button>
-                                                    {(actions && actionCount === index+1) &&
+                                                    {(actions && actionCount === index + 1) &&
                                                         <div className="bg-black text-white border overflow-hidden border-black rounded rounded-xl w-[100px] flex flex-col flex-wrap items-start justify-start shadow-sm absolute top-[30px] right-[75px] z-[1]">
                                                             <Link
                                                                 href="#"
@@ -186,7 +228,10 @@ export default function ClassManagement(props: any) {
 
 
             {/* Add New Class */}
-            <AddNewClass handleClick={handleClick} show={showModal} />
+            <AddNewClass
+                handleClick={handleClick}
+                show={showModal}
+            />
 
 
             {/* Delete Modal */}
