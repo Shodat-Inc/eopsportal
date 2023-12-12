@@ -3,13 +3,17 @@ import { TOGGLE_ADD_OBJECT_MODEL_ERROR, TOGGLE_ADD_OBJECT_MODEL_SUCCESS } from "
 import { GET_ALL_CLASS_ERROR, GET_ALL_CLASS_SUCCESS } from "../types";
 import { BREADCRUMB_SUCCESS, BREADCRUMB_ERROR } from "../types";
 import { TOGGLE_ADD_CLASS_OBJECT_MODEL_ERROR, TOGGLE_ADD_CLASS_OBJECT_MODEL_SUCCESS } from "../types";
+import { OBJ_SELECT_DEFAULT_CLASS_ERROR, OBJ_SELECT_DEFAULT_CLASS_SUCCESS } from "../types";
+import { OBJ_SELECT_DEFAULT_SUB_CLASS_ERROR, OBJ_SELECT_DEFAULT_SUB_CLASS_SUCCESS } from "../types";
 
 const initialState = {
   selectedClass: '',
   toggleAddObject: false,
   getAllClass: [],
   classBreadcrumbs: {},
-  toggleAddClassObject:false,
+  toggleAddClassObject: false,
+  objDefaultClassSelector: '',
+  objDefaultSubClassSelector: '',
 };
 
 const classReducer = (state = initialState, action: any) => {
@@ -25,6 +29,28 @@ const classReducer = (state = initialState, action: any) => {
         error: action.payload,
       };
 
+    case OBJ_SELECT_DEFAULT_CLASS_SUCCESS:
+      return {
+        ...state,
+        objDefaultClassSelector: action.payload,
+      };
+
+    case OBJ_SELECT_DEFAULT_CLASS_ERROR:
+      return {
+        error: action.payload,
+      };
+
+      case OBJ_SELECT_DEFAULT_SUB_CLASS_SUCCESS:
+      return {
+        ...state,
+        objDefaultSubClassSelector: action.payload,
+      };
+
+    case OBJ_SELECT_DEFAULT_SUB_CLASS_ERROR:
+      return {
+        error: action.payload,
+      };
+
     case TOGGLE_ADD_OBJECT_MODEL_SUCCESS:
       return {
         ...state,
@@ -35,8 +61,8 @@ const classReducer = (state = initialState, action: any) => {
       return {
         error: action.payload,
       };
-      
-      case TOGGLE_ADD_CLASS_OBJECT_MODEL_SUCCESS:
+
+    case TOGGLE_ADD_CLASS_OBJECT_MODEL_SUCCESS:
       return {
         ...state,
         toggleAddClassObject: action.payload,

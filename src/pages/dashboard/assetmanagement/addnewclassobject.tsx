@@ -7,9 +7,9 @@ import { toggleAddNewClassObjectModel } from "@/store/actions/classAction";
 
 export default function AddNewClassObject(props: any) {
 
-    console.log({
-        "PROPS IN ADD NEW CLASS OBJECT COMPONENT": props,
-    })
+    // console.log({
+    //     "PROPS IN ADD NEW CLASS OBJECT COMPONENT": props,
+    // })
 
     const dispatch = useDispatch<any>();
     const [classData, setClassData] = useState([] as any);
@@ -21,34 +21,34 @@ export default function AddNewClassObject(props: any) {
         access_token = localStorage.getItem('authToken')
     }
     // UseEffect to get Sub Class from parent Class ID
-    useEffect(() => {
-        let tokenStr = access_token;
-        (async function () {
-            try {
-                await axios({
-                    method: 'GET',
-                    // url: `http://20.232.178.134:3000/api/getAssetById?id=${props.parentClassID}`,
-                    url: `/api/getAssetById?id=${props.parentClassID}`,
-                    headers: {
-                        "Authorization": `Bearer ${tokenStr}`,
-                        "Content-Type": "application/json"
-                    }
-                }).then(function (response) {
-                    if (response) {
-                        console.log({
-                            "RESPONSE HERE CREATE NEW CLASS OBJECT ": response.data.data[0]
-                        })
-                        setResData(response.data?.data[0]);
-                        setClassData(response.data?.data[0]?.ClassTags);
-                    }
-                }).catch(function (error) {
-                    console.log("ERROR IN AXIOS CATCH BLOCK", error)
-                })
-            } catch (err) {
-                console.log("ERROR IN TRY CATCH BLOCK:", err)
-            }
-        })();
-    }, [props]);
+    // useEffect(() => {
+    //     let tokenStr = access_token;
+    //     (async function () {
+    //         try {
+    //             await axios({
+    //                 method: 'GET',
+    //                 // url: `http://20.232.178.134:3000/api/getAssetById?id=${props.parentClassID}`,
+    //                 url: `/api/getAssetById?id=${props.parentClassID}`,
+    //                 headers: {
+    //                     "Authorization": `Bearer ${tokenStr}`,
+    //                     "Content-Type": "application/json"
+    //                 }
+    //             }).then(function (response) {
+    //                 if (response) {
+    //                     console.log({
+    //                         "RESPONSE HERE CREATE NEW CLASS OBJECT ": response.data.data[0]
+    //                     })
+    //                     setResData(response.data?.data[0]);
+    //                     setClassData(response.data?.data[0]?.ClassTags);
+    //                 }
+    //             }).catch(function (error) {
+    //                 console.log("ERROR IN AXIOS CATCH BLOCK", error)
+    //             })
+    //         } catch (err) {
+    //             console.log("ERROR IN TRY CATCH BLOCK:", err)
+    //         }
+    //     })();
+    // }, [props]);
 
     const closeModel = () => {
         dispatch(toggleAddNewClassObjectModel(false));

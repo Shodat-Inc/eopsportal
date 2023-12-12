@@ -47,7 +47,7 @@ export default function ClassManagement(props: any) {
     const takeMeToClassComponent = (item: any) => {
         props.handelsubClass(item)
     }
-    
+
     return (
         <div className='px-0 py-3 font-OpenSans'>
             {/* Title, search and filters */}
@@ -96,97 +96,92 @@ export default function ClassManagement(props: any) {
             </div>
 
             {/* Table */}
-            <div className='w-full mt-6 min-h-[400px] '>
-                <table className={`table-auto lg:min-w-full sm:w-full small:w-full text-left ${styles.tableV3} ${styles.tableV4}`}>
-                    <thead className="text-sm font-normal">
-                        <tr>
-                            <th>S.No</th>
-                            <th>
-                                <button className="flex justify-center items-center" onClick={sortByClassName}>
-                                    <Image src="/img/arrow-up-gray.svg" alt="sort" height={17} width={17} className={`${toggleSort === true ? 'rotate-180' : 'rotate-0'}`} />
-                                    <span>Class name</span>
-                                </button>
-                            </th>
-                            <th>Tags</th>
-                            <th>Date of creation</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>
-                                <button
-                                    onClick={() => takeMeToClassComponent('Manufacturing Plant')}
-                                >
-                                    <span>Manufacturing Plant</span>
-                                </button>
-                            </td>
-                            <td>Plant ID,  Street, City, Zip, Country</td>
-                            <td>12-10-2023</td>
-                            <td className='relative'>
-                                <div className="flex justify-start items-center relative">
-                                    <button onClick={() => toggleActions(1)}>
-                                        <Image
-                                            src="/img/more-vertical.svg"
-                                            alt="more-vertical"
-                                            height={24}
-                                            width={24}
-                                        />
-                                    </button>
-                                    {(actions && actionCount === 1) &&
-                                        <div className="bg-black text-white border overflow-hidden border-black rounded rounded-xl w-[100px] flex flex-col flex-wrap items-start justify-start shadow-sm absolute top-[30px] right-[75px] z-[1]">
-                                            <Link
-                                                href="#"
-                                                className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[30px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
-                                                <span>Edit</span>
-                                            </Link>
-                                            <button
-                                                onClick={deleteModalFunction}
-                                                className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[30px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
-                                                <span>Delete</span>
-                                            </button>
-                                        </div>
-                                    }
-                                </div>
+            <div className='w-full mt-6 min-h-[400px]'>
+                {
+                 props.classData && props.classData.length > 0 ?
+                        <table className={`table-auto lg:min-w-full sm:w-full small:w-full text-left ${styles.tableV3} ${styles.tableV4}`}>
+                            <thead className="text-sm font-normal">
+                                <tr>
+                                    <th>S.No</th>
+                                    <th>
+                                        <button className="flex justify-center items-center" onClick={sortByClassName}>
+                                            <Image src="/img/arrow-up-gray.svg" alt="sort" height={17} width={17} className={`${toggleSort === true ? 'rotate-180' : 'rotate-0'}`} />
+                                            <span>Class name</span>
+                                        </button>
+                                    </th>
+                                    <th>Tags</th>
+                                    <th>Date of creation</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {
+                                    props.classData.map((item: any, index: any) => (
+                                        <tr key={index}>
+                                            <td>{index + 1}</td>
+                                            <td>
+                                                <button
+                                                    onClick={() => takeMeToClassComponent(item.assetName)}
+                                                >
+                                                    <span>{item.assetName}</span>
+                                                </button>
+                                            </td>
+                                            <td>
+                                                {
+                                                    item?.tags.map((it: any, indx: any) => (
+                                                        <span key={indx}>
+                                                            {it.tagName}<em>, </em>
+                                                        </span>
+                                                    ))
 
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Vehicles</td>
-                            <td>VIN, MfdDate, Model, Assembly Plant</td>
-                            <td>12-10-2023</td>
-                            <td>
-                                <div className="flex justify-start items-center relative">
-                                    <button onClick={() => toggleActions(2)}>
-                                        <Image
-                                            src="/img/more-vertical.svg"
-                                            alt="more-vertical"
-                                            height={24}
-                                            width={24}
-                                        />
-                                    </button>
-                                    {(actions && actionCount === 2) &&
-                                        <div className="bg-black text-white border overflow-hidden border-black rounded rounded-xl w-[100px] flex flex-col flex-wrap items-start justify-start shadow-sm absolute top-[30px] right-[75px] z-[1]">
-                                            <Link
-                                                href="#"
-                                                className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[30px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
-                                                <span>Edit</span>
-                                            </Link>
-                                            <button
-                                                onClick={deleteModalFunction}
-                                                className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[30px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
-                                                <span>Delete</span>
-                                            </button>
-                                        </div>
-                                    }
-                                </div>
+                                                }
+                                            </td>
+                                            <td>{item.dateCreated}</td>
+                                            <td className='relative'>
+                                                <div className="flex justify-start items-center relative">
+                                                    <button onClick={() => toggleActions(index+1)}>
+                                                        <Image
+                                                            src="/img/more-vertical.svg"
+                                                            alt="more-vertical"
+                                                            height={24}
+                                                            width={24}
+                                                        />
+                                                    </button>
+                                                    {(actions && actionCount === index+1) &&
+                                                        <div className="bg-black text-white border overflow-hidden border-black rounded rounded-xl w-[100px] flex flex-col flex-wrap items-start justify-start shadow-sm absolute top-[30px] right-[75px] z-[1]">
+                                                            <Link
+                                                                href="#"
+                                                                className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[30px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
+                                                                <span>Edit</span>
+                                                            </Link>
+                                                            <button
+                                                                onClick={deleteModalFunction}
+                                                                className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[30px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
+                                                                <span>Delete</span>
+                                                            </button>
+                                                        </div>
+                                                    }
+                                                </div>
 
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                                            </td>
+                                        </tr>
+                                    ))
+                                }
+                            </tbody>
+                        </table>
+                        :
+                        <div className='flex justify-center items-center w-full flex-wrap flex-col py-3 h-[250px]'>
+                            <Image
+                                src="/img/not-found.svg"
+                                alt='not-found'
+                                height={72}
+                                width={72}
+                                className='mb-6'
+                            />
+                            <p className="text-black text-2xl font-semibold">No data found!!</p>
+                            <p className="text-black text-lg mt-3 font-normal">Please create the class by clicking on the  <span className="text-black font-semibold text-lg]">"Add Class"</span> button.</p>
+                        </div>
+                }
             </div>
 
 

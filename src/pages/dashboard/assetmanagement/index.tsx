@@ -17,19 +17,33 @@ export default function AssetManagement() {
     const [defaultClass, setDefaultClass] = useState("");
     const [nav, setNav] = useState({} as any)
     const getSelClass = useSelector((state: any) => state.classReducer);
-    console.log({
-        "getSelClass in landingpage": getSelClass
-    })
+    const [objectKey, setObjectKey] = useState('');
+
     useEffect(() => {
         dispatch(getSingleUser())
     }, [])
-    const fetchData = () => {
-        axios.get("/api/getAssets").then((response) => {
-            if (response.data) {
-                setClassData(response.data);
-            }
-        });
-    };
+
+    async function fetchData() {
+        try {
+            await axios({
+                method: 'GET',
+                url: `/api/getAssets`,
+
+            }).then(function (response) {                
+                if (response) {
+                    setClassData(response.data)
+                }
+            }).catch(function (error) {
+                console.log({
+                    "ERROR IN AXIOS CATCH": error
+                })
+            })
+        } catch (err) {
+            console.log({
+                "ERROR IN TRY CATCH": err
+            })
+        }
+    }
     useEffect(() => {
         fetchData();
         if (fetchData.length) return;
@@ -62,16 +76,21 @@ export default function AssetManagement() {
     const handleaddClassModal = (item: any) => {
         setAddClassModal(item)
     }
+
+    // Object Management Callback
     const handelObject = (item: any) => {
-        console.log({
-            "item - landing page": item
-        })
+        // console.log({
+        //     "ITEM HERE OBJ MGMT":item
+        // })
+        setObjectKey(item)
         if (item !== "") {
             setTab(3)
         } else {
             setTab(tab)
         }
     }
+
+    // Sub Object Management Callback
     const handleSubObject = (item: any) => {
         if (item !== "") {
             setTab(2)
@@ -83,7 +102,11 @@ export default function AssetManagement() {
     const handleaddSubClassModal = (item: any) => {
         setAddSubClassModal(item)
     }
+
+    // Sub Class Management Callback
     const handelsubClass = (item: any) => {
+        dispatch(setSelectedClass(item))
+        setDefaultClass(item)
         if (item !== "") {
             setTab(4)
         } else {
@@ -95,10 +118,11 @@ export default function AssetManagement() {
         dispatch(toggleAddNewObjectModel(true));
     }
 
-
     const openAddClassObjectModal = () => {
         dispatch(toggleAddNewClassObjectModel(true));
     }
+
+
     return (
         <div className="flex font-OpenSans">
 
@@ -304,18 +328,22 @@ export default function AssetManagement() {
                             <SubClassManagement
                                 handleaddSubClassModal={handleaddSubClassModal}
                                 addSubClassModal={addSubClassModal}
+                                classData={classData && classData.length > 0 ? classData : []}
+                                selectedParentClass={defaultClass ? defaultClass : getSelClass.selectedClass}
                             />
                         }
                         {tab === 2 &&
                             <ObjectManagement
                                 handelObject={handelObject}
-                                defaultClass={defaultClass}
+                                classData={classData && classData.length > 0 ? classData : []}
+                                defaultClass={defaultClass ? defaultClass : getSelClass.selectedClass}
                             />
                         }
                         {tab === 3 &&
                             <SubObjectManagement
                                 handleSubObject={handleSubObject}
-                                defaultClass={getSelClass.selectedClass}
+                                defaultClass={getSelClass.objDefaultClassSelector}
+                                objectKey={objectKey}
                             />
                         }
                     </div>

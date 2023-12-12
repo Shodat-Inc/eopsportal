@@ -3,13 +3,17 @@ import { TOGGLE_ADD_OBJECT_MODEL_ERROR, TOGGLE_ADD_OBJECT_MODEL_SUCCESS } from "
 import { TOGGLE_ADD_CLASS_OBJECT_MODEL_ERROR, TOGGLE_ADD_CLASS_OBJECT_MODEL_SUCCESS } from "../types";
 import { GET_ALL_CLASS_ERROR, GET_ALL_CLASS_SUCCESS } from "../types";
 import { BREADCRUMB_SUCCESS, BREADCRUMB_ERROR } from "../types";
+import { OBJ_SELECT_DEFAULT_CLASS_ERROR, OBJ_SELECT_DEFAULT_CLASS_SUCCESS } from "../types";
+import { OBJ_SELECT_DEFAULT_SUB_CLASS_ERROR, OBJ_SELECT_DEFAULT_SUB_CLASS_SUCCESS } from "../types";
 import axios from "axios";
 let access_token = "" as any;
 if (typeof window !== 'undefined') {
     access_token = localStorage.getItem('authenticationToken')
 }
+
+
 /*
-Function to set the selected class at Object Management Landing Page
+Function to set the selected class at CLASS Management Landing Page
 */
 export const setSelectedClass = (selClass: any) => async (dispatch: any) => {
     try {
@@ -129,6 +133,49 @@ export const setClassBreadcrumb = (data: any) => async (dispatch: any) => {
             dispatch({
                 type: BREADCRUMB_ERROR,
                 payload: "error in setting breadcrumb"
+            });
+        }
+    } catch (err) {
+        console.log("err in action:", err)
+    }
+};
+
+
+/*
+Function to set the selected class at OBJECT Management Landing Page
+*/
+export const objDefaultClassSelectorFunction = (selClass: any) => async (dispatch: any) => {
+    try {
+        if (selClass) {
+            dispatch({
+                type: OBJ_SELECT_DEFAULT_CLASS_SUCCESS,
+                payload: selClass
+            });
+        } else {
+            dispatch({
+                type: OBJ_SELECT_DEFAULT_CLASS_ERROR,
+                payload: "No Class Found!"
+            });
+        }
+    } catch (err) {
+        console.log("err in action:", err)
+    }
+};
+
+/*
+Function to set the selected Sub class at OBJECT Management Landing Page
+*/
+export const objDefaultSubClassSelectorFunction = (selClass: any) => async (dispatch: any) => {
+    try {
+        if (selClass) {
+            dispatch({
+                type: OBJ_SELECT_DEFAULT_SUB_CLASS_SUCCESS,
+                payload: selClass
+            });
+        } else {
+            dispatch({
+                type: OBJ_SELECT_DEFAULT_SUB_CLASS_ERROR,
+                payload: "No sub class Found!"
             });
         }
     } catch (err) {

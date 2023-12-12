@@ -5,21 +5,29 @@ import Image from "next/image";
 import CustomDrop from '@/common/customdrop';
 import axios from 'axios';
 import Link from 'next/dist/client/link';
-import { setSelectedClass, getSingleUser, setClassBreadcrumb } from '@/store/actions/classAction';
+import { setSelectedClass, getSingleUser, setClassBreadcrumb, objDefaultClassSelectorFunction } from '@/store/actions/classAction';
 import AddNewClassObject from './addnewclassobject';
 
 export default function ObjectManagement(props: any) {
+    // console.log({
+    //     "HERE PROPS": props
+    // })
+
     const dispatch = useDispatch<any>();
     const [toggleFilter, setToggleFilter] = useState(false);
     const [toggleArrow, setToggleArrow] = useState(false);
     const [toggleSort, setToggleSort] = useState(false);
-    const [classData, setClassData] = useState([] as any);
     const [chooseAsset, setChooseAsset] = useState('');
+    const [toggleAsset, setToggleAsset] = useState(false);
     const [actions, setActions] = useState(false);
     const [actionCount, setActionCount] = useState(1);
     const [objID, setObjID] = useState("");
     const [deleteModal, setDeleteModal] = useState(false);
-    
+    const [objectData, setObjectData] = useState([] as any);
+    const [tableHeader, setTableHeader] = useState({} as any);
+    const [tableData, setTableData] = useState([] as any);
+
+    // All class reducer states
     const classSelector = useSelector((state: any) => state.classReducer);
 
     const toggleFilterFunction = () => {
@@ -29,33 +37,14 @@ export default function ObjectManagement(props: any) {
     const sortByClassName = () => {
         setToggleSort(!toggleSort)
     }
-    const fetchClassData = () => {
-        axios.get("/api/getAssets").then((response: any) => {
-            if (response.data) {
-                const filtered = response.data.filter((item: any) => {
-                    return item.assetName
-                });
-                if (filtered && filtered.length > 0) {
-                    setClassData(filtered);
-                }
-            }
-        });
-    };
-    useEffect(() => {
-        fetchClassData();
-        if (fetchClassData.length) return;
-    }, [])
 
     useEffect(() => {
-        setChooseAsset(classData[0]?.assetName);
-        dispatch(setSelectedClass(classData[0]?.assetName))
-    }, [classData, dispatch])
+        setChooseAsset(props.classData[0]?.assetName);
+        dispatch(objDefaultClassSelectorFunction(props.classData[0]?.assetName))
+    }, [props.classData, dispatch])
 
     const handleDropDown = (item: any) => {
-        console.log({
-            "AMIT": item
-        })
-        dispatch(setSelectedClass(item))
+        dispatch(objDefaultClassSelectorFunction(item))
         setChooseAsset(item);
     }
     const toggleActions = (item: any) => {
@@ -66,14 +55,16 @@ export default function ObjectManagement(props: any) {
         setActions(false);
     }
     const takeMeToSubObjectComponent = (item: any) => {
-        console.log({
-            "CHOOSEASSET": chooseAsset
-        })
+        // console.log({
+        //     "CHOOSEASSET": chooseAsset,
+        //     "ITEM HERE":item
+        // })
+        let classObjKey = chooseAsset === 'Manufacturing Plants' ? 'PlantID' : 'VIN';
         let abc = {
             "flow": "Object Management",
             "class": chooseAsset,
-            "classObjKey": "VIN",
-            "classObjValue": "5PVBE7AJ8R5T50001",
+            "classObjKey": classObjKey,
+            "classObjValue": item,
             "subClass": "Batteries",
             "subClassObjKey": "",
             "subClassObjValue": ""
@@ -93,16 +84,120 @@ export default function ObjectManagement(props: any) {
         setDeleteModal(false)
     }
 
+
+    function useOutsideAlerter(ref: any) {
+        useEffect(() => {
+            function handleClickOutside(event: any) {
+                if (ref.current && !ref.current.contains(event.target)) {
+                    setToggleAsset(false)
+                }
+            }
+            document.addEventListener("mousedown", handleClickOutside);
+            return () => {
+                document.removeEventListener("mousedown", handleClickOutside);
+            };
+        }, [ref]);
+    }
+    const wrapperRef = useRef(null);
+    useOutsideAlerter(wrapperRef);
+
+    const toggleDropdownFunction = () => {
+        setToggleAsset(!toggleAsset)
+    }
+
+    const selectItemFunction = (item: any) => {
+        setChooseAsset(item);
+        setToggleAsset(false);
+        dispatch(objDefaultClassSelectorFunction(item))
+    }
+
+
+    // Get objected based on selected class
+    async function fetchData() {
+        try {
+            await axios({
+                method: 'GET',
+                url: `/api/getObjects`,
+
+            }).then(function (response) {
+                if (response) {
+                    let headArray = response.data[0]?.subObjects;
+                    let filtered = response.data.filter((item: any) => {
+                        return item.parentAssetName === chooseAsset
+                    })
+                    if (filtered && filtered.length > 0) {
+                        let headArray = filtered[0]?.subObjects;
+                        setTableHeader(headArray)
+                        setObjectData(filtered);
+                    }
+                    // console.log({
+                    //     headArray: headArray,
+                    //     ObjectKeys: Object.keys(headArray),
+                    //     response: response
+                    // })
+                }
+            }).catch(function (error) {
+                console.log({
+                    "ERROR IN AXIOS CATCH": error
+                })
+            })
+        } catch (err) {
+            console.log({
+                "ERROR IN TRY CATCH": err
+            })
+        }
+    }
+    useEffect(() => {
+        fetchData();
+        if (fetchData.length) return;
+    }, [chooseAsset])
+
+    // console.log({
+    //     objectData: objectData,
+    //     tableHeader: tableHeader
+    // })
+
     return (
         <div className='py-3 font-OpenSans'>
             {/* Title, search and filters */}
             <div className='flex justify-between items-center py-2 px-4 '>
                 <div className='w-[350px]'>
-                    <CustomDrop
-                        data={classData}
-                        handleClick={handleDropDown}
-                        defaultClass={classData && classData.length > 0 ? classData[0].assetName : ""}
-                    />
+                    <div ref={wrapperRef}>
+                        <div
+                            className="border rounded-xl border-gray-969 h-[55px] pl-2 pr-5 relative flex items-center justify-start bg-white w-[80%] cursor-pointer"
+                            onClick={toggleDropdownFunction}
+                        >
+                            <label className="absolute text-sm top-[-10px] left-2 pl-2 pr-2 bg-white">Choose Industry type</label>
+                            <Image
+                                src="/img/arrow-down-black.svg"
+                                alt="arrow-down"
+                                height={20}
+                                width={20}
+                                className={`absolute right-3 top-4 ${toggleAsset ? 'rotate-180' : 'rotate-0'}`}
+                            />
+                            <span className="text-lg text-black pl-2">{chooseAsset}</span>
+                        </div>
+
+                        {toggleAsset ?
+                            <div className={`h-52 border rounded-xl border-gray-969 h-auto max-h-[250px] w-[400px]  absolute flex items-start justify-start mt-1 overflow-hidden overflow-y-auto bg-white ${styles.scroll} z-10`}>
+                                <ul className="p-0 m-0 w-full">
+                                    {
+                                        props.classData.map((item: any, index: any) => (
+                                            <li
+                                                className="px-5 py-2 bg-white cursor-pointer hover:bg-yellow-951 w-full font-normal"
+                                                onClick={() => selectItemFunction(item.assetName)}
+                                                key={index}
+                                            >
+                                                <span>{item.assetName}</span>
+                                            </li>
+                                        ))
+                                    }
+                                </ul>
+                            </div>
+                            :
+                            null
+                        }
+                    </div>
                 </div>
 
                 <div className='flex justify-start items-center'>
@@ -149,137 +244,112 @@ export default function ObjectManagement(props: any) {
 
             {/* Table */}
             <div className='w-full mt-6 min-h-[400px]'>
-                <table className={`table-auto lg:min-w-full sm:w-full small:w-full text-left ${styles.tableV3} ${styles.tableV4}`}>
-                    <thead className="text-sm font-normal">
-                        <tr>
-                            <th>S.No</th>
-                            <th>
-                                <button className="flex justify-center items-center" onClick={sortByClassName}>
-                                    <Image src="/img/arrow-up-gray.svg" alt="sort" height={17} width={17} className={`${toggleSort === true ? 'rotate-180' : 'rotate-0'}`} />
-                                    <span>VIN No</span>
-                                </button>
-                            </th>
-                            <th>Mfd Date</th>
-                            <th>Model</th>
-                            <th>Assembly Plant</th>
-                            <th>Lot No</th>
-                            <th>Model Year</th>
-                            <th>Type</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>
-                                <button
-                                    onClick={() => takeMeToSubObjectComponent('5PVBE7AJ8R5T50001')}
-                                >
-                                    <span>5PVBE7AJ8R5T50001</span>
-                                </button>
-                            </td>
-                            <td>06/03/2022</td>
-                            <td>Mineral Wells</td>
-                            <td>ES350</td>
-                            <td>104CY5209</td>
-                            <td>2022</td>
-                            <td>ICE</td>
-                            <td>
-                                <div className="flex justify-start items-center relative">
-                                    <button onClick={() => toggleActions(1)}>
-                                        <Image
-                                            src="/img/more-vertical.svg"
-                                            alt="more-vertical"
-                                            height={24}
-                                            width={24}
-                                        />
-                                    </button>
-                                    {(actions && actionCount === 1) &&
-                                        <div className="bg-black text-white border overflow-hidden border-black rounded rounded-lg w-[200px] flex flex-col flex-wrap items-start justify-start shadow-sm absolute top-[30px] right-[75px] z-[1]">
-                                            <Link
-                                                href="#"
-                                                className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
-                                                <span>Edit</span>
-                                            </Link>
-                                            <button
-                                                onClick={deleteModalFunction}
-                                                className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
-                                                <span>Delete</span>
-                                            </button>
-                                            <Link
-                                                href="#"
-                                                className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
-                                                <span>eOps Watch</span>
-                                            </Link>
-                                            <Link
-                                                href="#"
-                                                className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
-                                                <span>eOps Trace</span>
-                                            </Link>
-                                            <Link
-                                                href="#"
-                                                className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
-                                                <span>eOps Prosense</span>
-                                            </Link>
-                                            <Link
-                                                href="#"
-                                                className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
-                                                <span>eOps Insights/Reports</span>
-                                            </Link>
-                                        </div>
-                                    }
-                                </div>
+                {objectData && objectData.length > 0 ?
+                    <table className={`table-auto lg:min-w-full sm:w-full small:w-full text-left ${styles.tableV3} ${styles.tableV4}`}>
+                        <thead className="text-sm font-normal">
+                            <tr>
+                                <th>S.No</th>
+                                {
+                                    tableHeader && Object.keys(`tableHeader`).length != 0 ?
+                                        Object.keys(tableHeader).map((item: any, i: any) => (
+                                            <th className="capitalize" key={i}>
+                                                {
+                                                    item.split(/(?=[A-Z])/).join(" ")
+                                                }
+                                            </th>
+                                        ))
+                                        : null
+                                }
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {
+                                objectData && objectData.length > 0 ?
+                                    objectData.map((items: any, index: any) => (
+                                        <tr key={index}>
+                                            <td>{index + 1}</td>
+                                            {
+                                                Object.values(items?.subObjects).map((item: any, i: any) => (
+                                                    <td key={i} className={items.subObjectID}>
+                                                        <button
+                                                            onClick={() => takeMeToSubObjectComponent(items.subObjectID)}
+                                                        >
+                                                            <span>{item ? item : '-'}</span>
+                                                        </button>
+                                                    </td>
+                                                ))
+                                            }
+                                            <td>
+                                                <div className="flex justify-start items-center relative">
+                                                    <button onClick={() => toggleActions(index + 1)}>
+                                                        <Image
+                                                            src="/img/more-vertical.svg"
+                                                            alt="more-vertical"
+                                                            height={24}
+                                                            width={24}
+                                                        />
+                                                    </button>
+                                                    {(actions && actionCount === index + 1) &&
+                                                        <div className="bg-black text-white border overflow-hidden border-black rounded rounded-lg w-[200px] flex flex-col flex-wrap items-start justify-start shadow-sm absolute top-[30px] right-[75px] z-[1]">
+                                                            <Link
+                                                                href="#"
+                                                                className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
+                                                                <span>Edit</span>
+                                                            </Link>
+                                                            <button
+                                                                onClick={deleteModalFunction}
+                                                                className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
+                                                                <span>Delete</span>
+                                                            </button>
+                                                            <Link
+                                                                href="#"
+                                                                className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
+                                                                <span>eOps Watch</span>
+                                                            </Link>
+                                                            <Link
+                                                                href="#"
+                                                                className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
+                                                                <span>eOps Trace</span>
+                                                            </Link>
+                                                            <Link
+                                                                href="#"
+                                                                className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
+                                                                <span>eOps Prosense</span>
+                                                            </Link>
+                                                            <Link
+                                                                href="#"
+                                                                className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
+                                                                <span>eOps Insights/Reports</span>
+                                                            </Link>
+                                                        </div>
+                                                    }
+                                                </div>
 
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>5PVBE7AJ8R5T50007</td>
-                            <td>06/03/2022</td>
-                            <td>Mineral Wells</td>
-                            <td>GS450</td>
-                            <td>104CY5209</td>
-                            <td>2022</td>
-                            <td>ICE</td>
-                            <td>
-                                <div className="flex justify-start items-center relative">
-                                    <button onClick={() => toggleActions(1)}>
-                                        <Image
-                                            src="/img/more-vertical.svg"
-                                            alt="more-vertical"
-                                            height={24}
-                                            width={24}
-                                        />
-                                    </button>
-                                </div>
+                                            </td>
+                                        </tr>
+                                    ))
+                                    : null
+                            }
 
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>5PVBN3TK3R6Y67222</td>
-                            <td>06/03/2022</td>
-                            <td>Virginia</td>
-                            <td>EX-F</td>
-                            <td>104FG2001</td>
-                            <td>2023</td>
-                            <td>EV</td>
-                            <td>
-                                <div className="flex justify-start items-center relative">
-                                    <button onClick={() => toggleActions(3)}>
-                                        <Image
-                                            src="/img/more-vertical.svg"
-                                            alt="more-vertical"
-                                            height={24}
-                                            width={24}
-                                        />
-                                    </button>
-                                </div>
-
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                    :
+                    <div className="flex justify-center items-center flex-wrap flex-col font-OpenSans mt-20">
+                        <div className="no-data-image">
+                            <Image
+                                src="/img/not-found.svg"
+                                alt="no data found!"
+                                className="inline-block"
+                                height={72}
+                                width={72}
+                            />
+                        </div>
+                        <p className="text-black text-xl mt-8 font-semibold">No data found!!</p>
+                        <p className="text-black text-lg mt-3 font-normal">
+                            Please create the object by clicking on the  <span className="text-black font-semibold text-lg]">&#34;Add Class Object&#34;</span> button.</p>
+                    </div>
+                }
             </div>
 
 

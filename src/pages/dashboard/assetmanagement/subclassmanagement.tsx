@@ -1,9 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import styles from '../../../styles/Common.module.css';
 import Image from "next/image";
 import Link from 'next/dist/client/link';
 import AddNewSubClass from './addnewsubclass';
+import axios from 'axios';
 export default function SubClassManagement(props: any) {
+    
     const [toggleFilter, setToggleFilter] = useState(false);
     const [toggleArrow, setToggleArrow] = useState(false);
     const [toggleSort, setToggleSort] = useState(false);
@@ -12,6 +15,10 @@ export default function SubClassManagement(props: any) {
     const [showModal, setShowModal] = useState(Boolean);
     const [deleteModal, setDeleteModal] = useState(false);
     const [subClassData, setSubClassData] = useState([] as any)
+
+    // Reducer Redux data
+    const classReducerData = useSelector((state: any) => state.classReducer);
+
     useEffect(() => {
         setShowModal(props.addSubClassModal)
     }, [props.addSubClassModal])
@@ -48,6 +55,39 @@ export default function SubClassManagement(props: any) {
     const takeMeToClassComponent = (item: any) => {
         props.handelsubClass(item)
     }
+
+
+    // set default choose asset
+    async function fetchData() {
+        try {
+            await axios({
+                method: 'GET',
+                url: `/api/getSubAssets`,
+
+            }).then(function (response) {
+                if (response) {
+                    if (response.data) {
+                        let filtered = response.data.filter((item: any) => {
+                            return item.parentAssetID === props.selectedParentClass
+                        })
+                        setSubClassData(filtered);
+                    }
+                }
+            }).catch(function (error) {
+                console.log({
+                    "ERROR IN AXIOS CATCH": error
+                })
+            })
+        } catch (err) {
+            console.log({
+                "ERROR IN TRY CATCH": err
+            })
+        }
+    }
+    useEffect(() => {
+        fetchData()
+    }, [props.selectedParentClass])
+
     return (
         <div className='px-0 py-3 font-OpenSans'>
             {/* Title, search and filters */}
@@ -114,11 +154,59 @@ export default function SubClassManagement(props: any) {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td colSpan={5}>
-                                    No Data Found!
-                                </td>
-                            </tr>
+                            {
+                                subClassData.map((item: any, index: any) => (
+                                    <tr key={index}>
+                                        <td>{index + 1}</td>
+                                        <td>
+                                            <button
+                                                onClick={() => takeMeToClassComponent(item.assetName)}
+                                            >
+                                                <span>{item.assetName}</span>
+                                            </button>
+                                        </td>
+                                        <td>
+                                            {
+                                                item?.tagsWithDataType.map((it: any, indx: any) => (
+                                                    <span key={indx}>
+                                                        {it.tagName}<em>, </em>
+                                                    </span>
+                                                ))
+
+                                            }
+                                        </td>
+                                        <td>{item.dateCreated}</td>
+                                        <td className='relative'>
+                                            <div className="flex justify-start items-center relative">
+                                                <button onClick={() => toggleActions(index + 1)}>
+                                                    <Image
+                                                        src="/img/more-vertical.svg"
+                                                        alt="more-vertical"
+                                                        height={24}
+                                                        width={24}
+                                                    />
+                                                </button>
+                                                {(actions && actionCount === index + 1) &&
+                                                    <div className="bg-black text-white border overflow-hidden border-black rounded rounded-xl w-[100px] flex flex-col flex-wrap items-start justify-start shadow-sm absolute top-[30px] right-[75px] z-[1]">
+                                                        <Link
+                                                            href="#"
+                                                            className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[30px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
+                                                            <span>Edit</span>
+                                                        </Link>
+                                                        <button
+                                                            onClick={deleteModalFunction}
+                                                            className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[30px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
+                                                            <span>Delete</span>
+                                                        </button>
+                                                    </div>
+                                                }
+                                            </div>
+
+                                        </td>
+                                    </tr>
+                                ))
+
+                            }
                         </tbody>
                     </table>
                     :

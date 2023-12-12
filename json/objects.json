@@ -69,8 +69,8 @@
             "ModelYear": "2022",
             "Type": "ICE"
         },
-        "subObjectName": "",
-        "subObjectID": ""
+        "subObjectName": "Mineral Wells",
+        "subObjectID": "5PVBE7AJ8R5T50001"
     },
     {
         "assetID": 2000000005,
@@ -85,8 +85,8 @@
             "ModelYear": "2022",
             "Type": "ICE"
         },
-        "subObjectName": "",
-        "subObjectID": ""
+        "subObjectName": "Mineral Wells",
+        "subObjectID": "5PVBE7AJ8R5T50007"
     },
     {
         "assetID": 2000000006,
@@ -101,7 +101,7 @@
             "ModelYear": "2023",
             "Type": "EV"
         },
-        "subObjectName": "",
-        "subObjectID": ""
+        "subObjectName": "Virginia",
+        "subObjectID": "5PVBN3TK3R6Y67222"
     }
 ]
