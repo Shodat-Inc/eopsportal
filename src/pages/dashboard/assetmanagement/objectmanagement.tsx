@@ -2,22 +2,18 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from '../../../styles/Common.module.css';
 import Image from "next/image";
-import CustomDrop from '@/common/customdrop';
 import axios from 'axios';
 import Link from 'next/dist/client/link';
-import { setSelectedClass, getSingleUser, setClassBreadcrumb, objDefaultClassSelectorFunction } from '@/store/actions/classAction';
+import { setClassBreadcrumb, objDefaultClassSelectorFunction } from '@/store/actions/classAction';
 import AddNewClassObject from './addnewclassobject';
 
 export default function ObjectManagement(props: any) {
-    // console.log({
-    //     "HERE PROPS": props
-    // })
 
     const dispatch = useDispatch<any>();
     const [toggleFilter, setToggleFilter] = useState(false);
     const [toggleArrow, setToggleArrow] = useState(false);
     const [toggleSort, setToggleSort] = useState(false);
-    const [chooseAsset, setChooseAsset] = useState('');
+    const [chooseAsset, setChooseAsset] = useState(props.classData[0]?.assetName);
     const [toggleAsset, setToggleAsset] = useState(false);
     const [actions, setActions] = useState(false);
     const [actionCount, setActionCount] = useState(1);
@@ -25,7 +21,6 @@ export default function ObjectManagement(props: any) {
     const [deleteModal, setDeleteModal] = useState(false);
     const [objectData, setObjectData] = useState([] as any);
     const [tableHeader, setTableHeader] = useState({} as any);
-    const [tableData, setTableData] = useState([] as any);
 
     // All class reducer states
     const classSelector = useSelector((state: any) => state.classReducer);
@@ -55,10 +50,6 @@ export default function ObjectManagement(props: any) {
         setActions(false);
     }
     const takeMeToSubObjectComponent = (item: any) => {
-        // console.log({
-        //     "CHOOSEASSET": chooseAsset,
-        //     "ITEM HERE":item
-        // })
         let classObjKey = chooseAsset === 'Manufacturing Plants' ? 'PlantID' : 'VIN';
         let abc = {
             "flow": "Object Management",
@@ -130,11 +121,6 @@ export default function ObjectManagement(props: any) {
                         setTableHeader(headArray)
                         setObjectData(filtered);
                     }
-                    // console.log({
-                    //     headArray: headArray,
-                    //     ObjectKeys: Object.keys(headArray),
-                    //     response: response
-                    // })
                 }
             }).catch(function (error) {
                 console.log({
@@ -151,11 +137,6 @@ export default function ObjectManagement(props: any) {
         fetchData();
         if (fetchData.length) return;
     }, [chooseAsset])
-
-    // console.log({
-    //     objectData: objectData,
-    //     tableHeader: tableHeader
-    // })
 
     return (
         <div className='py-3 font-OpenSans'>
@@ -347,7 +328,8 @@ export default function ObjectManagement(props: any) {
                         </div>
                         <p className="text-black text-xl mt-8 font-semibold">No data found!!</p>
                         <p className="text-black text-lg mt-3 font-normal">
-                            Please create the object by clicking on the  <span className="text-black font-semibold text-lg]">&#34;Add Class Object&#34;</span> button.</p>
+                            Please create the object by clicking on the  <span className="text-black font-semibold text-lg]">&#34;Add Class Object&#34;</span> button.
+                        </p>
                     </div>
                 }
             </div>
@@ -406,8 +388,8 @@ export default function ObjectManagement(props: any) {
             {/* Add New Class Object */}
             <AddNewClassObject
                 show={classSelector.toggleAddClassObject && classSelector.toggleAddClassObject}
-                // parentClassID={getClassStates.selectedClass}
-                parentClassID={chooseAsset}
+                objectData={objectData}
+                selectedParentClass={chooseAsset}
             // subClassID={chooseAsset}
             // subClassData={subClassData}
             />

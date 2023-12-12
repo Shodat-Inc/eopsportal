@@ -8,18 +8,23 @@ import { toggleAddNewClassObjectModel } from "@/store/actions/classAction";
 export default function AddNewClassObject(props: any) {
 
     // console.log({
-    //     "PROPS IN ADD NEW CLASS OBJECT COMPONENT": props,
+    //     "PROPS ADD": props,
     // })
 
     const dispatch = useDispatch<any>();
     const [classData, setClassData] = useState([] as any);
-    const [resData, setResData] = useState([] as any);
     const formData = useRef("");
     const [success, setSuccess] = useState(false);
     let access_token = "" as any;
     if (typeof window !== 'undefined') {
         access_token = localStorage.getItem('authToken')
     }
+
+    useEffect(() => {
+        if (props.objectData && props.objectData.length > 0) {
+            setClassData(props.objectData[0].subObjects)
+        }
+    }, [props.objectData])
     // UseEffect to get Sub Class from parent Class ID
     // useEffect(() => {
     //     let tokenStr = access_token;
@@ -27,8 +32,8 @@ export default function AddNewClassObject(props: any) {
     //         try {
     //             await axios({
     //                 method: 'GET',
-    //                 // url: `http://20.232.178.134:3000/api/getAssetById?id=${props.parentClassID}`,
-    //                 url: `/api/getAssetById?id=${props.parentClassID}`,
+    //                 // url: `http://20.232.178.134:3000/api/getAssetById?id=${props.selectedParentClass}`,
+    //                 url: `/api/getAssetById?id=${props.selectedParentClass}`,
     //                 headers: {
     //                     "Authorization": `Bearer ${tokenStr}`,
     //                     "Content-Type": "application/json"
@@ -53,14 +58,6 @@ export default function AddNewClassObject(props: any) {
     const closeModel = () => {
         dispatch(toggleAddNewClassObjectModel(false));
     }
-
-    const formRef = useRef();
-    const handleReset = () => {
-        Array.from(document.querySelectorAll("input")).forEach(
-            input => (input.value = "")
-        );
-        setFields: [{}]
-    };
 
     // Save Data for subclass
     const handleSubmit = async (e: any) => {
@@ -89,7 +86,7 @@ export default function AddNewClassObject(props: any) {
 
         let finalArray = objectKey.map((item: any, i: any) => Object.assign({}, item, objectValue[i]));
         const dataToSave = {
-            "classId": props.subClassID, 
+            "classId": props.subClassID,
             "values": finalArray
         }
 
@@ -164,11 +161,15 @@ export default function AddNewClassObject(props: any) {
         return dt;
     }
 
+    // console.log({
+    //     classData: classData
+    // })
+
     return (
         <>
             <div className={`bg-white h-full z-[11] fixed top-0 right-0 p-5 shadow shadow-lg ${props.show === true ? `${styles.objectContainer} ${styles.sliderShow}` : `${styles.objectContainer}`}`}>
                 <div className="flex justify-between items-center w-full mb-3">
-                    <h2 className="font-semibold text-lg">Add New Object (<span className="text-sm text-gray-800">{resData?.className}</span>)</h2>
+                    <h2 className="font-semibold text-lg">Add New Object (<span className="text-sm text-gray-800">{props.selectedParentClass}</span>)</h2>
                     <button onClick={closeModel}>
                         <Image
                             src="/img/x.svg"
@@ -201,31 +202,42 @@ export default function AddNewClassObject(props: any) {
                         className="w-full flex justify-start items-start flex-wrap flex-col"
                     >
                         {
-                            classData && classData.length >= 0 ?
-                                classData.map((item: any, index: any) => (
+                            classData && Object.keys(classData).length != 0 ?
+                                Object.keys(classData).map((item: any, index: any) => (
                                     <div key={index} className="w-full flex justify-start items-start flex-wrap flex-col">
                                         <div className={`mb-5 lg:w-full small:w-full small:w-full ${styles.form__wrap}`}>
                                             <div className={`relative ${styles.form__group} font-OpenSans`}>
                                                 <input
-                                                    type={dataTypeFunction(item.dataTypeId)}
-                                                    id={`${item.tagName}`}
-                                                    name={`${item.tagName}_${item.id}`}
+                                                    type="text"
+                                                    id={`${item}`}
+                                                    name={`${item}`}
                                                     className={`border border-gray-961 ${styles.form__field}`}
-                                                    placeholder={`${item.tagName}`}
+                                                    placeholder={`${item}`}
                                                     onChange={(e) => (formData.current = e.target.value)}
                                                     required
                                                 />
-                                                <label htmlFor={`${item.tagName}`} className={`${styles.form__label}`}>{item.tagName}</label>
+                                                <label htmlFor={`${item}`} className={`${styles.form__label}`}>{item}</label>
                                             </div>
                                         </div>
                                     </div>
                                 ))
                                 :
-                                <h2>No sub class tags found!!</h2>
+                                <div className="flex justify-center items-center flex-wrap flex-col font-OpenSans mt-20">
+                                    <div className="no-data-image">
+                                        <Image
+                                            src="/img/not-found.svg"
+                                            alt="no data found!"
+                                            className="inline-block"
+                                            height={72}
+                                            width={72}
+                                        />
+                                    </div>
+                                    <p className="text-black text-xl mt-8 font-semibold">No data found!!</p>
+                                </div>
                         }
 
 
-                         <div className="w-full flex justify-start items-start flex-wrap flex-col hidden">
+                        <div className="w-full flex justify-start items-start flex-wrap flex-col hidden">
                             <div className={`mb-5 lg:w-full small:w-full small:w-full ${styles.form__wrap}`}>
                                 <div className={`relative ${styles.form__group} font-OpenSans`}>
                                     <input
@@ -323,7 +335,7 @@ export default function AddNewClassObject(props: any) {
                                     <label htmlFor="type" className={`${styles.form__label}`}>Enter Type</label>
                                 </div>
                             </div>
-                        </div> 
+                        </div>
 
                         <div className="relative flex justify-end items-center w-full">
                             <button
