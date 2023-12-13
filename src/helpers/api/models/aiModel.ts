@@ -10,13 +10,6 @@ export function Model(sequelize: any) {
     },
     modelName: { type: DataTypes.STRING, allowNull: false },
     description: { type: DataTypes.JSON, allowNull: true },
-    associationId: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: "ModelClassAssociations",
-        id: "id",
-      },
-    },
   };
   return sequelize.define("Model", attributes);
 }
