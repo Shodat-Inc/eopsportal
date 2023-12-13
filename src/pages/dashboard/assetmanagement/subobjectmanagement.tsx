@@ -2,11 +2,12 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from '../../../styles/Common.module.css';
 import Image from "next/image";
-import CustomDropSubClass from './customdropsubclass';
 import axios from 'axios';
 import Link from 'next/dist/client/link';
 import AddNewObject from './addnewobject';
 import { objDefaultSubClassSelectorFunction } from '@/store/actions/classAction';
+import { successMessageAction } from '@/store/actions/classAction';
+
 export default function SubObjectManagement(props: any) {
     // console.log({
     //     "props in object management": props
@@ -25,6 +26,23 @@ export default function SubObjectManagement(props: any) {
     const [tableHeader, setTableHeader] = useState({} as any);
     const [objectData, setObjectData] = useState([] as any);
 
+    // All class reducer states
+    const classSelector = useSelector((state: any) => state.classReducer);
+
+    console.log({
+        classSelector: classSelector.objDefaultClassSelector
+    })
+
+    // Close Success message after 5 second if true
+    useEffect(() => {
+        if (classSelector && classSelector.successMessageReducer === true) {
+            setTimeout(() => {
+                dispatch(successMessageAction(false))
+            }, 5000)
+        }
+
+    }, [classSelector.successMessageReducer])
+
     const addNewObject = useSelector((state: any) => state.classReducer)
     const toggleFilterFunction = () => {
         setToggleArrow(!toggleArrow);
@@ -37,11 +55,6 @@ export default function SubObjectManagement(props: any) {
     useEffect(() => {
         setShowModal(addNewObject.toggleAddObject)
     }, [addNewObject.toggleAddObject])
-
-    // console.log({
-    //     addNewObject: addNewObject
-    // })
-
 
     // Get all sub class
     async function fetchData() {
@@ -140,10 +153,6 @@ export default function SubObjectManagement(props: any) {
                     let filtered = response.data.filter((item: any) => {
                         return item.object === chooseAsset
                     })
-                    // console.log({
-                    //     response: response,
-                    //     filtered: filtered
-                    // })
                     if (filtered) {
                         let headArray = filtered[0]?.tags;
                         setTableHeader(headArray)
@@ -259,6 +268,23 @@ export default function SubObjectManagement(props: any) {
                 Back To Object Management Component
             </button> */}
 
+            {/* Response Messages */}
+            {
+                classSelector.successMessageReducer === true &&
+
+                <div className={`bg-green-957 border-green-958 text-green-959 mb-1 mt-1 border text-md px-4 py-3 rounded rounded-xl relative flex items-center justify-start`}>
+                    <Image
+                        src="/img/AlertSuccess.svg"
+                        alt="Alert Success"
+                        height={24}
+                        width={24}
+                        className='mr-2'
+                    />
+                    <strong className="font-semibold">Success</strong>
+                    <span className="block sm:inline ml-2">Object stored successfully!</span>
+                </div>
+            }
+
             {/* Table */}
             <div className='w-full mt-6 min-h-[400px]'>
                 {objectData && objectData.length > 0 ?
@@ -266,16 +292,6 @@ export default function SubObjectManagement(props: any) {
                         <thead className="text-sm font-normal">
                             <tr>
                                 <th>S.No</th>
-                                {/* <th>
-                                    <button className="flex justify-center items-center" onClick={sortByClassName}>
-                                        <Image src="/img/arrow-up-gray.svg" alt="sort" height={17} width={17} className={`${toggleSort === true ? 'rotate-180' : 'rotate-0'}`} />
-                                        <span>Serial ID</span>
-                                    </button>
-                                </th>
-                                <th>VIN</th>
-                                <th>Manufacturer</th>
-                                <th>Capacity(AH)</th>
-                                <th>Voltage(V)</th> */}
                                 {
                                     tableHeader && Object.keys(tableHeader).length != 0 ?
                                         Object.keys(tableHeader).map((item: any, i: any) => (
@@ -443,6 +459,8 @@ export default function SubObjectManagement(props: any) {
                 show={addNewObject.toggleAddObject && addNewObject.toggleAddObject}
                 selectedSubClass={chooseAsset}
                 subClassData={subClassData}
+                parentClass={props.defaultClass}
+                objID={props.objID}
             />
 
             {/* Delete Modal */}

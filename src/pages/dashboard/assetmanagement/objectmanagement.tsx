@@ -27,6 +27,10 @@ export default function ObjectManagement(props: any) {
     // All class reducer states
     const classSelector = useSelector((state: any) => state.classReducer);
 
+    console.log({
+        classSelector:classSelector.objDefaultClassSelector
+    })
+
     // Close Success message after 5 second if true
     useEffect(() => {
         if (classSelector && classSelector.successMessageReducer === true) {
@@ -423,6 +427,7 @@ export default function ObjectManagement(props: any) {
                 objectData={objectData}
                 selectedParentClass={chooseAsset}
                 classData={props.classData}
+                objID={objID}
             />
 
         </div>

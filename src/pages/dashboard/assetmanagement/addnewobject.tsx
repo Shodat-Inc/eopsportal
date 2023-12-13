@@ -3,13 +3,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import styles from '../../../styles/Common.module.css';
 import Image from "next/image";
 import { toggleAddNewObjectModel } from "@/store/actions/classAction";
+import { successMessageAction } from '@/store/actions/classAction';
 
 export default function AddNewObject(props: any) {
     const [selectedObjectData, setSelectedObjectData] = useState([] as any);
     const formData = useRef("");
-    // console.log({
-    //     "AK PROPS": props
-    // })
 
     useEffect(() => {
         if (props.subClassData && props.subClassData.length > 0) {
@@ -30,13 +28,37 @@ export default function AddNewObject(props: any) {
     // Submit Form Data
     const handleSubmit = async (e: any) => {
         e.preventDefault();
-    }
-    var myJsonString = JSON.stringify(selectedObjectData);
+        var formData = new FormData(e.target);
+        let currentDate = new Date().toISOString().split('T')[0];
+        const form_values = Object.fromEntries(formData);
 
-    // console.log({
-    //     selectedObjectData: selectedObjectData,
-    //     myJsonString: myJsonString
-    // })
+        const response = await fetch('/api/createChildObject', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(
+                {
+                    className: `${props.parentClass}`,
+                    object: `${props.selectedSubClass}`,
+                    subObject: `${props.objID}`,
+                    dateCreated: `${currentDate}`,
+                    tags: form_values,
+                }
+            )
+        });
+        const resdata = await response.json();
+        if (resdata) {
+            dispatch(successMessageAction(true));
+            setTimeout(()=>{
+                dispatch(toggleAddNewObjectModel(false));
+            }, 10)
+        } else {
+            console.log("FAILED")
+        }
+
+    }
+
     return (
         <>
             <div className={`bg-white h-full z-[11] fixed top-0 right-0 p-5 shadow shadow-lg ${props.show === true ? `${styles.objectContainer} ${styles.sliderShow}` : `${styles.objectContainer}`}`}>
@@ -94,106 +116,6 @@ export default function AddNewObject(props: any) {
                                     <p className="text-black text-xl mt-8 font-semibold">No data found!!</p>
                                 </div>
                         }
-                    </form>
-
-                    <div className="hidden w-full flex justify-start items-start flex-wrap flex-col">
-                        <div className={`mb-5 lg:w-full small:w-full small:w-full ${styles.form__wrap}`}>
-                            <div className={`relative ${styles.form__group} font-OpenSans`}>
-                                <input
-                                    type="text"
-                                    id="serialID"
-                                    name="serialID"
-                                    className={`border border-gray-961 ${styles.form__field}`}
-                                    placeholder="Enter class name"
-                                    required
-                                />
-                                <label htmlFor="serialID" className={`${styles.form__label}`}>Enter Serial ID</label>
-                            </div>
-                        </div>
-
-                        <div className={`mb-5 lg:w-full small:w-full small:w-full ${styles.form__wrap}`}>
-                            <div className={`relative ${styles.form__group} font-OpenSans`}>
-                                <input
-                                    type="text"
-                                    id="VIN"
-                                    name="VIN"
-                                    className={`border border-gray-961 ${styles.form__field}`}
-                                    placeholder="Enter class name"
-                                    required
-                                />
-                                <label htmlFor="VIN" className={`${styles.form__label}`}>Enter VIN No</label>
-                            </div>
-                        </div>
-
-                        <div className={`mb-5 lg:w-full small:w-full small:w-full ${styles.form__wrap}`}>
-                            <div className={`relative ${styles.form__group} font-OpenSans`}>
-                                <input
-                                    type="text"
-                                    id="manufacturer"
-                                    name="manufacturer"
-                                    className={`border border-gray-961 ${styles.form__field}`}
-                                    placeholder="Enter class name"
-                                    required
-                                />
-                                <label htmlFor="manufacturer" className={`${styles.form__label}`}>Enter Manufacturer</label>
-                            </div>
-                        </div>
-
-                        <div className={`mb-5 lg:w-full small:w-full small:w-full ${styles.form__wrap}`}>
-                            <div className={`relative ${styles.form__group} font-OpenSans`}>
-                                <input
-                                    type="text"
-                                    id="capacity"
-                                    name="capacity"
-                                    className={`border border-gray-961 ${styles.form__field}`}
-                                    placeholder="Enter class name"
-                                    required
-                                />
-                                <label htmlFor="capacity" className={`${styles.form__label}`}>Enter Capacity (AH)</label>
-                            </div>
-                        </div>
-
-                        <div className={`mb-5 lg:w-full small:w-full small:w-full ${styles.form__wrap}`}>
-                            <div className={`relative ${styles.form__group} font-OpenSans`}>
-                                <input
-                                    type="text"
-                                    id="voltage"
-                                    name="voltage"
-                                    className={`border border-gray-961 ${styles.form__field}`}
-                                    placeholder="Enter class name"
-                                    required
-                                />
-                                <label htmlFor="voltage" className={`${styles.form__label}`}>Enter Voltage (V)</label>
-                            </div>
-                        </div>
-
-                        <div className={`mb-5 lg:w-full small:w-full small:w-full ${styles.form__wrap}`}>
-                            <div className={`relative ${styles.form__group} font-OpenSans`}>
-                                <input
-                                    type="text"
-                                    id="lotNo"
-                                    name="lotNo"
-                                    className={`border border-gray-961 ${styles.form__field}`}
-                                    placeholder="Enter class name"
-                                    required
-                                />
-                                <label htmlFor="lotNo" className={`${styles.form__label}`}>Enter Lot No</label>
-                            </div>
-                        </div>
-
-                        <div className={`mb-5 lg:w-full small:w-full small:w-full ${styles.form__wrap}`}>
-                            <div className={`relative ${styles.form__group} font-OpenSans`}>
-                                <input
-                                    type="text"
-                                    id="type"
-                                    name="type"
-                                    className={`border border-gray-961 ${styles.form__field}`}
-                                    placeholder="Enter class name"
-                                    required
-                                />
-                                <label htmlFor="type" className={`${styles.form__label}`}>Enter Type</label>
-                            </div>
-                        </div>
 
                         <div className="relative flex justify-end items-center w-full">
                             <button
@@ -209,7 +131,7 @@ export default function AddNewObject(props: any) {
                             </button>
                         </div>
 
-                    </div>
+                    </form>
 
                 </div>
 
