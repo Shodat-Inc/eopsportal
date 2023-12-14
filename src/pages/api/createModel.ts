@@ -21,6 +21,7 @@ export default apiHandler({
 
             // Extract data from the request body
             const data = req.body;
+            const id = req.auth.sub
 
             // Validate the data using a validation module
             const validation = createModelValidation(data);
@@ -35,15 +36,32 @@ export default apiHandler({
                 });
                 return;
             }
-
-            // Create an enterprise user using the enterprise users repository
-            const user = await ModelRepo.create(validation.value);
-
+            // Determine the model type based on the modelName property
+            let modelType;
+            switch (validation.value.modelName) {
+                case "Crack Detection":
+                    modelType = "CrackModel";
+                    break;
+                case "Parts Detection":
+                    modelType = "PartModel";
+                    break;
+                case "Workplace Safety Detection":
+                    modelType = "WorkplaceModel";
+                    break;
+            }
+            if (modelType === undefined) {
+                res.status(400).json({
+                    success: false,
+                    message: "Invalid modelName",
+                });
+                return;
+            }
+            const user = await ModelRepo.create(id, validation.value, modelType);
             // Send a success response
             res.status(200).json({ message: user });
         } catch (error: any) {
             // Log the error to the console
-            loggerError.error("error in posting class");
+            loggerError.error("Error in posting class");
 
             // Send an error response
             res.status(400).json(error);

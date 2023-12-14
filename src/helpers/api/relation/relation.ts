@@ -128,6 +128,18 @@ async function relationship(db: any) {
     db.Model.hasMany(db.Association, { foreignKey: "modelId" });
     db.Association.belongsTo(db.Association, { foreignKey: "modelId" });
 
+    db.ImageObject.hasMany(db.Response, { foreignKey: "imageObjectId" });
+    db.Response.belongsTo(db.ImageObject, { foreignKey: "imageObjectId" })
+
+    db.AddClasses.hasMany(db.ImageObject, { foreignKey: "classId" })
+    db.ImageObject.belongsTo(db.AddClasses, { foreignKey: "classId" })
+
+    db.object.hasMany(db.ImageObject, { foreignKey: "objectId" })
+    db.ImageObject.belongsTo(db.object, { foreignKey: "objectId" })
+
+    db.CrackModel.hasMany(db.ImageObject, { foreignKey: "crackDetectionModelId" })
+    db.ImageObject.belongsTo(db.CrackModel, { foreignKey: "crackDetectionModelId" })
+
     resolve("Imported");
   });
 }

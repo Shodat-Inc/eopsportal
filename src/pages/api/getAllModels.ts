@@ -10,7 +10,27 @@ export default apiHandler({
 
 async function getAllModel(req: any, res: any) {
     try {
-        const model = await ModelRepo.getAllModels();
+        const reqData = req.query.modelName
+        let modelType;
+        switch (reqData) {
+            case "Crack Detection":
+                modelType = "CrackModel";
+                break;
+            case "Parts Detection":
+                modelType = "PartModel";
+                break;
+            case "Workplace Safety Detection":
+                modelType = "WorkplaceModel";
+                break;
+        }
+        if (modelType === undefined) {
+            res.status(400).json({
+                success: false,
+                message: "Invalid modelName",
+            });
+            return;
+        }
+        const model = await ModelRepo.getAllModels(reqData, modelType);
 
         res.status(200).json(model);
     } catch (error: any) {

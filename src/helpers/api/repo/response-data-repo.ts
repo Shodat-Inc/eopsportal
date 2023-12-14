@@ -1,10 +1,11 @@
 import sendResponseData from "@/helpers/constant";
-import { db, dbConnection } from "../db";
-import { Response } from "../models";
+import { db } from "../db";
+
 export const responseDataRepo = {
   saveResponse,
   get
 };
+
 async function saveResponse(params: any) {
   try {
     // const data = await db.Response.findOne({
@@ -17,20 +18,18 @@ async function saveResponse(params: any) {
     return sendResponseData(false, "Error", error);
   }
 }
+
 async function get(params: any) {
   try {
-    const sequelize = await dbConnection()
-    const data = await Response(sequelize, "Workplace Detection")
-    const res=data.findAll({
+    const data = await db.Response.findAll({
       where: { id: params.id },
       attributes: ["modelValuesId", "response"]
     });
     if (!data) {
       return sendResponseData(false, "Data Doesn't Exist", {})
     }
-    return sendResponseData(true, "Data Fetched", res);
+    return sendResponseData(true, "Data Fetched Successfully", data);
   } catch (error: any) {
     return sendResponseData(false, "Error", error);
   }
-
 }

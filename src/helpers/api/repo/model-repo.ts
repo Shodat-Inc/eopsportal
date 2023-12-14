@@ -2,9 +2,6 @@ import { loggerError, loggerInfo } from "@/logger";
 import { db } from "../db";
 import sendResponseData from "@/helpers/constant";
 import getConfig from "next/config";
-import { Response } from "../models/responseData"
-// import { Sequelize } from "sequelize";
-import { dbConnection } from "../db";
 
 const { serverRuntimeConfig } = getConfig();
 
@@ -17,29 +14,32 @@ export const ModelRepo = {
   getClassObjectBySerialId,
   getSubClassObjectBySerialId,
   getAllModels,
-  getModelById
+  getModelById,
+  update
 };
 
-async function create(params: any) {
+async function create(id: any, params: any, modelType: string) {
   try {
-    loggerInfo.info("Create Model");
-    const data = await db.Model.findOne({
-      where: { modelName: params.modelName },
+    loggerInfo.info(`Create ${modelType} Model`);
+    const Model = db[modelType];
+    const data = await Model.findOne({
+      where: {
+        id: id,
+        modelName: params.modelName
+      },
     });
+
     if (data) {
-      return sendResponseData(false, "Model Name already exists", {});
+      return sendResponseData(false, `${modelType} Name already exists`, {});
     }
 
-    const sequelize = await dbConnection()
-    const dbModel = Response(sequelize, params.modelName)
-    dbModel.sync({force:true})
-
-    const newModel = new db.Model(params);
+    const newModel = new Model(params);
     const save = await newModel.save();
-    return sendResponseData(true, "Model created Successfully", save);
+
+    return sendResponseData(true, `${modelType} created Successfully`, save);
   } catch (error: any) {
-    loggerError.error("Error in Model Repo", error);
-    return sendResponseData(false, "Error in Model Repo", error);
+    loggerError.error(`Error in ${modelType} Repo`, error);
+    return sendResponseData(false, `Error in ${modelType} Repo`, error);
   }
 }
 
@@ -161,10 +161,12 @@ async function getSubClassObjectBySerialId(params: any) {
     );
   }
 }
-async function getAllModels() {
+
+async function getAllModels(reqData: any, modelType: string) {
   loggerInfo.info("Get Models");
   try {
-    const data = await db.Model.findAll({
+    const Model = db[modelType];
+    const data = await Model.findAll({
       attributes: ["id", "modelName", "description"],
     });
     if (!data) {
@@ -176,10 +178,11 @@ async function getAllModels() {
   }
 }
 
-async function getModelById(params: any) {
+async function getModelById(params: any, modelType: any) {
   try {
     loggerInfo.info("Get Model By Id")
-    const data = await db.Model.findOne({
+    const Model = db[modelType];
+    const data = await Model.findOne({
       where: { id: params.id }
     })
     if (!data) {
@@ -189,5 +192,36 @@ async function getModelById(params: any) {
   } catch (error: any) {
     loggerError.error("Error in Model Repo")
     return sendResponseData(false, "Error in getting Model By ID", error)
+  }
+}
+
+async function update(id: any, params: any, modelType: any) {
+  try {
+    loggerInfo.info(`Update ${modelType} Model`)
+    const Model = db[modelType];
+    const data = await Model.findOne({
+      where: {
+        id: id,
+        modelName: params.modelName
+      }
+    })
+    // console.log(params.description,"=====h")
+    // if (params.description.Benefits) {
+    //   data.description.Benefits = params.description.Benefits
+    // }
+    // if (params.description.HowItWorks) {
+    //   data.description.HowItWorks= params.description.HowItWorks
+    // }
+    if (params.description.Benefits !== undefined) {
+      data.description.Benefits = params.description.Benefits;
+    }
+    if (params.description.HowItWorks !== undefined) {
+      data.description.HowItWorks = params.description.HowItWorks;
+    }
+    const res = await data.save()
+    return sendResponseData(true, "Data Updated Successfully", res)
+  } catch (error: any) {
+    loggerError.error(`Error in ${modelType} Repo, error`);
+    return sendResponseData(false, `Error in ${modelType} Repo`, error)
   }
 }

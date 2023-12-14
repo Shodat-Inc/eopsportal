@@ -298,7 +298,7 @@ export const createModelValidation = (data) => {
 
 export const saveResponseValidation = (data) => {
   const schema = Joi.object({
-    modelValuesId: Joi.number(),
+    imageObjectId: Joi.number(),
     response: Joi.object().keys({
       coordinates: Joi.object({
         'coord-topLeft': Joi.string().required(),
@@ -315,3 +315,10 @@ export const saveResponseValidation = (data) => {
   return schema.validate(data)
 }
 
+export const updateModelValidation = (data) => {
+  const schema = Joi.object({
+    modelName: Joi.string().required(),
+    description: Joi.object(),
+  });
+  return schema.validate(data);
+};
