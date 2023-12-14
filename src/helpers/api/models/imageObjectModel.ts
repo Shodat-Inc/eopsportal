@@ -30,10 +30,10 @@ export function ImageObject(sequelize: any) {
                 id: "id",
             },
         },
-        crackDetectionModelId: {
+        modelId: {
             type: DataTypes.INTEGER,
             references: {
-                model: "CrackDetectionModels",
+                model: "Models",
                 id: "id",
             },
         },

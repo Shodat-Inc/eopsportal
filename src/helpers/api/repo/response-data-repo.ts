@@ -8,10 +8,15 @@ export const responseDataRepo = {
 
 async function saveResponse(params: any) {
   try {
-    // const data = await db.Response.findOne({
-    //   where: { modelValueId: params.modelValueId },
-    // });
-    const newEntry = new db.Response(params);
+    //Filter the data based on the unique "imageObjectId" associated with each image URL.
+    console.log(params, "==oparams")
+    const data = await db.CrackResponse.findOne({
+      where: { imageObjectId: params.imageObjectId },
+    });
+    if (data) {
+      return sendResponseData(false, "Response Already Exist with given imageObjectId", {})
+    }
+    const newEntry = new db.CrackResponse(params);
     const save = await newEntry.save();
     return sendResponseData(true, "Response Saved Successfully", save);
   } catch (error: any) {

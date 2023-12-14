@@ -12,16 +12,16 @@ export const ImageObjectRepo = {
     create,
 }
 
-async function create(id: any, params: any) {
+async function create(params: any) {
     try {
         loggerInfo.info("Creating Image of the Object")
         const data = await db.ImageObject.findOne({
             where: {
-                id: id,
+                url: params.url,
             }
         })
         if (data) {
-            return sendResponseData(false, "Data already Exist", {})
+            return sendResponseData(false, "Image URL already exist", {})
         }
         const newData = new db.ImageObject(params)
         const save = await newData.save()

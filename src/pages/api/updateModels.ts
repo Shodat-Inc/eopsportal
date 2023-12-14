@@ -31,28 +31,8 @@ async function handler(req: any, res: any) {
             });
             return;
         }
-        let modelType;
-        switch (validation.value.modelName) {
-            case "Crack Detection":
-                modelType = "CrackModel";
-                break;
-            case "Parts Detection":
-                modelType = "PartModel";
-                break;
-            case "Workplace Safety Detection":
-                modelType = "WorkplaceModel";
-                break;
-        }
-        if (modelType === undefined) {
-            res.status(400).json({
-                success: false,
-                message: "Invalid modelName",
-            });
-            return;
-        }
-
         // Attempt to update the model description using Model Repo.
-        const updatedRole: any = await ModelRepo.update(id, validation.value, modelType);
+        const updatedRole: any = await ModelRepo.update(validation.value);
 
         // If successful, return a success response with the updated model data.
         res.status(200).json({ message: updatedRole });

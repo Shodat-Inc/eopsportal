@@ -128,10 +128,8 @@ export async function initialize() {
       aiModel: "Model",
       aiModelData: "ModelData",
       responseData: "Response",
-      crackDetectionModel: "CrackModel",
-      partDetectionModel: "PartModel",
-      workplaceSafetyDetection: "WorkplaceModel",
-      imageObjectModel: "ImageObject"
+      imageObjectModel: "ImageObject",
+      crackDetectionResponse: "CrackResponse",
     };
 
 

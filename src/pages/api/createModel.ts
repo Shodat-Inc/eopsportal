@@ -21,7 +21,6 @@ export default apiHandler({
 
             // Extract data from the request body
             const data = req.body;
-            const id = req.auth.sub
 
             // Validate the data using a validation module
             const validation = createModelValidation(data);
@@ -37,26 +36,7 @@ export default apiHandler({
                 return;
             }
             // Determine the model type based on the modelName property
-            let modelType;
-            switch (validation.value.modelName) {
-                case "Crack Detection":
-                    modelType = "CrackModel";
-                    break;
-                case "Parts Detection":
-                    modelType = "PartModel";
-                    break;
-                case "Workplace Safety Detection":
-                    modelType = "WorkplaceModel";
-                    break;
-            }
-            if (modelType === undefined) {
-                res.status(400).json({
-                    success: false,
-                    message: "Invalid modelName",
-                });
-                return;
-            }
-            const user = await ModelRepo.create(id, validation.value, modelType);
+            const user = await ModelRepo.create(validation.value);
             // Send a success response
             res.status(200).json({ message: user });
         } catch (error: any) {

@@ -17,11 +17,11 @@ export default apiHandler({
                 res.status(405).send(message.error.postMethodError);
                 return;
             }
-            const id = req.auth.sub;  
+            // const id = req.auth.sub; 
 
             // Extract data from the request body
             const data = req.body;
-            const user = await ImageObjectRepo.create(id, data);
+            const user = await ImageObjectRepo.create( data);
 
             // Send a success response
             res.status(200).json({ message: user });

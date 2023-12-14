@@ -18,28 +18,24 @@ export const ModelRepo = {
   update
 };
 
-async function create(id: any, params: any, modelType: string) {
+async function create(params: any) {
   try {
-    loggerInfo.info(`Create ${modelType} Model`);
-    const Model = db[modelType];
-    const data = await Model.findOne({
+    loggerInfo.info("");
+    const data = await db.Model.findOne({
       where: {
-        id: id,
         modelName: params.modelName
       },
     });
-
     if (data) {
-      return sendResponseData(false, `${modelType} Name already exists`, {});
+      return sendResponseData(false, "Model Name already Exist", {});
     }
-
-    const newModel = new Model(params);
+    const newModel = new db.Model(params);
     const save = await newModel.save();
 
-    return sendResponseData(true, `${modelType} created Successfully`, save);
+    return sendResponseData(true, "Model Name with the description is Successfully saved", save);
   } catch (error: any) {
-    loggerError.error(`Error in ${modelType} Repo`, error);
-    return sendResponseData(false, `Error in ${modelType} Repo`, error);
+    loggerError.error("Error in Model Repo", error);
+    return sendResponseData(false, "Error in Model Repo", error);
   }
 }
 
@@ -195,33 +191,33 @@ async function getModelById(params: any, modelType: any) {
   }
 }
 
-async function update(id: any, params: any, modelType: any) {
+async function update(params: any) {
   try {
-    loggerInfo.info(`Update ${modelType} Model`)
-    const Model = db[modelType];
-    const data = await Model.findOne({
+    loggerInfo.info("Update the description of Models");
+    const updatedModel = await db.Model.findOne({
       where: {
-        id: id,
-        modelName: params.modelName
+        modelName: params.modelName,
+      },
+    });
+
+    if (!updatedModel) {
+      return sendResponseData(false, "Model not found", {});
+    }
+    const update =await db.Model.update(
+      {
+        description: params.description,
+      },
+      {
+        where: {
+          modelName: params.modelName,
+        },
       }
-    })
-    // console.log(params.description,"=====h")
-    // if (params.description.Benefits) {
-    //   data.description.Benefits = params.description.Benefits
-    // }
-    // if (params.description.HowItWorks) {
-    //   data.description.HowItWorks= params.description.HowItWorks
-    // }
-    if (params.description.Benefits !== undefined) {
-      data.description.Benefits = params.description.Benefits;
-    }
-    if (params.description.HowItWorks !== undefined) {
-      data.description.HowItWorks = params.description.HowItWorks;
-    }
-    const res = await data.save()
-    return sendResponseData(true, "Data Updated Successfully", res)
+    );
+
+    return sendResponseData(true, "Data Updated Successfully", { updatedModel });
   } catch (error: any) {
-    loggerError.error(`Error in ${modelType} Repo, error`);
-    return sendResponseData(false, `Error in ${modelType} Repo`, error)
+    loggerError.error("Error in updating description of Models", error);
+    return sendResponseData(false, "Error in updating description of Models", error);
   }
 }
+
