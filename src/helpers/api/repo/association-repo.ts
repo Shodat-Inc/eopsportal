@@ -15,7 +15,7 @@ async function create(params: any) {
             where: {
                 classId: params.classId,
                 objectId: params.objectId,
-                associationId: params.associationId
+                modelId: params.modelId
             }
         })
         if (data) {
@@ -35,7 +35,7 @@ async function getAll() {
     try {
         loggerInfo.info("Getting Association")
         const data = await db.Association.findAll({
-            attributes: ["id", "classId", "objectId"]
+            attributes: ["id", "classId", "objectId", "modelId"]
         })
         return sendResponseData(true, "Data fetched Successfully", data)
     } catch (error: any) {
@@ -54,7 +54,7 @@ async function getById(params: any) {
             where: {
                 id: params.id,
             },
-            attributes: ["id", "classId", "objectId"]
+            attributes: ["id", "classId", "objectId", "modelId"]
         });
 
         if (result.length === 0) {

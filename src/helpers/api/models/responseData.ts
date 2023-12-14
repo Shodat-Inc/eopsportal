@@ -1,6 +1,6 @@
 import { DataTypes } from "sequelize";
 
-export function Response(sequelize: any) {
+export function Response(sequelize: any, modelName: any) {
     const attributes = {
         id: {
             type: DataTypes.INTEGER,
@@ -21,5 +21,6 @@ export function Response(sequelize: any) {
             allowNull: true
         }
     };
-    return sequelize.define("ResponseData", attributes);
+    const dbModel =sequelize.define(modelName, attributes);
+    return dbModel;
 }

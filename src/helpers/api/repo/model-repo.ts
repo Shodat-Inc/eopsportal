@@ -2,6 +2,9 @@ import { loggerError, loggerInfo } from "@/logger";
 import { db } from "../db";
 import sendResponseData from "@/helpers/constant";
 import getConfig from "next/config";
+import { Response } from "../models/responseData"
+// import { Sequelize } from "sequelize";
+import { dbConnection } from "../db";
 
 const { serverRuntimeConfig } = getConfig();
 
@@ -26,6 +29,11 @@ async function create(params: any) {
     if (data) {
       return sendResponseData(false, "Model Name already exists", {});
     }
+
+    const sequelize = await dbConnection()
+    const dbModel = Response(sequelize, params.modelName)
+    dbModel.sync({force:true})
+
     const newModel = new db.Model(params);
     const save = await newModel.save();
     return sendResponseData(true, "Model created Successfully", save);
@@ -157,7 +165,7 @@ async function getAllModels() {
   loggerInfo.info("Get Models");
   try {
     const data = await db.Model.findAll({
-      attributes: ["id", "modelName", "description", "associationId"],
+      attributes: ["id", "modelName", "description"],
     });
     if (!data) {
       return sendResponseData(false, "No data Found", []);
@@ -168,9 +176,18 @@ async function getAllModels() {
   }
 }
 
-async function getModelById(params:any) {
-  try{}catch(error:any){
+async function getModelById(params: any) {
+  try {
+    loggerInfo.info("Get Model By Id")
+    const data = await db.Model.findOne({
+      where: { id: params.id }
+    })
+    if (!data) {
+      return sendResponseData(false, "Data Doesn't Exist", {})
+    }
+    return sendResponseData(true, "Data Fetched Successfully", data)
+  } catch (error: any) {
     loggerError.error("Error in Model Repo")
-    return sendResponseData(false,"Error in getting Model By ID",error)
-  }  
+    return sendResponseData(false, "Error in getting Model By ID", error)
+  }
 }

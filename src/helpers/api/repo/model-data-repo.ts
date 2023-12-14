@@ -16,7 +16,7 @@ async function saveData(params: any) {
     }
     const result = new db.ModelData(params);
     const save = await result.save();
-    return sendResponseData(true, "Data Save Successfully", save);
+    return sendResponseData(true, "Data Saved Successfully", save);
   } catch (error: any) {
     return sendResponseData(false, "Error In Service", error);
   }
