@@ -2,13 +2,20 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from '../../../styles/Common.module.css';
 import Image from "next/image";
+import { useRouter } from 'next/router';
 import axios from 'axios';
 import Link from 'next/dist/client/link';
 import AddNewObject from './addnewobject';
 import { objDefaultSubClassSelectorFunction } from '@/store/actions/classAction';
-import { successMessageAction, setClassBreadcrumb } from '@/store/actions/classAction';
+import { successMessageAction, setClassBreadcrumb, setDataForeOpsWatchAction } from '@/store/actions/classAction';
+import { setTimeout } from 'timers';
 
 export default function SubObjectManagement(props: any) {
+
+    // console.log({
+    //     "PROPS HERE":props
+    // })
+
     const dispatch = useDispatch<any>();
     const [toggleFilter, setToggleFilter] = useState(false);
     const [toggleArrow, setToggleArrow] = useState(false);
@@ -27,9 +34,9 @@ export default function SubObjectManagement(props: any) {
     // All class reducer states
     const classSelector = useSelector((state: any) => state.classReducer);
 
-    console.log({
-        classSelector: classSelector.classBreadcrumbs
-    })
+    // console.log({
+    //     classSelector: classSelector.classBreadcrumbs
+    // })
 
     // Close Success message after 5 second if true
     useEffect(() => {
@@ -197,7 +204,7 @@ export default function SubObjectManagement(props: any) {
     }
 
     // Set Sub Class in Breadcrumb
-    useEffect(()=> {
+    useEffect(() => {
         let abc = {
             "flow": "Object Management",
             "class": classSelector?.classBreadcrumbs?.class,
@@ -207,8 +214,30 @@ export default function SubObjectManagement(props: any) {
             "subClassObjKey": "",
             "subClassObjValue": ""
         }
-        dispatch(setClassBreadcrumb(abc))
+        dispatch(setClassBreadcrumb(abc));
+
     }, [chooseAsset])
+
+    const router = useRouter();
+    // Save data for eopswatch section
+    const eOpsWatchFunction = (item: any) => {
+        let obj = '';
+        if (props.defaultClass === "Manufacturing Plants") {
+            obj = item.PlantID
+        } else {
+            obj = item.VIN
+        }
+        const eopsData = {
+            "class": props.defaultClass,
+            "subClass": chooseAsset,
+            "classObject": props.objectKey,
+            "object": obj
+        }
+        dispatch(setDataForeOpsWatchAction(eopsData));
+        setTimeout(() => {
+            router.push('/dashboard/aimodaldetection');
+        }, 1000)
+    }
 
     return (
         <div className='py-3 font-OpenSans'>
@@ -382,11 +411,11 @@ export default function SubObjectManagement(props: any) {
                                                                 className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
                                                                 <span>Delete</span>
                                                             </button>
-                                                            <Link
-                                                                href="#"
+                                                            <button
+                                                                onClick={() => eOpsWatchFunction(items?.tags)}
                                                                 className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
                                                                 <span>eOps Watch</span>
-                                                            </Link>
+                                                            </button>
                                                             <Link
                                                                 href="#"
                                                                 className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">

@@ -29,7 +29,7 @@ export default function AssetManagement() {
                 method: 'GET',
                 url: `/api/getAssets`,
 
-            }).then(function (response) {                
+            }).then(function (response) {
                 if (response) {
                     setClassData(response.data)
                 }
@@ -153,14 +153,12 @@ export default function AssetManagement() {
                                     height={28}
                                     width={28}
                                 />
-                                <Link
-                                    href={{
-                                        pathname: '/dashboard/assetmanagement/',
-                                    }}
+                                <button
+                                    onClick={() => toggleTab(2)}
                                     className="font-semibold"
                                 >
                                     <span>Class name: {nav.class}</span>
-                                </Link>
+                                </button>
                             </li>
 
                             <li className="flex justify-start items-center">
@@ -170,14 +168,12 @@ export default function AssetManagement() {
                                     height={28}
                                     width={28}
                                 />
-                                <Link
-                                    href={{
-                                        pathname: '/dashboard/assetmanagement/',
-                                    }}
+                                <button
+                                    onClick={() => toggleTab(2)}
                                     className="font-semibold"
                                 >
                                     <span>{nav.classObjKey}: {nav.classObjValue}</span>
-                                </Link>
+                                </button>
                             </li>
 
                             <li className="flex justify-start items-center">

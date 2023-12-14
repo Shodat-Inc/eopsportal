@@ -6,6 +6,8 @@ import { BREADCRUMB_SUCCESS, BREADCRUMB_ERROR } from "../types";
 import { OBJ_SELECT_DEFAULT_CLASS_ERROR, OBJ_SELECT_DEFAULT_CLASS_SUCCESS } from "../types";
 import { OBJ_SELECT_DEFAULT_SUB_CLASS_ERROR, OBJ_SELECT_DEFAULT_SUB_CLASS_SUCCESS } from "../types";
 import { SUCCESS_MESSAGE_ERROR, SUCCESS_MESSAGE_SUCCESS } from "../types";
+import { DATA_FOR_EOPSWATCH_ERROR, DATA_FOR_EOPSWATCH_SUCCESS } from "../types";
+
 import axios from "axios";
 let access_token = "" as any;
 if (typeof window !== 'undefined') {
@@ -195,6 +197,26 @@ export const successMessageAction = (action:any) => async (dispatch: any) => {
         } else {
             dispatch({
                 type: SUCCESS_MESSAGE_ERROR,
+                payload: action
+            });
+        }
+    } catch (err) {
+        console.log("err in action:", err)
+    }
+};
+
+
+// Store data for eopswatch
+export const setDataForeOpsWatchAction = (action:any) => async (dispatch: any) => {
+    try {
+        if (action) {
+            dispatch({
+                type: DATA_FOR_EOPSWATCH_SUCCESS,
+                payload: action
+            });
+        } else {
+            dispatch({
+                type: DATA_FOR_EOPSWATCH_ERROR,
                 payload: action
             });
         }

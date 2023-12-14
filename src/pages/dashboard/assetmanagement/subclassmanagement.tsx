@@ -6,7 +6,7 @@ import Link from 'next/dist/client/link';
 import AddNewSubClass from './addnewsubclass';
 import axios from 'axios';
 export default function SubClassManagement(props: any) {
-    
+
     const [toggleFilter, setToggleFilter] = useState(false);
     const [toggleArrow, setToggleArrow] = useState(false);
     const [toggleSort, setToggleSort] = useState(false);
@@ -174,6 +174,7 @@ export default function SubClassManagement(props: any) {
                                     </button>
                                 </th>
                                 <th>Tags</th>
+                                <th>Parent Join Keys</th>
                                 <th>Date of creation</th>
                                 <th>Actions</th>
                             </tr>
@@ -195,6 +196,16 @@ export default function SubClassManagement(props: any) {
                                                 item?.tagsWithDataType.map((it: any, indx: any) => (
                                                     <span key={indx}>
                                                         {it.tagName}<em>, </em>
+                                                    </span>
+                                                ))
+
+                                            }
+                                        </td>
+                                        <td>
+                                            {
+                                                item?.parentJoinKey.map((it: any, indx: any) => (
+                                                    <span key={indx}>
+                                                        {it}<em>, </em>
                                                     </span>
                                                 ))
 
@@ -254,7 +265,12 @@ export default function SubClassManagement(props: any) {
 
 
             {/* Add New Class */}
-            <AddNewSubClass handleClick={handleClick} show={showModal} />
+            <AddNewSubClass
+                handleClick={handleClick}
+                show={showModal}
+                selectedParentClass={props.selectedParentClass}
+                classData={props.classData}
+            />
 
 
 

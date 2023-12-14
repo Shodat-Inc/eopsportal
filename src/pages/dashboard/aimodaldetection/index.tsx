@@ -6,6 +6,8 @@ import Image from "next/image";
 import Link from "next/link";
 import EopsWatch from "./eopswatch";
 import EopsTrace from "./eopstrace";
+import axios from "axios";
+import { setDataForeOpsWatchAction } from "@/store/actions/classAction";
 
 export default function AiModelDetection() {
     const [tab, setTab] = useState(1);
@@ -14,10 +16,65 @@ export default function AiModelDetection() {
     const [selectObject, setSelectObject] = useState('');
     const [showObject, setShowObject] = useState(false);
     const [showSubClass, setShowSubClass] = useState(false);
+    const [getAllClass, setGetAllClass] = useState([] as any);
+    const [classObject, setClassObject] = useState([] as any);
     const toggleTab = (item: any) => {
         setTab(item)
     }
     const [disable, setDisable] = useState(0);
+
+    // All class reducer states
+    const classSelector = useSelector((state: any) => state.classReducer);
+    console.log({
+        classSelector: classSelector.dataforeopswatchReducer
+    })
+
+    // select class by default
+    async function fetchObjectData() {
+        try {
+            await axios({
+                method: 'GET',
+                url: `/api/getObjects`,
+
+            }).then(function (response) {
+                if (response) {
+                    let filtered = response.data.filter((item: any) => {
+                        return item.parentAssetName === classSelector.dataforeopswatchReducer.class
+                    })
+                    setClassObject(filtered)
+                }
+            }).catch(function (error) {
+                console.log({
+                    "ERROR IN AXIOS CATCH": error
+                })
+            })
+        } catch (err) {
+            console.log({
+                "ERROR IN TRY CATCH": err
+            })
+        }
+    }
+    useEffect(() => {
+        setSelectClass(classSelector.dataforeopswatchReducer.class)
+        if (classSelector.dataforeopswatchReducer.class != "") {
+            setShowObject(true);
+            setDisable(1);
+            fetchObjectData();
+        }
+    }, [classSelector.dataforeopswatchReducer.class])
+
+    // Set VIN/PlantID on page load
+    useEffect(() => {
+        setSelectObject(classSelector.dataforeopswatchReducer.classObject)
+        if(classSelector.dataforeopswatchReducer.classObject !== "") {
+            setShowSubClass(true)
+        }
+    }, [classSelector.dataforeopswatchReducer.classObject])
+
+    // Get all class on page load
+    useEffect(() => {
+        setGetAllClass(classSelector.getAllClass)
+    }, [classSelector.getAllClass])
 
     const handleInputFunction = (e: any) => {
         setSearch(e.target.value)
@@ -40,6 +97,12 @@ export default function AiModelDetection() {
         setSelectObject(e.target.value);
         setShowSubClass(true)
     }
+
+    console.log({
+        getAllClass: getAllClass,
+        classObject: classObject
+    })
+
     return (
         <div className="font-OpenSans w-full">
 
@@ -72,7 +135,6 @@ export default function AiModelDetection() {
                     </div>
 
                     <div className="text-md text-[#666666] ml-5 mr-5">Or</div>
-
                     <select
                         name="selectClass"
                         id="selectClass"
@@ -82,8 +144,20 @@ export default function AiModelDetection() {
                         disabled={disable == 2}
                     >
                         <option value="">Select Class</option>
-                        <option value="Vehicles">Vehicles</option>
-                        <option value="Manufacturing Plants">Manufacturing Plants</option>
+                        {
+                            getAllClass && getAllClass.length > 0 ?
+                                getAllClass.map((item: any, index: any) => {
+                                    return (
+                                        <option
+                                            key={index}
+                                            value={item.assetName}
+                                        >
+                                            {item.assetName}
+                                        </option>
+                                    )
+                                })
+                                : null
+                        }
                     </select>
 
                     {
@@ -95,10 +169,22 @@ export default function AiModelDetection() {
                             onChange={handleObjectFunction}
                             value={selectObject}
                         >
-                            <option value="">Select VIN No</option>
-                            <option value="5PVBE7AJ8R5T50001">5PVBE7AJ8R5T50001</option>
-                            <option value="5PVBE7AJ8R5T50007">5PVBE7AJ8R5T50007</option>
-                            <option value="5PVBN3TK3R6Y67222">5PVBN3TK3R6Y67222</option>
+                            <option value="">Select {classSelector.dataforeopswatchReducer.class === "Vehicles" ? "VIN" : "PlantID"}</option>
+                            {
+                            classObject && classObject.length > 0 ?
+                                classObject.map((item: any, index: any) => {
+                                    let key = classSelector.dataforeopswatchReducer.class === "Vehicles" ? item.subObjects?.VIN : item.subObjects?.PlantID;
+                                    return (
+                                        <option
+                                            key={index}
+                                            value={key}
+                                        >
+                                            {key}
+                                        </option>
+                                    )
+                                })
+                                : null
+                        }
                         </select>
                     }
 

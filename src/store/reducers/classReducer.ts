@@ -6,6 +6,7 @@ import { TOGGLE_ADD_CLASS_OBJECT_MODEL_ERROR, TOGGLE_ADD_CLASS_OBJECT_MODEL_SUCC
 import { OBJ_SELECT_DEFAULT_CLASS_ERROR, OBJ_SELECT_DEFAULT_CLASS_SUCCESS } from "../types";
 import { OBJ_SELECT_DEFAULT_SUB_CLASS_ERROR, OBJ_SELECT_DEFAULT_SUB_CLASS_SUCCESS } from "../types";
 import { SUCCESS_MESSAGE_ERROR, SUCCESS_MESSAGE_SUCCESS } from "../types";
+import { DATA_FOR_EOPSWATCH_ERROR, DATA_FOR_EOPSWATCH_SUCCESS } from "../types";
 
 const initialState = {
   selectedClass: '',
@@ -16,6 +17,7 @@ const initialState = {
   objDefaultClassSelector: '',
   objDefaultSubClassSelector: '',
   successMessageReducer: false,
+  dataforeopswatchReducer: {}
 };
 
 const classReducer = (state = initialState, action: any) => {
@@ -106,6 +108,18 @@ const classReducer = (state = initialState, action: any) => {
     case SUCCESS_MESSAGE_ERROR:
       return {
         successMessageReducer: action.payload,
+      };
+
+
+    case DATA_FOR_EOPSWATCH_SUCCESS:
+      return {
+        ...state,
+        dataforeopswatchReducer: action.payload,
+      };
+
+    case DATA_FOR_EOPSWATCH_ERROR:
+      return {
+        dataforeopswatchReducer: action.payload,
       };
 
     default:
