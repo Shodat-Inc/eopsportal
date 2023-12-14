@@ -22,6 +22,7 @@ export default function ObjectManagement(props: any) {
     const [deleteModal, setDeleteModal] = useState(false);
     const [objectData, setObjectData] = useState([] as any);
     const [tableHeader, setTableHeader] = useState({} as any);
+    const [search, setSearch] = useState('');
 
 
     // All class reducer states
@@ -156,6 +157,29 @@ export default function ObjectManagement(props: any) {
         if (fetchData.length) return;
     }, [chooseAsset])
 
+
+    // function for searching
+    const handleSearchFUnction = (e: any) => {
+        setSearch(e.target.value);
+        if (e.target.value === "" || e.target.value.length <= 0) {
+            fetchData();
+            setSearch('');
+            return;
+        }
+        if (objectData && objectData.length > 0) {
+            const filtered = objectData.filter((item: any) => {
+                if (item.hasOwnProperty("Name")) {
+                    if (item.Name.toString().toLowerCase().includes(e.target.value.toString().toLowerCase())) {
+                        return item;
+                    }
+                }
+            })
+            setObjectData(filtered)
+        } else {
+            fetchData();
+        }
+    }
+
     return (
         <div className='py-3 font-OpenSans'>
             {/* Title, search and filters */}
@@ -215,6 +239,8 @@ export default function ObjectManagement(props: any) {
                             name="searchobjects"
                             className="border border-gray-969 rounded-lg h-[44px] w-[310px] pl-10 pr-2"
                             autoComplete="off"
+                            value={search}
+                            onChange={handleSearchFUnction}
                         />
                     </div>
                     <div className="relative ml-3">
