@@ -119,8 +119,14 @@ async function relationship(db: any) {
     db.Enterprise.hasMany(db.Invite, { foreignKey: "enterpriseId" });
     db.Invite.belongsTo(db.Enterprise, { foreignKey: "enterpriseId" });
 
-    db.object.hasMany(db.Model, { foreignKey: "objectId" })
-    db.Model.belongsTo(db.object, { foreignKey: "objectId" })
+    db.AddClasses.hasMany(db.Association, { foreignKey: "classId" });
+    db.Association.belongsTo(db.AddClasses, { foreignKey: "classId" });
+
+    db.object.hasMany(db.Association, { foreignKey: "objectId" });
+    db.Association.belongsTo(db.object, { foreignKey: "objectId" });
+
+    db.Model.hasMany(db.Association, { foreignKey: "modelId" });
+    db.Association.belongsTo(db.Association, { foreignKey: "modelId" });
 
     resolve("Imported");
   });

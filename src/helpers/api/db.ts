@@ -77,37 +77,57 @@ async function seedDemoIndvidualRole(Role: any) {
   }
 }
 
+export async function dbConnection() {
+  const { host, port, user, password, database } =
+  serverRuntimeConfig.dbConfig;
+const connection = await mysql.createConnection({
+  host,
+  port,
+  user,
+  password,
+});
+await connection.query(`CREATE DATABASE IF NOT EXISTS \`${database}\`;`);
+
+// connect to db
+const sequelize = new Sequelize(database, user, password, {
+  dialect: "mysql",
+  port,
+  host,
+});
+  return sequelize
+}
 // initialize db and models, called on first api request from /helpers/api/api-handler.js
 export async function initialize() {
   loggerInfo.info("<+----|| DB connection ||-----+>");
 
   try {
     // create db if it doesn't already exist
-    const { host, port, user, password, database } =
-      serverRuntimeConfig.dbConfig;
+    // const { host, port, user, password, database } =
+    //   serverRuntimeConfig.dbConfig;
     const { isDBSync } = serverRuntimeConfig;
 
-    const connection = await mysql.createConnection({
-      host,
-      port,
-      user,
-      password,
-    });
-    await connection.query(`CREATE DATABASE IF NOT EXISTS \`${database}\`;`);
+    // const connection = await mysql.createConnection({
+    //   host,
+    //   port,
+    //   user,
+    //   password,
+    // });
+    // await connection.query(`CREATE DATABASE IF NOT EXISTS \`${database}\`;`);
 
     // connect to db
-    const sequelize = new Sequelize(database, user, password, {
-      dialect: "mysql",
-      port,
-      host,
-    });
+    // const sequelize = new Sequelize(database, user, password, {
+    //   dialect: "mysql",
+    //   port,
+    //   host,
+    // });
+    const sequelize = await dbConnection()
     // for (let key in models) {
     //   db[key] = (models as any)[key](sequelize);
     //   loggerInfo.info(key);
     // }\
     const modelArray: any = {
-      tagDataType: "tagDataType",
       countryData: "countryCodeModel",
+      tagDataType: "tagDataType",
       routeTable: "Routes",
       role: "Role",
       address: "Address",
@@ -127,13 +147,14 @@ export async function initialize() {
       contactSales: "ContactSale",
       enterpriseAddress: "EnterpriseAddress",
       invite: "Invite",
+      association: "Association",
       aiModel: "Model",
       aiModelData: "ModelData",
-      responseData: "Response"
+      responseData: "Response",
     };
 
 
-    if (!db.initialized) {
+    if (true) {
       for (let key in modelArray) {
         const modelName = modelArray[key];
         const modelModule = await import(`./models/${key}.ts`);

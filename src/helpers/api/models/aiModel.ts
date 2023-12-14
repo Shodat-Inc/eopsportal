@@ -9,20 +9,7 @@ export function Model(sequelize: any) {
       autoIncrement: true,
     },
     modelName: { type: DataTypes.STRING, allowNull: false },
-    classId: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: "Classes",
-        id: "id",
-      },
-    },
-    objectId: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: "Objects",
-        id: "id",
-      },
-    },
+    description: { type: DataTypes.JSON, allowNull: true },
   };
   return sequelize.define("Model", attributes);
 }
