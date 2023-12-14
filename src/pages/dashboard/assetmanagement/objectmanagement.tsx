@@ -28,9 +28,9 @@ export default function ObjectManagement(props: any) {
     // All class reducer states
     const classSelector = useSelector((state: any) => state.classReducer);
 
-    console.log({
-        classSelector:classSelector.objDefaultClassSelector
-    })
+    // console.log({
+    //     classSelector:classSelector.objDefaultClassSelector
+    // })
 
     // Close Success message after 5 second if true
     useEffect(() => {

@@ -6,7 +6,7 @@ import axios from 'axios';
 import Link from 'next/dist/client/link';
 import AddNewObject from './addnewobject';
 import { objDefaultSubClassSelectorFunction } from '@/store/actions/classAction';
-import { successMessageAction } from '@/store/actions/classAction';
+import { successMessageAction, setClassBreadcrumb } from '@/store/actions/classAction';
 
 export default function SubObjectManagement(props: any) {
     const dispatch = useDispatch<any>();
@@ -28,7 +28,7 @@ export default function SubObjectManagement(props: any) {
     const classSelector = useSelector((state: any) => state.classReducer);
 
     console.log({
-        classSelector: classSelector.objDefaultClassSelector
+        classSelector: classSelector.classBreadcrumbs
     })
 
     // Close Success message after 5 second if true
@@ -195,6 +195,20 @@ export default function SubObjectManagement(props: any) {
             fetchObjectData();
         }
     }
+
+    // Set Sub Class in Breadcrumb
+    useEffect(()=> {
+        let abc = {
+            "flow": "Object Management",
+            "class": classSelector?.classBreadcrumbs?.class,
+            "classObjKey": classSelector?.classBreadcrumbs?.classObjKey,
+            "classObjValue": classSelector?.classBreadcrumbs?.classObjValue,
+            "subClass": chooseAsset,
+            "subClassObjKey": "",
+            "subClassObjValue": ""
+        }
+        dispatch(setClassBreadcrumb(abc))
+    }, [chooseAsset])
 
     return (
         <div className='py-3 font-OpenSans'>
