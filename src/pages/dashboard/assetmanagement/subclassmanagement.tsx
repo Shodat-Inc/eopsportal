@@ -14,7 +14,8 @@ export default function SubClassManagement(props: any) {
     const [actionCount, setActionCount] = useState(1);
     const [showModal, setShowModal] = useState(Boolean);
     const [deleteModal, setDeleteModal] = useState(false);
-    const [subClassData, setSubClassData] = useState([] as any)
+    const [subClassData, setSubClassData] = useState([] as any);
+    const [search, setSearch] = useState('');
 
     // Reducer Redux data
     const classReducerData = useSelector((state: any) => state.classReducer);
@@ -88,6 +89,28 @@ export default function SubClassManagement(props: any) {
         fetchData()
     }, [props.selectedParentClass])
 
+    // function for searching
+    const handleSearchFUnction = (e: any) => {
+        setSearch(e.target.value);
+        if (e.target.value === "" || e.target.value.length <= 0) {
+            fetchData();
+            setSearch('');
+            return;
+        }
+        if (subClassData && subClassData.length > 0) {
+            const filtered = subClassData.filter((item: any) => {
+                if (item.hasOwnProperty("assetName")) {
+                    if (item.assetName.toString().toLowerCase().includes(e.target.value.toString().toLowerCase())) {
+                        return item;
+                    }
+                }
+            })
+            setSubClassData(filtered)
+        } else {
+            fetchData();
+        }
+    }
+
     return (
         <div className='px-0 py-3 font-OpenSans'>
             {/* Title, search and filters */}
@@ -109,6 +132,8 @@ export default function SubClassManagement(props: any) {
                             name="searchobjects"
                             className="border border-gray-969 rounded-lg h-[44px] w-[310px] pl-10 pr-2"
                             autoComplete="off"
+                            value={search}
+                            onChange={handleSearchFUnction}
                         />
                     </div>
                     <div className="relative ml-3">

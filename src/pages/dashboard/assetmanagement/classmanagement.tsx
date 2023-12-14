@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from '../../../styles/Common.module.css';
 import Image from "next/image";
@@ -15,18 +15,16 @@ export default function ClassManagement(props: any) {
     const [actionCount, setActionCount] = useState(1);
     const [showModal, setShowModal] = useState(Boolean);
     const [deleteModal, setDeleteModal] = useState(false);
+    const [searchClass, setSearchClass] = useState('');
+    const [allData, setAllData] = useState(props.classData);
 
     // All class reducer states
     const allClassSelector = useSelector((state: any) => state.classReducer);
 
-    console.log({
-        allClassSelector: allClassSelector.successMessageReducer
-    })
-
     // Close Success message after 5 second if true
-    useEffect(()=> {
-        if(allClassSelector && allClassSelector.successMessageReducer === true ) {
-            setTimeout(()=>{
+    useEffect(() => {
+        if (allClassSelector && allClassSelector.successMessageReducer === true) {
+            setTimeout(() => {
                 dispatch(successMessageAction(false))
             }, 5000)
         }
@@ -36,7 +34,13 @@ export default function ClassManagement(props: any) {
     useEffect(() => {
         setShowModal(props.addClassModal)
     }, [props.addClassModal])
+    
+    // Set class data on page load
+    useEffect(() => {
+        setAllData(props.classData)
+    }, [props, props.classData])
 
+    // Toggle Filters
     const toggleFilterFunction = () => {
         setToggleArrow(!toggleArrow);
         setToggleFilter(!toggleFilter);
@@ -48,10 +52,6 @@ export default function ClassManagement(props: any) {
         setActionCount(item);
         setActions(!actions);
     }
-    const selectedAction = (item: any) => {
-        setActions(false);
-    }
-
     const handleClick = (item: any) => {
         setShowModal(false);
         props.handleaddClassModal(item)
@@ -70,6 +70,28 @@ export default function ClassManagement(props: any) {
         props.handelsubClass(item)
     }
 
+    // function for searching
+    const handleSearchFUnction = (e: any) => {
+        setSearchClass(e.target.value);
+        if (e.target.value === "" || e.target.value.length <= 0) {
+            setSearchClass('');
+            setAllData(props.classData)
+            return;
+        }
+        if (props.classData && props.classData.length > 0) {
+            const filtered = props.classData.filter((item: any) => {
+                if (item.hasOwnProperty("assetName")) {
+                    if (item.assetName.toString().toLowerCase().includes(e.target.value.toString().toLowerCase())) {
+                        return item;
+                    }
+                }
+            })
+            setAllData(filtered)
+        } else {
+            setAllData(props.classData)
+        }
+    }
+
     return (
         <div className='px-0 py-3 font-OpenSans'>
             {/* Title, search and filters */}
@@ -86,11 +108,13 @@ export default function ClassManagement(props: any) {
                         />
                         <input
                             type="text"
-                            placeholder={`Search`}
-                            id="searchobjects"
-                            name="searchobjects"
+                            placeholder="Search"
+                            id="searchClass"
+                            name="searchClass"
                             className="border border-gray-969 rounded-lg h-[44px] w-[310px] pl-10 pr-2"
                             autoComplete="off"
+                            value={searchClass}
+                            onChange={handleSearchFUnction}
                         />
                     </div>
                     <div className="relative ml-3">
@@ -140,7 +164,7 @@ export default function ClassManagement(props: any) {
             {/* Table */}
             <div className='w-full mt-6 min-h-[400px]'>
                 {
-                    props.classData && props.classData.length > 0 ?
+                    allData && allData.length > 0 ?
                         <table className={`table-auto lg:min-w-full sm:w-full small:w-full text-left ${styles.tableV3} ${styles.tableV4}`}>
                             <thead className="text-sm font-normal">
                                 <tr>
@@ -158,7 +182,7 @@ export default function ClassManagement(props: any) {
                             </thead>
                             <tbody>
                                 {
-                                    props.classData.map((item: any, index: any) => (
+                                    allData.map((item: any, index: any) => (
                                         <tr key={index}>
                                             <td>{index + 1}</td>
                                             <td>
