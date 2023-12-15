@@ -1,6 +1,6 @@
 import { DataTypes } from "sequelize";
 
-export function Association(sequelize: any) {
+export function PurchaseHistory(sequelize: any) {
     const attributes = {
         id: {
             type: DataTypes.INTEGER,
@@ -8,20 +8,11 @@ export function Association(sequelize: any) {
             allowNull: false,
             autoIncrement: true,
         },
-        classId: {
-            type: DataTypes.INTEGER,
-            references: {
-                model: "Classes",
-                id: "id",
-            },
+        currentStatus: {
+            type: DataTypes.ENUM('active', 'inactive'),
+            defaultValue: 'inactive'
         },
-        objectId: {
-            type: DataTypes.INTEGER,
-            references: {
-                model: "Objects",
-                id: "id",
-            },
-        },
+        expireDate: { type: DataTypes.DATE, allowNull: false },
         modelId: {
             type: DataTypes.INTEGER,
             references: {
@@ -29,10 +20,20 @@ export function Association(sequelize: any) {
                 id: "id",
             },
         },
+        userId: {
+            type: DataTypes.INTEGER,
+            references: {
+                model: "Users",
+                id: "id"
+            }
+        },
+        subscriptionId: {
+            type: DataTypes.INTEGER,
+            references: {
+                model: "Subscriptions",
+                id: "id",
+            },
+        },
     };
-    return sequelize.define("ModelClassAssociation", attributes);
+    return sequelize.define("PurchaseHistory", attributes);
 }
-
-
-
-

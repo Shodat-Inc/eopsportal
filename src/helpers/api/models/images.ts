@@ -1,6 +1,6 @@
 import { DataTypes } from "sequelize";
 
-export function Response(sequelize: any) {
+export function Image(sequelize: any) {
     const attributes = {
         id: {
             type: DataTypes.INTEGER,
@@ -8,17 +8,14 @@ export function Response(sequelize: any) {
             allowNull: false,
             autoIncrement: true,
         },
-        imageObjectId: {
+        url: { type: DataTypes.STRING, allowNull: false },
+        modelDataId: {
             type: DataTypes.INTEGER,
             references: {
-                model: "ImageObjectModels",
+                model: "ModelData",
                 id: "id",
             },
         },
-        response: {
-            type: DataTypes.JSON,
-            allowNull: true
-        }
     };
-    return sequelize.define("ResponseData", attributes);
+    return sequelize.define("Image", attributes);
 }

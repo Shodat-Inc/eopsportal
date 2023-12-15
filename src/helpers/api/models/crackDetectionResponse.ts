@@ -1,4 +1,3 @@
-import { Data } from "@react-google-maps/api";
 import { DataTypes } from "sequelize";
 
 export function CrackResponse(sequelize: any) {
@@ -23,10 +22,10 @@ export function CrackResponse(sequelize: any) {
       type: DataTypes.STRING,
       allowNull: false
     },
-    imageObjectId: {
+    imageId: {
       type: DataTypes.INTEGER,
       references: {
-        model: "ImageObjectModels",
+        model: "Images",
         id: "id",
       },
     },

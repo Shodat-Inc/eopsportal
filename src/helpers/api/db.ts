@@ -124,12 +124,12 @@ export async function initialize() {
       contactSales: "ContactSale",
       enterpriseAddress: "EnterpriseAddress",
       invite: "Invite",
-      association: "Association",
       aiModel: "Model",
       aiModelData: "ModelData",
-      responseData: "Response",
-      imageObjectModel: "ImageObject",
+      images: "Image",
       crackDetectionResponse: "CrackResponse",
+      subscription: "Subscription",
+      purchaseHistory: "PurchaseHistory"
     };
 
 
