@@ -33,6 +33,13 @@ export function ModelData(sequelize: any) {
                 id: "id",
             },
         },
+        userId: {
+            type: DataTypes.INTEGER,
+            references: {
+                model: "Users",
+                id: "id",
+            },
+        },
     };
     return sequelize.define("ModelData", attributes);
 }

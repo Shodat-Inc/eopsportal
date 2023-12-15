@@ -119,36 +119,42 @@ async function relationship(db: any) {
     db.Enterprise.hasMany(db.Invite, { foreignKey: "enterpriseId" });
     db.Invite.belongsTo(db.Enterprise, { foreignKey: "enterpriseId" });
 
-    db.AddClasses.hasMany(db.ModelData, { foreignKey: "classId" })
-    db.ModelData.belongsTo(db.AddClasses, { foreignKey: "classId" })
+    db.AddClasses.hasMany(db.ModelData, { foreignKey: "classId" });
+    db.ModelData.belongsTo(db.AddClasses, { foreignKey: "classId" });
 
-    db.AddValues.hasMany(db.ModelData, { foreignKey: "objectValueId" })
-    db.ModelData.belongsTo(db.AddValues, { foreignKey: "objectValueId" })
+    db.AddValues.hasMany(db.ModelData, { foreignKey: "objectValueId" });
+    db.ModelData.belongsTo(db.AddValues, { foreignKey: "objectValueId" });
 
-    db.Model.hasMany(db.ModelData, { foreignKey: "modelId" })
-    db.ModelData.belongsTo(db.Model, { foreignKey: "modelId" })
+    db.Model.hasMany(db.ModelData, { foreignKey: "modelId" });
+    db.ModelData.belongsTo(db.Model, { foreignKey: "modelId" });
 
-    db.ModelData.hasMany(db.Image, { foreignKey: "modelDataId" })
-    db.Image.belongsTo(db.ModelData, { foreignKey: "modelDataId" })
+    db.ModelData.hasMany(db.Image, { foreignKey: "modelDataId" });
+    db.Image.belongsTo(db.ModelData, { foreignKey: "modelDataId" });
 
-    db.Image.hasMany(db.CrackResponse, { foreignKey: "imageId" })
-    db.CrackResponse.belongsTo(db.Image, { foreignKey: "imageId" })
+    db.Image.hasMany(db.CrackResponse, { foreignKey: "imageId" });
+    db.CrackResponse.belongsTo(db.Image, { foreignKey: "imageId" });
 
-    db.Model.hasMany(db.Subscription, { foreignKey: "modelId" })
-    db.Subscription.belongsTo(db.Model, { foreignKey: "modelId" })
+    db.Model.hasMany(db.Subscription, { foreignKey: "modelId" });
+    db.Subscription.belongsTo(db.Model, { foreignKey: "modelId" });
 
-    db.User.hasMany(db.Subscription, { foreignKey: "userId" })
-    db.Subscription.belongsTo(db.User, { foreignKey: "userId" })
+    db.User.hasMany(db.Subscription, { foreignKey: "userId" });
+    db.Subscription.belongsTo(db.User, { foreignKey: "userId" });
 
-    db.Model.hasMany(db.PurchaseHistory, { foreignKey: "modelId" })
-    db.PurchaseHistory.belongsTo(db.Model, { foreignKey: "modelId" })
+    db.Model.hasMany(db.PurchaseHistory, { foreignKey: "modelId" });
+    db.PurchaseHistory.belongsTo(db.Model, { foreignKey: "modelId" });
 
-    db.User.hasMany(db.PurchaseHistory, { foreignKey: "userId" })
-    db.PurchaseHistory.belongsTo(db.User, { foreignKey: "userId" })
+    db.User.hasMany(db.PurchaseHistory, { foreignKey: "userId" });
+    db.PurchaseHistory.belongsTo(db.User, { foreignKey: "userId" });
 
-    db.Subscription.hasMany(db.PurchaseHistory, { foreignKey: "subscriptionId" })
-    db.PurchaseHistory.belongsTo(db.Subscription, { foreignKey: "subscriptionId" })
+    db.Subscription.hasMany(db.PurchaseHistory, {
+      foreignKey: "subscriptionId",
+    });
+    db.PurchaseHistory.belongsTo(db.Subscription, {
+      foreignKey: "subscriptionId",
+    });
 
+    db.User.hasMany(db.ModelData, { foreignKey: "userId" });
+    db.ModelData.belongsTo(db.User, { foreignKey: "userId" });
     resolve("Imported");
   });
 }
