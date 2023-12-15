@@ -12,7 +12,7 @@ export function Model(sequelize: any) {
     modelTitle: { type: DataTypes.STRING, allowNull: true },
     modelSubTitle: { type: DataTypes.STRING, allowNull: true },
     howItWorks: { type: DataTypes.STRING, allowNUll: true },
-    benefits: { type: DataTypes.STRING, allowNull: true }
+    benefits: { type: DataTypes.JSON, allowNull: true }
   };
   return sequelize.define("Model", attributes);
 }
