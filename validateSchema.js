@@ -291,7 +291,10 @@ export const inviteValidation = (data) => {
 export const createModelValidation = (data) => {
   const schema = Joi.object({
     modelName: Joi.string().required(),
-    description: Joi.object(),
+    modelTitle: Joi.string(),
+    modelSubTitle: Joi.string(),
+    howItWorks: Joi.string(),
+    benefits: Joi.array().items(Joi.string())
   });
   return schema.validate(data);
 };
@@ -315,8 +318,11 @@ export const saveResponseValidation = (data) => {
 
 export const updateModelValidation = (data) => {
   const schema = Joi.object({
-    modelName: Joi.string().required(),
-    description: Joi.object(),
+    modelName: Joi.string(),
+    modelTitle: Joi.string(),
+    modelSubTitle: Joi.string(),
+    howItWorks: Joi.string(),
+    benefits: Joi.object()
   });
   return schema.validate(data);
 };
