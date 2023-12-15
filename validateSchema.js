@@ -294,7 +294,7 @@ export const createModelValidation = (data) => {
     modelTitle: Joi.string(),
     modelSubTitle: Joi.string(),
     howItWorks: Joi.string(),
-    benefits: Joi.array().items(Joi.string())
+    benefits: Joi.object()
   });
   return schema.validate(data);
 };
