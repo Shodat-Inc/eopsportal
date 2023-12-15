@@ -9,7 +9,10 @@ export function Model(sequelize: any) {
       autoIncrement: true,
     },
     modelName: { type: DataTypes.STRING, allowNull: false },
-    description: { type: DataTypes.JSON, allowNull: true },
+    modelTitle: { type: DataTypes.STRING, allowNull: true },
+    modelSubTitle: { type: DataTypes.STRING, allowNull: true },
+    howItWorks: { type: DataTypes.STRING, allowNUll: true },
+    benefits: { type: DataTypes.STRING, allowNull: true }
   };
   return sequelize.define("Model", attributes);
 }

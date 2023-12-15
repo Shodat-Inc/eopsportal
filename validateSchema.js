@@ -298,20 +298,25 @@ export const createModelValidation = (data) => {
 
 export const saveResponseValidation = (data) => {
   const schema = Joi.object({
-    modelValuesId: Joi.number(),
-    response: Joi.object().keys({
-      coordinates: Joi.object({
-        'coord-topLeft': Joi.string().required(),
-        'coord-topRight': Joi.string().required(),
-        'coord-bottomRight': Joi.string().required(),
-        'coord-bottomLeft': Joi.string().required(),
-      }),
-      Predictions: Joi.string().required(),
-      ThresholdValue: Joi.string().required(),
-      Tag: Joi.string().required(),
-      Probability: Joi.string().required(),
-    })
+    imageObjectId: Joi.number().required(),
+    coordinates: Joi.object({
+      'coord-topLeft': Joi.string().required(),
+      'coord-topRight': Joi.string().required(),
+      'coord-bottomRight': Joi.string().required(),
+      'coord-bottomLeft': Joi.string().required(),
+    }),
+    predictions: Joi.string().required(),
+    thresholdValue: Joi.string().required(),
+    tag: Joi.string().required(),
+    probability: Joi.string().required(),
   })
   return schema.validate(data)
 }
 
+export const updateModelValidation = (data) => {
+  const schema = Joi.object({
+    modelName: Joi.string().required(),
+    description: Joi.object(),
+  });
+  return schema.validate(data);
+};
