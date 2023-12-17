@@ -122,8 +122,8 @@ async function relationship(db: any) {
     db.AddClasses.hasMany(db.ModelData, { foreignKey: "classId" });
     db.ModelData.belongsTo(db.AddClasses, { foreignKey: "classId" });
 
-    db.AddValues.hasMany(db.ModelData, { foreignKey: "objectValueId" });
-    db.ModelData.belongsTo(db.AddValues, { foreignKey: "objectValueId" });
+    db.object.hasMany(db.ModelData, { foreignKey: "objectId" });
+    db.ModelData.belongsTo(db.object, { foreignKey: "objectId" });
 
     db.Model.hasMany(db.ModelData, { foreignKey: "modelId" });
     db.ModelData.belongsTo(db.Model, { foreignKey: "modelId" });

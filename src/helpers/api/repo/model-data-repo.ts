@@ -21,13 +21,16 @@ async function get(modelId: any, type: any, userId: any) {
   try {
     const data = await db.Image.findAll({
       attributes: ["url"],
-      includes: [
+      include: [
         {
           model: db.ModelData,
           where: { modelId: modelId, type: type, userId: userId },
         },
       ],
     });
+    if (data.length === 0) {
+      return sendResponseData(false, "No data Found", []);
+    }
     return sendResponseData(true, "Data Fetched Successfully", data);
   } catch (error: any) {
     loggerError.error("Error");
