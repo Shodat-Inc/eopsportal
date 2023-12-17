@@ -19,10 +19,10 @@ export function ModelData(sequelize: any) {
                 id: "id",
             },
         },
-        objectValueId: {
+        objectId: {
             type: DataTypes.INTEGER,
             references: {
-                model: "ObjectValues",
+                model: "Objects",
                 id: "id",
             },
         },

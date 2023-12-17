@@ -11,7 +11,7 @@ async function handler(req: any, res: any) {
       return;
     }
     const data = req.body;
-    const { userId, type, classId, objectValueId, modelId, ...objdata } = data;
+    const { userId, type, classId, objectId, modelId, ...objdata } = data;
     const { url } = objdata;
     const result = await modelDataRepo.create(data);
     const urlData = await imgaeTableRepo.create({
