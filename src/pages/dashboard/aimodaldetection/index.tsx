@@ -6,6 +6,8 @@ import Image from "next/image";
 import Link from "next/link";
 import EopsWatch from "./eopswatch";
 import EopsTrace from "./eopstrace";
+import EopsWatchModel from "./eopswatchModel";
+import EopsTraceModel from "./eopstracemodel";
 import axios from "axios";
 import { setDataForeOpsWatchAction } from "@/store/actions/classAction";
 
@@ -273,13 +275,29 @@ export default function AiModelDetection() {
             </div>
 
             {/* Tab Contect */}
-            <div className="w-full min-h-[500px] bg-white border border-gray-957 overflow-hidden1 rounded-tr-xl rounded-br-xl rounded-bl-xl pb-32 bg-[#F2F2F2]" >
+            <div className="w-full min-h-[500px] bg-white border border-gray-957 overflow-hidden1 rounded-tr-xl rounded-br-xl rounded-bl-xl pb-16 bg-[#F2F2F2]" >
                 <div className="bg-white w-full h-full rounded-tr-xl rounded-br-xl rounded-bl-xl overflow-hidden">
                     {tab === 1 &&
-                        <EopsWatch />
+                        <>
+                            {
+                                classSelector?.dataforeopswatchReducer && Object.keys(classSelector?.dataforeopswatchReducer).length !== 0
+                                    ?
+                                    <EopsWatch />
+                                    :
+                                    <EopsWatchModel />
+                            }
+                        </>
                     }
                     {tab === 2 &&
-                        <EopsTrace />
+                        <>
+                            {
+                                classSelector?.dataforeopswatchReducer && Object.keys(classSelector?.dataforeopswatchReducer).length !== 0
+                                    ?
+                                    <EopsTrace />
+                                    :
+                                    <EopsTraceModel />
+                            }
+                        </>
                     }
                 </div>
             </div>
