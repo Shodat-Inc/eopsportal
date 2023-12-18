@@ -20,6 +20,7 @@ export default function AiModelDetection() {
     const [showSubClass, setShowSubClass] = useState(false);
     const [getAllClass, setGetAllClass] = useState([] as any);
     const [classObject, setClassObject] = useState([] as any);
+    const [selectedClass, setSelectedClass] = useState('');
     const toggleTab = (item: any) => {
         setTab(item)
     }
@@ -40,10 +41,20 @@ export default function AiModelDetection() {
 
             }).then(function (response) {
                 if (response) {
-                    let filtered = response.data.filter((item: any) => {
-                        return item.parentAssetName === classSelector.dataforeopswatchReducer.class
+                    console.log({
+                        response: response
                     })
-                    setClassObject(filtered)
+                    if (classSelector.dataforeopswatchReducer.class && classSelector.dataforeopswatchReducer.class !== "") {
+                        let filtered = response.data.filter((item: any) => {
+                            return item.parentAssetName === classSelector.dataforeopswatchReducer.class
+                        })
+                        setClassObject(filtered)
+                    } else {
+                        let filtered = response.data.filter((item: any) => {
+                            return item.parentAssetName === selectClass
+                        })
+                        setClassObject(filtered)
+                    }
                 }
             }).catch(function (error) {
                 console.log({
@@ -67,6 +78,10 @@ export default function AiModelDetection() {
         }
     }, [classSelector.dataforeopswatchReducer])
 
+    useEffect(() => {
+        fetchObjectData();
+    }, [selectClass])
+
     // Set VIN/PlantID on page load
     useEffect(() => {
         if (classSelector.dataforeopswatchReducer.classObject && classSelector.dataforeopswatchReducer.classObject !== "") {
@@ -77,10 +92,35 @@ export default function AiModelDetection() {
         }
     }, [classSelector.dataforeopswatchReducer.classObject])
 
+    // function to get all classes
+    async function fetchClassData() {
+        try {
+            await axios({
+                method: 'GET',
+                url: `/api/getAssets`,
+
+            }).then(function (response) {
+                if (response) {
+                    setGetAllClass(response.data)
+                }
+            }).catch(function (error) {
+                console.log({
+                    "ERROR IN AXIOS CATCH": error
+                })
+            })
+        } catch (err) {
+            console.log({
+                "ERROR IN TRY CATCH": err
+            })
+        }
+    }
+
     // Get all class on page load
     useEffect(() => {
         if (classSelector.getAllClass && classSelector.getAllClass.length > 0) {
             setGetAllClass(classSelector.getAllClass)
+        } else {
+            fetchClassData();
         }
     }, [classSelector.getAllClass])
 
@@ -91,7 +131,7 @@ export default function AiModelDetection() {
     const handleSelectFunction = (e: any) => {
         setSelectClass(e.target.value)
         setDisable(1);
-        setShowObject(true)
+        setShowObject(true);
     }
     const resetFunction = () => {
         setDisable(0);
@@ -182,7 +222,21 @@ export default function AiModelDetection() {
                             {
                                 classObject && classObject.length > 0 ?
                                     classObject.map((item: any, index: any) => {
-                                        let key = classSelector.dataforeopswatchReducer.class === "Vehicles" ? item.subObjects?.VIN : item.subObjects?.PlantID;
+                                        // let key = classSelector.dataforeopswatchReducer.class === "Vehicles" ? item.subObjects?.VIN : item.subObjects?.PlantID;
+                                        let key = '';
+                                        if (classSelector.dataforeopswatchReducer.class && classSelector.dataforeopswatchReducer.class !== "") {
+                                            if (classSelector.dataforeopswatchReducer.class === "Vehicles") {
+                                                key = item.subObjects?.VIN
+                                            } else {
+                                                key = item.subObjects?.PlantID
+                                            }
+                                        } else {
+                                            if (selectClass === "Vehicles") {
+                                                key = item.subObjects?.VIN
+                                            } else {
+                                                key = item.subObjects?.PlantID
+                                            }
+                                        }
                                         return (
                                             <option
                                                 key={index}
@@ -280,7 +334,7 @@ export default function AiModelDetection() {
                     {tab === 1 &&
                         <>
                             {
-                                classSelector?.dataforeopswatchReducer && Object.keys(classSelector?.dataforeopswatchReducer).length !== 0
+                                (classSelector?.dataforeopswatchReducer && Object.keys(classSelector?.dataforeopswatchReducer).length) !== 0 || (selectClass !== "")
                                     ?
                                     <EopsWatch />
                                     :
@@ -291,7 +345,7 @@ export default function AiModelDetection() {
                     {tab === 2 &&
                         <>
                             {
-                                classSelector?.dataforeopswatchReducer && Object.keys(classSelector?.dataforeopswatchReducer).length !== 0
+                                (classSelector?.dataforeopswatchReducer && Object.keys(classSelector?.dataforeopswatchReducer).length) !== 0 || (selectClass !== "")
                                     ?
                                     <EopsTrace />
                                     :
