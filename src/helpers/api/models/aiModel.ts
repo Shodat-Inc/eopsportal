@@ -11,7 +11,6 @@ export function Model(sequelize: any) {
     modelName: { type: DataTypes.STRING, allowNull: false },
     modelTitle: { type: DataTypes.STRING, allowNull: true },
     modelSubTitle: { type: DataTypes.STRING, allowNull: true },
-    //The TEXT data type is suitable for storing large amounts of string data.
     howItWorks: { type: DataTypes.TEXT, allowNUll: true },
     benefits: { type: DataTypes.JSON, allowNull: true },
     iconUrl: { type: DataTypes.STRING, allowNull: true }

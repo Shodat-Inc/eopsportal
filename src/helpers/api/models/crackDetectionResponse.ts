@@ -9,23 +9,14 @@ export function CrackResponse(sequelize: any) {
       autoIncrement: true,
     },
     coordinates: { type: DataTypes.JSON, allowNull: true },
-    predictions: { type: DataTypes.STRING, allowNull: true },
-    thresholdValue: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
     tag: {
       type: DataTypes.STRING,
       allowNull: false
     },
-    probability: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    imageId: {
+    modelObjectImageId: {
       type: DataTypes.INTEGER,
       references: {
-        model: "Images",
+        model: "ModelObjectImages",
         id: "id",
       },
     },

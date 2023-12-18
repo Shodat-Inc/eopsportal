@@ -1,7 +1,6 @@
 import { db } from "../db";
 import sendResponseData from "../../constant";
 import { loggerInfo, loggerError } from "@/logger";
-import { send } from "process";
 
 /**
  * Repository for handling Model related operations.

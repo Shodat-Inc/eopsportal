@@ -1,4 +1,5 @@
 import { DataTypes } from "sequelize";
+import { TestProductionDataType } from "@/util/enums"
 
 export function Image(sequelize: any) {
     const attributes = {
@@ -16,7 +17,12 @@ export function Image(sequelize: any) {
             },
             comment: "Foreign key referencing the associated ModelData. Indicates the ModelData to which the url belongs.",
         },
+        type: {
+            type: TestProductionDataType,
+            defaultValue: 'test'
+        },
         url: { type: DataTypes.STRING, allowNull: false },
+        testRanCount: { type: DataTypes.INTEGER, allowNull: true },        
     };
-    return sequelize.define("Image", attributes);
+    return sequelize.define("ModelObjectImage", attributes);
 }

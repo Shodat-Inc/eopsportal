@@ -1,5 +1,4 @@
 import { DataTypes } from "sequelize";
-import { TestProductionDataType } from "@/util/enums"
 
 export function ModelData(sequelize: any) {
     const attributes = {
@@ -30,7 +29,7 @@ export function ModelData(sequelize: any) {
                 model: "Objects",
                 id: "id",
             },
-            comment: "Foreign key referencing the associated Model. Indicates the Model for which the object values are stored.",
+            comment: "Foreign key referencing the associated Object. Indicates the Model for which the object id is stored.",
         },
         classId: {
             type: DataTypes.INTEGER,
@@ -40,19 +39,7 @@ export function ModelData(sequelize: any) {
             },
             comment: "Foreign key referencing the associated Class. Indicates the Class to which the image belongs.",
         },
-        objectValueId: {
-            type: DataTypes.INTEGER,
-            references: {
-                model: "ObjectValues",
-                id: "id",
-            },
-            comment: "Foreign key referencing the associated Object Value. Indicates the Object Value to which the image belongs.",
-
-        },
-        type: {
-            type: TestProductionDataType,
-            defaultValue: 'test'
-        },
+        
     };
     return sequelize.define("ModelData", attributes);
 }

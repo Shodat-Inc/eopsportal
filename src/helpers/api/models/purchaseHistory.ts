@@ -33,7 +33,7 @@ export function PurchaseHistory(sequelize: any) {
             },
             comment: "Foreign key referencing the associated Subscription. Indicates the subscription for which the user has made a purchase, recorded in the purchase history table for future reference.",
         },
-        status: {
+        paymentStatus: {
             type: ActiveInactiveDataType,
             defaultValue: 'inactive'
         },
