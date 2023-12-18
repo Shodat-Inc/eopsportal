@@ -55,25 +55,31 @@ export default function AiModelDetection() {
         }
     }
     useEffect(() => {
-        setSelectClass(classSelector.dataforeopswatchReducer.class)
-        if (classSelector.dataforeopswatchReducer.class != "") {
+        if (classSelector?.dataforeopswatchReducer?.class && classSelector?.dataforeopswatchReducer?.class !== "") {
+            setSelectClass(classSelector.dataforeopswatchReducer.class);
             setShowObject(true);
             setDisable(1);
             fetchObjectData();
+        } else {
+            setShowObject(false);
         }
-    }, [classSelector.dataforeopswatchReducer.class])
+    }, [classSelector.dataforeopswatchReducer])
 
     // Set VIN/PlantID on page load
     useEffect(() => {
-        setSelectObject(classSelector.dataforeopswatchReducer.classObject)
-        if(classSelector.dataforeopswatchReducer.classObject !== "") {
+        if (classSelector.dataforeopswatchReducer.classObject && classSelector.dataforeopswatchReducer.classObject !== "") {
+            setSelectObject(classSelector.dataforeopswatchReducer.classObject);
             setShowSubClass(true)
+        } else {
+            setShowSubClass(false)
         }
     }, [classSelector.dataforeopswatchReducer.classObject])
 
     // Get all class on page load
     useEffect(() => {
-        setGetAllClass(classSelector.getAllClass)
+        if (classSelector.getAllClass && classSelector.getAllClass.length > 0) {
+            setGetAllClass(classSelector.getAllClass)
+        }
     }, [classSelector.getAllClass])
 
     const handleInputFunction = (e: any) => {
@@ -100,7 +106,8 @@ export default function AiModelDetection() {
 
     console.log({
         getAllClass: getAllClass,
-        classObject: classObject
+        classObject: classObject,
+        showObject: showObject
     })
 
     return (
@@ -171,20 +178,20 @@ export default function AiModelDetection() {
                         >
                             <option value="">Select {classSelector.dataforeopswatchReducer.class === "Vehicles" ? "VIN" : "PlantID"}</option>
                             {
-                            classObject && classObject.length > 0 ?
-                                classObject.map((item: any, index: any) => {
-                                    let key = classSelector.dataforeopswatchReducer.class === "Vehicles" ? item.subObjects?.VIN : item.subObjects?.PlantID;
-                                    return (
-                                        <option
-                                            key={index}
-                                            value={key}
-                                        >
-                                            {key}
-                                        </option>
-                                    )
-                                })
-                                : null
-                        }
+                                classObject && classObject.length > 0 ?
+                                    classObject.map((item: any, index: any) => {
+                                        let key = classSelector.dataforeopswatchReducer.class === "Vehicles" ? item.subObjects?.VIN : item.subObjects?.PlantID;
+                                        return (
+                                            <option
+                                                key={index}
+                                                value={key}
+                                            >
+                                                {key}
+                                            </option>
+                                        )
+                                    })
+                                    : null
+                            }
                         </select>
                     }
 

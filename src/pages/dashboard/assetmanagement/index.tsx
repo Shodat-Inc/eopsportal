@@ -122,6 +122,15 @@ export default function AssetManagement() {
         dispatch(toggleAddNewClassObjectModel(true));
     }
 
+    const backToPrevComponent = (item: any) => {
+        if (item === 4) {
+            setTab(1);
+        }
+        if (item === 3) {
+            setTab(2);
+        }
+    }
+
 
     return (
         <div className="flex font-OpenSans">
@@ -129,7 +138,7 @@ export default function AssetManagement() {
             <div className="w-[100%] min-h-full rounded-xl bg-gray-966">
 
                 {/* Title */}
-                <div className="columns-2 flex justify-between items-center mb-7">
+                <div className="columns-2 flex justify-between items-center mb-2">
                     <p className="text-black text-xl font-semibold">Asset Management</p>
                 </div>
 
@@ -189,7 +198,48 @@ export default function AssetManagement() {
                             </li>
                         </ul>
                     </div>
-                    : null}
+                    : null
+                }
+
+                {/* Back Buttons */}
+                {
+                    tab === 4 &&
+                    <div className="flex justify-start items-center mb-4">
+                        <button
+                            onClick={() => backToPrevComponent(4)}
+                            className="flex justify-start items-center"
+                        >
+                            <Image
+                                src="/img/arrow-left-black.svg"
+                                alt="arrow-left-black"
+                                height={24}
+                                width={24}
+                                className="mr-2"
+                            />
+                            <span>Back</span>
+                        </button>
+                    </div>
+                }
+                {
+                    tab === 3 &&
+                    <div className="flex justify-start items-center mb-4">
+                        <button
+                            onClick={() => backToPrevComponent(3)}
+                            className="flex justify-start items-center"
+                        >
+                            <Image
+                                src="/img/arrow-left-black.svg"
+                                alt="arrow-left-black"
+                                height={24}
+                                width={24}
+                                className="mr-2"
+                            />
+                            <span>Back</span>
+                        </button>
+                    </div>
+                }
+
+                
 
                 {/* Tabs */}
                 <div className="flex justify-between items-center w-full">
