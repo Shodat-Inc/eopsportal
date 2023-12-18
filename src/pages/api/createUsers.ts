@@ -2,7 +2,6 @@ import { apiHandler, usersRepo } from "../../helpers/api";
 import { loggerInfo, loggerError } from "@/logger";
 import { NextApiRequest, NextApiResponse } from "next";
 import { info } from "console";
-import { addressRepo } from "@/helpers/api/repo/address-repo";
 import { phoneRecordRepo } from "@/helpers/api/repo/phone-record-repo";
 import { CompanyRecordRepo } from "@/helpers/api/repo/company-record-repo";
 import message from "@/util/responseMessage";

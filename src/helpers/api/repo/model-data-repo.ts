@@ -25,6 +25,7 @@ async function get(modelId: any, type: any, userId: any) {
         {
           model: db.ModelData,
           where: { modelId: modelId, type: type, userId: userId },
+          attributes: ["id", "type", "createdAt"],
         },
       ],
     });
