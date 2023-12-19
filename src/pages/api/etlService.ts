@@ -1,4 +1,4 @@
-import { apiHandler, imgaeTableRepo, modelDataRepo } from "@/helpers/api";
+import { apiHandler, imageTableRepo, modelDataRepo } from "@/helpers/api";
 import { loggerInfo } from "@/logger";
 export default apiHandler({
   post: handler,
@@ -14,7 +14,7 @@ async function handler(req: any, res: any) {
     const { userId, type, classId, objectId, modelId, ...objdata } = data;
     const { url } = objdata;
     const result = await modelDataRepo.create(data);
-    const urlData = await imgaeTableRepo.create({
+    const urlData = await imageTableRepo.create({
       url,
       modelDataId: result.data.id,
     });

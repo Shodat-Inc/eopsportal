@@ -1,7 +1,7 @@
 import { loggerError, loggerInfo } from "@/logger";
 import { db } from "../db";
 import sendResponseData from "@/helpers/constant";
-export const imgaeTableRepo = {
+export const imageTableRepo = {
   create,
 };
 async function create(params: any) {

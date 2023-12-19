@@ -4,6 +4,15 @@ const passwordRegex =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 const usernameRegex = /^([a-zA-Z0-9]|[-._](?![-._])){4,14}$/;
 
+const coordinateSchema = Joi.object({
+  'coord-topLeft': Joi.string().required(),
+  'coord-topRight': Joi.string().required(),
+  'coord-bottomRight': Joi.string().required(),
+  'coord-bottomLeft': Joi.string().required(),
+  probability: Joi.string(),
+});
+const imageSchema = Joi.object().pattern(/^image\d+$/, coordinateSchema);
+
 export const signInValidation = (data) => {
   const schema = Joi.object({
     email: Joi.string().email().required(),
@@ -294,26 +303,19 @@ export const createModelValidation = (data) => {
     modelTitle: Joi.string(),
     modelSubTitle: Joi.string(),
     howItWorks: Joi.string(),
-    benefits: Joi.object()
+    benefits: Joi.object(),
+    iconUrl: Joi.string()
   });
   return schema.validate(data);
 };
 
 export const saveResponseValidation = (data) => {
-  const schema = Joi.object({
-    imageObjectId: Joi.number().required(),
-    coordinates: Joi.object({
-      'coord-topLeft': Joi.string().required(),
-      'coord-topRight': Joi.string().required(),
-      'coord-bottomRight': Joi.string().required(),
-      'coord-bottomLeft': Joi.string().required(),
-    }),
-    predictions: Joi.string().required(),
-    thresholdValue: Joi.string().required(),
-    tag: Joi.string().required(),
-    probability: Joi.string().required(),
-  })
-  return schema.validate(data)
+const schema = Joi.object({
+  coordinates: Joi.array().items(imageSchema).min(1).required(),
+  tag: Joi.string().required(),
+  modelObjectImageId: Joi.number().integer().required(),
+});
+return schema.validate(data);
 }
 
 export const updateModelValidation = (data) => {

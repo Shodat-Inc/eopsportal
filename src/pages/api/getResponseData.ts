@@ -1,6 +1,4 @@
-import { apiHandler } from "@/helpers/api";
-import { responseDataRepo } from "@/helpers/api";
-import { saveResponseValidation } from "../../../validateSchema"
+import { apiHandler, crackDetectionResRepo } from "@/helpers/api";
 
 export default apiHandler({
   get: handler,
@@ -26,7 +24,7 @@ async function handler(req: any, res: any) {
     //   return;
     // }
 
-    const result = await responseDataRepo.get(data);
+    const result = await crackDetectionResRepo.getResponse(data);
     return res.status(200).json(result);
   } catch (error: any) {
     return res.status(400).json(error);

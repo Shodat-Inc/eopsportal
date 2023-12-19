@@ -1,4 +1,5 @@
 import { DataTypes } from "sequelize";
+import { ActiveInactiveDataType, OnOffDataType } from "@/util/enums";
 
 export function Subscription(sequelize: any) {
     const attributes = {
@@ -8,14 +9,13 @@ export function Subscription(sequelize: any) {
             allowNull: false,
             autoIncrement: true,
         },
-        status: {
-            type: DataTypes.ENUM('active', 'inactive'),
-            defaultValue: 'inactive'
-        },
-        expireDate: { type: DataTypes.DATE, allowNull: false },
-        autoRenew: {
-            type: DataTypes.ENUM('on', 'off'),
-            defaultValue: 'off'
+        userId: {
+            type: DataTypes.INTEGER,
+            references: {
+                model: "Users",
+                id: "id"
+            },
+            comment: "Foreign key referencing the associated User. Represents the user whose subscription data is saved.",
         },
         modelId: {
             type: DataTypes.INTEGER,
@@ -23,14 +23,22 @@ export function Subscription(sequelize: any) {
                 model: "Models",
                 id: "id",
             },
+            comment: "Foreign key referencing the associated Model. Indicates the model for which the user has taken a subscription.",
         },
-        userId: {
-            type: DataTypes.INTEGER,
-            references: {
-                model: "Users",
-                id: "id"
-            }
-        }
+        status: {
+            type: ActiveInactiveDataType,
+            defaultValue: 'inactive'
+        },
+        autoRenew: {
+            type: OnOffDataType,
+            defaultValue: 'off',
+            comment: "Indicates whether the user has opted for automatic subscription renewal. 'on' means auto-renewal is enabled, 'off' means it's disabled.",
+        },
+        expireDate: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            comment: "Date when the subscription is set to expire.",
+        },
     };
     return sequelize.define("Subscription", attributes);
 }

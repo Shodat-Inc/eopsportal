@@ -21,7 +21,7 @@ export * from "./otpverify";
 export * from './invite'
 export * from './aiModel'
 export * from './aiModelData'
-export * from './images'
+export * from './modelObjectImages'
 export * from './crackDetectionResponse'
 export * from './subscription'
 export * from './purchaseHistory'

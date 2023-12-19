@@ -1,6 +1,6 @@
 import { apiHandler, crackDetectionResRepo } from "@/helpers/api";
 import { loggerError, loggerInfo } from "@/logger";
-
+import { saveResponseValidation } from "../../../validateSchema"
 
 // Default API handler for the GET method to handle retrieval of models.
 export default apiHandler({
@@ -17,7 +17,20 @@ async function allhandler(req: any, res: any) {
     loggerInfo.info("GET Enterprise User");
     try {
         const reqData = req.body
-        const model = await crackDetectionResRepo.create(reqData);
+        const validation = saveResponseValidation(reqData);
+
+        //Check for validation errors
+        if (validation.error) {
+            // Handle validation errors
+            res.status(400).json({
+                success: false,
+                message: "Validation error",
+                errors: validation.error.details.map((detail) => detail.message),
+            });
+            return;
+        }
+
+        const model = await crackDetectionResRepo.create(validation.value);
         res.status(200).json({ message: model });
     } catch (error: any) {
         // If there's an error during the retrieval, log the error and send back a 500 Internal Server Error response with the error message.

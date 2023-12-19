@@ -1,7 +1,6 @@
-import { db } from "../db";
+import { db, initialize } from "../db";
 import sendResponseData from "../../constant";
 import { loggerInfo, loggerError } from "@/logger";
-import { send } from "process";
 
 /**
  * Repository for handling Model related operations.
@@ -13,35 +12,42 @@ export const crackDetectionResRepo = {
 
 async function create(params: any) {
     try {
-        loggerInfo.info("Saving Response")
+        loggerInfo.info("Saving Response");
         const data = await db.CrackResponse.findOne({
             where: {
-                imageId: params.imageId
+                modelObjectImageId: params.modelObjectImageId
             }
-        })
+        });
         if (data) {
-            return sendResponseData(false, "Response is already saved", {})
+            const modelObjectImage = await db.Image.findByPk(params.modelObjectImageId);
+            if (modelObjectImage) {
+                modelObjectImage.testRanCount += 1;
+                await modelObjectImage.save();
+            } else {
+                return sendResponseData(false, "ModelObjectImage Id not found", {});
+            }
+            return sendResponseData(false, "Response is already saved", {});
         }
-        const newResponse = new db.CrackResponse(params)
-        const save = await newResponse.save()
-        return sendResponseData(true, "Response Saved Successfully", save)
+        const newResponse = new db.CrackResponse(params);
+        const save = await newResponse.save();
+        return sendResponseData(true, "Response Saved Successfully", save);
     } catch (error: any) {
-        loggerError.error("Error in Crack Detection Response Repo", error)
-        return sendResponseData(false, "Error in Crack Detection Repo", error)
+        loggerError.error("Error in Crack Detection Response Repo", error);
+        return sendResponseData(false, "Error in Crack Detection Repo", error);
     }
 }
 
 async function getResponse(params: any) {
     try {
         loggerInfo.info("Getting Response")
-        if (!params.imageId) {
-            return sendResponseData(false, "Image ID is not provided in params", {})
+        if (!params.modelObjectImageId) {
+            return sendResponseData(false, "ModelObjectImage ID is not provided in params", {})
         }
         const data = await db.CrackResponse.findAll({
             where: {
-                imageId: params.imageId
+                modelObjectImageId: params.modelObjectImageId
             },
-            attributes: ["coordinates", "predictions", "thresholdValue", "tag", "probability"]
+            attributes: ["coordinates", "tag", "modelObjectImageId"]
         })
         if (!data) {
             return sendResponseData(false, "Response data doesn't exist with provided id", {})
@@ -51,5 +57,4 @@ async function getResponse(params: any) {
         loggerError.error("Error in fetching Response", error)
         return sendResponseData(false, "Error in fetching Response", error)
     }
-
 }
