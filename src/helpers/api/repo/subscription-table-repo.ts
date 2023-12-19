@@ -1,6 +1,7 @@
 import { loggerError, loggerInfo } from "@/logger";
 import { db } from "../db";
 import sendResponseData from "@/helpers/constant";
+import message from "@/util/responseMessage";
 
 /**
  * Repository for handling Subscription related operations.
@@ -22,17 +23,17 @@ async function getDetails(params: any) {
 
     // If no data is found, return an error response
     if (data.length === 0) {
-      return sendResponseData(false, "Model's Data doesn't Exist", []);
+      return sendResponseData(false, message.error.modelDataNotExist, []);
     }
 
     // Return a successful response with the fetched data
-    return sendResponseData(true, "Data Fetched Successfully", data);
+    return sendResponseData(true, message.success.dataFetched, data);
   } catch (error: any) {
     // Log an error message using the 'loggerError' instance
     loggerError.error("Error In Subscription Repo");
 
     // Return an error response
-    return sendResponseData(false, "Error", error);
+    return sendResponseData(false, message.error.error, error);
   }
 }
 
@@ -73,12 +74,12 @@ async function getModelName(params: any) {
     }
 
     // Return a successful response with the fetched Model names based on the user's subscription
-    return sendResponseData(true, "Fetched Model Name based on User's Subscription", data);
+    return sendResponseData(true, message.success.modelNameBasedOnSubscription, data);
   } catch (error: any) {
     // Log an error message using the 'loggerError' instance
     loggerError.error("Error in getting Model Name based on Subscription", error);
 
     // Return an error response
-    return sendResponseData(false, "Error in getting Model Name based on User's Subscription", error);
+    return sendResponseData(false, message.error.errorModelNameBasedOnSubscription, error);
   }
 }

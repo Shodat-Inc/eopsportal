@@ -85,7 +85,7 @@ async function authenticate(data: any) {
     });
 
   } catch (error) {
-    loggerError.error("Authentication Error",error);
+    loggerError.error("Authentication Error", error);
     return sendResponseData(false, message.error.error, error);
   }
 }
@@ -137,14 +137,14 @@ async function getAll() {
     });
 
     // Return a successful response with the fetched users and associated information
-    return sendResponseData(true, "Users Fetched Successfully", result);
+    return sendResponseData(true, message.success.userFetched, result);
 
   } catch (error: any) {
     // Log error information in case of an exception during user fetching
     loggerError.error("Error in fetching users");
 
     // Return an error response in case of an exception during user fetching
-    return sendResponseData(false, "Error in fetching users", []);
+    return sendResponseData(false, message.error.errorFetchingUser, []);
   }
 }
 
@@ -190,14 +190,14 @@ async function getById(id: any) {
     });
 
     // Return a successful response with the fetched user and associated information
-    return sendResponseData(true, "User Fetched Successfully", result);
+    return sendResponseData(true, message.success.userFetched, result);
 
   } catch (error: any) {
     // Log error information in case of an exception during user fetching by ID
     loggerError.error("Error in fetching user by ID");
 
     // Return an error response in case of an exception during user fetching by ID
-    return sendResponseData(false, "Error in fetching user by ID", []);
+    return sendResponseData(false, message.error.errorFetchingUserById, []);
   }
 }
 

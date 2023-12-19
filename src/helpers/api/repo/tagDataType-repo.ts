@@ -52,13 +52,13 @@ async function get() {
     const result = await db.tagDataType.findAll();
 
     // Return a successful response with the fetched Tag DataTypes
-    return sendResponseData(true, "Tag Data Type Fetched Successfully", result);
+    return sendResponseData(true, message.success.tagDataTypeFetched, result);
 
   } catch (error: any) {
     // Log error information in case of an exception during Tag DataTypes fetching
     loggerError.error("Error in fetching Tag DataTypes");
 
     // Return an error response in case of an exception during Tag DataTypes fetching
-    return sendResponseData(false, "Can't Fetch Tag DataTypes", []);
+    return sendResponseData(false, message.error.unableFetchTagDataType, []);
   }
 }
