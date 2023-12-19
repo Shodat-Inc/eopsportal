@@ -53,7 +53,12 @@ const message: any = {
     modelNameBasedOnSubscription: "Fetched Model Name based on User's Subscription",
     tagDataTypeFetched: "Tag Data Type Fetched Successfully",
     userFetched: "Users Fetched Successfully",
-    tagDeleted: "Tag Deleted Successfully"
+    tagDeleted: "Tag Deleted Successfully",
+    enterpriseUserFetched: "Enterprise User fetched Successfully",
+    profileUpdated: "Profile Updated Successfully",
+    emailSent: "Email sent successfully",
+    emailSentAdmin: "Email sent Successfully to Enterprise Admin",
+    invitationCanceled: "Invitation Canceled Successfully"
   },
   error: {
     error: "error",
@@ -124,7 +129,14 @@ const message: any = {
     unableFetchTagDataType: "Can't Fetch Tag DataTypes",
     errorFetchingUser: "Error in fetching users",
     errorFetchingUserById: "Error in fetching user by ID",
-    errorDeletingObjectValues: "Error in deleting object values"
+    errorDeletingObjectValues: "Error in deleting object values",
+    errorFetchingEnterpriseUser: "Error in fetching Enterprise User",
+    errorUpdatingData: "Error in Updating data",
+    enterpriseAdminAccess: "Heyy, Only Enterprise Admins have access to send invitations",
+    apologiesEnterpriseAdminAccess: "Apologies, Only Enterprise Admin have access to send Invitation",
+    errorInvitingUser: "Error in inviting Enterprise User",
+    userNotFoundForMail: "User not found for the given email",
+    errorCancelInvite: "Error in cancel Invite of Enterprise User"
   },
 };
 
