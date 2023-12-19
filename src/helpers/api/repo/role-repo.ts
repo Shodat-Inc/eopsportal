@@ -69,7 +69,7 @@ async function getAllRoles() {
     loggerError.error("Error in fetching roles");
 
     // Return an error response in case of an exception during role fetching
-    return sendResponseData(false, "Error in fetching roles", error);
+    return sendResponseData(false, message.error.errorFetchingRoles, error);
   }
 }
 
@@ -88,7 +88,7 @@ async function update(params: any) {
 
     // If the role doesn't exist, return an error response
     if (!role) {
-      return sendResponseData(false, "No Role Exists", []);
+      return sendResponseData(false, message.error.rolesNotExist, []);
     }
 
     // Define the properties to update
@@ -132,7 +132,7 @@ async function _delete(params: any) {
 
     // If the role doesn't exist, return an error response
     if (!role) {
-      return sendResponseData(false, "Role doesn't Exist", []);
+      return sendResponseData(false, message.error.rolesNotExist, []);
     }
 
     // Delete the role from the database

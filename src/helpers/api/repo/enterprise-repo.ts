@@ -1,6 +1,7 @@
 import { loggerError, loggerInfo } from "@/logger";
 import { db } from "../db";
 import sendResponseData from "@/helpers/constant";
+import message from "@/util/responseMessage";
 
 /**
  * Repository for handling operations related to enterprises.
@@ -39,13 +40,13 @@ async function create(params: any) {
     const save = await newEnterprise.save();
 
     // Return a successful response with the created enterprise entry
-    return sendResponseData(true, "Enterprise Created Successfully", save);
+    return sendResponseData(true, message.success.enterpriseCreated, save);
   } catch (error: any) {
     // Log error information in case of an exception
     loggerError.error("Error in Enterprise Repo");
 
     // Return an error response in case of an exception during enterprise creation
-    return sendResponseData(false, "Error In Creating Enterprise", []);
+    return sendResponseData(false, message.error.errorCreateEnterpriseUser, []);
   }
 }
 
@@ -107,17 +108,17 @@ async function getDataById(params: any) {
 
     // If no data is found for the provided ID, return an error response
     if (result.length === 0) {
-      return sendResponseData(false, "Data Doesn't Exist", [])
+      return sendResponseData(false, message.error.dataNotExist, [])
     }
 
     // Return a successful response with the fetched enterprise data
-    return sendResponseData(true, "Data fetched By Id", result)
+    return sendResponseData(true, message.success.dataFetchedById, result)
   } catch (error: any) {
     // Log error information in case of an exception
     loggerError.error("Error in enterprise repo")
 
     // Return an error response in case of an exception during data fetching
-    return sendResponseData(false, "Error in fetching Enterprise Data", [])
+    return sendResponseData(false, message.error.errorFetchingEnterpriseData, [])
   }
 }
 
@@ -161,17 +162,17 @@ async function update(params: any, reqAuth: any) {
 
     // If no data is found for the provided ID, return an error response
     if (!data) {
-      return sendResponseData(false, "Data doesn't Exist", []);
+      return sendResponseData(false, message.error.dataNotExist, []);
     }
 
     // Return a successful response with the updated enterprise data
-    return sendResponseData(true, "Updated Data", response);
+    return sendResponseData(true, message.success.updated, response);
   } catch (error: any) {
     // Log error information in case of an exception
     loggerError.error("Error in enterprise repo");
 
     // Return an error response in case of an exception during data updating
-    return sendResponseData(false, "Error in updating Enterprise Data", []);
+    return sendResponseData(false, message.error.errorUpdatingEnterpriseData, []);
   }
 }
 
@@ -188,7 +189,7 @@ async function _delete(params: any) {
 
     // Check if the ID is provided in the parameters
     if (!params.id) {
-      return sendResponseData(false, "Id is not provided", []);
+      return sendResponseData(false, message.error.idNotProvided, []);
     }
 
     // Find the enterprise data in the database based on the provided ID
@@ -198,20 +199,20 @@ async function _delete(params: any) {
 
     // If no data is found for the provided ID, return an error response
     if (!data) {
-      return sendResponseData(false, "Data doesn't Exist", []);
+      return sendResponseData(false, message.error.dataNotExist, []);
     }
 
     // Delete the enterprise data
     await data.destroy();
 
     // Return a successful response after deleting the enterprise data
-    return sendResponseData(true, "Enterprise Data deleted Successfully", []);
+    return sendResponseData(true, message.success.enterpriseDataDeleted, []);
 
   } catch (error: any) {
     // Log error information in case of an exception
     loggerError.error("Error in enterprise repo");
 
     // Return an error response in case of an exception during data deletion
-    return sendResponseData(false, "Error in deleting data", []);
+    return sendResponseData(false, message.error.errorDeletingData, []);
   }
 }

@@ -2,6 +2,7 @@ import { loggerError, loggerInfo } from "@/logger";
 import { db } from "../db";
 import sendResponseData from "@/helpers/constant";
 import { Sequelize } from "sequelize";
+import message from "@/util/responseMessage";
 
 /**
  * Repository for handling operations related to enterprise data.
@@ -51,13 +52,13 @@ async function getEnterpriseClass(params: any) {
     });
 
     // Return a successful response with the fetched class data
-    return sendResponseData(true, "Class Data", data);
+    return sendResponseData(true, message.success.classData, data);
   } catch (error: any) {
     // Log error information in case of an exception
     loggerError.error("Error in Enterprise Class Repo");
 
     // Return an error response in case of an exception during data fetching
-    return sendResponseData(false, "Error", error);
+    return sendResponseData(false, message.error.error, error);
   }
 }
 
@@ -106,7 +107,7 @@ async function getEnterpriseObject(params: any) {
     // Return an error response in case of an exception during data fetching
     return sendResponseData(
       false,
-      "Error in getting Enterprise Data by Id",
+      message.error.errorGettingEnterpriseDataById,
       []
     );
   }
@@ -161,14 +162,14 @@ async function getAllEnterpriseData(params: any) {
     }));
 
     // Return a successful response with the fetched enterprise class data
-    return sendResponseData(true, "Enterprise Class Data fetched Successfully", response);
+    return sendResponseData(true, message.success.enterpriseClassDataFetched, response);
 
   } catch (error) {
     // Log the error if fetching classes and tags fails.
     loggerError.error("Error fetching class", error);
 
     // Return an error response in case of an exception during data fetching
-    return sendResponseData(false, "Error in fetching Class Data", error);
+    return sendResponseData(false, message.error.errorFetchingClassData, error);
   }
 }
 
