@@ -5,6 +5,8 @@ import Image from "next/image";
 import CustomDrop from '@/common/customdrop';
 import axios from 'axios';
 import Link from 'next/dist/client/link';
+import Router from 'next/router'
+import { useRouter } from 'next/router'
 const jsonData = [
     {
         "name": "Crack Detection",
@@ -53,6 +55,11 @@ const jsonData = [
     }
 ]
 export default function EopsWatch(props: any) {
+    console.log({
+        "ALL PROPS":props
+    })
+    const router = useRouter();
+    const routerParams = router.query;
     const [data, setData] = useState(jsonData[0]);
     const setModelInformation = (model: any) => {
         const filterData = jsonData.filter((item: any) => {
@@ -60,6 +67,25 @@ export default function EopsWatch(props: any) {
         })
         setData(filterData[0]);
     }
+
+    console.log({
+        data:data.name
+    })
+
+    const redirectToNext = () => {
+        Router.push({
+            pathname: '/dashboard/eopswatch/preview',
+            query: {
+                objectID: props?.nextDataProps?.objectID,
+                subObject: props?.nextDataProps?.subObject,
+                key: props?.nextDataProps?.key,
+                id: props?.nextDataProps?.id,
+                model: data.name ? data.name : props?.nextDataProps?.model,
+                industryID: props?.nextDataProps?.industryID
+            }
+        })
+    }
+
     return (
         <div className="flex w-full h-full mt-1">
             <div className="w-[20%] bg-[#F2F2F2]">
@@ -104,6 +130,7 @@ export default function EopsWatch(props: any) {
                     <div className="flex justify-start items-start mb-4">
                         <button
                             className="h-[44px] px-2 py-1 px-3 flex justify-center items-center bg-yellow-951 border border-yellow-951 text-sm text-black rounded rounded-xl mr-6"
+                            onClick={redirectToNext}
                         >
                             <span>Run this model</span>
                         </button>

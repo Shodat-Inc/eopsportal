@@ -10,8 +10,12 @@ import EopsWatchModel from "./eopswatchModel";
 import EopsTraceModel from "./eopstracemodel";
 import axios from "axios";
 import { setDataForeOpsWatchAction } from "@/store/actions/classAction";
+import Router from 'next/router'
+import { useRouter } from 'next/router'
 
 export default function AiModelDetection() {
+    const router = useRouter();
+    const routerParams = router.query;
     const [tab, setTab] = useState(1);
     const [search, setSearch] = useState('');
     const [selectClass, setSelectClass] = useState('');
@@ -41,9 +45,6 @@ export default function AiModelDetection() {
 
             }).then(function (response) {
                 if (response) {
-                    console.log({
-                        "response HERE": response
-                    })
                     if (classSelector.dataforeopswatchReducer.class && classSelector.dataforeopswatchReducer.class !== "") {
                         let filtered = response.data.filter((item: any) => {
                             return item.parentAssetName === classSelector.dataforeopswatchReducer.class
@@ -155,8 +156,6 @@ export default function AiModelDetection() {
         setSelectObject('')
     }
 
-
-
     // Get object data based on selected class and object
     async function getObjects() {
         try {
@@ -196,17 +195,22 @@ export default function AiModelDetection() {
     }, [selectObject])
 
     // Set dropdown title
-    // const title = classSelector.dataforeopswatchReducer.class && classSelector.dataforeopswatchReducer.class === "Vehicles" ? "VIN" : "PlantID"
     const title = (selectClass === 'Vehicles') ? 'VIN' : 'PlantID'
 
-    console.log({
-        // getAllClass: getAllClass,
-        // classObject: classObject,
-        // showObject: showObject, 
-        selectClass: selectClass,
-        selectObject: selectObject,
-        selObjectData: selObjectData
-    })
+    // console.log({
+    //     selectClass: selectClass,
+    //     selectObject: selectObject,
+    //     selObjectData: selObjectData
+    // })
+    // http://localhost:3000/dashboard/eopswatch/preview?objectID=Manufacturing+Plants&subObject=Walls&key=TPC71810-01-012&id=TPC71810-01&model=Crack+Detection&industryID=TPC71810-01
+    const nextDataProps = {
+        objectID: selectClass,
+        industryID: selectObject,
+        id: selectObject,
+        subObject: "Walls",
+        key: "TPC71810-01-012",
+        model: "Crack Detection"
+    }
 
     return (
         <div className="font-OpenSans w-full">
@@ -395,7 +399,9 @@ export default function AiModelDetection() {
                             {
                                 (classSelector?.dataforeopswatchReducer && Object.keys(classSelector?.dataforeopswatchReducer).length) !== 0 || (selectClass !== "")
                                     ?
-                                    <EopsWatch />
+                                    <EopsWatch
+                                        nextDataProps={nextDataProps}
+                                    />
                                     :
                                     <EopsWatchModel />
                             }
@@ -406,7 +412,9 @@ export default function AiModelDetection() {
                             {
                                 (classSelector?.dataforeopswatchReducer && Object.keys(classSelector?.dataforeopswatchReducer).length) !== 0 || (selectClass !== "")
                                     ?
-                                    <EopsTrace />
+                                    <EopsTrace
+                                        nextDataProps={nextDataProps}
+                                    />
                                     :
                                     <EopsTraceModel />
                             }
