@@ -139,12 +139,12 @@ async function _delete(params: any) {
     }
 
     // Return a successful response after deleting all object values
-    return sendResponseData(true, "Tag Deleted Successfully", []);
+    return sendResponseData(true, message.success.tagDeleted, []);
   } catch (error: any) {
     // Log error information in case of an exception during object value deletion
     loggerError.error("Error in deleting object values");
 
     // Return an error response in case of an exception during object value deletion
-    return sendResponseData(false, "Error in deleting object values", error);
+    return sendResponseData(false, message.error.errorDeletingObjectValues, error);
   }
 }
