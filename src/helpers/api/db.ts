@@ -126,7 +126,7 @@ export async function initialize() {
       invite: "Invite",
       aiModel: "Model",
       aiModelData: "ModelData",
-      images: "Image",
+      modelObjectImages: "Image",
       crackDetectionResponse: "CrackResponse",
       subscription: "Subscription",
       purchaseHistory: "PurchaseHistory"

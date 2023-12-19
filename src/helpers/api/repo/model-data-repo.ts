@@ -1,10 +1,12 @@
 import { loggerError, loggerInfo } from "@/logger";
 import { db } from "../db";
 import sendResponseData from "@/helpers/constant";
+
 export const modelDataRepo = {
   create,
   get,
 };
+
 async function create(params: any) {
   try {
     loggerInfo.info("Model Data Entry");
@@ -16,16 +18,16 @@ async function create(params: any) {
     return sendResponseData(false, "Error in saving Data", error);
   }
 }
-async function get(modelId: any, type: any, userId: any) {
+
+async function get(modelId: any, userId: any) {
   loggerInfo.info("Get Images");
   try {
     const data = await db.Image.findAll({
-      attributes: ["url"],
+      attributes: ["url", "type"],
       include: [
         {
           model: db.ModelData,
-          where: { modelId: modelId, type: type, userId: userId },
-          attributes: ["id", "type", "createdAt"],
+          where: { modelId: modelId, userId: userId },
         },
       ],
     });

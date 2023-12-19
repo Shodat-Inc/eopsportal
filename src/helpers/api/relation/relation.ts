@@ -131,8 +131,8 @@ async function relationship(db: any) {
     db.ModelData.hasMany(db.Image, { foreignKey: "modelDataId" });
     db.Image.belongsTo(db.ModelData, { foreignKey: "modelDataId" });
 
-    db.Image.hasMany(db.CrackResponse, { foreignKey: "imageId" });
-    db.CrackResponse.belongsTo(db.Image, { foreignKey: "imageId" });
+    db.Image.hasMany(db.CrackResponse, { foreignKey: "modelObjectImageId" });
+    db.CrackResponse.belongsTo(db.Image, { foreignKey: "modelObjectImageId" });
 
     db.Model.hasMany(db.Subscription, { foreignKey: "modelId" });
     db.Subscription.belongsTo(db.Model, { foreignKey: "modelId" });

@@ -7,16 +7,20 @@ export function ModelData(sequelize: any) {
             primaryKey: true,
             allowNull: false,
             autoIncrement: true,
+            comment: "Unique identifier for the Image.",
         },
-        type: {
-            type: DataTypes.ENUM('test', 'production'),
-            defaultValue: 'test'
-        },
-        classId: {
+        userId: {
             type: DataTypes.INTEGER,
             references: {
-                model: "Classes",
+                model: "Users",
                 id: "id",
+            },
+            comment: "Foreign key referencing the associated User. Indicates the User who is logged in and whose objectValues are being considered.",
+        },
+        modelId: {
+            type: DataTypes.INTEGER,
+            references: {
+                model: "Models",
             },
         },
         objectId: {
@@ -25,21 +29,17 @@ export function ModelData(sequelize: any) {
                 model: "Objects",
                 id: "id",
             },
+            comment: "Foreign key referencing the associated Object. Indicates the Model for which the object id is stored.",
         },
-        modelId: {
+        classId: {
             type: DataTypes.INTEGER,
             references: {
-                model: "Models",
+                model: "Classes",
                 id: "id",
             },
+            comment: "Foreign key referencing the associated Class. Indicates the Class to which the image belongs.",
         },
-        userId: {
-            type: DataTypes.INTEGER,
-            references: {
-                model: "Users",
-                id: "id",
-            },
-        },
+        
     };
     return sequelize.define("ModelData", attributes);
 }
