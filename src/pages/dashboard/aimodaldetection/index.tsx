@@ -20,7 +20,7 @@ export default function AiModelDetection() {
     const [showSubClass, setShowSubClass] = useState(false);
     const [getAllClass, setGetAllClass] = useState([] as any);
     const [classObject, setClassObject] = useState([] as any);
-    const [selectedClass, setSelectedClass] = useState('');
+    const [selObjectData, setSelObjectData] = useState([] as any);
     const toggleTab = (item: any) => {
         setTab(item)
     }
@@ -42,7 +42,7 @@ export default function AiModelDetection() {
             }).then(function (response) {
                 if (response) {
                     console.log({
-                        response: response
+                        "response HERE": response
                     })
                     if (classSelector.dataforeopswatchReducer.class && classSelector.dataforeopswatchReducer.class !== "") {
                         let filtered = response.data.filter((item: any) => {
@@ -124,15 +124,28 @@ export default function AiModelDetection() {
         }
     }, [classSelector.getAllClass])
 
-    const handleInputFunction = (e: any) => {
+
+    // Search input box on changes function
+    const searchFunction = (e: any) => {
         setSearch(e.target.value)
         setDisable(2)
     }
-    const handleSelectFunction = (e: any) => {
+
+    // On change class dropdown
+    const selectClassFunction = (e: any) => {
+        setSelectObject('')
         setSelectClass(e.target.value)
         setDisable(1);
         setShowObject(true);
     }
+
+    // on changhe object dropdown
+    const selectObjectFunction = (e: any) => {
+        setSelectObject(e.target.value);
+        setShowSubClass(true)
+    }
+
+    // Reset button on click function
     const resetFunction = () => {
         setDisable(0);
         setSearch('');
@@ -141,15 +154,58 @@ export default function AiModelDetection() {
         setShowSubClass(false)
         setSelectObject('')
     }
-    const handleObjectFunction = (e: any) => {
-        setSelectObject(e.target.value);
-        setShowSubClass(true)
+
+
+
+    // Get object data based on selected class and object
+    async function getObjects() {
+        try {
+            await axios({
+                method: 'GET',
+                url: `/api/getObjects`,
+
+            }).then(function (response) {
+                if (response) {
+                    console.log({
+                        "AMIT": response.data
+                    })
+                    let filtered = response.data.filter((item: any) => {
+                        if (selectClass === 'Vehicles') {
+                            return item?.subObjects?.VIN === selectObject
+                        } else {
+                            return item?.subObjects?.PlantID === selectObject
+                        }
+                    })
+                    setSelObjectData(filtered[0]?.subObjects)
+                }
+            }).catch(function (error) {
+                console.log({
+                    "ERROR IN AXIOS CATCH": error
+                })
+            })
+        } catch (err) {
+            console.log({
+                "ERROR IN TRY CATCH": err
+            })
+        }
     }
+    useEffect(() => {
+        if (selectObject !== "") {
+            getObjects();
+        }
+    }, [selectObject])
+
+    // Set dropdown title
+    // const title = classSelector.dataforeopswatchReducer.class && classSelector.dataforeopswatchReducer.class === "Vehicles" ? "VIN" : "PlantID"
+    const title = (selectClass === 'Vehicles') ? 'VIN' : 'PlantID'
 
     console.log({
-        getAllClass: getAllClass,
-        classObject: classObject,
-        showObject: showObject
+        // getAllClass: getAllClass,
+        // classObject: classObject,
+        // showObject: showObject, 
+        selectClass: selectClass,
+        selectObject: selectObject,
+        selObjectData: selObjectData
     })
 
     return (
@@ -178,7 +234,7 @@ export default function AiModelDetection() {
                             className={`border border-gray-[#A7A7A7] rounded-lg h-[56px] w-[250px] pl-10 pr-2 text-[#666666] ${disable == 1 ? 'bg-[#EEEEEE]' : 'bg-white'}`}
                             autoComplete="off"
                             value={search}
-                            onChange={handleInputFunction}
+                            onChange={searchFunction}
                             disabled={disable === 1}
                         />
                     </div>
@@ -188,7 +244,7 @@ export default function AiModelDetection() {
                         name="selectClass"
                         id="selectClass"
                         className={`border border-gray-[#A7A7A7] rounded-lg h-[56px] w-[250px] pl-2 pr-2 text-[#000000] ${disable == 2 ? 'bg-[#EEEEEE]' : 'bg-white'}`}
-                        onChange={handleSelectFunction}
+                        onChange={selectClassFunction}
                         value={selectClass}
                         disabled={disable == 2}
                     >
@@ -215,14 +271,13 @@ export default function AiModelDetection() {
                             name="selectClass"
                             id="selectClass"
                             className={`border border-gray-[#A7A7A7] rounded-lg h-[56px] w-[250px] pl-2 pr-2 text-[#000000] ml-4`}
-                            onChange={handleObjectFunction}
+                            onChange={selectObjectFunction}
                             value={selectObject}
                         >
-                            <option value="">Select {classSelector.dataforeopswatchReducer.class === "Vehicles" ? "VIN" : "PlantID"}</option>
+                            <option value="">Select {title}</option>
                             {
                                 classObject && classObject.length > 0 ?
                                     classObject.map((item: any, index: any) => {
-                                        // let key = classSelector.dataforeopswatchReducer.class === "Vehicles" ? item.subObjects?.VIN : item.subObjects?.PlantID;
                                         let key = '';
                                         if (classSelector.dataforeopswatchReducer.class && classSelector.dataforeopswatchReducer.class !== "") {
                                             if (classSelector.dataforeopswatchReducer.class === "Vehicles") {
@@ -282,27 +337,31 @@ export default function AiModelDetection() {
                                 <span className="ml-2">Object level</span>
                             </button>
                         </div>
-                        <table className={`table-auto lg:min-w-full sm:w-full small:w-full text-left ${styles.tableV3} ${styles.tableV4}`}>
+                        <table className={`table-auto lg:min-w-full sm:w-full small:w-full text-left ${styles.tableV3} ${styles.tableV41}`}>
                             <thead className="text-sm font-normal">
-                                <tr>
-                                    <th>VIN No</th>
-                                    <th>Mfd Date</th>
-                                    <th>Model</th>
-                                    <th>Assembly Plant</th>
-                                    <th>Lot No</th>
-                                    <th>Model Year</th>
-                                    <th>Type</th>
-                                </tr>
+
+                                {
+                                    selObjectData && Object.keys(`selObjectData`).length != 0 ?
+                                        Object.keys(selObjectData).map((item: any, i: any) => (
+                                            <th className="capitalize" key={i}>
+                                                {
+                                                    item.split(/(?=[A-Z])/).join(" ")
+                                                }
+                                            </th>
+                                        ))
+                                        : null
+                                }
+
                             </thead>
-                            <tbody>
+                            <tbody className="text-sm font-normal">
                                 <tr>
-                                    <td>5PVBE7AJ8R5T50007</td>
-                                    <td>06/03/2022</td>
-                                    <td>Mineral Wells</td>
-                                    <td>GS450</td>
-                                    <td>104CY5209</td>
-                                    <td>2022</td>
-                                    <td>ICE</td>
+                                    {
+                                        Object.values(selObjectData).map((item: any, i: any) => (
+                                            <td key={i}>
+                                                <span>{item ? item : '-'}</span>
+                                            </td>
+                                        ))
+                                    }
                                 </tr>
                             </tbody>
                         </table>
