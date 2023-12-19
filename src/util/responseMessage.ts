@@ -41,6 +41,15 @@ const message: any = {
     enterpriseUserCreated: "Enterprise User Created Successfully",
     enterpriseUserUpdated: "Enterprise User Updated Successfully",
     enterpriseUserDeleted: "Enterprise User Deleted Successfully",
+    responseSaved:"Response Saved Successfully",
+    responseFetched:"Response Fetched Successfully",
+    enterpriseCreated:"Enterprise Created Successfully",
+    dataFetchedById:"Data fetched By Id",
+    enterpriseDataDeleted:"Enterprise Data deleted Successfully",
+    enterpriseAddress:"Enterprise Address Added Successfully",
+    classData:"Class Data",
+    enterpriseClassDataFetched:"Enterprise Class Data fetched Successfully",
+    dataFetched:"Data Fetched Successfully"
   },
   error: {
     error: "error",
@@ -87,7 +96,25 @@ const message: any = {
     enterpriseUserExist: "Enterprise User Already Exists",
     errorCreateEnterpriseUser: "Error In Creating Enterprise",
     errorUpdationMessage: "Error in Updating Enterprise User",
-    errorDeletionEnterpriseUser: "Error in deleting Enterprise User"
+    errorUpdatingEnterpriseData:"Error in updating Enterprise Data",
+    errorDeletionEnterpriseUser: "Error in deleting Enterprise User",
+    errorFetchingEnterpriseData:"Error in fetching Enterprise Data",
+    modelObjectImageId: "ModelObjectImage Id not found",
+    responseAlreadySaved:"Response is already Saved",
+    errorCrackDetectionRepo:"Error in Crack Detection Repo",
+    modelObjectImageIdInParams:"ModelObjectImage ID is not provided in params",
+    responseDataNotExist:"Response data doesn't exist with provided id",
+    errorFetchingResponse:"Error in fetching Response",
+    dataNotExist:"Data doesn't Exist",
+    idNotProvided:"Id is not provided",
+    errorDeletingData:"Error in deleting data",
+    errorSavingEnterpriseAddress:"Error In Saving Enterprise Address",
+    errorGettingEnterpriseDataById:"Error in getting Enterprise Data by Id",
+    errorFetchingClassData:"Error in fetching Class Data",
+    enterpriseUserNotExist:"Enterprise User doesn't Exist",
+    purchaseHistoryDataNotExist:"Purchase History Data doesn't Exist",
+    errorFetchingRoles:"Error in fetching roles",
+    rolesNotExist:"Roles doesn't Exists"
   },
 };
 

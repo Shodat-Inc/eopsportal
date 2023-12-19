@@ -1,6 +1,7 @@
 import { loggerError, loggerInfo } from "@/logger";
 import { db } from "../db";
 import sendResponseData from "@/helpers/constant";
+import message from "@/util/responseMessage";
 
 /**
  * Repository for handling operations related to enterprise addresses.
@@ -25,14 +26,14 @@ async function create(params: any) {
     const save = await newAddress.save();
 
     // Return a successful response after saving the enterprise address
-    return sendResponseData(true, "Enterprise Address Added Successfully", []);
+    return sendResponseData(true, message.success.enterpriseAddress, []);
 
   } catch (error: any) {
     // Log error information in case of an exception
     loggerError.error("Error in Enterprise Address Repo");
 
     // Return an error response in case of an exception during enterprise address creation
-    return sendResponseData(false, "Error In Saving Enterprise Address", []);
+    return sendResponseData(false, message.error.errorSavingEnterpriseAddress, []);
   }
 }
 

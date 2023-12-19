@@ -10,11 +10,12 @@ import { TagDataType } from "../seedData/datatype";
 import { routes } from "../seedData/route";
 import { individualRole } from "../seedData/indvidualRole";
 const { serverRuntimeConfig } = getConfig();
-
+let sequelize
 
 export const db: any = {
   initialized: false,
   initialize,
+  sequelize,
 };
 export interface Models {
   [key: string]: any;
@@ -93,7 +94,7 @@ export async function initialize() {
     });
     await connection.query(`CREATE DATABASE IF NOT EXISTS \`${database}\`;`);
 
-    const sequelize = new Sequelize(database, user, password, {
+    sequelize = new Sequelize(database, user, password, {
       dialect: "mysql",
       port,
       host,
@@ -166,6 +167,7 @@ export async function initialize() {
       }
     }
     db.initialized = true;
+    db.sequelize = sequelize;
   } catch (e) {
     loggerError.error(`db.ts`, e);
   }
