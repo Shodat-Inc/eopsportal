@@ -266,7 +266,7 @@ async function getEnterpriseUserById(params: any) {
     // Check if the ID is provided in the parameters.
     if (!params.id) {
       // Return a response indicating that the ID is not provided.
-      return sendResponseData(false, "ID is not provided", []);
+      return sendResponseData(false, message.error.idNotProvided, []);
     }
 
     // Find the enterprise user in the database based on the provided ID.
@@ -278,17 +278,17 @@ async function getEnterpriseUserById(params: any) {
     // Check if the user data is available.
     if (!data) {
       // Return a response indicating that the enterprise user doesn't exist.
-      return sendResponseData(false, "Enterprise User doesn't Exist", []);
+      return sendResponseData(false, message.error.enterpriseUserNotExist, []);
     }
 
     // Return a successful response with the fetched enterprise user data.
-    return sendResponseData(true, "Enterprise User fetched Successfully", data);
+    return sendResponseData(true, message.success.enterpriseUserFetched, data);
   } catch (error: any) {
     // Log an error message if an exception occurs during the operation.
     loggerError.error("Error in enterprise user repo", error);
 
     // Return an error response with details about the encountered error.
-    return sendResponseData(false, "Error in fetching Enterprise User", error);
+    return sendResponseData(false, message.error.errorFetchingEnterpriseUser, error);
   }
 }
 
@@ -310,10 +310,10 @@ async function updateProfile(params: any, reqData: any) {
     })
     const response = await data.save();
 
-    return sendResponseData(true, "Profile Updated Successfully", response)
+    return sendResponseData(true, message.success.profileUpdated, response)
   } catch (error: any) {
     loggerError.error("Error in Enterprise user repo", error)
-    return sendResponseData(false, "Error in Updating data", error)
+    return sendResponseData(false, message.error.errorUpdatingData, error)
   }
 }
 
@@ -321,7 +321,7 @@ async function inviteEnterpriseUser(params: any, reqData: any) {
   try {
     loggerError.info("Inviting Enterprise User");
     if (reqData.role !== 4) {
-      return sendResponseData(false, "Heyy, Only Enterprise Admins have access to send invitations", {});
+      return sendResponseData(false, message.error.enterpriseAdminAccess, {});
     }
     // To identify that the user sending invitation is Admin
     const adminData = await db.EnterpriseUser.findOne({
@@ -329,7 +329,7 @@ async function inviteEnterpriseUser(params: any, reqData: any) {
     });
 
     if (!adminData) {
-      return sendResponseData(false, "Apologies, Only Enterprise Admin have access to send Invitation", adminData);
+      return sendResponseData(false, message.error.apologiesEnterpriseAdminAccess, adminData);
     }
 
     const [invite, created] = await db.Invite.findOrCreate({
@@ -348,11 +348,11 @@ async function inviteEnterpriseUser(params: any, reqData: any) {
       });
     }
     inviteEnterpriseUserMail(params.email)
-    return sendResponseData(true, "Email sent successfully", invite);
+    return sendResponseData(true, message.success.emailSent, invite);
 
   } catch (error: any) {
     loggerError.error("Error in inviting Enterprise User", error);
-    return sendResponseData(false, "Error in inviting Enterprise User", {});
+    return sendResponseData(false, message.error.errorInvitingUser, {});
   }
 }
 
@@ -364,7 +364,7 @@ async function cancelInvite(params: any, reqData: any) {
       where: { email: params.email },
     });
     if (!user) {
-      return sendResponseData(false, "User not found for the given email", {});
+      return sendResponseData(false, message.error.userNotFoundForMail, {});
     }
 
     // check if the enterprise user exist in enterpriseUser table too
@@ -376,11 +376,11 @@ async function cancelInvite(params: any, reqData: any) {
     const adminMail = await db.EnterpriseUser.findOne({
       where: { id: reqData.enterpriseUserId }
     })
-    
+
     if (check) {
       //send mail to admin 
       enterpriseAdminMail(adminMail.dataValues.email, check.dataValues.email)
-      return sendResponseData(true, "Email sent Successfully to Enterprise Admin", {})
+      return sendResponseData(true, message.success.emailSentAdmin, {})
     } else {
       const res = await user.update(
         {
@@ -391,10 +391,10 @@ async function cancelInvite(params: any, reqData: any) {
         {
           where: { email: params.email },
         })
-      return sendResponseData(true, "Invitation Canceled Successfully", res)
+      return sendResponseData(true, message.success.invitationCanceled, res)
     }
   } catch (error: any) {
     loggerError.error("Error in Inviting Enterprise User")
-    return sendResponseData(false, "Error in cancel Invite of Enterprise User", error.message)
+    return sendResponseData(false, message.error.errorCancelInvite, error.message)
   }
 }
