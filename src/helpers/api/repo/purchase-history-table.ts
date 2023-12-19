@@ -11,7 +11,7 @@ async function getDetails(params: any) {
       where: { userId: params.userId, subscriptionId: params.subscriptionId },
     });
     if (data.length === 0) {
-      return sendResponseData(false, "No Purchase History Data Exists", []);
+      return sendResponseData(false, "Purchase History Data doesn't Exists", []);
     }
     return sendResponseData(true, "Data Fetched Successfully", data);
   } catch (error: any) {

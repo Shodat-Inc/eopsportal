@@ -78,7 +78,7 @@ async function update(reqData: any, params: any) {
             }
         });
         const response = await data.save();
-        return sendResponseData(true, "Model Data Updated Successfully", response);
+        return sendResponseData(true, "Model's Data Updated Successfully", response);
     } catch (error: any) {
         loggerError.error("Error in Model Repo", error);
         return sendResponseData(false, "Error in Model Repo", error);
