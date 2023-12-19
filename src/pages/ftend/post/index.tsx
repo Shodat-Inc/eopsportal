@@ -13,6 +13,7 @@ export default function page(props: any) {
         "1": "beautifys",
         "2": "fixs",
       },
+      iconUrl: "crack.jpeg",
     };
     console.log({
       dataToSave: data,
