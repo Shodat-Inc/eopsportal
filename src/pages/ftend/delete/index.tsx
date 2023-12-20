@@ -1,9 +1,8 @@
 import React, { useEffect } from "react";
+import { tokenData } from "../constant";
 
 export default function Page(props: any) {
-  let token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInJvbGUiOjEsImlhdCI6MTcwMjk2MzkzMywiZXhwIjoxNzAzNTY4NzMzfQ.TRNXMzLJbZWM5tKBJmGZ_jAevB3BTqAFXIlm54RWHHA";
-
+  let token =tokenData
   const handleDelete = async () => {
     try {
       const response = await fetch(`/api/`, {

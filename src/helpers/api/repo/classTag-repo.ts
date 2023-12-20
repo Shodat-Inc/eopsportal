@@ -49,7 +49,7 @@ async function create(params: any, classId: any) {
  * @param {any} classId - The class ID to which the tags should be associated.
  * @returns {Object} - Response object indicating the success or failure of the operation.
  */
-async function bulkCreate(params: any[], classId: any) {
+async function bulkCreate(params: any[], classId: any, transaction: any) {
   // Log the initiation of bulk class tag creation.
   loggerInfo.info("Bulk Create Class Tag Repo:");
 
@@ -61,12 +61,12 @@ async function bulkCreate(params: any[], classId: any) {
 
   try {
     // Create multiple class tag entries in the database using the provided parameters.
-    const data = await db.classTag.bulkCreate(params);
+    const data = await db.classTag.bulkCreate(params, { transaction });
     return sendResponseData(true, message.success.classTag, data);
   } catch (error) {
     // Log the error if there's an issue with the bulk class tag creation.
     loggerError.error("Error in bulk class Tag repo");
-    return sendResponseData(false,message.error.errorBulkClassTag, error)
+    return sendResponseData(false, message.error.errorBulkClassTag, error)
   }
 }
 
@@ -76,12 +76,12 @@ async function bulkCreate(params: any[], classId: any) {
  * @param {any} id - The ID used to filter class tags.
  * @returns {Promise<object>} A promise that resolves with the result of the database query.
  */
-async function getClassTags(id: any) {
+async function getClassTags(id: any, transaction: any) {
   try {
     // Fetch class tags from the database using Sequelize findAll method
     const result = await db.classTag.findAll({
       where: { id },
-    });
+    }, { transaction });
     // Return successful response with fetched class tags
     return sendResponseData(true, message.success.fetchClassTag, result);
   } catch (error: any) {

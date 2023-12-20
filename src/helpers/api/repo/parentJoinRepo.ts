@@ -17,7 +17,7 @@ export const parentJoinKeyRepo = {
  * @param {any} classId - The class ID to which the tags should be associated.
  * @returns {Object} - Response object indicating the success or failure of the operation.
  */
-async function bulkCreate(params: any[], classId: any) {
+async function bulkCreate(params: any[], classId: any, transaction: any) {
   // Log the initiation of bulk class tag creation.
   loggerInfo.info("Bulk Create Class Tag Repo:");
 
@@ -29,7 +29,7 @@ async function bulkCreate(params: any[], classId: any) {
 
   try {
     // Create multiple class tag entries in the database using the provided parameters.
-    const data = await db.parentJoinKey.bulkCreate(params);
+    const data = await db.parentJoinKey.bulkCreate(params, { transaction });
     return sendResponseData(true, message.success.classTag, data);
   } catch (error) {
     // Log the error if there's an issue with the bulk class tag creation.
