@@ -25,6 +25,12 @@ export default function AiModelDetection() {
     const [getAllClass, setGetAllClass] = useState([] as any);
     const [classObject, setClassObject] = useState([] as any);
     const [selObjectData, setSelObjectData] = useState([] as any);
+    const [selectSubClass, setSelectSubClass] = useState("");
+    const [selectSubObject, setSelectSubObject] = useState("");
+    const [toggleObjectLevel, setToggleObjectLevel] = useState(false);
+    const [getAllSubClass, setGetAllSubClass] = useState([] as any);
+    const [getAllSubObject, setGetAllSubObject] = useState([] as any);
+
     const toggleTab = (item: any) => {
         setTab(item)
     }
@@ -154,6 +160,7 @@ export default function AiModelDetection() {
         setShowObject(false);
         setShowSubClass(false)
         setSelectObject('')
+        setToggleObjectLevel(false) 
     }
 
     // Get object data based on selected class and object
@@ -165,9 +172,6 @@ export default function AiModelDetection() {
 
             }).then(function (response) {
                 if (response) {
-                    console.log({
-                        "AMIT": response.data
-                    })
                     let filtered = response.data.filter((item: any) => {
                         if (selectClass === 'Vehicles') {
                             return item?.subObjects?.VIN === selectObject
@@ -196,21 +200,103 @@ export default function AiModelDetection() {
 
     // Set dropdown title
     const title = (selectClass === 'Vehicles') ? 'VIN' : 'PlantID'
-
-    // console.log({
-    //     selectClass: selectClass,
-    //     selectObject: selectObject,
-    //     selObjectData: selObjectData
-    // })
-    // http://localhost:3000/dashboard/eopswatch/preview?objectID=Manufacturing+Plants&subObject=Walls&key=TPC71810-01-012&id=TPC71810-01&model=Crack+Detection&industryID=TPC71810-01
     const nextDataProps = {
         objectID: selectClass,
         industryID: selectObject,
         id: selectObject,
-        subObject: "Walls",
-        key: "TPC71810-01-012",
+        subObject: selectSubClass ? selectSubClass :"Walls",
+        key: selectSubObject ? selectSubObject : "TPC71810-01-012",
         model: "Crack Detection"
     }
+
+    // Select Sub Class dropdown function
+    const selectSubClassFunction = (e: any) => {
+        let val = e.target.value;
+        setSelectSubClass(val);
+    }
+
+    // Select Sub Class  objects dropdown function
+    const selectSubObjectsFunction = (e: any) => {
+        let val = e.target.value;
+        setSelectSubObject(val)
+    }
+
+    // Toggle sub class and object dropdowns
+    const toggleSubClassObjectOption = () => {
+        setToggleObjectLevel(!toggleObjectLevel)
+    }
+
+    // Close Sub class and Object Dropdowns
+    const closeObjectLevel = () => {
+        setToggleObjectLevel(false);
+        setSelectSubClass("");
+        setSelectSubObject("");
+    }
+
+    // Get object data based on selected class and object
+    async function getSubClass() {
+        try {
+            await axios({
+                method: 'GET',
+                url: `/api/getSubAssets`,
+
+            }).then(function (response) {
+                if (response) {
+                    const filtered = response.data.filter((item: any) => {
+                        return item.parentAssetName === selectClass
+                    })
+                    setGetAllSubClass(filtered)
+                }
+            }).catch(function (error) {
+                console.log({
+                    "ERROR IN AXIOS CATCH": error
+                })
+            })
+        } catch (err) {
+            console.log({
+                "ERROR IN TRY CATCH": err
+            })
+        }
+    }
+    useEffect(() => {
+        getSubClass();
+    }, [selectClass])
+
+
+    // selectSubObject
+    // Get Sub Object bases on selection of sub class 
+    async function getSubObjects() {
+        try {
+            await axios({
+                method: 'GET',
+                url: `/api/getChildObject`,
+
+            }).then(function (response) {
+                if (response) {
+                    const filtered = response.data.filter((item: any) => {
+                        return item.object === selectSubClass
+                    })
+                    console.log({
+                        "AMIT RES": response.data,
+                        filtered: filtered
+                    })
+                    setGetAllSubObject(filtered)
+                }
+            }).catch(function (error) {
+                console.log({
+                    "ERROR IN AXIOS CATCH": error
+                })
+            })
+        } catch (err) {
+            console.log({
+                "ERROR IN TRY CATCH": err
+            })
+        }
+    }
+    useEffect(() => {
+        getSubObjects()
+    }, [selectSubClass])
+
 
     return (
         <div className="font-OpenSans w-full">
@@ -327,11 +413,104 @@ export default function AiModelDetection() {
                 </div>
 
 
+                {/* Object/Sub Class level */}
+                {toggleObjectLevel &&
+                    <div className={`flex ${showObject ? 'justify-between' : 'justify-start'} mt-4 items-center w-full`}>
+                        <div className="flex relative invisible">
+                            <Image
+                                src="/img/search-icon-gray.svg"
+                                alt="search"
+                                height={22}
+                                width={22}
+                                className="absolute top-[17px] left-3"
+                            />
+                            <input
+                                type="text"
+                                placeholder="Search by ID or Name"
+                                id="searchobjects"
+                                name="searchobjects"
+                                className={`border border-gray-[#A7A7A7] rounded-lg h-[56px] w-[250px] pl-10 pr-2 text-[#666666] bg-white`}
+                                autoComplete="off"
+                            />
+                        </div>
+
+                        <div className="text-md text-[#666666] ml-5 mr-5 invisible">Or</div>
+                        <select
+                            name="selectSubClass"
+                            id="selectSubClass"
+                            className={`border border-gray-[#A7A7A7] rounded-lg h-[56px] w-[250px] pl-2 pr-2 text-[#000000] bg-white`}
+                            onChange={selectSubClassFunction}
+                            value={selectSubClass}
+                        >
+                            <option value="">Select sub class</option>
+                            {
+                                getAllSubClass && getAllSubClass.length > 0 ?
+                                    getAllSubClass.map((item: any, index: any) => (
+                                        <option key={index} value={item.assetName}>{item.assetName}</option>
+
+                                    ))
+                                    :
+                                    null
+                            }
+                        </select>
+
+
+                        <select
+                            name="selectSubObject"
+                            id="selectSubObject"
+                            className={`border border-gray-[#A7A7A7] rounded-lg h-[56px] w-[250px] pl-2 pr-2 text-[#000000] ml-4`}
+                            onChange={selectSubObjectsFunction}
+                            value={selectSubObject}
+                        >
+                            <option value="">Select objects</option>
+                            {
+                                getAllSubObject && getAllSubObject.length > 0 ?
+                                    getAllSubObject.map((item: any, index: any) => (
+                                        <option
+                                            key={index}
+                                            value={selectClass === "Vehicles" ? (item.object === "Tire" ? item?.tags?.SerialID : item?.tags?.SerialNo) : item?.tags?.ID}
+                                        >
+                                            {selectClass === "Vehicles" ? (item.object === "Tire" ? item?.tags?.SerialID : item?.tags?.SerialNo) : item?.tags?.ID}
+                                        </option>
+
+                                    ))
+                                    :
+                                    null
+                            }
+                        </select>
+
+
+                        <div className="flex justify-start items-center ml-9">
+                            <Image
+                                src="/img/arrow-left-black.svg"
+                                alt="arrow-left"
+                                height={20}
+                                width={30}
+                                className="mr-3 invisible"
+                            />
+                            <button
+                                onClick={closeObjectLevel}
+                                className="bg-white border border-[#EEEEEE] rounded rounded-full flex justify-center items-center h-[40px] w-[40px] hover:bg-yellow-951 hover:border-yellow-951">
+                                <Image
+                                    src="/img/x.svg"
+                                    alt="x"
+                                    height={24}
+                                    width={24}
+                                />
+                            </button>
+                        </div>
+                    </div>
+                }
+
+
                 {/* Table */}
                 {showSubClass &&
                     <div className="w-full mt-3">
                         <div className="w-full flex justify-end">
-                            <button className="flex justify-center items-center rounded rounded-xl h-[35px] px-1 py-1 bg-[#404040] border border-[#404040] text-white text-sm mb-7">
+                            <button
+                                className="flex justify-center items-center rounded rounded-lg h-[35px] px-3  py-3 bg-[#404040] border border-[#404040] text-white text-sm mb-7"
+                                onClick={toggleSubClassObjectOption}
+                            >
                                 <Image
                                     src="/img/plus.svg"
                                     alt="activity"
