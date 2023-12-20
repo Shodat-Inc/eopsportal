@@ -52,7 +52,7 @@ async function create(params: any, objectId: any) {
  * @param {any} objectId - The object ID to which the values should be associated.
  * @returns {Object} - Response object indicating the success or failure of the operation.
  */
-async function bulkCreate(params: any[], objectId: any) {
+async function bulkCreate(params: any[], objectId: any, transaction: any) {
   // Log the initiation of bulk value creation.
   loggerInfo.info("Bulk Create Value Repo:");
 
@@ -64,7 +64,7 @@ async function bulkCreate(params: any[], objectId: any) {
 
   try {
     // Create multiple value entries in the database using the provided parameters.
-    const data = await db.AddValues.bulkCreate(params);
+    const data = await db.AddValues.bulkCreate(params, { transaction });
 
     // Return a successful response indicating the values were added.
     return sendResponseData(true, message.success.valuesAdded, data);

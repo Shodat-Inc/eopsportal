@@ -21,7 +21,7 @@ export const objectRepo = {
  * @param {Object} params - The parameters containing information to save the object.
  * @returns {Object} - Response object indicating the success or failure of the operation.
  */
-async function create(params: any) {
+async function create(params: any, transaction: any) {
   // Log the initiation of object creation.
   loggerInfo.info("Object Repo");
 
@@ -32,16 +32,16 @@ async function create(params: any) {
   }
 
   try {
-    const serialId = await generateRandomAlphaNumeric({ model: db.Object })
+    const serialId = await generateRandomAlphaNumeric({ model: db.Object, transaction })
     const updatedData = {
       ...params,
       serialId
     }
     // Create a new object instance using the provided parameters.
-    const object = new db.object(updatedData);
+    const object = new db.object(updatedData, { transaction });
 
     // Save the new object to the database.
-    const data = await object.save();
+    const data = await object.save({ transaction });
 
     // Return a successful response indicating the object was added.
     return sendResponseData(true, message.success.objectAdded, data);

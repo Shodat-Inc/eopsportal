@@ -1,14 +1,13 @@
 import React, { useEffect } from "react";
+import { tokenData } from "../constant";
 
 export default function page(props: any) {
-  let token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInJvbGUiOjEsImlhdCI6MTcwMjk2MzkzMywiZXhwIjoxNzAzNTY4NzMzfQ.TRNXMzLJbZWM5tKBJmGZ_jAevB3BTqAFXIlm54RWHHA";
+  let token = tokenData
   const handleSubmit = async () => {
     const data = {
-      modelTitle: "Crack Detailss",
+      modelTitle: "Workplace Details",
       benefits: {
-        "1": "fixs",
-        "2": "beautify1",
+        "1": "fixed",
       },
     };
     console.log({
@@ -16,7 +15,7 @@ export default function page(props: any) {
     });
     try {
       const response = await fetch(
-        `/api/updateModel?modelName=Crack Detection`,
+        `/api/updateModel?modelName=Workplace Safety Detection`,
         {
           method: "PUT",
           headers: {

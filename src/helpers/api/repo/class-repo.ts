@@ -24,7 +24,7 @@ export const classRepo = {
  * @param {Object} params - The parameters containing information to save the class.
  * @returns {Object} - Response object indicating the success or failure of the operation.
  */
-async function create(params: any) {
+async function create(params: any, transaction: any) {
   // Log the initiation of class creation.
   loggerInfo.info("Create Class Repo:");
 
@@ -32,19 +32,19 @@ async function create(params: any) {
     // Validate that the class name doesn't already exist.
     let class_data = await db.AddClasses.findOne({
       where: { className: params.className },
-    });
+    }, { transaction });
     if (class_data) {
       return sendResponseData(false, message.error.classExist, {});
     }
-    const serialId = await generateRandomAlphaNumeric({ model: db.AddClasses })
+    const serialId = await generateRandomAlphaNumeric({ model: db.AddClasses, transaction })
     const updatedData = {
       ...params,
       serialId
     }
 
     // Create and save the new class instance.
-    const classes = new db.AddClasses(updatedData);
-    const data = await classes.save();
+    const classes = new db.AddClasses(updatedData, { transaction });
+    const data = await classes.save({ transaction });
     return sendResponseData(true, message.success.classAdded, data);
   } catch (error) {
     // Log the error if there's an issue with the class creation.

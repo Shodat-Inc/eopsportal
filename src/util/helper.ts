@@ -1,6 +1,7 @@
 export const generateRandomAlphaNumeric = async ({
     length = 5,
     model = null,
+    transaction = null
 }) => {
     const alphanumericChars =
         "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -10,14 +11,15 @@ export const generateRandomAlphaNumeric = async ({
         id += alphanumericChars.charAt(randomIndex);
     }
     if (model) {
-        id = await checkUniqueId(id, model);
+        id = await checkUniqueId(id, model, transaction);
     }
     return id;
 };
 
 async function checkUniqueId(
     generateSerialID: string,
-    model: any
+    model: any,
+    transaction: any
 ): Promise<any> {
     return new Promise(async (resolve, reject) => {
         try {
@@ -28,7 +30,7 @@ async function checkUniqueId(
                 generateSerialID = await generateRandomAlphaNumeric({});
                 checkSerialID = await model.findOne({
                     where: { serialID: generateSerialID },
-                });
+                }, { transaction });
             }
             resolve(generateSerialID);
         } catch (e) {

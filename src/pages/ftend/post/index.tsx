@@ -1,25 +1,29 @@
 import React, { useEffect } from "react";
+import { tokenData } from "../constant";
 
 export default function page(props: any) {
-  let token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInJvbGUiOjEsImlhdCI6MTcwMjkxMDA0OCwiZXhwIjoxNzAzNTE0ODQ4fQ.0ifQ_sBokRJofW-qYM_fUhU7FTBxzZiOb3D-qSp2lgE";
+  let token = tokenData;
   const handleSubmit = async () => {
     const data = {
-      modelName: "Crack Detections",
-      modelTitle: "Model Detailss",
-      modelSubTitle: "Crack Detections",
-      howItWorks: "Crack Safety detection techniques.",
-      benefits: {
-        "1": "beautifys",
-        "2": "fixs",
-      },
-      iconUrl: "crack.jpeg",
-    };
+      "coordinates": [
+        {
+          "image1": {
+            "probability": "41.3%",
+            "coord-topLeft": "(-3,5)",
+            "coord-topRight": "(3,7)",
+            "coord-bottomLeft": "(0,-4)",
+            "coord-bottomRight": "(6,-2)"
+          }
+        },
+      ],
+      "tag": "Crack",
+      "modelObjectImageId": 42
+    }
     console.log({
       dataToSave: data,
     });
     try {
-      const response = await fetch(`/api/createModel`, {
+      const response = await fetch(`/api/saveResponse`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
