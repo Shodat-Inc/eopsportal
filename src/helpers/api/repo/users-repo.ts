@@ -207,7 +207,7 @@ async function getById(id: any) {
  * @param {any} params - The parameters for creating a new user.
  * @returns {Promise<object>} A promise that resolves with the result of creating the user.
  */
-async function create(params: any) {
+async function create(params: any, transaction: any) {
 
   try {
     // Log information about the user creation process
@@ -216,7 +216,7 @@ async function create(params: any) {
     // Validate if a user with the same email already exists
     let user_data = await db.User.findOne({
       where: { email: params.email },
-    });
+    }, { transaction });
     if (user_data) {
       return sendResponseData(false, message.error.alreadyExist, {});
     }
@@ -224,7 +224,7 @@ async function create(params: any) {
     // Validate the provided roleId, if available
     if (params.roleId) {
       // Check if the specified role exists
-      let role_data = await db.Role.findByPk(params.roleId);
+      let role_data = await db.Role.findByPk(params.roleId, { transaction });
       if (!role_data) {
         return sendResponseData(false, message.error.roleError1, {});
       }
@@ -236,7 +236,7 @@ async function create(params: any) {
     }
 
     // Create a new user instance with the provided parameters
-    const user = new db.User(params);
+    const user = new db.User(params, { transaction });
 
     // Hash the user's password before saving to the database
     if (params.password) {
@@ -244,7 +244,7 @@ async function create(params: any) {
     }
 
     // Save the user to the database
-    const data = await user.save();
+    const data = await user.save({ transaction });
 
     // Return a successful response with the created user data
     return sendResponseData(true, message.success.userCreated, data);

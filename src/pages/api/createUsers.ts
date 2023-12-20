@@ -1,4 +1,4 @@
-import { apiHandler, usersRepo } from "../../helpers/api";
+import { apiHandler, db, usersRepo } from "../../helpers/api";
 import { loggerInfo, loggerError } from "@/logger";
 import { NextApiRequest, NextApiResponse } from "next";
 import { info } from "console";
@@ -44,37 +44,40 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     const { countryCodeId, phoneNumber, companyName } = objData;
     // Extract data for company record
 
-    // Create user data
-    const userData = await usersRepo.create({
-      username,
-      email,
-      firstName,
-      lastName,
-      password,
-      roleId,
-    });
+    await db.sequelize.transaction(async (transaction: any) => {
 
-    if (!userData.success) {
-      return res.send(sendResponseData(false, userData.message, []));
-    }
+      // Create user data
+      const userData = await usersRepo.create({
+        username,
+        email,
+        firstName,
+        lastName,
+        password,
+        roleId,
+      }, transaction);
 
-    // Create company record
-    const companyRecord = await CompanyRecordRepo.create({
-      companyName,
-      userId: userData.data.id,
-    });
+      if (!userData.success) {
+        return res.send(sendResponseData(false, userData.message, []));
+      }
 
-    // Create phone record
-    const phoneRecord = await phoneRecordRepo.create({
-      countryCodeId,
-      phoneNumber,
-      userId: userData.data.id,
-    });
+      // Create company record
+      const companyRecord = await CompanyRecordRepo.create({
+        companyName,
+        userId: userData.data.id,
+      }, transaction);
 
-    // Send success response
-    return res
-      .status(200)
-      .json(sendResponseData(true, message.success.userCreated, []));
+      // Create phone record
+      const phoneRecord = await phoneRecordRepo.create({
+        countryCodeId,
+        phoneNumber,
+        userId: userData.data.id,
+      }, transaction);
+
+      // Send success response
+      return res
+        .status(200)
+        .json(sendResponseData(true, message.success.userCreated, []));
+    })
   } catch (error: any) {
     // Handle errors
     loggerError.error("error in createUsers API ", error);

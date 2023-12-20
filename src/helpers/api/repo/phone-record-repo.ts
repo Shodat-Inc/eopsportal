@@ -16,7 +16,7 @@ export const phoneRecordRepo = {
  * @param {Object} params - The parameters containing information to save the phone record.
  * @returns {Object} - Response object indicating the success or failure of the operation.
  */
-async function create(params: any) {
+async function create(params: any, transaction: any) {
   // Log the initiation of phone record creation.
   loggerInfo.info("POST api/createUsers Save Phone records");
 
@@ -24,7 +24,7 @@ async function create(params: any) {
     // Validate that the userId is provided.
     if (params.userId) {
       // Retrieve the user by its primary key (ID) from the database.
-      const user = await db.User.findByPk(params.userId);
+      const user = await db.User.findByPk(params.userId, { transaction });
 
       // If no user is found with the given ID, return an error response.
       if (!user) {
@@ -36,10 +36,10 @@ async function create(params: any) {
     }
 
     // Create a new phoneRecord instance using the provided parameters.
-    const phoneRecord = new db.phoneRecord(params);
+    const phoneRecord = new db.phoneRecord(params, { transaction });
 
     // Save the new phone record to the database.
-    const data = await phoneRecord.save();
+    const data = await phoneRecord.save({ transaction });
 
     // Return a successful response indicating the phone record was added.
     return sendResponseData(true, message.success.phoneRecordAdded, data);
