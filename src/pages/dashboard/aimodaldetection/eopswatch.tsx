@@ -52,12 +52,120 @@ const jsonData = [
             "Typesetting industry"
         ],
         "activePlan": false
+    },
+    {
+        "name": "Crystallization Detection",
+        "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
+        "image": "crystallizatiod-detection.png",
+        "planExpire": "08.31.2023",
+        "benifits": [
+            "Typesetting industry",
+            "Text of the printing",
+            "Lorem Ipsum is simply dummy",
+            "Lorem Ipsum is simply dummy",
+            "Typesetting industry",
+            "Text of the printing"
+        ],
+        "activePlan": true
+    },
+    {
+        "name": "Battery Life Prediction",
+        "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
+        "image": "Battery-Life-Prediction.png",
+        "planExpire": "04.25.2024",
+        "benifits": [
+            "Typesetting industry",
+            "Text of the printing",
+            "Lorem Ipsum is simply dummy",
+            "Typesetting industry",
+            "Lorem Ipsum is simply dummy",
+            "Text of the printing"
+        ],
+        "activePlan": false
+    },
+    {
+        "name": "Tire Wear Detection",
+        "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
+        "image": "tyre-wear-modal-catalog.png",
+        "planExpire": "11.22.2024",
+        "benifits": [
+            "Lorem Ipsum is simply dummy",
+            "Text of the printing",
+            "Typesetting industry",
+            "Lorem Ipsum is simply dummy",
+            "Text of the printing",
+            "Typesetting industry"
+        ],
+        "activePlan": false
+    }
+]
+
+const jsonDataVehicles = [
+    {
+        "name": "Crystallization Detection",
+        "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
+        "image": "crystallizatiod-detection.png",
+        "planExpire": "08.31.2023",
+        "benifits": [
+            "Typesetting industry",
+            "Text of the printing",
+            "Lorem Ipsum is simply dummy",
+            "Lorem Ipsum is simply dummy",
+            "Typesetting industry",
+            "Text of the printing"
+        ],
+        "activePlan": true
+    },
+    {
+        "name": "Battery Life Prediction",
+        "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
+        "image": "Battery-Life-Prediction.png",
+        "planExpire": "04.25.2024",
+        "benifits": [
+            "Typesetting industry",
+            "Text of the printing",
+            "Lorem Ipsum is simply dummy",
+            "Typesetting industry",
+            "Lorem Ipsum is simply dummy",
+            "Text of the printing"
+        ],
+        "activePlan": false
+    },
+    {
+        "name": "Tire Wear Detection",
+        "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
+        "image": "tyre-wear-modal-catalog.png",
+        "planExpire": "11.22.2024",
+        "benifits": [
+            "Lorem Ipsum is simply dummy",
+            "Text of the printing",
+            "Typesetting industry",
+            "Lorem Ipsum is simply dummy",
+            "Text of the printing",
+            "Typesetting industry"
+        ],
+        "activePlan": false
+    },
+    {
+        "name": "Parts Detection",
+        "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
+        "image": "Parts-Detection.png",
+        "planExpire": "11.22.2024",
+        "benifits": [
+            "Lorem Ipsum is simply dummy",
+            "Text of the printing",
+            "Typesetting industry",
+            "Lorem Ipsum is simply dummy",
+            "Text of the printing",
+            "Typesetting industry"
+        ],
+        "activePlan": false
     }
 ]
 export default function EopsWatch(props: any) {
-    console.log({
-        "ALL PROPS":props
-    })
+    // console.log({
+    //     "ALL PROPS":props
+    // })
     const router = useRouter();
     const routerParams = router.query;
     const [data, setData] = useState(jsonData[0]);
@@ -68,9 +176,19 @@ export default function EopsWatch(props: any) {
         setData(filterData[0]);
     }
 
+    useEffect(() => {
+        if (props.nextDataProps && props.nextDataProps.objectID === "Manufacturing Plants") {
+            setData(jsonData[0]);
+        } else {
+            setData(jsonDataVehicles[0]);
+        }
+
+    }, [props.nextDataProps])
     console.log({
-        data:data.name
+        "ALL PROPS": props,
+        "ALL DATA": data
     })
+
 
     const redirectToNext = () => {
         Router.push({
@@ -90,39 +208,82 @@ export default function EopsWatch(props: any) {
         <div className="flex w-full h-full mt-1">
             <div className="w-[20%] bg-[#F2F2F2]">
                 <div className="flex flex-wrap flex-row">
-                    <button
-                        onClick={() => setModelInformation("Crack Detection")}
-                        className={`relative flex items-center justify-between rounded-l-xl-1 p-4 h-[106px] w-full bg-white relative text-left ${data.name === "Crack Detection" ? 'border-t-0 border-b-2 border-l-0 border-[#E3E3E3] left-[2px]' : 'border-b-2 border-t-2 border-l-0 border-[#E3E3E3] left-[0px]'}`}>
-                        <span className="text-gray-967 text-sm font-semibold w-full">Crack Detection</span>
-                        <Image
-                            src="/img/crack-detection.svg"
-                            alt="crack detection"
-                            height={54}
-                            width={54}
-                        />
-                    </button>
-                    <button
-                        onClick={() => setModelInformation("Part Detection")}
-                        className={`relative flex items-center justify-between rounded-l-xl-1 p-4 h-[106px] w-full bg-white relative text-left ${data.name === "Part Detection" ? 'border-t-0 border-b-2 border-l-0 border-[#E3E3E3] left-[2px]' : 'border-b-2 border-l-0 border-[#E3E3E3] left-[0px]'}`}>
-                        <span className="text-gray-967 text-md font-semibold w-[50%]">Part Detection</span>
-                        <Image
-                            src="/img/parts-detection.svg"
-                            alt="Part detection"
-                            height={54}
-                            width={54}
-                        />
-                    </button>
-                    <button
-                        onClick={() => setModelInformation("Workplace Safety Detection")}
-                        className={`relative flex items-center justify-between rounded-l-xl-1 p-4 h-[106px] w-full bg-white relative text-left ${data.name === "Workplace Safety Detection" ? 'border-t-0 border-b-2 border-l-0 border-[#E3E3E3] left-[2px]' : 'border-b-2 border-l-0 border-[#E3E3E3] left-[0px]'}`}>
-                        <span className="text-gray-967 text-md font-semibold">Workplace <br />Safety Detection</span>
-                        <Image
-                            src="/img/wortkplace-safety-detection.svg"
-                            alt="Workplace Safety Detection"
-                            height={54}
-                            width={54}
-                        />
-                    </button>
+                    {
+                        props?.nextDataProps?.objectID && props?.nextDataProps?.objectID === "Manufacturing Plants"
+                            ?
+                            <>
+                                <button
+                                    onClick={() => setModelInformation("Crack Detection")}
+                                    className={`relative flex items-center justify-between rounded-l-xl-1 p-4 h-[106px] w-full bg-white relative text-left ${data.name === "Crack Detection" ? 'border-t-0 border-b-2 border-l-0 border-[#E3E3E3] left-[2px]' : 'border-b-2 border-t-2 border-l-0 border-[#E3E3E3] left-[0px]'}`}>
+                                    <span className="text-gray-967 text-sm font-semibold w-full">Crack Detection</span>
+                                    <Image
+                                        src="/img/crack-detection.svg"
+                                        alt="crack detection"
+                                        height={54}
+                                        width={54}
+                                    />
+                                </button>
+                                <button
+                                    onClick={() => setModelInformation("Part Detection")}
+                                    className={`relative flex items-center justify-between rounded-l-xl-1 p-4 h-[106px] w-full bg-white relative text-left ${data.name === "Part Detection" ? 'border-t-0 border-b-2 border-l-0 border-[#E3E3E3] left-[2px]' : 'border-b-2 border-l-0 border-[#E3E3E3] left-[0px]'}`}>
+                                    <span className="text-gray-967 text-md font-semibold w-[50%]">Part Detection</span>
+                                    <Image
+                                        src="/img/parts-detection.svg"
+                                        alt="Part detection"
+                                        height={54}
+                                        width={54}
+                                    />
+                                </button>
+                                <button
+                                    onClick={() => setModelInformation("Workplace Safety Detection")}
+                                    className={`relative flex items-center justify-between rounded-l-xl-1 p-4 h-[106px] w-full bg-white relative text-left ${data.name === "Workplace Safety Detection" ? 'border-t-0 border-b-2 border-l-0 border-[#E3E3E3] left-[2px]' : 'border-b-2 border-l-0 border-[#E3E3E3] left-[0px]'}`}>
+                                    <span className="text-gray-967 text-md font-semibold">Workplace <br />Safety Detection</span>
+                                    <Image
+                                        src="/img/wortkplace-safety-detection.svg"
+                                        alt="Workplace Safety Detection"
+                                        height={54}
+                                        width={54}
+                                    />
+                                </button>
+                            </>
+                            :
+                            <>
+                                <button
+                                    onClick={() => setModelInformation("Crystallization Detection")}
+                                    className={`relative flex items-center justify-between rounded-l-xl-1 p-4 h-[106px] w-full bg-white relative text-left ${data.name === "Crystallization Detection" ? 'border-t-0 border-b-2 border-l-0 border-[#E3E3E3] left-[2px]' : 'border-b-2 border-t-2 border-l-0 border-[#E3E3E3] left-[0px]'}`}>
+                                    <span className="text-gray-967 text-sm font-semibold w-full">Crystallization Detection</span>
+                                    <Image
+                                        src="/img/crack-detection.svg"
+                                        alt="Crystallization Detection"
+                                        height={54}
+                                        width={54}
+                                    />
+                                </button>
+                                <button
+                                    onClick={() => setModelInformation("Battery Life Prediction")}
+                                    className={`relative flex items-center justify-between rounded-l-xl-1 p-4 h-[106px] w-full bg-white relative text-left ${data.name === "Battery Life Prediction" ? 'border-t-0 border-b-2 border-l-0 border-[#E3E3E3] left-[2px]' : 'border-b-2 border-l-0 border-[#E3E3E3] left-[0px]'}`}>
+                                    <span className="text-gray-967 text-md font-semibold w-[50%]">Battery Life Prediction</span>
+                                    <Image
+                                        src="/img/parts-detection.svg"
+                                        alt="Battery Life Prediction"
+                                        height={54}
+                                        width={54}
+                                    />
+                                </button>
+                                <button
+                                    onClick={() => setModelInformation("Tire Wear Detection")}
+                                    className={`relative flex items-center justify-between rounded-l-xl-1 p-4 h-[106px] w-full bg-white relative text-left ${data.name === "Tire Wear Detection" ? 'border-t-0 border-b-2 border-l-0 border-[#E3E3E3] left-[2px]' : 'border-b-2 border-l-0 border-[#E3E3E3] left-[0px]'}`}>
+                                    <span className="text-gray-967 text-md font-semibold">Tire Wear Detection</span>
+                                    <Image
+                                        src="/img/wortkplace-safety-detection.svg"
+                                        alt="Tire Wear Detection"
+                                        height={54}
+                                        width={54}
+                                    />
+                                </button>
+                            </>
+                    }
+
                 </div>
             </div>
             <div className="w-[80%] px-8 py-5 rounded-r-xl rounded-bl-xl border border-[#E3E3E3] border-l-2 border-t-0 border-b-2 border-r-0 bg-white min-h-[500px]">

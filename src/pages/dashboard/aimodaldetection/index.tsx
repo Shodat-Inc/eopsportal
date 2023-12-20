@@ -38,9 +38,9 @@ export default function AiModelDetection() {
 
     // All class reducer states
     const classSelector = useSelector((state: any) => state.classReducer);
-    console.log({
-        classSelector: classSelector.dataforeopswatchReducer
-    })
+    // console.log({
+    //     classSelector: classSelector.dataforeopswatchReducer
+    // })
 
     // select class by default
     async function fetchObjectData() {
@@ -160,7 +160,7 @@ export default function AiModelDetection() {
         setShowObject(false);
         setShowSubClass(false)
         setSelectObject('')
-        setToggleObjectLevel(false) 
+        setToggleObjectLevel(false)
     }
 
     // Get object data based on selected class and object
@@ -204,7 +204,7 @@ export default function AiModelDetection() {
         objectID: selectClass,
         industryID: selectObject,
         id: selectObject,
-        subObject: selectSubClass ? selectSubClass :"Walls",
+        subObject: selectSubClass ? selectSubClass : "Walls",
         key: selectSubObject ? selectSubObject : "TPC71810-01-012",
         model: "Crack Detection"
     }
@@ -275,10 +275,6 @@ export default function AiModelDetection() {
                 if (response) {
                     const filtered = response.data.filter((item: any) => {
                         return item.object === selectSubClass
-                    })
-                    console.log({
-                        "AMIT RES": response.data,
-                        filtered: filtered
                     })
                     setGetAllSubObject(filtered)
                 }
@@ -522,25 +518,25 @@ export default function AiModelDetection() {
                         </div>
                         <table className={`table-auto lg:min-w-full sm:w-full small:w-full text-left ${styles.tableV3} ${styles.tableV41}`}>
                             <thead className="text-sm font-normal">
-
-                                {
-                                    selObjectData && Object.keys(`selObjectData`).length != 0 ?
-                                        Object.keys(selObjectData).map((item: any, i: any) => (
-                                            <th className="capitalize" key={i}>
-                                                {
-                                                    item.split(/(?=[A-Z])/).join(" ")
-                                                }
-                                            </th>
-                                        ))
-                                        : null
-                                }
-
+                                <tr>
+                                    {
+                                        selObjectData && Object.keys(`selObjectData`).length != 0 ?
+                                            Object.keys(selObjectData).map((item: any, index: any) => (
+                                                <th className="capitalize" key={index}>
+                                                    {
+                                                        item.split(/(?=[A-Z])/).join(" ")
+                                                    }
+                                                </th>
+                                            ))
+                                            : null
+                                    }
+                                </tr>
                             </thead>
                             <tbody className="text-sm font-normal">
                                 <tr>
                                     {
-                                        Object.values(selObjectData).map((item: any, i: any) => (
-                                            <td key={i}>
+                                        Object.values(selObjectData).map((item: any, index: any) => (
+                                            <td key={index}>
                                                 <span>{item ? item : '-'}</span>
                                             </td>
                                         ))
