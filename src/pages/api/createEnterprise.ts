@@ -1,4 +1,4 @@
-import { apiHandler } from "@/helpers/api";
+import { apiHandler, db } from "@/helpers/api";
 import { enterpriseRepo } from "@/helpers/api/repo/enterprise-repo";
 import { enterpriseAddressRepo } from "@/helpers/api/repo/enterpriseAddress-repo";
 import sendResponseData from "@/helpers/constant";
@@ -27,42 +27,45 @@ export default apiHandler({
         ...resData
       } = reqData;
 
-      // Create an enterprise using the enterprise repository
-      const enterprise = await enterpriseRepo.create({
-        enterpriseName,
-        enterpriseIndustry,
-        founderYear,
-        website,
-        description,
-        employeeCount,
-        superAdminName,
-        roleId,
-        status
-      });
+      await db.sequelize.transaction(async (transaction: any) => {
 
-      // Check if the enterprise creation was successful
-      if (!enterprise.success) {
-        // Send a response indicating failure
-        return res.send(sendResponseData(false, enterprise.message, []));
-      }
+        // Create an enterprise using the enterprise repository
+        const enterprise = await enterpriseRepo.create({
+          enterpriseName,
+          enterpriseIndustry,
+          founderYear,
+          website,
+          description,
+          employeeCount,
+          superAdminName,
+          roleId,
+          status
+        }, transaction);
 
-      // Extract address-related data from the response data
-      const { city, state, pincode, address } = resData;
+        // Check if the enterprise creation was successful
+        if (!enterprise.success) {
+          // Send a response indicating failure
+          return res.send(sendResponseData(false, enterprise.message, []));
+        }
 
-      // Create an enterprise address using the enterprise address repository
-      const enterpriseAddress = await enterpriseAddressRepo.create({
-        city,
-        state,
-        pincode,
-        address,
-        enterpriseId: enterprise.data.id,
-      });
+        // Extract address-related data from the response data
+        const { city, state, pincode, address } = resData;
 
-      // Send a success response
-      res.status(200).json({ message: enterprise });
+        // Create an enterprise address using the enterprise address repository
+        const enterpriseAddress = await enterpriseAddressRepo.create({
+          city,
+          state,
+          pincode,
+          address,
+          enterpriseId: enterprise.data.id,
+        }, transaction);
+
+        // Send a success response
+        res.status(200).json({ message: enterprise });
+      })
     } catch (error: any) {
       // Log the error to the console
-      loggerError.error("Error in Enterprise API");
+      loggerError.error("Error in Enterprise API", error);
 
       // Send an error response
       res.status(400).json({ message: "Error in Saving Enterprise" });
