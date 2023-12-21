@@ -63,7 +63,6 @@ async function handler(req: any, res: any) {
       const tagIdArr: any = [];
       if (reqData.parentJoinKey && reqData.parentJoinKey.length) {
         const classTagId = await classTagRepo.getClassTags(reqData.parentJoinKey, transaction);
-        console.log(classTagId, "==classTagId")
         classTagId.data.forEach((element: any) => {
           tagIdArr.push({
             classId,
@@ -71,7 +70,6 @@ async function handler(req: any, res: any) {
           });
         });
         const values = await parentJoinKeyRepo.bulkCreate(tagIdArr, classId, transaction);
-        console.log(values, "===values")
       }
       // Send back a successful response with the class and tag data.
       res.send({ classData, classTags });

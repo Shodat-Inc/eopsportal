@@ -16,14 +16,14 @@ export const enterpriseAddressRepo = {
  * @param {any} params - The parameters containing information for creating an enterprise address entry.
  * @returns {Promise<object>} A promise that resolves with the result of the database operation.
  */
-async function create(params: any) {
+async function create(params: any, transaction: any) {
   try {
     // Log information about the function execution
     loggerInfo.info("Create Enterprise Address Repo");
 
     // Create a new enterprise address entry using Sequelize model
-    const newAddress = new db.EnterpriseAddress(params);
-    const save = await newAddress.save();
+    const newAddress = new db.EnterpriseAddress(params, { transaction });
+    const save = await newAddress.save({ transaction });
 
     // Return a successful response after saving the enterprise address
     return sendResponseData(true, message.success.enterpriseAddress, []);

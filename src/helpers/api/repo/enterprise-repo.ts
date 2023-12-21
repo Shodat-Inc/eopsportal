@@ -20,7 +20,7 @@ export const enterpriseRepo = {
  * @param {any} params - The parameters containing information for creating an enterprise entry.
  * @returns {Promise<object>} A promise that resolves with the result of the database operation.
  */
-async function create(params: any) {
+async function create(params: any, transaction: any) {
   try {
     // Log information about the function execution
     loggerInfo.info("Create Enterprise Repo");
@@ -28,7 +28,7 @@ async function create(params: any) {
     // Check if an enterprise with the given name already exists
     const enterprise = await db.Enterprise.findOne({
       where: { enterpriseName: params.enterpriseName },
-    });
+    }, { transaction });
 
     // If the enterprise already exists, return an error response
     if (enterprise) {
@@ -36,8 +36,8 @@ async function create(params: any) {
     }
 
     // Create a new enterprise entry using Sequelize model
-    const newEnterprise = new db.Enterprise(params);
-    const save = await newEnterprise.save();
+    const newEnterprise = new db.Enterprise(params, { transaction });
+    const save = await newEnterprise.save({ transaction });
 
     // Return a successful response with the created enterprise entry
     return sendResponseData(true, message.success.enterpriseCreated, save);
