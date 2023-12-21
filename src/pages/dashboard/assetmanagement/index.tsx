@@ -138,8 +138,47 @@ export default function AssetManagement() {
             <div className="w-[100%] min-h-full rounded-xl bg-gray-966">
 
                 {/* Title */}
-                <div className="columns-2 flex justify-between items-center mb-2">
+                <div className="columns-2 flex justify-start items-center mb-2">
                     <p className="text-black text-xl font-semibold">Asset Management</p>
+                    <div className="ml-8 flex justify-center items-center">
+                        {
+                            tab === 4 &&
+                            <div className="flex justify-start items-center">
+                                <button
+                                    onClick={() => backToPrevComponent(4)}
+                                    className="flex justify-start items-center"
+                                >
+                                    <Image
+                                        src="/img/arrow-left-black.svg"
+                                        alt="arrow-left-black"
+                                        height={24}
+                                        width={24}
+                                        className="mr-2"
+                                    />
+                                    <span>Back</span>
+                                </button>
+                            </div>
+                        }
+                        {
+                            tab === 3 &&
+                            <div className="flex justify-start items-center">
+                                <button
+                                    onClick={() => backToPrevComponent(3)}
+                                    className="flex justify-start items-center"
+                                >
+                                    <Image
+                                        src="/img/arrow-left-black.svg"
+                                        alt="arrow-left-black"
+                                        height={24}
+                                        width={24}
+                                        className="mr-2"
+                                    />
+                                    <span>Back</span>
+                                </button>
+                            </div>
+                        }
+
+                    </div>
                 </div>
 
                 {/* Breadcrumb */}
@@ -202,7 +241,7 @@ export default function AssetManagement() {
                 }
 
                 {/* Back Buttons */}
-                {
+                {/* {
                     tab === 4 &&
                     <div className="flex justify-start items-center mb-4">
                         <button
@@ -237,9 +276,9 @@ export default function AssetManagement() {
                             <span>Back</span>
                         </button>
                     </div>
-                }
+                } */}
 
-                
+
 
                 {/* Tabs */}
                 <div className="flex justify-between items-center w-full">

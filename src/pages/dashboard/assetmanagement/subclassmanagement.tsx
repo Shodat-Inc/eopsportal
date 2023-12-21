@@ -18,7 +18,7 @@ export default function SubClassManagement(props: any) {
     const [search, setSearch] = useState('');
 
     // Reducer Redux data
-    const classReducerData = useSelector((state: any) => state.classReducer);
+    // const classReducerData = useSelector((state: any) => state.classReducer);
 
     useEffect(() => {
         setShowModal(props.addSubClassModal)
@@ -53,9 +53,9 @@ export default function SubClassManagement(props: any) {
         setDeleteModal(false)
     }
 
-    const takeMeToClassComponent = (item: any) => {
-        props.handelsubClass(item)
-    }
+    // const takeMeToClassComponent = (item: any) => {
+    //     props.handelsubClass(item)
+    // }
 
 
     // set default choose asset
@@ -65,7 +65,7 @@ export default function SubClassManagement(props: any) {
                 method: 'GET',
                 url: `/api/getSubAssets`,
 
-            }).then(function (response) {
+            }).then(function (response:any) {
                 if (response) {
                     if (response.data) {
                         let filtered = response.data.filter((item: any) => {
@@ -74,7 +74,7 @@ export default function SubClassManagement(props: any) {
                         setSubClassData(filtered);
                     }
                 }
-            }).catch(function (error) {
+            }).catch(function (error:any) {
                 console.log({
                     "ERROR IN AXIOS CATCH": error
                 })
@@ -186,7 +186,7 @@ export default function SubClassManagement(props: any) {
                                         <td>{index + 1}</td>
                                         <td>
                                             <button
-                                                onClick={() => takeMeToClassComponent(item.assetName)}
+                                                // onClick={() => takeMeToClassComponent(item.assetName)}
                                             >
                                                 <span>{item.assetName}</span>
                                             </button>

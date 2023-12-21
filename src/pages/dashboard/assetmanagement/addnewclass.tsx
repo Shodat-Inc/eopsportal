@@ -1,27 +1,14 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
-import Layout from "../../../components/Layout";
-import NoDataFound from "../../../common/nodatafound";
 import styles from '../../../styles/Common.module.css';
-import { getAssetsData } from "../../../lib/getassets";
 import { useRouter } from 'next/router'
 import Router from 'next/router'
-import Link from "next/link";
 import Image from "next/image";
-import Template from "../template";
-import axios from 'axios';
-import AlertMessage from "@/common/alertMessage";
-import moment from "moment";
-import { setSelectedClass } from "@/store/actions/classAction";
-import DeleteModal from "@/common/deletemodal";
-import ObjectModal from "./objectmodal";
 import { successMessageAction } from '@/store/actions/classAction';
 
 export default function AddNewClass(props: any) {
     const dispatch = useDispatch<any>();
-    const [success, setSuccess] = useState(false);
     const assetname = useRef("");
-    const router = useRouter();
     const [allTags, setAllTags] = useState<any[]>([]);
     const [newTag, setNewTag] = useState<string>("");
     const [showInput, setShowInput] = useState(false);
@@ -32,10 +19,9 @@ export default function AddNewClass(props: any) {
     const [chooseAsset, setChooseAsset] = useState("");
     const [toggleAsset, setToggleAsset] = useState(false);
     const [dtObject, setDtObject] = useState<any[]>([]);
-    const [deleteModal, setDeleteModal] = useState(false);
     
     // All class reducer states
-    const allClassSelector = useSelector((state: any) => state.classReducer);
+    // const allClassSelector = useSelector((state: any) => state.classReducer);
 
     const closeModal = () => {
         props.handleClick(false);
@@ -174,21 +160,14 @@ export default function AddNewClass(props: any) {
         });
         const resdata = await response.json();
         if (resdata) {
-            setSuccess(true);
             setAllTags([]);
             dispatch(successMessageAction(true))
             setTimeout(() => {
-                setSuccess(false);
                 props.handleClick(false);
             }, 50);
         } else {
             console.log("FAILED")
         }
-    }
-
-    // Delete Asset
-    const deleteAsset = (assetID: any) => {
-        setDeleteModal(true);
     }
 
 
@@ -223,10 +202,6 @@ export default function AddNewClass(props: any) {
         }, 'assetmanagement/subasset')
     }
 
-
-    const handleDeleteFunction = () => {
-        setDeleteModal(false)
-    }
 
 
     return (
