@@ -22,6 +22,7 @@ export default function AiModelDetection() {
     const [selectObject, setSelectObject] = useState('');
     const [showObject, setShowObject] = useState(false);
     const [showSubClass, setShowSubClass] = useState(false);
+    const [showObjLvlButton, setShowObjLvlButton] = useState(false);
     const [getAllClass, setGetAllClass] = useState([] as any);
     const [classObject, setClassObject] = useState([] as any);
     const [selObjectData, setSelObjectData] = useState([] as any);
@@ -30,6 +31,7 @@ export default function AiModelDetection() {
     const [toggleObjectLevel, setToggleObjectLevel] = useState(false);
     const [getAllSubClass, setGetAllSubClass] = useState([] as any);
     const [getAllSubObject, setGetAllSubObject] = useState([] as any);
+    const [tableDataSubObject, setTableDataSubObject] = useState([] as any);
 
     const toggleTab = (item: any) => {
         setTab(item)
@@ -94,8 +96,10 @@ export default function AiModelDetection() {
         if (classSelector.dataforeopswatchReducer.classObject && classSelector.dataforeopswatchReducer.classObject !== "") {
             setSelectObject(classSelector.dataforeopswatchReducer.classObject);
             setShowSubClass(true)
+            setShowObjLvlButton(true)
         } else {
             setShowSubClass(false)
+            setShowObjLvlButton(false)
         }
     }, [classSelector.dataforeopswatchReducer.classObject])
 
@@ -150,6 +154,7 @@ export default function AiModelDetection() {
     const selectObjectFunction = (e: any) => {
         setSelectObject(e.target.value);
         setShowSubClass(true)
+        setShowObjLvlButton(true)
     }
 
     // Reset button on click function
@@ -159,6 +164,7 @@ export default function AiModelDetection() {
         setSelectClass('');
         setShowObject(false);
         setShowSubClass(false)
+        setShowObjLvlButton(false)
         setSelectObject('')
         setToggleObjectLevel(false)
     }
@@ -224,6 +230,7 @@ export default function AiModelDetection() {
     // Toggle sub class and object dropdowns
     const toggleSubClassObjectOption = () => {
         setToggleObjectLevel(!toggleObjectLevel)
+
     }
 
     // Close Sub class and Object Dropdowns
@@ -273,10 +280,14 @@ export default function AiModelDetection() {
 
             }).then(function (response) {
                 if (response) {
+
+
                     const filtered = response.data.filter((item: any) => {
                         return item.object === selectSubClass
                     })
                     setGetAllSubObject(filtered)
+
+
                 }
             }).catch(function (error) {
                 console.log({
@@ -292,6 +303,65 @@ export default function AiModelDetection() {
     useEffect(() => {
         getSubObjects()
     }, [selectSubClass])
+
+
+
+    // Get Subobject data based on selected class and object
+    async function getSubObjectsData() {
+        try {
+            await axios({
+                method: 'GET',
+                url: `/api/getChildObject`,
+
+            }).then(function (response) {
+                if (response) {
+                    // let a = selectClass === "Vehicles" ? (item.object === "Tire" ? item?.tags?.SerialID : item?.tags?.SerialNo) : item?.tags?.ID
+                    const filtered = response.data.filter((item: any) => {
+                        return (item.object === selectSubClass) && item?.tags?.SerialNo === selectSubObject
+
+                    })
+                    setTableDataSubObject(filtered[0]?.tags)
+                    console.log({
+                        "HERAMIT": response.data,
+                        filtered: filtered
+                    })
+                    // let filtered = response.data.filter((item: any) => {
+                    //     if (selectClass === 'Vehicles') {
+                    //         return item?.subObjects?.VIN === selectObject
+                    //     } else {
+                    //         return item?.subObjects?.PlantID === selectObject
+                    //     }
+                    // })
+                    // setSelObjectData(filtered[0]?.subObjects)
+                }
+            }).catch(function (error) {
+                console.log({
+                    "ERROR IN AXIOS CATCH": error
+                })
+            })
+        } catch (err) {
+            console.log({
+                "ERROR IN TRY CATCH": err
+            })
+        }
+    }
+    useEffect(() => {
+        if (selectSubObject !== "") {
+            getSubObjectsData();
+        }
+    }, [selectSubObject, selectSubClass])
+
+    console.log({
+        getAllSubObject: getAllSubObject,
+        selectSubObject: selectSubObject
+    })
+
+
+    useEffect(() => {
+        if (selectSubObject !== "") {
+            setShowSubClass(false)
+        }
+    }, [selectSubObject])
 
 
     return (
@@ -500,8 +570,9 @@ export default function AiModelDetection() {
 
 
                 {/* Table */}
-                {showSubClass &&
-                    <div className="w-full mt-3">
+
+                <div className="w-full mt-3">
+                    {showObjLvlButton &&
                         <div className="w-full flex justify-end">
                             <button
                                 className="flex justify-center items-center rounded rounded-lg h-[35px] px-3  py-3 bg-[#404040] border border-[#404040] text-white text-sm mb-7"
@@ -516,6 +587,9 @@ export default function AiModelDetection() {
                                 <span className="ml-2">Object level</span>
                             </button>
                         </div>
+                    }
+
+                    {showSubClass &&
                         <table className={`table-auto lg:min-w-full sm:w-full small:w-full text-left ${styles.tableV3} ${styles.tableV41}`}>
                             <thead className="text-sm font-normal">
                                 <tr>
@@ -544,8 +618,41 @@ export default function AiModelDetection() {
                                 </tr>
                             </tbody>
                         </table>
-                    </div>
-                }
+                    }
+
+                    {
+                        selectSubObject &&
+                        <table className={`table-auto lg:min-w-full sm:w-full small:w-full text-left ${styles.tableV3} ${styles.tableV41}`}>
+                            <thead className="text-sm font-normal">
+                                <tr>
+                                    {
+                                        tableDataSubObject && Object.keys(`tableDataSubObject`).length != 0 ?
+                                            Object.keys(tableDataSubObject).map((item: any, index: any) => (
+                                                <th className="capitalize" key={index}>
+                                                    {
+                                                        item.split(/(?=[A-Z])/).join(" ")
+                                                    }
+                                                </th>
+                                            ))
+                                            : null
+                                    }
+                                </tr>
+                            </thead>
+                            <tbody className="text-sm font-normal">
+                                <tr>
+                                    {
+                                        Object.values(tableDataSubObject).map((item: any, index: any) => (
+                                            <td key={index}>
+                                                <span>{item ? item : '-'}</span>
+                                            </td>
+                                        ))
+                                    }
+                                </tr>
+                            </tbody>
+                        </table>
+                    }
+
+                </div>
 
             </div>
 
