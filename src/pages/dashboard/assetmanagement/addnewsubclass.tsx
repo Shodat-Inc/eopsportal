@@ -6,7 +6,6 @@ import Router from 'next/router'
 import Image from "next/image";
 import axios from "axios";
 import moment from "moment";
-import Select from "react-select";
 import { successMessageAction } from '@/store/actions/classAction';
 
 export default function AddNewSubClass(props: any) {
