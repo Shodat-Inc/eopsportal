@@ -350,6 +350,9 @@
     background: transparent;
     transition: border-color 0.2s;
 }
+.form__field__w {
+    width: 250px;
+}
 
 .form__field::placeholder {
     color: transparent;

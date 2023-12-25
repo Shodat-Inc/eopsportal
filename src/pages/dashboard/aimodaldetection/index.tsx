@@ -315,24 +315,26 @@ export default function AiModelDetection() {
 
             }).then(function (response) {
                 if (response) {
-                    // let a = selectClass === "Vehicles" ? (item.object === "Tire" ? item?.tags?.SerialID : item?.tags?.SerialNo) : item?.tags?.ID
-                    const filtered = response.data.filter((item: any) => {
-                        return (item.object === selectSubClass) && item?.tags?.SerialNo === selectSubObject
-
-                    })
-                    setTableDataSubObject(filtered[0]?.tags)
+                    let filtered = [] as any;
+                    if (selectClass === "Vehicles") {
+                        filtered = response.data.filter((item: any) => {
+                            if(selectSubClass === "Battery") {
+                                return (item.object === selectSubClass) && item?.tags?.SerialNo === selectSubObject
+                            }else {
+                                return (item.object === selectSubClass) && item?.tags?.SerialID === selectSubObject
+                            }
+                        })
+                        setTableDataSubObject(filtered[0]?.tags)
+                    } else {
+                        filtered = response.data.filter((item: any) => {
+                            return (item.object === selectSubClass) && item?.tags?.ID === selectSubObject
+                        })
+                        setTableDataSubObject(filtered[0]?.tags)
+                    }
                     console.log({
                         "HERAMIT": response.data,
                         filtered: filtered
                     })
-                    // let filtered = response.data.filter((item: any) => {
-                    //     if (selectClass === 'Vehicles') {
-                    //         return item?.subObjects?.VIN === selectObject
-                    //     } else {
-                    //         return item?.subObjects?.PlantID === selectObject
-                    //     }
-                    // })
-                    // setSelObjectData(filtered[0]?.subObjects)
                 }
             }).catch(function (error) {
                 console.log({
@@ -396,70 +398,78 @@ export default function AiModelDetection() {
                     </div>
 
                     <div className="text-md text-[#666666] ml-5 mr-5">Or</div>
-                    <select
-                        name="selectClass"
-                        id="selectClass"
-                        className={`border border-gray-[#A7A7A7] rounded-lg h-[56px] w-[250px] pl-2 pr-2 text-[#000000] ${disable == 2 ? 'bg-[#EEEEEE]' : 'bg-white'}`}
-                        onChange={selectClassFunction}
-                        value={selectClass}
-                        disabled={disable == 2}
-                    >
-                        <option value="">Select Class</option>
-                        {
-                            getAllClass && getAllClass.length > 0 ?
-                                getAllClass.map((item: any, index: any) => {
-                                    return (
-                                        <option
-                                            key={index}
-                                            value={item.assetName}
-                                        >
-                                            {item.assetName}
-                                        </option>
-                                    )
-                                })
-                                : null
-                        }
-                    </select>
 
-                    {
-                        showObject &&
+                    <div className={`${styles.form__wrap} relative`}>
+                        <span className="absolute text-[14px] bg-white px-[3px] py-0 left-[15px] top-[-10px]">Class</span>
                         <select
                             name="selectClass"
                             id="selectClass"
-                            className={`border border-gray-[#A7A7A7] rounded-lg h-[56px] w-[250px] pl-2 pr-2 text-[#000000] ml-4`}
-                            onChange={selectObjectFunction}
-                            value={selectObject}
+                            className={`border border-gray-[#A7A7A7] rounded-lg h-[56px] w-[250px] pl-2 pr-2 text-[#000000] ${disable == 2 ? 'bg-[#EEEEEE]' : 'bg-white'} ${styles.form__field} ${styles.form__field__w}`}
+                            onChange={selectClassFunction}
+                            value={selectClass}
+                            disabled={disable == 2}
                         >
-                            <option value="">Select {title}</option>
+                            <option value="">Select Class</option>
                             {
-                                classObject && classObject.length > 0 ?
-                                    classObject.map((item: any, index: any) => {
-                                        let key = '';
-                                        if (classSelector.dataforeopswatchReducer.class && classSelector.dataforeopswatchReducer.class !== "") {
-                                            if (classSelector.dataforeopswatchReducer.class === "Vehicles") {
-                                                key = item.subObjects?.VIN
-                                            } else {
-                                                key = item.subObjects?.PlantID
-                                            }
-                                        } else {
-                                            if (selectClass === "Vehicles") {
-                                                key = item.subObjects?.VIN
-                                            } else {
-                                                key = item.subObjects?.PlantID
-                                            }
-                                        }
+                                getAllClass && getAllClass.length > 0 ?
+                                    getAllClass.map((item: any, index: any) => {
                                         return (
                                             <option
                                                 key={index}
-                                                value={key}
+                                                value={item.assetName}
                                             >
-                                                {key}
+                                                {item.assetName}
                                             </option>
                                         )
                                     })
                                     : null
                             }
                         </select>
+                    </div>
+
+                    {
+                        showObject &&
+
+                        <div className={`${styles.form__wrap} relative`}>
+                            <span className="absolute text-[14px] bg-white px-[3px] py-0 left-[30px] top-[-10px]">{title}</span>
+                            <select
+                                name="selectClass"
+                                id="selectClass"
+                                className={`border border-gray-[#A7A7A7] rounded-lg h-[56px] w-[250px] pl-2 pr-2 text-[#000000] ml-4 ${styles.form__field} ${styles.form__field__w}`}
+                                onChange={selectObjectFunction}
+                                value={selectObject}
+                            >
+                                <option value="">Select {title}</option>
+                                {
+                                    classObject && classObject.length > 0 ?
+                                        classObject.map((item: any, index: any) => {
+                                            let key = '';
+                                            if (classSelector.dataforeopswatchReducer.class && classSelector.dataforeopswatchReducer.class !== "") {
+                                                if (classSelector.dataforeopswatchReducer.class === "Vehicles") {
+                                                    key = item.subObjects?.VIN
+                                                } else {
+                                                    key = item.subObjects?.PlantID
+                                                }
+                                            } else {
+                                                if (selectClass === "Vehicles") {
+                                                    key = item.subObjects?.VIN
+                                                } else {
+                                                    key = item.subObjects?.PlantID
+                                                }
+                                            }
+                                            return (
+                                                <option
+                                                    key={index}
+                                                    value={key}
+                                                >
+                                                    {key}
+                                                </option>
+                                            )
+                                        })
+                                        : null
+                                }
+                            </select>
+                        </div>
                     }
 
                     <div className="flex justify-start items-center ml-4">
@@ -501,49 +511,55 @@ export default function AiModelDetection() {
                         </div>
 
                         <div className="text-md text-[#666666] ml-5 mr-5 invisible">Or</div>
-                        <select
-                            name="selectSubClass"
-                            id="selectSubClass"
-                            className={`border border-gray-[#A7A7A7] rounded-lg h-[56px] w-[250px] pl-2 pr-2 text-[#000000] bg-white`}
-                            onChange={selectSubClassFunction}
-                            value={selectSubClass}
-                        >
-                            <option value="">Select sub class</option>
-                            {
-                                getAllSubClass && getAllSubClass.length > 0 ?
-                                    getAllSubClass.map((item: any, index: any) => (
-                                        <option key={index} value={item.assetName}>{item.assetName}</option>
 
-                                    ))
-                                    :
-                                    null
-                            }
-                        </select>
+                        <div className={`${styles.form__wrap} relative`}>
+                            <span className="absolute text-[14px] bg-white px-[3px] py-0 left-[15px] top-[-10px]">Sub Class</span>
+                            <select
+                                name="selectSubClass"
+                                id="selectSubClass"
+                                className={`border border-gray-[#A7A7A7] rounded-lg h-[56px] w-[250px] pl-2 pr-2 text-[#000000] bg-white ${styles.form__field} ${styles.form__field__w}`}
+                                onChange={selectSubClassFunction}
+                                value={selectSubClass}
+                            >
+                                <option value="">Select sub class</option>
+                                {
+                                    getAllSubClass && getAllSubClass.length > 0 ?
+                                        getAllSubClass.map((item: any, index: any) => (
+                                            <option key={index} value={item.assetName}>{item.assetName}</option>
 
+                                        ))
+                                        :
+                                        null
+                                }
+                            </select>
+                        </div>
 
-                        <select
-                            name="selectSubObject"
-                            id="selectSubObject"
-                            className={`border border-gray-[#A7A7A7] rounded-lg h-[56px] w-[250px] pl-2 pr-2 text-[#000000] ml-4`}
-                            onChange={selectSubObjectsFunction}
-                            value={selectSubObject}
-                        >
-                            <option value="">Select objects</option>
-                            {
-                                getAllSubObject && getAllSubObject.length > 0 ?
-                                    getAllSubObject.map((item: any, index: any) => (
-                                        <option
-                                            key={index}
-                                            value={selectClass === "Vehicles" ? (item.object === "Tire" ? item?.tags?.SerialID : item?.tags?.SerialNo) : item?.tags?.ID}
-                                        >
-                                            {selectClass === "Vehicles" ? (item.object === "Tire" ? item?.tags?.SerialID : item?.tags?.SerialNo) : item?.tags?.ID}
-                                        </option>
+                        <div className={`${styles.form__wrap} relative`}>
+                            <span className="absolute text-[14px] bg-white px-[3px] py-0 left-[30px] top-[-10px]">Objects</span>
+                            <select
+                                name="selectSubObject"
+                                id="selectSubObject"
+                                className={`border border-gray-[#A7A7A7] rounded-lg h-[56px] w-[250px] pl-2 pr-2 text-[#000000] ml-4 ${styles.form__field} ${styles.form__field__w}`}
+                                onChange={selectSubObjectsFunction}
+                                value={selectSubObject}
+                            >
+                                <option value="">Select objects</option>
+                                {
+                                    getAllSubObject && getAllSubObject.length > 0 ?
+                                        getAllSubObject.map((item: any, index: any) => (
+                                            <option
+                                                key={index}
+                                                value={selectClass === "Vehicles" ? (item.object === "Tire" ? item?.tags?.SerialID : item?.tags?.SerialNo) : item?.tags?.ID}
+                                            >
+                                                {selectClass === "Vehicles" ? (item.object === "Tire" ? item?.tags?.SerialID : item?.tags?.SerialNo) : item?.tags?.ID}
+                                            </option>
 
-                                    ))
-                                    :
-                                    null
-                            }
-                        </select>
+                                        ))
+                                        :
+                                        null
+                                }
+                            </select>
+                        </div>
 
 
                         <div className="flex justify-start items-center ml-9">
