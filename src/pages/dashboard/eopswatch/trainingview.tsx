@@ -102,7 +102,7 @@ export default function TrainingView() {
         setValue(e.target.value);
         
         const filtered = plots.filter((item: any) => {
-            return parseInt(item.performance) <= parseInt(e.target.value)
+            return parseInt(item.performance) >= parseInt(e.target.value)
         })
         setPlotData(filtered)
         console.log({
@@ -115,7 +115,7 @@ export default function TrainingView() {
     useEffect(() => {
         if (value !== 0) {
             const filter = plots.filter((item: any) => {
-                return item.performance <= value
+                return item.performance >= value
             })
             setPlotData(filter)
         }
