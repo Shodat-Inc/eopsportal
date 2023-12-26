@@ -40,7 +40,7 @@ export default function ObjectManagement(props: any) {
             }, 5000)
         }
 
-    }, [classSelector.successMessageReducer])
+    }, [classSelector])
 
     // Toggle the filters dropdown
     const toggleFilterFunction = () => {
