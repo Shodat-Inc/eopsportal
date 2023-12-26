@@ -7,6 +7,7 @@ import { OBJ_SELECT_DEFAULT_CLASS_ERROR, OBJ_SELECT_DEFAULT_CLASS_SUCCESS } from
 import { OBJ_SELECT_DEFAULT_SUB_CLASS_ERROR, OBJ_SELECT_DEFAULT_SUB_CLASS_SUCCESS } from "../types";
 import { SUCCESS_MESSAGE_ERROR, SUCCESS_MESSAGE_SUCCESS } from "../types";
 import { DATA_FOR_EOPSWATCH_ERROR, DATA_FOR_EOPSWATCH_SUCCESS } from "../types";
+import { EDIT_CLASS_MODEL_ERROR, EDIT_CLASS_MODEL_SUCCESS } from "../types";
 
 import axios from "axios";
 let access_token = "" as any;
@@ -218,6 +219,33 @@ export const setDataForeOpsWatchAction = (action:any) => async (dispatch: any) =
             dispatch({
                 type: DATA_FOR_EOPSWATCH_ERROR,
                 payload: action
+            });
+        }
+    } catch (err) {
+        console.log("err in action:", err)
+    }
+};
+
+
+/*
+Function to toggle "EDIT Class " model
+*/
+export const editClassModalAction = (item: any) => async (dispatch: any) => {
+    try {
+        if (item === true) {
+            dispatch({
+                type: EDIT_CLASS_MODEL_SUCCESS,
+                payload: item
+            });
+        } else if (item === false) {
+            dispatch({
+                type: EDIT_CLASS_MODEL_SUCCESS,
+                payload: item
+            });
+        } else {
+            dispatch({
+                type: EDIT_CLASS_MODEL_ERROR,
+                payload: "Failed!"
             });
         }
     } catch (err) {

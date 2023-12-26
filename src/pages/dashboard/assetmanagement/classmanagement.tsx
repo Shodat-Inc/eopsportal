@@ -5,6 +5,8 @@ import Image from "next/image";
 import Link from 'next/dist/client/link';
 import AddNewClass from './addnewclass';
 import { successMessageAction } from '@/store/actions/classAction';
+import EditClass from './editclass';
+import { editClassModalAction } from '@/store/actions/classAction';
 
 export default function ClassManagement(props: any) {
     const dispatch = useDispatch<any>();
@@ -14,12 +16,17 @@ export default function ClassManagement(props: any) {
     const [actions, setActions] = useState(false);
     const [actionCount, setActionCount] = useState(1);
     const [showModal, setShowModal] = useState(Boolean);
+    // const [showEditClassModal, setShowEditClassModal] = useState(Boolean);
     const [deleteModal, setDeleteModal] = useState(false);
     const [searchClass, setSearchClass] = useState('');
     const [allData, setAllData] = useState(props.classData);
+    const [selectedClass, setSelectedClass] = useState("")
 
     // All class reducer states
     const allClassSelector = useSelector((state: any) => state.classReducer);
+    // console.log({
+    //     allClassSelector:allClassSelector?.editClassModalReducer
+    // })
 
     // Close Success message after 5 second if true
     useEffect(() => {
@@ -34,7 +41,7 @@ export default function ClassManagement(props: any) {
     useEffect(() => {
         setShowModal(props.addClassModal)
     }, [props.addClassModal])
-    
+
     // Set class data on page load
     useEffect(() => {
         setAllData(props.classData)
@@ -54,8 +61,12 @@ export default function ClassManagement(props: any) {
     }
     const handleClick = (item: any) => {
         setShowModal(false);
-        props.handleaddClassModal(item)
+        props.handleaddClassModal(item);
     }
+
+    // const handleClickForEditClass = (item: any) => {
+    //     setShowEditClassModal(false)
+    // }
 
     const deleteModalFunction = () => {
         setDeleteModal(true);
@@ -90,6 +101,14 @@ export default function ClassManagement(props: any) {
         } else {
             setAllData(props.classData)
         }
+    }
+
+
+    // Open Edit class modal
+    const openEditClassModal = (item:any) => {
+        setSelectedClass(item)
+        dispatch(editClassModalAction(true));
+        setActions(false);
     }
 
     return (
@@ -215,11 +234,11 @@ export default function ClassManagement(props: any) {
                                                     </button>
                                                     {(actions && actionCount === index + 1) &&
                                                         <div className="bg-black text-white border overflow-hidden border-black rounded rounded-xl w-[100px] flex flex-col flex-wrap items-start justify-start shadow-sm absolute top-[30px] right-[75px] z-[1]">
-                                                            <Link
-                                                                href="#"
+                                                            <button
+                                                                onClick={()=>openEditClassModal(item.assetName)}
                                                                 className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[30px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
                                                                 <span>Edit</span>
-                                                            </Link>
+                                                            </button>
                                                             <button
                                                                 onClick={deleteModalFunction}
                                                                 className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[30px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
@@ -255,6 +274,14 @@ export default function ClassManagement(props: any) {
             <AddNewClass
                 handleClick={handleClick}
                 show={showModal}
+            />
+
+
+            {/* Add Edit Class */}
+            <EditClass
+                selectedClass={selectedClass}
+                allClassData={allData}
+                show={allClassSelector?.editClassModalReducer}
             />
 
 

@@ -7,6 +7,7 @@ import { OBJ_SELECT_DEFAULT_CLASS_ERROR, OBJ_SELECT_DEFAULT_CLASS_SUCCESS } from
 import { OBJ_SELECT_DEFAULT_SUB_CLASS_ERROR, OBJ_SELECT_DEFAULT_SUB_CLASS_SUCCESS } from "../types";
 import { SUCCESS_MESSAGE_ERROR, SUCCESS_MESSAGE_SUCCESS } from "../types";
 import { DATA_FOR_EOPSWATCH_ERROR, DATA_FOR_EOPSWATCH_SUCCESS } from "../types";
+import { EDIT_CLASS_MODEL_ERROR, EDIT_CLASS_MODEL_SUCCESS } from "../types";
 
 const initialState = {
   selectedClass: '',
@@ -17,7 +18,8 @@ const initialState = {
   objDefaultClassSelector: '',
   objDefaultSubClassSelector: '',
   successMessageReducer: false,
-  dataforeopswatchReducer: {}
+  dataforeopswatchReducer: {},
+  editClassModalReducer: false
 };
 
 const classReducer = (state = initialState, action: any) => {
@@ -121,6 +123,17 @@ const classReducer = (state = initialState, action: any) => {
       return {
         dataforeopswatchReducer: action.payload,
       };
+
+    case EDIT_CLASS_MODEL_SUCCESS:
+      return {
+        ...state,
+        editClassModalReducer: action.payload,
+      };
+
+    case EDIT_CLASS_MODEL_ERROR:
+      return {
+        error: action.payload,
+      }
 
     default:
       return state;
