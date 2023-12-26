@@ -59,6 +59,15 @@ export default function AiModelDetection() {
         }        
     }, [classSelector.dataforeopswatchReducer?.subClass])
 
+
+    useEffect(() => {
+        if(Object.keys(classSelector.dataforeopswatchReducer).length !== 0 && classSelector.dataforeopswatchReducer.subClass!=="") {
+            // toggleObjectLevel
+            setToggleObjectLevel(true)
+        }
+
+    },  [classSelector.dataforeopswatchReducer] )
+
     // select class by default
     async function fetchObjectData() {
         try {
@@ -507,7 +516,7 @@ export default function AiModelDetection() {
 
 
                 {/* Object/Sub Class level */}
-                {toggleObjectLevel || classSelector.dataforeopswatchReducer?.subClass!=="" &&
+                {toggleObjectLevel &&
                     <div className={`flex ${showObject ? 'justify-between' : 'justify-start'} mt-4 items-center w-full`}>
                         <div className="flex relative invisible">
                             <Image
