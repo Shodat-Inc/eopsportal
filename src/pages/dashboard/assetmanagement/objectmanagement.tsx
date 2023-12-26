@@ -14,7 +14,8 @@ export default function ObjectManagement(props: any) {
     const [toggleFilter, setToggleFilter] = useState(false);
     const [toggleArrow, setToggleArrow] = useState(false);
     const [toggleSort, setToggleSort] = useState(false);
-    const [chooseAsset, setChooseAsset] = useState(props.classData[0]?.assetName);
+    // const [chooseAsset, setChooseAsset] = useState(props.classData[0]?.assetName);
+    const [chooseAsset, setChooseAsset] = useState(props.classData && props.classData.length > 0 ? props.classData[0]?.assetName : '');
     const [toggleAsset, setToggleAsset] = useState(false);
     const [actions, setActions] = useState(false);
     const [actionCount, setActionCount] = useState(1);
@@ -53,8 +54,10 @@ export default function ObjectManagement(props: any) {
 
     // Set the choose asset on page load
     useEffect(() => {
-        setChooseAsset(props.classData[0]?.assetName);
-        dispatch(objDefaultClassSelectorFunction(props.classData[0]?.assetName))
+        if(props.classData && props.classData.length > 0) {
+            setChooseAsset(props.classData[0]?.assetName);
+            dispatch(objDefaultClassSelectorFunction(props.classData[0]?.assetName))
+        }
     }, [props.classData, dispatch])
 
     const handleDropDown = (item: any) => {
