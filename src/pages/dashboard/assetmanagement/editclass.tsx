@@ -442,7 +442,7 @@ export default function EditClass(props: any) {
                                     className="border border-black rounded-lg bg-black text-white text-lg w-20 h-12 mr-5 hover:bg-yellow-951 hover:text-white hover:border-yellow-951 ease-in-out duration-300 disabled:bg-gray-951 disabled:hover:border-gray-951 disabled:border-gray-951 transition-all duration-[100ms] transition-opacity duration-100 outline-none transform active:scale-75 transition-transform"
                                     disabled={(allTags && allTags.length > 0) ? false : true}
                                 >
-                                    Save
+                                    Update
                                 </button>
                                 <button
                                     className="border border-black rounded-lg bg-white text-black text-lg w-24 h-12 hover:text-white hover:bg-yellow-951 hover:border-yellow-951 ease-in-out duration-300 transition-all duration-[100ms] transition-opacity duration-100 outline-none transform active:scale-75 transition-transform"

@@ -223,7 +223,7 @@ export default function SubObjectManagement(props: any) {
     const eOpsWatchFunction = (item: any) => {
         let obj = '';
         if (props.defaultClass === "Manufacturing Plants") {
-            obj = item.PlantID
+            obj = item.ID
         } else {
             obj = item.VIN
         }

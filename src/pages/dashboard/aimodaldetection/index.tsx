@@ -40,9 +40,24 @@ export default function AiModelDetection() {
 
     // All class reducer states
     const classSelector = useSelector((state: any) => state.classReducer);
-    // console.log({
-    //     classSelector: classSelector.dataforeopswatchReducer
-    // })
+    console.log({
+        // classSelector: classSelector.dataforeopswatchReducer
+        classSelector: classSelector.dataforeopswatchReducer?.subClass
+    })
+
+    // Set Selected sub Object 
+    useEffect(()=>{
+        if(classSelector.dataforeopswatchReducer?.object!=="") {
+            setSelectSubObject(classSelector.dataforeopswatchReducer?.object)
+        }        
+    }, [classSelector.dataforeopswatchReducer?.object])
+
+    // Set Selected sub object 
+    useEffect(()=>{
+        if(classSelector.dataforeopswatchReducer?.subClass!=="") {
+            setSelectSubClass(classSelector.dataforeopswatchReducer?.subClass)
+        }        
+    }, [classSelector.dataforeopswatchReducer?.subClass])
 
     // select class by default
     async function fetchObjectData() {
@@ -320,8 +335,10 @@ export default function AiModelDetection() {
                         filtered = response.data.filter((item: any) => {
                             if(selectSubClass === "Battery") {
                                 return (item.object === selectSubClass) && item?.tags?.SerialNo === selectSubObject
-                            }else {
+                            }else if(selectSubClass === "Tire") {
                                 return (item.object === selectSubClass) && item?.tags?.SerialID === selectSubObject
+                            } else {
+                                return (item.object === selectSubClass) && item?.tags?.SerialNo === selectSubObject
                             }
                         })
                         setTableDataSubObject(filtered[0]?.tags)
@@ -490,7 +507,7 @@ export default function AiModelDetection() {
 
 
                 {/* Object/Sub Class level */}
-                {toggleObjectLevel &&
+                {toggleObjectLevel || classSelector.dataforeopswatchReducer?.subClass!=="" &&
                     <div className={`flex ${showObject ? 'justify-between' : 'justify-start'} mt-4 items-center w-full`}>
                         <div className="flex relative invisible">
                             <Image
@@ -657,11 +674,13 @@ export default function AiModelDetection() {
                             <tbody className="text-sm font-normal">
                                 <tr>
                                     {
+                                    tableDataSubObject && Object.keys(tableDataSubObject).length != 0 ?
                                         Object.values(tableDataSubObject).map((item: any, index: any) => (
                                             <td key={index}>
                                                 <span>{item ? item : '-'}</span>
                                             </td>
                                         ))
+                                        : null
                                     }
                                 </tr>
                             </tbody>
