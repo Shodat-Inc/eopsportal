@@ -138,47 +138,52 @@ export default function AssetManagement() {
             <div className="w-[100%] min-h-full rounded-xl bg-gray-966">
 
                 {/* Title */}
-                <div className="columns-2 flex justify-start items-center mb-2">
-                    <p className="text-black text-xl font-semibold">Asset Management</p>
-                    <div className="ml-8 flex justify-center items-center">
+                <div className="columns-2 flex justify-start items-center mb-2 relative">
+                    
+                    <div className="flex justify-center items-center">
                         {
-                            tab === 4 &&
-                            <div className="flex justify-start items-center">
+                            tab === 4 ?
+                            <div className="flex justify-start items-center mr-3 absolute left-0">
                                 <button
                                     onClick={() => backToPrevComponent(4)}
-                                    className="flex justify-start items-center"
+                                    className="flex justify-start items-center border border-black"
                                 >
                                     <Image
                                         src="/img/arrow-left-black.svg"
                                         alt="arrow-left-black"
-                                        height={24}
-                                        width={24}
-                                        className="mr-2"
+                                        height={22}
+                                        width={22}
+                                        className=""
                                     />
-                                    <span>Back</span>
+                                    {/* <span>Back</span> */}
                                 </button>
                             </div>
+                            :
+                            <div className="flex justify-start items-center mr-3 h-[22px] w-[24px] absolute left-0"></div>
                         }
                         {
-                            tab === 3 &&
-                            <div className="flex justify-start items-center">
+                            tab === 3 ?
+                            <div className="flex justify-start items-center mr-3 absolute left-0">
                                 <button
                                     onClick={() => backToPrevComponent(3)}
-                                    className="flex justify-start items-center"
+                                    className="flex justify-start items-center border border-black"
                                 >
                                     <Image
                                         src="/img/arrow-left-black.svg"
                                         alt="arrow-left-black"
-                                        height={24}
-                                        width={24}
-                                        className="mr-2"
+                                        height={22}
+                                        width={22}
                                     />
-                                    <span>Back</span>
+                                    {/* <span>Back</span> */}
                                 </button>
                             </div>
+                            :
+                            <div className="flex justify-start items-center mr-3 h-[22px] w-[24px] absolute left-0"></div>
                         }
 
                     </div>
+
+                    <p className="text-black text-xl font-semibold pl-10">Asset Management</p>
                 </div>
 
                 {/* Breadcrumb */}
