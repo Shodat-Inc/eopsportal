@@ -7,6 +7,7 @@ import Link from 'next/dist/client/link';
 import { setClassBreadcrumb, objDefaultClassSelectorFunction } from '@/store/actions/classAction';
 import AddNewClassObject from './addnewclassobject';
 import { successMessageAction } from '@/store/actions/classAction';
+import EditObject from './editobject';
 
 export default function ObjectManagement(props: any) {
 
@@ -54,7 +55,7 @@ export default function ObjectManagement(props: any) {
 
     // Set the choose asset on page load
     useEffect(() => {
-        if(props.classData && props.classData.length > 0) {
+        if (props.classData && props.classData.length > 0) {
             setChooseAsset(props.classData[0]?.assetName);
             dispatch(objDefaultClassSelectorFunction(props.classData[0]?.assetName))
         }
@@ -457,6 +458,10 @@ export default function ObjectManagement(props: any) {
                 selectedParentClass={chooseAsset}
                 classData={props.classData}
                 objID={objID}
+            />
+
+            <EditObject
+                show={true}
             />
 
         </div>
