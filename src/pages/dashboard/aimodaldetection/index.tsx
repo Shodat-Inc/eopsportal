@@ -415,7 +415,7 @@ export default function AiModelDetection() {
                             placeholder="Search by ID or Name"
                             id="searchobjects"
                             name="searchobjects"
-                            className={`border border-gray-[#A7A7A7] rounded-lg h-[56px] w-[250px] pl-10 pr-2 text-[#666666] ${disable == 1 ? 'bg-[#EEEEEE]' : 'bg-white'}`}
+                            className={`border border-[#A7A7A7] rounded-lg h-[56px] w-[250px] pl-10 pr-2 text-[#666666] ${disable == 1 ? 'bg-[#F2F2F2]' : 'bg-white'}`}
                             autoComplete="off"
                             value={search}
                             onChange={searchFunction}
@@ -430,7 +430,7 @@ export default function AiModelDetection() {
                         <select
                             name="selectClass"
                             id="selectClass"
-                            className={`border border-gray-[#A7A7A7] rounded-lg h-[56px] w-[250px] pl-2 pr-2 text-[#000000] ${disable == 2 ? 'bg-[#EEEEEE]' : 'bg-white'} ${styles.form__field} ${styles.form__field__w}`}
+                            className={`border border-[#A7A7A7] rounded-lg h-[56px] w-[250px] pl-2 pr-2 text-[#000000] ${disable == 2 ? 'bg-[#EEEEEE]' : 'bg-white'} ${styles.form__field} ${styles.form__field__w}`}
                             onChange={selectClassFunction}
                             value={selectClass}
                             disabled={disable == 2}
@@ -461,7 +461,7 @@ export default function AiModelDetection() {
                             <select
                                 name="selectClass"
                                 id="selectClass"
-                                className={`border border-gray-[#A7A7A7] rounded-lg h-[56px] w-[250px] pl-2 pr-2 text-[#000000] ml-4 ${styles.form__field} ${styles.form__field__w}`}
+                                className={`border border-[#A7A7A7] rounded-lg h-[56px] w-[250px] pl-2 pr-2 text-[#000000] ml-4 ${styles.form__field} ${styles.form__field__w}`}
                                 onChange={selectObjectFunction}
                                 value={selectObject}
                             >
@@ -531,7 +531,7 @@ export default function AiModelDetection() {
                                 placeholder="Search by ID or Name"
                                 id="searchobjects"
                                 name="searchobjects"
-                                className={`border border-gray-[#A7A7A7] rounded-lg h-[56px] w-[250px] pl-10 pr-2 text-[#666666] bg-white`}
+                                className={`border border-[#A7A7A7] rounded-lg h-[56px] w-[250px] pl-10 pr-2 text-[#666666] bg-white`}
                                 autoComplete="off"
                             />
                         </div>
@@ -543,7 +543,7 @@ export default function AiModelDetection() {
                             <select
                                 name="selectSubClass"
                                 id="selectSubClass"
-                                className={`border border-gray-[#A7A7A7] rounded-lg h-[56px] w-[250px] pl-2 pr-2 text-[#000000] bg-white ${styles.form__field} ${styles.form__field__w}`}
+                                className={`border border-[#A7A7A7] rounded-lg h-[56px] w-[250px] pl-2 pr-2 text-[#000000] bg-white ${styles.form__field} ${styles.form__field__w}`}
                                 onChange={selectSubClassFunction}
                                 value={selectSubClass}
                             >
@@ -565,7 +565,7 @@ export default function AiModelDetection() {
                             <select
                                 name="selectSubObject"
                                 id="selectSubObject"
-                                className={`border border-gray-[#A7A7A7] rounded-lg h-[56px] w-[250px] pl-2 pr-2 text-[#000000] ml-4 ${styles.form__field} ${styles.form__field__w}`}
+                                className={`border border-[#A7A7A7] rounded-lg h-[56px] w-[250px] pl-2 pr-2 text-[#000000] ml-4 ${styles.form__field} ${styles.form__field__w}`}
                                 onChange={selectSubObjectsFunction}
                                 value={selectSubObject}
                             >
