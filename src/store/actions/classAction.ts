@@ -8,6 +8,9 @@ import { OBJ_SELECT_DEFAULT_SUB_CLASS_ERROR, OBJ_SELECT_DEFAULT_SUB_CLASS_SUCCES
 import { SUCCESS_MESSAGE_ERROR, SUCCESS_MESSAGE_SUCCESS } from "../types";
 import { DATA_FOR_EOPSWATCH_ERROR, DATA_FOR_EOPSWATCH_SUCCESS } from "../types";
 import { EDIT_CLASS_MODEL_ERROR, EDIT_CLASS_MODEL_SUCCESS } from "../types";
+import { EDIT_SUB_CLASS_MODEL_ERROR, EDIT_SUB_CLASS_MODEL_SUCCESS } from "../types";
+import { EDIT_OBJECT_MODEL_ERROR, EDIT_OBJECT_MODEL_SUCCESS } from "../types";
+import { EDIT_SUB_OBJECT_MODEL_ERROR, EDIT_SUB_OBJECT_MODEL_SUCCESS } from "../types";
 
 import axios from "axios";
 let access_token = "" as any;
@@ -245,6 +248,87 @@ export const editClassModalAction = (item: any) => async (dispatch: any) => {
         } else {
             dispatch({
                 type: EDIT_CLASS_MODEL_ERROR,
+                payload: "Failed!"
+            });
+        }
+    } catch (err) {
+        console.log("err in action:", err)
+    }
+};
+
+
+/*
+Function to toggle "EDIT SUB CLASS " model
+*/
+export const editSubClassModalAction = (item: any) => async (dispatch: any) => {
+    try {
+        if (item === true) {
+            dispatch({
+                type: EDIT_SUB_CLASS_MODEL_SUCCESS,
+                payload: item
+            });
+        } else if (item === false) {
+            dispatch({
+                type: EDIT_SUB_CLASS_MODEL_SUCCESS,
+                payload: item
+            });
+        } else {
+            dispatch({
+                type: EDIT_SUB_CLASS_MODEL_ERROR,
+                payload: "Failed!"
+            });
+        }
+    } catch (err) {
+        console.log("err in action:", err)
+    }
+};
+
+
+/*
+Function to toggle "EDIT OBJECT " model
+*/
+export const editObjectModalAction = (item: any) => async (dispatch: any) => {
+    try {
+        if (item === true) {
+            dispatch({
+                type: EDIT_OBJECT_MODEL_SUCCESS,
+                payload: item
+            });
+        } else if (item === false) {
+            dispatch({
+                type: EDIT_OBJECT_MODEL_SUCCESS,
+                payload: item
+            });
+        } else {
+            dispatch({
+                type: EDIT_OBJECT_MODEL_ERROR,
+                payload: "Failed!"
+            });
+        }
+    } catch (err) {
+        console.log("err in action:", err)
+    }
+};
+
+
+/*
+Function to toggle "EDIT SUB OBJECT " model
+*/
+export const editSubObjectModalAction = (item: any) => async (dispatch: any) => {
+    try {
+        if (item === true) {
+            dispatch({
+                type: EDIT_SUB_OBJECT_MODEL_SUCCESS,
+                payload: item
+            });
+        } else if (item === false) {
+            dispatch({
+                type: EDIT_SUB_OBJECT_MODEL_SUCCESS,
+                payload: item
+            });
+        } else {
+            dispatch({
+                type: EDIT_SUB_OBJECT_MODEL_ERROR,
                 payload: "Failed!"
             });
         }

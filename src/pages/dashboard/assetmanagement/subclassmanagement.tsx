@@ -5,8 +5,11 @@ import Image from "next/image";
 import Link from 'next/dist/client/link';
 import AddNewSubClass from './addnewsubclass';
 import axios from 'axios';
-export default function SubClassManagement(props: any) {
+import EditSubClass from './editsubclass';
+import { editSubClassModalAction } from '@/store/actions/classAction';
 
+export default function SubClassManagement(props: any) {
+    const dispatch = useDispatch<any>();
     const [toggleFilter, setToggleFilter] = useState(false);
     const [toggleArrow, setToggleArrow] = useState(false);
     const [toggleSort, setToggleSort] = useState(false);
@@ -17,8 +20,8 @@ export default function SubClassManagement(props: any) {
     const [subClassData, setSubClassData] = useState([] as any);
     const [search, setSearch] = useState('');
 
-    // Reducer Redux data
-    // const classReducerData = useSelector((state: any) => state.classReducer);
+    // All class reducer states
+    const allClassSelector = useSelector((state: any) => state.classReducer);
 
     useEffect(() => {
         setShowModal(props.addSubClassModal)
@@ -109,6 +112,14 @@ export default function SubClassManagement(props: any) {
         } else {
             fetchData();
         }
+    }
+
+
+    // Open Edit class modal
+    const openEditSubClassModal = (item:any) => {
+        // setSelectedClass(item)
+        dispatch(editSubClassModalAction(true));
+        setActions(false);
     }
 
     return (
@@ -224,11 +235,11 @@ export default function SubClassManagement(props: any) {
                                                 </button>
                                                 {(actions && actionCount === index + 1) &&
                                                     <div className="bg-black text-white border overflow-hidden border-black rounded rounded-xl w-[100px] flex flex-col flex-wrap items-start justify-start shadow-sm absolute top-[30px] right-[75px] z-[1]">
-                                                        <Link
-                                                            href="#"
+                                                        <button
+                                                            onClick={() => openEditSubClassModal(item.assetName)}
                                                             className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[30px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
                                                             <span>Edit</span>
-                                                        </Link>
+                                                        </button>
                                                         <button
                                                             onClick={deleteModalFunction}
                                                             className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[30px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
@@ -270,6 +281,15 @@ export default function SubClassManagement(props: any) {
                 show={showModal}
                 selectedParentClass={props.selectedParentClass}
                 classData={props.classData}
+            />
+
+
+            {/* Edit Sub Class Component */}
+            <EditSubClass            
+            show={allClassSelector?.editSubClassModalReducer}
+            selectedParentClass={props.selectedParentClass ? props.selectedParentClass : ''}
+            classData={props.classData ? props.classData : []}
+            subClassData={subClassData ? subClassData : []}
             />
 
 

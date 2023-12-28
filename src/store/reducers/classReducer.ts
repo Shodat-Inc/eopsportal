@@ -8,6 +8,9 @@ import { OBJ_SELECT_DEFAULT_SUB_CLASS_ERROR, OBJ_SELECT_DEFAULT_SUB_CLASS_SUCCES
 import { SUCCESS_MESSAGE_ERROR, SUCCESS_MESSAGE_SUCCESS } from "../types";
 import { DATA_FOR_EOPSWATCH_ERROR, DATA_FOR_EOPSWATCH_SUCCESS } from "../types";
 import { EDIT_CLASS_MODEL_ERROR, EDIT_CLASS_MODEL_SUCCESS } from "../types";
+import { EDIT_SUB_CLASS_MODEL_ERROR, EDIT_SUB_CLASS_MODEL_SUCCESS } from "../types";
+import { EDIT_OBJECT_MODEL_ERROR, EDIT_OBJECT_MODEL_SUCCESS } from "../types";
+import { EDIT_SUB_OBJECT_MODEL_ERROR, EDIT_SUB_OBJECT_MODEL_SUCCESS } from "../types";
 
 const initialState = {
   selectedClass: '',
@@ -19,7 +22,10 @@ const initialState = {
   objDefaultSubClassSelector: '',
   successMessageReducer: false,
   dataforeopswatchReducer: {},
-  editClassModalReducer: false
+  editClassModalReducer: false,
+  editSubClassModalReducer: false,
+  editObjectModalReducer: false,
+  editSubObjectModalReducer: false
 };
 
 const classReducer = (state = initialState, action: any) => {
@@ -131,6 +137,39 @@ const classReducer = (state = initialState, action: any) => {
       };
 
     case EDIT_CLASS_MODEL_ERROR:
+      return {
+        error: action.payload,
+      }
+
+    case EDIT_SUB_CLASS_MODEL_SUCCESS:
+      return {
+        ...state,
+        editSubClassModalReducer: action.payload,
+      };
+
+    case EDIT_SUB_CLASS_MODEL_ERROR:
+      return {
+        error: action.payload,
+      }
+
+    case EDIT_OBJECT_MODEL_SUCCESS:
+      return {
+        ...state,
+        editObjectModalReducer: action.payload,
+      };
+
+    case EDIT_OBJECT_MODEL_ERROR:
+      return {
+        error: action.payload,
+      }
+
+    case EDIT_SUB_OBJECT_MODEL_SUCCESS:
+      return {
+        ...state,
+        editSubObjectModalReducer: action.payload,
+      };
+
+    case EDIT_SUB_OBJECT_MODEL_ERROR:
       return {
         error: action.payload,
       }
