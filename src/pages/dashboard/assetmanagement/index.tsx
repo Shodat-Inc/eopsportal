@@ -143,7 +143,7 @@ export default function AssetManagement() {
                     <div className="flex justify-center items-center">
                         {
                             tab === 4 ?
-                            <div className="flex justify-start items-center mr-3 absolute left-0">
+                            <div className="flex justify-start items-center mr-3 absolute left-0 z-[99]">
                                 <button
                                     onClick={() => backToPrevComponent(4)}
                                     className="flex justify-start items-center border border-black"
@@ -163,7 +163,7 @@ export default function AssetManagement() {
                         }
                         {
                             tab === 3 ?
-                            <div className="flex justify-start items-center mr-3 absolute left-0">
+                            <div className="flex justify-start items-center mr-3 absolute left-0 z-[99]">
                                 <button
                                     onClick={() => backToPrevComponent(3)}
                                     className="flex justify-start items-center border border-black"

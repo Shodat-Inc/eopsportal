@@ -25,6 +25,23 @@ export default function EditSubClass(props: any) {
     const [assetDataType, setAssetDataType] = useState<any[]>([]);
     const [dtObject, setDtObject] = useState<any[]>([]);
     const [allClassData, setAllClassData] = useState([] as any);
+    const [data, setData] = useState([] as any);
+    const [pjk, setPjk] = useState([] as any);
+
+    // Get Selected Class Data
+    useEffect(() => {
+        if (props.subClassData.length > 0 && props.selectedClass != "") {
+            const filtered = props.subClassData.filter((item: any) => {
+                return item.assetName === props.selectedSubClass
+            })
+            setData(filtered);
+            if (filtered) {
+                setAllTags(filtered[0]?.tags);
+                setPjk(filtered[0]?.parentJoinKey)
+            }
+        }
+
+    }, [props.subClassData, props.selectedSubClass])
 
 
     // Get class data and filter parent tags based on selected class
@@ -34,11 +51,11 @@ export default function EditSubClass(props: any) {
                 return item.assetName === props.selectedParentClass;
             })
             setAllClassData(filtered)
-            
+
             let label = [] as any;
             let val = [] as any;
             let ajson = [] as any;
-            filtered[0]?.tags?.map((item:any)=>{
+            filtered[0]?.tags?.map((item: any) => {
                 label.push(item.tagName)
                 val.push(item.tagName)
                 let json: any = CreateJSONForSelect(item.tagName, item.tagName);
@@ -48,7 +65,7 @@ export default function EditSubClass(props: any) {
 
     }, [props.classData, props.selectedParentClass])
 
-   
+
 
 
     const closeModal = () => {
@@ -224,12 +241,6 @@ export default function EditSubClass(props: any) {
 
                             <div className="mb-6 relative column-2 flex justify-start items-center sm:w-full small:w-full">
                                 <div className="lg:w-full small:w-full sm:w-full">
-                                    {/* <input
-                                        type="hidden"
-                                        name="assetid"
-                                        placeholder="Enter asset ID"
-                                        value={1}
-                                    /> */}
 
                                     <div className={`mb-5 lg:w-full small:w-full small:w-full ${styles.form__wrap}`}>
                                         <div className={`relative ${styles.form__group} font-OpenSans`}>
@@ -241,6 +252,7 @@ export default function EditSubClass(props: any) {
                                                 placeholder="Enter sub class name"
                                                 required
                                                 onChange={(e) => (assetname.current = e.target.value)}
+                                                value={props.selectedSubClass}
                                             />
                                             <label htmlFor="assetname" className={`${styles.form__label}`}>Enter sub class name</label>
                                         </div>
@@ -481,8 +493,9 @@ export default function EditSubClass(props: any) {
                                                 placeholder="Parent Join Key"
                                                 required
                                                 onChange={(e) => (assetname.current = e.target.value)}
-                                                // onChange={handleJoinKey}
-                                                // multiple
+                                                value={pjk}
+                                            // onChange={handleJoinKey}
+                                            // multiple
                                             >
                                                 {
                                                     allClassData && allClassData[0]?.tags?.map((item: any, index: any) => (

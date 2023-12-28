@@ -19,6 +19,7 @@ export default function SubClassManagement(props: any) {
     const [deleteModal, setDeleteModal] = useState(false);
     const [subClassData, setSubClassData] = useState([] as any);
     const [search, setSearch] = useState('');
+    const [selectedSubClass, setSelectedSubClass] = useState("");
 
     // All class reducer states
     const allClassSelector = useSelector((state: any) => state.classReducer);
@@ -68,7 +69,7 @@ export default function SubClassManagement(props: any) {
                 method: 'GET',
                 url: `/api/getSubAssets`,
 
-            }).then(function (response:any) {
+            }).then(function (response: any) {
                 if (response) {
                     if (response.data) {
                         let filtered = response.data.filter((item: any) => {
@@ -77,7 +78,7 @@ export default function SubClassManagement(props: any) {
                         setSubClassData(filtered);
                     }
                 }
-            }).catch(function (error:any) {
+            }).catch(function (error: any) {
                 console.log({
                     "ERROR IN AXIOS CATCH": error
                 })
@@ -116,8 +117,8 @@ export default function SubClassManagement(props: any) {
 
 
     // Open Edit class modal
-    const openEditSubClassModal = (item:any) => {
-        // setSelectedClass(item)
+    const openEditSubClassModal = (item: any) => {
+        setSelectedSubClass(item)
         dispatch(editSubClassModalAction(true));
         setActions(false);
     }
@@ -197,7 +198,7 @@ export default function SubClassManagement(props: any) {
                                         <td>{index + 1}</td>
                                         <td>
                                             <button
-                                                // onClick={() => takeMeToClassComponent(item.assetName)}
+                                            // onClick={() => takeMeToClassComponent(item.assetName)}
                                             >
                                                 <span>{item.assetName}</span>
                                             </button>
@@ -285,11 +286,12 @@ export default function SubClassManagement(props: any) {
 
 
             {/* Edit Sub Class Component */}
-            <EditSubClass            
-            show={allClassSelector?.editSubClassModalReducer}
-            selectedParentClass={props.selectedParentClass ? props.selectedParentClass : ''}
-            classData={props.classData ? props.classData : []}
-            subClassData={subClassData ? subClassData : []}
+            <EditSubClass
+                show={allClassSelector?.editSubClassModalReducer}
+                selectedParentClass={props.selectedParentClass ? props.selectedParentClass : ''}
+                classData={props.classData ? props.classData : []}
+                subClassData={subClassData ? subClassData : []}
+                selectedSubClass={selectedSubClass}
             />
 
 
