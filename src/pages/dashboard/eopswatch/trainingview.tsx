@@ -122,10 +122,10 @@ export default function TrainingView() {
 
     }, [value])
 
-    console.log({
-        "VALUE": value,
-        plotData: plotData
-    })
+    // console.log({
+    //     "VALUE": value,
+    //     plotData: plotData
+    // })
 
 
     return (
@@ -360,7 +360,7 @@ export default function TrainingView() {
                                                         <div className="relative w-[45%]">
                                                             <div className="bg-gray-951 flex justify-center items-center rounded rounded-xl overflow-hidden relative">
                                                                 <Image
-                                                                    src={data ? data[0].resultImage : parentAsset?.result?.toString()}
+                                                                    src={data ? data[0]?.resultImage : parentAsset?.result?.toString()}
                                                                     alt="Result"
                                                                     height={700}
                                                                     width={500}
@@ -374,7 +374,7 @@ export default function TrainingView() {
                                                                 data ?
                                                                     <>
                                                                         <Image
-                                                                            src={data[0].threshold}
+                                                                            src={data[0]?.threshold}
                                                                             alt="Result"
                                                                             height={300}
                                                                             width={300}
@@ -456,7 +456,7 @@ export default function TrainingView() {
                                                                         </div>
 
                                                                         {/* <Image
-                                                                            src={data[0].threshold}
+                                                                            src={data[0]?.threshold}
                                                                             alt="Result"
                                                                             height={70}
                                                                             width={290}

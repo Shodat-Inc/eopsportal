@@ -20,6 +20,89 @@ export default function ProductionView() {
     }, [])
     const [value, setValue] = useState(0);
 
+
+    const plots = [
+        {
+            "performance": 5,
+            "x": 30,
+            "y": 20,
+            "h": 110,
+            "w": 250,
+        },
+        {
+            "performance": 15,
+            "x": 140,
+            "y": 140,
+            "h": 110,
+            "w": 120,
+        },
+        {
+            "performance": 25,
+            "x": 160,
+            "y": 250,
+            "h": 80,
+            "w": 130,
+        },
+        {
+            "performance": 35,
+            "x": 70,
+            "y": 90,
+            "h": 100,
+            "w": 100,
+        },
+        {
+            "performance": 55,
+            "x": 90,
+            "y": 120,
+            "h": 100,
+            "w": 100,
+        },
+        {
+            "performance": 75,
+            "x": 130,
+            "y": 220,
+            "h": 100,
+            "w": 100,
+        },
+        {
+            "performance": 85,
+            "x": 99,
+            "y": 145,
+            "h": 100,
+            "w": 100,
+        },
+    ]
+    const [plotData, setPlotData] = useState(plots)
+
+    const handleRange = (e: any) => {
+        setValue(e.target.value);
+        
+        const filtered = plots.filter((item: any) => {
+            return parseInt(item.performance) >= parseInt(e.target.value)
+        })
+        setPlotData(filtered)
+        console.log({
+            "T-VALUE": e.target.value,
+            "filter":filtered,
+            plots:plots
+        })
+    }
+
+    useEffect(() => {
+        if (value !== 0) {
+            const filter = plots.filter((item: any) => {
+                return item.performance >= value
+            })
+            setPlotData(filter)
+        }
+
+    }, [value])
+
+    // console.log({
+    //     "VALUE": value,
+    //     plotData: plotData
+    // })
+
     const fetchObjectData = () => {
         axios.get("/api/geteopsWatch").then((response) => {
             if (response.data) {
@@ -45,9 +128,9 @@ export default function ProductionView() {
         if (fetchObjectData.length) return;
     }, [parentAsset])
 
-    const handleRange = (e: any) => {
-        setValue(e.target.value)
-    }
+    // const handleRange = (e: any) => {
+    //     setValue(e.target.value)
+    // }
 
     return (
         <div className="flex font-OpenSans">
@@ -312,12 +395,31 @@ export default function ProductionView() {
                                                         <div className="relative w-[45%]">
                                                             <Image
                                                                 // src="/img/CrackDetection/TPC3305-01-011/Test/PipeTest2ResultNew.png"
-                                                                src={data ? data[0].resultImage : parentAsset?.result?.toString()}
+                                                                src={data ? data[0]?.resultImage : parentAsset?.result?.toString()}
                                                                 alt="Result"
                                                                 height={700}
                                                                 width={500}
                                                                 className="h-auto w-auto"
                                                             />
+                                                            <div className="absolute h-full w-full top-0 left-0">
+                                                                {
+                                                                    plotData.map((item: any, index: any) => (
+                                                                        <svg
+                                                                            width={item.w + 30}
+                                                                            height={item.h + 30}
+                                                                            key={index}
+                                                                            className={`${styles.svgRect}`}
+                                                                        >
+                                                                            <rect
+                                                                                x={item.x}
+                                                                                y={item.y}
+                                                                                width={item.w}
+                                                                                height={item.h}
+                                                                            />
+                                                                        </svg>
+                                                                    ))
+                                                                }
+                                                            </div>
                                                         </div>
                                                         <div className="relative pl-10 w-[55%]">
                                                             <p className="mb-2 p-0 text-black text-xl font-semibold">My Objects</p>
@@ -350,9 +452,9 @@ export default function ProductionView() {
                                                                                     min={0}
                                                                                     step={1}
                                                                                     value={value}
-                                                                                    defaultValue={data[0].thresholdValue}
+                                                                                    defaultValue={data[0]?.thresholdValue}
                                                                                     onChange={handleRange}
-                                                                                    title={data[0].thresholdValue.toString()}
+                                                                                    title={data[0]?.thresholdValue.toString()}
                                                                                 />
                                                                             </div>
                                                                         </div>
@@ -382,7 +484,7 @@ export default function ProductionView() {
                                                                             </thead>
                                                                             <tbody className="cursor-pointer">
                                                                                 {
-                                                                                    data[0].thresholdTags.map((item: any, index: any) => (
+                                                                                    data[0]?.thresholdTags.map((item: any, index: any) => (
                                                                                         <tr>
                                                                                             <td className="text-black text-lg font-semibold">Crack</td>
                                                                                             <td><span className="text-black rounded rounded-xl bg-yellow-951 py-1 px-3">{item.Crack}%</span></td>
