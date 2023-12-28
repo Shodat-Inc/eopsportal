@@ -706,12 +706,12 @@ export default function AiModelDetection() {
                 <div className="flex justify-start items-center z-[1] relative top-[1px] text-sm">
                     <button
                         onClick={() => toggleTab(1)}
-                        className={`rounded-tr-xl rounded-tl-xl mr-1 h-[46px] min-w-[100px] px-4 inline-flex jsutify-center items-center font-semibold ${tab === 1 ? "bg-white border border-[#E1E1E1] border-b-0" : "bg-[#404040] bg-opacity-50 hover:bg-opacity-100"}`}>
+                        className={`rounded-tr-xl rounded-tl-xl mr-1 h-[46px] min-w-[100px] px-4 inline-flex jsutify-center items-center font-semibold ${tab === 1 ? "bg-white border border-[#E1E1E1] border-b-0 text-black" : "bg-[#474B52] bg-opacity-100 hover:bg-opacity-50 text-white"}`}>
                         <span>eOps Watch</span>
                     </button>
                     <button
                         onClick={() => toggleTab(2)}
-                        className={`rounded-tr-xl rounded-tl-xl mr-1 h-[46px] min-w-[100px] px-4 inline-flex jsutify-center items-center font-semibold ${tab === 2 || tab === 3 ? "bg-white border border-[#E1E1E1] border-b-0" : "bg-[#404040] bg-opacity-50 hover:bg-opacity-100"}`}>
+                        className={`rounded-tr-xl rounded-tl-xl mr-1 h-[46px] min-w-[100px] px-4 inline-flex jsutify-center items-center font-semibold ${tab === 2 || tab === 3 ? "bg-white border border-[#E1E1E1] border-b-0 " : "bg-[#474B52] bg-opacity-100 hover:bg-opacity-50 text-white"}`}>
                         <span>eOps Trace</span>
                     </button>
                 </div>
