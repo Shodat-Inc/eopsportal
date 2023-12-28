@@ -7,6 +7,7 @@ import Link from 'next/dist/client/link';
 import { setClassBreadcrumb, objDefaultClassSelectorFunction } from '@/store/actions/classAction';
 import AddNewClassObject from './addnewclassobject';
 import { successMessageAction } from '@/store/actions/classAction';
+import { editObjectModalAction } from '@/store/actions/classAction';
 import EditObject from './editobject';
 
 export default function ObjectManagement(props: any) {
@@ -14,8 +15,6 @@ export default function ObjectManagement(props: any) {
     const dispatch = useDispatch<any>();
     const [toggleFilter, setToggleFilter] = useState(false);
     const [toggleArrow, setToggleArrow] = useState(false);
-    const [toggleSort, setToggleSort] = useState(false);
-    // const [chooseAsset, setChooseAsset] = useState(props.classData[0]?.assetName);
     const [chooseAsset, setChooseAsset] = useState(props.classData && props.classData.length > 0 ? props.classData[0]?.assetName : '');
     const [toggleAsset, setToggleAsset] = useState(false);
     const [actions, setActions] = useState(false);
@@ -25,14 +24,14 @@ export default function ObjectManagement(props: any) {
     const [objectData, setObjectData] = useState([] as any);
     const [tableHeader, setTableHeader] = useState({} as any);
     const [search, setSearch] = useState('');
-
+    const [selectedObjID, setSelectedObjID] = useState('')
 
     // All class reducer states
     const classSelector = useSelector((state: any) => state.classReducer);
 
-    // console.log({
-    //     classSelector:classSelector.objDefaultClassSelector
-    // })
+    console.log({
+        classSelector:classSelector
+    })
 
     // Close Success message after 5 second if true
     useEffect(() => {
@@ -49,9 +48,7 @@ export default function ObjectManagement(props: any) {
         setToggleArrow(!toggleArrow);
         setToggleFilter(!toggleFilter);
     }
-    const sortByClassName = () => {
-        setToggleSort(!toggleSort)
-    }
+   
 
     // Set the choose asset on page load
     useEffect(() => {
@@ -59,19 +56,11 @@ export default function ObjectManagement(props: any) {
             setChooseAsset(props.classData[0]?.assetName);
             dispatch(objDefaultClassSelectorFunction(props.classData[0]?.assetName))
         }
-    }, [props.classData, dispatch])
-
-    const handleDropDown = (item: any) => {
-        dispatch(objDefaultClassSelectorFunction(item))
-        setChooseAsset(item);
-    }
+    }, [props.classData, dispatch])  
 
     const toggleActions = (item: any) => {
         setActionCount(item);
         setActions(!actions);
-    }
-    const selectedAction = (item: any) => {
-        setActions(false);
     }
     const takeMeToSubObjectComponent = (item: any) => {
         let classObjKey = chooseAsset === 'Manufacturing Plants' ? 'PlantID' : 'VIN';
@@ -182,6 +171,17 @@ export default function ObjectManagement(props: any) {
         } else {
             fetchData();
         }
+    }
+
+
+    // Edit Object Show/Hide
+    const editObjectFunction = (item:any) => {
+        dispatch(editObjectModalAction(true));
+        setActions(false);
+        setSelectedObjID(item)
+        console.log({
+            "ITEMS":item
+        })
     }
 
     return (
@@ -339,11 +339,11 @@ export default function ObjectManagement(props: any) {
                                                     </button>
                                                     {(actions && actionCount === index + 1) &&
                                                         <div className="bg-black text-white border overflow-hidden border-black rounded rounded-lg w-[200px] flex flex-col flex-wrap items-start justify-start shadow-sm absolute top-[30px] right-[75px] z-[1]">
-                                                            <Link
-                                                                href="#"
+                                                            <button
+                                                                onClick={()=>editObjectFunction(items.subObjectID)}
                                                                 className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
                                                                 <span>Edit</span>
-                                                            </Link>
+                                                            </button>
                                                             <button
                                                                 onClick={deleteModalFunction}
                                                                 className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
@@ -461,7 +461,10 @@ export default function ObjectManagement(props: any) {
             />
 
             <EditObject
-                show={true}
+                show={classSelector?.editObjectModalReducer}
+                selectedObject={selectedObjID}
+                selectedParentClass={chooseAsset}
+                objectData={objectData}
             />
 
         </div>
