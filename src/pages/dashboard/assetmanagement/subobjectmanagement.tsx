@@ -9,12 +9,14 @@ import AddNewObject from './addnewobject';
 import { objDefaultSubClassSelectorFunction } from '@/store/actions/classAction';
 import { successMessageAction, setClassBreadcrumb, setDataForeOpsWatchAction } from '@/store/actions/classAction';
 import { setTimeout } from 'timers';
+import EditSubObject from './editsubobject';
+import { editSubObjectModalAction } from '@/store/actions/classAction';
 
 export default function SubObjectManagement(props: any) {
 
-    // console.log({
-    //     "PROPS HERE":props
-    // })
+    console.log({
+        "PROPS HERE":props
+    })
 
     const dispatch = useDispatch<any>();
     const [toggleFilter, setToggleFilter] = useState(false);
@@ -30,6 +32,7 @@ export default function SubObjectManagement(props: any) {
     const [tableHeader, setTableHeader] = useState({} as any);
     const [objectData, setObjectData] = useState([] as any);
     const [search, setSearch] = useState('');
+    const [selectedObjectID, setSelectedObjectID] = useState("");
 
     // All class reducer states
     const classSelector = useSelector((state: any) => state.classReducer);
@@ -239,6 +242,19 @@ export default function SubObjectManagement(props: any) {
         }, 1000)
     }
 
+
+    // Edit Sub Object
+    const editSubObjectFunction = (item:any) => {
+        setActions(false);
+        dispatch(editSubObjectModalAction(true));
+        setSelectedObjectID(item)
+    }
+
+
+    console.log({
+        objectData:objectData
+    })
+
     return (
         <div className='py-3 font-OpenSans'>
 
@@ -401,11 +417,11 @@ export default function SubObjectManagement(props: any) {
                                                     </button>
                                                     {(actions && actionCount === index + 1) &&
                                                         <div className="bg-black text-white border overflow-hidden border-black rounded rounded-lg w-[200px] flex flex-col flex-wrap items-start justify-start shadow-sm absolute top-[30px] right-[75px] z-[1]">
-                                                            <Link
-                                                                href="#"
+                                                            <button
+                                                                onClick={()=>editSubObjectFunction(items?.tags?.ID)}
                                                                 className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
                                                                 <span>Edit</span>
-                                                            </Link>
+                                                            </button>
                                                             <button
                                                                 onClick={deleteModalFunction}
                                                                 className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
@@ -527,6 +543,14 @@ export default function SubObjectManagement(props: any) {
                 subClassData={subClassData}
                 parentClass={props.defaultClass}
                 objID={props.objID}
+            />
+
+            <EditSubObject
+                show={classSelector?.editSubObjectModalReducer}
+                parentClass={props?.defaultClass}
+                parentObject={props?.objectKey}
+                selectedObject={selectedObjectID}
+                subClass={chooseAsset}
             />
 
             {/* Delete Modal */}
