@@ -40,10 +40,6 @@ export default function AiModelDetection() {
 
     // All class reducer states
     const classSelector = useSelector((state: any) => state.classReducer);
-    console.log({
-        // classSelector: classSelector.dataforeopswatchReducer
-        classSelector: classSelector.dataforeopswatchReducer?.subClass
-    })
 
     // Set Selected sub Object 
     useEffect(()=>{
@@ -357,10 +353,6 @@ export default function AiModelDetection() {
                         })
                         setTableDataSubObject(filtered[0]?.tags)
                     }
-                    console.log({
-                        "HERAMIT": response.data,
-                        filtered: filtered
-                    })
                 }
             }).catch(function (error) {
                 console.log({
@@ -378,11 +370,6 @@ export default function AiModelDetection() {
             getSubObjectsData();
         }
     }, [selectSubObject, selectSubClass])
-
-    console.log({
-        getAllSubObject: getAllSubObject,
-        selectSubObject: selectSubObject
-    })
 
 
     useEffect(() => {

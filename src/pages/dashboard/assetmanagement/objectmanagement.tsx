@@ -29,10 +29,6 @@ export default function ObjectManagement(props: any) {
     // All class reducer states
     const classSelector = useSelector((state: any) => state.classReducer);
 
-    console.log({
-        classSelector:classSelector
-    })
-
     // Close Success message after 5 second if true
     useEffect(() => {
         if (classSelector && classSelector.successMessageReducer === true) {
@@ -178,10 +174,7 @@ export default function ObjectManagement(props: any) {
     const editObjectFunction = (item:any) => {
         dispatch(editObjectModalAction(true));
         setActions(false);
-        setSelectedObjID(item)
-        console.log({
-            "ITEMS":item
-        })
+        setSelectedObjID(item);        
     }
 
     return (

@@ -180,10 +180,10 @@ export default function Objects() {
                     setObjectData(filtered);
                 }
 
-                console.log({
-                    filteredData: filteredData,
-                    filtered: filtered
-                })
+                // console.log({
+                //     filteredData: filteredData,
+                //     filtered: filtered
+                // })
 
             }
         });

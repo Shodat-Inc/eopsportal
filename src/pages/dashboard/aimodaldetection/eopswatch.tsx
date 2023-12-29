@@ -163,9 +163,6 @@ const jsonDataVehicles = [
     }
 ]
 export default function EopsWatch(props: any) {
-    // console.log({
-    //     "ALL PROPS":props
-    // })
     const router = useRouter();
     const routerParams = router.query;
     const [data, setData] = useState(jsonData[0]);
@@ -184,10 +181,6 @@ export default function EopsWatch(props: any) {
         }
 
     }, [props.nextDataProps])
-    console.log({
-        "ALL PROPS": props,
-        "ALL DATA": data
-    })
 
 
     const redirectToNext = () => {

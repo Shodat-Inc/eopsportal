@@ -10,9 +10,6 @@ import { successMessageAction, editSubClassModalAction } from '@/store/actions/c
 
 export default function EditSubClass(props: any) {
 
-    console.log({
-        PROPS: props
-    })
     const dispatch = useDispatch<any>();
     const assetname = useRef("");
     const router = useRouter();

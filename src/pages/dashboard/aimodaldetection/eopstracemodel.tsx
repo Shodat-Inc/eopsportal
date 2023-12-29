@@ -18,9 +18,6 @@ export default function EopsTraceModel() {
     }
     const [value, setValue] = useState(20);
     const handleRange = (e: any) => {
-        console.log({
-            value: e.target.value
-        })
         setValue(e.target.value)
     }
 
@@ -37,9 +34,6 @@ export default function EopsTraceModel() {
         if (item) {
             arr.push(item)
         }
-        console.log({
-            arr: arr
-        })
         setAddCart(arr)
     }
     // Remove from cart
@@ -49,9 +43,6 @@ export default function EopsTraceModel() {
         if (item) {
             arr.pop(item)
         }
-        console.log({
-            arr: arr
-        })
         setAddCart(arr)
     }
 
@@ -76,10 +67,7 @@ export default function EopsTraceModel() {
     }
 
     removeDuplicates(addCart)
-    console.log({
-        addCart: addCart
-        // automotiveModels: automotiveModels
-    })
+    
 
     return (
         <div className="flex font-OpenSans">

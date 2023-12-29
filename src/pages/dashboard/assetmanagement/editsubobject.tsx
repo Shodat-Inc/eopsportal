@@ -7,10 +7,6 @@ import axios from "axios";
 
 export default function EditSubObject(props: any) {
 
-    console.log({
-        "PROPS IN SUBOBJECT": props
-    })
-
     const [selectedObjectData, setSelectedObjectData] = useState([] as any);
     const [objectsData, setObjectsData] = useState([] as any);
     const formData = useRef("");
@@ -23,17 +19,11 @@ export default function EditSubObject(props: any) {
 
             }).then(function (response) {
                 if (response) {
-
-
                     if (response) {
                         const filtered = response.data.filter((item: any) => {
                             return item.className === props.parentClass && item.object === props.subClass && item?.tags?.ID === props.selectedObject
                         })
                         setObjectsData(filtered[0]?.tags);
-                        console.log({
-                            filtered: filtered,
-                            response: response.data
-                        })
                     }
                 }
             }).catch(function (error) {

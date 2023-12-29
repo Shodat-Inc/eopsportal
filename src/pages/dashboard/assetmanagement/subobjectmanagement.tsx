@@ -14,10 +14,6 @@ import { editSubObjectModalAction } from '@/store/actions/classAction';
 
 export default function SubObjectManagement(props: any) {
 
-    console.log({
-        "PROPS HERE":props
-    })
-
     const dispatch = useDispatch<any>();
     const [toggleFilter, setToggleFilter] = useState(false);
     const [toggleArrow, setToggleArrow] = useState(false);
@@ -36,10 +32,6 @@ export default function SubObjectManagement(props: any) {
 
     // All class reducer states
     const classSelector = useSelector((state: any) => state.classReducer);
-
-    // console.log({
-    //     classSelector: classSelector.classBreadcrumbs
-    // })
 
     // Close Success message after 5 second if true
     useEffect(() => {
@@ -250,10 +242,6 @@ export default function SubObjectManagement(props: any) {
         setSelectedObjectID(item)
     }
 
-
-    console.log({
-        objectData:objectData
-    })
 
     return (
         <div className='py-3 font-OpenSans'>

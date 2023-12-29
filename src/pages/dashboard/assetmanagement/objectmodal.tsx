@@ -11,10 +11,6 @@ export default function ObjectModal(props: any) {
 
     // Continue to next page after setting the selected class to redux
     const continueToNext = () => {
-        // console.log({
-        //     chooseAsset: chooseAsset
-        // })
-        // dispatch(setSelectedClass(chooseAsset));
 
         setTimeout(() => {
             Router.push({

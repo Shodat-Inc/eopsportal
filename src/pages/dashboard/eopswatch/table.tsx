@@ -7,9 +7,9 @@ import axios from 'axios';
 
 export default function Table(props: any) {
 
-    console.log({
-        "props in table": props
-    })
+    // console.log({
+    //     "props in table": props
+    // })
     const { tabledata, classData, assetData, urlParams } = props;
     const [toggleSort, setToggleSort] = useState(false);
     const [data, setData] = useState([] as any);
@@ -17,10 +17,10 @@ export default function Table(props: any) {
     const [actions, setActions] = useState(false);
     const [actionCount, setActionCount] = useState(1);
     const [spinner, setSpinner] = useState(false);
-    console.log({
-        urlParams: urlParams,
-        props: props
-    })
+    // console.log({
+    //     urlParams: urlParams,
+    //     props: props
+    // })
 
     // Get Child Object data on page load
     const fetchChildObjectData = () => {
@@ -114,10 +114,10 @@ export default function Table(props: any) {
 
 
 
-    console.log({
-        data: data,
-        dataHeader: dataHeader
-    })
+    // console.log({
+    //     data: data,
+    //     dataHeader: dataHeader
+    // })
 
     return (
         <>

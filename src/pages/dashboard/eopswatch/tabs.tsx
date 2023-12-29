@@ -70,7 +70,7 @@ export default function Tabs(props: any) {
         axios.get("/api/getChildObject").then((response) => {
             if (response.data) {
                 const filtered = response.data.filter((item: any) => {
-                    console.log("tabData", tabData, props.className)
+                    // console.log("tabData", tabData, props.className)
                     if (props.className === "Manufacturing Plants") {
                         return item?.tags?.PlantID === props.searchData && item.object === tabData
                     } else {

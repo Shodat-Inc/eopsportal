@@ -105,11 +105,11 @@ export default function TrainingView() {
             return parseInt(item.performance) >= parseInt(e.target.value)
         })
         setPlotData(filtered)
-        console.log({
-            "T-VALUE": e.target.value,
-            "filter":filtered,
-            plots:plots
-        })
+        // console.log({
+        //     "T-VALUE": e.target.value,
+        //     "filter":filtered,
+        //     plots:plots
+        // })
     }
 
     useEffect(() => {

@@ -21,7 +21,7 @@ export default function Result() {
     const fetchObjectData = () => {
         axios.get("/api/getWatchAlerts").then((response) => {
             if (response.data) {
-                console.log(response.data)
+                // console.log(response.data)
                 const filtered = response.data.filter((item: any) => {
                     if (item.ObjectID == parentAsset.selectedID) {
                         return item;
@@ -38,10 +38,10 @@ export default function Result() {
         // if (fetchObjectData.length) return;
     }, [parentAsset])
 
-    console.log({
-        data: data,
-        parentAsset: parentAsset
-    })
+    // console.log({
+    //     data: data,
+    //     parentAsset: parentAsset
+    // })
 
     return (
         <div className="flex font-OpenSans">

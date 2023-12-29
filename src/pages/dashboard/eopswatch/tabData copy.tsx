@@ -10,9 +10,9 @@ export default function TabData(props: any) {
     const [dataHeader, setDataHeader] = useState([] as any);
     const [searchData, setSearchData] = useState([] as any);
 
-    console.log({
-        props: props
-    })
+    // console.log({
+    //     props: props
+    // })
 
     // Get Child Object data on page load
     const fetchChildObjectData = () => {
@@ -62,9 +62,9 @@ export default function TabData(props: any) {
 
 
 
-    console.log({
-        data: data
-    })
+    // console.log({
+    //     data: data
+    // })
 
     return (
         <>
