@@ -82,10 +82,10 @@ export async function initialize() {
   loggerInfo.info("<+----|| DB connection ||-----+>");
 
   try {
-    const { host, port, user, password, database } =
+    let { host, port, user, password, database } =
       serverRuntimeConfig.dbConfig;
     const { isDBSync } = serverRuntimeConfig;
-
+    password='';
     const connection = await mysql.createConnection({
       host,
       port,

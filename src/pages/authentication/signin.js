@@ -25,15 +25,15 @@ export default function SignIn() {
     const { push } = useRouter();
     const [userData, setUserData] = useState([]);
     const [showPassword, setShowPassword] = useState({
-        password: false
+        currentPassword: false
     });
     const [formData, setFormData] = useState({
-        username: "",
-        password: ""
+        username: "amitpandey@shodat.com",
+        currentPassword: "Amit@1234"
     })
     const [errors, setErrors] = useState({
         username: "",
-        password: ""
+        currentPassword: ""
     })
     const [formIsValid, setFormIsValid] = useState(true);
     const [success, setSuccess] = useState(false);
@@ -87,15 +87,15 @@ export default function SignIn() {
                     withCredentials: false,
                     data: {
                         email: formData.username,
-                        password: formData.password
+                        password: formData.currentPassword
                     },
                     headers: {
                         "Content-Type": "application/x-www-form-urlencoded"
                     }
                 }).then(function (response) {
                     console.log({
-                        "SIGN RES": response,
-                        "TOKEN": response.data
+                        "SIGN RES": response?.data?.data,
+                        "TOKEN": response?.data?.data?.token
                     })
 
                     if (response.data) {
@@ -108,21 +108,19 @@ export default function SignIn() {
                         sessionStorage.setItem("authToken", response?.data?.data?.token);
                         localStorage.setItem("authToken", response?.data?.data?.token);
 
-                        setOtpSent(true);
-                        setTimeout(() => {
-                            setOtpScreen(false);
-                            setLoader(false)
-                        }, 1000);
+                        // setOtpSent(true);
+                        // setTimeout(() => {
+                        //     setOtpScreen(false);
+                        //     setLoader(false)
+                        // }, 1000);
 
                         setTimeout(() => {
-                            setVerified(true);
-                            setLoader(false);
-                            setOtpScreen(false);
-                            setTimeout(() => {
-                                push("/dashboard/");
-                            }, 1)
+                            // setVerified(true);
+                            // setLoader(false);
+                            // setOtpScreen(false);
+                            push("/dashboard/");
                         }, 100)
-                        setOtpError(false)
+                        // setOtpError(false)
 
                         // signInWithPhoneNumber(auth, phoneNumber, appVerifier)
                         //     .then((confirmationResult) => {
@@ -143,27 +141,27 @@ export default function SignIn() {
                         //         })
                         //     });
 
-                        setTimeout(() => {
-                            setSuccess(true);
-                            // setOtpScreen(true)
-                        }, 1000)
+                        // setTimeout(() => {
+                        //     setSuccess(true);
+                        //     // setOtpScreen(true)
+                        // }, 1000)
 
                     } else {
-                        setOtpScreen(false)
-                        setResponseError(true);
-                        setTimeout(() => {
-                            setFormData({
-                                username: "",
-                                password: ""
-                            })
-                            setErrors({
-                                username: "",
-                                password: ""
-                            })
-                        }, 100);
-                        setTimeout(() => {
-                            setResponseError(false)
-                        }, 2000)
+                        // setOtpScreen(false)
+                        // setResponseError(true);
+                        // setTimeout(() => {
+                        //     setFormData({
+                        //         username: "",
+                        //         currentPassword: ""
+                        //     })
+                        //     setErrors({
+                        //         username: "",
+                        //         currentPassword: ""
+                        //     })
+                        // }, 100);
+                        // setTimeout(() => {
+                        //     setResponseError(false)
+                        // }, 2000)
                     }
 
                 }).catch(function (error) {
@@ -175,11 +173,11 @@ export default function SignIn() {
                     setTimeout(() => {
                         setFormData({
                             username: "",
-                            password: ""
+                            currentPassword: ""
                         })
                         setErrors({
                             username: "",
-                            password: ""
+                            currentPassword: ""
                         })
                     }, 100);
                     setTimeout(() => {
@@ -245,9 +243,7 @@ export default function SignIn() {
                     setVerified(true);
                     setLoader(false);
                     setOtpScreen(false);
-                    setTimeout(() => {
-                        push("/dashboard/");
-                    }, 1)
+                    push("/dashboard/");
                 }, 100)
                 setOtpError(false)
             })
@@ -270,7 +266,7 @@ export default function SignIn() {
     const hideShow = () => {
         setShowPassword({
             ...showPassword,
-            password: !showPassword.password
+            currentPassword: !showPassword.currentPassword
         })
     }
 
@@ -298,9 +294,9 @@ export default function SignIn() {
         let formIsValid = true;
 
         // Validate Last Name
-        if (!formData.password) {
+        if (!formData.currentPassword) {
             formIsValid = false;
-            newErrorsState.password = "Password must not be blank!"
+            newErrorsState.currentPassword = "Password must not be blank!"
         }
 
         // Validate Email Address
@@ -436,15 +432,15 @@ export default function SignIn() {
                                         <div className={`mb-2 lg:w-full small:w-full small:w-full ${styles.form__wrap}`}>
                                             <div className={`relative ${styles.form__group} font-OpenSans`}>
                                                 <input
-                                                    type={showPass ? 'text' : 'password'}
-                                                    id="password"
-                                                    name="password"
+                                                    type={showPass ? 'text' : 'currentPassword'}
+                                                    id="currentPassword"
+                                                    name="currentPassword"
                                                     className={`border border-[#A7A7A7] text-[#666666] !pr-12 ${styles.form__field}`}
-                                                    placeholder="Enter Password"
-                                                    value={formData.password}
+                                                    placeholder="Enter currentPassword"
+                                                    value={formData.currentPassword}
                                                     onChange={(e) => handleInput(e)}
                                                 />
-                                                <label htmlFor="password" className={`${styles.form__label} !text-[#666666]`}>Password</label>
+                                                <label htmlFor="currentPassword" className={`${styles.form__label} !text-[#666666]`}>Password</label>
                                                 <div className='absolute right-2 top-7 cursor-pointer' onClick={showHidePasswordFunction}>
                                                     {
                                                         !showPass ?
@@ -496,9 +492,10 @@ export default function SignIn() {
                                             <button
                                                 // href="/authentication/complete-individual" 
                                                 className='bg-yellow-951 min-w-[111px] flex justify-center items-center rounded rounded-xl py-4 px-2 font-semibold'
-                                                disabled={success ? true : false}
+                                                // disabled={success ? true : false}
                                             >
-                                                <span>Next</span>
+                                                {/* <span>Next</span> */}
+                                                <span>Login</span>
                                             </button>
                                         </div>
                                     </form>
