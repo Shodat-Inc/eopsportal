@@ -15,7 +15,7 @@ export const getSingleUser = () => async (dispatch: any) => {
     try {
         await axios({
             method: 'GET',
-            url: `http://20.232.178.134:3000/api/getUsers`,
+            url: `/api/getUsers`,
             headers: {
                 "Authorization": `Bearer ${tokenStr}`,
                 "Content-Type": "application/json"

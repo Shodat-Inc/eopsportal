@@ -2,20 +2,11 @@ import React, { useState, useRef, useEffect } from "react";
 import styles from '../../../styles/Common.module.css';
 import Image from "next/image";
 export default function CustomDropSubClass(props: any) {
-    console.log({
-        "PROPS IN CUSTOM DROP SUBCLSS": props
-    })
     const [toggleAsset, setToggleAsset] = useState(false);
-    const [chooseAsset, setChooseAsset] = useState();
-    const [selClass, setSelClass] = useState([] as any);
+    const [chooseAsset, setChooseAsset] = useState("");
     useEffect(() => {
         setChooseAsset(props.defaultClass);
-        const filter  = (props.data && props.data.length >=0) && props.data?.filter((item:any)=> {
-            return item.S_No === props.defaultClass
-        })
-        setSelClass(filter);
-
-    }, [props.defaultClass, chooseAsset])
+    }, [props.defaultClass])
 
     const toggleDropdownFunction = () => {
         setToggleAsset(!toggleAsset)
@@ -56,7 +47,7 @@ export default function CustomDropSubClass(props: any) {
                     width={24}
                     className={`absolute right-3 top-4 ${toggleAsset ? 'rotate-180' : 'rotate-0'}`}
                 />
-                <span className="text-lg text-black pl-2">{selClass && selClass.length >=0 ? selClass[0]?.className : "-Select Class-"}</span>
+                <span className="text-lg text-black pl-2">{chooseAsset}</span>
             </div>
 
             {toggleAsset ?
@@ -83,10 +74,10 @@ export default function CustomDropSubClass(props: any) {
                             props.data.map((item: any, index: any) => (
                                 <li
                                     className="px-5 py-2 bg-white cursor-pointer hover:bg-yellow-951 w-full font-normal"
-                                    onClick={() => selectItemFunction(item.S_NO)}
+                                    onClick={() => selectItemFunction(item.assetName)}
                                     key={index}
                                 >
-                                    <span>{item.className}</span>
+                                    <span>{item.assetName}</span>
                                 </li>
                             ))
                         }

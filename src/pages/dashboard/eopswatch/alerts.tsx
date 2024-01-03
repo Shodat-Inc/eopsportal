@@ -47,10 +47,10 @@ export default function Alerts() {
         setData(newArr);
     }
 
-    console.log({
-        parentAsset: parentAsset,
-        data: data
-    })
+    // console.log({
+    //     parentAsset: parentAsset,
+    //     data: data
+    // })
     return (
         <div className="flex font-OpenSans">
 

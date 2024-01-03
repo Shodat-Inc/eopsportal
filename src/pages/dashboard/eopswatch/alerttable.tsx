@@ -25,9 +25,9 @@ export default function AlertTable(props: any) {
         if (fetchClassData.length) return;
     }, [props])
 
-    console.log({
-        props: props, data: data
-    })
+    // console.log({
+    //     props: props, data: data
+    // })
 
     const result = () => {
         if (props.model === "Tire Wear Detection") {

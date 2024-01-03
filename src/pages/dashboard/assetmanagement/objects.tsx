@@ -37,6 +37,26 @@ export default function Objects(localData: any) {
     const [subObj, setSebObj] = useState({} as any);
     const [deleteModal, setDeleteModal] = useState(false);
 
+
+    // Get JSON data on page load
+    const fetchDataForParent = () => {
+        axios.get("/api/getAssets").then((response) => {
+            if (response.data) {
+                const filtered = response.data.filter((item: any) => {
+                    return item.assetName === parentAsset.assets;
+                });
+                if (filtered && filtered.length > 0) {
+                    setGetParentData(filtered[0].assetkey);
+                }
+            }
+        });
+    };
+    useEffect(() => {
+        fetchDataForParent();
+        if (fetchDataForParent.length) return;
+    }, [parentAsset])
+
+
     // Get JSON data on page load
     const fetchData = () => {
         axios.get("/api/getObjects").then((response) => {
@@ -308,7 +328,7 @@ export default function Objects(localData: any) {
                                                                 ))
                                                             }
                                                             <td>
-                                                                <button className="mr-3 transition-opacity duration-300 outline-none transform active:scale-75 transition-transform">
+                                                                <button className="mr-3 transition-opacity duration-[100ms] outline-none transform active:scale-75 transition-transform">
                                                                     <Image
                                                                         src="/img/edit.svg"
                                                                         alt="Edit"
@@ -317,7 +337,7 @@ export default function Objects(localData: any) {
                                                                     />
                                                                 </button>
                                                                 <button
-                                                                    className="transition-opacity duration-300 outline-none transform active:scale-75 transition-transform"
+                                                                    className="transition-opacity duration-[100ms] outline-none transform active:scale-75 transition-transform"
                                                                     onClick={() => deleteAsset(items)}>
                                                                     <Image
                                                                         src="/img/trash.svg"
@@ -365,7 +385,7 @@ export default function Objects(localData: any) {
                                     <div className="flex items-start justify-between p-2">
                                         <h3 className="text-lg font-medium"></h3>
                                         <button
-                                            className="p-1 ml-auto bg-transparent border-0 text-black float-right leading-none font-semibold outline-none focus:outline-none transition-opacity duration-300 outline-none transform active:scale-75 transition-transform"
+                                            className="p-1 ml-auto bg-transparent border-0 text-black float-right leading-none font-semibold outline-none focus:outline-none transition-opacity duration-[100ms] outline-none transform active:scale-75 transition-transform"
                                             onClick={() => setDeleteModal(false)}
                                         >
                                             <Image
@@ -383,13 +403,13 @@ export default function Objects(localData: any) {
                                             <p className="flex justify-center items-center text-lg">Are you sure want to delete this record?</p>
                                             <div className="mt-10 relative flex justify-center items-center w-full">
                                                 <button
-                                                    className="border border-black rounded-lg bg-black text-white text-lg w-[70px] h-[47px] mr-5 hover:bg-yellow-951 hover:text-white hover:border-yellow-951 ease-in-out duration-300 disabled:bg-gray-951 disabled:hover:border-gray-951 disabled:border-gray-951 transition-opacity duration-300 outline-none transform active:scale-75 transition-transform"
+                                                    className="border border-black rounded-lg bg-black text-white text-lg w-[70px] h-[47px] mr-5 hover:bg-yellow-951 hover:text-white hover:border-yellow-951 ease-in-out duration-[100ms] disabled:bg-gray-951 disabled:hover:border-gray-951 disabled:border-gray-951 transition-opacity duration-[100ms] outline-none transform active:scale-75 transition-transform"
                                                     onClick={() => { setDeleteModal(false); }}
                                                 >
                                                     Yes
                                                 </button>
                                                 <button
-                                                    className="border border-black rounded-lg bg-white text-black text-lg w-[70px] h-[47px] hover:text-white hover:bg-yellow-951 hover:border-yellow-951 ease-in-out duration-300 transition-opacity duration-300 outline-none transform active:scale-75 transition-transform"
+                                                    className="border border-black rounded-lg bg-white text-black text-lg w-[70px] h-[47px] hover:text-white hover:bg-yellow-951 hover:border-yellow-951 ease-in-out duration-[100ms] transition-opacity duration-[100ms] outline-none transform active:scale-75 transition-transform"
                                                     onClick={() => { setDeleteModal(false); }}
                                                 >
                                                     No

@@ -23,6 +23,7 @@ export default function Preview() {
     const [authType, setAuthType] = useState(false);
     const [drop, setDrop] = useState(false);
     const [data, setData] = useState([] as any);
+    const [enabled, setEnabled] = useState(false);
 
     const authenticationType = [
         "Basic", "Client Certificate", "Active Directory OAuth", "Raw", "Managed Identity"
@@ -123,6 +124,14 @@ export default function Preview() {
 
     const hasParams = routerParams.hasOwnProperty("PlantID");
     const hasObjectParams = routerParams.hasOwnProperty("subObject")
+
+    const checkboxFunction = (event:any) => {
+        if(event.currentTarget.checked) {
+            setEnabled(true)
+        } else {
+            setEnabled(false)
+        }
+    }
 
     return (
         <div className="w-full h-full font-OpenSans">
@@ -276,10 +285,11 @@ export default function Preview() {
                     <div className="flex justify-start items-center relative pr-3 h-[65px]">
                         {defaultTab === "Production" && <>
                             <div className="flex items-center justify-start ml-7">
-                                <p className="text-gray mr-3 text-sm font-semibold">Site Visity</p>
+                                <p className="text-gray mr-3 text-sm font-semibold">{enabled ? "Enabled" :"Disabled" }</p>
                                 <div className={`${styles.radioWrap} relative top-[2px]`}>
                                     <input
                                         type="checkbox"
+                                        onChange={checkboxFunction}
                                     />
                                     <span className={`${styles.radioFrame}`}></span>
                                 </div>

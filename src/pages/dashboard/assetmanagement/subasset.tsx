@@ -49,6 +49,26 @@ export default function SubAsset(localData: any) {
     }
 
 
+
+    // Get JSON data on page load
+    const fetchDataForParent = () => {
+        axios.get("/api/getAssets").then((response) => {
+            if (response.data) {
+                const filtered = response.data.filter((item: any) => {
+                    return item.assetName === parentAsset.assets;
+                });
+                if (filtered && filtered.length > 0) {
+                    setParentJoinKey(filtered[0].assetkey);
+                }
+            }
+        });
+    };
+    useEffect(() => {
+        fetchDataForParent();
+        if (fetchDataForParent.length) return;
+    }, [])
+
+
     // Remove duplicate element from array
     function removeDuplicates(arr: any) {
         let unique = [];
@@ -254,7 +274,7 @@ export default function SubAsset(localData: any) {
                         <p className="text-black text-lg mb-0 font-semibold">Class Management</p>
                         <div className="flex justify-end items-right">
                             <button
-                                className="rounded-xl bg-yellow-951 border-[2px] border-yellow-951 text-black flex h-12 justify-center items-center pl-2 pr-2 hover:bg-white hover:text-black hover:border-black transition-all duration-[400ms] transition-opacity duration-300 outline-none transform active:scale-75 transition-transform"
+                                className="rounded-xl bg-yellow-951 border-[2px] border-yellow-951 text-black flex h-12 justify-center items-center pl-2 pr-2 hover:bg-white hover:text-black hover:border-black transition-all duration-[400ms] transition-opacity duration-[100ms] outline-none transform active:scale-75 transition-transform"
                                 onClick={() => setShowModal(true)}
                             >
                                 <Image
@@ -346,7 +366,7 @@ export default function SubAsset(localData: any) {
                                                     <td><span>{item.parentJoinKey.toString().split(",").join(", ")}</span></td>
                                                     <td><span>{moment(item.dateCreated).format('DD-MM-YYYY')}</span></td>
                                                     <td>
-                                                        <button className="mr-4 transition-opacity duration-300 outline-none transform active:scale-75 transition-transform">
+                                                        <button className="mr-4 transition-opacity duration-[100ms] outline-none transform active:scale-75 transition-transform">
                                                             <Image
                                                                 src="/img/edit.svg"
                                                                 alt="Edit"
@@ -354,7 +374,7 @@ export default function SubAsset(localData: any) {
                                                                 width={18}
                                                             />
                                                         </button>
-                                                        <button className="transition-opacity duration-300 outline-none transform active:scale-75 transition-transform">
+                                                        <button className="transition-opacity duration-[100ms] outline-none transform active:scale-75 transition-transform">
                                                             <Image
                                                                 src="/img/trash.svg"
                                                                 alt="Trash"
@@ -401,7 +421,7 @@ export default function SubAsset(localData: any) {
                                             Add Sub Class
                                         </h3>
                                         <button
-                                            className="p-1 ml-auto bg-transparent border-0 text-black float-right leading-none font-semibold outline-none focus:outline-none transition-opacity duration-300 outline-none transform active:scale-75 transition-transform"
+                                            className="p-1 ml-auto bg-transparent border-0 text-black float-right leading-none font-semibold outline-none focus:outline-none transition-opacity duration-[100ms] outline-none transform active:scale-75 transition-transform"
                                             onClick={() => { setShowModal(false); setAllTags([]) }}
                                         >
                                             <Image
@@ -465,7 +485,7 @@ export default function SubAsset(localData: any) {
                                                                             className="rounded-lg inline-flex justify-center items-center h-8 pl-2 pr-2 bg-black text-white text-[14px] mr-2 mb-2">
                                                                             {items}
                                                                             <button
-                                                                                className="rounded-full border-2 border-white h-[18px] w-[18px] inline-flex justify-center items-center ml-3 transition-opacity duration-300 outline-none transform active:scale-75 transition-transform"
+                                                                                className="rounded-full border-2 border-white h-[18px] w-[18px] inline-flex justify-center items-center ml-3 transition-opacity duration-[100ms] outline-none transform active:scale-75 transition-transform"
                                                                                 onClick={() => removeElement(items)}
                                                                             >
                                                                                 <Image
@@ -491,14 +511,14 @@ export default function SubAsset(localData: any) {
                                                                             required
                                                                         />
                                                                         <button
-                                                                            className={`text-black border border-transparent rounded inline-flex justify-center items-center text-sm h-8 px-2 ml-1 bg-yellow-951 ${dataType && (dataType != null || dataType != "") ? 'okay' : 'disabled disabled:bg-gray-300'} transition-opacity duration-300 outline-none transform active:scale-75 transition-transform`}
+                                                                            className={`text-black border border-transparent rounded inline-flex justify-center items-center text-sm h-8 px-2 ml-1 bg-yellow-951 ${dataType && (dataType != null || dataType != "") ? 'okay' : 'disabled disabled:bg-gray-300'} transition-opacity duration-[100ms] outline-none transform active:scale-75 transition-transform`}
                                                                             onClick={saveNewTag}
                                                                             disabled={dataType && (dataType != null || dataType != "") ? false : true}
                                                                         >
                                                                             Add
                                                                         </button>
                                                                         <button
-                                                                            className="text-white border border-transparent rounded inline-flex justify-center items-center text-sm h-8 px-2 ml-1 bg-red-600 transition-opacity duration-300 outline-none transform active:scale-75 transition-transform"
+                                                                            className="text-white border border-transparent rounded inline-flex justify-center items-center text-sm h-8 px-2 ml-1 bg-red-600 transition-opacity duration-[100ms] outline-none transform active:scale-75 transition-transform"
                                                                             onClick={cancelAddingTag}
                                                                         >
                                                                             Cancel
@@ -510,7 +530,7 @@ export default function SubAsset(localData: any) {
 
                                                             {!showHideAddTagButton ?
                                                                 <button
-                                                                    className="text-gray-952 inline-flex justify-center items-center text-lg h-8 mb-2 transition-opacity duration-300 outline-none transform active:scale-75 transition-transform"
+                                                                    className="text-gray-952 inline-flex justify-center items-center text-lg h-8 mb-2 transition-opacity duration-[100ms] outline-none transform active:scale-75 transition-transform"
                                                                     onClick={addTags}
                                                                 >
                                                                     <Image
@@ -689,13 +709,13 @@ export default function SubAsset(localData: any) {
 
                                                 <div className="mb-5 relative flex justify-end items-center w-full pr-4">
                                                     <button
-                                                        className="border border-black rounded-lg bg-black text-white font-lg w-20 h-12 mr-5 font-semibold hover:bg-yellow-951 hover:text-white hover:border-yellow-951 ease-in-out duration-300 disabled:bg-gray-951 disabled:hover:border-gray-951 disabled:border-gray-951 transition-opacity duration-300 outline-none transform active:scale-75 transition-transform"
+                                                        className="border border-black rounded-lg bg-black text-white font-lg w-20 h-12 mr-5 font-semibold hover:bg-yellow-951 hover:text-white hover:border-yellow-951 ease-in-out duration-[100ms] disabled:bg-gray-951 disabled:hover:border-gray-951 disabled:border-gray-951 transition-opacity duration-[100ms] outline-none transform active:scale-75 transition-transform"
                                                         disabled={(allTags && allTags.length > 0) ? false : true}
                                                     >
                                                         Save
                                                     </button>
                                                     <button
-                                                        className="border border-black rounded-lg bg-white font-semibold text-black font-lg w-24 h-12 hover:text-white hover:bg-yellow-951 hover:border-yellow-951 ease-in-out duration-300 transition-opacity duration-300 outline-none transform active:scale-75 transition-transform"
+                                                        className="border border-black rounded-lg bg-white font-semibold text-black font-lg w-24 h-12 hover:text-white hover:bg-yellow-951 hover:border-yellow-951 ease-in-out duration-[100ms] transition-opacity duration-[100ms] outline-none transform active:scale-75 transition-transform"
                                                         onClick={() => { setShowModal(false); setAllTags([]) }}
                                                     >
                                                         Cancel

@@ -2,18 +2,30 @@ import { SET_CLASS_ERROR, SET_CLASS_SUCCESS } from "../types";
 import { TOGGLE_ADD_OBJECT_MODEL_ERROR, TOGGLE_ADD_OBJECT_MODEL_SUCCESS } from "../types";
 import { GET_ALL_CLASS_ERROR, GET_ALL_CLASS_SUCCESS } from "../types";
 import { BREADCRUMB_SUCCESS, BREADCRUMB_ERROR } from "../types";
-import { CREATE_NEW_CLASS_ERROR, CREATE_NEW_CLASS_SUCCESS } from "../types";
-import { CLASS_DELETE_MODAL_TOGGLE_ERROR, CLASS_DELETE_MODAL_TOGGLE_SUCCESS } from "../types";
-import { SELECTED_CLASS_DATA_ERROR, SELECTED_CLASS_DATA_SUCCESS } from "../types";
+import { TOGGLE_ADD_CLASS_OBJECT_MODEL_ERROR, TOGGLE_ADD_CLASS_OBJECT_MODEL_SUCCESS } from "../types";
+import { OBJ_SELECT_DEFAULT_CLASS_ERROR, OBJ_SELECT_DEFAULT_CLASS_SUCCESS } from "../types";
+import { OBJ_SELECT_DEFAULT_SUB_CLASS_ERROR, OBJ_SELECT_DEFAULT_SUB_CLASS_SUCCESS } from "../types";
+import { SUCCESS_MESSAGE_ERROR, SUCCESS_MESSAGE_SUCCESS } from "../types";
+import { DATA_FOR_EOPSWATCH_ERROR, DATA_FOR_EOPSWATCH_SUCCESS } from "../types";
+import { EDIT_CLASS_MODEL_ERROR, EDIT_CLASS_MODEL_SUCCESS } from "../types";
+import { EDIT_SUB_CLASS_MODEL_ERROR, EDIT_SUB_CLASS_MODEL_SUCCESS } from "../types";
+import { EDIT_OBJECT_MODEL_ERROR, EDIT_OBJECT_MODEL_SUCCESS } from "../types";
+import { EDIT_SUB_OBJECT_MODEL_ERROR, EDIT_SUB_OBJECT_MODEL_SUCCESS } from "../types";
 
 const initialState = {
   selectedClass: '',
   toggleAddObject: false,
   getAllClass: [],
   classBreadcrumbs: {},
-  createClassRes: {},
-  toggleClassDeleteModal: false,
-  selectedClassData:[]
+  toggleAddClassObject: false,
+  objDefaultClassSelector: '',
+  objDefaultSubClassSelector: '',
+  successMessageReducer: false,
+  dataforeopswatchReducer: {},
+  editClassModalReducer: false,
+  editSubClassModalReducer: false,
+  editObjectModalReducer: false,
+  editSubObjectModalReducer: false
 };
 
 const classReducer = (state = initialState, action: any) => {
@@ -29,6 +41,28 @@ const classReducer = (state = initialState, action: any) => {
         error: action.payload,
       };
 
+    case OBJ_SELECT_DEFAULT_CLASS_SUCCESS:
+      return {
+        ...state,
+        objDefaultClassSelector: action.payload,
+      };
+
+    case OBJ_SELECT_DEFAULT_CLASS_ERROR:
+      return {
+        error: action.payload,
+      };
+
+    case OBJ_SELECT_DEFAULT_SUB_CLASS_SUCCESS:
+      return {
+        ...state,
+        objDefaultSubClassSelector: action.payload,
+      };
+
+    case OBJ_SELECT_DEFAULT_SUB_CLASS_ERROR:
+      return {
+        error: action.payload,
+      };
+
     case TOGGLE_ADD_OBJECT_MODEL_SUCCESS:
       return {
         ...state,
@@ -39,6 +73,17 @@ const classReducer = (state = initialState, action: any) => {
       return {
         error: action.payload,
       };
+
+    case TOGGLE_ADD_CLASS_OBJECT_MODEL_SUCCESS:
+      return {
+        ...state,
+        toggleAddClassObject: action.payload,
+      };
+
+    case TOGGLE_ADD_CLASS_OBJECT_MODEL_ERROR:
+      return {
+        error: action.payload,
+      }
 
     case GET_ALL_CLASS_SUCCESS:
       return {
@@ -62,38 +107,72 @@ const classReducer = (state = initialState, action: any) => {
         classBreadcrumbs: action.payload,
       };
 
-    case CREATE_NEW_CLASS_SUCCESS:
+    case SUCCESS_MESSAGE_SUCCESS:
       return {
         ...state,
-        createClassRes: action.payload,
+        successMessageReducer: action.payload,
       };
 
-    case CREATE_NEW_CLASS_ERROR:
+    case SUCCESS_MESSAGE_ERROR:
       return {
-        createClassRes: action.payload,
+        successMessageReducer: action.payload,
       };
 
-    case CLASS_DELETE_MODAL_TOGGLE_SUCCESS:
-      return {
-        ...state,
-        toggleClassDeleteModal: action.payload,
-      };
 
-    case CLASS_DELETE_MODAL_TOGGLE_ERROR:
-      return {
-        toggleClassDeleteModal: action.payload,
-      };
-
-      case SELECTED_CLASS_DATA_SUCCESS:
+    case DATA_FOR_EOPSWATCH_SUCCESS:
       return {
         ...state,
-        selectedClassData: action.payload,
+        dataforeopswatchReducer: action.payload,
       };
 
-    case SELECTED_CLASS_DATA_ERROR:
+    case DATA_FOR_EOPSWATCH_ERROR:
       return {
-        selectedClassData: action.payload,
+        dataforeopswatchReducer: action.payload,
       };
+
+    case EDIT_CLASS_MODEL_SUCCESS:
+      return {
+        ...state,
+        editClassModalReducer: action.payload,
+      };
+
+    case EDIT_CLASS_MODEL_ERROR:
+      return {
+        error: action.payload,
+      }
+
+    case EDIT_SUB_CLASS_MODEL_SUCCESS:
+      return {
+        ...state,
+        editSubClassModalReducer: action.payload,
+      };
+
+    case EDIT_SUB_CLASS_MODEL_ERROR:
+      return {
+        error: action.payload,
+      }
+
+    case EDIT_OBJECT_MODEL_SUCCESS:
+      return {
+        ...state,
+        editObjectModalReducer: action.payload,
+      };
+
+    case EDIT_OBJECT_MODEL_ERROR:
+      return {
+        error: action.payload,
+      }
+
+    case EDIT_SUB_OBJECT_MODEL_SUCCESS:
+      return {
+        ...state,
+        editSubObjectModalReducer: action.payload,
+      };
+
+    case EDIT_SUB_OBJECT_MODEL_ERROR:
+      return {
+        error: action.payload,
+      }
 
     default:
       return state;

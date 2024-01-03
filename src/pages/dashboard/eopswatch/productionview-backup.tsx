@@ -40,9 +40,9 @@ export default function ProductionView() {
                         setValue(filterArr[0].thresholdValue)
                         setData(filterArr);
                         setPlots(filterArr[0].plots);
-                        console.log({
-                            filterArr: filterArr[0].plots
-                        })
+                        // console.log({
+                        //     filterArr: filterArr[0].plots
+                        // })
                     }
                 }
             }
@@ -64,12 +64,12 @@ export default function ProductionView() {
         })
         setNewPlot(arr)
 
-        console.log({
-            tagte: e.target.value,
-            value: value,
-            arr: arr,
-            newPlot: newPlot
-        });
+        // console.log({
+        //     tagte: e.target.value,
+        //     value: value,
+        //     arr: arr,
+        //     newPlot: newPlot
+        // });
 
     }
 

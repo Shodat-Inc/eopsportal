@@ -1,28 +1,13 @@
 import React, { useState, useRef, useEffect } from "react";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import styles from '../../../styles/Common.module.css';
+import { useRouter } from 'next/router'
 import Router from 'next/router'
 import Image from "next/image";
-import axios from 'axios';
-import { useRouter } from 'next/router'
-import { createNewClass } from "@/store/actions/classAction";
-import Layout from "../../../components/Layout";
-import NoDataFound from "../../../common/nodatafound";
-import { getAssetsData } from "../../../lib/getassets";
-import Link from "next/link";
-import Template from "../template";
-import AlertMessage from "@/common/alertMessage";
-import moment from "moment";
-import { setSelectedClass } from "@/store/actions/classAction";
-import DeleteModal from "@/common/deletemodal";
-import ObjectModal from "./objectmodal";
+import { successMessageAction } from '@/store/actions/classAction';
 
 export default function AddNewClass(props: any) {
-    // console.log({
-    //     props: props
-    // })
     const dispatch = useDispatch<any>();
-    const [success, setSuccess] = useState(false);
     const assetname = useRef("");
     const [allTags, setAllTags] = useState<any[]>([]);
     const [newTag, setNewTag] = useState<string>("");
@@ -34,45 +19,12 @@ export default function AddNewClass(props: any) {
     const [chooseAsset, setChooseAsset] = useState("");
     const [toggleAsset, setToggleAsset] = useState(false);
     const [dtObject, setDtObject] = useState<any[]>([]);
-    const [allDataTypes, setAllDataTypes] = useState([] as any);
-    let access_token = "" as any;
-    if (typeof window !== 'undefined') {
-        access_token = localStorage.getItem('authToken')
-    }
-
-    // GET ALL DATATYPES
-    async function fetchData() {
-        try {
-            await axios({
-                method: 'GET',
-                url: `/api/getDataType`,
-                headers: {
-                    "Authorization": `Bearer ${access_token}`,
-                    "Content-Type": "application/json"
-                }
-            }).then(function (response) {
-                if (response) {
-                    setAllDataTypes(response.data?.data)
-                }
-            }).catch(function (error) {
-                console.log({
-                    "ERROR IN AXIOS CATCH (GET DT)": error
-                })
-            })
-        } catch (err) {
-            console.log({
-                "ERROR IN TRY CATCH (GET DT)": err
-            })
-        }
-    }
-    useEffect(() => {
-        fetchData();
-    }, [access_token])
-
+    
+    // All class reducer states
+    // const allClassSelector = useSelector((state: any) => state.classReducer);
 
     const closeModal = () => {
         props.handleClick(false);
-        // setShowModal(false);
         setShowInput(false);
         setShowHideAddTagButton(false)
         setToggleDT(false);
@@ -82,7 +34,6 @@ export default function AddNewClass(props: any) {
     }
     const cancelModal = () => {
         props.handleClick(false);
-        // setShowModal(false);
         setAllTags([]);
     }
 
@@ -103,6 +54,7 @@ export default function AddNewClass(props: any) {
     const wrapperRef = useRef(null);
     useOutsideAlerter(wrapperRef);
 
+
     // Adding New Tags
     const addTags = () => {
         setShowInput(true);
@@ -119,7 +71,7 @@ export default function AddNewClass(props: any) {
     function CreateJSON(tag: any, datatype: any) {
         var myObject = {
             "tagName": tag,
-            "dataTypeId": datatype
+            "dataType": datatype
         };
         return myObject;
     }
@@ -188,46 +140,35 @@ export default function AddNewClass(props: any) {
         e.preventDefault();
         var formData = new FormData(e.target);
         const form_values = Object.fromEntries(formData);
-        const dataToSave = {
-            className: form_values.assetname,
-            tags: dtObject
-        };
-        console.log({
-            dataToSave: dataToSave
-        })
-        let tokenStr = access_token;
-        // dispatch(createNewClass(dataToSave))
-        try {
-            await axios({
-                method: 'POST',
-                // url: `http://20.232.178.134:3000/api/createClasses`,
-                url: `api/createClasses`,
-                data: dataToSave,
-                headers: {
-                    "Authorization": `Bearer ${tokenStr}`,
-                    "Content-Type": "application/json"
+        const response = await fetch('/api/assets', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(
+                {
+                    assetID: `1000000003`,
+                    assetName: `${form_values.assetname}`,
+                    slug: `${form_values.assetname}`,
+                    assetkey: allTags,
+                    dateCreated: new Date().toLocaleString() + "",
+                    dateModified: new Date().toLocaleString() + "",
+                    assetTypes: assetDataType,
+                    tags: dtObject
                 }
-            }).then(function (response) {
-                if (response) {
-                    setSuccess(true)
-                    setAllTags([]);
-                    setTimeout(() => {
-                        setSuccess(false)
-                        props.handleClick(false);
-                    }, 1500)
-                }
-            }).catch(function (error) {
-                console.log("ERROR IN AXIOS CATCH (CREATE CLASS):", error)
-            })
-        } catch (err) {
-            console.log("ERROR IN TRY CATCH (CREATE CLASS):", err)
+            )
+        });
+        const resdata = await response.json();
+        if (resdata) {
+            setAllTags([]);
+            dispatch(successMessageAction(true))
+            setTimeout(() => {
+                props.handleClick(false);
+            }, 50);
+        } else {
+            console.log("FAILED")
         }
     }
-
-    // Delete Asset
-    // const deleteAsset = (assetID: any) => {
-    //     setDeleteModal(true);
-    // }
 
 
     // Show Choose Asset List
@@ -262,10 +203,6 @@ export default function AddNewClass(props: any) {
     }
 
 
-    // const handleDeleteFunction = () => {
-    //     setDeleteModal(false)
-    // }
-
 
     return (
         <>
@@ -273,7 +210,10 @@ export default function AddNewClass(props: any) {
 
                 <div className="flex justify-between items-center w-full mb-3">
                     <h2 className="font-semibold text-lg">Add New Class</h2>
-                    <button onClick={closeModal}>
+                    <button 
+                    onClick={closeModal}
+                    className="transition-all duration-[100ms] transition-opacity duration-100 outline-none transform active:scale-75 transition-transform"
+                    >
                         <Image
                             src="/img/x.svg"
                             alt="close"
@@ -282,20 +222,6 @@ export default function AddNewClass(props: any) {
                         />
                     </button>
                 </div>
-
-                {success &&
-                    <div className={`bg-green-957 border-green-958 text-green-959 mb-1 mt-1 border text-md px-4 py-3 rounded rounded-xl relative flex items-center justify-start`}>
-                        <Image
-                            src="/img/AlertSuccess.svg"
-                            alt="Alert Success"
-                            height={24}
-                            width={24}
-                            className='mr-2'
-                        />
-                        <strong className="font-semibold">Success</strong>
-                        <span className="block sm:inline ml-2">Class has been added successfully!</span>
-                    </div>
-                }
 
                 <div className={`flex justify-start items-start w-full overflow-auto h-full pb-10 ${styles.scroll} pr-3`}>
                     <form
@@ -307,6 +233,12 @@ export default function AddNewClass(props: any) {
 
                             <div className="mb-6 relative column-2 flex justify-start items-center sm:w-full small:w-full">
                                 <div className="lg:w-full small:w-full sm:w-full">
+                                    <input
+                                        type="hidden"
+                                        name="assetid"
+                                        placeholder="Enter asset ID"
+                                        value={1}
+                                    />
 
                                     <div className={`mb-5 lg:w-full small:w-full small:w-full ${styles.form__wrap}`}>
                                         <div className={`relative ${styles.form__group} font-OpenSans`}>
@@ -339,7 +271,7 @@ export default function AddNewClass(props: any) {
                                                             className="rounded-lg inline-flex justify-center items-center h-8 pl-2 pr-2 bg-[#F2F1F1] text-black text-[14px] mr-2 mb-2">
                                                             {items}
                                                             <button
-                                                                className="rounded-full border-2 border-white h-[24px] w-[24px] inline-flex justify-center items-center ml-3"
+                                                                className="rounded-full border-2 border-white h-[24px] w-[24px] inline-flex justify-center items-center ml-3 transition-all duration-[100ms] transition-opacity duration-100 outline-none transform active:scale-75 transition-transform"
                                                                 onClick={() => removeElement(items)}
                                                             >
                                                                 <Image
@@ -366,14 +298,14 @@ export default function AddNewClass(props: any) {
                                                         required
                                                     />
                                                     <button
-                                                        className={`text-black border border-transparent rounded inline-flex justify-center items-center text-sm h-8 px-2 ml-1 bg-yellow-951 ${dataType && (dataType != null || dataType != "") ? 'okay' : 'disabled disabled:bg-gray-300'}`}
+                                                        className={`transition-all duration-[100ms] transition-opacity duration-100 outline-none transform active:scale-75 transition-transform text-black border border-transparent rounded inline-flex justify-center items-center text-sm h-8 px-2 ml-1 bg-yellow-951 ${dataType && (dataType != null || dataType != "") ? 'okay' : 'disabled disabled:bg-gray-300'}`}
                                                         onClick={saveNewTag}
                                                         disabled={dataType && (dataType != null || dataType != "") ? false : true}
                                                     >
                                                         Add
                                                     </button>
                                                     <button
-                                                        className="text-white border border-transparent rounded inline-flex justify-center items-center text-sm h-8 px-2 ml-1 bg-red-600"
+                                                        className="transition-all duration-[100ms] transition-opacity duration-100 outline-none transform active:scale-75 transition-transform text-white border border-transparent rounded inline-flex justify-center items-center text-sm h-8 px-2 ml-1 bg-red-600"
                                                         onClick={cancelAddingTag}
                                                     >
                                                         Cancel
@@ -385,7 +317,7 @@ export default function AddNewClass(props: any) {
 
 
                                         <button
-                                            className={`text-black text-sm inline-flex justify-center items-center text-lg h-8 mb-2 px-2 mt-0 rounded rounded-lg font-semibold ${showHideAddTagButton ? 'bg-gray-951' : 'bg-yellow-951'}`}
+                                            className={`transition-all duration-[100ms] transition-opacity duration-100 outline-none transform active:scale-75 transition-transform text-black text-sm inline-flex justify-center items-center text-lg h-8 mb-2 px-2 mt-0 rounded rounded-lg font-semibold ${showHideAddTagButton ? 'bg-gray-951' : 'bg-yellow-951'}`}
                                             onClick={addTags}
                                             disabled={showHideAddTagButton}
                                         >
@@ -400,7 +332,7 @@ export default function AddNewClass(props: any) {
 
 
                                         <button
-                                            className={`absolute right-1 top-5 ${allTags && allTags.length > 0 ? 'hidden' : ''} `}
+                                            className={`transition-all duration-[100ms] transition-opacity duration-100 outline-none transform active:scale-75 transition-transform absolute right-1 top-5 ${allTags && allTags.length > 0 ? 'hidden' : ''} `}
                                             onClick={addTags}
                                         >
                                             <Image
@@ -428,120 +360,99 @@ export default function AddNewClass(props: any) {
 
                                             <div className="text-sm font-bold color-black mb-2 flex items-center justify-between">
                                                 <span>Select Data Type</span>
+                                                {/* <span className="bg-black h-8 w-8 p-1 inline-flex rounded-full justify-center items-center">
+                                                <Image
+                                                    src="/img/tick-white.svg"
+                                                    alt="check"
+                                                    height={20}
+                                                    width={20}
+                                                    className="inline-block"
+                                                />
+                                            </span> */}
                                             </div>
-
-                                            {
-                                                allDataTypes && allDataTypes.length >= 0 ?
-                                                    allDataTypes.map((item: any, index: any) => (
-                                                        <div key={index}>
-                                                            <div className="flex pt-1 pb-1">
-                                                                <div className={`${styles.customRadio} mr-2`}>
-                                                                    <input
-                                                                        id={item.type}
-                                                                        type="radio"
-                                                                        name="datatype"
-                                                                        className="scale-150"
-                                                                        value={item.type}
-                                                                        checked={dataType === item.id}
-                                                                        onChange={() => radioChange(item.id)}
-                                                                    />
-                                                                    <span></span>
-                                                                </div>
-                                                                <label htmlFor={item.type} className="text-black font-semibold">{item.name}<span className="text-gray-500 font-normal text-[14px] ml-2">
-                                                                    {item.description}
-                                                                </span>
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                    ))
-                                                    :
-                                                    null
-                                            }
-                                            <div className="hidden">
-                                                <div className="flex pt-1 pb-1">
-                                                    <div className={`${styles.customRadio} mr-2`}>
-                                                        <input
-                                                            type="radio"
-                                                            name="datatype"
-                                                            className="scale-150"
-                                                            value="int"
-                                                            checked={dataType === "int"}
-                                                            onChange={() => radioChange("int")}
-                                                        />
-                                                        <span></span>
-                                                    </div>
-                                                    <label className="text-black font-semibold">int <span className="text-gray-500 font-normal text-[14px]">(myNum = 5)</span></label>
+                                            <div className="flex pt-1 pb-1">
+                                                <div className={`${styles.customRadio} mr-2`}>
+                                                    <input
+                                                        type="radio"
+                                                        name="datatype"
+                                                        className="scale-150"
+                                                        value="int"
+                                                        checked={dataType === "int"}
+                                                        onChange={() => radioChange("int")}
+                                                    />
+                                                    <span></span>
                                                 </div>
-                                                <div className="flex pt-1 pb-1">
-                                                    <div className={`${styles.customRadio} mr-2`}>
-                                                        <input
-                                                            type="radio"
-                                                            name="datatype"
-                                                            className="scale-150"
-                                                            value="float"
-                                                            checked={dataType === "float"}
-                                                            onChange={() => radioChange("float")}
-                                                        />
-                                                        <span></span>
-                                                    </div>
-                                                    <label className="text-black font-semibold">float <span className="text-gray-500 font-normal text-[14px]">(myFloatNum = 5.99f)</span></label>
+                                                <label className="text-black font-semibold">int <span className="text-gray-500 font-normal text-[14px]">(myNum = 5)</span></label>
+                                            </div>
+                                            <div className="flex pt-1 pb-1">
+                                                <div className={`${styles.customRadio} mr-2`}>
+                                                    <input
+                                                        type="radio"
+                                                        name="datatype"
+                                                        className="scale-150"
+                                                        value="float"
+                                                        checked={dataType === "float"}
+                                                        onChange={() => radioChange("float")}
+                                                    />
+                                                    <span></span>
                                                 </div>
-                                                <div className="flex pt-1 pb-1">
-                                                    <div className={`${styles.customRadio} mr-2`}>
-                                                        <input
-                                                            type="radio"
-                                                            name="datatype"
-                                                            className="scale-150"
-                                                            value="char"
-                                                            checked={dataType === "char"}
-                                                            onChange={() => radioChange("char")}
-                                                        />
-                                                        <span></span>
-                                                    </div>
-                                                    <label className="text-black font-semibold">char <span className="text-gray-500 font-normal text-[14px]">(myLetter = &apos;D&apos;)</span></label>
+                                                <label className="text-black font-semibold">float <span className="text-gray-500 font-normal text-[14px]">(myFloatNum = 5.99f)</span></label>
+                                            </div>
+                                            <div className="flex pt-1 pb-1">
+                                                <div className={`${styles.customRadio} mr-2`}>
+                                                    <input
+                                                        type="radio"
+                                                        name="datatype"
+                                                        className="scale-150"
+                                                        value="char"
+                                                        checked={dataType === "char"}
+                                                        onChange={() => radioChange("char")}
+                                                    />
+                                                    <span></span>
                                                 </div>
-                                                <div className="flex pt-1 pb-1">
-                                                    <div className={`${styles.customRadio} mr-2`}>
-                                                        <input
-                                                            type="radio"
-                                                            name="datatype"
-                                                            className="scale-150"
-                                                            value="boolean"
-                                                            checked={dataType === "boolean"}
-                                                            onChange={() => radioChange("boolean")}
-                                                        />
-                                                        <span></span>
-                                                    </div>
-                                                    <label className="text-black font-semibold">boolean <span className="text-gray-500 font-normal text-[14px]">(myBool = true/false)</span></label>
+                                                <label className="text-black font-semibold">char <span className="text-gray-500 font-normal text-[14px]">(myLetter = &apos;D&apos;)</span></label>
+                                            </div>
+                                            <div className="flex pt-1 pb-1">
+                                                <div className={`${styles.customRadio} mr-2`}>
+                                                    <input
+                                                        type="radio"
+                                                        name="datatype"
+                                                        className="scale-150"
+                                                        value="boolean"
+                                                        checked={dataType === "boolean"}
+                                                        onChange={() => radioChange("boolean")}
+                                                    />
+                                                    <span></span>
                                                 </div>
-                                                <div className="flex pt-1 pb-1">
-                                                    <div className={`${styles.customRadio} mr-2`}>
-                                                        <input
-                                                            type="radio"
-                                                            name="datatype"
-                                                            className="scale-150"
-                                                            value="string"
-                                                            checked={dataType === "string"}
-                                                            onChange={() => radioChange("string")}
-                                                        />
-                                                        <span></span>
-                                                    </div>
-                                                    <label className="text-black font-semibold">string <span className="text-gray-500 font-normal text-[14px]">(myText = &quot;Hello&quot;)</span></label>
+                                                <label className="text-black font-semibold">boolean <span className="text-gray-500 font-normal text-[14px]">(myBool = true/false)</span></label>
+                                            </div>
+                                            <div className="flex pt-1 pb-1">
+                                                <div className={`${styles.customRadio} mr-2`}>
+                                                    <input
+                                                        type="radio"
+                                                        name="datatype"
+                                                        className="scale-150"
+                                                        value="string"
+                                                        checked={dataType === "string"}
+                                                        onChange={() => radioChange("string")}
+                                                    />
+                                                    <span></span>
                                                 </div>
-                                                <div className="flex pt-1 pb-1">
-                                                    <div className={`${styles.customRadio} mr-2`}>
-                                                        <input
-                                                            type="radio"
-                                                            name="datatype"
-                                                            className="scale-150"
-                                                            value="date"
-                                                            checked={dataType === "date"}
-                                                            onChange={() => radioChange("date")}
-                                                        />
-                                                        <span></span>
-                                                    </div>
-                                                    <label className="text-black font-semibold">date <span className="text-gray-500 font-normal text-[14px]">(myDate = &quot;29-05-2023&quot;)</span></label>
+                                                <label className="text-black font-semibold">string <span className="text-gray-500 font-normal text-[14px]">(myText = &quot;Hello&quot;)</span></label>
+                                            </div>
+                                            <div className="flex pt-1 pb-1">
+                                                <div className={`${styles.customRadio} mr-2`}>
+                                                    <input
+                                                        type="radio"
+                                                        name="datatype"
+                                                        className="scale-150"
+                                                        value="date"
+                                                        checked={dataType === "date"}
+                                                        onChange={() => radioChange("date")}
+                                                    />
+                                                    <span></span>
                                                 </div>
+                                                <label className="text-black font-semibold">date <span className="text-gray-500 font-normal text-[14px]">(myDate = &quot;29-05-2023&quot;)</span></label>
                                             </div>
 
                                             <div className="flex justify-end items-center w-full">
@@ -568,13 +479,13 @@ export default function AddNewClass(props: any) {
 
                             <div className="mb-0 relative flex justify-end items-center w-full">
                                 <button
-                                    className="border border-black rounded-lg bg-black text-white text-lg w-20 h-12 mr-5 hover:bg-yellow-951 hover:text-white hover:border-yellow-951 ease-in-out duration-300 disabled:bg-gray-951 disabled:hover:border-gray-951 disabled:border-gray-951"
+                                    className="border border-black rounded-lg bg-black text-white text-lg w-20 h-12 mr-5 hover:bg-yellow-951 hover:text-white hover:border-yellow-951 ease-in-out duration-300 disabled:bg-gray-951 disabled:hover:border-gray-951 disabled:border-gray-951 transition-all duration-[100ms] transition-opacity duration-100 outline-none transform active:scale-75 transition-transform"
                                     disabled={(allTags && allTags.length > 0) ? false : true}
                                 >
                                     Save
                                 </button>
                                 <button
-                                    className="border border-black rounded-lg bg-white text-black text-lg w-24 h-12 hover:text-white hover:bg-yellow-951 hover:border-yellow-951 ease-in-out duration-300"
+                                    className="border border-black rounded-lg bg-white text-black text-lg w-24 h-12 hover:text-white hover:bg-yellow-951 hover:border-yellow-951 ease-in-out duration-300 transition-all duration-[100ms] transition-opacity duration-100 outline-none transform active:scale-75 transition-transform"
                                     onClick={cancelModal}
                                 >
                                     Cancel
@@ -586,7 +497,7 @@ export default function AddNewClass(props: any) {
                 </div>
 
             </div>
-            {props.show === true && <div className={styles.backdrop}></div>}
+            {props.show === true && <div className={styles.backdrop}></div> }
         </>
     )
 }

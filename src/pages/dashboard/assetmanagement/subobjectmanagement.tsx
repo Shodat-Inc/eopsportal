@@ -1,34 +1,48 @@
-import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useState, useEffect, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import styles from '../../../styles/Common.module.css';
 import Image from "next/image";
+import { useRouter } from 'next/router';
 import axios from 'axios';
 import Link from 'next/dist/client/link';
 import AddNewObject from './addnewobject';
+import { objDefaultSubClassSelectorFunction } from '@/store/actions/classAction';
+import { successMessageAction, setClassBreadcrumb, setDataForeOpsWatchAction } from '@/store/actions/classAction';
+import { setTimeout } from 'timers';
+import EditSubObject from './editsubobject';
+import { editSubObjectModalAction } from '@/store/actions/classAction';
+
 export default function SubObjectManagement(props: any) {
 
-    const getClassStates = useSelector((state: any) => state.classReducer);
-    console.log({
-        "PROPS IN SUB-OBJECT": props,
-        "GET CLASS STATES": getClassStates.selectedClass,
-    })
-    // console.log({
-    //     "props in object management": props
-    // })
+    const dispatch = useDispatch<any>();
     const [toggleFilter, setToggleFilter] = useState(false);
     const [toggleArrow, setToggleArrow] = useState(false);
     const [toggleSort, setToggleSort] = useState(false);
-    const [chooseAsset, setChooseAsset] = useState(0);
+    const [subClassData, setSubClassData] = useState([] as any);
+    const [chooseAsset, setChooseAsset] = useState('');
+    const [toggleAsset, setToggleAsset] = useState(false);
     const [actions, setActions] = useState(false);
     const [actionCount, setActionCount] = useState(1);
-
-    const [subClassData, setSubClassData] = useState([] as any);
-    const [toggleAsset, setToggleAsset] = useState(false);
-    const [objects, setObjects] = useState([] as any);
-
-    const classSelector = useSelector((state: any) => state.classReducer);
     const [showModal, setShowModal] = useState(false);
     const [deleteModal, setDeleteModal] = useState(false);
+    const [tableHeader, setTableHeader] = useState({} as any);
+    const [objectData, setObjectData] = useState([] as any);
+    const [search, setSearch] = useState('');
+    const [selectedObjectID, setSelectedObjectID] = useState("");
+
+    // All class reducer states
+    const classSelector = useSelector((state: any) => state.classReducer);
+
+    // Close Success message after 5 second if true
+    useEffect(() => {
+        if (classSelector && classSelector.successMessageReducer === true) {
+            setTimeout(() => {
+                dispatch(successMessageAction(false))
+            }, 5000)
+        }
+
+    }, [classSelector.successMessageReducer])
+
     const addNewObject = useSelector((state: any) => state.classReducer)
     const toggleFilterFunction = () => {
         setToggleArrow(!toggleArrow);
@@ -38,107 +52,59 @@ export default function SubObjectManagement(props: any) {
         setToggleSort(!toggleSort)
     }
 
-    // Get Sub Classes
-    let access_token = "" as any;
-    if (typeof window !== 'undefined') {
-        access_token = localStorage.getItem('authToken')
-    }
     useEffect(() => {
-        let tokenStr = access_token;
-        (async function () {
-            try {
-                await axios({
-                    method: 'GET',
-                    // url: `http://20.232.178.134:3000/api/getChildAssets?id=${props.defaultClass}`,
-                    url: `/api/getChildAssets?id=${props.defaultClass}`,
-                    headers: {
-                        "Authorization": `Bearer ${tokenStr}`,
-                        "Content-Type": "application/json"
-                    }
-                }).then(function (response) {
-                    if (response.status === 200) {
-                        console.log({
-                            "RESPONSE DATA -1 ": response.data
-                        })
-                        setChooseAsset(response.data.data[0]?.id)
-                        setSubClassData(response.data.data)
-                    } else {
+        setShowModal(addNewObject.toggleAddObject)
+    }, [addNewObject.toggleAddObject])
 
+    // Get all sub class
+    async function fetchData() {
+        try {
+            await axios({
+                method: 'GET',
+                url: `/api/getSubAssets`,
+
+            }).then(function (response) {
+                if (response) {
+                    let filtered = response.data.filter((item: any) => {
+                        return item.parentAssetID === props.defaultClass
+                    })
+                    if (filtered) {
+                        setChooseAsset(filtered[0].assetName);
+                        dispatch(objDefaultSubClassSelectorFunction(filtered[0].assetName))
+                        setSubClassData(filtered)
                     }
-                }).catch(function (error) {
-                    console.log("ERROR IN DELETE AXIOS CATCH:", error)
+                }
+            }).catch(function (error) {
+                console.log({
+                    "ERROR IN AXIOS CATCH": error
                 })
-            } catch (err) {
-                console.log("ERROR IN DELETE TRY CATCH:", err)
-            }
-        })();
-    }, [props.defaultClass]);
-
-    // Function to get className based on ID
-    function getClassNameFunction(id: any) {
-        let data = [] as any;
-        if (subClassData && subClassData.length >= 0) {
-            data = subClassData.filter(function (item: any) {
-                return item.id === id;
+            })
+        } catch (err) {
+            console.log({
+                "ERROR IN TRY CATCH": err
             })
         }
-        return data;
     }
+    useEffect(() => {
+        fetchData();
+        if (fetchData.length) return;
+    }, [props.defaultClass])
 
-    // Toogle table option actions
+    const handleDropDown = (item: any) => {
+        setChooseAsset(item)
+    }
     const toggleActions = (item: any) => {
         setActionCount(item);
         setActions(!actions);
     }
-
-    // Dropdown Function
-    const toggleDropdownFunction = () => {
-        setToggleAsset(!toggleAsset)
+    const selectedAction = (item: any) => {
+        setActions(false);
     }
-    const selectItemFunction = (item: any) => {
-        setChooseAsset(item);
-        setToggleAsset(false);
+    const backToObect = () => {
+        props.handleSubObject("Vehicles")
     }
 
 
-    // Get all object for selected sub class 
-    useEffect(() => {
-        let tokenStr = access_token;
-        (async function () {
-            try {
-                await axios({
-                    method: 'GET',
-                    // url: `/api/getObjects?id=${chooseAsset}`,
-                    // url: `http://20.232.178.134:3000/api/getObjects?id=12`,
-                    url: `/api/getObjects?id=12`,
-                    headers: {
-                        "Authorization": `Bearer ${tokenStr}`,
-                        "Content-Type": "application/json"
-                    }
-                }).then(function (response) {
-                    if (response) {
-                        console.log({
-                            "RESPONSE DATA": response.data
-                        })                         
-                        setObjects(response.data)
-                    } else {
-
-                    }
-                }).catch(function (error) {
-                    console.log("ERROR IN DELETE AXIOS CATCH:", error)
-                })
-            } catch (err) {
-                console.log("ERROR IN DELETE TRY CATCH:", err)
-            }
-        })();
-    }, [chooseAsset]);
-
-    
-    console.log({
-        "CHOOSE ASSET": chooseAsset,
-        "SUB CLASS DATA": subClassData,
-        "OBJECTS":objects
-    })
     const deleteModalFunction = () => {
         setDeleteModal(true);
         setActions(false);
@@ -147,60 +113,169 @@ export default function SubObjectManagement(props: any) {
     const closeDeleteModal = () => {
         setDeleteModal(false)
     }
-    
+
+    function useOutsideAlerter(ref: any) {
+        useEffect(() => {
+            function handleClickOutside(event: any) {
+                if (ref.current && !ref.current.contains(event.target)) {
+                    setToggleAsset(false)
+                }
+            }
+            document.addEventListener("mousedown", handleClickOutside);
+            return () => {
+                document.removeEventListener("mousedown", handleClickOutside);
+            };
+        }, [ref]);
+    }
+    const wrapperRef = useRef(null);
+    useOutsideAlerter(wrapperRef);
+
+
+    const toggleDropdownFunction = () => {
+        setToggleAsset(!toggleAsset)
+    }
+    const selectItemFunction = (item: any) => {
+        setChooseAsset(item);
+        setToggleAsset(false);
+        dispatch(objDefaultSubClassSelectorFunction(item))
+    }
+
+    // Get All object of sub class based on selected sub class
+    async function fetchObjectData() {
+        try {
+            await axios({
+                method: 'GET',
+                url: `/api/getChildObject`,
+
+            }).then(function (response) {
+                if (response) {
+                    let headArray = response.data[0]?.subObjects;
+                    let filtered = response.data.filter((item: any) => {
+                        return item.object === chooseAsset
+                    })
+                    if (filtered) {
+                        let headArray = filtered[0]?.tags;
+                        setTableHeader(headArray)
+                        setObjectData(filtered)
+                    }
+                }
+            }).catch(function (error) {
+                console.log({
+                    "ERROR IN AXIOS CATCH": error
+                })
+            })
+        } catch (err) {
+            console.log({
+                "ERROR IN TRY CATCH": err
+            })
+        }
+    }
+    useEffect(() => {
+        fetchObjectData();
+        if (fetchObjectData.length) return;
+    }, [chooseAsset])
+
+
+    // function for searching
+    const handleSearchFUnction = (e: any) => {
+        setSearch(e.target.value);
+        if (e.target.value === "" || e.target.value.length <= 0) {
+            fetchObjectData();
+            setSearch('');
+            return;
+        }
+        if (objectData && objectData.length > 0) {
+            const filtered = objectData.filter((item: any) => {
+                if (item.tags.hasOwnProperty("ID")) {
+                    if (item.tags.ID.toString().toLowerCase().includes(e.target.value.toString().toLowerCase())) {
+                        return item;
+                    }
+                }
+            })
+            setObjectData(filtered)
+        } else {
+            fetchObjectData();
+        }
+    }
+
+    // Set Sub Class in Breadcrumb
+    useEffect(() => {
+        let abc = {
+            "flow": "Object Management",
+            "class": classSelector?.classBreadcrumbs?.class,
+            "classObjKey": classSelector?.classBreadcrumbs?.classObjKey,
+            "classObjValue": classSelector?.classBreadcrumbs?.classObjValue,
+            "subClass": chooseAsset,
+            "subClassObjKey": "",
+            "subClassObjValue": ""
+        }
+        dispatch(setClassBreadcrumb(abc));
+
+    }, [chooseAsset])
+
+    const router = useRouter();
+    // Save data for eopswatch section
+    const eOpsWatchFunction = (item: any) => {
+        let obj = '';
+        if (props.defaultClass === "Manufacturing Plants") {
+            obj = item.ID
+        } else {
+            obj = item.VIN
+        }
+        const eopsData = {
+            "class": props.defaultClass,
+            "subClass": chooseAsset,
+            "classObject": props.objectKey,
+            "object": obj
+        }
+        dispatch(setDataForeOpsWatchAction(eopsData));
+        setTimeout(() => {
+            router.push('/dashboard/aimodaldetection');
+        }, 1000)
+    }
+
+
+    // Edit Sub Object
+    const editSubObjectFunction = (item:any) => {
+        setActions(false);
+        dispatch(editSubObjectModalAction(true));
+        setSelectedObjectID(item)
+    }
+
+
     return (
         <div className='py-3 font-OpenSans'>
 
             {/* Title, search and filters */}
             <div className='flex justify-between items-center py-2 px-4 '>
                 <div className='w-[350px]'>
-                    {/* Dropdown for subclasses */}
-                    <div>
+                    <div ref={wrapperRef}>
                         <div
-                            className="border rounded-xl border-gray-500 h-[55px] pl-2 pr-5 relative flex items-center justify-start bg-white w-[80%] cursor-pointer"
+                            className="border rounded-xl border-gray-969 h-[55px] pl-2 pr-5 relative flex items-center justify-start bg-white w-[80%] cursor-pointer"
                             onClick={toggleDropdownFunction}
                         >
-                            <label className="absolute text-sm top-[-10px] left-2 pl-2 pr-2 bg-white">Choose Sub Class</label>
+                            <label className="absolute text-sm top-[-10px] left-2 pl-2 pr-2 bg-white">Choose Industry type</label>
                             <Image
                                 src="/img/arrow-down-black.svg"
                                 alt="arrow-down"
-                                height={24}
-                                width={24}
+                                height={20}
+                                width={20}
                                 className={`absolute right-3 top-4 ${toggleAsset ? 'rotate-180' : 'rotate-0'}`}
                             />
-                            <span className="text-lg text-black pl-2">
-                                {getClassNameFunction(chooseAsset)[0]?.className}
-                            </span>
+                            <span className="text-lg text-black pl-2">{chooseAsset}</span>
                         </div>
 
                         {toggleAsset ?
-                            <div className={`h-52 border rounded-xl border-gray-500 h-auto max-h-[250px] w-[400px]  absolute flex items-start justify-start flex-wrap flex-col mt-1 overflow-hidden overflow-y-auto bg-white ${styles.scroll} z-10`}>
-                                <div className="flex relative w-full mt-3 mb-3 pl-3 pr-3">
-                                    <Image
-                                        src="/img/search-icon-gray.svg"
-                                        alt="search"
-                                        height={22}
-                                        width={22}
-                                        className="absolute top-[11px] left-5"
-                                    />
-                                    <input
-                                        type="text"
-                                        placeholder={`Search`}
-                                        id="searchobjects"
-                                        name="searchobjects"
-                                        className="border border-gray-969 rounded-lg h-[44px] w-full pl-10 pr-2"
-                                        autoComplete="off"
-                                    />
-                                </div>
+                            <div className={`h-52 border rounded-xl border-gray-969 h-auto max-h-[250px] w-[400px]  absolute flex items-start justify-start mt-1 overflow-hidden overflow-y-auto bg-white ${styles.scroll} z-10`}>
                                 <ul className="p-0 m-0 w-full">
                                     {
-                                        subClassData && subClassData.length >= 0 && subClassData.map((item: any, index: any) => (
+                                        subClassData.map((item: any, index: any) => (
                                             <li
                                                 className="px-5 py-2 bg-white cursor-pointer hover:bg-yellow-951 w-full font-normal"
-                                                onClick={() => selectItemFunction(item.id)}
+                                                onClick={() => selectItemFunction(item.assetName)}
                                                 key={index}
                                             >
-                                                <span>{item.className} {item.id}</span>
+                                                <span>{item.assetName}</span>
                                             </li>
                                         ))
                                     }
@@ -210,6 +285,7 @@ export default function SubObjectManagement(props: any) {
                             null
                         }
                     </div>
+
                 </div>
 
                 <div className='flex justify-start items-center'>
@@ -228,12 +304,14 @@ export default function SubObjectManagement(props: any) {
                             name="searchobjects"
                             className="border border-gray-969 rounded-lg h-[44px] w-[310px] pl-10 pr-2"
                             autoComplete="off"
+                            value={search}
+                            onChange={handleSearchFUnction}
                         />
                     </div>
                     <div className="relative ml-3">
                         <button
                             className={`bg-white border  rounded-xl h-[44px] transition-all duration-[400ms] h-[44px] rounded rounded-lg px-2 py-2 flex items-center justify-start ${toggleFilter === true ? 'border-black' : 'border-gray-969'}`}
-                            onClick={toggleFilterFunction}  
+                            onClick={toggleFilterFunction}
                         >
                             <Image
                                 src="/img/filter-icon.svg"
@@ -260,94 +338,208 @@ export default function SubObjectManagement(props: any) {
                 Back To Object Management Component
             </button> */}
 
+            {/* Response Messages */}
+            {
+                classSelector.successMessageReducer === true &&
+
+                <div className={`bg-green-957 border-green-958 text-green-959 mb-1 mt-1 border text-md px-4 py-3 rounded rounded-xl relative flex items-center justify-start`}>
+                    <Image
+                        src="/img/AlertSuccess.svg"
+                        alt="Alert Success"
+                        height={24}
+                        width={24}
+                        className='mr-2'
+                    />
+                    <strong className="font-semibold">Success</strong>
+                    <span className="block sm:inline ml-2">Object stored successfully!</span>
+                </div>
+            }
+
             {/* Table */}
             <div className='w-full mt-6 min-h-[400px]'>
-                <table className={`table-auto lg:min-w-full sm:w-full small:w-full text-left ${styles.tableV3} ${styles.tableV4}`}>
-                    <thead className="text-sm font-normal">
-                        <tr>
-                            <th>S.No</th>
-                            <th>
-                                <button className="flex justify-center items-center" onClick={sortByClassName}>
-                                    <Image src="/img/arrow-up-gray.svg" alt="sort" height={17} width={17} className={`${toggleSort === true ? 'rotate-180' : 'rotate-0'}`} />
-                                    <span>Serial ID</span>
-                                </button>
-                            </th>
-                            <th>VIN</th>
-                            <th>Manufacturer</th>
-                            <th>Capacity(AH)</th>
-                            <th>Voltage(V)</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>1S223</td>
-                            <td>5PVBE7AJ8R5T50001</td>
-                            <td>Cummins</td>
-                            <td>48</td>
-                            <td>12</td>
-                            <td>
-                                <div className="flex justify-start items-center relative">
-                                    <button onClick={() => toggleActions(1)}>
-                                        <Image
-                                            src="/img/more-vertical.svg"
-                                            alt="more-vertical"
-                                            height={24}
-                                            width={24}
-                                        />
-                                    </button>
-                                    {(actions && actionCount === 1) &&
-                                        <div className="bg-black text-white border overflow-hidden border-black rounded rounded-lg w-[200px] flex flex-col flex-wrap items-start justify-start shadow-sm absolute top-[30px] right-[75px] z-[1]">
-                                            <Link
-                                                href="#"
-                                                className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
-                                                <span>Edit</span>
-                                            </Link>
-                                            <button
-                                                onClick={deleteModalFunction}
-                                                className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
-                                                <span>Delete</span>
-                                            </button>
-                                            <Link
-                                                href="#"
-                                                className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
-                                                <span>eOps Watch</span>
-                                            </Link>
-                                            <Link
-                                                href="#"
-                                                className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
-                                                <span>eOps Trace</span>
-                                            </Link>
-                                            <Link
-                                                href="#"
-                                                className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
-                                                <span>eOps Prosense</span>
-                                            </Link>
-                                            <Link
-                                                href="#"
-                                                className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
-                                                <span>eOps Insights/Reports</span>
-                                            </Link>
-                                        </div>
-                                    }
-                                </div>
+                {objectData && objectData.length > 0 ?
+                    <table className={`table-auto lg:min-w-full sm:w-full small:w-full text-left ${styles.tableV3} ${styles.tableV4}`}>
+                        <thead className="text-sm font-normal">
+                            <tr>
+                                <th>S.No</th>
+                                {
+                                    tableHeader && Object.keys(tableHeader).length != 0 ?
+                                        Object.keys(tableHeader).map((item: any, i: any) => (
+                                            <th className="capitalize" key={i}>
+                                                {
+                                                    item.split(/(?=[A-Z])/).join(" ")
+                                                }
+                                            </th>
+                                        ))
+                                        : null
+                                }
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {
+                                objectData && objectData.length > 0 ?
+                                    objectData.map((items: any, index: any) => (
+                                        <tr key={index}>
+                                            <td>{index + 1}</td>
+                                            {
+                                                Object.values(items?.tags).map((item: any, i: any) => (
+                                                    <td key={i}>
+                                                        <button
+                                                        // onClick={() => takeMeToSubObjectComponent(items.subObjectID)}
+                                                        >
+                                                            <span>{item ? item : '-'}</span>
+                                                        </button>
+                                                    </td>
+                                                ))
+                                            }
+                                            <td>
+                                                <div className="flex justify-start items-center relative">
+                                                    <button onClick={() => toggleActions(index + 1)}>
+                                                        <Image
+                                                            src="/img/more-vertical.svg"
+                                                            alt="more-vertical"
+                                                            height={24}
+                                                            width={24}
+                                                        />
+                                                    </button>
+                                                    {(actions && actionCount === index + 1) &&
+                                                        <div className="bg-black text-white border overflow-hidden border-black rounded rounded-lg w-[200px] flex flex-col flex-wrap items-start justify-start shadow-sm absolute top-[30px] right-[75px] z-[1]">
+                                                            <button
+                                                                onClick={()=>editSubObjectFunction(items?.tags?.ID)}
+                                                                className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
+                                                                <span>Edit</span>
+                                                            </button>
+                                                            <button
+                                                                onClick={deleteModalFunction}
+                                                                className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
+                                                                <span>Delete</span>
+                                                            </button>
+                                                            <button
+                                                                onClick={() => eOpsWatchFunction(items?.tags)}
+                                                                className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
+                                                                <span>eOps Watch</span>
+                                                            </button>
+                                                            <Link
+                                                                href="#"
+                                                                className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
+                                                                <span>eOps Trace</span>
+                                                            </Link>
+                                                            <Link
+                                                                href="#"
+                                                                className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
+                                                                <span>eOps Prosense</span>
+                                                            </Link>
+                                                            <Link
+                                                                href="#"
+                                                                className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
+                                                                <span>eOps Insights/Reports</span>
+                                                            </Link>
+                                                        </div>
+                                                    }
+                                                </div>
 
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                                            </td>
+                                        </tr>
+                                    ))
+                                    : null
+                            }
+
+                        </tbody>
+
+                        {/* <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>1S223</td>
+                                <td>5PVBE7AJ8R5T50001</td>
+                                <td>Cummins</td>
+                                <td>48</td>
+                                <td>12</td>
+                                <td>
+                                    <div className="flex justify-start items-center relative">
+                                        <button onClick={() => toggleActions(1)}>
+                                            <Image
+                                                src="/img/more-vertical.svg"
+                                                alt="more-vertical"
+                                                height={24}
+                                                width={24}
+                                            />
+                                        </button>
+                                        {(actions && actionCount === 1) &&
+                                            <div className="bg-black text-white border overflow-hidden border-black rounded rounded-lg w-[200px] flex flex-col flex-wrap items-start justify-start shadow-sm absolute top-[30px] right-[75px] z-[1]">
+                                                <Link
+                                                    href="#"
+                                                    className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
+                                                    <span>Edit</span>
+                                                </Link>
+                                                <button
+                                                    onClick={deleteModalFunction}
+                                                    className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
+                                                    <span>Delete</span>
+                                                </button>
+                                                <Link
+                                                    href="#"
+                                                    className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
+                                                    <span>eOps Watch</span>
+                                                </Link>
+                                                <Link
+                                                    href="#"
+                                                    className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
+                                                    <span>eOps Trace</span>
+                                                </Link>
+                                                <Link
+                                                    href="#"
+                                                    className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
+                                                    <span>eOps Prosense</span>
+                                                </Link>
+                                                <Link
+                                                    href="#"
+                                                    className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
+                                                    <span>eOps Insights/Reports</span>
+                                                </Link>
+                                            </div>
+                                        }
+                                    </div>
+
+                                </td>
+                            </tr>
+                        </tbody> */}
+                    </table>
+                    :
+                    <div className="flex justify-center items-center flex-wrap flex-col font-OpenSans mt-20">
+                        <div className="no-data-image">
+                            <Image
+                                src="/img/not-found.svg"
+                                alt="no data found!"
+                                className="inline-block"
+                                height={72}
+                                width={72}
+                            />
+                        </div>
+                        <p className="text-black text-xl mt-8 font-semibold">No data found!!</p>
+                        <p className="text-black text-lg mt-3 font-normal">
+                            Please create the object by clicking on the  <span className="text-black font-semibold text-lg]">&#34;Add Sub Class Object&#34;</span> button.
+                        </p>
+                    </div>
+                }
             </div>
 
-            <AddNewObject
-                show={classSelector.toggleAddObject && classSelector.toggleAddObject}
-                parentClassID={getClassStates.selectedClass}
-                subClassID={chooseAsset}
-                subClassData={subClassData}
-            />
-            
             {/* Add New Object */}
-            <AddNewObject show={addNewObject.toggleAddObject && addNewObject.toggleAddObject}  /> 
+            <AddNewObject
+                show={addNewObject.toggleAddObject && addNewObject.toggleAddObject}
+                selectedSubClass={chooseAsset}
+                subClassData={subClassData}
+                parentClass={props.defaultClass}
+                objID={props.objID}
+            />
+
+            <EditSubObject
+                show={classSelector?.editSubObjectModalReducer}
+                parentClass={props?.defaultClass}
+                parentObject={props?.objectKey}
+                selectedObject={selectedObjectID}
+                subClass={chooseAsset}
+            />
 
             {/* Delete Modal */}
             {deleteModal &&
@@ -379,13 +571,13 @@ export default function SubObjectManagement(props: any) {
                                         <p className="flex justify-center items-center text-lg">Are you sure want to <span className="text-[#EF0000] mx-1 font-semibold">Delete</span> this sub-object?</p>
                                         <div className="mt-10 relative flex justify-center items-center w-full">
                                             <button
-                                                className="border border-black rounded-lg bg-black text-white text-lg w-[70px] h-[47px] mr-5 hover:bg-yellow-951 hover:text-white hover:border-yellow-951 ease-in-out duration-300 disabled:bg-gray-951 disabled:hover:border-gray-951 disabled:border-gray-951"
+                                                className="border border-black rounded-lg bg-black text-white text-lg w-[70px] h-[47px] mr-5 hover:bg-yellow-951 hover:text-white hover:border-yellow-951 ease-in-out duration-[100ms] disabled:bg-gray-951 disabled:hover:border-gray-951 disabled:border-gray-951"
                                                 onClick={closeDeleteModal}
                                             >
                                                 Yes
                                             </button>
                                             <button
-                                                className="border border-black rounded-lg bg-white text-black text-lg w-[70px] h-[47px] hover:text-white hover:bg-yellow-951 hover:border-yellow-951 ease-in-out duration-300"
+                                                className="border border-black rounded-lg bg-white text-black text-lg w-[70px] h-[47px] hover:text-white hover:bg-yellow-951 hover:border-yellow-951 ease-in-out duration-[100ms]"
                                                 onClick={closeDeleteModal}
                                             >
                                                 No

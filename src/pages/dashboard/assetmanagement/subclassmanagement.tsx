@@ -1,13 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import styles from '../../../styles/Common.module.css';
 import Image from "next/image";
 import Link from 'next/dist/client/link';
 import AddNewSubClass from './addnewsubclass';
-export default function SubClassManagement(props: any) {
-    // console.log({
-    //     props: props.classData
+import axios from 'axios';
+import EditSubClass from './editsubclass';
+import { editSubClassModalAction } from '@/store/actions/classAction';
 
-    // })
+export default function SubClassManagement(props: any) {
+    const dispatch = useDispatch<any>();
     const [toggleFilter, setToggleFilter] = useState(false);
     const [toggleArrow, setToggleArrow] = useState(false);
     const [toggleSort, setToggleSort] = useState(false);
@@ -15,7 +17,13 @@ export default function SubClassManagement(props: any) {
     const [actionCount, setActionCount] = useState(1);
     const [showModal, setShowModal] = useState(Boolean);
     const [deleteModal, setDeleteModal] = useState(false);
-    const [subClassData, setSubClassData] = useState([] as any)
+    const [subClassData, setSubClassData] = useState([] as any);
+    const [search, setSearch] = useState('');
+    const [selectedSubClass, setSelectedSubClass] = useState("");
+
+    // All class reducer states
+    const allClassSelector = useSelector((state: any) => state.classReducer);
+
     useEffect(() => {
         setShowModal(props.addSubClassModal)
     }, [props.addSubClassModal])
@@ -49,9 +57,72 @@ export default function SubClassManagement(props: any) {
         setDeleteModal(false)
     }
 
-    const takeMeToClassComponent = (item: any) => {
-        props.handelsubClass(item)
+    // const takeMeToClassComponent = (item: any) => {
+    //     props.handelsubClass(item)
+    // }
+
+
+    // set default choose asset
+    async function fetchData() {
+        try {
+            await axios({
+                method: 'GET',
+                url: `/api/getSubAssets`,
+
+            }).then(function (response: any) {
+                if (response) {
+                    if (response.data) {
+                        let filtered = response.data.filter((item: any) => {
+                            return item.parentAssetID === props.selectedParentClass
+                        })
+                        setSubClassData(filtered);
+                    }
+                }
+            }).catch(function (error: any) {
+                console.log({
+                    "ERROR IN AXIOS CATCH": error
+                })
+            })
+        } catch (err) {
+            console.log({
+                "ERROR IN TRY CATCH": err
+            })
+        }
     }
+    useEffect(() => {
+        fetchData()
+    }, [props.selectedParentClass])
+
+    // function for searching
+    const handleSearchFUnction = (e: any) => {
+        setSearch(e.target.value);
+        if (e.target.value === "" || e.target.value.length <= 0) {
+            fetchData();
+            setSearch('');
+            return;
+        }
+        if (subClassData && subClassData.length > 0) {
+            const filtered = subClassData.filter((item: any) => {
+                if (item.hasOwnProperty("assetName")) {
+                    if (item.assetName.toString().toLowerCase().includes(e.target.value.toString().toLowerCase())) {
+                        return item;
+                    }
+                }
+            })
+            setSubClassData(filtered)
+        } else {
+            fetchData();
+        }
+    }
+
+
+    // Open Edit class modal
+    const openEditSubClassModal = (item: any) => {
+        setSelectedSubClass(item)
+        dispatch(editSubClassModalAction(true));
+        setActions(false);
+    }
+
     return (
         <div className='px-0 py-3 font-OpenSans'>
             {/* Title, search and filters */}
@@ -73,6 +144,8 @@ export default function SubClassManagement(props: any) {
                             name="searchobjects"
                             className="border border-gray-969 rounded-lg h-[44px] w-[310px] pl-10 pr-2"
                             autoComplete="off"
+                            value={search}
+                            onChange={handleSearchFUnction}
                         />
                     </div>
                     <div className="relative ml-3">
@@ -113,16 +186,75 @@ export default function SubClassManagement(props: any) {
                                     </button>
                                 </th>
                                 <th>Tags</th>
+                                <th>Parent Join Keys</th>
                                 <th>Date of creation</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td colSpan={5}>
-                                    No Data Found!
-                                </td>
-                            </tr>
+                            {
+                                subClassData.map((item: any, index: any) => (
+                                    <tr key={index}>
+                                        <td>{index + 1}</td>
+                                        <td>
+                                            <button
+                                            // onClick={() => takeMeToClassComponent(item.assetName)}
+                                            >
+                                                <span>{item.assetName}</span>
+                                            </button>
+                                        </td>
+                                        <td>
+                                            {
+                                                item?.tagsWithDataType.map((it: any, indx: any) => (
+                                                    <span key={indx}>
+                                                        {it.tagName}<em>, </em>
+                                                    </span>
+                                                ))
+
+                                            }
+                                        </td>
+                                        <td>
+                                            {
+                                                item?.parentJoinKey.map((it: any, indx: any) => (
+                                                    <span key={indx}>
+                                                        {it}<em>, </em>
+                                                    </span>
+                                                ))
+
+                                            }
+                                        </td>
+                                        <td>{item.dateCreated}</td>
+                                        <td className='relative'>
+                                            <div className="flex justify-start items-center relative">
+                                                <button onClick={() => toggleActions(index + 1)}>
+                                                    <Image
+                                                        src="/img/more-vertical.svg"
+                                                        alt="more-vertical"
+                                                        height={24}
+                                                        width={24}
+                                                    />
+                                                </button>
+                                                {(actions && actionCount === index + 1) &&
+                                                    <div className="bg-black text-white border overflow-hidden border-black rounded rounded-xl w-[100px] flex flex-col flex-wrap items-start justify-start shadow-sm absolute top-[30px] right-[75px] z-[1]">
+                                                        <button
+                                                            onClick={() => openEditSubClassModal(item.assetName)}
+                                                            className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[30px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
+                                                            <span>Edit</span>
+                                                        </button>
+                                                        <button
+                                                            onClick={deleteModalFunction}
+                                                            className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[30px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
+                                                            <span>Delete</span>
+                                                        </button>
+                                                    </div>
+                                                }
+                                            </div>
+
+                                        </td>
+                                    </tr>
+                                ))
+
+                            }
                         </tbody>
                     </table>
                     :
@@ -148,7 +280,18 @@ export default function SubClassManagement(props: any) {
             <AddNewSubClass
                 handleClick={handleClick}
                 show={showModal}
+                selectedParentClass={props.selectedParentClass}
                 classData={props.classData}
+            />
+
+
+            {/* Edit Sub Class Component */}
+            <EditSubClass
+                show={allClassSelector?.editSubClassModalReducer}
+                selectedParentClass={props.selectedParentClass ? props.selectedParentClass : ''}
+                classData={props.classData ? props.classData : []}
+                subClassData={subClassData ? subClassData : []}
+                selectedSubClass={selectedSubClass}
             />
 
 

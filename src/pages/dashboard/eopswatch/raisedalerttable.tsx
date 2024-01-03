@@ -118,10 +118,10 @@ export default function RaisedAlertTable(props: any) {
     }
 
 
-    console.log({
-        props: props,
-        data: data
-    })
+    // console.log({
+    //     props: props,
+    //     data: data
+    // })
 
     return (
         <>

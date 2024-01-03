@@ -132,7 +132,7 @@ export default function AddAlerts(localData: any) {
                 'Content-Type': 'application/json'
             }
         }).then(res => {
-            console.log('res', res.data);
+            // console.log('res', res.data);
             setSuccess(true)
             setTimeout(() => {
                 setFormData((state) => ({

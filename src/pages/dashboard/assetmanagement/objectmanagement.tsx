@@ -1,96 +1,79 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import styles from '../../../styles/Common.module.css';
 import Image from "next/image";
 import axios from 'axios';
 import Link from 'next/dist/client/link';
-import { setSelectedClass, setClassBreadcrumb, selectedClassDataAction } from '@/store/actions/classAction';
+import { setClassBreadcrumb, objDefaultClassSelectorFunction } from '@/store/actions/classAction';
+import AddNewClassObject from './addnewclassobject';
+import { successMessageAction } from '@/store/actions/classAction';
+import { editObjectModalAction } from '@/store/actions/classAction';
+import EditObject from './editobject';
 
 export default function ObjectManagement(props: any) {
-    console.log({
-        "OBJECT MANAGEMENT": props
-    })
-    const dispatch = useDispatch<any>();
-    const [chooseAsset, setChooseAsset] = useState(0);
 
+    const dispatch = useDispatch<any>();
     const [toggleFilter, setToggleFilter] = useState(false);
     const [toggleArrow, setToggleArrow] = useState(false);
-    const [toggleSort, setToggleSort] = useState(false);
+    const [chooseAsset, setChooseAsset] = useState(props.classData && props.classData.length > 0 ? props.classData[0]?.assetName : '');
+    const [toggleAsset, setToggleAsset] = useState(false);
     const [actions, setActions] = useState(false);
     const [actionCount, setActionCount] = useState(1);
-    const [toggleAsset, setToggleAsset] = useState(false);
-
-    // Use Effect to set default dropdown selector
-    useEffect(() => {
-        if (props.classData && props.classData.length >= 0) {
-            setChooseAsset(props.classData[0].id);
-        }
-    }, [props.classData])
-
-    // Function to get className based on ID
-    function getClassNameFunction(id: any) {
-        let data = [] as any;
-        if (props.classData && props.classData.length >= 0) {
-            data = props.classData.filter(function(item:any){
-                return item.id === id;
-             })
-        }
-        return data;
-    }
-
-    // Toggle filters
     const [objID, setObjID] = useState("");
     const [deleteModal, setDeleteModal] = useState(false);
- 
+    const [objectData, setObjectData] = useState([] as any);
+    const [tableHeader, setTableHeader] = useState({} as any);
+    const [search, setSearch] = useState('');
+    const [selectedObjID, setSelectedObjID] = useState('')
+
+    // All class reducer states
+    const classSelector = useSelector((state: any) => state.classReducer);
+
+    // Close Success message after 5 second if true
+    useEffect(() => {
+        if (classSelector && classSelector.successMessageReducer === true) {
+            setTimeout(() => {
+                dispatch(successMessageAction(false))
+            }, 5000)
+        }
+
+    }, [classSelector])
+
+    // Toggle the filters dropdown
     const toggleFilterFunction = () => {
         setToggleArrow(!toggleArrow);
         setToggleFilter(!toggleFilter);
     }
-    const sortByClassName = () => {
-        setToggleSort(!toggleSort)
-    }
+   
 
-    // UseEffect to dispatch an action
+    // Set the choose asset on page load
     useEffect(() => {
-        dispatch(setSelectedClass(props.classData[0]?.id))
-        dispatch(selectedClassDataAction(props.classData[0]))
-    }, [props.classData, dispatch])
+        if (props.classData && props.classData.length > 0) {
+            setChooseAsset(props.classData[0]?.assetName);
+            dispatch(objDefaultClassSelectorFunction(props.classData[0]?.assetName))
+        }
+    }, [props.classData, dispatch])  
 
-
-    // Toggle dropdown options to open in table
     const toggleActions = (item: any) => {
         setActionCount(item);
         setActions(!actions);
     }
-
-    // function to create breadcrumb
     const takeMeToSubObjectComponent = (item: any) => {
+        let classObjKey = chooseAsset === 'Manufacturing Plants' ? 'PlantID' : 'VIN';
         let abc = {
             "flow": "Object Management",
-            "class": getClassNameFunction(chooseAsset)[0]?.className,
-            "classObjKey": getClassNameFunction(chooseAsset)[0]?.className === "Vehicles" ? "VIN" : "PlantID",
+            "class": chooseAsset,
+            "classObjKey": classObjKey,
             "classObjValue": item,
-            "subClass": "Battery",
+            "subClass": "Batteries",
             "subClassObjKey": "",
             "subClassObjValue": ""
         }
         dispatch(setClassBreadcrumb(abc))
+        setObjID(item);
         props.handelObject(item)
     }
 
-    // Function to toggle the class dropdown
-    const toggleDropdownFunction = () => {
-        setToggleAsset(!toggleAsset)
-    }
-    const selectItemFunction = (item: any) => {
-        setChooseAsset(item);
-        setToggleAsset(false);
-        // dispatch(setSelectedClass(item))
-    }
-
-    useEffect(()=>{
-        dispatch(setSelectedClass(chooseAsset))
-    }, [chooseAsset, dispatch])
 
     const deleteModalFunction = () => {
         setDeleteModal(true);
@@ -101,16 +84,107 @@ export default function ObjectManagement(props: any) {
         setDeleteModal(false)
     }
 
+
+    function useOutsideAlerter(ref: any) {
+        useEffect(() => {
+            function handleClickOutside(event: any) {
+                if (ref.current && !ref.current.contains(event.target)) {
+                    setToggleAsset(false)
+                }
+            }
+            document.addEventListener("mousedown", handleClickOutside);
+            return () => {
+                document.removeEventListener("mousedown", handleClickOutside);
+            };
+        }, [ref]);
+    }
+    const wrapperRef = useRef(null);
+    useOutsideAlerter(wrapperRef);
+
+    const toggleDropdownFunction = () => {
+        setToggleAsset(!toggleAsset)
+    }
+
+    const selectItemFunction = (item: any) => {
+        setChooseAsset(item);
+        setToggleAsset(false);
+        dispatch(objDefaultClassSelectorFunction(item))
+    }
+
+
+    // Get objected based on selected class
+    async function fetchData() {
+        try {
+            await axios({
+                method: 'GET',
+                url: `/api/getObjects`,
+
+            }).then(function (response) {
+                if (response) {
+                    let filtered = response.data.filter((item: any) => {
+                        return item.parentAssetName === chooseAsset
+                    })
+                    if (filtered && filtered.length >= 0) {
+                        let headArray = filtered[0]?.subObjects;
+                        setTableHeader(headArray)
+                        setObjectData(filtered);
+                    }
+                }
+            }).catch(function (error) {
+                console.log({
+                    "ERROR IN AXIOS CATCH": error
+                })
+            })
+        } catch (err) {
+            console.log({
+                "ERROR IN TRY CATCH": err
+            })
+        }
+    }
+    useEffect(() => {
+        fetchData();
+        if (fetchData.length) return;
+    }, [chooseAsset])
+
+
+    // function for searching
+    const handleSearchFUnction = (e: any) => {
+        setSearch(e.target.value);
+        if (e.target.value === "" || e.target.value.length <= 0) {
+            fetchData();
+            setSearch('');
+            return;
+        }
+        if (objectData && objectData.length > 0) {
+            const filtered = objectData.filter((item: any) => {
+                if (item.hasOwnProperty("Name")) {
+                    if (item.Name.toString().toLowerCase().includes(e.target.value.toString().toLowerCase())) {
+                        return item;
+                    }
+                }
+            })
+            setObjectData(filtered)
+        } else {
+            fetchData();
+        }
+    }
+
+
+    // Edit Object Show/Hide
+    const editObjectFunction = (item:any) => {
+        dispatch(editObjectModalAction(true));
+        setActions(false);
+        setSelectedObjID(item);        
+    }
+
     return (
         <div className='py-3 font-OpenSans'>
             {/* Title, search and filters */}
             <div className='flex justify-between items-center py-2 px-4 '>
                 <div className='w-[350px]'>
-
-                    {/* Class dropdown */}
-                    <div>
+                    <div ref={wrapperRef}>
                         <div
-                            className="border rounded-xl border-gray-500 h-[55px] pl-2 pr-5 relative flex items-center justify-start bg-white w-[80%] cursor-pointer"
+                            className="border rounded-xl border-gray-969 h-[55px] pl-2 pr-5 relative flex items-center justify-start bg-white w-[80%] cursor-pointer"
                             onClick={toggleDropdownFunction}
                         >
                             <label className="absolute text-sm top-[-10px] left-2 pl-2 pr-2 bg-white">Choose Industry type</label>
@@ -121,33 +195,29 @@ export default function ObjectManagement(props: any) {
                                 width={20}
                                 className={`absolute right-3 top-4 ${toggleAsset ? 'rotate-180' : 'rotate-0'}`}
                             />
-                            <span className="text-lg text-black pl-2">
-                                {getClassNameFunction(chooseAsset)[0]?.className}
-                            </span>
+                            <span className="text-lg text-black pl-2">{chooseAsset}</span>
                         </div>
 
                         {toggleAsset ?
-                            <div className={`h-52 border rounded-xl border-gray-500 h-auto max-h-[250px] w-[400px]  absolute flex items-start justify-start mt-1 overflow-hidden overflow-y-auto bg-white ${styles.scroll} z-10`}>
-                                    <ul className="p-0 m-0 w-full">
-                                        {
-                                            props.classData && props.classData.length >= 0 && props.classData.map((item: any, index: any) => (
-                                                <li
-                                                    className="px-5 py-2 bg-white cursor-pointer hover:bg-yellow-951 w-full font-normal"
-                                                    onClick={() => selectItemFunction(item.id)}
-                                                    key={index}
-                                                >
-                                                    <span>{item.className}</span>
-                                                </li>
-                                            ))
-                                        }
-                                    </ul>
-                                
+                            <div className={`h-52 border rounded-xl border-gray-969 h-auto max-h-[250px] w-[400px]  absolute flex items-start justify-start mt-1 overflow-hidden overflow-y-auto bg-white ${styles.scroll} z-10`}>
+                                <ul className="p-0 m-0 w-full">
+                                    {
+                                        props.classData.map((item: any, index: any) => (
+                                            <li
+                                                className="px-5 py-2 bg-white cursor-pointer hover:bg-yellow-951 w-full font-normal"
+                                                onClick={() => selectItemFunction(item.assetName)}
+                                                key={index}
+                                            >
+                                                <span>{item.assetName}</span>
+                                            </li>
+                                        ))
+                                    }
+                                </ul>
                             </div>
                             :
                             null
                         }
                     </div>
-
                 </div>
 
                 <div className='flex justify-start items-center'>
@@ -166,6 +236,8 @@ export default function ObjectManagement(props: any) {
                             name="searchobjects"
                             className="border border-gray-969 rounded-lg h-[44px] w-[310px] pl-10 pr-2"
                             autoComplete="off"
+                            value={search}
+                            onChange={handleSearchFUnction}
                         />
                     </div>
                     <div className="relative ml-3">
@@ -192,139 +264,133 @@ export default function ObjectManagement(props: any) {
                 </div>
             </div>
 
+
+            {/* Response Messages */}
+            {
+                classSelector.successMessageReducer === true &&
+
+                <div className={`bg-green-957 border-green-958 text-green-959 mb-1 mt-1 border text-md px-4 py-3 rounded rounded-xl relative flex items-center justify-start`}>
+                    <Image
+                        src="/img/AlertSuccess.svg"
+                        alt="Alert Success"
+                        height={24}
+                        width={24}
+                        className='mr-2'
+                    />
+                    <strong className="font-semibold">Success</strong>
+                    <span className="block sm:inline ml-2">Object stored successfully!</span>
+                </div>
+            }
+
             {/* Table */}
             <div className='w-full mt-6 min-h-[400px]'>
-                <table className={`table-auto lg:min-w-full sm:w-full small:w-full text-left ${styles.tableV3} ${styles.tableV4}`}>
-                    <thead className="text-sm font-normal">
-                        <tr>
-                            <th>S.No</th>
-                            <th>
-                                <button className="flex justify-center items-center" onClick={sortByClassName}>
-                                    <Image src="/img/arrow-up-gray.svg" alt="sort" height={17} width={17} className={`${toggleSort === true ? 'rotate-180' : 'rotate-0'}`} />
-                                    <span>VIN No</span>
-                                </button>
-                            </th>
-                            <th>Mfd Date</th>
-                            <th>Model</th>
-                            <th>Assembly Plant</th>
-                            <th>Lot No</th>
-                            <th>Model Year</th>
-                            <th>Type</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>
-                                <button
-                                    onClick={() => takeMeToSubObjectComponent('5PVBE7AJ8R5T50001')}
-                                >
-                                    <span>5PVBE7AJ8R5T50001</span>
-                                </button>
-                            </td>
-                            <td>06/03/2022</td>
-                            <td>Mineral Wells</td>
-                            <td>ES350</td>
-                            <td>104CY5209</td>
-                            <td>2022</td>
-                            <td>ICE</td>
-                            <td>
-                                <div className="flex justify-start items-center relative">
-                                    <button onClick={() => toggleActions(1)}>
-                                        <Image
-                                            src="/img/more-vertical.svg"
-                                            alt="more-vertical"
-                                            height={24}
-                                            width={24}
-                                        />
-                                    </button>
-                                    {(actions && actionCount === 1) &&
-                                        <div className="bg-black text-white border overflow-hidden border-black rounded rounded-lg w-[200px] flex flex-col flex-wrap items-start justify-start shadow-sm absolute top-[30px] right-[75px] z-[1]">
-                                            <Link
-                                                href="#"
-                                                className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
-                                                <span>Edit</span>
-                                            </Link>
-                                            <button
-                                                onClick={deleteModalFunction}
-                                                className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
-                                                <span>Delete</span>
-                                            </button>
-                                            <Link
-                                                href="#"
-                                                className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
-                                                <span>eOps Watch</span>
-                                            </Link>
-                                            <Link
-                                                href="#"
-                                                className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
-                                                <span>eOps Trace</span>
-                                            </Link>
-                                            <Link
-                                                href="#"
-                                                className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
-                                                <span>eOps Prosense</span>
-                                            </Link>
-                                            <Link
-                                                href="#"
-                                                className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
-                                                <span>eOps Insights/Reports</span>
-                                            </Link>
-                                        </div>
-                                    }
-                                </div>
+                {objectData && objectData.length > 0 ?
+                    <table className={`table-auto lg:min-w-full sm:w-full small:w-full text-left ${styles.tableV3} ${styles.tableV4}`}>
+                        <thead className="text-sm font-normal">
+                            <tr>
+                                <th>S.No</th>
+                                {
+                                    tableHeader && Object.keys(`tableHeader`).length != 0 ?
+                                        Object.keys(tableHeader).map((item: any, i: any) => (
+                                            <th className="capitalize" key={i}>
+                                                {
+                                                    item.split(/(?=[A-Z])/).join(" ")
+                                                }
+                                            </th>
+                                        ))
+                                        : null
+                                }
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {
+                                objectData && objectData.length > 0 ?
+                                    objectData.map((items: any, index: any) => (
+                                        <tr key={index}>
+                                            <td>{index + 1}</td>
+                                            {
+                                                Object.values(items?.subObjects).map((item: any, i: any) => (
+                                                    <td key={i} className={items.subObjectID}>
+                                                        <button
+                                                            onClick={() => takeMeToSubObjectComponent(items.subObjectID)}
+                                                        >
+                                                            <span>{item ? item : '-'}</span>
+                                                        </button>
+                                                    </td>
+                                                ))
+                                            }
+                                            <td>
+                                                <div className="flex justify-start items-center relative">
+                                                    <button onClick={() => toggleActions(index + 1)}>
+                                                        <Image
+                                                            src="/img/more-vertical.svg"
+                                                            alt="more-vertical"
+                                                            height={24}
+                                                            width={24}
+                                                        />
+                                                    </button>
+                                                    {(actions && actionCount === index + 1) &&
+                                                        <div className="bg-black text-white border overflow-hidden border-black rounded rounded-lg w-[200px] flex flex-col flex-wrap items-start justify-start shadow-sm absolute top-[30px] right-[75px] z-[1]">
+                                                            <button
+                                                                onClick={()=>editObjectFunction(items.subObjectID)}
+                                                                className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
+                                                                <span>Edit</span>
+                                                            </button>
+                                                            <button
+                                                                onClick={deleteModalFunction}
+                                                                className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
+                                                                <span>Delete</span>
+                                                            </button>
+                                                            <Link
+                                                                href="#"
+                                                                className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
+                                                                <span>eOps Watch</span>
+                                                            </Link>
+                                                            <Link
+                                                                href="#"
+                                                                className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
+                                                                <span>eOps Trace</span>
+                                                            </Link>
+                                                            <Link
+                                                                href="#"
+                                                                className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
+                                                                <span>eOps Prosense</span>
+                                                            </Link>
+                                                            <Link
+                                                                href="#"
+                                                                className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
+                                                                <span>eOps Insights/Reports</span>
+                                                            </Link>
+                                                        </div>
+                                                    }
+                                                </div>
 
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>5PVBE7AJ8R5T50007</td>
-                            <td>06/03/2022</td>
-                            <td>Mineral Wells</td>
-                            <td>GS450</td>
-                            <td>104CY5209</td>
-                            <td>2022</td>
-                            <td>ICE</td>
-                            <td>
-                                <div className="flex justify-start items-center relative">
-                                    <button onClick={() => toggleActions(1)}>
-                                        <Image
-                                            src="/img/more-vertical.svg"
-                                            alt="more-vertical"
-                                            height={24}
-                                            width={24}
-                                        />
-                                    </button>
-                                </div>
+                                            </td>
+                                        </tr>
+                                    ))
+                                    : null
+                            }
 
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>5PVBN3TK3R6Y67222</td>
-                            <td>06/03/2022</td>
-                            <td>Virginia</td>
-                            <td>EX-F</td>
-                            <td>104FG2001</td>
-                            <td>2023</td>
-                            <td>EV</td>
-                            <td>
-                                <div className="flex justify-start items-center relative">
-                                    <button onClick={() => toggleActions(3)}>
-                                        <Image
-                                            src="/img/more-vertical.svg"
-                                            alt="more-vertical"
-                                            height={24}
-                                            width={24}
-                                        />
-                                    </button>
-                                </div>
-
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                    :
+                    <div className="flex justify-center items-center flex-wrap flex-col font-OpenSans mt-20">
+                        <div className="no-data-image">
+                            <Image
+                                src="/img/not-found.svg"
+                                alt="no data found!"
+                                className="inline-block"
+                                height={72}
+                                width={72}
+                            />
+                        </div>
+                        <p className="text-black text-xl mt-8 font-semibold">No data found!!</p>
+                        <p className="text-black text-lg mt-3 font-normal">
+                            Please create the object by clicking on the  <span className="text-black font-semibold text-lg]">&#34;Add Class Object&#34;</span> button.
+                        </p>
+                    </div>
+                }
             </div>
 
 
@@ -358,13 +424,13 @@ export default function ObjectManagement(props: any) {
                                         <p className="flex justify-center items-center text-lg">Are you sure want to <span className="text-[#EF0000] mx-1 font-semibold">Delete</span> this object?</p>
                                         <div className="mt-10 relative flex justify-center items-center w-full">
                                             <button
-                                                className="border border-black rounded-lg bg-black text-white text-lg w-[70px] h-[47px] mr-5 hover:bg-yellow-951 hover:text-white hover:border-yellow-951 ease-in-out duration-300 disabled:bg-gray-951 disabled:hover:border-gray-951 disabled:border-gray-951"
+                                                className="border border-black rounded-lg bg-black text-white text-lg w-[70px] h-[47px] mr-5 hover:bg-yellow-951 hover:text-white hover:border-yellow-951 ease-in-out duration-[100ms] disabled:bg-gray-951 disabled:hover:border-gray-951 disabled:border-gray-951"
                                                 onClick={closeDeleteModal}
                                             >
                                                 Yes
                                             </button>
                                             <button
-                                                className="border border-black rounded-lg bg-white text-black text-lg w-[70px] h-[47px] hover:text-white hover:bg-yellow-951 hover:border-yellow-951 ease-in-out duration-300"
+                                                className="border border-black rounded-lg bg-white text-black text-lg w-[70px] h-[47px] hover:text-white hover:bg-yellow-951 hover:border-yellow-951 ease-in-out duration-[100ms]"
                                                 onClick={closeDeleteModal}
                                             >
                                                 No
@@ -378,8 +444,21 @@ export default function ObjectManagement(props: any) {
                     <div className="opacity-75 fixed inset-0 z-40 bg-black"></div>
                 </>
             }
+            {/* Add New Class Object */}
+            <AddNewClassObject
+                show={classSelector.toggleAddClassObject && classSelector.toggleAddClassObject}
+                objectData={objectData}
+                selectedParentClass={chooseAsset}
+                classData={props.classData}
+                objID={objID}
+            />
 
-
+            <EditObject
+                show={classSelector?.editObjectModalReducer}
+                selectedObject={selectedObjID}
+                selectedParentClass={chooseAsset}
+                objectData={objectData}
+            />
 
         </div>
     )

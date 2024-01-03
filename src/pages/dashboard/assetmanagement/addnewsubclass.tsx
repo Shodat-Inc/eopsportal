@@ -1,34 +1,20 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, Component } from "react";
 import { useDispatch, useSelector } from 'react-redux';
-import Layout from "../../../components/Layout";
-import NoDataFound from "../../../common/nodatafound";
 import styles from '../../../styles/Common.module.css';
-import { getAssetsData } from "../../../lib/getassets";
 import { useRouter } from 'next/router'
 import Router from 'next/router'
-import Link from "next/link";
 import Image from "next/image";
-import Template from "../template";
-import axios from 'axios';
-import AlertMessage from "@/common/alertMessage";
+import axios from "axios";
 import moment from "moment";
-import { setSelectedClass } from "@/store/actions/classAction";
-import DeleteModal from "@/common/deletemodal";
-import ObjectModal from "./objectmodal";
-export async function getServerSideProps() {
-    const localData = await getAssetsData()
-    return {
-        props: {
-            localData,
-        },
-    }
-}
-export default function AddNewSubClass(props: any, localData: any) {
+import { successMessageAction } from '@/store/actions/classAction';
+
+export default function AddNewSubClass(props: any) {
+
+    // console.log({
+    //     PROPS: props
+    // })
     const dispatch = useDispatch<any>();
-    const [showModal, setShowModal] = useState(false);
-    const [success, setSuccess] = useState(false);
     const assetname = useRef("");
-    const [data, setData] = useState<any[]>([]);
     const router = useRouter();
     const [allTags, setAllTags] = useState<any[]>([]);
     const [newTag, setNewTag] = useState<string>("");
@@ -37,14 +23,54 @@ export default function AddNewSubClass(props: any, localData: any) {
     const [toggleDT, setToggleDT] = useState(false);
     const [dataType, setDataType] = useState("");
     const [assetDataType, setAssetDataType] = useState<any[]>([]);
-    const [showObjectModal, setShowObjectModal] = useState(false);
     const [chooseAsset, setChooseAsset] = useState("");
     const [toggleAsset, setToggleAsset] = useState(false);
     const [dtObject, setDtObject] = useState<any[]>([]);
-    const [deleteModal, setDeleteModal] = useState(false);
+
+    const [allClassData, setAllClassData] = useState([] as any);
+    const [selectedOptions, setSelectedOptions] = useState(null);
+    const [selectParentJoin, setSelectParentJoin] = useState("");
+
+
+    // Get class data and filter parent tags based on selected class
+    useEffect(() => {
+        if (props.classData && props.classData.length > 0) {
+            let filtered = props.classData.filter((item: any) => {
+                return item.assetName === props.selectedParentClass;
+            })
+            setAllClassData(filtered)
+            
+            let label = [] as any;
+            let val = [] as any;
+            let ajson = [] as any;
+            filtered[0]?.tags?.map((item:any)=>{
+                label.push(item.tagName)
+                val.push(item.tagName)
+                let json: any = CreateJSONForSelect(item.tagName, item.tagName);
+                ajson.push(json)
+            })
+
+            
+
+            
+            // let jsonList = dtObject.slice();
+            // jsonList.push(json)
+            // setDtObject(jsonList)
+
+            // console.log({
+            //     label: label,
+            //     val:val,
+            //     ajson:ajson
+            // })
+        }
+
+    }, [props.classData, props.selectedParentClass])
+
+   
+
+
     const closeModal = () => {
         props.handleClick(false);
-        setShowModal(false);
         setShowInput(false);
         setShowHideAddTagButton(false)
         setToggleDT(false);
@@ -54,7 +80,6 @@ export default function AddNewSubClass(props: any, localData: any) {
     }
     const cancelModal = () => {
         props.handleClick(false);
-        setShowModal(false);
         setAllTags([]);
     }
 
@@ -75,13 +100,7 @@ export default function AddNewSubClass(props: any, localData: any) {
     const wrapperRef = useRef(null);
     useOutsideAlerter(wrapperRef);
 
-    useEffect(() => {
-        setData(props.classData)
-    }, [props.classData])
 
-
-    // Get Last Asset ID
-    const getLastID = (data && data.length > 0) ? data.slice(-1)[0].assetID : '1000000001';
 
     // Adding New Tags
     const addTags = () => {
@@ -100,6 +119,14 @@ export default function AddNewSubClass(props: any, localData: any) {
         var myObject = {
             "tagName": tag,
             "dataType": datatype
+        };
+        return myObject;
+    }
+
+    function CreateJSONForSelect(value: any, label: any) {
+        var myObject = {
+            "value": value,
+            "label": label
         };
         return myObject;
     }
@@ -168,46 +195,47 @@ export default function AddNewSubClass(props: any, localData: any) {
         e.preventDefault();
         var formData = new FormData(e.target);
         const form_values = Object.fromEntries(formData);
-        const response = await fetch('/api/assets', {
-            // const response = await fetch('https://shodat.vercel.app/api/assets', {
+
+        // console.log({
+        //     formData: formData,
+        //     form_values: form_values,
+        //     tags:dtObject,
+        //     assetkey: allTags,
+        // })
+        let parentJoinKeyArr = [] as any;
+        parentJoinKeyArr.push(form_values.parentJoinKey)
+        const response = await fetch('/api/createSubAssets', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(
                 {
-                    assetID: `${form_values.assetid}`,
+                    assetID: "1234567890",
                     assetName: `${form_values.assetname}`,
                     slug: `${form_values.assetname}`,
-                    assetkey: allTags,
+                    parentAssetID: `${props.selectedParentClass}`,
+                    parentAssetName: `${props.selectedParentClass}`,
+                    tags: allTags,
+                    parentJoinKey:parentJoinKeyArr,
                     dateCreated: new Date().toLocaleString() + "",
                     dateModified: new Date().toLocaleString() + "",
-                    assetTypes: assetDataType,
-                    tags: dtObject
+                    geoScopeLink:"",
+                    tagsWithDataType: dtObject,
+                    assetTypes: assetDataType
                 }
             )
         });
         const resdata = await response.json();
         if (resdata) {
-            router.replace(router.asPath);
-            // Updated state to close the modal
-            setShowModal(false);
-            // Update state to Show the success message
-            setSuccess(true);
-            // Update state to empty all tags 
             setAllTags([]);
-            // Update state to hide the success message after 5 seconds
+            dispatch(successMessageAction(true))
             setTimeout(() => {
-                setSuccess(false);
-            }, 5000);
+                props.handleClick(false);
+            }, 50);
         } else {
             console.log("FAILED")
         }
-    }
-
-    // Delete Asset
-    const deleteAsset = (assetID: any) => {
-        setDeleteModal(true);
     }
 
 
@@ -243,9 +271,10 @@ export default function AddNewSubClass(props: any, localData: any) {
     }
 
 
-    const handleDeleteFunction = () => {
-        setDeleteModal(false)
-    }
+    // Handle Parent Join Key
+    const handleJoinKey = (e:any) => {
+        setSelectParentJoin(e.target.value)
+    } 
 
 
     return (
@@ -254,7 +283,7 @@ export default function AddNewSubClass(props: any, localData: any) {
 
                 <div className="flex justify-between items-center w-full mb-3">
                     <h2 className="font-semibold text-lg">Add New Sub Class</h2>
-                    <button onClick={closeModal}>
+                    <button onClick={closeModal} className="transition-all duration-[100ms] transition-opacity duration-100 outline-none transform active:scale-75 transition-transform">
                         <Image
                             src="/img/x.svg"
                             alt="close"
@@ -274,12 +303,12 @@ export default function AddNewSubClass(props: any, localData: any) {
 
                             <div className="mb-6 relative column-2 flex justify-start items-center sm:w-full small:w-full">
                                 <div className="lg:w-full small:w-full sm:w-full">
-                                    <input
+                                    {/* <input
                                         type="hidden"
                                         name="assetid"
                                         placeholder="Enter asset ID"
                                         value={1}
-                                    />
+                                    /> */}
 
                                     <div className={`mb-5 lg:w-full small:w-full small:w-full ${styles.form__wrap}`}>
                                         <div className={`relative ${styles.form__group} font-OpenSans`}>
@@ -312,7 +341,7 @@ export default function AddNewSubClass(props: any, localData: any) {
                                                             className="rounded-lg inline-flex justify-center items-center h-8 pl-2 pr-2 bg-[#F2F1F1] text-black text-[14px] mr-2 mb-2">
                                                             {items}
                                                             <button
-                                                                className="rounded-full border-2 border-white h-[24px] w-[24px] inline-flex justify-center items-center ml-3"
+                                                                className="transition-all duration-[100ms] transition-opacity duration-100 outline-none transform active:scale-75 transition-transform rounded-full border-2 border-white h-[24px] w-[24px] inline-flex justify-center items-center ml-3"
                                                                 onClick={() => removeElement(items)}
                                                             >
                                                                 <Image
@@ -339,14 +368,14 @@ export default function AddNewSubClass(props: any, localData: any) {
                                                         required
                                                     />
                                                     <button
-                                                        className={`text-black border border-transparent rounded inline-flex justify-center items-center text-sm h-8 px-2 ml-1 bg-yellow-951 ${dataType && (dataType != null || dataType != "") ? 'okay' : 'disabled disabled:bg-gray-300'}`}
+                                                        className={`transition-all duration-[100ms] transition-opacity duration-100 outline-none transform active:scale-75 transition-transform text-black border border-transparent rounded inline-flex justify-center items-center text-sm h-8 px-2 ml-1 bg-yellow-951 ${dataType && (dataType != null || dataType != "") ? 'okay' : 'disabled disabled:bg-gray-300'}`}
                                                         onClick={saveNewTag}
                                                         disabled={dataType && (dataType != null || dataType != "") ? false : true}
                                                     >
                                                         Add
                                                     </button>
                                                     <button
-                                                        className="text-white border border-transparent rounded inline-flex justify-center items-center text-sm h-8 px-2 ml-1 bg-red-600"
+                                                        className="text-white border border-transparent rounded inline-flex justify-center items-center text-sm h-8 px-2 ml-1 bg-red-600 transition-all duration-[100ms] transition-opacity duration-100 outline-none transform active:scale-75 transition-transform"
                                                         onClick={cancelAddingTag}
                                                     >
                                                         Cancel
@@ -358,7 +387,7 @@ export default function AddNewSubClass(props: any, localData: any) {
 
 
                                         <button
-                                            className={`text-black text-sm inline-flex justify-center items-center text-lg h-8 mb-2 px-2 mt-0 rounded rounded-lg font-semibold ${showHideAddTagButton ? 'bg-gray-951' : 'bg-yellow-951'}`}
+                                            className={`transition-all duration-[100ms] transition-opacity duration-100 outline-none transform active:scale-75 transition-transform text-black text-sm inline-flex justify-center items-center text-lg h-8 mb-2 px-2 mt-0 rounded rounded-lg font-semibold ${showHideAddTagButton ? 'bg-gray-951' : 'bg-yellow-951'}`}
                                             onClick={addTags}
                                             disabled={showHideAddTagButton}
                                         >
@@ -373,7 +402,7 @@ export default function AddNewSubClass(props: any, localData: any) {
 
 
                                         <button
-                                            className={`absolute right-1 top-5 ${allTags && allTags.length > 0 ? 'hidden' : ''} `}
+                                            className={`transition-all duration-[100ms] transition-opacity duration-100 outline-none transform active:scale-75 transition-transform absolute right-1 top-5 ${allTags && allTags.length > 0 ? 'hidden' : ''} `}
                                             onClick={addTags}
                                         >
                                             <Image
@@ -498,14 +527,14 @@ export default function AddNewSubClass(props: any, localData: any) {
 
                                             <div className="flex justify-end items-center w-full">
                                                 <button
-                                                    className={`border border-black rounded-lg bg-black text-white text-md w-20 h-10 mr-5 hover:bg-yellow-951 hover:text-white hover:border-yellow-951 ease-in-out duration-300 disabled:bg-gray-951 disabled:hover:border-gray-951 disabled:border-gray-951 ${dataType && (dataType != null || dataType != "") ? 'okay' : 'disabled disabled:bg-gray-300'} `}
+                                                    className={`transition-all duration-[100ms] transition-opacity duration-100 outline-none transform active:scale-75 transition-transform border border-black rounded-lg bg-black text-white text-md w-20 h-10 mr-5 hover:bg-yellow-951 hover:text-white hover:border-yellow-951 ease-in-out duration-300 disabled:bg-gray-951 disabled:hover:border-gray-951 disabled:border-gray-951 ${dataType && (dataType != null || dataType != "") ? 'okay' : 'disabled disabled:bg-gray-300'} `}
                                                     onClick={saveNewTag}
                                                     disabled={dataType && (dataType != null || dataType != "") ? false : true}
                                                 >
                                                     <span>Save</span>
                                                 </button>
                                                 <button
-                                                    className="border border-black rounded-lg bg-white text-black text-md w-20 h-10 hover:text-white hover:bg-yellow-951 hover:border-yellow-951 ease-in-out duration-300"
+                                                    className="border border-black rounded-lg bg-white text-black text-md w-20 h-10 hover:text-white hover:bg-yellow-951 hover:border-yellow-951 ease-in-out duration-300 transition-all duration-[100ms] transition-opacity duration-100 outline-none transform active:scale-75 transition-transform"
                                                     onClick={cancelAddingTag}
                                                 >
                                                     <span>Cancel</span>
@@ -531,18 +560,25 @@ export default function AddNewSubClass(props: any, localData: any) {
                                                 placeholder="Parent Join Key"
                                                 required
                                                 onChange={(e) => (assetname.current = e.target.value)}
+                                                // onChange={handleJoinKey}
+                                                // multiple
                                             >
+                                                {
+                                                    allClassData && allClassData[0]?.tags?.map((item: any, index: any) => (
+                                                        <option key={index} value={item.tagName}>{item.tagName}</option>
+                                                    ))
+                                                }
                                                 <option value="">Select</option>
                                             </select>
-                                            <label htmlFor="parentJoinKey" className={`${styles.form__label}`}>Parent Join Key</label>
+                                            <label htmlFor="parentJoinKey" className={`${styles.form__label}`}>Parent Join Key </label>
                                         </div>
-                                        <div className="mt-4 flex flex-wrap flex-col justify-start items-start">
+                                        <div className="mt-4 flex flex-wrap flex-col justify-start items-start hidden">
                                             <div className="flex flex-wrap justify-start items-center">
                                                 <span
                                                     className="rounded-lg inline-flex justify-center items-center h-8 pl-2 pr-2 bg-[#F2F1F1] text-black text-[14px] mr-2 mb-2">
                                                     VinNo
                                                     <button
-                                                        className="rounded-full border-2 border-white h-[24px] w-[24px] inline-flex justify-center items-center ml-3"
+                                                        className="rounded-full border-2 border-white h-[24px] w-[24px] inline-flex justify-center items-center ml-3 transition-all duration-[100ms] transition-opacity duration-100 outline-none transform active:scale-75 transition-transform"
                                                     >
                                                         <Image
                                                             src="/img/x-circle.svg"
@@ -556,7 +592,7 @@ export default function AddNewSubClass(props: any, localData: any) {
                                                     className="rounded-lg inline-flex justify-center items-center h-8 pl-2 pr-2 bg-[#F2F1F1] text-black text-[14px] mr-2 mb-2">
                                                     MfdDate
                                                     <button
-                                                        className="rounded-full border-2 border-white h-[24px] w-[24px] inline-flex justify-center items-center ml-3"
+                                                        className="rounded-full border-2 border-white h-[24px] w-[24px] inline-flex justify-center items-center ml-3 transition-all duration-[100ms] transition-opacity duration-100 outline-none transform active:scale-75 transition-transform"
                                                     >
                                                         <Image
                                                             src="/img/x-circle.svg"
@@ -570,7 +606,7 @@ export default function AddNewSubClass(props: any, localData: any) {
                                                     className="rounded-lg inline-flex justify-center items-center h-8 pl-2 pr-2 bg-[#F2F1F1] text-black text-[14px] mr-2 mb-2">
                                                     Model
                                                     <button
-                                                        className="rounded-full border-2 border-white h-[24px] w-[24px] inline-flex justify-center items-center ml-3"
+                                                        className="rounded-full border-2 border-white h-[24px] w-[24px] inline-flex justify-center items-center ml-3 transition-all duration-[100ms] transition-opacity duration-100 outline-none transform active:scale-75 transition-transform"
                                                     >
                                                         <Image
                                                             src="/img/x-circle.svg"
@@ -582,7 +618,7 @@ export default function AddNewSubClass(props: any, localData: any) {
                                                 </span>
                                             </div>
                                             <div className="mt-3">
-                                                <button className="rounded rounded-lg border border-black flex justify-center items-center py-1 px-3 text-sm">Clear All</button>
+                                                <button className="rounded rounded-lg border border-black flex justify-center items-center py-1 px-3 text-sm transition-all duration-[100ms] transition-opacity duration-100 outline-none transform active:scale-75 transition-transform">Clear All</button>
                                             </div>
                                         </div>
                                     </div>
@@ -592,13 +628,13 @@ export default function AddNewSubClass(props: any, localData: any) {
 
                             <div className="mb-0 relative flex justify-end items-center w-full">
                                 <button
-                                    className="border border-black rounded-lg bg-black text-white text-lg w-20 h-12 mr-5 hover:bg-yellow-951 hover:text-white hover:border-yellow-951 ease-in-out duration-300 disabled:bg-gray-951 disabled:hover:border-gray-951 disabled:border-gray-951"
+                                    className="border border-black rounded-lg bg-black text-white text-lg w-20 h-12 mr-5 hover:bg-yellow-951 hover:text-white hover:border-yellow-951 ease-in-out duration-300 disabled:bg-gray-951 disabled:hover:border-gray-951 disabled:border-gray-951 transition-all duration-[100ms] transition-opacity duration-100 outline-none transform active:scale-75 transition-transform"
                                     disabled={(allTags && allTags.length > 0) ? false : true}
                                 >
                                     Save
                                 </button>
                                 <button
-                                    className="border border-black rounded-lg bg-white text-black text-lg w-24 h-12 hover:text-white hover:bg-yellow-951 hover:border-yellow-951 ease-in-out duration-300"
+                                    className="border border-black rounded-lg bg-white text-black text-lg w-24 h-12 hover:text-white hover:bg-yellow-951 hover:border-yellow-951 ease-in-out duration-300 transition-all duration-[100ms] transition-opacity duration-100 outline-none transform active:scale-75 transition-transform"
                                     onClick={cancelModal}
                                 >
                                     Cancel

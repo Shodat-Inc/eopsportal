@@ -3,7 +3,7 @@ import axios from "axios";
 
 export const getProsenseData = () => async (dispatch: any) => {
     try {
-        await axios.get('http://20.232.178.134:3000/api/getProsense')
+        await axios.get('/api/getProsense')
             .then(function (response) {
                 dispatch({
                     type: PROSENSE_SUCCESS,

@@ -8,7 +8,7 @@ import ClassManagement from "./classmanagement";
 import ObjectManagement from "./objectmanagement";
 import SubObjectManagement from "./subobjectmanagement";
 import SubClassManagement from "./subclassmanagement";
-import { setSelectedClass, toggleAddNewObjectModel } from "@/store/actions/classAction";
+import { setSelectedClass, toggleAddNewObjectModel, getSingleUser, toggleAddNewClassObjectModel } from "@/store/actions/classAction";
 
 export default function AssetManagement() {
     const dispatch = useDispatch<any>();
@@ -17,25 +17,33 @@ export default function AssetManagement() {
     const [defaultClass, setDefaultClass] = useState("");
     const [nav, setNav] = useState({} as any)
     const getSelClass = useSelector((state: any) => state.classReducer);
+    const [objectKey, setObjectKey] = useState('');
     let access_token = "" as any;
     if (typeof window !== 'undefined') {
         access_token = localStorage.getItem('authToken')
     }
 
-    // GET ALL CLASS DATA
+    useEffect(() => {
+        dispatch(getSingleUser())
+    }, [])
+
     async function fetchData() {
         try {
             await axios({
                 method: 'GET',
-                // url: `http://20.232.178.134:3000/api/getAssets`,
                 url: `/api/getAssets`,
                 headers: {
                     "Authorization": `Bearer ${access_token}`,
                     "Content-Type": "application/json"
                 }
+
             }).then(function (response) {
+                console.log({
+                    RES:response?.data?.data
+
+                })
                 if (response) {
-                    setClassData(response.data.data)
+                    setClassData(response?.data?.data)
                 }
             }).catch(function (error) {
                 console.log({
@@ -50,6 +58,7 @@ export default function AssetManagement() {
     }
     useEffect(() => {
         fetchData();
+        if (fetchData.length) return;
     }, [access_token])
 
     useEffect(() => {
@@ -58,8 +67,8 @@ export default function AssetManagement() {
 
     useEffect(() => {
         if (classData && classData.length > 0) {
-            setDefaultClass(classData[0]?.className)
-            dispatch(setSelectedClass(classData[0]?.id))
+            setDefaultClass(classData[0]?.assetName)
+            dispatch(setSelectedClass(classData[0]?.assetName))
         }
     }, [classData, dispatch])
 
@@ -79,13 +88,21 @@ export default function AssetManagement() {
     const handleaddClassModal = (item: any) => {
         setAddClassModal(item)
     }
+
+    // Object Management Callback
     const handelObject = (item: any) => {
+        // console.log({
+        //     "ITEM HERE OBJ MGMT":item
+        // })
+        setObjectKey(item)
         if (item !== "") {
             setTab(3)
         } else {
             setTab(tab)
         }
     }
+
+    // Sub Object Management Callback
     const handleSubObject = (item: any) => {
         if (item !== "") {
             setTab(2)
@@ -94,13 +111,14 @@ export default function AssetManagement() {
         }
     }
 
-    const redirectToObjects = () => {
-        setTab(2);
-    }
     const handleaddSubClassModal = (item: any) => {
         setAddSubClassModal(item)
     }
+
+    // Sub Class Management Callback
     const handelsubClass = (item: any) => {
+        dispatch(setSelectedClass(item))
+        setDefaultClass(item)
         if (item !== "") {
             setTab(4)
         } else {
@@ -112,14 +130,72 @@ export default function AssetManagement() {
         dispatch(toggleAddNewObjectModel(true));
     }
 
+    const openAddClassObjectModal = () => {
+        dispatch(toggleAddNewClassObjectModel(true));
+    }
+
+    const backToPrevComponent = (item: any) => {
+        if (item === 4) {
+            setTab(1);
+        }
+        if (item === 3) {
+            setTab(2);
+        }
+    }
+
+
     return (
         <div className="flex font-OpenSans">
 
             <div className="w-[100%] min-h-full rounded-xl bg-gray-966">
 
                 {/* Title */}
-                <div className="columns-2 flex justify-between items-center mb-7">
-                    <p className="text-black text-xl font-semibold">Asset Management</p>
+                <div className="columns-2 flex justify-start items-center mb-2 relative">
+                    
+                    <div className="flex justify-center items-center">
+                        {
+                            tab === 4 ?
+                            <div className="flex justify-start items-center mr-3 absolute left-0 z-[99]">
+                                <button
+                                    onClick={() => backToPrevComponent(4)}
+                                    className="flex justify-start items-center border border-black"
+                                >
+                                    <Image
+                                        src="/img/arrow-left-black.svg"
+                                        alt="arrow-left-black"
+                                        height={22}
+                                        width={22}
+                                        className=""
+                                    />
+                                    {/* <span>Back</span> */}
+                                </button>
+                            </div>
+                            :
+                            <div className="flex justify-start items-center mr-3 h-[22px] w-[24px] absolute left-0"></div>
+                        }
+                        {
+                            tab === 3 ?
+                            <div className="flex justify-start items-center mr-3 absolute left-0 z-[99]">
+                                <button
+                                    onClick={() => backToPrevComponent(3)}
+                                    className="flex justify-start items-center border border-black"
+                                >
+                                    <Image
+                                        src="/img/arrow-left-black.svg"
+                                        alt="arrow-left-black"
+                                        height={22}
+                                        width={22}
+                                    />
+                                    {/* <span>Back</span> */}
+                                </button>
+                            </div>
+                            :
+                            <div className="flex justify-start items-center mr-3 h-[22px] w-[24px] absolute left-0"></div>
+                        }
+
+                    </div>
+
+                    <p className="text-black text-xl font-semibold pl-10">Asset Management</p>
                 </div>
 
                 {/* Breadcrumb */}
@@ -143,7 +219,7 @@ export default function AssetManagement() {
                                     width={28}
                                 />
                                 <button
-                                    onClick={redirectToObjects}
+                                    onClick={() => toggleTab(2)}
                                     className="font-semibold"
                                 >
                                     <span>Class name: {nav.class}</span>
@@ -158,7 +234,7 @@ export default function AssetManagement() {
                                     width={28}
                                 />
                                 <button
-                                    onClick={redirectToObjects}
+                                    onClick={() => toggleTab(2)}
                                     className="font-semibold"
                                 >
                                     <span>{nav.classObjKey}: {nav.classObjValue}</span>
@@ -178,7 +254,48 @@ export default function AssetManagement() {
                             </li>
                         </ul>
                     </div>
-                    : null}
+                    : null
+                }
+
+                {/* Back Buttons */}
+                {/* {
+                    tab === 4 &&
+                    <div className="flex justify-start items-center mb-4">
+                        <button
+                            onClick={() => backToPrevComponent(4)}
+                            className="flex justify-start items-center"
+                        >
+                            <Image
+                                src="/img/arrow-left-black.svg"
+                                alt="arrow-left-black"
+                                height={24}
+                                width={24}
+                                className="mr-2"
+                            />
+                            <span>Back</span>
+                        </button>
+                    </div>
+                }
+                {
+                    tab === 3 &&
+                    <div className="flex justify-start items-center mb-4">
+                        <button
+                            onClick={() => backToPrevComponent(3)}
+                            className="flex justify-start items-center"
+                        >
+                            <Image
+                                src="/img/arrow-left-black.svg"
+                                alt="arrow-left-black"
+                                height={24}
+                                width={24}
+                                className="mr-2"
+                            />
+                            <span>Back</span>
+                        </button>
+                    </div>
+                } */}
+
+
 
                 {/* Tabs */}
                 <div className="flex justify-between items-center w-full">
@@ -213,7 +330,7 @@ export default function AssetManagement() {
                         tab === 1 &&
                         <div className="flex justify-start items-center">
                             <button
-                                className="rounded rounded-xl bg-black h-[44px] px-4 flex justify-center items-center text-white text-sm hover:bg-[#303030] transition-all duration-[400ms] transition-opacity duration-300 outline-none transform active:scale-75 transition-transform"
+                                className="rounded rounded-xl bg-black h-[44px] px-4 flex justify-center items-center text-white text-sm hover:bg-[#303030] transition-all duration-[100ms] transition-opacity duration-100 outline-none transform active:scale-75 transition-transform "
                                 onClick={openAddClassModal}
                             >
                                 <Image
@@ -226,7 +343,7 @@ export default function AssetManagement() {
                                 <span>Add Class</span>
                             </button>
                             <button
-                                className="rounded rounded-xl bg-black h-[44px] px-4 flex justify-center items-center text-white text-sm hover:bg-[#303030] transition-all duration-[400ms] transition-opacity duration-300 outline-none transform active:scale-75 transition-transform ml-4"
+                                className="rounded rounded-xl bg-black h-[44px] px-4 flex justify-center items-center text-white text-sm hover:bg-[#303030] transition-all duration-[100ms] transition-opacity duration-100 outline-none transform active:scale-75 transition-transform ml-4"
                             >
                                 <Image
                                     src="/img/download.svg"
@@ -244,7 +361,7 @@ export default function AssetManagement() {
                         tab === 4 &&
                         <div className="flex justify-start items-center">
                             <button
-                                className="rounded rounded-xl bg-black h-[44px] px-4 flex justify-center items-center text-white text-sm hover:bg-[#303030] transition-all duration-[400ms] transition-opacity duration-300 outline-none transform active:scale-75 transition-transform"
+                                className="rounded rounded-xl bg-black h-[44px] px-4 flex justify-center items-center text-white text-sm hover:bg-[#303030] transition-all duration-[100ms] transition-opacity duration-100 outline-none transform active:scale-75 transition-transform"
                                 onClick={openAddSubClassModal}
                             >
                                 <Image
@@ -262,7 +379,7 @@ export default function AssetManagement() {
                     {tab === 3 &&
                         <div className="flex justify-start items-center">
                             <button
-                                className="rounded rounded-xl bg-black h-[44px] px-4 flex justify-center items-center text-white text-sm hover:bg-[#303030] transition-all duration-[400ms] transition-opacity duration-300 outline-none transform active:scale-75 transition-transform"
+                                className="rounded rounded-xl bg-black h-[44px] px-4 flex justify-center items-center text-white text-sm hover:bg-[#303030] transition-all duration-[100ms] transition-opacity duration-100 outline-none transform active:scale-75 transition-transform"
                                 onClick={openAddObjectModal}
                             >
                                 <Image
@@ -272,7 +389,26 @@ export default function AssetManagement() {
                                     height={24}
                                     width={24}
                                 />
-                                <span>Add Object</span>
+                                <span>Add Sub Class Object</span>
+                            </button>
+                        </div>
+                    }
+
+
+                    {tab === 2 &&
+                        <div className="flex justify-start items-center">
+                            <button
+                                className="rounded rounded-xl bg-black h-[44px] px-4 flex justify-center items-center text-white text-sm hover:bg-[#303030] transition-all duration-[400ms] transition-opacity duration-300 outline-none transform active:scale-75 transition-transform"
+                                onClick={openAddClassObjectModal}
+                            >
+                                <Image
+                                    src="/img/plus.svg"
+                                    alt="Add Class"
+                                    className="mr-2"
+                                    height={24}
+                                    width={24}
+                                />
+                                <span>Add Class Object</span>
                             </button>
                         </div>
                     }
@@ -295,21 +431,21 @@ export default function AssetManagement() {
                                 handleaddSubClassModal={handleaddSubClassModal}
                                 addSubClassModal={addSubClassModal}
                                 classData={classData && classData.length > 0 ? classData : []}
+                                selectedParentClass={defaultClass ? defaultClass : getSelClass.selectedClass}
                             />
                         }
                         {tab === 2 &&
                             <ObjectManagement
                                 handelObject={handelObject}
-                                defaultClass={defaultClass}
-                                defaultClassID={defaultClass}
-                                classData={classData}
+                                classData={classData && classData.length > 0 ? classData : []}
+                                defaultClass={defaultClass ? defaultClass : getSelClass.selectedClass}
                             />
                         }
                         {tab === 3 &&
                             <SubObjectManagement
                                 handleSubObject={handleSubObject}
-                                defaultClass={getSelClass.selectedClass}
-                                classData={classData}
+                                defaultClass={getSelClass.objDefaultClassSelector}
+                                objectKey={objectKey}
                             />
                         }
                     </div>

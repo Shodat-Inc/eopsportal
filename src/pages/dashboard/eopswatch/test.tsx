@@ -5,6 +5,9 @@ import Link from "next/dist/client/link";
 
 export default function Test(props: any) {
     const { data, routerParams } = props;
+    // console.log({
+    //     "HERE PROPS":props
+    // })
     const [showImageModal, setShowImageModal] = useState(false);
     const [resImage, setResImage] = useState("");
     const imageModalFunction = (image: any) => {
@@ -51,7 +54,7 @@ export default function Test(props: any) {
                                                     from:"eopswatch"
                                                 }
                                             }}
-                                            className="text-sm font-semibold h-[32px] px-2 rounded rounded-lg inline-flex justify-center items-center bg-yellow-951 mr-4">
+                                            className={`text-sm font-semibold h-[32px] px-2 rounded rounded-lg inline-flex justify-center items-center mr-4 ${item.resultImage==="" ? 'pointer-events-none cursor-not-allowed bg-gray-951' : ' bg-yellow-951'}`}>
                                             <Image
                                                 src="/img/test-icon.svg"
                                                 alt="Test Icon"
