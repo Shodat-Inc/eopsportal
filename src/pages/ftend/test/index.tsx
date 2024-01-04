@@ -2,11 +2,12 @@ import React, { useEffect, useState } from "react";
 
 export default function Page(props: any) {
   const [processedImage, setProcessedImage] = useState();
+  const [coordinates, setCoordinates] = useState([]);
 
   const handleSubmit = async () => {
     const data = {
       image_url:
-        "https://nipponpaint.com.sg/wp-content/uploads/hairline-crack-wall.jpg",
+        "https://www.shutterstock.com/image-vector/surface-cracks-fissures-ground-concrete-600nw-2167683007.jpg",
     };
 
     try {
@@ -18,12 +19,13 @@ export default function Page(props: any) {
         },
         body: JSON.stringify(data),
       });
-
+      //insert query fr image and assetid
       if (response.ok) {
         const responseData = await response.json();
         let url = responseData.processed_image_path.split("/");
         let imgPath = url[url.length - 1];
         setProcessedImage(imgPath);
+        setCoordinates(responseData.crack_coordinates);
       } else {
         console.log("ERROR IN FETCH Create Model:", response.statusText);
       }
@@ -47,6 +49,14 @@ export default function Page(props: any) {
           height="500"
         />
       )}
+      <p>Crack Coordinates:</p>
+      <ul>
+        {Object.entries(coordinates).map(([key, value]) => (
+          <li key={key}>
+            <strong>{key}:</strong> {value}
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
