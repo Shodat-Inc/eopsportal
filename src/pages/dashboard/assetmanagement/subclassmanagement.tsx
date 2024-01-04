@@ -5,10 +5,14 @@ import Image from "next/image";
 import Link from 'next/dist/client/link';
 import AddNewSubClass from './addnewsubclass';
 import axios from 'axios';
+import moment from 'moment';
 import EditSubClass from './editsubclass';
 import { editSubClassModalAction } from '@/store/actions/classAction';
 
 export default function SubClassManagement(props: any) {
+    console.log({
+        "PROPS_IN_SUB_CLASS": props
+    })
     const dispatch = useDispatch<any>();
     const [toggleFilter, setToggleFilter] = useState(false);
     const [toggleArrow, setToggleArrow] = useState(false);
@@ -20,6 +24,8 @@ export default function SubClassManagement(props: any) {
     const [subClassData, setSubClassData] = useState([] as any);
     const [search, setSearch] = useState('');
     const [selectedSubClass, setSelectedSubClass] = useState("");
+    const [deleteID, setDeleteID] = useState(0);
+    const [deleteMessage, setDeleteMessage] = useState(false);
 
     let access_token = "" as any;
     if (typeof window !== 'undefined') {
@@ -53,7 +59,8 @@ export default function SubClassManagement(props: any) {
         props.handleaddSubClassModal(item)
     }
 
-    const deleteModalFunction = () => {
+    const deleteModalFunction = (id: any) => {
+        setDeleteID(id)
         setDeleteModal(true);
         setActions(false);
     }
@@ -72,7 +79,7 @@ export default function SubClassManagement(props: any) {
         try {
             await axios({
                 method: 'GET',
-                url: `/api/getSubAssets`,
+                url: `/api/getChildAssets?id=${props.selectedParentClass}`,
                 headers: {
                     "Authorization": `Bearer ${access_token}`,
                     "Content-Type": "application/json"
@@ -80,12 +87,11 @@ export default function SubClassManagement(props: any) {
 
             }).then(function (response: any) {
                 if (response) {
-                    if (response.data) {
-                        let filtered = response.data.filter((item: any) => {
-                            return item.parentAssetID === props.selectedParentClass
-                        })
-                        setSubClassData(filtered);
-                    }
+
+                    console.log({
+                        response: response?.data?.data
+                    })
+                    setSubClassData(response?.data?.data);
                 }
             }).catch(function (error: any) {
                 console.log({
@@ -130,6 +136,40 @@ export default function SubClassManagement(props: any) {
         setSelectedSubClass(item)
         dispatch(editSubClassModalAction(true));
         setActions(false);
+    }
+
+
+    // CALLLING DELETE ASSET API WHEN CONFIRM 'YES' BUTTON CLICKED!
+    const confirmDeleteClass = async (index: any) => {
+        setDeleteModal(false);
+        try {
+            await axios({
+                method: 'DELETE',
+                url: `/api/deleteClasses?id=${index}`,
+                headers: {
+                    "Authorization": `Bearer ${access_token}`,
+                    "Content-Type": "application/json"
+                }
+            }).then(function (response) {
+                console.log({
+                    response: response,
+                    message: "Class deleted successful!!"
+                })
+                setDeleteMessage(true);
+                setTimeout(() => {
+                    setDeleteMessage(false)
+                }, 2000)
+            }).catch(function (error) {
+                console.log({
+                    "ERROR IN AXIOS CATCH (DELETE)": error
+                })
+            })
+        } catch (err) {
+            console.log({
+                "ERROR IN TRY CATCH (DELETE)": err
+            })
+        }
+
     }
 
     return (
@@ -181,6 +221,25 @@ export default function SubClassManagement(props: any) {
                 </div>
             </div>
 
+
+            {/* Success / Error Message */}
+            <div className='flex justify-start items-center px-4'>
+                {deleteMessage &&
+                    <div className={`bg-blue-957 border-blue-958 text-blue-959 mb-1 mt-1 border text-md px-4 py-3 rounded rounded-xl relative flex items-center justify-start`}>
+                        <Image
+                            src="/img/AlertInfo.svg"
+                            alt="Alert Success"
+                            height={24}
+                            width={24}
+                            className='mr-2'
+                        />
+                        <strong className="font-semibold">Success</strong>
+                        <span className="block sm:inline ml-2">Sub Class deleted successfully!</span>
+                    </div>
+                }
+            </div>
+
+
             {/* Table */}
             <div className='w-full mt-6 min-h-[400px]'>
                 {subClassData && subClassData.length > 0 ?
@@ -206,33 +265,29 @@ export default function SubClassManagement(props: any) {
                                     <tr key={index}>
                                         <td>{index + 1}</td>
                                         <td>
-                                            <button
-                                            // onClick={() => takeMeToClassComponent(item.assetName)}
-                                            >
-                                                <span>{item.assetName}</span>
+                                            <button>
+                                                <span>{item.className}</span>
                                             </button>
                                         </td>
                                         <td>
                                             {
-                                                item?.tagsWithDataType.map((it: any, indx: any) => (
+                                                item?.ClassTags.map((it: any, indx: any) => (
                                                     <span key={indx}>
                                                         {it.tagName}<em>, </em>
                                                     </span>
                                                 ))
-
                                             }
                                         </td>
                                         <td>
                                             {
-                                                item?.parentJoinKey.map((it: any, indx: any) => (
+                                                item?.ParentJoinKeys.map((it: any, indx: any) => (
                                                     <span key={indx}>
-                                                        {it}<em>, </em>
+                                                        {it.tagname}<em>, </em>
                                                     </span>
                                                 ))
-
                                             }
                                         </td>
-                                        <td>{item.dateCreated}</td>
+                                        <td>{moment(item.createdAt).format('DD-MM-YYYY')}</td>
                                         <td className='relative'>
                                             <div className="flex justify-start items-center relative">
                                                 <button onClick={() => toggleActions(index + 1)}>
@@ -246,12 +301,12 @@ export default function SubClassManagement(props: any) {
                                                 {(actions && actionCount === index + 1) &&
                                                     <div className="bg-black text-white border overflow-hidden border-black rounded rounded-xl w-[100px] flex flex-col flex-wrap items-start justify-start shadow-sm absolute top-[30px] right-[75px] z-[1]">
                                                         <button
-                                                            onClick={() => openEditSubClassModal(item.assetName)}
+                                                            onClick={() => openEditSubClassModal(item.id)}
                                                             className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[30px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
                                                             <span>Edit</span>
                                                         </button>
                                                         <button
-                                                            onClick={deleteModalFunction}
+                                                            onClick={() => deleteModalFunction(item.id)}
                                                             className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[30px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
                                                             <span>Delete</span>
                                                         </button>
@@ -302,6 +357,59 @@ export default function SubClassManagement(props: any) {
                 subClassData={subClassData ? subClassData : []}
                 selectedSubClass={selectedSubClass}
             />
+
+
+
+            {/* Delete Modal */}
+            {deleteModal &&
+                <>
+                    <div
+                        className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
+                    >
+                        <div className="relative my-6 w-[580px]">
+                            <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+                                {/*header*/}
+                                <div className="flex items-start justify-between p-2">
+                                    <h3 className="text-lg font-medium"></h3>
+                                    <button
+                                        className="p-1 ml-auto bg-transparent border-0 text-black float-right leading-none font-semibold outline-none focus:outline-none"
+                                        onClick={closeDeleteModal}
+                                    >
+                                        <Image
+                                            src="/img/close.svg"
+                                            alt="close"
+                                            className="h-6"
+                                            height={24}
+                                            width={24}
+                                        />
+                                    </button>
+                                </div>
+                                {/*body*/}
+                                <div className="relative pt-2 pb-8 flex-auto">
+                                    <div className="flex justify-start items-center flex-wrap flex-col">
+                                        <p className="flex justify-center items-center text-lg">Are you sure want to <span className="text-[#EF0000] mx-1 font-semibold">Delete</span> this sub-class?</p>
+                                        <div className="mt-10 relative flex justify-center items-center w-full">
+                                            <button
+                                                className="border border-black rounded-lg bg-black text-white text-lg w-[70px] h-[47px] mr-5 hover:bg-yellow-951 hover:text-white hover:border-yellow-951 ease-in-out duration-[100ms] disabled:bg-gray-951 disabled:hover:border-gray-951 disabled:border-gray-951"
+                                                onClick={() => confirmDeleteClass(deleteID)}
+                                            >
+                                                Yes
+                                            </button>
+                                            <button
+                                                className="border border-black rounded-lg bg-white text-black text-lg w-[70px] h-[47px] hover:text-white hover:bg-yellow-951 hover:border-yellow-951 ease-in-out duration-[100ms]"
+                                                onClick={closeDeleteModal}
+                                            >
+                                                No
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="opacity-75 fixed inset-0 z-40 bg-black"></div>
+                </>
+            }
 
 
 

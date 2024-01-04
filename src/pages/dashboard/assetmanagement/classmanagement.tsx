@@ -264,7 +264,7 @@ export default function ClassManagement(props: any) {
                                             <td>{index + 1}</td>
                                             <td>
                                                 <button
-                                                    onClick={() => takeMeToClassComponent(item.assetName)}
+                                                    onClick={() => takeMeToClassComponent(item.id)}
                                                 >
                                                     <span>{item.id} - {item.className}</span>
                                                 </button>
