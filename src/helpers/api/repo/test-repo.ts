@@ -1,9 +1,10 @@
 import { loggerInfo } from "@/logger";
 import { db } from "../db";
 import sendResponseData from "@/helpers/constant";
-import { crackDetectionResponse } from "@/util/crackDetectionResponse";
+
 import externalAPI from "@/util/externalAPI";
 import { error } from "console";
+import { crackDetectionResponse } from "../constant/crackDetectionResponse";
 
 export default async function runTest(params: any) {
   try {

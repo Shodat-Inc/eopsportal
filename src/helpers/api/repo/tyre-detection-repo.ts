@@ -2,7 +2,8 @@ import { loggerInfo } from "@/logger";
 import { db } from "../db";
 import sendResponseData from "@/helpers/constant";
 import { error } from "console";
-import { tyreDetection } from "@/util/tyreDetection";
+import { tyreDetection } from "../constant/tyreDetection";
+
 
 export default async function runTest(params: any) {
   try {
