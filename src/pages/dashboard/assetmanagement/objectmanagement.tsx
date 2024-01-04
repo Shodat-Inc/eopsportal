@@ -12,6 +12,10 @@ import EditObject from './editobject';
 
 export default function ObjectManagement(props: any) {
 
+    console.log({
+        "PROPS OBJ": props
+    })
+
     const dispatch = useDispatch<any>();
     const [toggleFilter, setToggleFilter] = useState(false);
     const [toggleArrow, setToggleArrow] = useState(false);
@@ -24,7 +28,11 @@ export default function ObjectManagement(props: any) {
     const [objectData, setObjectData] = useState([] as any);
     const [tableHeader, setTableHeader] = useState({} as any);
     const [search, setSearch] = useState('');
-    const [selectedObjID, setSelectedObjID] = useState('')
+    const [selectedObjID, setSelectedObjID] = useState('');
+    let access_token = "" as any;
+    if (typeof window !== 'undefined') {
+        access_token = localStorage.getItem('authToken')
+    }
 
     // All class reducer states
     const classSelector = useSelector((state: any) => state.classReducer);
@@ -44,22 +52,35 @@ export default function ObjectManagement(props: any) {
         setToggleArrow(!toggleArrow);
         setToggleFilter(!toggleFilter);
     }
-   
+
 
     // Set the choose asset on page load
     useEffect(() => {
         if (props.classData && props.classData.length > 0) {
-            setChooseAsset(props.classData[0]?.assetName);
-            dispatch(objDefaultClassSelectorFunction(props.classData[0]?.assetName))
+            setChooseAsset(props.classData[0]?.id);
+            dispatch(objDefaultClassSelectorFunction(props.classData[0]?.className))
         }
-    }, [props.classData, dispatch])  
+    }, [props.classData, dispatch]);
+
+    // convert selected id to classname
+    const showClassNameFromID = (id: any) => {
+        if (props.classData && props.classData.length > 0) {
+            let filter = props.classData.filter((item: any) => {
+                return item.id === id
+            })
+            if (filter) {
+                return filter[0]?.className
+            }
+        }
+    }
+
 
     const toggleActions = (item: any) => {
         setActionCount(item);
         setActions(!actions);
     }
     const takeMeToSubObjectComponent = (item: any) => {
-        let classObjKey = chooseAsset === 'Manufacturing Plants' ? 'PlantID' : 'VIN';
+        let classObjKey = chooseAsset === 1 ? 'PlantID' : 'VIN';
         let abc = {
             "flow": "Object Management",
             "class": chooseAsset,
@@ -117,18 +138,18 @@ export default function ObjectManagement(props: any) {
         try {
             await axios({
                 method: 'GET',
-                url: `/api/getObjects`,
-
+                url: `/api/getObjects?id=${chooseAsset}`,
+                headers: {
+                    "Authorization": `Bearer ${access_token}`,
+                    "Content-Type": "application/json"
+                }
             }).then(function (response) {
+                // console.log({
+                //     response: response?.data?.objects?.data
+                // })
                 if (response) {
-                    let filtered = response.data.filter((item: any) => {
-                        return item.parentAssetName === chooseAsset
-                    })
-                    if (filtered && filtered.length >= 0) {
-                        let headArray = filtered[0]?.subObjects;
-                        setTableHeader(headArray)
-                        setObjectData(filtered);
-                    }
+                    setTableHeader(response?.data?.objects?.data[0]?.Class?.ClassTags)
+                    setObjectData(response?.data?.objects?.data);
                 }
             }).catch(function (error) {
                 console.log({
@@ -171,10 +192,10 @@ export default function ObjectManagement(props: any) {
 
 
     // Edit Object Show/Hide
-    const editObjectFunction = (item:any) => {
+    const editObjectFunction = (item: any) => {
         dispatch(editObjectModalAction(true));
         setActions(false);
-        setSelectedObjID(item);        
+        setSelectedObjID(item);
     }
 
     return (
@@ -195,7 +216,7 @@ export default function ObjectManagement(props: any) {
                                 width={20}
                                 className={`absolute right-3 top-4 ${toggleAsset ? 'rotate-180' : 'rotate-0'}`}
                             />
-                            <span className="text-lg text-black pl-2">{chooseAsset}</span>
+                            <span className="text-lg text-black pl-2">{showClassNameFromID(chooseAsset)}</span>
                         </div>
 
                         {toggleAsset ?
@@ -205,10 +226,10 @@ export default function ObjectManagement(props: any) {
                                         props.classData.map((item: any, index: any) => (
                                             <li
                                                 className="px-5 py-2 bg-white cursor-pointer hover:bg-yellow-951 w-full font-normal"
-                                                onClick={() => selectItemFunction(item.assetName)}
+                                                onClick={() => selectItemFunction(item.id)}
                                                 key={index}
                                             >
-                                                <span>{item.assetName}</span>
+                                                <span>{item.className}</span>
                                             </li>
                                         ))
                                     }
@@ -290,11 +311,12 @@ export default function ObjectManagement(props: any) {
                             <tr>
                                 <th>S.No</th>
                                 {
-                                    tableHeader && Object.keys(`tableHeader`).length != 0 ?
-                                        Object.keys(tableHeader).map((item: any, i: any) => (
+                                    tableHeader && tableHeader.length != 0 ?
+                                        tableHeader.map((item: any, i: any) => (
                                             <th className="capitalize" key={i}>
                                                 {
-                                                    item.split(/(?=[A-Z])/).join(" ")
+                                                    // item?.tagName.split(/(?=[A-Z])/).join(" ")
+                                                    item?.tagName
                                                 }
                                             </th>
                                         ))
@@ -310,12 +332,12 @@ export default function ObjectManagement(props: any) {
                                         <tr key={index}>
                                             <td>{index + 1}</td>
                                             {
-                                                Object.values(items?.subObjects).map((item: any, i: any) => (
-                                                    <td key={i} className={items.subObjectID}>
+                                                items?.ObjectValues?.map((item: any, i: any) => (
+                                                    <td key={i}>
                                                         <button
-                                                            onClick={() => takeMeToSubObjectComponent(items.subObjectID)}
+                                                            onClick={() => takeMeToSubObjectComponent(items.id)}
                                                         >
-                                                            <span>{item ? item : '-'}</span>
+                                                            <span>{item.values ? item.values : '-'}</span>
                                                         </button>
                                                     </td>
                                                 ))
@@ -333,7 +355,7 @@ export default function ObjectManagement(props: any) {
                                                     {(actions && actionCount === index + 1) &&
                                                         <div className="bg-black text-white border overflow-hidden border-black rounded rounded-lg w-[200px] flex flex-col flex-wrap items-start justify-start shadow-sm absolute top-[30px] right-[75px] z-[1]">
                                                             <button
-                                                                onClick={()=>editObjectFunction(items.subObjectID)}
+                                                                onClick={() => editObjectFunction(items.subObjectID)}
                                                                 className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
                                                                 <span>Edit</span>
                                                             </button>

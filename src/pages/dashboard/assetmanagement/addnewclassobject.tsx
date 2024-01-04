@@ -4,26 +4,35 @@ import styles from '../../../styles/Common.module.css';
 import Image from "next/image";
 import { toggleAddNewClassObjectModel } from "@/store/actions/classAction";
 import { successMessageAction } from '@/store/actions/classAction';
+import axios from "axios";
 
 export default function AddNewClassObject(props: any) {
+
+    console.log({
+        "PROPS_IN_ADD_OBJECT": props
+    })
 
     const dispatch = useDispatch<any>();
     const [classData, setClassData] = useState([] as any);
     const formData = useRef("");
     const [success, setSuccess] = useState(false);
+    let access_token = "" as any;
+    if (typeof window !== 'undefined') {
+        access_token = localStorage.getItem('authToken')
+    }
 
     // Filter the selected class data from class data array
     useEffect(() => {
         if (props.classData && props.classData.length >= 0) {
-            let filtered = props.classData.filter((item:any)=> {
-                return item.assetName === props.selectedParentClass
+            let filtered = props.classData.filter((item: any) => {
+                return item.id === props.selectedParentClass
             })
-            if(filtered) {
-                setClassData(filtered[0]?.tags)
+            if (filtered) {
+                setClassData(filtered[0]?.ClassTags)
             }
         }
     }, [props.selectedParentClass, props.classData])
-    
+
     // Close modal action - redux
     const closeModel = () => {
         dispatch(toggleAddNewClassObjectModel(false));
@@ -56,47 +65,66 @@ export default function AddNewClassObject(props: any) {
 
         let finalArray = objectKey.map((item: any, i: any) => Object.assign({}, item, objectValue[i]));
         const dataToSave = {
-            "classId": props.subClassID,
+            "classId": props.selectedParentClass,
             "values": finalArray
-        } 
-        let allTags = {};
-        const response = await fetch('/api/createObjects', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(
-                {
-                    assetID: `2000000011`,
-                    parentAssetID: `${props.selectedParentClass}`,
-                    parentAssetName: `${props.selectedParentClass}`,
-                    dateCreated: currentDate,
-                    subObjectName: `${form_values.PlantID || form_values.VIN}`,
-                    subObjectID: `${form_values.PlantID || form_values.VIN}`,
-                    subObjects: form_values,
+        }
+        let tokenStr = access_token;
+
+        console.log({
+            dataToSave: dataToSave,
+        })
+        try {
+            await axios({
+                method: 'POST',
+                url: `/api/createObjects`,
+                data: dataToSave,
+                headers: {
+                    "Authorization": `Bearer ${tokenStr}`,
+                    "Content-Type": "application/json"
                 }
-            )
-        });
-        const resdata = await response.json();
-        if (resdata) {
-            setSuccess(true);
-            dispatch(successMessageAction(true))
-            setTimeout(() => {
-                setSuccess(false);
-                dispatch(toggleAddNewClassObjectModel(false));
-            }, 50);
-        } else {
-            console.log("FAILED")
+            }).then(function (response) {
+                if (response) {
+                    setSuccess(true);
+                    dispatch(successMessageAction(true))
+                    setTimeout(() => {
+                        setSuccess(false);
+                        dispatch(toggleAddNewClassObjectModel(false));
+                    }, 50);
+                }
+            }).catch(function (error) {
+                console.log("ERROR IN AXIOS CATCH (CREATE CLASS OBJECT):", error)
+            })
+        } catch (err) {
+            console.log("ERROR IN TRY CATCH (CREATE CLASS OBJECT):", err)
         }
 
+
+
     }
+
+
+    // convert selected id to classname
+    const showClassNameFromID = (id: any) => {
+        if (props.classData && props.classData.length > 0) {
+            let filter = props.classData.filter((item: any) => {
+                return item.id === id
+            })
+            if (filter) {
+                return filter[0]?.className
+            }
+        }
+    }
+
+    console.log({
+        classData: classData
+    })
 
 
     return (
         <>
             <div className={`bg-white h-full z-[11] fixed top-0 right-0 p-5 shadow shadow-lg ${props.show === true ? `${styles.objectContainer} ${styles.sliderShow}` : `${styles.objectContainer}`}`}>
                 <div className="flex justify-between items-center w-full mb-3">
-                    <h2 className="font-semibold text-lg">Add New Object (<span className="text-sm text-gray-800">{props.selectedParentClass}</span>)</h2>
+                    <h2 className="font-semibold text-lg">Add New Object (<span className="text-sm text-gray-800">{showClassNameFromID(props.selectedParentClass)}</span>)</h2>
                     <button onClick={closeModel}>
                         <Image
                             src="/img/x.svg"
@@ -130,14 +158,15 @@ export default function AddNewClassObject(props: any) {
                     >
                         {
                             classData && classData.length != 0 ?
-                                classData.map((item: any, index: any) => (
+                                classData?.map((item: any, index: any) => (
                                     <div key={index} className="w-full flex justify-start items-start flex-wrap flex-col">
                                         <div className={`mb-5 lg:w-full small:w-full small:w-full ${styles.form__wrap}`}>
                                             <div className={`relative ${styles.form__group} font-OpenSans`}>
                                                 <input
                                                     type="text"
                                                     id={`${item.tagName}`}
-                                                    name={`${item.tagName}`}
+                                                    // name={`${item.tagName}`}
+                                                    name={`${item.tagName}_${item.id}`}
                                                     className={`border border-gray-961 ${styles.form__field}`}
                                                     placeholder={`${item.tagName}`}
                                                     onChange={(e) => (formData.current = e.target.value)}

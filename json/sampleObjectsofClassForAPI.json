@@ -1,0 +1,115 @@
+{
+    "classId": 1,
+    "values": [
+        {
+            "classTagId": 1,
+            "value": "TPC3305-01"
+        },
+        {
+            "classTagId": 2,
+            "value": "3861 Scenic Hwy"
+        },
+        {
+            "classTagId": 3,
+            "value": "Baton Rouge"
+        },
+        {
+            "classTagId": 4,
+            "value": "Louisana"
+        },
+        {
+            "classTagId": 5,
+            "value": "70805"
+        },
+        {
+            "classTagId": 6,
+            "value": "United States"
+        },
+        {
+            "classTagId": 7,
+            "value": "Tepco Natural Gas"
+        },
+        {
+            "classTagId": 8,
+            "value": ""
+        }
+    ]
+}
+
+
+{
+    "classId": 1,
+    "values": [
+        {
+            "classTagId": 1,
+            "value": "TPC3305-02"
+        },
+        {
+            "classTagId": 2,
+            "value": "3861 Scenic Hwy"
+        },
+        {
+            "classTagId": 3,
+            "value": "Baton Rouge"
+        },
+        {
+            "classTagId": 4,
+            "value": "Louisana"
+        },
+        {
+            "classTagId": 5,
+            "value": "70805"
+        },
+        {
+            "classTagId": 6,
+            "value": "United States"
+        },
+        {
+            "classTagId": 7,
+            "value": "Tepco Petroleum"
+        },
+        {
+            "classTagId": 8,
+            "value": "Description"
+        }
+    ]
+}
+
+
+{
+    "classId": 1,
+    "values": [
+        {
+            "classTagId": 1,
+            "value": "TPC71810-01"
+        },
+        {
+            "classTagId": 2,
+            "value": "22712 206th Ave N"
+        },
+        {
+            "classTagId": 3,
+            "value": "Cordova"
+        },
+        {
+            "classTagId": 4,
+            "value": "Illinios"
+        },
+        {
+            "classTagId": 5,
+            "value": "61242"
+        },
+        {
+            "classTagId": 6,
+            "value": "United States"
+        },
+        {
+            "classTagId": 7,
+            "value": "Tepco Nuclear Energy"
+        },
+        {
+            "classTagId": 8,
+            "value": "Description"
+        }
+    ]
+}

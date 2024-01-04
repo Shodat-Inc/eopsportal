@@ -66,8 +66,8 @@ export default function AssetManagement() {
 
     useEffect(() => {
         if (classData && classData.length > 0) {
-            setDefaultClass(classData[0]?.assetName)
-            dispatch(setSelectedClass(classData[0]?.assetName))
+            setDefaultClass(classData[0]?.id)
+            dispatch(setSelectedClass(classData[0]?.id))
         }
     }, [classData, dispatch])
 
