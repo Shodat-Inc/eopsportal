@@ -23076,3 +23076,47 @@
 {"level":"info","message":"Error Handler","timestamp":"2024-01-04T17:29:56.353Z"}
 {"level":"error","message":"UnauthorizedError","timestamp":"2024-01-04T17:29:56.354Z"}
 {"level":"info","message":"Get All Tag DataTypes","timestamp":"2024-01-04T17:29:56.356Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-04T17:30:05.839Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-04T17:30:05.843Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-04T17:30:05.913Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-04T17:30:05.915Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-04T17:30:05.960Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-04T17:30:05.966Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-04T17:31:07.556Z"}
+{"level":"info","message":"POST api/createObjects","timestamp":"2024-01-04T17:31:07.560Z"}
+{"level":"info","message":"Object Repo","timestamp":"2024-01-04T17:31:07.577Z"}
+{"level":"info","message":"Bulk Create Value Repo:","timestamp":"2024-01-04T17:31:07.589Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-04T17:31:20.569Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-04T17:31:20.612Z"}
+{"level":"info","message":"Get All Tag DataTypes","timestamp":"2024-01-04T17:31:20.616Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-04T17:31:20.644Z"}
+{"level":"info","message":"Error Handler","timestamp":"2024-01-04T17:31:20.650Z"}
+{"level":"error","message":"UnauthorizedError","timestamp":"2024-01-04T17:31:20.652Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-04T17:31:20.665Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2024-01-04T17:31:20.671Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-04T17:31:23.006Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-04T17:31:23.008Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-04T17:31:23.072Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-04T17:31:23.076Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-04T17:37:18.821Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-04T17:37:18.823Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-04T17:37:18.879Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-04T17:37:18.882Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-04T17:37:18.922Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-04T17:37:18.924Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-04T17:37:21.525Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-04T17:37:21.526Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-04T17:37:21.571Z"}
+{"level":"info","message":"Error Handler","timestamp":"2024-01-04T17:37:21.572Z"}
+{"level":"error","message":"UnauthorizedError","timestamp":"2024-01-04T17:37:21.573Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-04T17:37:21.632Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-04T17:37:22.073Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-04T17:37:22.076Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-04T17:37:22.127Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2024-01-04T17:37:22.130Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-04T17:37:22.160Z"}
+{"level":"info","message":"Get All Tag DataTypes","timestamp":"2024-01-04T17:37:22.162Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-04T17:37:23.256Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-04T17:37:23.258Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-04T17:37:23.316Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-04T17:37:23.322Z"}

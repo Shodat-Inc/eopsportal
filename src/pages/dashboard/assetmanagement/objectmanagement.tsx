@@ -29,6 +29,8 @@ export default function ObjectManagement(props: any) {
     const [tableHeader, setTableHeader] = useState({} as any);
     const [search, setSearch] = useState('');
     const [selectedObjID, setSelectedObjID] = useState('');
+    const [deleteID, setDeleteID] = useState(0);
+    const [deleteMessage, setDeleteMessage] = useState(false);
     let access_token = "" as any;
     if (typeof window !== 'undefined') {
         access_token = localStorage.getItem('authToken')
@@ -96,7 +98,8 @@ export default function ObjectManagement(props: any) {
     }
 
 
-    const deleteModalFunction = () => {
+    const deleteModalFunction = (id: any) => {
+        setDeleteID(id);
         setDeleteModal(true);
         setActions(false);
     }
@@ -196,6 +199,40 @@ export default function ObjectManagement(props: any) {
         dispatch(editObjectModalAction(true));
         setActions(false);
         setSelectedObjID(item);
+    }
+
+
+    // CALLLING DELETE ASSET API WHEN CONFIRM 'YES' BUTTON CLICKED!
+    const confirmDeleteClass = async (delId: any) => {
+        setDeleteModal(false);
+        try {
+            await axios({
+                method: 'DELETE',
+                url: `/api/deleteObject?id=${delId}`,
+                headers: {
+                    "Authorization": `Bearer ${access_token}`,
+                    "Content-Type": "application/json"
+                }
+            }).then(function (response) {
+                console.log({
+                    response: response,
+                    message: "Class deleted successful!!"
+                })
+                setDeleteMessage(true);
+                setTimeout(() => {
+                    setDeleteMessage(false)
+                }, 2000)
+            }).catch(function (error) {
+                console.log({
+                    "ERROR IN AXIOS CATCH (DELETE)": error
+                })
+            })
+        } catch (err) {
+            console.log({
+                "ERROR IN TRY CATCH (DELETE)": err
+            })
+        }
+
     }
 
     return (
@@ -303,6 +340,24 @@ export default function ObjectManagement(props: any) {
                 </div>
             }
 
+
+            {/* Success / Error Message */}
+            <div className='flex justify-start items-center px-4'>
+                {deleteMessage &&
+                    <div className={`bg-blue-957 border-blue-958 text-blue-959 mb-1 mt-1 border text-md px-4 py-3 rounded rounded-xl relative flex items-center justify-start`}>
+                        <Image
+                            src="/img/AlertInfo.svg"
+                            alt="Alert Success"
+                            height={24}
+                            width={24}
+                            className='mr-2'
+                        />
+                        <strong className="font-semibold">Success</strong>
+                        <span className="block sm:inline ml-2">Object deleted successfully!</span>
+                    </div>
+                }
+            </div>
+
             {/* Table */}
             <div className='w-full mt-6 min-h-[400px]'>
                 {objectData && objectData.length > 0 ?
@@ -360,7 +415,7 @@ export default function ObjectManagement(props: any) {
                                                                 <span>Edit</span>
                                                             </button>
                                                             <button
-                                                                onClick={deleteModalFunction}
+                                                                onClick={() => deleteModalFunction(items.id)}
                                                                 className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
                                                                 <span>Delete</span>
                                                             </button>
@@ -447,7 +502,7 @@ export default function ObjectManagement(props: any) {
                                         <div className="mt-10 relative flex justify-center items-center w-full">
                                             <button
                                                 className="border border-black rounded-lg bg-black text-white text-lg w-[70px] h-[47px] mr-5 hover:bg-yellow-951 hover:text-white hover:border-yellow-951 ease-in-out duration-[100ms] disabled:bg-gray-951 disabled:hover:border-gray-951 disabled:border-gray-951"
-                                                onClick={closeDeleteModal}
+                                                onClick={() => confirmDeleteClass(deleteID)}
                                             >
                                                 Yes
                                             </button>
