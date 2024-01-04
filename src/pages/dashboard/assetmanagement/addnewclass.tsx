@@ -170,7 +170,6 @@ export default function AddNewClass(props: any) {
         try {
             await axios({
                 method: 'POST',
-                // url: `http://20.232.178.134:3000/api/createClasses`,
                 url: `/api/createClasses`,
                 data: dataToSave,
                 headers: {

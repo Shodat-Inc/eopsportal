@@ -132,10 +132,10 @@ export default function ClassManagement(props: any) {
                     "Content-Type": "application/json"
                 }
             }).then(function (response) {
-                console.log({
-                    response: response,
-                    message: "Class deleted successful!!"
-                })
+                // console.log({
+                //     response: response,
+                //     message: "Class deleted successful!!"
+                // })
                 setDeleteMessage(true);
                 setTimeout(() => {
                     setDeleteMessage(false)
@@ -266,7 +266,7 @@ export default function ClassManagement(props: any) {
                                                 <button
                                                     onClick={() => takeMeToClassComponent(item.id)}
                                                 >
-                                                    <span>{item.id} - {item.className}</span>
+                                                    <span>{item.className}</span>
                                                 </button>
                                             </td>
                                             <td>

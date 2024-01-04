@@ -10,9 +10,10 @@ import { successMessageAction } from '@/store/actions/classAction';
 
 export default function AddNewSubClass(props: any) {
 
-    // console.log({
-    //     PROPS: props
-    // })
+    console.log({
+        "PROPS_IN_ADD_UB_CLASS": props
+    })
+
     const dispatch = useDispatch<any>();
     const assetname = useRef("");
     const router = useRouter();
@@ -27,10 +28,43 @@ export default function AddNewSubClass(props: any) {
     const [toggleAsset, setToggleAsset] = useState(false);
     const [dtObject, setDtObject] = useState<any[]>([]);
 
-    const [allClassData, setAllClassData] = useState([] as any);
-    const [selectedOptions, setSelectedOptions] = useState(null);
-    const [selectParentJoin, setSelectParentJoin] = useState("");
+    // const [allClassData, setAllClassData] = useState([] as any);
+    const [allDataTypes, setAllDataTypes] = useState([] as any);
+    const [success, setSuccess] = useState(false);
+    let access_token = "" as any;
+    if (typeof window !== 'undefined') {
+        access_token = localStorage.getItem('authToken')
+    }
 
+
+    // GET ALL DATATYPES
+    async function fetchData() {
+        try {
+            await axios({
+                method: 'GET',
+                url: `/api/getDataType`,
+                headers: {
+                    "Authorization": `Bearer ${access_token}`,
+                    "Content-Type": "application/json"
+                }
+            }).then(function (response) {
+                if (response) {
+                    setAllDataTypes(response.data?.data)
+                }
+            }).catch(function (error) {
+                console.log({
+                    "ERROR IN AXIOS CATCH (GET DT)": error
+                })
+            })
+        } catch (err) {
+            console.log({
+                "ERROR IN TRY CATCH (GET DT)": err
+            })
+        }
+    }
+    useEffect(() => {
+        fetchData();
+    }, [access_token])
 
     // Get class data and filter parent tags based on selected class
     useEffect(() => {
@@ -38,21 +72,21 @@ export default function AddNewSubClass(props: any) {
             let filtered = props.classData.filter((item: any) => {
                 return item.assetName === props.selectedParentClass;
             })
-            setAllClassData(filtered)
-            
+            // setAllClassData(filtered)
+
             let label = [] as any;
             let val = [] as any;
             let ajson = [] as any;
-            filtered[0]?.tags?.map((item:any)=>{
+            filtered[0]?.tags?.map((item: any) => {
                 label.push(item.tagName)
                 val.push(item.tagName)
                 let json: any = CreateJSONForSelect(item.tagName, item.tagName);
                 ajson.push(json)
             })
 
-            
 
-            
+
+
             // let jsonList = dtObject.slice();
             // jsonList.push(json)
             // setDtObject(jsonList)
@@ -66,7 +100,7 @@ export default function AddNewSubClass(props: any) {
 
     }, [props.classData, props.selectedParentClass])
 
-   
+
 
 
     const closeModal = () => {
@@ -118,7 +152,7 @@ export default function AddNewSubClass(props: any) {
     function CreateJSON(tag: any, datatype: any) {
         var myObject = {
             "tagName": tag,
-            "dataType": datatype
+            "dataTypeId": datatype
         };
         return myObject;
     }
@@ -195,86 +229,69 @@ export default function AddNewSubClass(props: any) {
         e.preventDefault();
         var formData = new FormData(e.target);
         const form_values = Object.fromEntries(formData);
+        let parentJoinKeyArr = [] as any;
+        parentJoinKeyArr.push(form_values.parentJoinKey)
 
+        const dataToSave = {
+            className: form_values.assetname,
+            superParentId: props.selectedParentClass,
+            parentId: props.selectedParentClass,
+            parentJoinKey: parentJoinKeyArr,
+            tags: dtObject
+        };
         // console.log({
         //     formData: formData,
         //     form_values: form_values,
         //     tags:dtObject,
         //     assetkey: allTags,
         // })
-        let parentJoinKeyArr = [] as any;
-        parentJoinKeyArr.push(form_values.parentJoinKey)
-        const response = await fetch('/api/createSubAssets', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(
-                {
-                    assetID: "1234567890",
-                    assetName: `${form_values.assetname}`,
-                    slug: `${form_values.assetname}`,
-                    parentAssetID: `${props.selectedParentClass}`,
-                    parentAssetName: `${props.selectedParentClass}`,
-                    tags: allTags,
-                    parentJoinKey:parentJoinKeyArr,
-                    dateCreated: new Date().toLocaleString() + "",
-                    dateModified: new Date().toLocaleString() + "",
-                    geoScopeLink:"",
-                    tagsWithDataType: dtObject,
-                    assetTypes: assetDataType
+
+
+        console.log({
+            dataToSave: dataToSave
+        })
+        let tokenStr = access_token;
+        try {
+            await axios({
+                method: 'POST',
+                url: `/api/createClasses`,
+                data: dataToSave,
+                headers: {
+                    "Authorization": `Bearer ${tokenStr}`,
+                    "Content-Type": "application/json"
                 }
-            )
-        });
-        const resdata = await response.json();
-        if (resdata) {
-            setAllTags([]);
-            dispatch(successMessageAction(true))
-            setTimeout(() => {
-                props.handleClick(false);
-            }, 50);
-        } else {
-            console.log("FAILED")
+            }).then(function (response) {
+                if (response) {
+                    setSuccess(true)
+                    setAllTags([]);
+                    setTimeout(() => {
+                        setSuccess(false)
+                        props.handleClick(false);
+                        // dispatch(openCloseNewClassModalAction(false))
+                    }, 1500)
+                }
+            }).catch(function (error) {
+                console.log("ERROR IN AXIOS CATCH (CREATE CLASS):", error)
+            })
+        } catch (err) {
+            console.log("ERROR IN TRY CATCH (CREATE CLASS):", err)
+        }
+
+        
+    }
+
+
+    // convert selected id to classname
+    const showClassNameFromID = (id: any) => {
+        if (props.classData && props.classData.length > 0) {
+            let filter = props.classData.filter((item: any) => {
+                return item.id === id
+            })
+            if (filter) {
+                return filter[0]?.className
+            }
         }
     }
-
-
-    // Show Choose Asset List
-    const showChooseAssetList = () => {
-        setToggleAsset(!toggleAsset)
-    }
-    const selectAsset = (item: any) => {
-        setChooseAsset(item);
-        setToggleAsset(false)
-    }
-
-    // Continue to next page after setting the selected class to redux
-    const continueToNext = () => {
-        setTimeout(() => {
-            Router.push({
-                pathname: '/dashboard/assetmanagement/objects',
-                query: {
-                    assets: chooseAsset
-                }
-            })
-        }, 100)
-    }
-
-    // Send props to next page
-    function sendProps() {
-        Router.push({
-            pathname: "/dashboard/assetmanagement/subasset",
-            query: {
-                chooseAsset
-            }
-        }, 'assetmanagement/subasset')
-    }
-
-
-    // Handle Parent Join Key
-    const handleJoinKey = (e:any) => {
-        setSelectParentJoin(e.target.value)
-    } 
 
 
     return (
@@ -282,7 +299,7 @@ export default function AddNewSubClass(props: any) {
             <div className={`bg-white h-full z-[11] fixed top-0 right-0 p-5 shadow shadow-lg ${props.show === true ? `${styles.objectContainer} ${styles.sliderShow}` : `${styles.objectContainer}`}`}>
 
                 <div className="flex justify-between items-center w-full mb-3">
-                    <h2 className="font-semibold text-lg">Add New Sub Class</h2>
+                    <h2 className="font-semibold text-lg">Add New Sub Class <span className="text-sm color-gray-951">({showClassNameFromID(props.selectedParentClass)})</span></h2>
                     <button onClick={closeModal} className="transition-all duration-[100ms] transition-opacity duration-100 outline-none transform active:scale-75 transition-transform">
                         <Image
                             src="/img/x.svg"
@@ -303,13 +320,6 @@ export default function AddNewSubClass(props: any) {
 
                             <div className="mb-6 relative column-2 flex justify-start items-center sm:w-full small:w-full">
                                 <div className="lg:w-full small:w-full sm:w-full">
-                                    {/* <input
-                                        type="hidden"
-                                        name="assetid"
-                                        placeholder="Enter asset ID"
-                                        value={1}
-                                    /> */}
-
                                     <div className={`mb-5 lg:w-full small:w-full small:w-full ${styles.form__wrap}`}>
                                         <div className={`relative ${styles.form__group} font-OpenSans`}>
                                             <input
@@ -430,100 +440,34 @@ export default function AddNewSubClass(props: any) {
 
                                             <div className="text-sm font-bold color-black mb-2 flex items-center justify-between">
                                                 <span>Select Data Type</span>
-                                                {/* <span className="bg-black h-8 w-8 p-1 inline-flex rounded-full justify-center items-center">
-                                                <Image
-                                                    src="/img/tick-white.svg"
-                                                    alt="check"
-                                                    height={20}
-                                                    width={20}
-                                                    className="inline-block"
-                                                />
-                                            </span> */}
                                             </div>
-                                            <div className="flex pt-1 pb-1">
-                                                <div className={`${styles.customRadio} mr-2`}>
-                                                    <input
-                                                        type="radio"
-                                                        name="datatype"
-                                                        className="scale-150"
-                                                        value="int"
-                                                        checked={dataType === "int"}
-                                                        onChange={() => radioChange("int")}
-                                                    />
-                                                    <span></span>
-                                                </div>
-                                                <label className="text-black font-semibold">int <span className="text-gray-500 font-normal text-[14px]">(myNum = 5)</span></label>
-                                            </div>
-                                            <div className="flex pt-1 pb-1">
-                                                <div className={`${styles.customRadio} mr-2`}>
-                                                    <input
-                                                        type="radio"
-                                                        name="datatype"
-                                                        className="scale-150"
-                                                        value="float"
-                                                        checked={dataType === "float"}
-                                                        onChange={() => radioChange("float")}
-                                                    />
-                                                    <span></span>
-                                                </div>
-                                                <label className="text-black font-semibold">float <span className="text-gray-500 font-normal text-[14px]">(myFloatNum = 5.99f)</span></label>
-                                            </div>
-                                            <div className="flex pt-1 pb-1">
-                                                <div className={`${styles.customRadio} mr-2`}>
-                                                    <input
-                                                        type="radio"
-                                                        name="datatype"
-                                                        className="scale-150"
-                                                        value="char"
-                                                        checked={dataType === "char"}
-                                                        onChange={() => radioChange("char")}
-                                                    />
-                                                    <span></span>
-                                                </div>
-                                                <label className="text-black font-semibold">char <span className="text-gray-500 font-normal text-[14px]">(myLetter = &apos;D&apos;)</span></label>
-                                            </div>
-                                            <div className="flex pt-1 pb-1">
-                                                <div className={`${styles.customRadio} mr-2`}>
-                                                    <input
-                                                        type="radio"
-                                                        name="datatype"
-                                                        className="scale-150"
-                                                        value="boolean"
-                                                        checked={dataType === "boolean"}
-                                                        onChange={() => radioChange("boolean")}
-                                                    />
-                                                    <span></span>
-                                                </div>
-                                                <label className="text-black font-semibold">boolean <span className="text-gray-500 font-normal text-[14px]">(myBool = true/false)</span></label>
-                                            </div>
-                                            <div className="flex pt-1 pb-1">
-                                                <div className={`${styles.customRadio} mr-2`}>
-                                                    <input
-                                                        type="radio"
-                                                        name="datatype"
-                                                        className="scale-150"
-                                                        value="string"
-                                                        checked={dataType === "string"}
-                                                        onChange={() => radioChange("string")}
-                                                    />
-                                                    <span></span>
-                                                </div>
-                                                <label className="text-black font-semibold">string <span className="text-gray-500 font-normal text-[14px]">(myText = &quot;Hello&quot;)</span></label>
-                                            </div>
-                                            <div className="flex pt-1 pb-1">
-                                                <div className={`${styles.customRadio} mr-2`}>
-                                                    <input
-                                                        type="radio"
-                                                        name="datatype"
-                                                        className="scale-150"
-                                                        value="date"
-                                                        checked={dataType === "date"}
-                                                        onChange={() => radioChange("date")}
-                                                    />
-                                                    <span></span>
-                                                </div>
-                                                <label className="text-black font-semibold">date <span className="text-gray-500 font-normal text-[14px]">(myDate = &quot;29-05-2023&quot;)</span></label>
-                                            </div>
+                                            {
+                                                allDataTypes && allDataTypes.length >= 0 ?
+                                                    allDataTypes.map((item: any, index: any) => (
+                                                        <div key={index}>
+                                                            <div className="flex pt-1 pb-1">
+                                                                <div className={`${styles.customRadio} mr-2`}>
+                                                                    <input
+                                                                        id={item.type}
+                                                                        type="radio"
+                                                                        name="datatype"
+                                                                        className="scale-150"
+                                                                        value={item.type}
+                                                                        checked={dataType === item.id}
+                                                                        onChange={() => radioChange(item.id)}
+                                                                    />
+                                                                    <span></span>
+                                                                </div>
+                                                                <label htmlFor={item.type} className="text-black font-semibold">{item.name}<span className="text-gray-500 font-normal text-[14px] ml-2">
+                                                                    {item.description}
+                                                                </span>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    ))
+                                                    :
+                                                    null
+                                            }
 
                                             <div className="flex justify-end items-center w-full">
                                                 <button
@@ -560,12 +504,12 @@ export default function AddNewSubClass(props: any) {
                                                 placeholder="Parent Join Key"
                                                 required
                                                 onChange={(e) => (assetname.current = e.target.value)}
-                                                // onChange={handleJoinKey}
-                                                // multiple
+                                            // onChange={handleJoinKey}
+                                            // multiple
                                             >
                                                 {
-                                                    allClassData && allClassData[0]?.tags?.map((item: any, index: any) => (
-                                                        <option key={index} value={item.tagName}>{item.tagName}</option>
+                                                    props.classData && props.classData[0]?.ClassTags?.map((item: any, index: any) => (
+                                                        <option key={index} value={item.id}>{item.tagName}</option>
                                                     ))
                                                 }
                                                 <option value="">Select</option>

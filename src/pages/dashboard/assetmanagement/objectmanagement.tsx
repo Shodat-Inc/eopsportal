@@ -214,10 +214,10 @@ export default function ObjectManagement(props: any) {
                     "Content-Type": "application/json"
                 }
             }).then(function (response) {
-                console.log({
-                    response: response,
-                    message: "Class deleted successful!!"
-                })
+                // console.log({
+                //     response: response,
+                //     message: "Class deleted successful!!"
+                // })
                 setDeleteMessage(true);
                 setTimeout(() => {
                     setDeleteMessage(false)

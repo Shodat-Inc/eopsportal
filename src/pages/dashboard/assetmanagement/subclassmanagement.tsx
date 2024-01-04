@@ -10,9 +10,9 @@ import EditSubClass from './editsubclass';
 import { editSubClassModalAction } from '@/store/actions/classAction';
 
 export default function SubClassManagement(props: any) {
-    console.log({
-        "PROPS_IN_SUB_CLASS": props
-    })
+    // console.log({
+    //     "PROPS_IN_SUB_CLASS": props
+    // })
     const dispatch = useDispatch<any>();
     const [toggleFilter, setToggleFilter] = useState(false);
     const [toggleArrow, setToggleArrow] = useState(false);
@@ -87,10 +87,6 @@ export default function SubClassManagement(props: any) {
 
             }).then(function (response: any) {
                 if (response) {
-
-                    console.log({
-                        response: response?.data?.data
-                    })
                     setSubClassData(response?.data?.data);
                 }
             }).catch(function (error: any) {
@@ -151,10 +147,6 @@ export default function SubClassManagement(props: any) {
                     "Content-Type": "application/json"
                 }
             }).then(function (response) {
-                console.log({
-                    response: response,
-                    message: "Class deleted successful!!"
-                })
                 setDeleteMessage(true);
                 setTimeout(() => {
                     setDeleteMessage(false)
