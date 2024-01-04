@@ -8,7 +8,7 @@ import ClassManagement from "./classmanagement";
 import ObjectManagement from "./objectmanagement";
 import SubObjectManagement from "./subobjectmanagement";
 import SubClassManagement from "./subclassmanagement";
-import { setSelectedClass, toggleAddNewObjectModel, getSingleUser, toggleAddNewClassObjectModel } from "@/store/actions/classAction";
+import { setSelectedClass, toggleAddNewObjectModel, getSingleUser, toggleAddNewClassObjectModel, openCloseNewClassModalAction } from "@/store/actions/classAction";
 
 export default function AssetManagement() {
     const dispatch = useDispatch<any>();
@@ -38,10 +38,9 @@ export default function AssetManagement() {
                 }
 
             }).then(function (response) {
-                console.log({
-                    RES:response?.data?.data
-
-                })
+                // console.log({
+                //     RES:response?.data?.data
+                // })
                 if (response) {
                     setClassData(response?.data?.data)
                 }
@@ -77,7 +76,8 @@ export default function AssetManagement() {
     }
     const [addClassModal, setAddClassModal] = useState(false);
     const openAddClassModal = () => {
-        setAddClassModal(!addClassModal);
+        // setAddClassModal(!addClassModal);
+        dispatch(openCloseNewClassModalAction(true))
     }
 
     const [addSubClassModal, setAddSubClassModal] = useState(false);

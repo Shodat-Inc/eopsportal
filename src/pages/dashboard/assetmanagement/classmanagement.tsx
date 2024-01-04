@@ -16,7 +16,6 @@ export default function ClassManagement(props: any) {
     const [actions, setActions] = useState(false);
     const [actionCount, setActionCount] = useState(1);
     const [showModal, setShowModal] = useState(Boolean);
-    // const [showEditClassModal, setShowEditClassModal] = useState(Boolean);
     const [deleteModal, setDeleteModal] = useState(false);
     const [searchClass, setSearchClass] = useState('');
     const [allData, setAllData] = useState(props.classData);
@@ -273,8 +272,8 @@ export default function ClassManagement(props: any) {
 
             {/* Add New Class */}
             <AddNewClass
-                handleClick={handleClick}
-                show={showModal}
+                // handleClick={handleClick}
+                show={allClassSelector?.newClassModalReducer}
             />
 
 

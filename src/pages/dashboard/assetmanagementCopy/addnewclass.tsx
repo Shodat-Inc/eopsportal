@@ -5,7 +5,7 @@ import Router from 'next/router'
 import Image from "next/image";
 import axios from 'axios';
 import { useRouter } from 'next/router'
-import { createNewClass } from "@/store/actions/classAction";
+// import { createNewClass } from "@/store/actions/classAction";
 import Layout from "../../../components/Layout";
 import NoDataFound from "../../../common/nodatafound";
 import { getAssetsData } from "../../../lib/getassets";

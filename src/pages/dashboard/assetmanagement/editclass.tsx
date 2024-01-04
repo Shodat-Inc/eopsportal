@@ -8,6 +8,9 @@ import { successMessageAction } from '@/store/actions/classAction';
 import { editClassModalAction } from "@/store/actions/classAction";
 
 export default function EditClass(props: any) {
+    // console.log({
+    //     "PROPS":props
+    // })
     const dispatch = useDispatch<any>();
     const assetname = useRef("");
     const [allTags, setAllTags] = useState<any[]>([]);

@@ -21,6 +21,11 @@ export default function SubClassManagement(props: any) {
     const [search, setSearch] = useState('');
     const [selectedSubClass, setSelectedSubClass] = useState("");
 
+    let access_token = "" as any;
+    if (typeof window !== 'undefined') {
+        access_token = localStorage.getItem('authToken')
+    }
+
     // All class reducer states
     const allClassSelector = useSelector((state: any) => state.classReducer);
 
@@ -68,6 +73,10 @@ export default function SubClassManagement(props: any) {
             await axios({
                 method: 'GET',
                 url: `/api/getSubAssets`,
+                headers: {
+                    "Authorization": `Bearer ${access_token}`,
+                    "Content-Type": "application/json"
+                }
 
             }).then(function (response: any) {
                 if (response) {
