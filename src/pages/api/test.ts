@@ -1,10 +1,22 @@
-import { NextRequest, NextResponse } from "next/server";
+import { apiHandler } from "@/helpers/api";
 import { loggerInfo } from "@/logger";
-
-export function Get(req: NextRequest) {
-  loggerInfo.info(`GET /api/getUsers ${req}`);
-  return NextResponse.json({
-    message: "Success",
-    status: 200,
-  });
+import repoName from "@/util/checkRepo";
+// { } index
+export default apiHandler({
+  post: handler,
+});
+async function handler(req: any, res: any) {
+  if (req.method !== "POST") {
+    res.status(405).json("ONLY POST METHOD IS ALLOWED");
+  }
+  try {
+    loggerInfo.info("Test The Model");
+    const data = req.body;
+    const importRepo: any = await repoName(data.modelName);
+    const result = await importRepo.default(data);
+    return res.status(200).json(result);
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json(error);
+  }
 }
