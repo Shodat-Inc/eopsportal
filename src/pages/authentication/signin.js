@@ -69,9 +69,9 @@ export default function SignIn() {
         event.preventDefault()
         if (handleValidation()) {
 
-            console.log({
-                formData: formData
-            })
+            // console.log({
+            //     formData: formData
+            // })
 
             // setLoader(true)
 
@@ -93,12 +93,15 @@ export default function SignIn() {
                         "Content-Type": "application/x-www-form-urlencoded"
                     }
                 }).then(function (response) {
-                    console.log({
-                        "SIGN RES": response?.data?.data,
-                        "TOKEN": response?.data?.data?.token
-                    })
+                    // console.log({
+                    //     "SIGN RES": response?.data,
+                    //     "TOKEN": response?.data?.data?.token
+                    // })
 
-                    if (response.data) {
+                    if (response.data && response?.data?.success!==false) {
+                        // console.log({
+                        //     'YOU ARE HERE WITH TOKEN': response?.data?.data?.token
+                        // })
                         let phoneNumber = response?.data?.data?.phoneNumber;
                         setUserPhone(phoneNumber);
                         sessionStorage.setItem("authenticationUsername", response?.data?.data?.email);
@@ -120,7 +123,7 @@ export default function SignIn() {
                             // setOtpScreen(false);
                             push("/dashboard/");
                         }, 100)
-                        // setOtpError(false)
+                        setOtpError(false)
 
                         // signInWithPhoneNumber(auth, phoneNumber, appVerifier)
                         //     .then((confirmationResult) => {
@@ -147,21 +150,22 @@ export default function SignIn() {
                         // }, 1000)
 
                     } else {
-                        // setOtpScreen(false)
-                        // setResponseError(true);
-                        // setTimeout(() => {
-                        //     setFormData({
-                        //         username: "",
-                        //         currentPassword: ""
-                        //     })
-                        //     setErrors({
-                        //         username: "",
-                        //         currentPassword: ""
-                        //     })
-                        // }, 100);
-                        // setTimeout(() => {
-                        //     setResponseError(false)
-                        // }, 2000)
+                        // console.log('NO TOKEN SO STAY HERE ONLY')
+                        setOtpScreen(false)
+                        setResponseError(true);
+                        setTimeout(() => {
+                            setFormData({
+                                username: "",
+                                currentPassword: ""
+                            })
+                            setErrors({
+                                username: "",
+                                currentPassword: ""
+                            })
+                        }, 100);
+                        setTimeout(() => {
+                            setResponseError(false)
+                        }, 5000)
                     }
 
                 }).catch(function (error) {
@@ -224,9 +228,9 @@ export default function SignIn() {
     };
 
     const verifyOtpFunction = () => {
-        console.log({
-            code: code
-        })
+        // console.log({
+        //     code: code
+        // })
 
         setLoader(true)
 
