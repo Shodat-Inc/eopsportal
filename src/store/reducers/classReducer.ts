@@ -12,6 +12,7 @@ import { EDIT_SUB_CLASS_MODEL_ERROR, EDIT_SUB_CLASS_MODEL_SUCCESS } from "../typ
 import { EDIT_OBJECT_MODEL_ERROR, EDIT_OBJECT_MODEL_SUCCESS } from "../types";
 import { EDIT_SUB_OBJECT_MODEL_ERROR, EDIT_SUB_OBJECT_MODEL_SUCCESS } from "../types";
 import { NEW_CLASS_MODEL_ERROR, NEW_CLASS_MODEL_SUCCESS } from "../types";
+import { SET_DATA_FOR_SUB_OBJECT_ERROR, SET_DATA_FOR_SUB_OBJECT_SUCCESS } from "../types";
 
 const initialState = {
   selectedClass: '',
@@ -28,6 +29,7 @@ const initialState = {
   editObjectModalReducer: false,
   editSubObjectModalReducer: false,
   newClassModalReducer: false,
+  setDataForSubObjectReducer: {},
 };
 
 const classReducer = (state = initialState, action: any) => {
@@ -186,6 +188,17 @@ const classReducer = (state = initialState, action: any) => {
       return {
         error: action.payload,
       }
+
+    case SET_DATA_FOR_SUB_OBJECT_SUCCESS:
+      return {
+        ...state,
+        setDataForSubObjectReducer: action.payload,
+      };
+
+    case SET_DATA_FOR_SUB_OBJECT_ERROR:
+      return {
+        setDataForSubObjectReducer: action.payload,
+      };
 
     default:
       return state;

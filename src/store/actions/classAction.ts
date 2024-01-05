@@ -12,6 +12,7 @@ import { EDIT_SUB_CLASS_MODEL_ERROR, EDIT_SUB_CLASS_MODEL_SUCCESS } from "../typ
 import { EDIT_OBJECT_MODEL_ERROR, EDIT_OBJECT_MODEL_SUCCESS } from "../types";
 import { EDIT_SUB_OBJECT_MODEL_ERROR, EDIT_SUB_OBJECT_MODEL_SUCCESS } from "../types";
 import { NEW_CLASS_MODEL_ERROR, NEW_CLASS_MODEL_SUCCESS } from "../types";
+import { SET_DATA_FOR_SUB_OBJECT_ERROR, SET_DATA_FOR_SUB_OBJECT_SUCCESS } from "../types";
 
 import axios from "axios";
 let access_token = "" as any;
@@ -362,5 +363,27 @@ export const openCloseNewClassModalAction = (item: any) => async (dispatch: any)
         }
     } catch (err) {
         console.log("err in action:", err)
+    }
+};
+
+
+/*
+FUNCTION TO SET DATA TO TRANSFER FROM OBJECT TO SUB_OBJECT COMPONENTS
+*/
+export const setDataForSubObjectCompAction = (data: any) => async (dispatch: any) => {
+    try {
+        if (data) {
+            dispatch({
+                type: SET_DATA_FOR_SUB_OBJECT_SUCCESS,
+                payload: data
+            });
+        } else {
+            dispatch({
+                type: SET_DATA_FOR_SUB_OBJECT_ERROR,
+                payload: "ERROR IN SENDING DATA"
+            });
+        }
+    } catch (err) {
+        console.log("ERROR IN ACTION:", err)
     }
 };

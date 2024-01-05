@@ -14,6 +14,10 @@ import { editSubObjectModalAction } from '@/store/actions/classAction';
 
 export default function SubObjectManagement(props: any) {
 
+    console.log({
+        "PROPS_IN_SUB_OBJECT": props
+    })
+
     const dispatch = useDispatch<any>();
     const [toggleFilter, setToggleFilter] = useState(false);
     const [toggleArrow, setToggleArrow] = useState(false);
@@ -29,9 +33,19 @@ export default function SubObjectManagement(props: any) {
     const [objectData, setObjectData] = useState([] as any);
     const [search, setSearch] = useState('');
     const [selectedObjectID, setSelectedObjectID] = useState("");
+    const [deleteID, setDeleteID] = useState(0);
+    const [deleteMessage, setDeleteMessage] = useState(false);
+    let access_token = "" as any;
+    if (typeof window !== 'undefined') {
+        access_token = localStorage.getItem('authToken')
+    }
 
     // All class reducer states
     const classSelector = useSelector((state: any) => state.classReducer);
+
+    console.log({
+        "ALL_CLASS_REDUCER_STATES": classSelector.setDataForSubObjectReducer
+    })
 
     // Close Success message after 5 second if true
     useEffect(() => {
@@ -40,17 +54,15 @@ export default function SubObjectManagement(props: any) {
                 dispatch(successMessageAction(false))
             }, 5000)
         }
-
     }, [classSelector.successMessageReducer])
+
 
     const addNewObject = useSelector((state: any) => state.classReducer)
     const toggleFilterFunction = () => {
         setToggleArrow(!toggleArrow);
         setToggleFilter(!toggleFilter);
     }
-    const sortByClassName = () => {
-        setToggleSort(!toggleSort)
-    }
+
 
     useEffect(() => {
         setShowModal(addNewObject.toggleAddObject)
@@ -61,18 +73,18 @@ export default function SubObjectManagement(props: any) {
         try {
             await axios({
                 method: 'GET',
-                url: `/api/getSubAssets`,
-
+                url: `/api/getChildAssets?id=${classSelector?.setDataForSubObjectReducer?.parentClass}`,
+                headers: {
+                    "Authorization": `Bearer ${access_token}`,
+                    "Content-Type": "application/json"
+                }
             }).then(function (response) {
-                if (response) {
-                    let filtered = response.data.filter((item: any) => {
-                        return item.parentAssetID === props.defaultClass
+                if (response.data.success === true) {
+                    console.log({
+                        response: response?.data?.data
                     })
-                    if (filtered) {
-                        setChooseAsset(filtered[0].assetName);
-                        dispatch(objDefaultSubClassSelectorFunction(filtered[0].assetName))
-                        setSubClassData(filtered)
-                    }
+                    setSubClassData(response?.data?.data);
+                    setChooseAsset(response?.data?.data[0]?.id)
                 }
             }).catch(function (error) {
                 console.log({
@@ -88,21 +100,35 @@ export default function SubObjectManagement(props: any) {
     useEffect(() => {
         fetchData();
         if (fetchData.length) return;
-    }, [props.defaultClass])
+    }, [access_token])
 
-    const handleDropDown = (item: any) => {
-        setChooseAsset(item)
+
+
+    // convert selected id to classname
+    const showClassNameFromID = (id: any) => {
+        if (subClassData && subClassData.length > 0) {
+            let filter = subClassData.filter((item: any) => {
+                return item.id === id
+            })
+            if (filter) {
+                return filter[0]?.className
+            }
+        }
     }
+
+    // const handleDropDown = (item: any) => {
+    //     setChooseAsset(item)
+    // }
     const toggleActions = (item: any) => {
         setActionCount(item);
         setActions(!actions);
     }
-    const selectedAction = (item: any) => {
-        setActions(false);
-    }
-    const backToObect = () => {
-        props.handleSubObject("Vehicles")
-    }
+    // const selectedAction = (item: any) => {
+    //     setActions(false);
+    // }
+    // const backToObect = () => {
+    //     props.handleSubObject("Vehicles")
+    // }
 
 
     const deleteModalFunction = () => {
@@ -236,12 +262,13 @@ export default function SubObjectManagement(props: any) {
 
 
     // Edit Sub Object
-    const editSubObjectFunction = (item:any) => {
+    const editSubObjectFunction = (item: any) => {
         setActions(false);
         dispatch(editSubObjectModalAction(true));
         setSelectedObjectID(item)
     }
 
+    
 
     return (
         <div className='py-3 font-OpenSans'>
@@ -262,7 +289,7 @@ export default function SubObjectManagement(props: any) {
                                 width={20}
                                 className={`absolute right-3 top-4 ${toggleAsset ? 'rotate-180' : 'rotate-0'}`}
                             />
-                            <span className="text-lg text-black pl-2">{chooseAsset}</span>
+                            <span className="text-lg text-black pl-2">{showClassNameFromID(chooseAsset)}</span>
                         </div>
 
                         {toggleAsset ?
@@ -272,10 +299,10 @@ export default function SubObjectManagement(props: any) {
                                         subClassData.map((item: any, index: any) => (
                                             <li
                                                 className="px-5 py-2 bg-white cursor-pointer hover:bg-yellow-951 w-full font-normal"
-                                                onClick={() => selectItemFunction(item.assetName)}
+                                                onClick={() => selectItemFunction(item.id)}
                                                 key={index}
                                             >
-                                                <span>{item.assetName}</span>
+                                                <span>{item.className}</span>
                                             </li>
                                         ))
                                     }
@@ -406,7 +433,7 @@ export default function SubObjectManagement(props: any) {
                                                     {(actions && actionCount === index + 1) &&
                                                         <div className="bg-black text-white border overflow-hidden border-black rounded rounded-lg w-[200px] flex flex-col flex-wrap items-start justify-start shadow-sm absolute top-[30px] right-[75px] z-[1]">
                                                             <button
-                                                                onClick={()=>editSubObjectFunction(items?.tags?.ID)}
+                                                                onClick={() => editSubObjectFunction(items?.tags?.ID)}
                                                                 className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
                                                                 <span>Edit</span>
                                                             </button>
@@ -525,13 +552,13 @@ export default function SubObjectManagement(props: any) {
             </div>
 
             {/* Add New Object */}
-            <AddNewObject
+            {/* <AddNewObject
                 show={addNewObject.toggleAddObject && addNewObject.toggleAddObject}
                 selectedSubClass={chooseAsset}
                 subClassData={subClassData}
                 parentClass={props.defaultClass}
                 objID={props.objID}
-            />
+            /> */}
 
             <EditSubObject
                 show={classSelector?.editSubObjectModalReducer}

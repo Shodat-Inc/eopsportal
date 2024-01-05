@@ -8,13 +8,14 @@ import { setClassBreadcrumb, objDefaultClassSelectorFunction } from '@/store/act
 import AddNewClassObject from './addnewclassobject';
 import { successMessageAction } from '@/store/actions/classAction';
 import { editObjectModalAction } from '@/store/actions/classAction';
+import { setDataForSubObjectCompAction } from '@/store/actions/classAction';
 import EditObject from './editobject';
 
 export default function ObjectManagement(props: any) {
 
-    console.log({
-        "PROPS OBJ": props
-    })
+    // console.log({
+    //     "PROPS OBJ": props
+    // })
 
     const dispatch = useDispatch<any>();
     const [toggleFilter, setToggleFilter] = useState(false);
@@ -82,6 +83,9 @@ export default function ObjectManagement(props: any) {
         setActions(!actions);
     }
     const takeMeToSubObjectComponent = (item: any) => {
+        console.log({
+            "item here ...":item
+        })
         let classObjKey = chooseAsset === 1 ? 'PlantID' : 'VIN';
         let abc = {
             "flow": "Object Management",
@@ -94,7 +98,14 @@ export default function ObjectManagement(props: any) {
         }
         dispatch(setClassBreadcrumb(abc))
         setObjID(item);
-        props.handelObject(item)
+        props.handelObject(item);
+
+        // send parent class and selected object ID to sub object component
+        let dataForSubObj = {
+            "parentClass":chooseAsset,
+            "objectID":item
+        }
+        dispatch(setDataForSubObjectCompAction(dataForSubObj))
     }
 
 
