@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import styles from '../../../styles/Common.module.css';
 import Layout from "../../../components/Layout";
@@ -32,6 +32,14 @@ export default function AiModelDetection() {
     const [getAllSubClass, setGetAllSubClass] = useState([] as any);
     const [getAllSubObject, setGetAllSubObject] = useState([] as any);
     const [tableDataSubObject, setTableDataSubObject] = useState([] as any);
+    const [toggleAsset, setToggleAsset] = useState(false);
+    const [chooseClass, setChooseClass] = useState('select');
+    const [chooseObject, setChooseObject] = useState('')
+    const [chooseSubClass, setChooseSubClass] = useState('')
+    const [chooseSubObject, setChooseSubObject] = useState('')
+    const [toggleObject, setToggleObject] = useState(false);
+    const [toggleSubClass, setToggleSubClass] = useState(false);
+    const [toggleSubObject, setToggleSubObject] = useState(false);
 
     const toggleTab = (item: any) => {
         setTab(item)
@@ -42,27 +50,27 @@ export default function AiModelDetection() {
     const classSelector = useSelector((state: any) => state.classReducer);
 
     // Set Selected sub Object 
-    useEffect(()=>{
-        if(classSelector.dataforeopswatchReducer?.object!=="") {
+    useEffect(() => {
+        if (classSelector.dataforeopswatchReducer?.object !== "") {
             setSelectSubObject(classSelector.dataforeopswatchReducer?.object)
-        }        
+        }
     }, [classSelector.dataforeopswatchReducer?.object])
 
     // Set Selected sub object 
-    useEffect(()=>{
-        if(classSelector.dataforeopswatchReducer?.subClass!=="") {
+    useEffect(() => {
+        if (classSelector.dataforeopswatchReducer?.subClass !== "") {
             setSelectSubClass(classSelector.dataforeopswatchReducer?.subClass)
-        }        
+        }
     }, [classSelector.dataforeopswatchReducer?.subClass])
 
 
     useEffect(() => {
-        if(Object.keys(classSelector.dataforeopswatchReducer).length !== 0 && classSelector.dataforeopswatchReducer.subClass!=="") {
+        if (Object.keys(classSelector.dataforeopswatchReducer).length !== 0 && classSelector.dataforeopswatchReducer.subClass !== "") {
             // toggleObjectLevel
             setToggleObjectLevel(true)
         }
 
-    },  [classSelector.dataforeopswatchReducer] )
+    }, [classSelector.dataforeopswatchReducer])
 
     // select class by default
     async function fetchObjectData() {
@@ -132,7 +140,8 @@ export default function AiModelDetection() {
 
             }).then(function (response) {
                 if (response) {
-                    setGetAllClass(response.data)
+                    setGetAllClass(response?.data);
+                    setChooseClass(response?.data[0]?.assetName)
                 }
             }).catch(function (error) {
                 console.log({
@@ -338,9 +347,9 @@ export default function AiModelDetection() {
                     let filtered = [] as any;
                     if (selectClass === "Vehicles") {
                         filtered = response.data.filter((item: any) => {
-                            if(selectSubClass === "Battery") {
+                            if (selectSubClass === "Battery") {
                                 return (item.object === selectSubClass) && item?.tags?.SerialNo === selectSubObject
-                            }else if(selectSubClass === "Tire") {
+                            } else if (selectSubClass === "Tire") {
                                 return (item.object === selectSubClass) && item?.tags?.SerialID === selectSubObject
                             } else {
                                 return (item.object === selectSubClass) && item?.tags?.SerialNo === selectSubObject
@@ -378,7 +387,45 @@ export default function AiModelDetection() {
         }
     }, [selectSubObject])
 
+    // Clicking Outside fuinction
+    function useOutsideAlerter(ref: any) {
+        useEffect(() => {
+            function handleClickOutside(event: any) {
+                if (ref.current && !ref.current.contains(event.target)) {
+                    setToggleAsset(false);
+                }
+            }
+            document.addEventListener("mousedown", handleClickOutside);
+            return () => {
+                document.removeEventListener("mousedown", handleClickOutside);
+            };
+        }, [ref]);
+    }
+    const wrapperRef = useRef(null);
+    useOutsideAlerter(wrapperRef);
 
+    // Dropdown for 
+    const toggleDropdownFunction = () => {
+        setToggleAsset(!toggleAsset)
+    }
+    const selectItemFunction = (item: any) => {
+        setChooseClass(item);
+        setToggleAsset(false);
+        setSelectObject('')
+        setSelectClass(item)
+        setDisable(1);
+        setShowObject(true);
+    }
+
+    // Dropdown for object
+    const toggleObjectDropFunction = () => {
+        setToggleObject(!toggleObject)
+    }
+    const selectObjectItemFunction = (item: any) => {
+        setChooseObject(item);
+        setSelectObject(item)
+        setToggleObject(false);
+    }
     return (
         <div className="font-OpenSans w-full">
 
@@ -413,8 +460,57 @@ export default function AiModelDetection() {
                     <div className="text-md text-[#666666] ml-5 mr-5">Or</div>
 
                     <div className={`${styles.form__wrap} relative`}>
-                        <span className="absolute text-[14px] bg-white px-[3px] py-0 left-[15px] top-[-10px]">Class</span>
-                        <select
+                        <div className='w-[350px]'>
+                            <div className="relative" ref={wrapperRef}>
+                                <div
+                                    className="border rounded-xl border-gray-969 h-[55px] pl-2 pr-5 relative flex items-center justify-start bg-white w-[80%] cursor-pointer"
+                                    onClick={toggleDropdownFunction}
+                                >
+                                    <label className="absolute text-sm !top-[-10px] left-2 pl-2 pr-2 bg-white">Choose Industry type</label>
+                                    <Image
+                                        src="/img/arrow-down-black.svg"
+                                        alt="arrow-down"
+                                        height={20}
+                                        width={20}
+                                        className={`absolute right-3 top-4 ${toggleAsset ? 'rotate-180' : 'rotate-0'}`}
+                                    />
+                                    <span className="text-lg text-black pl-2">{chooseClass}</span>
+                                </div>
+
+                                {toggleAsset ?
+                                    <div className={`h-52 border rounded-xl border-gray-969 h-auto max-h-[250px] w-[350px]  absolute flex items-start justify-start mt-1 overflow-hidden overflow-y-auto bg-white ${styles.scroll} z-10`}>
+                                        <ul className="p-0 m-0 w-full">
+                                            <li
+                                                className="px-5 py-2 bg-white cursor-pointer hover:bg-yellow-951 w-full font-normal"
+                                            // onClick={() => selectItemFunction(item.assetName)}
+                                            >
+                                                <span>-Select-</span>
+                                            </li>
+                                            {
+                                                getAllClass && getAllClass.length > 0 ?
+                                                    getAllClass.map((item: any, index: any) => {
+                                                        return (
+                                                            <li
+                                                                className="px-5 py-2 bg-white cursor-pointer hover:bg-yellow-951 w-full font-normal"
+                                                                onClick={() => selectItemFunction(item.assetName)}
+                                                                key={index}
+                                                            >
+                                                                <span>{item.assetName}</span>
+                                                            </li>
+                                                        )
+                                                    })
+                                                    : null
+                                            }
+                                        </ul>
+                                    </div>
+                                    :
+                                    null
+                                }
+                            </div>
+                        </div>
+
+                        {/* <span className="absolute text-[14px] bg-white px-[3px] py-0 left-[15px] top-[-10px]">Class</span> */}
+                        {/* <select
                             name="selectClass"
                             id="selectClass"
                             className={`border border-[#A7A7A7] rounded-lg h-[56px] w-[250px] pl-2 pr-2 text-[#000000] ${disable == 2 ? 'bg-[#EEEEEE]' : 'bg-white'} ${styles.form__field} ${styles.form__field__w}`}
@@ -437,13 +533,46 @@ export default function AiModelDetection() {
                                     })
                                     : null
                             }
-                        </select>
+                        </select> */}
                     </div>
 
                     {
                         showObject &&
 
                         <div className={`${styles.form__wrap} relative`}>
+
+                            {/* <div className='w-[320px]'>
+                                <div className="relative" ref={wrapperRef}>
+                                    <div
+                                        className="border rounded-xl border-gray-969 h-[55px] pl-2 pr-5 relative flex items-center justify-start bg-white w-[80%] cursor-pointer"
+                                        onClick={toggleObjectDropFunction}
+                                    >
+                                        <label className="absolute text-sm !top-[-10px] left-2 pl-2 pr-2 bg-white">VIN</label>
+                                        <Image src="/img/arrow-down-black.svg" alt="arrow-down" height={20} width={20} className={`absolute right-3 top-4 ${toggleObject ? 'rotate-180' : 'rotate-0'}`} />
+                                        <span className="text-lg text-black pl-2">{chooseObject}</span>
+                                    </div>
+
+                                    {toggleObject ?
+                                        <div className={`h-52 border rounded-xl border-gray-969 h-auto max-h-[250px] w-[350px] absolute flex items-start justify-start mt-1 overflow-hidden overflow-y-auto bg-white ${styles.scroll} z-10`}>
+                                            <ul className="p-0 m-0 w-full">
+                                                <li className="px-5 py-2 bg-white cursor-pointer hover:bg-yellow-951 w-full font-normal" onClick={() => selectObjectItemFunction('Walls')}>
+                                                    <span>Walls</span>
+                                                </li>
+                                                <li className="px-5 py-2 bg-white cursor-pointer hover:bg-yellow-951 w-full font-normal" onClick={() => selectObjectItemFunction('Battery')}>
+                                                    <span>Battery</span>
+                                                </li>
+                                                <li className="px-5 py-2 bg-white cursor-pointer hover:bg-yellow-951 w-full font-normal" onClick={() => selectObjectItemFunction('Tire')}>
+                                                    <span>Tire</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        :
+                                        null
+                                    }
+                                </div>
+                            </div> */}
+
+
                             <span className="absolute text-[14px] bg-white px-[3px] py-0 left-[30px] top-[-10px]">{title}</span>
                             <select
                                 name="selectClass"
@@ -670,13 +799,13 @@ export default function AiModelDetection() {
                             <tbody className="text-sm font-normal">
                                 <tr>
                                     {
-                                    tableDataSubObject && Object.keys(tableDataSubObject).length != 0 ?
-                                        Object.values(tableDataSubObject).map((item: any, index: any) => (
-                                            <td key={index}>
-                                                <span>{item ? item : '-'}</span>
-                                            </td>
-                                        ))
-                                        : null
+                                        tableDataSubObject && Object.keys(tableDataSubObject).length != 0 ?
+                                            Object.values(tableDataSubObject).map((item: any, index: any) => (
+                                                <td key={index}>
+                                                    <span>{item ? item : '-'}</span>
+                                                </td>
+                                            ))
+                                            : null
                                     }
                                 </tr>
                             </tbody>
