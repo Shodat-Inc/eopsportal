@@ -134,10 +134,10 @@ export default function AddNewClass(props: any) {
     // Remove Element from all Tag Array
     const removeElement = (item: any) => {
 
-        console.log({
-            allTags:allTags, 
-            item:item
-        })
+        // console.log({
+        //     allTags:allTags, 
+        //     item:item
+        // })
 
         // removing the item form all tags array
         let updatedList = allTags.slice();

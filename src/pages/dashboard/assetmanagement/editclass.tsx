@@ -9,9 +9,9 @@ import { successMessageAction } from '@/store/actions/classAction';
 import { editClassModalAction } from "@/store/actions/classAction";
 
 export default function EditClass(props: any) {
-    console.log({
-        "PROPS_IN_EDIT_CLASS": props
-    })
+    // console.log({
+    //     "PROPS_IN_EDIT_CLASS": props
+    // })
     const dispatch = useDispatch<any>();
     const assetname = useRef("");
     const [allTags, setAllTags] = useState([] as any);
@@ -178,10 +178,10 @@ export default function EditClass(props: any) {
             setExistingTags(arr)
         }
 
-        console.log({
-            allTags: allTags,
-            item: item
-        })
+        // console.log({
+        //     allTags: allTags,
+        //     item: item
+        // })
 
         let deletedList = deleteTagIDS.slice();
         deletedList.push(item)
@@ -199,9 +199,9 @@ export default function EditClass(props: any) {
 
     }
 
-    console.log({
-        deleteTagIDS: deleteTagIDS
-    })
+    // console.log({
+    //     deleteTagIDS: deleteTagIDS
+    // })
 
     // Cancel Adding new tags
     const cancelAddingTag = () => {
@@ -248,11 +248,11 @@ export default function EditClass(props: any) {
         // }
     }
 
-    console.log({
-        classData: classData,
-        allTags: allTags,
-        existingTags: existingTags
-    })
+    // console.log({
+    //     classData: classData,
+    //     allTags: allTags,
+    //     existingTags: existingTags
+    // })
 
     return (
         <>
