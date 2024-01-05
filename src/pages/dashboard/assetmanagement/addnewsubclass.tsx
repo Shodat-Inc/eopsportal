@@ -247,9 +247,9 @@ export default function AddNewSubClass(props: any) {
         // })
 
 
-        console.log({
-            dataToSave: dataToSave
-        })
+        // console.log({
+        //     dataToSave: dataToSave
+        // })
         let tokenStr = access_token;
         try {
             await axios({

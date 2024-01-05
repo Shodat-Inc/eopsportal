@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from '../../../styles/Common.module.css';
 import Image from "next/image";
@@ -63,7 +63,12 @@ export default function ClassManagement(props: any) {
     }
     const toggleActions = (item: any) => {
         setActionCount(item);
-        setActions(!actions);
+        // setActions(!actions);
+        if (actions === true) {
+            setActions(false)
+        } else {
+            setActions(true)
+        }
     }
     const handleClick = (item: any) => {
         setShowModal(false);
@@ -152,6 +157,24 @@ export default function ClassManagement(props: any) {
         }
 
     }
+
+    // Function to hide modals clicking outside
+    function useOutsideAlerter(ref: any) {
+        useEffect(() => {
+            function handleClickOutside(event: any) {
+                if (ref.current && !ref.current.contains(event.target)) {
+                    setActions(false)
+                }
+            }
+            document.addEventListener("mousedown", handleClickOutside);
+            return () => {
+                document.removeEventListener("mousedown", handleClickOutside);
+            };
+        }, [ref]);
+    }
+
+    const wrapperRef = useRef(null);
+    useOutsideAlerter(wrapperRef);
 
 
     return (
@@ -292,7 +315,7 @@ export default function ClassManagement(props: any) {
                                                         />
                                                     </button>
                                                     {(actions && actionCount === index + 1) &&
-                                                        <div className="bg-black text-white border overflow-hidden border-black rounded rounded-xl w-[100px] flex flex-col flex-wrap items-start justify-start shadow-sm absolute top-[30px] right-[75px] z-[1]">
+                                                        <div ref={wrapperRef} className="bg-black text-white border overflow-hidden border-black rounded rounded-xl w-[100px] flex flex-col flex-wrap items-start justify-start shadow-sm absolute top-[30px] right-[75px] z-[1]">
                                                             <button
                                                                 onClick={() => openEditClassModal(item.id)}
                                                                 className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[30px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">

@@ -96,8 +96,12 @@ export default function AddNewClass(props: any) {
     }
 
     // Save New Tag
-    const saveNewTag = () => {
+    const saveNewTag = () => {        
         if (newTag.trim().length !== 0) {
+
+            // console.log({
+            //     allTags:allTags
+            // })
 
             // Creating the array of all tags
             let updatedList = allTags.slice();
@@ -125,9 +129,16 @@ export default function AddNewClass(props: any) {
         }
     }
 
+    
 
     // Remove Element from all Tag Array
     const removeElement = (item: any) => {
+
+        console.log({
+            allTags:allTags, 
+            item:item
+        })
+
         // removing the item form all tags array
         let updatedList = allTags.slice();
         var filteredArray = updatedList.filter(function (e) { return e !== item })
@@ -293,33 +304,7 @@ export default function AddNewClass(props: any) {
                                             }
                                         </div>
 
-                                        {
-                                            showInput ?
-                                                <span className="flex justify-center items-center mb-2 hidden">
-                                                    <input
-                                                        type="text"
-                                                        placeholder="Tag Name"
-                                                        className="border border-gray-951 rounded py-[3px] px-[3px] w-[100px] mr-2 h-8 text-sm"
-                                                        value={newTag}
-                                                        onChange={(e) => setNewTag(e.target.value)}
-                                                        required
-                                                    />
-                                                    <button
-                                                        className={`transition-all duration-[100ms] transition-opacity duration-100 outline-none transform active:scale-75 transition-transform text-black border border-transparent rounded inline-flex justify-center items-center text-sm h-8 px-2 ml-1 bg-yellow-951 ${dataType && (dataType != null || dataType != "") ? 'okay' : 'disabled disabled:bg-gray-300'}`}
-                                                        onClick={saveNewTag}
-                                                        disabled={dataType && (dataType != null || dataType != "") ? false : true}
-                                                    >
-                                                        Add
-                                                    </button>
-                                                    <button
-                                                        className="transition-all duration-[100ms] transition-opacity duration-100 outline-none transform active:scale-75 transition-transform text-white border border-transparent rounded inline-flex justify-center items-center text-sm h-8 px-2 ml-1 bg-red-600"
-                                                        onClick={cancelAddingTag}
-                                                    >
-                                                        Cancel
-                                                    </button>
-                                                </span>
-                                                : null
-                                        }
+                                        
                                         <input type="hidden" value={allTags} name="alltags" id="alltags" />
 
 

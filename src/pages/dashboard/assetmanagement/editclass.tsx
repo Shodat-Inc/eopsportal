@@ -3,17 +3,19 @@ import { useDispatch, useSelector } from 'react-redux';
 import styles from '../../../styles/Common.module.css';
 import { useRouter } from 'next/router'
 import Router from 'next/router'
+import axios from "axios";
 import Image from "next/image";
 import { successMessageAction } from '@/store/actions/classAction';
 import { editClassModalAction } from "@/store/actions/classAction";
 
 export default function EditClass(props: any) {
     console.log({
-        "PROPS_IN_EDIT_CLASS":props
+        "PROPS_IN_EDIT_CLASS": props
     })
     const dispatch = useDispatch<any>();
     const assetname = useRef("");
-    const [allTags, setAllTags] = useState<any[]>([]);
+    const [allTags, setAllTags] = useState([] as any);
+    const [existingTags, setExistingTags] = useState<any[]>([]);
     const [newTag, setNewTag] = useState<string>("");
     const [showInput, setShowInput] = useState(false);
     const [showHideAddTagButton, setShowHideAddTagButton] = useState(false);
@@ -21,20 +23,64 @@ export default function EditClass(props: any) {
     const [dataType, setDataType] = useState("");
     const [assetDataType, setAssetDataType] = useState<any[]>([]);
     const [dtObject, setDtObject] = useState<any[]>([]);
-    const [classData, setClassData] = useState([] as any)
+    const [classData, setClassData] = useState([] as any);
+    const [allDataTypes, setAllDataTypes] = useState([] as any);
+    const [success, setSuccess] = useState(false);
+    const [deleteTagIDS, setDeleteTagIDS] = useState([] as any);
+    const [addNewTag, setAddNewTag] = useState([] as any)
+    const [tagsToShow, setTagsToShow] = useState([] as any);
+    let access_token = "" as any;
+    if (typeof window !== 'undefined') {
+        access_token = localStorage.getItem('authToken')
+    }
 
+
+    // GET ALL DATATYPES
+    async function fetchData() {
+        try {
+            await axios({
+                method: 'GET',
+                url: `/api/getDataType`,
+                headers: {
+                    "Authorization": `Bearer ${access_token}`,
+                    "Content-Type": "application/json"
+                }
+            }).then(function (response) {
+                if (response) {
+                    setAllDataTypes(response.data?.data)
+                }
+            }).catch(function (error) {
+                console.log({
+                    "ERROR IN AXIOS CATCH (GET DT)": error
+                })
+            })
+        } catch (err) {
+            console.log({
+                "ERROR IN TRY CATCH (GET DT)": err
+            })
+        }
+    }
+    useEffect(() => {
+        fetchData();
+    }, [access_token])
 
     // Get Selected Class Data
     useEffect(() => {
-        if (props.allClassData.length > 0 ) {
+        if (props.allClassData && props.allClassData.length > 0) {
             const filtered = props.allClassData.filter((item: any) => {
                 return item.id === props.selectedClass
             })
             setClassData(filtered);
-            setAllTags(filtered[0]?.ClassTags)
+            setAllTags(filtered[0]?.ClassTags);
+            let arr = [] as any;
+            filtered[0]?.ClassTags.map((item: any) => {
+                arr.push(item.tagName)
+            })
+            setExistingTags(arr);
         }
 
-    }, [props.allClassData, props.selectedClass])
+    }, [props])
+
 
     const closeModal = () => {
         dispatch(editClassModalAction(false))
@@ -74,6 +120,9 @@ export default function EditClass(props: any) {
     // Save New Tag
     const saveNewTag = () => {
         if (newTag.trim().length !== 0) {
+            // console.log({
+            //     allTags:allTags
+            // })
 
             // Creating the array of all tags
             let updatedList = allTags.slice();
@@ -83,6 +132,11 @@ export default function EditClass(props: any) {
             setNewTag("");
             setShowHideAddTagButton(false);
             setToggleDT(false);
+
+            // Adding new tag to seperate array
+            let uList = addNewTag.slice();
+            uList.push(newTag);
+            setAddNewTag(uList)
 
             // Creating the array of data type
             let typeList = assetDataType;
@@ -102,12 +156,36 @@ export default function EditClass(props: any) {
     }
 
 
+
     // Remove Element from all Tag Array
     const removeElement = (item: any) => {
+        // console.log({
+        //     allTags:allTags,
+        //     item:item
+        // })
         // removing the item form all tags array
         let updatedList = allTags.slice();
-        var filteredArray = updatedList.filter(function (e) { return e !== item })
+        var filteredArray = updatedList.filter(function (e: any) { return e.id !== item })
         setAllTags(filteredArray)
+
+        let arr = [] as any;
+        if (filteredArray) {
+            setExistingTags([])
+
+            filteredArray.map((itms: any) => {
+                arr.push(itms.tagName)
+            })
+            setExistingTags(arr)
+        }
+
+        console.log({
+            allTags: allTags,
+            item: item
+        })
+
+        let deletedList = deleteTagIDS.slice();
+        deletedList.push(item)
+        setDeleteTagIDS(deletedList)
 
         // removing the datatype from datatype array
         let updatedListType = assetDataType;
@@ -120,6 +198,10 @@ export default function EditClass(props: any) {
         setDtObject(filteredJSON)
 
     }
+
+    console.log({
+        deleteTagIDS: deleteTagIDS
+    })
 
     // Cancel Adding new tags
     const cancelAddingTag = () => {
@@ -167,8 +249,9 @@ export default function EditClass(props: any) {
     }
 
     console.log({
-        classData:classData,
-        allTags:allTags
+        classData: classData,
+        allTags: allTags,
+        existingTags: existingTags
     })
 
     return (
@@ -328,100 +411,35 @@ export default function EditClass(props: any) {
 
                                             <div className="text-sm font-bold color-black mb-2 flex items-center justify-between">
                                                 <span>Select Data Type</span>
-                                                {/* <span className="bg-black h-8 w-8 p-1 inline-flex rounded-full justify-center items-center">
-                                                <Image
-                                                    src="/img/tick-white.svg"
-                                                    alt="check"
-                                                    height={20}
-                                                    width={20}
-                                                    className="inline-block"
-                                                />
-                                            </span> */}
                                             </div>
-                                            <div className="flex pt-1 pb-1">
-                                                <div className={`${styles.customRadio} mr-2`}>
-                                                    <input
-                                                        type="radio"
-                                                        name="datatype"
-                                                        className="scale-150"
-                                                        value="int"
-                                                        checked={dataType === "int"}
-                                                        onChange={() => radioChange("int")}
-                                                    />
-                                                    <span></span>
-                                                </div>
-                                                <label className="text-black font-semibold">int <span className="text-gray-500 font-normal text-[14px]">(myNum = 5)</span></label>
-                                            </div>
-                                            <div className="flex pt-1 pb-1">
-                                                <div className={`${styles.customRadio} mr-2`}>
-                                                    <input
-                                                        type="radio"
-                                                        name="datatype"
-                                                        className="scale-150"
-                                                        value="float"
-                                                        checked={dataType === "float"}
-                                                        onChange={() => radioChange("float")}
-                                                    />
-                                                    <span></span>
-                                                </div>
-                                                <label className="text-black font-semibold">float <span className="text-gray-500 font-normal text-[14px]">(myFloatNum = 5.99f)</span></label>
-                                            </div>
-                                            <div className="flex pt-1 pb-1">
-                                                <div className={`${styles.customRadio} mr-2`}>
-                                                    <input
-                                                        type="radio"
-                                                        name="datatype"
-                                                        className="scale-150"
-                                                        value="char"
-                                                        checked={dataType === "char"}
-                                                        onChange={() => radioChange("char")}
-                                                    />
-                                                    <span></span>
-                                                </div>
-                                                <label className="text-black font-semibold">char <span className="text-gray-500 font-normal text-[14px]">(myLetter = &apos;D&apos;)</span></label>
-                                            </div>
-                                            <div className="flex pt-1 pb-1">
-                                                <div className={`${styles.customRadio} mr-2`}>
-                                                    <input
-                                                        type="radio"
-                                                        name="datatype"
-                                                        className="scale-150"
-                                                        value="boolean"
-                                                        checked={dataType === "boolean"}
-                                                        onChange={() => radioChange("boolean")}
-                                                    />
-                                                    <span></span>
-                                                </div>
-                                                <label className="text-black font-semibold">boolean <span className="text-gray-500 font-normal text-[14px]">(myBool = true/false)</span></label>
-                                            </div>
-                                            <div className="flex pt-1 pb-1">
-                                                <div className={`${styles.customRadio} mr-2`}>
-                                                    <input
-                                                        type="radio"
-                                                        name="datatype"
-                                                        className="scale-150"
-                                                        value="string"
-                                                        checked={dataType === "string"}
-                                                        onChange={() => radioChange("string")}
-                                                    />
-                                                    <span></span>
-                                                </div>
-                                                <label className="text-black font-semibold">string <span className="text-gray-500 font-normal text-[14px]">(myText = &quot;Hello&quot;)</span></label>
-                                            </div>
-                                            <div className="flex pt-1 pb-1">
-                                                <div className={`${styles.customRadio} mr-2`}>
-                                                    <input
-                                                        type="radio"
-                                                        name="datatype"
-                                                        className="scale-150"
-                                                        value="date"
-                                                        checked={dataType === "date"}
-                                                        onChange={() => radioChange("date")}
-                                                    />
-                                                    <span></span>
-                                                </div>
-                                                <label className="text-black font-semibold">date <span className="text-gray-500 font-normal text-[14px]">(myDate = &quot;29-05-2023&quot;)</span></label>
-                                            </div>
+                                            {
+                                                allDataTypes && allDataTypes.length >= 0 ?
+                                                    allDataTypes.map((item: any, index: any) => (
+                                                        <div key={index}>
+                                                            <div className="flex pt-1 pb-1">
+                                                                <div className={`${styles.customRadio} mr-2`}>
+                                                                    <input
+                                                                        id={item.type}
+                                                                        type="radio"
+                                                                        name="datatype"
+                                                                        className="scale-150"
+                                                                        value={item.type}
+                                                                        checked={dataType === item.id}
+                                                                        onChange={() => radioChange(item.id)}
+                                                                    />
+                                                                    <span></span>
+                                                                </div>
+                                                                <label htmlFor={item.type} className="text-black font-semibold">{item.name}<span className="text-gray-500 font-normal text-[14px] ml-2">
+                                                                    {item.description}
+                                                                </span>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    ))
+                                                    :
+                                                    null
+                                            }
+
 
                                             <div className="flex justify-end items-center w-full">
                                                 <button
