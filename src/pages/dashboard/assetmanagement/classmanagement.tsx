@@ -20,7 +20,7 @@ export default function ClassManagement(props: any) {
     const [deleteModal, setDeleteModal] = useState(false);
     const [searchClass, setSearchClass] = useState('');
     const [allData, setAllData] = useState(props.classData);
-    const [selectedClass, setSelectedClass] = useState("");
+    const [selectedClass, setSelectedClass] = useState();
     const [deleteID, setDeleteID] = useState(0);
     const [deleteMessage, setDeleteMessage] = useState(false);
     let access_token = "" as any;
@@ -294,7 +294,7 @@ export default function ClassManagement(props: any) {
                                                     {(actions && actionCount === index + 1) &&
                                                         <div className="bg-black text-white border overflow-hidden border-black rounded rounded-xl w-[100px] flex flex-col flex-wrap items-start justify-start shadow-sm absolute top-[30px] right-[75px] z-[1]">
                                                             <button
-                                                                onClick={() => openEditClassModal(item.assetName)}
+                                                                onClick={() => openEditClassModal(item.id)}
                                                                 className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[30px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
                                                                 <span>Edit</span>
                                                             </button>

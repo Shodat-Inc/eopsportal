@@ -8,9 +8,9 @@ import { successMessageAction } from '@/store/actions/classAction';
 import { editClassModalAction } from "@/store/actions/classAction";
 
 export default function EditClass(props: any) {
-    // console.log({
-    //     "PROPS":props
-    // })
+    console.log({
+        "PROPS_IN_EDIT_CLASS":props
+    })
     const dispatch = useDispatch<any>();
     const assetname = useRef("");
     const [allTags, setAllTags] = useState<any[]>([]);
@@ -26,12 +26,12 @@ export default function EditClass(props: any) {
 
     // Get Selected Class Data
     useEffect(() => {
-        if (props.allClassData.length > 0 && props.selectedClass != "") {
+        if (props.allClassData.length > 0 ) {
             const filtered = props.allClassData.filter((item: any) => {
-                return item.assetName === props.selectedClass
+                return item.id === props.selectedClass
             })
             setClassData(filtered);
-            setAllTags(filtered[0].assetkey)
+            setAllTags(filtered[0]?.ClassTags)
         }
 
     }, [props.allClassData, props.selectedClass])
@@ -166,6 +166,11 @@ export default function EditClass(props: any) {
         // }
     }
 
+    console.log({
+        classData:classData,
+        allTags:allTags
+    })
+
     return (
         <>
             <div className={`bg-white h-full z-[11] fixed top-0 right-0 p-5 shadow shadow-lg ${props.show === true ? `${styles.objectContainer} ${styles.sliderShow}` : `${styles.objectContainer}`}`}>
@@ -212,7 +217,7 @@ export default function EditClass(props: any) {
                                                 placeholder="Enter class name"
                                                 required
                                                 onChange={(e) => (assetname.current = e.target.value)}
-                                                value={classData[0]?.assetName}
+                                                value={classData[0]?.className}
                                             />
                                             <label htmlFor="assetname" className={`${styles.form__label}`}>Enter class name</label>
                                         </div>
@@ -232,10 +237,10 @@ export default function EditClass(props: any) {
                                                         <span
                                                             key={index}
                                                             className="rounded-lg inline-flex justify-center items-center h-8 pl-2 pr-2 bg-[#F2F1F1] text-black text-[14px] mr-2 mb-2">
-                                                            {items}
+                                                            {items.tagName}
                                                             <button
                                                                 className="rounded-full border-2 border-white h-[24px] w-[24px] inline-flex justify-center items-center ml-3 transition-all duration-[100ms] transition-opacity duration-100 outline-none transform active:scale-75 transition-transform"
-                                                                onClick={() => removeElement(items)}
+                                                                onClick={() => removeElement(items.id)}
                                                             >
                                                                 <Image
                                                                     src="/img/x-circle.svg"
