@@ -25,6 +25,7 @@ export default function ObjectManagement(props: any) {
     const [tableHeader, setTableHeader] = useState({} as any);
     const [search, setSearch] = useState('');
     const [selectedObjID, setSelectedObjID] = useState('')
+    const [actionsToggle, setActionsToggle] = useState(false);
 
     // All class reducer states
     const classSelector = useSelector((state: any) => state.classReducer);
@@ -44,7 +45,7 @@ export default function ObjectManagement(props: any) {
         setToggleArrow(!toggleArrow);
         setToggleFilter(!toggleFilter);
     }
-   
+
 
     // Set the choose asset on page load
     useEffect(() => {
@@ -52,11 +53,15 @@ export default function ObjectManagement(props: any) {
             setChooseAsset(props.classData[0]?.assetName);
             dispatch(objDefaultClassSelectorFunction(props.classData[0]?.assetName))
         }
-    }, [props.classData, dispatch])  
+    }, [props.classData, dispatch])
 
     const toggleActions = (item: any) => {
         setActionCount(item);
         setActions(!actions);
+        setActionsToggle(true);
+        setTimeout(() => {
+            setActionsToggle(false);
+        }, 1000)
     }
     const takeMeToSubObjectComponent = (item: any) => {
         let classObjKey = chooseAsset === 'Manufacturing Plants' ? 'PlantID' : 'VIN';
@@ -89,7 +94,8 @@ export default function ObjectManagement(props: any) {
         useEffect(() => {
             function handleClickOutside(event: any) {
                 if (ref.current && !ref.current.contains(event.target)) {
-                    setToggleAsset(false)
+                    setToggleAsset(false);
+                    setActions(false)
                 }
             }
             document.addEventListener("mousedown", handleClickOutside);
@@ -171,10 +177,10 @@ export default function ObjectManagement(props: any) {
 
 
     // Edit Object Show/Hide
-    const editObjectFunction = (item:any) => {
+    const editObjectFunction = (item: any) => {
         dispatch(editObjectModalAction(true));
         setActions(false);
-        setSelectedObjID(item);        
+        setSelectedObjID(item);
     }
 
     return (
@@ -322,18 +328,32 @@ export default function ObjectManagement(props: any) {
                                             }
                                             <td>
                                                 <div className="flex justify-start items-center relative">
-                                                    <button onClick={() => toggleActions(index + 1)}>
-                                                        <Image
-                                                            src="/img/more-vertical.svg"
-                                                            alt="more-vertical"
-                                                            height={24}
-                                                            width={24}
-                                                        />
-                                                    </button>
-                                                    {(actions && actionCount === index + 1) &&
-                                                        <div className="bg-black text-white border overflow-hidden border-black rounded rounded-lg w-[200px] flex flex-col flex-wrap items-start justify-start shadow-sm absolute top-[30px] right-[75px] z-[1]">
+                                                    {
+                                                        !actionsToggle ?
                                                             <button
-                                                                onClick={()=>editObjectFunction(items.subObjectID)}
+                                                                className='flex justify-start items-center h-[35px] w-[35px]'
+                                                                onClick={() => toggleActions(index + 1)}>
+                                                                <Image
+                                                                    src="/img/more-vertical.svg"
+                                                                    alt="more-vertical"
+                                                                    height={24}
+                                                                    width={24}
+                                                                />
+                                                            </button>
+                                                            :
+                                                            <button className='flex justify-start items-center h-[35px] w-[35px]'>
+                                                                <Image
+                                                                    src="/img/more-vertical.svg"
+                                                                    alt="more-vertical"
+                                                                    height={24}
+                                                                    width={24}
+                                                                />
+                                                            </button>
+                                                    }
+                                                    {(actions && actionCount === index + 1) &&
+                                                        <div ref={wrapperRef} className="bg-black text-white border overflow-hidden border-black rounded rounded-lg w-[200px] flex flex-col flex-wrap items-start justify-start shadow-sm absolute top-[100%] right-[calc(100%-15px)] z-[1]">
+                                                            <button
+                                                                onClick={() => editObjectFunction(items.subObjectID)}
                                                                 className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
                                                                 <span>Edit</span>
                                                             </button>

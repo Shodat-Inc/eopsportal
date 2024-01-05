@@ -20,6 +20,7 @@ export default function SubClassManagement(props: any) {
     const [subClassData, setSubClassData] = useState([] as any);
     const [search, setSearch] = useState('');
     const [selectedSubClass, setSelectedSubClass] = useState("");
+    const [actionsToggle, setActionsToggle] = useState(false);
 
     // All class reducer states
     const allClassSelector = useSelector((state: any) => state.classReducer);
@@ -38,6 +39,10 @@ export default function SubClassManagement(props: any) {
     const toggleActions = (item: any) => {
         setActionCount(item);
         setActions(!actions);
+        setActionsToggle(true);
+        setTimeout(() => {
+            setActionsToggle(false);
+        }, 1000)
     }
     const selectedAction = (item: any) => {
         setActions(false);
@@ -56,10 +61,6 @@ export default function SubClassManagement(props: any) {
     const closeDeleteModal = () => {
         setDeleteModal(false)
     }
-
-    // const takeMeToClassComponent = (item: any) => {
-    //     props.handelsubClass(item)
-    // }
 
 
     // set default choose asset
@@ -123,6 +124,23 @@ export default function SubClassManagement(props: any) {
         setActions(false);
     }
 
+
+    // Click Outside function
+    function useOutsideAlerter(ref: any) {
+        useEffect(() => {
+            function handleClickOutside(event: any) {
+                if (ref.current && !ref.current.contains(event.target)) {
+                    setActions(false)
+                }
+            }
+            document.addEventListener("mousedown", handleClickOutside);
+            return () => {
+                document.removeEventListener("mousedown", handleClickOutside);
+            };
+        }, [ref]);
+    }
+    const wrapperRef = useRef(null);
+    useOutsideAlerter(wrapperRef);
     return (
         <div className='px-0 py-3 font-OpenSans'>
             {/* Title, search and filters */}
@@ -226,16 +244,30 @@ export default function SubClassManagement(props: any) {
                                         <td>{item.dateCreated}</td>
                                         <td className='relative'>
                                             <div className="flex justify-start items-center relative">
-                                                <button onClick={() => toggleActions(index + 1)}>
-                                                    <Image
-                                                        src="/img/more-vertical.svg"
-                                                        alt="more-vertical"
-                                                        height={24}
-                                                        width={24}
-                                                    />
-                                                </button>
+                                                {
+                                                    !actionsToggle ?
+                                                        <button
+                                                            className='flex justify-start items-center h-[35px] w-[35px]'
+                                                            onClick={() => toggleActions(index + 1)}>
+                                                            <Image
+                                                                src="/img/more-vertical.svg"
+                                                                alt="more-vertical"
+                                                                height={24}
+                                                                width={24}
+                                                            />
+                                                        </button>
+                                                        :
+                                                        <button className='flex justify-start items-center h-[35px] w-[35px]'>
+                                                            <Image
+                                                                src="/img/more-vertical.svg"
+                                                                alt="more-vertical"
+                                                                height={24}
+                                                                width={24}
+                                                            />
+                                                        </button>
+                                                }
                                                 {(actions && actionCount === index + 1) &&
-                                                    <div className="bg-black text-white border overflow-hidden border-black rounded rounded-xl w-[100px] flex flex-col flex-wrap items-start justify-start shadow-sm absolute top-[30px] right-[75px] z-[1]">
+                                                    <div ref={wrapperRef} className="bg-black text-white border overflow-hidden border-black rounded rounded-xl w-[100px] flex flex-col flex-wrap items-start justify-start shadow-sm absolute top-[100%] right-[calc(100%-15px)] z-[1]">
                                                         <button
                                                             onClick={() => openEditSubClassModal(item.assetName)}
                                                             className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[30px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">

@@ -16,8 +16,6 @@ export default function AddNewClass(props: any) {
     const [toggleDT, setToggleDT] = useState(false);
     const [dataType, setDataType] = useState("");
     const [assetDataType, setAssetDataType] = useState<any[]>([]);
-    const [chooseAsset, setChooseAsset] = useState("");
-    const [toggleAsset, setToggleAsset] = useState(false);
     const [dtObject, setDtObject] = useState<any[]>([]);
     
     // All class reducer states
@@ -37,11 +35,12 @@ export default function AddNewClass(props: any) {
         setAllTags([]);
     }
 
+    // Click Outside function
     function useOutsideAlerter(ref: any) {
         useEffect(() => {
             function handleClickOutside(event: any) {
                 if (ref.current && !ref.current.contains(event.target)) {
-                    setToggleAsset(false)
+                    // setToggleAsset(false)
                 }
             }
             document.addEventListener("mousedown", handleClickOutside);
@@ -50,7 +49,6 @@ export default function AddNewClass(props: any) {
             };
         }, [ref]);
     }
-
     const wrapperRef = useRef(null);
     useOutsideAlerter(wrapperRef);
 
@@ -169,39 +167,6 @@ export default function AddNewClass(props: any) {
             console.log("FAILED")
         }
     }
-
-
-    // Show Choose Asset List
-    const showChooseAssetList = () => {
-        setToggleAsset(!toggleAsset)
-    }
-    const selectAsset = (item: any) => {
-        setChooseAsset(item);
-        setToggleAsset(false)
-    }
-
-    // Continue to next page after setting the selected class to redux
-    const continueToNext = () => {
-        setTimeout(() => {
-            Router.push({
-                pathname: '/dashboard/assetmanagement/objects',
-                query: {
-                    assets: chooseAsset
-                }
-            })
-        }, 100)
-    }
-
-    // Send props to next page
-    function sendProps() {
-        Router.push({
-            pathname: "/dashboard/assetmanagement/subasset",
-            query: {
-                chooseAsset
-            }
-        }, 'assetmanagement/subasset')
-    }
-
 
 
     return (

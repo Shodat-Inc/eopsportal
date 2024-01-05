@@ -79,9 +79,6 @@ export default function AssetManagement() {
 
     // Object Management Callback
     const handelObject = (item: any) => {
-        // console.log({
-        //     "ITEM HERE OBJ MGMT":item
-        // })
         setObjectKey(item)
         if (item !== "") {
             setTab(3)
@@ -244,46 +241,6 @@ export default function AssetManagement() {
                     </div>
                     : null
                 }
-
-                {/* Back Buttons */}
-                {/* {
-                    tab === 4 &&
-                    <div className="flex justify-start items-center mb-4">
-                        <button
-                            onClick={() => backToPrevComponent(4)}
-                            className="flex justify-start items-center"
-                        >
-                            <Image
-                                src="/img/arrow-left-black.svg"
-                                alt="arrow-left-black"
-                                height={24}
-                                width={24}
-                                className="mr-2"
-                            />
-                            <span>Back</span>
-                        </button>
-                    </div>
-                }
-                {
-                    tab === 3 &&
-                    <div className="flex justify-start items-center mb-4">
-                        <button
-                            onClick={() => backToPrevComponent(3)}
-                            className="flex justify-start items-center"
-                        >
-                            <Image
-                                src="/img/arrow-left-black.svg"
-                                alt="arrow-left-black"
-                                height={24}
-                                width={24}
-                                className="mr-2"
-                            />
-                            <span>Back</span>
-                        </button>
-                    </div>
-                } */}
-
-
 
                 {/* Tabs */}
                 <div className="flex justify-between items-center w-full">
