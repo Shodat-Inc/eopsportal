@@ -13,8 +13,8 @@
             "Name",
             "Description"
         ],
-        "dateModified": "5/29/2023, 2:32:00 PM",
-        "dateCreated": "5/29/2023, 2:32:00 PM",
+        "dateModified": "29-05-2023",
+        "dateCreated": "26-05-2023",
         "assetTypes": [
             "int",
             "string",
@@ -73,8 +73,8 @@
             "ModelYear",
             "Type"
         ],
-        "dateModified": "5/29/2023, 2:47:23 PM",
-        "dateCreated": "5/29/2023, 2:47:23 PM",
+        "dateModified": "29-05-2023",
+        "dateCreated": "26-05-2023",
         "assetTypes": [
             "string",
             "date",
