@@ -14,10 +14,6 @@ import { editSubObjectModalAction } from '@/store/actions/classAction';
 
 export default function SubObjectManagement(props: any) {
 
-    // console.log({
-    //     "PROPS_IN_SUB_OBJECT": props
-    // })
-
     const dispatch = useDispatch<any>();
     const [toggleFilter, setToggleFilter] = useState(false);
     const [toggleArrow, setToggleArrow] = useState(false);
@@ -41,11 +37,6 @@ export default function SubObjectManagement(props: any) {
 
     // All class reducer states
     const classSelector = useSelector((state: any) => state.classReducer);
-
-    // console.log({
-    //     "ALL_CLASS_REDUCER_STATES": classSelector.setDataForSubObjectReducer
-    // })
-
     const addNewObject = useSelector((state: any) => state.classReducer);
 
     const toggleFilterFunction = () => {
@@ -70,9 +61,6 @@ export default function SubObjectManagement(props: any) {
                 }
             }).then(function (response) {
                 if (response.data.success === true) {
-                    console.log({
-                        response: response?.data?.data
-                    })
                     setSubClassData(response?.data?.data);
                     setChooseAsset(response?.data?.data[0]?.id)
                 }
@@ -170,10 +158,6 @@ export default function SubObjectManagement(props: any) {
                 }
             }).then(function (response) {
                 if (response) {
-                    console.log({
-                        "RES_GET_SUB_OBJ": response?.data?.objects?.data,
-                        "RES_TABLE_HEADR": response?.data?.objects?.data[0]?.Class?.ClassTags
-                    })
                     setObjectData(response?.data?.objects?.data)
                     setTableHeader(response?.data?.objects?.data[0]?.Class?.ClassTags)
                 }

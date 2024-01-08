@@ -8,10 +8,6 @@ import axios from 'axios';
 
 export default function AddNewObject(props: any) {
 
-    console.log({
-        "PROPS_IN_SUB_OBJECT_ADD": props
-    })
-
     const [selectedObjectData, setSelectedObjectData] = useState([] as any);
     const formData = useRef("");
     const [success, setSuccess] = useState(false);
@@ -69,9 +65,6 @@ export default function AddNewObject(props: any) {
         }
         let tokenStr = access_token;
 
-        console.log({
-            "____dataToSave": dataToSave,
-        })
         try {
             await axios({
                 method: 'POST',

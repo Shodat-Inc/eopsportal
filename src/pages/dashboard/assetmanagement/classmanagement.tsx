@@ -30,9 +30,6 @@ export default function ClassManagement(props: any) {
 
     // All class reducer states
     const allClassSelector = useSelector((state: any) => state.classReducer);
-    // console.log({
-    //     allClassSelector:allClassSelector?.editClassModalReducer
-    // })
 
     // Close Success message after 5 second if true
     useEffect(() => {
@@ -137,10 +134,6 @@ export default function ClassManagement(props: any) {
                     "Content-Type": "application/json"
                 }
             }).then(function (response) {
-                // console.log({
-                //     response: response,
-                //     message: "Class deleted successful!!"
-                // })
                 setDeleteMessage(true);
                 setTimeout(() => {
                     setDeleteMessage(false)

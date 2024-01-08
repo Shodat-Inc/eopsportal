@@ -8,10 +8,6 @@ import axios from "axios";
 
 export default function AddNewClassObject(props: any) {
 
-    // console.log({
-    //     "PROPS_IN_ADD_OBJECT": props
-    // })
-
     const dispatch = useDispatch<any>();
     const [classData, setClassData] = useState([] as any);
     const formData = useRef("");
@@ -42,7 +38,6 @@ export default function AddNewClassObject(props: any) {
     const handleSubmit = async (e: any) => {
         e.preventDefault();
         var formData = new FormData(e.target);
-        let currentDate = new Date().toISOString().split('T')[0];
         const form_values = Object.fromEntries(formData);
         const objectKey = [] as any;
         const objVal = [] as any;
@@ -70,9 +65,6 @@ export default function AddNewClassObject(props: any) {
         }
         let tokenStr = access_token;
 
-        console.log({
-            dataToSave: dataToSave,
-        })
         try {
             await axios({
                 method: 'POST',
@@ -97,9 +89,6 @@ export default function AddNewClassObject(props: any) {
         } catch (err) {
             console.log("ERROR IN TRY CATCH (CREATE CLASS OBJECT):", err)
         }
-
-
-
     }
 
 
@@ -114,11 +103,6 @@ export default function AddNewClassObject(props: any) {
             }
         }
     }
-
-    // console.log({
-    //     classData: classData
-    // })
-
 
     return (
         <>
@@ -165,7 +149,6 @@ export default function AddNewClassObject(props: any) {
                                                 <input
                                                     type="text"
                                                     id={`${item.tagName}`}
-                                                    // name={`${item.tagName}`}
                                                     name={`${item.tagName}_${item.id}`}
                                                     className={`border border-gray-961 ${styles.form__field}`}
                                                     placeholder={`${item.tagName}`}

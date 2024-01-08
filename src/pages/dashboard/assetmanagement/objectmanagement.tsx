@@ -13,10 +13,6 @@ import EditObject from './editobject';
 
 export default function ObjectManagement(props: any) {
 
-    // console.log({
-    //     "PROPS OBJ": props
-    // })
-
     const dispatch = useDispatch<any>();
     const [toggleFilter, setToggleFilter] = useState(false);
     const [toggleArrow, setToggleArrow] = useState(false);
@@ -83,13 +79,9 @@ export default function ObjectManagement(props: any) {
         setActions(!actions);
     }
     const takeMeToSubObjectComponent = (item: any, objID:any) => {
-        console.log({
-            "item here ...":item
-        })
         let classObjKey = chooseAsset === 1 ? 'PlantID' : 'VIN';
         let abc = {
             "flow": "Object Management",
-            // "class": chooseAsset,
             "class": showClassNameFromID(chooseAsset),
             "classObjKey": classObjKey,
             "classObjValue": objID,
@@ -159,9 +151,6 @@ export default function ObjectManagement(props: any) {
                     "Content-Type": "application/json"
                 }
             }).then(function (response) {
-                // console.log({
-                //     response: response?.data?.objects?.data
-                // })
                 if (response) {
                     setTableHeader(response?.data?.objects?.data[0]?.Class?.ClassTags)
                     setObjectData(response?.data?.objects?.data);
@@ -226,10 +215,6 @@ export default function ObjectManagement(props: any) {
                     "Content-Type": "application/json"
                 }
             }).then(function (response) {
-                // console.log({
-                //     response: response,
-                //     message: "Class deleted successful!!"
-                // })
                 setDeleteMessage(true);
                 setTimeout(() => {
                     setDeleteMessage(false)
@@ -244,12 +229,8 @@ export default function ObjectManagement(props: any) {
                 "ERROR IN TRY CATCH (DELETE)": err
             })
         }
-
     }
 
-    console.log({
-        "____objectData:":objectData
-    })
 
     return (
         <div className='py-3 font-OpenSans'>
