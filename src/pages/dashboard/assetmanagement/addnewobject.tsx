@@ -4,18 +4,30 @@ import styles from '../../../styles/Common.module.css';
 import Image from "next/image";
 import { toggleAddNewObjectModel } from "@/store/actions/classAction";
 import { successMessageAction } from '@/store/actions/classAction';
+import axios from 'axios';
 
 export default function AddNewObject(props: any) {
+
+    console.log({
+        "PROPS_IN_SUB_OBJECT_ADD": props
+    })
+
     const [selectedObjectData, setSelectedObjectData] = useState([] as any);
     const formData = useRef("");
+    const [success, setSuccess] = useState(false);
+
+    let access_token = "" as any;
+    if (typeof window !== 'undefined') {
+        access_token = localStorage.getItem('authToken')
+    }
 
     useEffect(() => {
         if (props.subClassData && props.subClassData.length > 0) {
             let filtered = props.subClassData.filter((item: any) => {
-                return item.assetName === props.selectedSubClass
+                return item.id === props.selectedSubClass
             })
             if (filtered) {
-                setSelectedObjectData(filtered[0].tagsWithDataType)
+                setSelectedObjectData(filtered[0].ClassTags)
             }
         }
     }, [props])
@@ -25,45 +37,72 @@ export default function AddNewObject(props: any) {
         dispatch(toggleAddNewObjectModel(false));
     }
 
-    // Submit Form Data
+    // Save Data for subclass
     const handleSubmit = async (e: any) => {
         e.preventDefault();
         var formData = new FormData(e.target);
         let currentDate = new Date().toISOString().split('T')[0];
         const form_values = Object.fromEntries(formData);
+        const objectKey = [] as any;
+        const objVal = [] as any;
+        Object.keys(form_values).map((item: any) => {
+            let tagID = item.split("_")[1];
+            let tagName = item.split("_")[0];
+            objectKey.push({
+                "classTagId": tagID
+            })
+            objVal.push({
+                tagName: tagName
+            })
+        })
+        const objectValue = [] as any;
+        Object.values(form_values).map((item: any) => {
+            objectValue.push({
+                "value": item
+            })
+        })
 
-        const response = await fetch('/api/createChildObject', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(
-                {
-                    className: `${props.parentClass}`,
-                    object: `${props.selectedSubClass}`,
-                    subObject: `${props.objID}`,
-                    dateCreated: `${currentDate}`,
-                    tags: form_values,
-                }
-            )
-        });
-        const resdata = await response.json();
-        if (resdata) {
-            dispatch(successMessageAction(true));
-            setTimeout(()=>{
-                dispatch(toggleAddNewObjectModel(false));
-            }, 10)
-        } else {
-            console.log("FAILED")
+        let finalArray = objectKey.map((item: any, i: any) => Object.assign({}, item, objectValue[i]));
+        const dataToSave = {
+            "classId": props.selectedSubClass,
+            "values": finalArray
         }
+        let tokenStr = access_token;
 
+        console.log({
+            "____dataToSave": dataToSave,
+        })
+        try {
+            await axios({
+                method: 'POST',
+                url: `/api/createObjects`,
+                data: dataToSave,
+                headers: {
+                    "Authorization": `Bearer ${tokenStr}`,
+                    "Content-Type": "application/json"
+                }
+            }).then(function (response) {
+                if (response) {
+                    setSuccess(true);
+                    dispatch(successMessageAction(true))
+                    setTimeout(() => {
+                        setSuccess(false);
+                        dispatch(toggleAddNewObjectModel(false));
+                    }, 50);
+                }
+            }).catch(function (error) {
+                console.log("ERROR IN AXIOS CATCH (CREATE CLASS OBJECT):", error)
+            })
+        } catch (err) {
+            console.log("ERROR IN TRY CATCH (CREATE CLASS OBJECT):", err)
+        }
     }
 
     return (
         <>
             <div className={`bg-white h-full z-[11] fixed top-0 right-0 p-5 shadow shadow-lg ${props.show === true ? `${styles.objectContainer} ${styles.sliderShow}` : `${styles.objectContainer}`}`}>
                 <div className="flex justify-between items-center w-full mb-3">
-                    <h2 className="font-semibold text-lg">Add New Object (<span className="text-sm text-gray-800">{props.selectedSubClass}</span>)</h2>
+                    <h2 className="font-semibold text-lg">Add New Object (<span className="text-sm text-gray-800">{props.subClassName}</span>)</h2>
                     <button onClick={closeModel} className="transition-all duration-[100ms] transition-opacity duration-100 outline-none transform active:scale-75 transition-transform">
                         <Image
                             src="/img/x.svg"
@@ -91,7 +130,8 @@ export default function AddNewObject(props: any) {
                                                 <input
                                                     type="text"
                                                     id={`${item.tagName}`}
-                                                    name={`${item.tagName}`}
+                                                    // name={`${item.tagName}`}
+                                                    name={`${item.tagName}_${item.id}`}
                                                     className={`border border-gray-961 ${styles.form__field}`}
                                                     placeholder={`${item.tagName}`}
                                                     onChange={(e) => (formData.current = e.target.value)}

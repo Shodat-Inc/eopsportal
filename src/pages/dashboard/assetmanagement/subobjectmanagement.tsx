@@ -14,14 +14,13 @@ import { editSubObjectModalAction } from '@/store/actions/classAction';
 
 export default function SubObjectManagement(props: any) {
 
-    console.log({
-        "PROPS_IN_SUB_OBJECT": props
-    })
+    // console.log({
+    //     "PROPS_IN_SUB_OBJECT": props
+    // })
 
     const dispatch = useDispatch<any>();
     const [toggleFilter, setToggleFilter] = useState(false);
     const [toggleArrow, setToggleArrow] = useState(false);
-    const [toggleSort, setToggleSort] = useState(false);
     const [subClassData, setSubClassData] = useState([] as any);
     const [chooseAsset, setChooseAsset] = useState('');
     const [toggleAsset, setToggleAsset] = useState(false);
@@ -29,7 +28,7 @@ export default function SubObjectManagement(props: any) {
     const [actionCount, setActionCount] = useState(1);
     const [showModal, setShowModal] = useState(false);
     const [deleteModal, setDeleteModal] = useState(false);
-    const [tableHeader, setTableHeader] = useState({} as any);
+    const [tableHeader, setTableHeader] = useState([] as any);
     const [objectData, setObjectData] = useState([] as any);
     const [search, setSearch] = useState('');
     const [selectedObjectID, setSelectedObjectID] = useState("");
@@ -43,21 +42,12 @@ export default function SubObjectManagement(props: any) {
     // All class reducer states
     const classSelector = useSelector((state: any) => state.classReducer);
 
-    console.log({
-        "ALL_CLASS_REDUCER_STATES": classSelector.setDataForSubObjectReducer
-    })
+    // console.log({
+    //     "ALL_CLASS_REDUCER_STATES": classSelector.setDataForSubObjectReducer
+    // })
 
-    // Close Success message after 5 second if true
-    useEffect(() => {
-        if (classSelector && classSelector.successMessageReducer === true) {
-            setTimeout(() => {
-                dispatch(successMessageAction(false))
-            }, 5000)
-        }
-    }, [classSelector.successMessageReducer])
+    const addNewObject = useSelector((state: any) => state.classReducer);
 
-
-    const addNewObject = useSelector((state: any) => state.classReducer)
     const toggleFilterFunction = () => {
         setToggleArrow(!toggleArrow);
         setToggleFilter(!toggleFilter);
@@ -102,6 +92,17 @@ export default function SubObjectManagement(props: any) {
         if (fetchData.length) return;
     }, [access_token])
 
+    // Close Success message after 5 second if true
+    useEffect(() => {
+        if (classSelector && classSelector.successMessageReducer === true) {
+            setTimeout(() => {
+                fetchData();
+            }, 2500)
+            setTimeout(() => {
+                dispatch(successMessageAction(false))
+            }, 5000)
+        }
+    }, [classSelector.successMessageReducer])
 
 
     // convert selected id to classname
@@ -116,24 +117,15 @@ export default function SubObjectManagement(props: any) {
         }
     }
 
-    // const handleDropDown = (item: any) => {
-    //     setChooseAsset(item)
-    // }
     const toggleActions = (item: any) => {
         setActionCount(item);
         setActions(!actions);
     }
-    // const selectedAction = (item: any) => {
-    //     setActions(false);
-    // }
-    // const backToObect = () => {
-    //     props.handleSubObject("Vehicles")
-    // }
 
-
-    const deleteModalFunction = () => {
+    const deleteModalFunction = (id: any) => {
         setDeleteModal(true);
         setActions(false);
+        setDeleteID(id);
     }
 
     const closeDeleteModal = () => {
@@ -171,19 +163,19 @@ export default function SubObjectManagement(props: any) {
         try {
             await axios({
                 method: 'GET',
-                url: `/api/getChildObject`,
-
+                url: `/api/getObjects?id=${chooseAsset}`,
+                headers: {
+                    "Authorization": `Bearer ${access_token}`,
+                    "Content-Type": "application/json"
+                }
             }).then(function (response) {
                 if (response) {
-                    let headArray = response.data[0]?.subObjects;
-                    let filtered = response.data.filter((item: any) => {
-                        return item.object === chooseAsset
+                    console.log({
+                        "RES_GET_SUB_OBJ": response?.data?.objects?.data,
+                        "RES_TABLE_HEADR": response?.data?.objects?.data[0]?.Class?.ClassTags
                     })
-                    if (filtered) {
-                        let headArray = filtered[0]?.tags;
-                        setTableHeader(headArray)
-                        setObjectData(filtered)
-                    }
+                    setObjectData(response?.data?.objects?.data)
+                    setTableHeader(response?.data?.objects?.data[0]?.Class?.ClassTags)
                 }
             }).catch(function (error) {
                 console.log({
@@ -197,32 +189,11 @@ export default function SubObjectManagement(props: any) {
         }
     }
     useEffect(() => {
-        fetchObjectData();
-        if (fetchObjectData.length) return;
+        setTimeout(() => {
+            fetchObjectData();
+        }, 250)
     }, [chooseAsset])
 
-
-    // function for searching
-    const handleSearchFUnction = (e: any) => {
-        setSearch(e.target.value);
-        if (e.target.value === "" || e.target.value.length <= 0) {
-            fetchObjectData();
-            setSearch('');
-            return;
-        }
-        if (objectData && objectData.length > 0) {
-            const filtered = objectData.filter((item: any) => {
-                if (item.tags.hasOwnProperty("ID")) {
-                    if (item.tags.ID.toString().toLowerCase().includes(e.target.value.toString().toLowerCase())) {
-                        return item;
-                    }
-                }
-            })
-            setObjectData(filtered)
-        } else {
-            fetchObjectData();
-        }
-    }
 
     // Set Sub Class in Breadcrumb
     useEffect(() => {
@@ -231,7 +202,7 @@ export default function SubObjectManagement(props: any) {
             "class": classSelector?.classBreadcrumbs?.class,
             "classObjKey": classSelector?.classBreadcrumbs?.classObjKey,
             "classObjValue": classSelector?.classBreadcrumbs?.classObjValue,
-            "subClass": chooseAsset,
+            "subClass": showClassNameFromID(chooseAsset),
             "subClassObjKey": "",
             "subClassObjValue": ""
         }
@@ -268,7 +239,39 @@ export default function SubObjectManagement(props: any) {
         setSelectedObjectID(item)
     }
 
-    
+
+
+    // CALLLING DELETE ASSET API WHEN CONFIRM 'YES' BUTTON CLICKED!
+    const confirmDeleteClass = async (id: any) => {
+        setDeleteModal(false);
+        try {
+            await axios({
+                method: 'DELETE',
+                url: `/api/deleteObject?id=${id}`,
+                headers: {
+                    "Authorization": `Bearer ${access_token}`,
+                    "Content-Type": "application/json"
+                }
+            }).then(function (response) {
+                setDeleteMessage(true);
+                setTimeout(() => {
+                    setDeleteMessage(false)
+                }, 2000)
+            }).catch(function (error) {
+                console.log({
+                    "ERROR IN AXIOS CATCH (DELETE)": error
+                })
+            })
+        } catch (err) {
+            console.log({
+                "ERROR IN TRY CATCH (DELETE)": err
+            })
+        }
+    }
+
+    useEffect(() => {
+        fetchData();
+    }, [deleteMessage === true])
 
     return (
         <div className='py-3 font-OpenSans'>
@@ -332,7 +335,7 @@ export default function SubObjectManagement(props: any) {
                             className="border border-gray-969 rounded-lg h-[44px] w-[310px] pl-10 pr-2"
                             autoComplete="off"
                             value={search}
-                            onChange={handleSearchFUnction}
+                        // onChange={handleSearchFUnction}
                         />
                     </div>
                     <div className="relative ml-3">
@@ -359,12 +362,6 @@ export default function SubObjectManagement(props: any) {
                 </div>
             </div>
 
-            {/* <button
-                onClick={backToObect}
-                className='text-sm mt-10 mb-10 px-10'>
-                Back To Object Management Component
-            </button> */}
-
             {/* Response Messages */}
             {
                 classSelector.successMessageReducer === true &&
@@ -382,6 +379,25 @@ export default function SubObjectManagement(props: any) {
                 </div>
             }
 
+
+
+            {/* Success / Error Message */}
+            <div className='flex justify-start items-center px-4'>
+                {deleteMessage &&
+                    <div className={`bg-blue-957 border-blue-958 text-blue-959 mb-1 mt-1 border text-md px-4 py-3 rounded rounded-xl relative flex items-center justify-start`}>
+                        <Image
+                            src="/img/AlertInfo.svg"
+                            alt="Alert Success"
+                            height={24}
+                            width={24}
+                            className='mr-2'
+                        />
+                        <strong className="font-semibold">Success</strong>
+                        <span className="block sm:inline ml-2">Object deleted successfully!</span>
+                    </div>
+                }
+            </div>
+
             {/* Table */}
             <div className='w-full mt-6 min-h-[400px]'>
                 {objectData && objectData.length > 0 ?
@@ -390,11 +406,11 @@ export default function SubObjectManagement(props: any) {
                             <tr>
                                 <th>S.No</th>
                                 {
-                                    tableHeader && Object.keys(tableHeader).length != 0 ?
-                                        Object.keys(tableHeader).map((item: any, i: any) => (
+                                    tableHeader && tableHeader.length != 0 ?
+                                        tableHeader.map((item: any, i: any) => (
                                             <th className="capitalize" key={i}>
                                                 {
-                                                    item.split(/(?=[A-Z])/).join(" ")
+                                                    item?.tagName
                                                 }
                                             </th>
                                         ))
@@ -410,12 +426,12 @@ export default function SubObjectManagement(props: any) {
                                         <tr key={index}>
                                             <td>{index + 1}</td>
                                             {
-                                                Object.values(items?.tags).map((item: any, i: any) => (
+                                                items?.ObjectValues?.map((item: any, i: any) => (
                                                     <td key={i}>
                                                         <button
                                                         // onClick={() => takeMeToSubObjectComponent(items.subObjectID)}
                                                         >
-                                                            <span>{item ? item : '-'}</span>
+                                                            <span>{item.values ? item.values : '-'}</span>
                                                         </button>
                                                     </td>
                                                 ))
@@ -438,7 +454,7 @@ export default function SubObjectManagement(props: any) {
                                                                 <span>Edit</span>
                                                             </button>
                                                             <button
-                                                                onClick={deleteModalFunction}
+                                                                onClick={() => deleteModalFunction(items?.id)}
                                                                 className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
                                                                 <span>Delete</span>
                                                             </button>
@@ -473,64 +489,6 @@ export default function SubObjectManagement(props: any) {
                             }
 
                         </tbody>
-
-                        {/* <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>1S223</td>
-                                <td>5PVBE7AJ8R5T50001</td>
-                                <td>Cummins</td>
-                                <td>48</td>
-                                <td>12</td>
-                                <td>
-                                    <div className="flex justify-start items-center relative">
-                                        <button onClick={() => toggleActions(1)}>
-                                            <Image
-                                                src="/img/more-vertical.svg"
-                                                alt="more-vertical"
-                                                height={24}
-                                                width={24}
-                                            />
-                                        </button>
-                                        {(actions && actionCount === 1) &&
-                                            <div className="bg-black text-white border overflow-hidden border-black rounded rounded-lg w-[200px] flex flex-col flex-wrap items-start justify-start shadow-sm absolute top-[30px] right-[75px] z-[1]">
-                                                <Link
-                                                    href="#"
-                                                    className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
-                                                    <span>Edit</span>
-                                                </Link>
-                                                <button
-                                                    onClick={deleteModalFunction}
-                                                    className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
-                                                    <span>Delete</span>
-                                                </button>
-                                                <Link
-                                                    href="#"
-                                                    className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
-                                                    <span>eOps Watch</span>
-                                                </Link>
-                                                <Link
-                                                    href="#"
-                                                    className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
-                                                    <span>eOps Trace</span>
-                                                </Link>
-                                                <Link
-                                                    href="#"
-                                                    className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
-                                                    <span>eOps Prosense</span>
-                                                </Link>
-                                                <Link
-                                                    href="#"
-                                                    className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
-                                                    <span>eOps Insights/Reports</span>
-                                                </Link>
-                                            </div>
-                                        }
-                                    </div>
-
-                                </td>
-                            </tr>
-                        </tbody> */}
                     </table>
                     :
                     <div className="flex justify-center items-center flex-wrap flex-col font-OpenSans mt-20">
@@ -552,13 +510,14 @@ export default function SubObjectManagement(props: any) {
             </div>
 
             {/* Add New Object */}
-            {/* <AddNewObject
+            <AddNewObject
                 show={addNewObject.toggleAddObject && addNewObject.toggleAddObject}
                 selectedSubClass={chooseAsset}
                 subClassData={subClassData}
-                parentClass={props.defaultClass}
-                objID={props.objID}
-            /> */}
+                parentClass={classSelector?.setDataForSubObjectReducer?.parentClass}
+                objID={classSelector?.setDataForSubObjectReducer?.objectKey}
+                subClassName={showClassNameFromID(chooseAsset)}
+            />
 
             <EditSubObject
                 show={classSelector?.editSubObjectModalReducer}
@@ -599,7 +558,7 @@ export default function SubObjectManagement(props: any) {
                                         <div className="mt-10 relative flex justify-center items-center w-full">
                                             <button
                                                 className="border border-black rounded-lg bg-black text-white text-lg w-[70px] h-[47px] mr-5 hover:bg-yellow-951 hover:text-white hover:border-yellow-951 ease-in-out duration-[100ms] disabled:bg-gray-951 disabled:hover:border-gray-951 disabled:border-gray-951"
-                                                onClick={closeDeleteModal}
+                                                onClick={() => confirmDeleteClass(deleteID)}
                                             >
                                                 Yes
                                             </button>

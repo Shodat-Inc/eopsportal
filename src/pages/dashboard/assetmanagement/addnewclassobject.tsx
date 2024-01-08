@@ -8,9 +8,9 @@ import axios from "axios";
 
 export default function AddNewClassObject(props: any) {
 
-    console.log({
-        "PROPS_IN_ADD_OBJECT": props
-    })
+    // console.log({
+    //     "PROPS_IN_ADD_OBJECT": props
+    // })
 
     const dispatch = useDispatch<any>();
     const [classData, setClassData] = useState([] as any);
@@ -115,9 +115,9 @@ export default function AddNewClassObject(props: any) {
         }
     }
 
-    console.log({
-        classData: classData
-    })
+    // console.log({
+    //     classData: classData
+    // })
 
 
     return (

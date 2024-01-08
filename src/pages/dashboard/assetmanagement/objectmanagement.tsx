@@ -82,16 +82,17 @@ export default function ObjectManagement(props: any) {
         setActionCount(item);
         setActions(!actions);
     }
-    const takeMeToSubObjectComponent = (item: any) => {
+    const takeMeToSubObjectComponent = (item: any, objID:any) => {
         console.log({
             "item here ...":item
         })
         let classObjKey = chooseAsset === 1 ? 'PlantID' : 'VIN';
         let abc = {
             "flow": "Object Management",
-            "class": chooseAsset,
+            // "class": chooseAsset,
+            "class": showClassNameFromID(chooseAsset),
             "classObjKey": classObjKey,
-            "classObjValue": item,
+            "classObjValue": objID,
             "subClass": "Batteries",
             "subClassObjKey": "",
             "subClassObjValue": ""
@@ -245,6 +246,10 @@ export default function ObjectManagement(props: any) {
         }
 
     }
+
+    console.log({
+        "____objectData:":objectData
+    })
 
     return (
         <div className='py-3 font-OpenSans'>
@@ -401,7 +406,7 @@ export default function ObjectManagement(props: any) {
                                                 items?.ObjectValues?.map((item: any, i: any) => (
                                                     <td key={i}>
                                                         <button
-                                                            onClick={() => takeMeToSubObjectComponent(items.id)}
+                                                            onClick={() => takeMeToSubObjectComponent(items.id, items?.ObjectValues[0]?.values)}
                                                         >
                                                             <span>{item.values ? item.values : '-'}</span>
                                                         </button>
