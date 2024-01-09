@@ -58,7 +58,7 @@ export default function ModelView() {
                         <nav className="flex" aria-label="Breadcrumb">
                             <ol className="inline-flex items-center space-x-1 md:space-x-1">
                                 <li className="inline-flex items-center">
-                                    <Link href="/dashboard/assetmanagement"
+                                    <Link href="/dashboard/aimodaldetection"
                                         className="inline-flex items-center text-sm font-medium text-black hover:text-yellow-950">
                                         <Image
                                             src="/img/home.svg"
@@ -72,12 +72,13 @@ export default function ModelView() {
                                 <li>
                                     <Link
                                         href={{
-                                            pathname: "/dashboard/assetmanagement/subchildobject",
+                                            pathname: "/dashboard/aimodaldetection",
                                             query: {
-                                                class: parentAsset.objectID,
-                                                object: parentAsset.id,
-                                                id: parentAsset.key,
+                                                objectID: parentAsset.objectID,
+                                                key: parentAsset.key,
+                                                id: parentAsset.id,
                                                 subObject: parentAsset.subObject,
+                                                model: parentAsset.model
                                             }
                                         }}
                                         className="flex items-center">
@@ -94,7 +95,7 @@ export default function ModelView() {
                                 <li>
                                     <Link
                                         href={{
-                                            pathname: "/dashboard/eopstrace/tracemodel",
+                                            pathname: "/dashboard/eopstrace/preview",
                                             query: {
                                                 objectID: parentAsset.objectID,
                                                 key: parentAsset.key,
@@ -118,7 +119,7 @@ export default function ModelView() {
                                 <li>
                                     <Link
                                         href={{
-                                            pathname: "/dashboard/eopstrace/testmodel",
+                                            pathname: "/dashboard/eopstrace/preview",
                                             query: {
                                                 objectID: parentAsset.objectID,
                                                 key: parentAsset.key,

@@ -7,7 +7,7 @@ import axios from 'axios';
 import Link from 'next/dist/client/link';
 import AddNewObject from './addnewobject';
 import { objDefaultSubClassSelectorFunction } from '@/store/actions/classAction';
-import { successMessageAction, setClassBreadcrumb, setDataForeOpsWatchAction } from '@/store/actions/classAction';
+import { successMessageAction, setClassBreadcrumb, setDataForeOpsWatchAction, setDataForeOpsTraceAction } from '@/store/actions/classAction';
 import { setTimeout } from 'timers';
 import EditSubObject from './editsubobject';
 import { editSubObjectModalAction } from '@/store/actions/classAction';
@@ -220,6 +220,7 @@ export default function SubObjectManagement(props: any) {
     }, [chooseAsset])
 
     const router = useRouter();
+
     // Save data for eopswatch section
     const eOpsWatchFunction = (item: any) => {
         let obj = '';
@@ -232,9 +233,31 @@ export default function SubObjectManagement(props: any) {
             "class": props.defaultClass,
             "subClass": chooseAsset,
             "classObject": props.objectKey,
-            "object": obj
+            "object": obj,
+            "datafor":"eopwatch"
         }
         dispatch(setDataForeOpsWatchAction(eopsData));
+        setTimeout(() => {
+            router.push('/dashboard/aimodaldetection');
+        }, 1000)
+    }
+
+    // Save Date for Eopswatch Section
+    const eOpsTraceFunction = (item: any) => {
+        let obj = '';
+        if (props.defaultClass === "Manufacturing Plants") {
+            obj = item.ID
+        } else {
+            obj = item.VIN
+        }
+        const eopsTraceData = {
+            "class": props.defaultClass,
+            "subClass": chooseAsset,
+            "classObject": props.objectKey,
+            "object": obj,
+            "datafor":"eopstrace"
+        }
+        dispatch(setDataForeOpsWatchAction(eopsTraceData));
         setTimeout(() => {
             router.push('/dashboard/aimodaldetection');
         }, 1000)
@@ -440,11 +463,11 @@ export default function SubObjectManagement(props: any) {
                                                                 className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
                                                                 <span>eOps Watch</span>
                                                             </button>
-                                                            <Link
-                                                                href="#"
+                                                            <button
+                                                                onClick={() => eOpsTraceFunction(items?.tags)}
                                                                 className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
                                                                 <span>eOps Trace</span>
-                                                            </Link>
+                                                            </button>
                                                             <Link
                                                                 href="#"
                                                                 className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">

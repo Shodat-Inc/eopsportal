@@ -182,12 +182,11 @@ export default function EopsTrace(props: any) {
         }
 
     }, [props.nextDataProps])
-    
 
 
     const redirectToNext = () => {
         Router.push({
-            pathname: '/dashboard/eopswatch/preview',
+            pathname: '/dashboard/eopstrace/preview',
             query: {
                 objectID: props?.nextDataProps?.objectID,
                 subObject: props?.nextDataProps?.subObject,

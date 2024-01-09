@@ -11,6 +11,7 @@ import { EDIT_CLASS_MODEL_ERROR, EDIT_CLASS_MODEL_SUCCESS } from "../types";
 import { EDIT_SUB_CLASS_MODEL_ERROR, EDIT_SUB_CLASS_MODEL_SUCCESS } from "../types";
 import { EDIT_OBJECT_MODEL_ERROR, EDIT_OBJECT_MODEL_SUCCESS } from "../types";
 import { EDIT_SUB_OBJECT_MODEL_ERROR, EDIT_SUB_OBJECT_MODEL_SUCCESS } from "../types";
+import { DATA_FOR_EOPSTRACE_ERROR, DATA_FOR_EOPSTRACE_SUCCESS } from "../types";
 
 import axios from "axios";
 let access_token = "" as any;
@@ -330,6 +331,26 @@ export const editSubObjectModalAction = (item: any) => async (dispatch: any) => 
             dispatch({
                 type: EDIT_SUB_OBJECT_MODEL_ERROR,
                 payload: "Failed!"
+            });
+        }
+    } catch (err) {
+        console.log("err in action:", err)
+    }
+};
+
+
+// Store data for eopstrace
+export const setDataForeOpsTraceAction = (action:any) => async (dispatch: any) => {
+    try {
+        if (action) {
+            dispatch({
+                type: DATA_FOR_EOPSTRACE_SUCCESS,
+                payload: action
+            });
+        } else {
+            dispatch({
+                type: DATA_FOR_EOPSTRACE_ERROR,
+                payload: action
             });
         }
     } catch (err) {

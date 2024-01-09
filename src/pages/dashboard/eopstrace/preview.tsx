@@ -129,7 +129,7 @@ export default function Preview() {
                 <ul className="flex justify-start items-center text-sm">
                 <li className="flex justify-start items-center">
                         <Link
-                            href="/dashboard/eopstrace"
+                            href="/dashboard/aimodaldetection"
                             className="font-semibold"
                         >
                             Home
@@ -144,7 +144,7 @@ export default function Preview() {
                         />
                         <Link
                             href={{
-                                pathname: '/dashboard/eopstrace/',
+                                pathname: '/dashboard/aimodaldetection/',
                                 query:{
                                     objectID:routerParams.objectID
                                 }
@@ -163,11 +163,11 @@ export default function Preview() {
                         />
                         <Link
                             href={{
-                                pathname: '/dashboard/eopstrace/',
+                                pathname: '/dashboard/aimodaldetection/',
                             }}
                             className="font-semibold"
                         >
-                            {routerParams.industryID}
+                            {routerParams.industryID ? routerParams.industryID : routerParams.id}
                         </Link>
                     </li>
                     <li className="flex justify-start items-center">
@@ -179,7 +179,7 @@ export default function Preview() {
                         />
                         <Link
                             href={{
-                                pathname: '/dashboard/eopstrace/',
+                                pathname: '/dashboard/aimodaldetection/',
                             }}
                             className="font-semibold"
                         >
@@ -195,7 +195,7 @@ export default function Preview() {
                         />
                         <Link
                             href={{
-                                pathname: '/dashboard/eopstrace/models',
+                                pathname: '/dashboard/aimodaldetection',
                                 query: {
                                     objectID: routerParams.objectID,
                                     subObject: routerParams.subObject,
@@ -218,7 +218,7 @@ export default function Preview() {
                         />
                         <Link
                             href={{
-                                pathname: '/dashboard/eopstrace/models',
+                                pathname: '/dashboard/aimodaldetection',
                                 query: {
                                     objectID: routerParams.objectID,
                                     subObject: routerParams.subObject,

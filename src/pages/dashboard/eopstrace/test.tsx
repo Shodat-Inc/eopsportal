@@ -39,7 +39,7 @@ export default function Test(props: any) {
                                     <div className="flex justify-start items-center absolute top-0 right-0">
                                         <Link
                                             href={{
-                                                pathname: "/dashboard/eopswatch/trainingview",
+                                                pathname: "/dashboard/eopstrace/modelview/",
                                                 query: {
                                                     objectID: routerParams.objectID,
                                                     key: routerParams.key,

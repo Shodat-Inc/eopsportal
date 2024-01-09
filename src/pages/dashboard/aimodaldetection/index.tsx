@@ -33,7 +33,7 @@ export default function AiModelDetection() {
     const [getAllSubObject, setGetAllSubObject] = useState([] as any);
     const [tableDataSubObject, setTableDataSubObject] = useState([] as any);
     const [toggleAsset, setToggleAsset] = useState(false);
-    const [chooseClass, setChooseClass] = useState('');
+    const [chooseClass, setChooseClass] = useState('Select');
     const [chooseObject, setChooseObject] = useState('Select')
     const [chooseSubClass, setChooseSubClass] = useState('Select')
     const [chooseSubObject, setChooseSubObject] = useState('Select')
@@ -54,14 +54,16 @@ export default function AiModelDetection() {
     // Set Selected sub Object 
     useEffect(() => {
         if (classSelector.dataforeopswatchReducer?.object !== "") {
-            setSelectSubObject(classSelector.dataforeopswatchReducer?.object)
+            // setSelectSubObject(classSelector.dataforeopswatchReducer?.object)
+            setChooseSubObject(classSelector.dataforeopswatchReducer?.object)
         }
     }, [classSelector.dataforeopswatchReducer?.object])
 
     // Set Selected sub object 
     useEffect(() => {
         if (classSelector.dataforeopswatchReducer?.subClass !== "") {
-            setSelectSubClass(classSelector.dataforeopswatchReducer?.subClass)
+            // setSelectSubClass(classSelector.dataforeopswatchReducer?.subClass)
+            setChooseSubClass(classSelector.dataforeopswatchReducer?.subClass)
         }
     }, [classSelector.dataforeopswatchReducer?.subClass])
 
@@ -125,7 +127,8 @@ export default function AiModelDetection() {
     // Set VIN/PlantID on page load
     useEffect(() => {
         if (classSelector.dataforeopswatchReducer.classObject && classSelector.dataforeopswatchReducer.classObject !== "") {
-            setSelectObject(classSelector.dataforeopswatchReducer.classObject);
+            // setSelectObject(classSelector.dataforeopswatchReducer.classObject);
+            setChooseObject(classSelector.dataforeopswatchReducer.classObject);
             setShowSubClass(true)
             setShowObjLvlButton(true)
         } else {
@@ -144,7 +147,7 @@ export default function AiModelDetection() {
             }).then(function (response) {
                 if (response) {
                     setGetAllClass(response?.data);
-                    setChooseClass(response?.data[0]?.assetName)
+                    // setChooseClass(response?.data[0]?.assetName)
                 }
             }).catch(function (error) {
                 console.log({
@@ -176,22 +179,6 @@ export default function AiModelDetection() {
         setDisable(2)
     }
 
-    // ============= On change class dropdown =============
-    // const selectClassFunction = (e: any) => {
-    //     setSelectObject('')
-    //     setSelectClass(e.target.value)
-    //     setChooseClass(e.target.value)
-    //     setDisable(1);
-    //     setShowObject(true);
-    // }
-
-    // ============== On Change object dropdown ==============
-    // const selectObjectFunction = (e: any) => {
-    //     setSelectObject(e.target.value);
-    //     setShowSubClass(true)
-    //     setShowObjLvlButton(true)
-    // }
-
     // ============= Reset button on click function =============
     const resetFunction = () => {
         setDisable(0);
@@ -200,7 +187,7 @@ export default function AiModelDetection() {
         setShowObject(false);
         setShowSubClass(false)
         setShowObjLvlButton(false)
-        setSelectObject('')
+        // setSelectObject('')
         setToggleObjectLevel(false)
 
         setChooseObject("Select");
@@ -261,18 +248,6 @@ export default function AiModelDetection() {
         model: "Crack Detection"
     }
 
-    // Select Sub Class dropdown function
-    // const selectSubClassFunction = (e: any) => {
-    //     let val = e.target.value;
-    //     setSelectSubClass(val);
-    // }
-
-    // Select Sub Class  objects dropdown function
-    // const selectSubObjectsFunction = (e: any) => {
-    //     let val = e.target.value;
-    //     setSelectSubObject(val)
-    // }
-
     // Toggle sub class and object dropdowns
     const toggleSubClassObjectOption = () => {
         setToggleObjectLevel(!toggleObjectLevel)
@@ -282,8 +257,6 @@ export default function AiModelDetection() {
     // Close Sub class and Object Dropdowns
     const closeObjectLevel = () => {
         setToggleObjectLevel(false);
-        setSelectSubClass("");
-        setSelectSubObject("");
     }
 
     // =============== Get object data based on selected class and object ============== 
@@ -438,7 +411,7 @@ export default function AiModelDetection() {
         setDisable(1);
         setChooseClass(item);
         setToggleAsset(false);
-        setSelectObject('')
+        // setSelectObject('')
         setSelectClass(item)
         setShowObject(true);
 
@@ -454,7 +427,7 @@ export default function AiModelDetection() {
     }
     const selectObjectItemFunction = (item: any) => {
         setChooseObject(item);
-        setSelectObject(item)
+        // setSelectObject(item)
         setToggleObject(false);
         setShowObjLvlButton(true);
         setShowSubClass(true)
@@ -487,6 +460,12 @@ export default function AiModelDetection() {
     }
 
 
+    // ============== Set Datafor (eopswatch/eopstrace) ==========
+    useEffect(()=> {
+        if(classSelector?.dataforeopswatchReducer?.datafor === "eopstrace") {
+            setTab(2)
+        }
+    }, [classSelector?.dataforeopswatchReducer?.datafor])
 
 
     return (
@@ -760,7 +739,7 @@ export default function AiModelDetection() {
                         <div className="w-full flex justify-end items-end flex-wrap flex-row mt-5">
                             <div className="w-full flex justify-end">
                                 <button
-                                    className="flex justify-center items-center rounded rounded-lg h-[35px] px-3  py-3 bg-[#404040] border border-[#404040] text-white text-sm mb-7"
+                                    className="flex justify-center items-center rounded rounded-lg h-[35px] px-3  py-3 bg-[#404040] border border-[#404040] text-white text-sm"
                                     onClick={toggleSubClassObjectOption}
                                 >
                                     <Image
@@ -774,10 +753,6 @@ export default function AiModelDetection() {
                             </div>
                         </div>
                     }
-
-
-
-
                 </div>
 
 

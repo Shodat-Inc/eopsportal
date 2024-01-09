@@ -11,6 +11,7 @@ import { EDIT_CLASS_MODEL_ERROR, EDIT_CLASS_MODEL_SUCCESS } from "../types";
 import { EDIT_SUB_CLASS_MODEL_ERROR, EDIT_SUB_CLASS_MODEL_SUCCESS } from "../types";
 import { EDIT_OBJECT_MODEL_ERROR, EDIT_OBJECT_MODEL_SUCCESS } from "../types";
 import { EDIT_SUB_OBJECT_MODEL_ERROR, EDIT_SUB_OBJECT_MODEL_SUCCESS } from "../types";
+import { DATA_FOR_EOPSTRACE_ERROR, DATA_FOR_EOPSTRACE_SUCCESS } from "../types";
 
 const initialState = {
   selectedClass: '',
@@ -25,7 +26,8 @@ const initialState = {
   editClassModalReducer: false,
   editSubClassModalReducer: false,
   editObjectModalReducer: false,
-  editSubObjectModalReducer: false
+  editSubObjectModalReducer: false,
+  dataforeopstraceReducer: {},
 };
 
 const classReducer = (state = initialState, action: any) => {
@@ -173,6 +175,17 @@ const classReducer = (state = initialState, action: any) => {
       return {
         error: action.payload,
       }
+
+    case DATA_FOR_EOPSTRACE_SUCCESS:
+      return {
+        ...state,
+        dataforeopstraceReducer: action.payload,
+      };
+
+    case DATA_FOR_EOPSTRACE_ERROR:
+      return {
+        dataforeopstraceReducer: action.payload,
+      };
 
     default:
       return state;

@@ -39,7 +39,7 @@ export default function Production(props: any) {
                                     <div className="flex justify-start items-center absolute top-0 right-0">
                                         <Link
                                             href={{
-                                                pathname: "/dashboard/eopswatch/productionview",
+                                                pathname: "/dashboard/eopstrace/productionview/",
                                                 query: {
                                                     objectID: routerParams.objectID,
                                                     key: routerParams.key,

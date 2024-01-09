@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from 'react-redux';
 import { forwardRef } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import styles from './Sidebar.module.css';
 import Image from "next/image";
+import { setDataForeOpsWatchAction, setDataForeOpsTraceAction } from '@/store/actions/classAction';
 
 const SideBar = forwardRef(({ showNav, setShowNav }, ref) => {
   const router = useRouter();
+  const dispatch = useDispatch();
   const [eopswatch, setEopswatch] = useState(false);
   const [asstMgmt, setAsstMgmt] = useState(false);
   const [dashboard, setDashboard] = useState(false);
@@ -18,6 +21,17 @@ const SideBar = forwardRef(({ showNav, setShowNav }, ref) => {
 
   const arr = router.pathname.split("/");
   const splitPathName = arr.filter(n => n);
+
+  const aimodaldetection = () => {
+    const eopsData = {
+      "class": "",
+      "subClass": "",
+      "classObject": "",
+      "object": "",
+      "datafor": ""
+    }
+    dispatch(setDataForeOpsWatchAction(eopsData));
+  }
 
   return (
     <div ref={ref} className={`font-OpenSans fixed w-60 h-full shadow-sm bg-black ${styles.sidebar}`}>
@@ -106,7 +120,7 @@ const SideBar = forwardRef(({ showNav, setShowNav }, ref) => {
           </div>
         </Link>
 
-        <Link href="/dashboard/aimodaldetection" className="px-3">
+        <Link href="/dashboard/aimodaldetection" className="px-3" onClick={aimodaldetection}>
           <div
             className={`pl-3 text-sm font-OpenSans font-light py-3 px-3 rounded rounded-lg text-center cursor-pointer mb-3 flex items-center transition-colors ${router.pathname == "/dashboard/eopswatch" || splitPathName.includes("aimodaldetection")
               ? "bg-[#2B2B2B] text-white"
