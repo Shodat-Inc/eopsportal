@@ -141,7 +141,7 @@ export default function Preview() {
                 <ul className="flex justify-start items-center text-sm">
                 <li className="flex justify-start items-center">
                         <Link
-                            href="/dashboard/eopswatch"
+                            href="/dashboard/aimodaldetection"
                             className="font-semibold"
                         >
                             Home
@@ -156,7 +156,7 @@ export default function Preview() {
                         />
                         <Link
                             href={{
-                                pathname: '/dashboard/eopswatch/',
+                                pathname: '/dashboard/aimodaldetection/',
                                 query:{
                                     objectID:routerParams.objectID
                                 }
@@ -175,7 +175,7 @@ export default function Preview() {
                         />
                         <Link
                             href={{
-                                pathname: '/dashboard/eopswatch/',
+                                pathname: '/dashboard/aimodaldetection/',
                             }}
                             className="font-semibold"
                         >
@@ -198,7 +198,7 @@ export default function Preview() {
                         />
                         <Link
                             href={{
-                                pathname: '/dashboard/eopswatch/',
+                                pathname: '/dashboard/aimodaldetection/',
                             }}
                             className="font-semibold"
                         >
@@ -214,7 +214,7 @@ export default function Preview() {
                         />
                         <Link
                             href={{
-                                pathname: '/dashboard/eopswatch/models',
+                                pathname: '/dashboard/aimodaldetection',
                                 query: {
                                     objectID: routerParams.objectID,
                                     subObject: routerParams.subObject,
@@ -237,7 +237,7 @@ export default function Preview() {
                         />
                         <Link
                             href={{
-                                pathname: '/dashboard/eopswatch/models',
+                                pathname: '/dashboard/aimodaldetection',
                                 query: {
                                     objectID: routerParams.objectID,
                                     subObject: routerParams.subObject,

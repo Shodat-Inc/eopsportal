@@ -107,6 +107,7 @@ export default function AiModelDetection() {
     useEffect(() => {
         if (classSelector?.dataforeopswatchReducer?.class && classSelector?.dataforeopswatchReducer?.class !== "") {
             setSelectClass(classSelector.dataforeopswatchReducer.class);
+            setChooseClass(classSelector.dataforeopswatchReducer.class);
             setShowObject(true);
             setDisable(1);
             fetchObjectData();
@@ -175,6 +176,7 @@ export default function AiModelDetection() {
     const selectClassFunction = (e: any) => {
         setSelectObject('')
         setSelectClass(e.target.value)
+        setChooseClass(e.target.value)
         setDisable(1);
         setShowObject(true);
     }
@@ -413,6 +415,7 @@ export default function AiModelDetection() {
         setToggleAsset(false);
         setSelectObject('')
         setSelectClass(item)
+        setChooseClass(item)
         setDisable(1);
         setShowObject(true);
     }

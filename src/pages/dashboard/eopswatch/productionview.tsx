@@ -149,7 +149,7 @@ export default function ProductionView() {
                                     <ul className="flex justify-start items-center text-sm">
                                         <li className="flex justify-start items-center">
                                             <Link
-                                                href="/dashboard/eopswatch"
+                                                href="/dashboard/aimodaldetection"
                                                 className="font-semibold"
                                             >
                                                 {parentAsset.key}
@@ -164,7 +164,7 @@ export default function ProductionView() {
                                             />
                                             <Link
                                                 href={{
-                                                    pathname: '/dashboard/eopswatch/models',
+                                                    pathname: '/dashboard/aimodaldetection',
                                                     query: {
                                                         objectID: parentAsset.objectID,
                                                         subObject: parentAsset.subObject,
@@ -186,7 +186,7 @@ export default function ProductionView() {
                                             />
                                             <Link
                                                 href={{
-                                                    pathname: '/dashboard/eopswatch/models',
+                                                    pathname: '/dashboard/aimodaldetection',
                                                     query: {
                                                         objectID: parentAsset.objectID,
                                                         subObject: parentAsset.subObject,
@@ -251,7 +251,7 @@ export default function ProductionView() {
                                         <li>
                                             <Link
                                                 href={{
-                                                    pathname: "/dashboard/assetmanagement/subchildobject",
+                                                    pathname: "/dashboard/aimodaldetection",
                                                     query: {
                                                         class: parentAsset.objectID,
                                                         object: parentAsset.id,
@@ -273,7 +273,7 @@ export default function ProductionView() {
                                         <li>
                                             <Link
                                                 href={{
-                                                    pathname: "/dashboard/eopswatch/eopswatchmodel",
+                                                    pathname: "/dashboard/aimodaldetection",
                                                     query: {
                                                         objectID: parentAsset.objectID,
                                                         key: parentAsset.key,
@@ -296,7 +296,7 @@ export default function ProductionView() {
                                         <li>
                                             <Link
                                                 href={{
-                                                    pathname: "/dashboard/eopswatch/productionmodel",
+                                                    pathname: "/dashboard/aimodaldetection",
                                                     query: {
                                                         objectID: parentAsset.objectID,
                                                         key: parentAsset.key,

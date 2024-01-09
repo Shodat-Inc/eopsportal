@@ -145,7 +145,7 @@ export default function TrainingView() {
                                     <ul className="flex justify-start items-center text-sm">
                                         <li className="flex justify-start items-center">
                                             <Link
-                                                href="/dashboard/eopswatch"
+                                                href="/dashboard/aimodaldetection"
                                                 className="font-semibold"
                                             >
                                                 {parentAsset.key}
@@ -160,7 +160,7 @@ export default function TrainingView() {
                                             />
                                             <Link
                                                 href={{
-                                                    pathname: '/dashboard/eopswatch/models',
+                                                    pathname: '/dashboard/aimodaldetection',
                                                     query: {
                                                         objectID: parentAsset.objectID,
                                                         subObject: parentAsset.subObject,
@@ -182,7 +182,7 @@ export default function TrainingView() {
                                             />
                                             <Link
                                                 href={{
-                                                    pathname: '/dashboard/eopswatch/models',
+                                                    pathname: '/dashboard/aimodaldetection',
                                                     query: {
                                                         objectID: parentAsset.objectID,
                                                         subObject: parentAsset.subObject,
@@ -247,7 +247,7 @@ export default function TrainingView() {
                                         <li>
                                             <Link
                                                 href={{
-                                                    pathname: "/dashboard/assetmanagement/subchildobject",
+                                                    pathname: "/dashboard/aimodaldetection",
                                                     query: {
                                                         class: parentAsset.objectID,
                                                         object: parentAsset.id,
@@ -269,7 +269,7 @@ export default function TrainingView() {
                                         <li>
                                             <Link
                                                 href={{
-                                                    pathname: "/dashboard/eopswatch/eopswatchmodel",
+                                                    pathname: "/dashboard/aimodaldetection",
                                                     query: {
                                                         objectID: parentAsset.objectID,
                                                         key: parentAsset.key,
@@ -292,7 +292,7 @@ export default function TrainingView() {
                                         <li>
                                             <Link
                                                 href={{
-                                                    pathname: "/dashboard/eopswatch/trainingmodel",
+                                                    pathname: "/dashboard/aimodaldetection",
                                                     query: {
                                                         objectID: parentAsset.objectID,
                                                         key: parentAsset.key,
