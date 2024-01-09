@@ -282,12 +282,23 @@ export default function EopsWatch(props: any) {
             <div className="w-[80%] px-8 py-5 rounded-r-xl rounded-bl-xl border border-[#E3E3E3] border-l-2 border-t-0 border-b-2 border-r-0 bg-white min-h-[500px]">
                 <div className='relative'>
                     <div className="flex justify-start items-start mb-4">
-                        <button
-                            className="h-[44px] px-2 py-1 px-3 flex justify-center items-center bg-yellow-951 border border-yellow-951 text-sm text-black rounded rounded-xl mr-6"
-                            onClick={redirectToNext}
-                        >
-                            <span>Run this model</span>
-                        </button>
+                        {
+                            props.active ?
+
+                                <button
+                                    className="h-[44px] px-2 py-1 px-3 flex justify-center items-center bg-yellow-951 border border-yellow-951 text-sm text-black rounded rounded-xl mr-6"
+                                    onClick={redirectToNext}
+                                >
+                                    <span>Run this model</span>
+                                </button>
+                                :
+                                <button
+                                    className="h-[44px] px-2 py-1 px-3 flex justify-center items-center bg-[#474B52] border border-[#474B52] text-sm text-white rounded rounded-xl mr-6"
+                                >
+                                    <span>Run this model</span>
+                                </button>
+                        }
+
                         <button className="flex justify-center items-center rounded rounded-xl h-[44px] px-1 py-1 bg-[#404040] border border-[#404040] text-white text-sm">
                             <Image
                                 src="/img/activity-white.svg"

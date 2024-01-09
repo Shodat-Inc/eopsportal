@@ -253,11 +253,11 @@ export default function AiModelDetection() {
     // ============= Set dropdown title ============= 
     const title = (selectClass === 'Vehicles') ? 'VIN' : 'PlantID'
     const nextDataProps = {
-        objectID: selectClass,
-        industryID: selectObject,
-        id: selectObject,
-        subObject: selectSubClass ? selectSubClass : "Walls",
-        key: selectSubObject ? selectSubObject : "TPC71810-01-012",
+        objectID: chooseClass,
+        industryID: chooseObject,
+        id: chooseObject,
+        subObject: chooseSubClass ? chooseSubClass : "Walls",
+        key: chooseSubObject ? chooseSubObject : "TPC71810-01-012",
         model: "Crack Detection"
     }
 
@@ -883,6 +883,7 @@ export default function AiModelDetection() {
                                     ?
                                     <EopsWatch
                                         nextDataProps={nextDataProps}
+                                        active={chooseSubObject!== "Select" ? true : false}
                                     />
                                     :
                                     <EopsWatchModel />
