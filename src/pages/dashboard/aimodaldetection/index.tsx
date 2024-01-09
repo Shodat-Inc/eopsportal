@@ -33,13 +33,15 @@ export default function AiModelDetection() {
     const [getAllSubObject, setGetAllSubObject] = useState([] as any);
     const [tableDataSubObject, setTableDataSubObject] = useState([] as any);
     const [toggleAsset, setToggleAsset] = useState(false);
-    const [chooseClass, setChooseClass] = useState('select');
-    const [chooseObject, setChooseObject] = useState('TPC71810-01')
-    const [chooseSubClass, setChooseSubClass] = useState('Walls')
-    const [chooseSubObject, setChooseSubObject] = useState('TPC71810-01-012')
+    const [chooseClass, setChooseClass] = useState('');
+    const [chooseObject, setChooseObject] = useState('Select')
+    const [chooseSubClass, setChooseSubClass] = useState('Select')
+    const [chooseSubObject, setChooseSubObject] = useState('Select')
     const [toggleObject, setToggleObject] = useState(false);
     const [toggleSubClass, setToggleSubClass] = useState(false);
     const [toggleSubObject, setToggleSubObject] = useState(false);
+    const [toggleReset, setToggleReset] = useState(false);
+    const [showSubObjTable, setShowSubObjTable] = useState(false)
 
     const toggleTab = (item: any) => {
         setTab(item)
@@ -72,7 +74,7 @@ export default function AiModelDetection() {
 
     }, [classSelector.dataforeopswatchReducer])
 
-    // select class by default
+    // =========== FETCH OBJECT DATA ==============
     async function fetchObjectData() {
         try {
             await axios({
@@ -88,7 +90,7 @@ export default function AiModelDetection() {
                         setClassObject(filtered)
                     } else {
                         let filtered = response.data.filter((item: any) => {
-                            return item.parentAssetName === selectClass
+                            return item.parentAssetName === chooseClass
                         })
                         setClassObject(filtered)
                     }
@@ -132,7 +134,7 @@ export default function AiModelDetection() {
         }
     }, [classSelector.dataforeopswatchReducer.classObject])
 
-    // function to get all classes
+    // =============== function to get all classes =============== 
     async function fetchClassData() {
         try {
             await axios({
@@ -166,29 +168,31 @@ export default function AiModelDetection() {
     }, [classSelector.getAllClass])
 
 
-    // Search input box on changes function
+
+
+    // ========== Search input box on changes function ============
     const searchFunction = (e: any) => {
         setSearch(e.target.value)
         setDisable(2)
     }
 
-    // On change class dropdown
-    const selectClassFunction = (e: any) => {
-        setSelectObject('')
-        setSelectClass(e.target.value)
-        setChooseClass(e.target.value)
-        setDisable(1);
-        setShowObject(true);
-    }
+    // ============= On change class dropdown =============
+    // const selectClassFunction = (e: any) => {
+    //     setSelectObject('')
+    //     setSelectClass(e.target.value)
+    //     setChooseClass(e.target.value)
+    //     setDisable(1);
+    //     setShowObject(true);
+    // }
 
-    // on changhe object dropdown
-    const selectObjectFunction = (e: any) => {
-        setSelectObject(e.target.value);
-        setShowSubClass(true)
-        setShowObjLvlButton(true)
-    }
+    // ============== On Change object dropdown ==============
+    // const selectObjectFunction = (e: any) => {
+    //     setSelectObject(e.target.value);
+    //     setShowSubClass(true)
+    //     setShowObjLvlButton(true)
+    // }
 
-    // Reset button on click function
+    // ============= Reset button on click function =============
     const resetFunction = () => {
         setDisable(0);
         setSearch('');
@@ -198,9 +202,14 @@ export default function AiModelDetection() {
         setShowObjLvlButton(false)
         setSelectObject('')
         setToggleObjectLevel(false)
+
+        setChooseObject("Select");
+        setChooseSubClass("Select");
+        setChooseSubObject("Select");
+        setToggleReset(false);
     }
 
-    // Get object data based on selected class and object
+    // =============== Get object data based on selected class and object =============== 
     async function getObjects() {
         try {
             await axios({
@@ -211,9 +220,9 @@ export default function AiModelDetection() {
                 if (response) {
                     let filtered = response.data.filter((item: any) => {
                         if (selectClass === 'Vehicles') {
-                            return item?.subObjects?.VIN === selectObject
+                            return item?.subObjects?.VIN === chooseObject
                         } else {
-                            return item?.subObjects?.PlantID === selectObject
+                            return item?.subObjects?.PlantID === chooseObject
                         }
                     })
                     setSelObjectData(filtered[0]?.subObjects)
@@ -230,12 +239,18 @@ export default function AiModelDetection() {
         }
     }
     useEffect(() => {
-        if (selectObject !== "") {
+        if (chooseObject !== "") {
             getObjects();
         }
-    }, [selectObject])
+    }, [chooseObject])
 
-    // Set dropdown title
+    console.log({
+        "__getAllClass": getAllClass,
+        "___classObject": classObject,
+        "__selObjectData": selObjectData
+    })
+
+    // ============= Set dropdown title ============= 
     const title = (selectClass === 'Vehicles') ? 'VIN' : 'PlantID'
     const nextDataProps = {
         objectID: selectClass,
@@ -247,16 +262,16 @@ export default function AiModelDetection() {
     }
 
     // Select Sub Class dropdown function
-    const selectSubClassFunction = (e: any) => {
-        let val = e.target.value;
-        setSelectSubClass(val);
-    }
+    // const selectSubClassFunction = (e: any) => {
+    //     let val = e.target.value;
+    //     setSelectSubClass(val);
+    // }
 
     // Select Sub Class  objects dropdown function
-    const selectSubObjectsFunction = (e: any) => {
-        let val = e.target.value;
-        setSelectSubObject(val)
-    }
+    // const selectSubObjectsFunction = (e: any) => {
+    //     let val = e.target.value;
+    //     setSelectSubObject(val)
+    // }
 
     // Toggle sub class and object dropdowns
     const toggleSubClassObjectOption = () => {
@@ -271,7 +286,7 @@ export default function AiModelDetection() {
         setSelectSubObject("");
     }
 
-    // Get object data based on selected class and object
+    // =============== Get object data based on selected class and object ============== 
     async function getSubClass() {
         try {
             await axios({
@@ -281,7 +296,7 @@ export default function AiModelDetection() {
             }).then(function (response) {
                 if (response) {
                     const filtered = response.data.filter((item: any) => {
-                        return item.parentAssetName === selectClass
+                        return item.parentAssetName === chooseClass
                     })
                     setGetAllSubClass(filtered)
                 }
@@ -298,11 +313,10 @@ export default function AiModelDetection() {
     }
     useEffect(() => {
         getSubClass();
-    }, [selectClass])
+    }, [chooseClass])
 
 
-    // selectSubObject
-    // Get Sub Object bases on selection of sub class 
+    // ============== Get Sub Object bases on selection of sub class ================= 
     async function getSubObjects() {
         try {
             await axios({
@@ -311,14 +325,10 @@ export default function AiModelDetection() {
 
             }).then(function (response) {
                 if (response) {
-
-
                     const filtered = response.data.filter((item: any) => {
-                        return item.object === selectSubClass
+                        return item.object === chooseSubClass
                     })
-                    setGetAllSubObject(filtered)
-
-
+                    setGetAllSubObject(filtered);
                 }
             }).catch(function (error) {
                 console.log({
@@ -333,7 +343,7 @@ export default function AiModelDetection() {
     }
     useEffect(() => {
         getSubObjects()
-    }, [selectSubClass])
+    }, [chooseSubClass])
 
 
 
@@ -346,24 +356,32 @@ export default function AiModelDetection() {
 
             }).then(function (response) {
                 if (response) {
+                    
                     let filtered = [] as any;
-                    if (selectClass === "Vehicles") {
+                    if (chooseClass === "Vehicles") {
                         filtered = response.data.filter((item: any) => {
-                            if (selectSubClass === "Battery") {
-                                return (item.object === selectSubClass) && item?.tags?.SerialNo === selectSubObject
-                            } else if (selectSubClass === "Tire") {
-                                return (item.object === selectSubClass) && item?.tags?.SerialID === selectSubObject
+                            if (chooseSubClass === "Battery") {
+                                return (item.object === chooseSubClass) && item?.tags?.SerialNo === chooseSubObject
+                            } else if (chooseSubClass === "Tire") {
+                                return (item.object === chooseSubClass) && item?.tags?.SerialID === chooseSubObject
                             } else {
-                                return (item.object === selectSubClass) && item?.tags?.SerialNo === selectSubObject
+                                return (item.object === chooseSubClass) && item?.tags?.SerialNo === chooseSubObject
                             }
                         })
                         setTableDataSubObject(filtered[0]?.tags)
                     } else {
                         filtered = response.data.filter((item: any) => {
-                            return (item.object === selectSubClass) && item?.tags?.ID === selectSubObject
+                            return (item.object === chooseSubClass) && item?.tags?.ID === chooseSubObject
                         })
                         setTableDataSubObject(filtered[0]?.tags)
                     }
+
+                    console.log({
+                        "___RESPONSE":response.data,
+                        "___filtered":filtered,
+                        "__chooseClass":chooseClass,
+                        "___chooseSubClass":chooseSubClass
+                    })
                 }
             }).catch(function (error) {
                 console.log({
@@ -377,10 +395,14 @@ export default function AiModelDetection() {
         }
     }
     useEffect(() => {
-        if (selectSubObject !== "") {
+        if (chooseSubClass !== "") {
             getSubObjectsData();
         }
-    }, [selectSubObject, selectSubClass])
+    }, [chooseClass, chooseSubClass, chooseSubObject])
+
+    console.log({
+        "____tableDataSubObject" : tableDataSubObject
+    })
 
 
     useEffect(() => {
@@ -413,12 +435,17 @@ export default function AiModelDetection() {
         setToggleAsset(!toggleAsset)
     }
     const selectItemFunction = (item: any) => {
+        setDisable(1);
         setChooseClass(item);
         setToggleAsset(false);
         setSelectObject('')
         setSelectClass(item)
-        setDisable(1);
         setShowObject(true);
+
+        setChooseObject("Select");
+        setChooseSubClass("Select");
+        setChooseSubObject("Select");
+        setToggleReset(true)
     }
 
     // =============== Dropdown for object ===============
@@ -429,6 +456,8 @@ export default function AiModelDetection() {
         setChooseObject(item);
         setSelectObject(item)
         setToggleObject(false);
+        setShowObjLvlButton(true);
+        setShowSubClass(true)
     }
 
 
@@ -439,7 +468,9 @@ export default function AiModelDetection() {
     }
     const selectSubClassItemFunction = (item: any) => {
         setToggleSubClass(false);
-        setChooseSubClass(item)
+        setChooseSubClass(item);
+        setChooseSubObject("Select");
+        setToggleSubObject(false);
     }
 
 
@@ -451,6 +482,8 @@ export default function AiModelDetection() {
     const selectSubClassObjectItemFunction = (item: any) => {
         setChooseSubObject(item)
         setToggleSubObject(false)
+        setShowSubObjTable(true);
+        setShowSubClass(false)
     }
 
 
@@ -496,7 +529,7 @@ export default function AiModelDetection() {
                 {/* Dropdowns */}
                 <div className="w-[70%] flex justify-start items-center flex-wrap flex-col">
 
-                    <div className="w-full flex justify-start items-start flex-wrap flex-row">
+                    <div className="w-full flex justify-start items-center flex-wrap flex-row">
                         <div className="w-[85%] flex justify-start items-center">
                             {/* Class */}
                             <div className={`${styles.form__wrap} relative w-[50%]`}>
@@ -566,6 +599,7 @@ export default function AiModelDetection() {
                                             {toggleObject ?
                                                 <div className={`h-52 border rounded-xl border-gray-969 h-auto max-h-[250px] w-[350px] absolute flex items-start justify-start mt-1 overflow-hidden overflow-y-auto bg-white ${styles.scroll} z-10`}>
                                                     <ul className="p-0 m-0 w-full">
+                                                        <li className="px-5 py-2 bg-white cursor-pointer hover:bg-yellow-951 w-full font-normal">Select</li>
                                                         {classObject && classObject.length > 0 ?
                                                             classObject.map((item: any, index: any) => {
                                                                 let key = '';
@@ -592,7 +626,8 @@ export default function AiModelDetection() {
                                                                         {key}
                                                                     </li>
                                                                 )
-                                                            }) : null}
+                                                            }) : null
+                                                        }
                                                     </ul>
                                                 </div>
                                                 :
@@ -600,127 +635,219 @@ export default function AiModelDetection() {
                                             }
                                         </div>
                                     </div>
-                                </div>}
+                                </div>
+                            }
 
                         </div>
 
                         <div className="w-[15%] flex justify-center items-center">
-                            <div className="flex justify-start items-center">
-                                <Image
-                                    src="/img/arrow-left-black.svg"
-                                    alt="arrow-left"
-                                    height={15}
-                                    width={24}
-                                    className="mr-1"
-                                />
-                                <button
-                                    onClick={resetFunction}
-                                    className="text-white bg-[#404040] border border-[#666666] rounded rounded-md flex justify-center items-center h-[30px] px-2 text-sm">
-                                    Reset
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="w-full flex justify-start items-start flex-wrap flex-row mt-5">
-                        <div className="w-[85%] flex justify-start items-center">
-                            {/* Sub Class */}
-                            <div className={`${styles.form__wrap} relative w-[50%]`}>
-                                <div className='w-full]'>
-                                    <div className="relative" ref={wrapperRef}>
-                                        <div
-                                            className="border rounded-xl border-gray-969 h-[55px] pl-2 pr-5 relative flex items-center justify-start bg-white w-[95%] cursor-pointer"
-                                            onClick={toggleSubClassDropFunction}
-                                        >
-                                            <label className="absolute text-sm !top-[-10px] left-2 pl-2 pr-2 bg-white">Sub Class</label>
-                                            <Image src="/img/arrow-down-black.svg" alt="arrow-down" height={20} width={20} className={`absolute right-3 top-4 ${toggleSubClass ? 'rotate-180' : 'rotate-0'}`} />
-                                            <span className="text-lg text-black pl-2">{chooseSubClass}</span>
-                                        </div>
-
-                                        {toggleSubClass ?
-                                            <div className={`h-52 border rounded-xl border-gray-969 h-auto max-h-[250px] w-[350px] absolute flex items-start justify-start mt-1 overflow-hidden overflow-y-auto bg-white ${styles.scroll} z-10`}>
-                                                <ul className="p-0 m-0 w-full">
-                                                    <li className="px-5 py-2 bg-white cursor-pointer hover:bg-yellow-951 w-full font-normal" onClick={() => selectSubClassItemFunction('Battery')}>
-                                                        <span>Battery</span>
-                                                    </li>
-                                                    <li className="px-5 py-2 bg-white cursor-pointer hover:bg-yellow-951 w-full font-normal" onClick={() => selectSubClassItemFunction('Tire')}>
-                                                        <span>Tire</span>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            :
-                                            null
-                                        }
-                                    </div>
-                                </div>
-                            </div>
-
-                            {/* Sub Class Object */}
-                            <div className={`${styles.form__wrap} relative w-[50%]`}>
-                                <div className='w-full'>
-                                    <div className="relative" ref={wrapperRef}>
-                                        <div
-                                            className="border rounded-xl border-gray-969 h-[55px] pl-2 pr-5 relative flex items-center justify-start bg-white w-[95%] cursor-pointer"
-                                            onClick={toggleSubObjectDropFunction}
-                                        >
-                                            <label className="absolute text-sm !top-[-10px] left-2 pl-2 pr-2 bg-white">Objects</label>
-                                            <Image src="/img/arrow-down-black.svg" alt="arrow-down" height={20} width={20} className={`absolute right-3 top-4 ${toggleSubObject ? 'rotate-180' : 'rotate-0'}`} />
-                                            <span className="text-lg text-black pl-2">{chooseSubObject}</span>
-                                        </div>
-
-                                        {toggleSubObject ?
-                                            <div className={`h-52 border rounded-xl border-gray-969 h-auto max-h-[250px] w-[350px] absolute flex items-start justify-start mt-1 overflow-hidden overflow-y-auto bg-white ${styles.scroll} z-10`}>
-                                                <ul className="p-0 m-0 w-full">
-                                                    <li className="px-5 py-2 bg-white cursor-pointer hover:bg-yellow-951 w-full font-normal" onClick={() => selectSubClassObjectItemFunction('TPC71810-01-011')}>
-                                                        <span>TPC71810-01-011</span>
-                                                    </li>
-                                                    <li className="px-5 py-2 bg-white cursor-pointer hover:bg-yellow-951 w-full font-normal" onClick={() => selectSubClassObjectItemFunction('TPC71810-01-012')}>
-                                                        <span>TPC71810-01-012</span>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            :
-                                            null
-                                        }
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <div className="w-[15%] flex justify-center items-center">
-                            <div className="flex justify-start items-center ml-9">
-                                <button
-                                    onClick={closeObjectLevel}
-                                    className="bg-white border border-[#EEEEEE] rounded rounded-full flex justify-center items-center h-[40px] w-[40px] hover:bg-yellow-951 hover:border-yellow-951">
+                            {toggleReset &&
+                                <div className="flex justify-start items-center">
                                     <Image
-                                        src="/img/x.svg"
-                                        alt="x"
-                                        height={25}
-                                        width={25}
+                                        src="/img/arrow-left-black.svg"
+                                        alt="arrow-left"
+                                        height={15}
+                                        width={24}
+                                        className="mr-1"
                                     />
+                                    <button
+                                        onClick={resetFunction}
+                                        className="text-white bg-[#404040] border border-[#666666] rounded rounded-md flex justify-center items-center h-[30px] px-2 text-sm">
+                                        Reset
+                                    </button>
+                                </div>
+                            }
+                        </div>
+                    </div>
+
+                    {toggleObjectLevel &&
+                        <div className="w-full flex justify-start items-start flex-wrap flex-row mt-5">
+                            <div className="w-[85%] flex justify-start items-center">
+                                {/* Sub Class */}
+                                <div className={`${styles.form__wrap} relative w-[50%]`}>
+                                    <div className='w-full]'>
+                                        <div className="relative" ref={wrapperRef}>
+                                            <div
+                                                className="border rounded-xl border-gray-969 h-[55px] pl-2 pr-5 relative flex items-center justify-start bg-white w-[95%] cursor-pointer"
+                                                onClick={toggleSubClassDropFunction}
+                                            >
+                                                <label className="absolute text-sm !top-[-10px] left-2 pl-2 pr-2 bg-white">Sub Class</label>
+                                                <Image src="/img/arrow-down-black.svg" alt="arrow-down" height={20} width={20} className={`absolute right-3 top-4 ${toggleSubClass ? 'rotate-180' : 'rotate-0'}`} />
+                                                <span className="text-lg text-black pl-2">{chooseSubClass}</span>
+                                            </div>
+
+                                            {toggleSubClass ?
+                                                <div className={`h-52 border rounded-xl border-gray-969 h-auto max-h-[250px] w-[350px] absolute flex items-start justify-start mt-1 overflow-hidden overflow-y-auto bg-white ${styles.scroll} z-10`}>
+                                                    <ul className="p-0 m-0 w-full">
+                                                        {getAllSubClass && getAllSubClass.length > 0 ?
+                                                            getAllSubClass.map((item: any, index: any) => (
+                                                                <li
+                                                                    key={index}
+                                                                    className="px-5 py-2 bg-white cursor-pointer hover:bg-yellow-951 w-full font-normal"
+                                                                    onClick={() => selectSubClassItemFunction(item.assetName)}
+                                                                >
+                                                                    {item.assetName}
+                                                                </li>
+                                                            )) : null
+                                                        }
+                                                    </ul>
+                                                </div>
+                                                :
+                                                null
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Sub Class Object */}
+                                <div className={`${styles.form__wrap} relative w-[50%]`}>
+                                    <div className='w-full'>
+                                        <div className="relative" ref={wrapperRef}>
+                                            <div
+                                                className="border rounded-xl border-gray-969 h-[55px] pl-2 pr-5 relative flex items-center justify-start bg-white w-[95%] cursor-pointer"
+                                                onClick={toggleSubObjectDropFunction}
+                                            >
+                                                <label className="absolute text-sm !top-[-10px] left-2 pl-2 pr-2 bg-white">Objects</label>
+                                                <Image src="/img/arrow-down-black.svg" alt="arrow-down" height={20} width={20} className={`absolute right-3 top-4 ${toggleSubObject ? 'rotate-180' : 'rotate-0'}`} />
+                                                <span className="text-lg text-black pl-2">{chooseSubObject}</span>
+                                            </div>
+
+                                            {toggleSubObject ?
+                                                <div className={`h-52 border rounded-xl border-gray-969 h-auto max-h-[250px] w-[350px] absolute flex items-start justify-start mt-1 overflow-hidden overflow-y-auto bg-white ${styles.scroll} z-10`}>
+                                                    <ul className="p-0 m-0 w-full">
+                                                        {
+                                                            getAllSubObject && getAllSubObject.length > 0 ?
+                                                                getAllSubObject.map((item: any, index: any) => (
+                                                                    <li
+                                                                        key={index}
+                                                                        onClick={() => selectSubClassObjectItemFunction(selectClass === "Vehicles" ? (item.object === "Tire" ? item?.tags?.SerialID : item?.tags?.SerialNo) : item?.tags?.ID)}
+                                                                        className="px-5 py-2 bg-white cursor-pointer hover:bg-yellow-951 w-full font-normal"
+                                                                    >
+                                                                        {selectClass === "Vehicles" ? (item.object === "Tire" ? item?.tags?.SerialID : item?.tags?.SerialNo) : item?.tags?.ID}
+                                                                    </li>
+
+                                                                )) : null
+                                                        }
+                                                    </ul>
+                                                </div>
+                                                :
+                                                null
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div className="w-[15%] flex justify-center items-center">
+                                <div className="flex justify-start items-center ml-9">
+                                    <button
+                                        onClick={closeObjectLevel}
+                                        className="bg-white border border-[#EEEEEE] rounded rounded-full flex justify-center items-center h-[40px] w-[40px] hover:bg-yellow-951 hover:border-yellow-951">
+                                        <Image
+                                            src="/img/x.svg"
+                                            alt="x"
+                                            height={25}
+                                            width={25}
+                                        />
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                    {showObjLvlButton &&
+                        <div className="w-full flex justify-end items-end flex-wrap flex-row mt-5">
+                            <div className="w-full flex justify-end">
+                                <button
+                                    className="flex justify-center items-center rounded rounded-lg h-[35px] px-3  py-3 bg-[#404040] border border-[#404040] text-white text-sm mb-7"
+                                    onClick={toggleSubClassObjectOption}
+                                >
+                                    <Image
+                                        src="/img/plus.svg"
+                                        alt="activity"
+                                        height={20}
+                                        width={20}
+                                    />
+                                    <span className="ml-2">Object level</span>
                                 </button>
                             </div>
                         </div>
-                    </div>
+                    }
 
-                    <div className="w-full flex justify-end items-end flex-wrap flex-row mt-5">
-                        <div className="w-full flex justify-end">
-                            <button
-                                className="flex justify-center items-center rounded rounded-lg h-[35px] px-3  py-3 bg-[#404040] border border-[#404040] text-white text-sm mb-7"
-                                onClick={toggleSubClassObjectOption}
-                            >
-                                <Image
-                                    src="/img/plus.svg"
-                                    alt="activity"
-                                    height={20}
-                                    width={20}
-                                />
-                                <span className="ml-2">Object level</span>
-                            </button>
-                        </div>
-                    </div>
 
+
+
+                </div>
+
+
+                {/* Table of Information */}
+                <div className="w-full flex justify-end items-end flex-wrap flex-row mt-5">
+                    {showSubClass &&
+                        <table className={`table-auto lg:min-w-full sm:w-full small:w-full text-left ${styles.tableV3} ${styles.tableV41}`}>
+                            <thead className="text-sm font-normal">
+                                <tr>
+                                    {
+                                        selObjectData && Object.keys(`selObjectData`).length != 0 ?
+                                            Object.keys(selObjectData).map((item: any, index: any) => (
+                                                <th className="capitalize" key={index}>
+                                                    {
+                                                        item.split(/(?=[A-Z])/).join(" ")
+                                                    }
+                                                </th>
+                                            ))
+                                            : null
+                                    }
+                                </tr>
+                            </thead>
+                            <tbody className="text-sm font-normal">
+                                <tr>
+                                    {
+                                        selObjectData && Object.values(`selObjectData`).length != 0 ?
+                                            Object.values(selObjectData).map((item: any, index: any) => (
+                                                <td key={index}>
+                                                    <span>{item ? item : '-'}</span>
+                                                </td>
+                                            )) : null
+                                    }
+                                </tr>
+                            </tbody>
+                        </table>
+                    }
+
+                    {
+                        showSubObjTable &&
+                        <table className={`table-auto lg:min-w-full sm:w-full small:w-full text-left ${styles.tableV3} ${styles.tableV41}`}>
+                            <thead className="text-sm font-normal">
+                                <tr>
+                                    {
+                                        tableDataSubObject && Object.keys(`tableDataSubObject`).length != 0 ?
+                                            Object.keys(tableDataSubObject).map((item: any, index: any) => (
+                                                <th className="capitalize" key={index}>
+                                                    {
+                                                        item.split(/(?=[A-Z])/).join(" ")
+                                                    }
+                                                </th>
+                                            ))
+                                            : null
+                                    }
+                                </tr>
+                            </thead>
+                            <tbody className="text-sm font-normal">
+                                <tr>
+                                    {
+                                        tableDataSubObject && Object.values(tableDataSubObject).length != 0 ?
+                                            Object.values(tableDataSubObject).map((item: any, index: any) => (
+                                                <td key={index}>
+                                                    <span>{item ? item : '-'}</span>
+                                                </td>
+                                            ))
+                                            : null
+                                    }
+                                </tr>
+                            </tbody>
+                        </table>
+                    }
                 </div>
 
             </div>
