@@ -8,7 +8,9 @@ import { setClassBreadcrumb, objDefaultClassSelectorFunction } from '@/store/act
 import AddNewClassObject from './addnewclassobject';
 import { successMessageAction } from '@/store/actions/classAction';
 import { editObjectModalAction } from '@/store/actions/classAction';
+import { setDataForeOpsWatchAction } from '@/store/actions/classAction';
 import EditObject from './editobject';
+import { useRouter } from 'next/router';
 
 export default function ObjectManagement(props: any) {
 
@@ -26,6 +28,7 @@ export default function ObjectManagement(props: any) {
     const [search, setSearch] = useState('');
     const [selectedObjID, setSelectedObjID] = useState('')
     const [actionsToggle, setActionsToggle] = useState(false);
+    const router = useRouter();
 
     // All class reducer states
     const classSelector = useSelector((state: any) => state.classReducer);
@@ -181,6 +184,47 @@ export default function ObjectManagement(props: any) {
         dispatch(editObjectModalAction(true));
         setActions(false);
         setSelectedObjID(item);
+    }
+
+      // Save data for eopswatch section
+      const eOpsWatchFunction = (item: any) => {
+        let obj = '';
+        if (chooseAsset === "Manufacturing Plants") {
+            obj = item.ID
+        } else {
+            obj = item.VIN
+        }
+        const eopsData = {
+            "class": chooseAsset,
+            "subClass": "",
+            "classObject": item,
+            "object": "",
+            "datafor":"eopwatch"
+        }
+        dispatch(setDataForeOpsWatchAction(eopsData));
+        setTimeout(() => {
+            router.push('/dashboard/aimodaldetection');
+        }, 1000)
+    }
+      // Save data for eopswatch section
+      const eOpsTraceFunction = (item: any) => {
+        let obj = '';
+        if (chooseAsset === "Manufacturing Plants") {
+            obj = item.ID
+        } else {
+            obj = item.VIN
+        }
+        const eopsData = {
+            "class": chooseAsset,
+            "subClass": "",
+            "classObject": item,
+            "object": "",
+            "datafor":"eoptrace"
+        }
+        dispatch(setDataForeOpsWatchAction(eopsData));
+        setTimeout(() => {
+            router.push('/dashboard/aimodaldetection');
+        }, 1000)
     }
 
     return (
@@ -362,16 +406,16 @@ export default function ObjectManagement(props: any) {
                                                                 className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
                                                                 <span>Delete</span>
                                                             </button>
-                                                            <Link
-                                                                href="#"
+                                                            <button
+                                                                onClick={()=>eOpsWatchFunction(items.subObjectID)}
                                                                 className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
                                                                 <span>eOps Watch</span>
-                                                            </Link>
-                                                            <Link
-                                                                href="#"
+                                                            </button>
+                                                            <button
+                                                                onClick={() => eOpsTraceFunction(items?.subObjectID)}
                                                                 className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
                                                                 <span>eOps Trace</span>
-                                                            </Link>
+                                                            </button>
                                                             <Link
                                                                 href="#"
                                                                 className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
