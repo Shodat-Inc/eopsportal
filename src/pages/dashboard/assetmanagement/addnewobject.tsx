@@ -15,7 +15,7 @@ export default function AddNewObject(props: any) {
                 return item.assetName === props.selectedSubClass
             })
             if (filtered) {
-                setSelectedObjectData(filtered[0].tagsWithDataType)
+                setSelectedObjectData(filtered[0]?.tagsWithDataType)
             }
         }
     }, [props])

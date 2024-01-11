@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import { useDispatch, useSelector } from 'react-redux';
 import Layout from "../../../components/Layout";
 import Template from "../template";
 import Image from "next/image";
@@ -6,9 +7,13 @@ import Link from "next/link";
 import { useRouter } from 'next/router'
 import axios from 'axios';
 import styles from '../../../styles/Common.module.css';
+import {
+    setDataFromResultEopsWatchAction,
+    setClassBreadcrumb
+} from "@/store/actions/classAction";
 
 export default function TrainingView() {
-
+    const dispatch = useDispatch<any>();
     const router = useRouter();
     const parentAsset = router.query;
     const [loader, setLoader] = useState(true);
@@ -19,6 +24,8 @@ export default function TrainingView() {
         }, 1)
     }, [])
     const [value, setValue] = useState(0);
+
+    const classSelector = useSelector((state: any) => state.classReducer);
 
     const fetchObjectData = () => {
         axios.get("/api/geteopsWatch").then((response) => {
@@ -100,16 +107,11 @@ export default function TrainingView() {
 
     const handleRange = (e: any) => {
         setValue(e.target.value);
-        
+
         const filtered = plots.filter((item: any) => {
             return parseInt(item.performance) >= parseInt(e.target.value)
         })
         setPlotData(filtered)
-        // console.log({
-        //     "T-VALUE": e.target.value,
-        //     "filter":filtered,
-        //     plots:plots
-        // })
     }
 
     useEffect(() => {
@@ -122,11 +124,43 @@ export default function TrainingView() {
 
     }, [value])
 
-    // console.log({
-    //     "VALUE": value,
-    //     plotData: plotData
-    // })
+    const goBackToSubObjectManagement = () => {
 
+        let type = "";
+        let type2 = "";
+        let abc = {} as any;
+        if (classSelector?.dataforeopswatchReducer?.class === "Manufacturing Plants") {
+            type = "PlantID",
+                type2 = "ID"
+        } else {
+            if (classSelector?.dataforeopswatchReducer?.subClass === "Battery") {
+                type = "VIN",
+                    type2 = "SerialNo"
+            } else {
+                type = "VIN",
+                    type2 = "SerialID"
+            }
+        }
+        abc = {
+            "flow": "Object Management",
+            "class": classSelector?.dataforeopswatchReducer?.class,
+            "classObjKey": type,
+            "classObjValue": classSelector?.dataforeopswatchReducer?.classObject,
+            "subClass": classSelector?.dataforeopswatchReducer?.subClass,
+            "subClassObjKey": type2,
+            "subClassObjValue": classSelector?.dataforeopswatchReducer?.object
+        }
+        dispatch(setClassBreadcrumb(abc));
+
+        let data = {
+            "comingFrom": "result",
+        }
+        setTimeout(() => {
+            router.push('/dashboard/assetmanagement');
+        }, 1000)
+        dispatch(setDataFromResultEopsWatchAction(data));
+
+    }
 
     return (
         <div className="flex font-OpenSans">
@@ -144,12 +178,18 @@ export default function TrainingView() {
                                 <div className="flex relative bg-white rounded rounded-lg px-3 py-1 inline-flex border border-[#E3E3E3]">
                                     <ul className="flex justify-start items-center text-sm">
                                         <li className="flex justify-start items-center">
-                                            <Link
+                                            {/* <Link
                                                 href="/dashboard/aimodaldetection"
                                                 className="font-semibold"
                                             >
                                                 {parentAsset.key}
-                                            </Link>
+                                            </Link> */}
+                                            <button
+                                                className="font-semibold"
+                                                onClick={goBackToSubObjectManagement}
+                                            >
+                                                {parentAsset.key}
+                                            </button>
                                         </li>
                                         <li className="flex justify-start items-center">
                                             <Image

@@ -12,6 +12,7 @@ import { EDIT_SUB_CLASS_MODEL_ERROR, EDIT_SUB_CLASS_MODEL_SUCCESS } from "../typ
 import { EDIT_OBJECT_MODEL_ERROR, EDIT_OBJECT_MODEL_SUCCESS } from "../types";
 import { EDIT_SUB_OBJECT_MODEL_ERROR, EDIT_SUB_OBJECT_MODEL_SUCCESS } from "../types";
 import { DATA_FOR_EOPSTRACE_ERROR, DATA_FOR_EOPSTRACE_SUCCESS } from "../types";
+import { DATA_FROM_RESULT_PAGE_ERROR, DATA_FROM_RESULT_PAGE_SUCCESS } from "../types";
 
 import axios from "axios";
 let access_token = "" as any;
@@ -350,6 +351,26 @@ export const setDataForeOpsTraceAction = (action:any) => async (dispatch: any) =
         } else {
             dispatch({
                 type: DATA_FOR_EOPSTRACE_ERROR,
+                payload: action
+            });
+        }
+    } catch (err) {
+        console.log("err in action:", err)
+    }
+};
+
+
+// Store data from eopswatch result page to move back to sub object management page
+export const setDataFromResultEopsWatchAction = (action:any) => async (dispatch: any) => {
+    try {
+        if (action) {
+            dispatch({
+                type: DATA_FROM_RESULT_PAGE_SUCCESS,
+                payload: action
+            });
+        } else {
+            dispatch({
+                type: DATA_FROM_RESULT_PAGE_ERROR,
                 payload: action
             });
         }

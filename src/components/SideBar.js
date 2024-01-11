@@ -28,7 +28,8 @@ const SideBar = forwardRef(({ showNav, setShowNav }, ref) => {
       "subClass": "",
       "classObject": "",
       "object": "",
-      "datafor": ""
+      "datafor": "",
+      "type":""
     }
     dispatch(setDataForeOpsWatchAction(eopsData));
   }

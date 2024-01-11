@@ -330,7 +330,7 @@ export default function AiModelDetection() {
 
             }).then(function (response) {
                 if (response) {
-                    
+
                     let filtered = [] as any;
                     if (chooseClass === "Vehicles") {
                         filtered = response.data.filter((item: any) => {
@@ -351,10 +351,10 @@ export default function AiModelDetection() {
                     }
 
                     console.log({
-                        "___RESPONSE":response.data,
-                        "___filtered":filtered,
-                        "__chooseClass":chooseClass,
-                        "___chooseSubClass":chooseSubClass
+                        "___RESPONSE": response.data,
+                        "___filtered": filtered,
+                        "__chooseClass": chooseClass,
+                        "___chooseSubClass": chooseSubClass
                     })
                 }
             }).catch(function (error) {
@@ -375,7 +375,7 @@ export default function AiModelDetection() {
     }, [chooseClass, chooseSubClass, chooseSubObject])
 
     console.log({
-        "____tableDataSubObject" : tableDataSubObject
+        "____tableDataSubObject": tableDataSubObject
     })
 
 
@@ -459,24 +459,36 @@ export default function AiModelDetection() {
         setShowSubObjTable(true);
         setShowSubClass(false);
 
+        let type = "";
+        if (chooseClass === "Manufacturing Plants") {
+            type = "ID"
+        } else {
+            if (chooseSubClass === "Battery") {
+                type = "SerialNo"
+            } else {
+                type = "SerialID"
+            }
+        }
+
         // Save data for redux
-        let eopsData:any = {
+        let eopsData: any = {
             "class": chooseClass,
             "subClass": chooseSubClass,
             "classObject": chooseObject,
             "object": item,
-            "datafor":"eopwatch"
+            "datafor": "eopwatch",
+            "type": type
         }
-        if(Object.keys(classSelector?.dataforeopswatchReducer).length === 0) {
+        // if (Object.keys(classSelector?.dataforeopswatchReducer).length === 0) {
             dispatch(setDataForeOpsWatchAction(eopsData));
-        }
+        // }
         localStorage.setItem('eopsData', eopsData);
     }
 
 
     // ============== Set Datafor (eopswatch/eopstrace) ==========
-    useEffect(()=> {
-        if(classSelector?.dataforeopswatchReducer?.datafor === "eopstrace") {
+    useEffect(() => {
+        if (classSelector?.dataforeopswatchReducer?.datafor === "eopstrace") {
             setTab(2)
         }
     }, [classSelector?.dataforeopswatchReducer?.datafor])
@@ -872,7 +884,7 @@ export default function AiModelDetection() {
                                     ?
                                     <EopsWatch
                                         nextDataProps={nextDataProps}
-                                        active={chooseSubObject!== "Select" ? true : false}
+                                        active={chooseSubObject !== "Select" ? true : false}
                                     />
                                     :
                                     <EopsWatchModel />

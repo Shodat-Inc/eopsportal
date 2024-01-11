@@ -19,6 +19,16 @@ export default function AssetManagement() {
     const getSelClass = useSelector((state: any) => state.classReducer);
     const [objectKey, setObjectKey] = useState('');
 
+    const classSelector = useSelector((state: any) => state.classReducer);
+
+    useEffect(()=>{
+        if(classSelector?.datafromresulteopswatchReducer?.comingFrom === "result") {
+            setTab(3)
+        } else {
+            setTab(tab)
+        }
+    }, [classSelector?.datafromresulteopswatchReducer?.comingFrom])
+
     useEffect(() => {
         dispatch(getSingleUser())
     }, [])
