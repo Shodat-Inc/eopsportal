@@ -227,7 +227,11 @@ export default function SubObjectManagement(props: any) {
         if (props.defaultClass === "Manufacturing Plants") {
             obj = item.ID
         } else {
-            obj = item.VIN
+            if(chooseAsset === "Battery") {
+                obj = item.SerialNo;
+            } else {
+                obj = item.SerialID;
+            }
         }
         const eopsData = {
             "class": props.defaultClass,
@@ -248,7 +252,11 @@ export default function SubObjectManagement(props: any) {
         if (props.defaultClass === "Manufacturing Plants") {
             obj = item.ID
         } else {
-            obj = item.VIN
+            if(chooseAsset === "Battery") {
+                obj = item.SerialNo;
+            } else {
+                obj = item.SerialID;
+            }
         }
         const eopsTraceData = {
             "class": props.defaultClass,

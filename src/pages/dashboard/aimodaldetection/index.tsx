@@ -9,11 +9,12 @@ import EopsTrace from "./eopstrace";
 import EopsWatchModel from "./eopswatchModel";
 import EopsTraceModel from "./eopstracemodel";
 import axios from "axios";
-import { setDataForeOpsWatchAction } from "@/store/actions/classAction";
+import { setDataForeOpsWatchAction, } from "@/store/actions/classAction";
 import Router from 'next/router'
 import { useRouter } from 'next/router'
 
 export default function AiModelDetection() {
+    const dispatch = useDispatch<any>()
     const router = useRouter();
     const routerParams = router.query;
     const [tab, setTab] = useState(1);
@@ -456,7 +457,20 @@ export default function AiModelDetection() {
         setChooseSubObject(item)
         setToggleSubObject(false)
         setShowSubObjTable(true);
-        setShowSubClass(false)
+        setShowSubClass(false);
+
+        // Save data for redux
+        let eopsData:any = {
+            "class": chooseClass,
+            "subClass": chooseSubClass,
+            "classObject": chooseObject,
+            "object": item,
+            "datafor":"eopwatch"
+        }
+        if(Object.keys(classSelector?.dataforeopswatchReducer).length === 0) {
+            dispatch(setDataForeOpsWatchAction(eopsData));
+        }
+        localStorage.setItem('eopsData', eopsData);
     }
 
 
