@@ -13,6 +13,7 @@ import { EDIT_OBJECT_MODEL_ERROR, EDIT_OBJECT_MODEL_SUCCESS } from "../types";
 import { EDIT_SUB_OBJECT_MODEL_ERROR, EDIT_SUB_OBJECT_MODEL_SUCCESS } from "../types";
 import { DATA_FOR_EOPSTRACE_ERROR, DATA_FOR_EOPSTRACE_SUCCESS } from "../types";
 import { DATA_FROM_RESULT_PAGE_ERROR, DATA_FROM_RESULT_PAGE_SUCCESS } from "../types";
+import { DATA_FOR_ALERTS_ERROR, DATA_FOR_ALERTS_SUCCESS } from "../types";
 
 const initialState = {
   selectedClass: '',
@@ -29,7 +30,8 @@ const initialState = {
   editObjectModalReducer: false,
   editSubObjectModalReducer: false,
   dataforeopstraceReducer: {},
-  datafromresulteopswatchReducer:{},
+  datafromresulteopswatchReducer: {},
+  dataforalertsReducer: {},
 };
 
 const classReducer = (state = initialState, action: any) => {
@@ -199,6 +201,18 @@ const classReducer = (state = initialState, action: any) => {
     case DATA_FROM_RESULT_PAGE_ERROR:
       return {
         datafromresulteopswatchReducer: action.payload,
+      };
+
+
+    case DATA_FOR_ALERTS_SUCCESS:
+      return {
+        ...state,
+        dataforalertsReducer: action.payload,
+      };
+
+    case DATA_FOR_ALERTS_ERROR:
+      return {
+        dataforalertsReducer: action.payload,
       };
 
     default:

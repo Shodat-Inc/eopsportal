@@ -13,6 +13,7 @@ import { EDIT_OBJECT_MODEL_ERROR, EDIT_OBJECT_MODEL_SUCCESS } from "../types";
 import { EDIT_SUB_OBJECT_MODEL_ERROR, EDIT_SUB_OBJECT_MODEL_SUCCESS } from "../types";
 import { DATA_FOR_EOPSTRACE_ERROR, DATA_FOR_EOPSTRACE_SUCCESS } from "../types";
 import { DATA_FROM_RESULT_PAGE_ERROR, DATA_FROM_RESULT_PAGE_SUCCESS } from "../types";
+import { DATA_FOR_ALERTS_ERROR, DATA_FOR_ALERTS_SUCCESS } from "../types";
 
 import axios from "axios";
 let access_token = "" as any;
@@ -371,6 +372,26 @@ export const setDataFromResultEopsWatchAction = (action:any) => async (dispatch:
         } else {
             dispatch({
                 type: DATA_FROM_RESULT_PAGE_ERROR,
+                payload: action
+            });
+        }
+    } catch (err) {
+        console.log("err in action:", err)
+    }
+};
+
+
+// Store data for alerts page from production page
+export const setDataForAlertsComponentAction = (action:any) => async (dispatch: any) => {
+    try {
+        if (action) {
+            dispatch({
+                type: DATA_FOR_ALERTS_SUCCESS,
+                payload: action
+            });
+        } else {
+            dispatch({
+                type: DATA_FOR_ALERTS_ERROR,
                 payload: action
             });
         }
