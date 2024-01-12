@@ -34,12 +34,14 @@ export default function SubObjectManagement(props: any) {
     // All class reducer states
     const classSelector = useSelector((state: any) => state.classReducer);
 
-    useEffect(() => {
-        if (Object.keys(classSelector?.dataforeopswatchReducer).length !== 0) {
-            setChooseAsset(classSelector?.dataforeopswatchReducer?.subClass)
-        }
+    // useEffect(() => {
+    //     setTimeout(()=>{
+    //         if(classSelector?.dataforeopswatchReducer?.subClass!=="") {
+    //             setChooseAsset(classSelector?.dataforeopswatchReducer?.subClass)
+    //         }
+    //     }, 1000)
 
-    }, [classSelector?.dataforeopswatchReducer])
+    // }, [classSelector?.dataforeopswatchReducer?.subClass])
 
     // Close Success message after 5 second if true
     useEffect(() => {
@@ -80,17 +82,19 @@ export default function SubObjectManagement(props: any) {
                     //     defaultClass = props.defaultClass
                     // }
 
-                    let defaultClass = classSelector?.dataforeopswatchReducer?.class ? classSelector?.dataforeopswatchReducer?.class : props.defaultClass
+                    // let defaultClass = classSelector?.dataforeopswatchReducer?.class ? classSelector?.dataforeopswatchReducer?.class : props.defaultClass
+                    let defaultClass = props.defaultClass
                     let filtered = response.data.filter((item: any) => {
                         return item.parentAssetID === defaultClass
                     })
                     if (filtered) {
-                        let chooseAsset = "";
-                        if (classSelector?.dataforeopswatchReducer?.subClass !== "") {
-                            chooseAsset = classSelector?.dataforeopswatchReducer?.subClass
-                        } else {
-                            chooseAsset = filtered[0].assetName
-                        }
+                        // let chooseAsset = "";
+                        // if (classSelector?.dataforeopswatchReducer?.subClass !== "") {
+                        //     chooseAsset = classSelector?.dataforeopswatchReducer?.subClass
+                        // } else {
+                        //     chooseAsset = filtered[0].assetName
+                        // }
+                        let chooseAsset = filtered[0].assetName
                         setChooseAsset(chooseAsset);
                         dispatch(objDefaultSubClassSelectorFunction(chooseAsset))
                         setSubClassData(filtered)
@@ -110,7 +114,7 @@ export default function SubObjectManagement(props: any) {
     useEffect(() => {
         fetchData();
         if (fetchData.length) return;
-    }, [props.defaultClass, classSelector?.dataforeopswatchReducer?.class])
+    }, [props.defaultClass])
 
     const handleDropDown = (item: any) => {
         setChooseAsset(item)
@@ -246,7 +250,8 @@ export default function SubObjectManagement(props: any) {
     const eOpsWatchFunction = (item: any) => {
         let obj = '';
         let type = "";
-        if (classSelector?.dataforeopswatchReducer?.class ? classSelector?.dataforeopswatchReducer?.class : props.defaultClass === "Manufacturing Plants") {
+        // if (classSelector?.dataforeopswatchReducer?.class ? classSelector?.dataforeopswatchReducer?.class : props.defaultClass === "Manufacturing Plants") {
+        if (props.defaultClass === "Manufacturing Plants") {
             obj = item.ID
             type="ID"
         } else {
@@ -259,7 +264,8 @@ export default function SubObjectManagement(props: any) {
             }
         }
         const eopsData = {
-            "class": classSelector?.dataforeopswatchReducer?.class ? classSelector?.dataforeopswatchReducer?.class : props.defaultClass,
+            // "class": classSelector?.dataforeopswatchReducer?.class ? classSelector?.dataforeopswatchReducer?.class : props.defaultClass,
+            "class":props.defaultClass,
             "subClass": chooseAsset,
             "classObject": props.objectKey,
             "object": obj,
@@ -282,7 +288,8 @@ export default function SubObjectManagement(props: any) {
         // } else {
         //     defaultClass = props.defaultClass
         // }
-        let defaultClass = classSelector?.dataforeopswatchReducer?.class ? classSelector?.dataforeopswatchReducer?.class : props.defaultClass
+        // let defaultClass = classSelector?.dataforeopswatchReducer?.class ? classSelector?.dataforeopswatchReducer?.class : props.defaultClass
+        let defaultClass = props.defaultClass
         
         if (defaultClass === "Manufacturing Plants") {
             obj = item.ID
@@ -297,7 +304,8 @@ export default function SubObjectManagement(props: any) {
             }
         }
         const eopsTraceData = {
-            "class": classSelector?.dataforeopswatchReducer?.class ? classSelector?.dataforeopswatchReducer?.class : props.defaultClass,
+            // "class": classSelector?.dataforeopswatchReducer?.class ? classSelector?.dataforeopswatchReducer?.class : props.defaultClass,
+            "class":props.defaultClass,
             "subClass": chooseAsset,
             "classObject": props.objectKey,
             "object": obj,
@@ -619,7 +627,8 @@ export default function SubObjectManagement(props: any) {
                 show={addNewObject.toggleAddObject && addNewObject.toggleAddObject}
                 selectedSubClass={chooseAsset}
                 subClassData={subClassData}
-                parentClass={props.defaultClass ? props.defaultClass : classSelector?.dataforeopswatchReducer?.class}
+                // parentClass={props.defaultClass ? props.defaultClass : classSelector?.dataforeopswatchReducer?.class}
+                parentClass={props.defaultClass}
                 objID={props.objID}
             />
 

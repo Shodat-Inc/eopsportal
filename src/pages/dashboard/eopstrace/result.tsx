@@ -2,9 +2,10 @@ import React, { useState, useEffect } from "react";
 import Layout from "../../../components/Layout";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from 'next/router'
+import Router from 'next/router'
+import { useRouter } from 'next/router';
 
-export default function Result() {
+export default function Result() {    
 
     const batteryData = [
         {
@@ -25,6 +26,7 @@ export default function Result() {
 
     const router = useRouter();
     const parentAsset = router.query;
+    const routerParams = router.query;
     const [loader, setLoader] = useState(true);
     const [data, setData] = useState([] as any);
     useEffect(() => {
@@ -39,6 +41,23 @@ export default function Result() {
         })
         setData(filtered)
     }, [parentAsset])
+
+    const clickOnBreadcrumb = () => {
+        setTimeout(() => {
+            Router.push({
+                pathname: '/dashboard/eopstrace/raisedalerts',
+                query: {
+                    objectID: routerParams?.objectID,
+                    subObject: routerParams?.subObject,
+                    key: routerParams?.key,
+                    id: routerParams?.id,
+                    model: routerParams?.model,
+                    industryID: routerParams?.industryID,
+                    from: "Production"
+                }
+            })
+        }, 100)
+    }
 
     return (
         <div className="flex font-OpenSans">
@@ -55,17 +74,18 @@ export default function Result() {
                         <nav className="flex" aria-label="Breadcrumb">
                             <ol className="inline-flex items-center space-x-1 md:space-x-1">
                                 <li className="inline-flex items-center">
-                                    <Link
-                                        href={{
-                                            pathname: "/dashboard/eopstrace/raisedalerts",
-                                            query: {
-                                                objectID: parentAsset.objectID,
-                                                key: parentAsset.key,
-                                                id: parentAsset.id,
-                                                subObject: parentAsset.subObject,
-                                                model: parentAsset.model
-                                            }
-                                        }}
+                                    <button
+                                        // href={{
+                                        //     pathname: "/dashboard/eopstrace/raisedalerts",
+                                        //     query: {
+                                        //         objectID: parentAsset.objectID,
+                                        //         key: parentAsset.key,
+                                        //         id: parentAsset.id,
+                                        //         subObject: parentAsset.subObject,
+                                        //         model: parentAsset.model
+                                        //     }
+                                        // }}
+                                        onClick={clickOnBreadcrumb}
 
                                         className="inline-flex items-center text-sm font-medium text-black hover:text-yellow-950">
                                         <Image
@@ -76,7 +96,7 @@ export default function Result() {
                                             width={24}
                                         />
                                         <span className="text-black ml-2">Back</span>
-                                    </Link>
+                                    </button>
                                 </li>
                             </ol>
                         </nav>

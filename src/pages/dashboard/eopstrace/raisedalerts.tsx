@@ -12,6 +12,7 @@ import { getProsenseData } from "@/store/actions/prosenseAction";
 import moment from "moment";
 import { useRouter } from 'next/router';
 import RaisedAlertTable from "./raisedalerttable";
+import Router from 'next/router'
 
 export async function getServerSideProps() {
     const assetData = await getAssetsData()
@@ -26,6 +27,7 @@ export default function RaisedAlerts(props: any) {
 
     const router = useRouter();
     const parentAsset = router.query;
+    const routerParams = router.query;
 
     const dispatch = useDispatch<any>();
     const [chooseAsset, setChooseAsset] = useState(parentAsset.objectID ? parentAsset.objectID : props.assetData && props.assetData[0].assetName);
@@ -220,32 +222,32 @@ export default function RaisedAlerts(props: any) {
         await axios.get("/api/getWatchAlerts").then((response) => {
             if (response.data) {
                 const filtered = response.data.filter((item: any) => {
-                    if(item.model === "Battery Life Prediction") {
-                    if (filterData.impact !== "" && filterData.date !== "" && filterData.threshold !== "") {
-                        console.log("ALL")
-                        return item.impact === filterData.impact || item.date === filterDateCondition || item.threshold >= filterData.threshold
-                    } else if (filterData.impact !== "" && filterData.date !== "") {
-                        console.log("IMPACT AND DATE")
-                        return item.impact === filterData.impact && item.date === filterDateCondition(filterData.date)
-                    } else if (filterData.impact !== "" && filterData.threshold !== "") {
-                        console.log("IMPACT AND THRESHOLD")
-                        return item.date === filterData.date || item.threshold === filterData.threshold
-                    } else if (filterData.date !== "" && filterData.threshold !== "") {
-                        console.log("DATE AND THRESHOLD")
-                        return item.impact === filterData.impact || item.threshold >= filterData.threshold
-                    } else if (filterData.impact !== "") {
-                        console.log("IMPACT")
-                        return item.impact === filterData.impact
-                    } else if (filterData.date !== "") {
-                        console.log("DATE")
-                        return item.date === filterDateCondition(filterData.date)
-                    } else if (filterData.threshold !== "") {
-                        console.log("THRESHOLD")
-                        return item.threshold >= filterData.threshold
-                    } else {
-                        return []
+                    if (item.model === "Battery Life Prediction") {
+                        if (filterData.impact !== "" && filterData.date !== "" && filterData.threshold !== "") {
+                            console.log("ALL")
+                            return item.impact === filterData.impact || item.date === filterDateCondition || item.threshold >= filterData.threshold
+                        } else if (filterData.impact !== "" && filterData.date !== "") {
+                            console.log("IMPACT AND DATE")
+                            return item.impact === filterData.impact && item.date === filterDateCondition(filterData.date)
+                        } else if (filterData.impact !== "" && filterData.threshold !== "") {
+                            console.log("IMPACT AND THRESHOLD")
+                            return item.date === filterData.date || item.threshold === filterData.threshold
+                        } else if (filterData.date !== "" && filterData.threshold !== "") {
+                            console.log("DATE AND THRESHOLD")
+                            return item.impact === filterData.impact || item.threshold >= filterData.threshold
+                        } else if (filterData.impact !== "") {
+                            console.log("IMPACT")
+                            return item.impact === filterData.impact
+                        } else if (filterData.date !== "") {
+                            console.log("DATE")
+                            return item.date === filterDateCondition(filterData.date)
+                        } else if (filterData.threshold !== "") {
+                            console.log("THRESHOLD")
+                            return item.threshold >= filterData.threshold
+                        } else {
+                            return []
+                        }
                     }
-                }
 
                 });
 
@@ -300,6 +302,24 @@ export default function RaisedAlerts(props: any) {
     const wrapperRef = useRef(null);
     useOutsideAlerter(wrapperRef);
 
+
+    const clickOnBreadcrumb = () => {
+        setTimeout(() => {
+            Router.push({
+                pathname: '/dashboard/eopstrace/preview',
+                query: {
+                    objectID: routerParams?.objectID,
+                    subObject: routerParams?.subObject,
+                    key: routerParams?.key,
+                    id: routerParams?.id,
+                    model: routerParams?.model,
+                    industryID: routerParams?.industryID,
+                    from: "Production"
+                }
+            })
+        }, 100)
+    }
+
     return (
         <div className="flex font-OpenSans">
 
@@ -314,7 +334,7 @@ export default function RaisedAlerts(props: any) {
                         <nav className="flex" aria-label="Breadcrumb">
                             <ol className="inline-flex items-center space-x-1 md:space-x-1">
                                 <li className="inline-flex items-center">
-                                    <Link href="/dashboard/assetmanagement"
+                                    <Link href="/dashboard/aimodaldetection"
                                         className="inline-flex items-center text-sm font-medium text-black hover:text-yellow-950">
                                         <Image
                                             src="/img/home.svg"
@@ -326,16 +346,17 @@ export default function RaisedAlerts(props: any) {
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link
-                                        href={{
-                                            pathname: "/dashboard/assetmanagement/subchildobject",
-                                            query: {
-                                                class: parentAsset.objectID,
-                                                object: parentAsset.id,
-                                                id: parentAsset.key,
-                                                subObject: parentAsset.subObject,
-                                            }
-                                        }}
+                                    <button
+                                        onClick={clickOnBreadcrumb}
+                                        // href={{
+                                        //     pathname: "/dashboard/assetmanagement/subchildobject",
+                                        //     query: {
+                                        //         class: parentAsset.objectID,
+                                        //         object: parentAsset.id,
+                                        //         id: parentAsset.key,
+                                        //         subObject: parentAsset.subObject,
+                                        //     }
+                                        // }}
                                         className="flex items-center">
                                         <Image
                                             src="/img/arrow-right.svg"
@@ -345,19 +366,20 @@ export default function RaisedAlerts(props: any) {
                                             width={24}
                                         />
                                         <span className="ml-1 text-sm font-medium text-black hover:text-yellow-950 md:ml-1">{parentAsset.key}</span>
-                                    </Link>
+                                    </button>
                                 </li>
                                 <li>
-                                    <Link
-                                        href={{
-                                            pathname: "/dashboard/eopstrace/tracemodel",
-                                            query: {
-                                                objectID: parentAsset.objectID,
-                                                key: parentAsset.key,
-                                                id: parentAsset.id,
-                                                subObject: parentAsset.subObject,
-                                            }
-                                        }}
+                                    <button
+                                        onClick={clickOnBreadcrumb}
+                                        // href={{
+                                        //     pathname: "/dashboard/eopstrace/tracemodel",
+                                        //     query: {
+                                        //         objectID: parentAsset.objectID,
+                                        //         key: parentAsset.key,
+                                        //         id: parentAsset.id,
+                                        //         subObject: parentAsset.subObject,
+                                        //     }
+                                        // }}
                                         className="flex items-center"
                                     >
                                         <Image
@@ -368,20 +390,21 @@ export default function RaisedAlerts(props: any) {
                                             width={24}
                                         />
                                         <span className="ml-1 text-sm font-medium text-black hover:text-yellow-950 md:ml-1">{parentAsset.model}</span>
-                                    </Link>
+                                    </button>
                                 </li>
                                 <li>
-                                    <Link
-                                        href={{
-                                            pathname: "/dashboard/eopstrace/productionmodel",
-                                            query: {
-                                                objectID: parentAsset.objectID,
-                                                key: parentAsset.key,
-                                                id: parentAsset.id,
-                                                subObject: parentAsset.subObject,
-                                                model: parentAsset.model,
-                                            }
-                                        }}
+                                    <button
+                                        // href={{
+                                        //     pathname: "/dashboard/eopstrace/productionmodel",
+                                        //     query: {
+                                        //         objectID: parentAsset.objectID,
+                                        //         key: parentAsset.key,
+                                        //         id: parentAsset.id,
+                                        //         subObject: parentAsset.subObject,
+                                        //         model: parentAsset.model,
+                                        //     }
+                                        // }}
+                                        onClick={clickOnBreadcrumb}
                                         className="flex items-center"
                                     >
                                         <Image
@@ -392,20 +415,21 @@ export default function RaisedAlerts(props: any) {
                                             width={24}
                                         />
                                         <span className="ml-1 text-sm font-medium text-black hover:text-yellow-950 md:ml-1">Production</span>
-                                    </Link>
+                                    </button>
                                 </li>
                                 <li>
-                                    <Link
-                                        href={{
-                                            pathname: "/dashboard/eopstrace/eopstracealerts",
-                                            query: {
-                                                objectID: parentAsset.objectID,
-                                                key: parentAsset.key,
-                                                id: parentAsset.id,
-                                                subObject: parentAsset.subObject,
-                                                model: parentAsset.model,
-                                            }
-                                        }}
+                                    <button
+                                        onClick={clickOnBreadcrumb}
+                                        // href={{
+                                        //     pathname: "/dashboard/eopstrace/eopstracealerts",
+                                        //     query: {
+                                        //         objectID: parentAsset.objectID,
+                                        //         key: parentAsset.key,
+                                        //         id: parentAsset.id,
+                                        //         subObject: parentAsset.subObject,
+                                        //         model: parentAsset.model,
+                                        //     }
+                                        // }}
                                         className="flex items-center"
                                     >
                                         <Image
@@ -416,7 +440,7 @@ export default function RaisedAlerts(props: any) {
                                             width={24}
                                         />
                                         <span className="ml-1 text-sm font-medium text-black hover:text-yellow-950 md:ml-1">Alerts</span>
-                                    </Link>
+                                    </button>
                                 </li>
                                 <li>
                                     <div className="flex items-center">
@@ -884,7 +908,7 @@ export default function RaisedAlerts(props: any) {
                                     model={parentAsset.model}
                                     filterData={data}
                                 />
-                                
+
                             </div>
                         </div>
                     </div>

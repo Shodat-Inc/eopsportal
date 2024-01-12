@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import { useDispatch, useSelector } from 'react-redux';
 import styles from '../../../styles/Common.module.css';
 import Layout from "../../../components/Layout";
 import Image from "next/image";
@@ -7,11 +8,14 @@ import Test from "./test";
 import Production from "./production";
 import Datepicker from "react-tailwindcss-datepicker";
 import { useRouter } from 'next/router'
+import Router from 'next/router'
 import axios from "axios";
+import { setDataForAlertsComponentAction } from "@/store/actions/classAction";
 
 export default function Preview() {
     const router = useRouter();
     const routerParams = router.query;
+    const dispatch = useDispatch<any>()
 
     const [defaultTab, setDefaultTab] = useState("Test");
     const [toggleArrow, setToggleArrow] = useState(false);
@@ -23,6 +27,8 @@ export default function Preview() {
     const [authType, setAuthType] = useState(false);
     const [drop, setDrop] = useState(false);
     const [data, setData] = useState([] as any);
+
+    const classSelector = useSelector((state: any) => state.classReducer);
 
     const authenticationType = [
         "Basic", "Client Certificate", "Active Directory OAuth", "Raw", "Managed Identity"
@@ -116,10 +122,65 @@ export default function Preview() {
     })
 
     console.log({
-        data:data,
-        filteredDataTest:filteredDataTest,
-        filteredDataProduction:filteredDataProduction
+        // data:data,
+        // filteredDataTest:filteredDataTest,
+        // filteredDataProduction:filteredDataProduction
+        "___routerParams": routerParams
     })
+
+    const goToRaisedAlertComponent = () => {
+        let data = {
+            "class": routerParams.objectID,
+            "subClass": routerParams.subObject,
+            "object": routerParams.id,
+            "subObject": routerParams.key,
+            "model": routerParams.model,
+            "from": "Production"
+        }
+
+        dispatch(setDataForAlertsComponentAction(data));
+        setTimeout(() => {
+            // router.push('/dashboard/eopstrace/raisedalerts');
+            Router.push({
+                pathname: '/dashboard/eopstrace/raisedalerts',
+                query: {
+                    objectID: routerParams?.objectID,
+                    subObject: routerParams?.subObject,
+                    key: routerParams?.key,
+                    id: routerParams?.id,
+                    model: routerParams?.model,
+                    industryID: routerParams?.industryID,
+                    from: "Production"
+                }
+            })
+        }, 100)
+    }
+
+
+    const clickOnBreadcrumb = () => {
+        http://localhost:3000/dashboard/eopstrace/preview?objectID=Vehicles&subObject=Battery&key=LI7481&id=5PVBE7AJ8R5T50001&model=Battery+Life+Prediction&industryID=5PVBE7AJ8R5T50001
+        setTimeout(() => {
+            // router.push('/dashboard/eopstrace/raisedalerts');
+            Router.push({
+                pathname: '/dashboard/eopstrace/preview',
+                query: {
+                    objectID: routerParams?.objectID,
+                    subObject: routerParams?.subObject,
+                    key: routerParams?.key,
+                    id: routerParams?.id,
+                    model: routerParams?.model,
+                    industryID: routerParams?.industryID,
+                    from: "Production"
+                }
+            })
+        }, 100)
+    }
+
+    useEffect(() => {
+        if(routerParams?.from === "Production") {
+            setDefaultTab("Production")
+        }
+    }, [routerParams?.from])
 
     return (
         <div className="w-full h-full font-OpenSans">
@@ -127,7 +188,7 @@ export default function Preview() {
             {/* Breadcrumb */}
             <div className="flex relative bg-white rounded rounded-lg px-3 py-1 inline-flex border border-[#E3E3E3]">
                 <ul className="flex justify-start items-center text-sm">
-                <li className="flex justify-start items-center">
+                    <li className="flex justify-start items-center">
                         <Link
                             href="/dashboard/aimodaldetection"
                             className="font-semibold"
@@ -145,8 +206,8 @@ export default function Preview() {
                         <Link
                             href={{
                                 pathname: '/dashboard/aimodaldetection/',
-                                query:{
-                                    objectID:routerParams.objectID
+                                query: {
+                                    objectID: routerParams.objectID
                                 }
                             }}
                             className="font-semibold"
@@ -201,14 +262,14 @@ export default function Preview() {
                                     subObject: routerParams.subObject,
                                     key: routerParams.key,
                                     id: routerParams.id,
-                                    industryID:routerParams.industryID
+                                    industryID: routerParams.industryID
                                 }
                             }}
                             className="font-semibold"
                         >
                             {routerParams.key}
                         </Link>
-                    </li>                 
+                    </li>
                     <li className="flex justify-start items-center">
                         <Image
                             src="/img/chevron-right.svg"
@@ -224,7 +285,7 @@ export default function Preview() {
                                     subObject: routerParams.subObject,
                                     key: routerParams.key,
                                     id: routerParams.id,
-                                    industryID:routerParams.industryID
+                                    industryID: routerParams.industryID
                                 }
                             }}
                             className="font-semibold"
@@ -274,7 +335,20 @@ export default function Preview() {
                                     <span className={`${styles.radioFrame}`}></span>
                                 </div>
                             </div>
-                            <Link
+                            <button
+                                onClick={goToRaisedAlertComponent}
+                                className={`border-2 rounded rounded-lg border-gray-969 h-[44px] px-2 py-1 flex justify-center items-center mr-4`}
+                            >
+                                <Image
+                                    src="/img/message-square.svg"
+                                    alt="Upload"
+                                    height={24}
+                                    width={24}
+                                />
+                                <span className="text-sm ml-2 mr-2 font-semibold">Alerts</span>
+                            </button>
+
+                            {/* <Link
                                 href="/dashboard/eopstrace/raisedalerts"
                                 className={`border-2 rounded rounded-lg border-gray-969 h-[44px] px-2 py-1 flex justify-center items-center mr-4`}
                             >
@@ -285,7 +359,7 @@ export default function Preview() {
                                     width={24}
                                 />
                                 <span className="text-sm ml-2 mr-2 font-semibold">Alerts</span>
-                            </Link>
+                            </Link> */}
                         </>}
 
                         <div className="relative">
