@@ -193,7 +193,8 @@ export default function EopsTrace(props: any) {
                 key: props?.nextDataProps?.key,
                 id: props?.nextDataProps?.id,
                 model: data.name ? data.name : props?.nextDataProps?.model,
-                industryID: props?.nextDataProps?.industryID
+                industryID: props?.nextDataProps?.industryID,
+                from:"eopstrace"
             }
         })
     }
