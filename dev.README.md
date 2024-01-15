@@ -27,3 +27,10 @@ Doubts
 Now for the ETL Engineer, i have created an API which he will use to make entry in database in such a way that he will have access for this API and now only we have to give him info and moreover he will have urls of image .
 
 The third API IS FOR GETTING ALL MODEL DATA FOR CLASSID 
+
+## response for tyre Detection :-->{
+distance: int,
+uom : string,
+recomendation: "severe , moderate, no",
+}
+##
