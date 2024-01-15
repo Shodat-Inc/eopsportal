@@ -9,9 +9,9 @@ import { successMessageAction } from '@/store/actions/classAction';
 import { editClassModalAction } from "@/store/actions/classAction";
 
 export default function EditClass(props: any) {
-    // console.log({
-    //     "PROPS_IN_EDIT_CLASS": props
-    // })
+    console.log({
+        "PROPS_IN_EDIT_CLASS": props
+    })
     const dispatch = useDispatch<any>();
     const assetname = useRef("");
     const [allTags, setAllTags] = useState([] as any);
@@ -27,8 +27,9 @@ export default function EditClass(props: any) {
     const [allDataTypes, setAllDataTypes] = useState([] as any);
     const [success, setSuccess] = useState(false);
     const [deleteTagIDS, setDeleteTagIDS] = useState([] as any);
-    const [addNewTag, setAddNewTag] = useState([] as any)
+    const [addNewTag, setAddNewTag] = useState([] as any);
     const [tagsToShow, setTagsToShow] = useState([] as any);
+    const [newlyAddedTag, setNewlyAddedTag] = useState([] as any);
     let access_token = "" as any;
     if (typeof window !== 'undefined') {
         access_token = localStorage.getItem('authToken')
@@ -112,7 +113,7 @@ export default function EditClass(props: any) {
     function CreateJSON(tag: any, datatype: any) {
         var myObject = {
             "tagName": tag,
-            "dataType": datatype
+            "dataTypeId": datatype
         };
         return myObject;
     }
@@ -120,14 +121,32 @@ export default function EditClass(props: any) {
     // Save New Tag
     const saveNewTag = () => {
         if (newTag.trim().length !== 0) {
-            // console.log({
-            //     allTags:allTags
+
+            let arr = [] as any;
+
+
+            // allTags.map((item:any)=>{
+            //     arr.push(item?.tagName)
             // })
 
+
+
+            // Create New array
+            arr.push(newTag);
+            let newAddedTag = newlyAddedTag.slice();
+            newAddedTag.push(newTag);
+            setNewlyAddedTag(newAddedTag)
+
+            console.log({
+                allTags: allTags,
+                arr: arr,
+                newTag: newTag
+            })
+
             // Creating the array of all tags
-            let updatedList = allTags.slice();
-            updatedList.push(newTag)
-            setAllTags(updatedList)
+            // let updatedList = allTags.slice();
+            // updatedList.push(newTag)
+            // setAllTags(updatedList)
             setShowInput(false);
             setNewTag("");
             setShowHideAddTagButton(false);
@@ -155,6 +174,11 @@ export default function EditClass(props: any) {
         }
     }
 
+    console.log({
+        dtObject: dtObject,
+        assetDataType: assetDataType
+    })
+
 
 
     // Remove Element from all Tag Array
@@ -178,10 +202,10 @@ export default function EditClass(props: any) {
             setExistingTags(arr)
         }
 
-        // console.log({
-        //     allTags: allTags,
-        //     item: item
-        // })
+        console.log({
+            allTags: allTags,
+            item: item
+        })
 
         let deletedList = deleteTagIDS.slice();
         deletedList.push(item)
@@ -195,13 +219,19 @@ export default function EditClass(props: any) {
         // remove the json item from json item array
         let updatedJSON = dtObject.slice();
         var filteredJSON = updatedJSON.filter(function (e) { return e.tagName !== item })
-        setDtObject(filteredJSON)
+        setDtObject(filteredJSON);
+
+
+        // delete from new array
+        let newAddedTag = newlyAddedTag.slice();
+        newAddedTag.splice(-1);
+        setNewlyAddedTag(newAddedTag)
 
     }
 
-    // console.log({
-    //     deleteTagIDS: deleteTagIDS
-    // })
+    console.log({
+        deleteTagIDS: deleteTagIDS
+    })
 
     // Cancel Adding new tags
     const cancelAddingTag = () => {
@@ -217,42 +247,47 @@ export default function EditClass(props: any) {
         e.preventDefault();
         var formData = new FormData(e.target);
         const form_values = Object.fromEntries(formData);
-        // const response = await fetch('/api/assets', {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json'
-        //     },
-        //     body: JSON.stringify(
-        //         {
-        //             assetID: `1000000003`,
-        //             assetName: `${form_values.assetname}`,
-        //             slug: `${form_values.assetname}`,
-        //             assetkey: allTags,
-        //             dateCreated: new Date().toLocaleString() + "",
-        //             dateModified: new Date().toLocaleString() + "",
-        //             assetTypes: assetDataType,
-        //             tags: dtObject
-        //         }
-        //     )
-        // });
-        // const resdata = await response.json();
-        // if (resdata) {
-        //     setAllTags([]);
-        //     dispatch(successMessageAction(true))
-        //     setTimeout(() => {
-        //         // props.handleClick(false);
-        //         dispatch(editClassModalAction(false))
-        //     }, 50);
-        // } else {
-        //     console.log("FAILED")
-        // }
-    }
 
-    // console.log({
-    //     classData: classData,
-    //     allTags: allTags,
-    //     existingTags: existingTags
-    // })
+        const dataToSave = {
+            id:classData[0]?.id,
+            className: form_values.assetname,
+            deleteTagId: deleteTagIDS && deleteTagIDS.length > 0 ? deleteTagIDS : [],
+            addTag: dtObject
+        };
+
+        console.log({
+            "DATA_TO_SAVE":dataToSave
+        })
+
+        let tokenStr = access_token;
+        try {
+            await axios({
+                method: 'PUT',
+                url: `/api/updateAssets`,
+                data: dataToSave,
+                headers: {
+                    "Authorization": `Bearer ${tokenStr}`,
+                    "Content-Type": "application/json"
+                }
+            }).then(function (response) {
+                if (response) {
+                    console.log({
+                        "EDIT_CLASS_SUCCESSFULL":response?.data?.message
+                    })
+                    setSuccess(true)
+                    setAllTags([]);
+                    dispatch(editClassModalAction(false));
+                    setTimeout(() => {
+                        setSuccess(false);
+                    }, 1500)
+                }
+            }).catch(function (error) {
+                console.log("ERROR IN AXIOS CATCH (CREATE CLASS):", error)
+            })
+        } catch (err) {
+            console.log("ERROR IN TRY CATCH (CREATE CLASS):", err)
+        }
+    }
 
     return (
         <>
@@ -287,7 +322,7 @@ export default function EditClass(props: any) {
                                         type="hidden"
                                         name="assetid"
                                         placeholder="Enter asset ID"
-                                        value={1}
+                                        value={classData[0]?.id}
                                     />
 
                                     <div className={`mb-5 lg:w-full small:w-full small:w-full ${styles.form__wrap}`}>
@@ -334,6 +369,28 @@ export default function EditClass(props: any) {
                                                             </button>
                                                         </span>
                                                     )) : null
+                                            }
+                                            {
+                                                newlyAddedTag && newlyAddedTag.length > 0 ?
+                                                    newlyAddedTag.map((items: any, index: any) => (
+                                                        <span
+                                                            key={index}
+                                                            className="rounded-lg inline-flex justify-center items-center h-8 pl-2 pr-2 bg-[#F2F1F1] text-black text-[14px] mr-2 mb-2">
+                                                            {items}
+                                                            <button
+                                                                className="rounded-full border-2 border-white h-[24px] w-[24px] inline-flex justify-center items-center ml-3 transition-all duration-[100ms] transition-opacity duration-100 outline-none transform active:scale-75 transition-transform"
+                                                                onClick={() => removeElement(items)}
+                                                            >
+                                                                <Image
+                                                                    src="/img/x-circle.svg"
+                                                                    alt="close"
+                                                                    height={24}
+                                                                    width={24}
+                                                                />
+                                                            </button>
+                                                        </span>
+                                                    ))
+                                                    : null
                                             }
                                         </div>
 
