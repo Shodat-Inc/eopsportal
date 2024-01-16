@@ -126,7 +126,7 @@ export default function EditObject(props: any) {
         <>
             <div className={`bg-white h-full z-[11] fixed top-0 right-0 p-5 shadow shadow-lg ${props.show === true ? `${styles.objectContainer} ${styles.sliderShow}` : `${styles.objectContainer}`}`}>
                 <div className="flex justify-between items-center w-full mb-3">
-                    <h2 className="font-semibold text-lg">Add New Object (<span className="text-sm text-gray-800">{props.selectedParentClass}</span>)</h2>
+                    <h2 className="font-semibold text-lg">Add New Object (<span className="text-sm text-gray-800">{props.objID}</span>)</h2>
                     <button onClick={closeModel} className="transition-all duration-[100ms] transition-opacity duration-100 outline-none transform active:scale-75 transition-transform">
                         <Image
                             src="/img/x.svg"
@@ -162,25 +162,28 @@ export default function EditObject(props: any) {
                     >
 
                         {
-                            objectsData[0]?.ObjectValues.map((items: any, index: any) => (
+                            objectsData[0]?.ObjectValues.map((items: any, index: any) => {
+                                const linkContent =  objectsData[0]?.Class?.ClassTags[index];
+                                return (
                                 <div key={index} className="w-full flex justify-start items-start flex-wrap flex-col">
                                     <div className={`mb-5 lg:w-full small:w-full small:w-full ${styles.form__wrap}`}>
                                         <div className={`relative ${styles.form__group} font-OpenSans`}>
                                             <input
                                                 type="text"
                                                 id={`${items.values}`}
-                                                name={`${items.values}`}
+                                                name={`${items.values}_${linkContent.id}`}
                                                 className={`border border-gray-961 ${styles.form__field}`}
                                                 placeholder={`${items.values}`}
                                                 onChange={(e) => (formData.current = e.target.value)}
                                                 required
                                                 value={`${items.values}`}
                                             />
-                                            <label htmlFor={`${items.values}`} className={`${styles.form__label}`}>{items.values}</label>
+                                            <label htmlFor={`${items.values}`} className={`${styles.form__label}`}>{linkContent.tagName}</label>
                                         </div>
                                     </div>
                                 </div>
-                            ))
+                                )
+})
                         }
 
 
