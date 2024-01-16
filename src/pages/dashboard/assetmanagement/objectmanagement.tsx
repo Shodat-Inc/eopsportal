@@ -199,6 +199,9 @@ export default function ObjectManagement(props: any) {
     const editObjectFunction = (item: any) => {
         dispatch(editObjectModalAction(true));
         setActions(false);
+        console.log({
+            ITEM:item
+        })
         setSelectedObjID(item);
     }
 
@@ -230,6 +233,11 @@ export default function ObjectManagement(props: any) {
             })
         }
     }
+
+
+    console.log({
+        objectData:objectData
+    })
 
 
     return (
@@ -407,7 +415,7 @@ export default function ObjectManagement(props: any) {
                                                     {(actions && actionCount === index + 1) &&
                                                         <div className="bg-black text-white border overflow-hidden border-black rounded rounded-lg w-[200px] flex flex-col flex-wrap items-start justify-start shadow-sm absolute top-[30px] right-[75px] z-[1]">
                                                             <button
-                                                                onClick={() => editObjectFunction(items.subObjectID)}
+                                                                onClick={() => editObjectFunction(items?.id)}
                                                                 className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
                                                                 <span>Edit</span>
                                                             </button>
@@ -529,9 +537,10 @@ export default function ObjectManagement(props: any) {
 
             <EditObject
                 show={classSelector?.editObjectModalReducer}
-                selectedObject={selectedObjID}
-                selectedParentClass={chooseAsset}
                 objectData={objectData}
+                selectedParentClass={chooseAsset}
+                classData={props.classData}
+                objID={selectedObjID}
             />
 
         </div>

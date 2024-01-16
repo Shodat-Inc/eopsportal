@@ -7,92 +7,120 @@ import axios from "axios";
 
 export default function EditObject(props: any) {
 
-    const [selectedObjectData, setSelectedObjectData] = useState([] as any);
+    console.log({
+        "PROPS_IN_EDIT_OBJECT_COMPONENT": props
+    })
+
     const [objectsData, setObjectsData] = useState([] as any);
     const formData = useRef("");
+    const [success, setSuccess] = useState(false);
 
-    async function fetchData() {
+    const dispatch = useDispatch<any>();
+
+    let access_token = "" as any;
+    if (typeof window !== 'undefined') {
+        access_token = localStorage.getItem('authToken')
+    }
+
+    // GET ALL DATATYPES
+    async function fetchObjectData() {
         try {
             await axios({
                 method: 'GET',
-                url: `/api/getObjects`,
-
+                url: `/api/getObjectById?objectId=${props.objID}&classId=${props.selectedParentClass}`,
+                headers: {
+                    "Authorization": `Bearer ${access_token}`,
+                    "Content-Type": "application/json"
+                }
             }).then(function (response) {
                 if (response) {
-
-                    if (response) {
-                        const filtered = response.data.filter((item: any) => {
-                            return item.parentAssetName === props.selectedParentClass && item.subObjectID === props.selectedObject
-                        })
-                        setObjectsData(filtered[0]?.subObjects)
-                    }
+                    console.log({
+                        "RESPONSE": response?.data?.data
+                    })
+                    setObjectsData(response.data?.data)
                 }
             }).catch(function (error) {
                 console.log({
-                    "ERROR IN AXIOS CATCH": error
+                    "ERROR IN AXIOS CATCH (GET DT)": error
                 })
             })
         } catch (err) {
             console.log({
-                "ERROR IN TRY CATCH": err
+                "ERROR IN TRY CATCH (GET DT)": err
             })
         }
     }
     useEffect(() => {
-        if (props.selectedObject) {
-            fetchData();
-        }
-    }, [props.selectedObject])
+        fetchObjectData();
+    }, [access_token, props])
 
-    useEffect(() => {
-        if (props.subClassData && props.subClassData.length > 0) {
-            let filtered = props.subClassData.filter((item: any) => {
-                return item.assetName === props.selectedSubClass
-            })
-            if (filtered) {
-                setSelectedObjectData(filtered[0].tagsWithDataType)
-            }
-        }
-    }, [props])
 
-    const dispatch = useDispatch<any>();
+    // Close the modal
     const closeModel = () => {
         dispatch(editObjectModalAction(false));
     }
 
-    // Submit Form Data
+    // Save Data for subclass
     const handleSubmit = async (e: any) => {
         e.preventDefault();
         var formData = new FormData(e.target);
         let currentDate = new Date().toISOString().split('T')[0];
         const form_values = Object.fromEntries(formData);
+        const objectKey = [] as any;
+        const objVal = [] as any;
+        Object.keys(form_values).map((item: any) => {
+            let tagID = item.split("_")[1];
+            let tagName = item.split("_")[0];
+            objectKey.push({
+                "classTagId": tagID
+            })
+            objVal.push({
+                tagName: tagName
+            })
+        })
+        const objectValue = [] as any;
+        Object.values(form_values).map((item: any) => {
+            objectValue.push({
+                "value": item
+            })
+        })
 
-        // const response = await fetch('/api/createChildObject', {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json'
-        //     },
-        //     body: JSON.stringify(
-        //         {
-        //             className: `${props.parentClass}`,
-        //             object: `${props.selectedSubClass}`,
-        //             subObject: `${props.objID}`,
-        //             dateCreated: `${currentDate}`,
-        //             tags: form_values,
+        let finalArray = objectKey.map((item: any, i: any) => Object.assign({}, item, objectValue[i]));
+        const dataToSave = {
+            "classId": props.selectedSubClass,
+            "values": finalArray
+        }
+        let tokenStr = access_token;
+
+        console.log({
+            "DATA_TO_SAVE": dataToSave
+        })
+
+        // try {
+        //     await axios({
+        //         method: 'POST',
+        //         url: `/api/createObjects`,
+        //         data: dataToSave,
+        //         headers: {
+        //             "Authorization": `Bearer ${tokenStr}`,
+        //             "Content-Type": "application/json"
         //         }
-        //     )
-        // });
-        // const resdata = await response.json();
-        // if (resdata) {
-        //     dispatch(successMessageAction(true));
-        //     setTimeout(() => {
-        //         dispatch(toggleAddNewObjectModel(false));
-        //     }, 10)
-        // } else {
-        //     console.log("FAILED")
+        //     }).then(function (response) {
+        //         if (response) {
+        //             setSuccess(true);
+        //             // dispatch(successMessageAction(true))
+        //             setTimeout(() => {
+        //                 setSuccess(false);
+        //                 dispatch(editObjectModalAction(false));
+        //             }, 50);
+        //         }
+        //     }).catch(function (error) {
+        //         console.log("ERROR IN AXIOS CATCH (CREATE CLASS OBJECT):", error)
+        //     })
+        // } catch (err) {
+        //     console.log("ERROR IN TRY CATCH (CREATE CLASS OBJECT):", err)
         // }
     }
-    let entries = Object.entries(objectsData);
 
     return (
         <>
@@ -109,6 +137,21 @@ export default function EditObject(props: any) {
                     </button>
                 </div>
 
+
+                {success &&
+                    <div className={`bg-green-957 border-green-958 text-green-959 mb-1 mt-1 border text-md px-4 py-3 rounded rounded-xl relative flex items-center justify-start`}>
+                        <Image
+                            src="/img/AlertSuccess.svg"
+                            alt="Alert Success"
+                            height={24}
+                            width={24}
+                            className='mr-2'
+                        />
+                        <strong className="font-semibold">Success</strong>
+                        <span className="block sm:inline ml-2">Object has been added successfully!</span>
+                    </div>
+                }
+
                 <div className={`flex justify-start items-start w-full overflow-auto h-full pb-10 ${styles.scroll} pr-3`}>
 
                     <form
@@ -119,6 +162,28 @@ export default function EditObject(props: any) {
                     >
 
                         {
+                            objectsData[0]?.ObjectValues.map((items: any, index: any) => (
+                                <div key={index} className="w-full flex justify-start items-start flex-wrap flex-col">
+                                    <div className={`mb-5 lg:w-full small:w-full small:w-full ${styles.form__wrap}`}>
+                                        <div className={`relative ${styles.form__group} font-OpenSans`}>
+                                            <input
+                                                type="text"
+                                                id={`${items.values}`}
+                                                name={`${items.values}`}
+                                                className={`border border-gray-961 ${styles.form__field}`}
+                                                placeholder={`${items.values}`}
+                                                onChange={(e) => (formData.current = e.target.value)}
+                                                required
+                                                value={`${items.values}`}
+                                            />
+                                            <label htmlFor={`${items.values}`} className={`${styles.form__label}`}>{items.values}</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))
+                        }
+
+                        {/* {
                             entries.map(([key, val]) => (
                                 <div className="w-full flex justify-start items-start flex-wrap flex-col">
                                     <div className={`mb-5 lg:w-full small:w-full small:w-full ${styles.form__wrap}`}>
@@ -138,7 +203,7 @@ export default function EditObject(props: any) {
                                     </div>
                                 </div>
                             ))
-                        }
+                        } */}
 
 
                         <div className="relative flex justify-end items-center w-full">
