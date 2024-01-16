@@ -28177,3 +28177,47 @@
 {"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-16T11:38:47.876Z"}
 {"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-16T11:38:47.879Z"}
 {"level":"error","message":"No Id is provided","timestamp":"2024-01-16T11:38:47.880Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-16T11:48:51.364Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-16T11:48:51.366Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-16T11:48:51.367Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-16T11:48:51.368Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-16T11:48:51.369Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T11:48:51.489Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2024-01-16T11:48:51.495Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T11:48:51.553Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T11:48:51.586Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T11:48:51.629Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T11:48:51.659Z"}
+{"level":"info","message":"Error Handler","timestamp":"2024-01-16T11:48:51.661Z"}
+{"level":"error","message":"UnauthorizedError","timestamp":"2024-01-16T11:48:51.661Z"}
+{"level":"info","message":"Get All Tag DataTypes","timestamp":"2024-01-16T11:48:51.662Z"}
+{"level":"info","message":"Get All Tag DataTypes","timestamp":"2024-01-16T11:48:51.668Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-16T11:48:54.380Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-16T11:48:54.382Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-16T11:48:54.383Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-16T11:48:54.384Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-16T11:48:54.385Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T11:48:54.434Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T11:48:54.463Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T11:48:54.495Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T11:48:54.525Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-16T11:48:54.528Z"}
+{"level":"error","message":"No Id is provided","timestamp":"2024-01-16T11:48:54.528Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-16T11:48:54.529Z"}
+{"level":"error","message":"No Id is provided","timestamp":"2024-01-16T11:48:54.530Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-16T11:48:54.534Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-16T11:48:54.544Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T11:48:54.587Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-16T11:48:54.589Z"}
+{"level":"error","message":"No Id is provided","timestamp":"2024-01-16T11:48:54.589Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T11:48:54.642Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-16T11:48:54.645Z"}
+{"level":"error","message":"No Id is provided","timestamp":"2024-01-16T11:48:54.646Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T11:48:54.669Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-16T11:48:54.672Z"}
+{"level":"error","message":"No Id is provided","timestamp":"2024-01-16T11:48:54.672Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T11:48:59.003Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-16T11:48:59.006Z"}
+{"level":"error","message":"No Id is provided","timestamp":"2024-01-16T11:48:59.007Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T11:48:59.795Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-16T11:48:59.798Z"}

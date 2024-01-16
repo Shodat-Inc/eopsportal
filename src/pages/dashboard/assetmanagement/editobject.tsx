@@ -183,28 +183,6 @@ export default function EditObject(props: any) {
                             ))
                         }
 
-                        {/* {
-                            entries.map(([key, val]) => (
-                                <div className="w-full flex justify-start items-start flex-wrap flex-col">
-                                    <div className={`mb-5 lg:w-full small:w-full small:w-full ${styles.form__wrap}`}>
-                                        <div className={`relative ${styles.form__group} font-OpenSans`}>
-                                            <input
-                                                type="text"
-                                                id={`${key}`}
-                                                name={`${key}`}
-                                                className={`border border-gray-961 ${styles.form__field}`}
-                                                placeholder={`${key}`}
-                                                onChange={(e) => (formData.current = e.target.value)}
-                                                required
-                                                value={`${val}`}
-                                            />
-                                            <label htmlFor={`${key}`} className={`${styles.form__label}`}>{key}</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            ))
-                        } */}
-
 
                         <div className="relative flex justify-end items-center w-full">
                             <button
