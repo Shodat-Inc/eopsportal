@@ -80,6 +80,11 @@ export default function AddNewClass(props: any) {
         setShowHideAddTagButton(true);
         setToggleDT(true);
     }
+    const closeAddTags = () => {
+        setShowInput(!showInput);
+        setShowHideAddTagButton(!showHideAddTagButton);
+        setToggleDT(!toggleDT); 
+    }
 
     // Get Radio Button Value
     const radioChange = (value: any) => {
@@ -323,9 +328,9 @@ export default function AddNewClass(props: any) {
                                         </button>
 
 
-                                        <button
-                                            className={`transition-all duration-[100ms] transition-opacity duration-100 outline-none transform active:scale-75 transition-transform absolute right-1 top-5 ${allTags && allTags.length > 0 ? 'hidden' : ''} `}
-                                            onClick={addTags}
+                                        <div
+                                            className={`transition-all duration-[100ms] transition-opacity duration-100 outline-none transform active:scale-75 transition-transform absolute right-1 top-5 ${toggleDT ? 'rotate-180' : 'rotate-0'} cursor-pointer`}
+                                            onClick={closeAddTags}
                                         >
                                             <Image
                                                 src="/img/arrow-down-black.svg"
@@ -333,7 +338,7 @@ export default function AddNewClass(props: any) {
                                                 height={29}
                                                 width={29}
                                             />
-                                        </button>
+                                        </div>
                                     </div>
 
                                     {toggleDT ?

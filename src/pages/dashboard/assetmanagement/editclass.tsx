@@ -9,9 +9,9 @@ import { successMessageAction } from '@/store/actions/classAction';
 import { editClassModalAction } from "@/store/actions/classAction";
 
 export default function EditClass(props: any) {
-    console.log({
-        "PROPS_IN_EDIT_CLASS": props
-    })
+    // console.log({
+    //     "PROPS_IN_EDIT_CLASS": props
+    // })
     const dispatch = useDispatch<any>();
     const assetname = useRef("");
     const [allTags, setAllTags] = useState([] as any);
@@ -137,11 +137,11 @@ export default function EditClass(props: any) {
             newAddedTag.push(newTag);
             setNewlyAddedTag(newAddedTag)
 
-            console.log({
-                allTags: allTags,
-                arr: arr,
-                newTag: newTag
-            })
+            // console.log({
+            //     allTags: allTags,
+            //     arr: arr,
+            //     newTag: newTag
+            // })
 
             // Creating the array of all tags
             // let updatedList = allTags.slice();
@@ -174,10 +174,10 @@ export default function EditClass(props: any) {
         }
     }
 
-    console.log({
-        dtObject: dtObject,
-        assetDataType: assetDataType
-    })
+    // console.log({
+    //     dtObject: dtObject,
+    //     assetDataType: assetDataType
+    // })
 
 
 
@@ -202,10 +202,10 @@ export default function EditClass(props: any) {
             setExistingTags(arr)
         }
 
-        console.log({
-            allTags: allTags,
-            item: item
-        })
+        // console.log({
+        //     allTags: allTags,
+        //     item: item
+        // })
 
         let deletedList = deleteTagIDS.slice();
         deletedList.push(item)
@@ -229,9 +229,9 @@ export default function EditClass(props: any) {
 
     }
 
-    console.log({
-        deleteTagIDS: deleteTagIDS
-    })
+    // console.log({
+    //     deleteTagIDS: deleteTagIDS
+    // })
 
     // Cancel Adding new tags
     const cancelAddingTag = () => {
@@ -255,9 +255,9 @@ export default function EditClass(props: any) {
             addTag: dtObject
         };
 
-        console.log({
-            "DATA_TO_SAVE":dataToSave
-        })
+        // console.log({
+        //     "DATA_TO_SAVE":dataToSave
+        // })
 
         let tokenStr = access_token;
         try {
@@ -271,9 +271,9 @@ export default function EditClass(props: any) {
                 }
             }).then(function (response) {
                 if (response) {
-                    console.log({
-                        "EDIT_CLASS_SUCCESSFULL":response?.data?.message
-                    })
+                    // console.log({
+                    //     "EDIT_CLASS_SUCCESSFULL":response?.data?.message
+                    // })
                     setSuccess(true)
                     setAllTags([]);
                     dispatch(editClassModalAction(false));

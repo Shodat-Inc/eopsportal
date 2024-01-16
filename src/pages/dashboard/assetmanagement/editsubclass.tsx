@@ -10,6 +10,10 @@ import { successMessageAction, editSubClassModalAction } from '@/store/actions/c
 
 export default function EditSubClass(props: any) {
 
+    // console.log({
+    //     "PROPS_IN_EDIT_SUB_CLASS": props
+    // })
+
     const dispatch = useDispatch<any>();
     const assetname = useRef("");
     const router = useRouter();
@@ -24,28 +28,65 @@ export default function EditSubClass(props: any) {
     const [allClassData, setAllClassData] = useState([] as any);
     const [data, setData] = useState([] as any);
     const [pjk, setPjk] = useState([] as any);
+    const [allSubClassData, setAllSubClassData] = useState([] as any);
+    const [existingTags, setExistingTags] = useState<any[]>([]);
+    const [newlyAddedTag, setNewlyAddedTag] = useState([] as any);
+    const [deleteTagIDS, setDeleteTagIDS] = useState([] as any);
+    const [allDataTypes, setAllDataTypes] = useState([] as any);
+    let access_token = "" as any;
+    if (typeof window !== 'undefined') {
+        access_token = localStorage.getItem('authToken')
+    }
+    // GET ALL DATATYPES
+    async function fetchData() {
+        try {
+            await axios({
+                method: 'GET',
+                url: `/api/getDataType`,
+                headers: {
+                    "Authorization": `Bearer ${access_token}`,
+                    "Content-Type": "application/json"
+                }
+            }).then(function (response) {
+                if (response) {
+                    setAllDataTypes(response.data?.data)
+                }
+            }).catch(function (error) {
+                console.log({
+                    "ERROR IN AXIOS CATCH (GET DT)": error
+                })
+            })
+        } catch (err) {
+            console.log({
+                "ERROR IN TRY CATCH (GET DT)": err
+            })
+        }
+    }
+    useEffect(() => {
+        fetchData();
+    }, [access_token])
 
     // Get Selected Class Data
-    useEffect(() => {
-        if (props.subClassData.length > 0 && props.selectedClass != "") {
-            const filtered = props.subClassData.filter((item: any) => {
-                return item.assetName === props.selectedSubClass
-            })
-            setData(filtered);
-            if (filtered) {
-                setAllTags(filtered[0]?.tags);
-                setPjk(filtered[0]?.parentJoinKey)
-            }
-        }
+    // useEffect(() => {
+    //     if (props.subClassData.length > 0 && props.selectedClass != "") {
+    //         const filtered = props.subClassData.filter((item: any) => {
+    //             return item.assetName === props.selectedSubClass
+    //         })
+    //         setData(filtered);
+    //         if (filtered) {
+    //             setAllTags(filtered[0]?.tags);
+    //             setPjk(filtered[0]?.parentJoinKey)
+    //         }
+    //     }
 
-    }, [props.subClassData, props.selectedSubClass])
+    // }, [props.subClassData, props.selectedSubClass])
 
 
     // Get class data and filter parent tags based on selected class
     useEffect(() => {
         if (props.classData && props.classData.length > 0) {
             let filtered = props.classData.filter((item: any) => {
-                return item.assetName === props.selectedParentClass;
+                return item.id === props.selectedParentClass;
             })
             setAllClassData(filtered)
 
@@ -63,6 +104,31 @@ export default function EditSubClass(props: any) {
     }, [props.classData, props.selectedParentClass])
 
 
+
+    // Get Selected Class Data
+    useEffect(() => {
+        if (props.subClassData && props.subClassData.length > 0) {
+            const filtered = props.subClassData.filter((item: any) => {
+                return item.id === props.selectedSubClass
+            })
+
+            // console.log({
+            //     filtered: filtered[0]?.className
+            // })
+            setAllSubClassData(filtered);
+            setAllTags(filtered[0]?.ClassTags);
+            let arr = [] as any;
+            filtered[0]?.ClassTags.map((item: any) => {
+                arr.push(item.tagName)
+            })
+            setExistingTags(arr);
+        }
+
+    }, [props])
+
+    // console.log({
+
+    // })
 
 
     const closeModal = () => {
@@ -88,6 +154,11 @@ export default function EditSubClass(props: any) {
         setShowHideAddTagButton(true);
         setToggleDT(true);
     }
+    const closeAddTags = () => {
+        setShowInput(!showInput);
+        setShowHideAddTagButton(!showHideAddTagButton);
+        setToggleDT(!toggleDT);
+    }
 
     // Get Radio Button Value
     const radioChange = (value: any) => {
@@ -98,7 +169,7 @@ export default function EditSubClass(props: any) {
     function CreateJSON(tag: any, datatype: any) {
         var myObject = {
             "tagName": tag,
-            "dataType": datatype
+            "dataTypeId": datatype
         };
         return myObject;
     }
@@ -118,11 +189,26 @@ export default function EditSubClass(props: any) {
             // Creating the array of all tags
             let updatedList = allTags.slice();
             updatedList.push(newTag)
-            setAllTags(updatedList)
+            // setAllTags(updatedList)
             setShowInput(false);
             setNewTag("");
             setShowHideAddTagButton(false);
             setToggleDT(false);
+
+
+            // Create New array
+            let arr = [] as any;
+            arr.push(newTag);
+            let newAddedTag = newlyAddedTag.slice();
+            newAddedTag.push(newTag);
+            setNewlyAddedTag(newAddedTag)
+
+            // console.log({
+            //     allTags: allTags,
+            //     arr: arr,
+            //     newTag: newTag
+            // })
+
 
             // Creating the array of data type
             let typeList = assetDataType;
@@ -146,8 +232,29 @@ export default function EditSubClass(props: any) {
     const removeElement = (item: any) => {
         // removing the item form all tags array
         let updatedList = allTags.slice();
-        var filteredArray = updatedList.filter(function (e) { return e !== item })
+        var filteredArray = updatedList.filter(function (e) { return e.id !== item })
         setAllTags(filteredArray)
+
+
+        let arr = [] as any;
+        if (filteredArray) {
+            setExistingTags([])
+
+            filteredArray.map((itms: any) => {
+                arr.push(itms.tagName)
+            })
+            setExistingTags(arr)
+        }
+
+        // console.log({
+        //     allTags: allTags,
+        //     item: item
+        // })
+
+        let deletedList = deleteTagIDS.slice();
+        deletedList.push(item)
+        setDeleteTagIDS(deletedList)
+
 
         // removing the datatype from datatype array
         let updatedListType = assetDataType;
@@ -159,7 +266,16 @@ export default function EditSubClass(props: any) {
         var filteredJSON = updatedJSON.filter(function (e) { return e.tagName !== item })
         setDtObject(filteredJSON)
 
+        // delete from new array
+        let newAddedTag = newlyAddedTag.slice();
+        newAddedTag.splice(-1);
+        setNewlyAddedTag(newAddedTag)
+
     }
+
+    // console.log({
+    //     deleteTagIDS: deleteTagIDS
+    // })
 
     // Cancel Adding new tags
     const cancelAddingTag = () => {
@@ -178,38 +294,47 @@ export default function EditSubClass(props: any) {
 
         let parentJoinKeyArr = [] as any;
         parentJoinKeyArr.push(form_values.parentJoinKey)
-        // const response = await fetch('/api/createSubAssets', {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json'
-        //     },
-        //     body: JSON.stringify(
-        //         {
-        //             assetID: "1234567890",
-        //             assetName: `${form_values.assetname}`,
-        //             slug: `${form_values.assetname}`,
-        //             parentAssetID: `${props.selectedParentClass}`,
-        //             parentAssetName: `${props.selectedParentClass}`,
-        //             tags: allTags,
-        //             parentJoinKey:parentJoinKeyArr,
-        //             dateCreated: new Date().toLocaleString() + "",
-        //             dateModified: new Date().toLocaleString() + "",
-        //             geoScopeLink:"",
-        //             tagsWithDataType: dtObject,
-        //             assetTypes: assetDataType
-        //         }
-        //     )
-        // });
-        // const resdata = await response.json();
-        // if (resdata) {
-        //     setAllTags([]);
-        //     dispatch(successMessageAction(true))
-        //     setTimeout(() => {
-        //         props.handleClick(false);
-        //     }, 50);
-        // } else {
-        //     console.log("FAILED")
-        // }
+        
+
+        const dataToSave = {
+            id:allSubClassData[0]?.id,
+            className: form_values.assetname,
+            deleteTagId: deleteTagIDS && deleteTagIDS.length > 0 ? deleteTagIDS : [],
+            addTag: dtObject
+        };
+
+        // console.log({
+        //     "DATA_TO_SAVE":dataToSave
+        // })
+
+        let tokenStr = access_token;
+        try {
+            await axios({
+                method: 'PUT',
+                url: `/api/updateAssets`,
+                data: dataToSave,
+                headers: {
+                    "Authorization": `Bearer ${tokenStr}`,
+                    "Content-Type": "application/json"
+                }
+            }).then(function (response) {
+                if (response) {
+                    // console.log({
+                    //     "EDIT_SUB_CLASS_SUCCESSFULL":response?.data?.message
+                    // })
+                    // setSuccess(true)
+                    setAllTags([]);
+                    dispatch(editSubClassModalAction(false));
+                    setTimeout(() => {
+                        // setSuccess(false);
+                    }, 1500)
+                }
+            }).catch(function (error) {
+                console.log("ERROR IN AXIOS CATCH (CREATE CLASS):", error)
+            })
+        } catch (err) {
+            console.log("ERROR IN TRY CATCH (CREATE CLASS):", err)
+        }
     }
 
     return (
@@ -249,7 +374,7 @@ export default function EditSubClass(props: any) {
                                                 placeholder="Enter sub class name"
                                                 required
                                                 onChange={(e) => (assetname.current = e.target.value)}
-                                                value={props.selectedSubClass}
+                                                value={allSubClassData[0]?.className}
                                             />
                                             <label htmlFor="assetname" className={`${styles.form__label}`}>Enter sub class name</label>
                                         </div>
@@ -269,10 +394,10 @@ export default function EditSubClass(props: any) {
                                                         <span
                                                             key={index}
                                                             className="rounded-lg inline-flex justify-center items-center h-8 pl-2 pr-2 bg-[#F2F1F1] text-black text-[14px] mr-2 mb-2">
-                                                            {items}
+                                                            {items.tagName}
                                                             <button
                                                                 className="transition-all duration-[100ms] transition-opacity duration-100 outline-none transform active:scale-75 transition-transform rounded-full border-2 border-white h-[24px] w-[24px] inline-flex justify-center items-center ml-3"
-                                                                onClick={() => removeElement(items)}
+                                                                onClick={() => removeElement(items.id)}
                                                             >
                                                                 <Image
                                                                     src="/img/x-circle.svg"
@@ -283,6 +408,28 @@ export default function EditSubClass(props: any) {
                                                             </button>
                                                         </span>
                                                     )) : null
+                                            }
+                                            {
+                                                newlyAddedTag && newlyAddedTag.length > 0 ?
+                                                    newlyAddedTag.map((items: any, index: any) => (
+                                                        <span
+                                                            key={index}
+                                                            className="rounded-lg inline-flex justify-center items-center h-8 pl-2 pr-2 bg-[#F2F1F1] text-black text-[14px] mr-2 mb-2">
+                                                            {items}
+                                                            <button
+                                                                className="rounded-full border-2 border-white h-[24px] w-[24px] inline-flex justify-center items-center ml-3 transition-all duration-[100ms] transition-opacity duration-100 outline-none transform active:scale-75 transition-transform"
+                                                                onClick={() => removeElement(items)}
+                                                            >
+                                                                <Image
+                                                                    src="/img/x-circle.svg"
+                                                                    alt="close"
+                                                                    height={24}
+                                                                    width={24}
+                                                                />
+                                                            </button>
+                                                        </span>
+                                                    ))
+                                                    : null
                                             }
                                         </div>
 
@@ -331,9 +478,9 @@ export default function EditSubClass(props: any) {
                                         </button>
 
 
-                                        <button
-                                            className={`transition-all duration-[100ms] transition-opacity duration-100 outline-none transform active:scale-75 transition-transform absolute right-1 top-5 ${allTags && allTags.length > 0 ? 'hidden' : ''} `}
-                                            onClick={addTags}
+                                        <div
+                                            className={`transition-all duration-[100ms] transition-opacity duration-100 outline-none transform active:scale-75 transition-transform absolute right-1 top-5 ${allTags && allTags.length > 0 ? 'hidden' : ''} cursor-pointer`}
+                                            onClick={closeAddTags}
                                         >
                                             <Image
                                                 src="/img/arrow-down-black.svg"
@@ -341,7 +488,7 @@ export default function EditSubClass(props: any) {
                                                 height={29}
                                                 width={29}
                                             />
-                                        </button>
+                                        </div>
                                     </div>
 
                                     {toggleDT ?
@@ -360,100 +507,35 @@ export default function EditSubClass(props: any) {
 
                                             <div className="text-sm font-bold color-black mb-2 flex items-center justify-between">
                                                 <span>Select Data Type</span>
-                                                {/* <span className="bg-black h-8 w-8 p-1 inline-flex rounded-full justify-center items-center">
-                                                <Image
-                                                    src="/img/tick-white.svg"
-                                                    alt="check"
-                                                    height={20}
-                                                    width={20}
-                                                    className="inline-block"
-                                                />
-                                            </span> */}
                                             </div>
-                                            <div className="flex pt-1 pb-1">
-                                                <div className={`${styles.customRadio} mr-2`}>
-                                                    <input
-                                                        type="radio"
-                                                        name="datatype"
-                                                        className="scale-150"
-                                                        value="int"
-                                                        checked={dataType === "int"}
-                                                        onChange={() => radioChange("int")}
-                                                    />
-                                                    <span></span>
-                                                </div>
-                                                <label className="text-black font-semibold">int <span className="text-gray-500 font-normal text-[14px]">(myNum = 5)</span></label>
-                                            </div>
-                                            <div className="flex pt-1 pb-1">
-                                                <div className={`${styles.customRadio} mr-2`}>
-                                                    <input
-                                                        type="radio"
-                                                        name="datatype"
-                                                        className="scale-150"
-                                                        value="float"
-                                                        checked={dataType === "float"}
-                                                        onChange={() => radioChange("float")}
-                                                    />
-                                                    <span></span>
-                                                </div>
-                                                <label className="text-black font-semibold">float <span className="text-gray-500 font-normal text-[14px]">(myFloatNum = 5.99f)</span></label>
-                                            </div>
-                                            <div className="flex pt-1 pb-1">
-                                                <div className={`${styles.customRadio} mr-2`}>
-                                                    <input
-                                                        type="radio"
-                                                        name="datatype"
-                                                        className="scale-150"
-                                                        value="char"
-                                                        checked={dataType === "char"}
-                                                        onChange={() => radioChange("char")}
-                                                    />
-                                                    <span></span>
-                                                </div>
-                                                <label className="text-black font-semibold">char <span className="text-gray-500 font-normal text-[14px]">(myLetter = &apos;D&apos;)</span></label>
-                                            </div>
-                                            <div className="flex pt-1 pb-1">
-                                                <div className={`${styles.customRadio} mr-2`}>
-                                                    <input
-                                                        type="radio"
-                                                        name="datatype"
-                                                        className="scale-150"
-                                                        value="boolean"
-                                                        checked={dataType === "boolean"}
-                                                        onChange={() => radioChange("boolean")}
-                                                    />
-                                                    <span></span>
-                                                </div>
-                                                <label className="text-black font-semibold">boolean <span className="text-gray-500 font-normal text-[14px]">(myBool = true/false)</span></label>
-                                            </div>
-                                            <div className="flex pt-1 pb-1">
-                                                <div className={`${styles.customRadio} mr-2`}>
-                                                    <input
-                                                        type="radio"
-                                                        name="datatype"
-                                                        className="scale-150"
-                                                        value="string"
-                                                        checked={dataType === "string"}
-                                                        onChange={() => radioChange("string")}
-                                                    />
-                                                    <span></span>
-                                                </div>
-                                                <label className="text-black font-semibold">string <span className="text-gray-500 font-normal text-[14px]">(myText = &quot;Hello&quot;)</span></label>
-                                            </div>
-                                            <div className="flex pt-1 pb-1">
-                                                <div className={`${styles.customRadio} mr-2`}>
-                                                    <input
-                                                        type="radio"
-                                                        name="datatype"
-                                                        className="scale-150"
-                                                        value="date"
-                                                        checked={dataType === "date"}
-                                                        onChange={() => radioChange("date")}
-                                                    />
-                                                    <span></span>
-                                                </div>
-                                                <label className="text-black font-semibold">date <span className="text-gray-500 font-normal text-[14px]">(myDate = &quot;29-05-2023&quot;)</span></label>
-                                            </div>
+
+                                            {
+                                                allDataTypes && allDataTypes.length >= 0 ?
+                                                    allDataTypes.map((item: any, index: any) => (
+                                                        <div key={index}>
+                                                            <div className="flex pt-1 pb-1">
+                                                                <div className={`${styles.customRadio} mr-2`}>
+                                                                    <input
+                                                                        id={item.type}
+                                                                        type="radio"
+                                                                        name="datatype"
+                                                                        className="scale-150"
+                                                                        value={item.type}
+                                                                        checked={dataType === item.id}
+                                                                        onChange={() => radioChange(item.id)}
+                                                                    />
+                                                                    <span></span>
+                                                                </div>
+                                                                <label htmlFor={item.type} className="text-black font-semibold">{item.name}<span className="text-gray-500 font-normal text-[14px] ml-2">
+                                                                    {item.description}
+                                                                </span>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    ))
+                                                    :
+                                                    null
+                                            }
 
                                             <div className="flex justify-end items-center w-full">
                                                 <button
@@ -490,16 +572,17 @@ export default function EditSubClass(props: any) {
                                                 placeholder="Parent Join Key"
                                                 required
                                                 onChange={(e) => (assetname.current = e.target.value)}
-                                                value={pjk}
+                                                // value={pjk}
+                                                value={allSubClassData[0]?.ParentJoinKeys[0]?.tagname}
                                             // onChange={handleJoinKey}
                                             // multiple
                                             >
+                                                {/* <option value="">Select</option> */}
                                                 {
-                                                    allClassData && allClassData[0]?.tags?.map((item: any, index: any) => (
-                                                        <option key={index} value={item.tagName}>{item.tagName}</option>
+                                                    allClassData && allClassData[0]?.ClassTags?.map((item: any, index: any) => (
+                                                        <option key={index} value={item.id}>{item.tagName}</option>
                                                     ))
                                                 }
-                                                <option value="">Select</option>
                                             </select>
                                             <label htmlFor="parentJoinKey" className={`${styles.form__label}`}>Parent Join Key </label>
                                         </div>
