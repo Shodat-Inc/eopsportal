@@ -139,7 +139,7 @@ async function getObjectById(params: any) {
           include: [
             {
               model: db.classTag,
-              attributes: ["tagName"],
+              attributes: ["id","tagName"],
             },
           ],
         },
