@@ -28397,3 +28397,371 @@
 {"code":"ER_CON_COUNT_ERROR","errno":1040,"level":"error","message":"db.ts Too many connections","sqlState":"","stack":"Error: Too many connections\n    at Object.createConnection (D:\\WORK\\eopsportal\\node_modules\\mysql2\\promise.js:253:31)\n    at Object.initialize (webpack-internal:///(api)/./src/helpers/api/db.ts:101:88)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:32:115)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)","timestamp":"2024-01-16T12:06:56.031Z"}
 {"level":"info","message":"JWT","timestamp":"2024-01-16T12:06:56.047Z"}
 {"level":"error","message":"Authentication Error Cannot read properties of undefined (reading 'scope')","stack":"TypeError: Cannot read properties of undefined (reading 'scope')\n    at Object.authenticate (webpack-internal:///(api)/./src/helpers/api/repo/users-repo.ts:43:69)\n    at Object.handler [as post] (webpack-internal:///(api)/./src/pages/api/signIn.ts:39:80)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:80:34)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)","timestamp":"2024-01-16T12:06:56.076Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-16T12:07:04.904Z"}
+{"code":"ER_CON_COUNT_ERROR","errno":1040,"level":"error","message":"db.ts Too many connections","sqlState":"","stack":"Error: Too many connections\n    at Object.createConnection (D:\\WORK\\eopsportal\\node_modules\\mysql2\\promise.js:253:31)\n    at Object.initialize (webpack-internal:///(api)/./src/helpers/api/db.ts:101:88)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:32:115)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)","timestamp":"2024-01-16T12:07:04.908Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T12:07:04.910Z"}
+{"level":"error","message":"Authentication Error Cannot read properties of undefined (reading 'scope')","stack":"TypeError: Cannot read properties of undefined (reading 'scope')\n    at Object.authenticate (webpack-internal:///(api)/./src/helpers/api/repo/users-repo.ts:43:69)\n    at Object.handler [as post] (webpack-internal:///(api)/./src/pages/api/signIn.ts:39:80)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:80:34)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)","timestamp":"2024-01-16T12:07:04.915Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-16T12:07:16.983Z"}
+{"code":"ER_CON_COUNT_ERROR","errno":1040,"level":"error","message":"db.ts Too many connections","sqlState":"","stack":"Error: Too many connections\n    at Object.createConnection (D:\\WORK\\eopsportal\\node_modules\\mysql2\\promise.js:253:31)\n    at Object.initialize (webpack-internal:///(api)/./src/helpers/api/db.ts:101:88)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:32:115)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)","timestamp":"2024-01-16T12:07:16.986Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T12:07:16.987Z"}
+{"level":"error","message":"Authentication Error Cannot read properties of undefined (reading 'scope')","stack":"TypeError: Cannot read properties of undefined (reading 'scope')\n    at Object.authenticate (webpack-internal:///(api)/./src/helpers/api/repo/users-repo.ts:43:69)\n    at Object.handler [as post] (webpack-internal:///(api)/./src/pages/api/signIn.ts:39:80)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:80:34)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)","timestamp":"2024-01-16T12:07:16.991Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-16T12:07:31.886Z"}
+{"code":"ER_CON_COUNT_ERROR","errno":1040,"level":"error","message":"db.ts Too many connections","sqlState":"","stack":"Error: Too many connections\n    at Object.createConnection (D:\\WORK\\eopsportal\\node_modules\\mysql2\\promise.js:253:31)\n    at Object.initialize (webpack-internal:///(api)/./src/helpers/api/db.ts:101:88)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:32:115)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)","timestamp":"2024-01-16T12:07:31.889Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T12:07:31.890Z"}
+{"level":"error","message":"Authentication Error Cannot read properties of undefined (reading 'scope')","stack":"TypeError: Cannot read properties of undefined (reading 'scope')\n    at Object.authenticate (webpack-internal:///(api)/./src/helpers/api/repo/users-repo.ts:43:69)\n    at Object.handler [as post] (webpack-internal:///(api)/./src/pages/api/signIn.ts:39:80)\n    at eval (webpack-internal:///(api)/./src/helpers/api/api-handler.ts:80:34)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)","timestamp":"2024-01-16T12:07:31.892Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-16T18:01:01.239Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:01:02.809Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:01:02.901Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-16T18:01:09.966Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:01:10.038Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-16T18:02:10.552Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:02:10.627Z"}
+{"level":"info","message":"Error Handler","timestamp":"2024-01-16T18:02:10.631Z"}
+{"level":"error","message":"UnauthorizedError","timestamp":"2024-01-16T18:02:10.636Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-16T18:02:11.026Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-16T18:02:11.027Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-16T18:02:11.029Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:02:11.086Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2024-01-16T18:02:11.090Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:02:11.129Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:02:11.173Z"}
+{"level":"info","message":"Get All Tag DataTypes","timestamp":"2024-01-16T18:02:11.183Z"}
+{"level":"info","message":"Get All Tag DataTypes","timestamp":"2024-01-16T18:02:11.185Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-16T18:02:14.292Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-16T18:02:14.294Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-16T18:02:14.296Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-16T18:02:14.297Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-16T18:02:14.299Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:02:14.347Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:02:14.376Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:02:14.406Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:02:14.445Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-16T18:02:14.448Z"}
+{"level":"error","message":"No Id is provided","timestamp":"2024-01-16T18:02:14.448Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-16T18:02:14.449Z"}
+{"level":"error","message":"No Id is provided","timestamp":"2024-01-16T18:02:14.450Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-16T18:02:14.454Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-16T18:02:14.463Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:02:14.516Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-16T18:02:14.537Z"}
+{"level":"error","message":"No Id is provided","timestamp":"2024-01-16T18:02:14.538Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:02:14.749Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-16T18:02:14.757Z"}
+{"level":"error","message":"No Id is provided","timestamp":"2024-01-16T18:02:14.759Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:02:14.813Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-16T18:02:14.819Z"}
+{"level":"error","message":"No Id is provided","timestamp":"2024-01-16T18:02:14.819Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:03:02.410Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-16T18:03:02.415Z"}
+{"level":"error","message":"No Id is provided","timestamp":"2024-01-16T18:03:02.416Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:03:03.276Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-16T18:03:03.278Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-16T18:06:04.181Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:06:04.249Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-16T18:06:04.253Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-16T18:06:13.507Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:06:13.551Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-16T18:06:13.553Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:06:15.471Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-16T18:06:15.474Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:06:17.074Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-16T18:06:17.077Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-16T18:06:33.671Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:06:33.748Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-16T18:06:33.751Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:06:35.734Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-16T18:06:35.736Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:06:37.127Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-16T18:06:37.129Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:06:38.137Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-16T18:06:38.140Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-16T18:06:46.265Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-16T18:06:46.267Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-16T18:06:46.268Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:06:46.312Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:06:46.346Z"}
+{"level":"info","message":"Get All Tag DataTypes","timestamp":"2024-01-16T18:06:46.349Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2024-01-16T18:06:46.350Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:06:46.392Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-16T18:06:47.446Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-16T18:06:47.448Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:06:47.502Z"}
+{"level":"info","message":"Get All Tag DataTypes","timestamp":"2024-01-16T18:06:47.504Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:06:47.539Z"}
+{"level":"info","message":"Error Handler","timestamp":"2024-01-16T18:06:47.540Z"}
+{"level":"error","message":"UnauthorizedError","timestamp":"2024-01-16T18:06:47.541Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-16T18:06:47.678Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-16T18:06:47.679Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:06:47.722Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:06:47.762Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-16T18:06:47.765Z"}
+{"level":"error","message":"No Id is provided","timestamp":"2024-01-16T18:06:47.765Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-16T18:06:47.767Z"}
+{"level":"error","message":"No Id is provided","timestamp":"2024-01-16T18:06:47.767Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-16T18:06:47.967Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-16T18:06:47.968Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:06:48.009Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-16T18:06:48.013Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:06:48.068Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-16T18:06:48.073Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-16T18:06:48.256Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-16T18:06:48.257Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:06:48.308Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-16T18:06:48.312Z"}
+{"level":"error","message":"No Id is provided","timestamp":"2024-01-16T18:06:48.312Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:06:48.361Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-16T18:06:48.364Z"}
+{"level":"error","message":"No Id is provided","timestamp":"2024-01-16T18:06:48.364Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:06:48.374Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-16T18:06:48.378Z"}
+{"level":"error","message":"No Id is provided","timestamp":"2024-01-16T18:06:48.379Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:06:48.390Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-16T18:06:48.394Z"}
+{"level":"error","message":"No Id is provided","timestamp":"2024-01-16T18:06:48.395Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:06:48.404Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-16T18:06:48.406Z"}
+{"level":"error","message":"No Id is provided","timestamp":"2024-01-16T18:06:48.407Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:06:49.203Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-16T18:06:49.205Z"}
+{"level":"error","message":"No Id is provided","timestamp":"2024-01-16T18:06:49.206Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:06:49.834Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-16T18:06:49.837Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-16T18:07:06.436Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:07:06.478Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-16T18:07:06.480Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-16T18:08:28.867Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:08:28.917Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-16T18:08:28.921Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-16T18:11:05.647Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:11:05.705Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-16T18:11:05.708Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-16T18:11:26.190Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:11:26.247Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-16T18:11:26.250Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-16T18:11:37.413Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:11:37.455Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-16T18:11:37.457Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-16T18:11:41.429Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:11:41.482Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-16T18:11:41.485Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-16T18:11:43.929Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:11:43.970Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-16T18:11:43.972Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-16T18:14:48.779Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:14:48.836Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-16T18:14:48.840Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-16T18:15:14.541Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:15:14.615Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-16T18:15:14.629Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-16T18:15:23.126Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:15:23.218Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-16T18:15:23.223Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-16T18:18:33.563Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:18:33.622Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-16T18:18:33.627Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-16T18:18:43.678Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:18:43.728Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-16T18:18:43.731Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-16T18:19:00.607Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:19:00.678Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-16T18:19:00.682Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-16T18:19:17.640Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:19:17.673Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-16T18:19:17.675Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-16T18:19:57.923Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:19:58.003Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-16T18:19:58.006Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-16T18:20:10.316Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:20:10.363Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-16T18:20:10.366Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-16T18:21:22.044Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-16T18:21:22.046Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-16T18:21:22.048Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-16T18:21:22.050Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-16T18:21:22.051Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:21:22.125Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:21:22.172Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:21:22.247Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:21:22.291Z"}
+{"level":"info","message":"Error Handler","timestamp":"2024-01-16T18:21:22.293Z"}
+{"level":"error","message":"UnauthorizedError","timestamp":"2024-01-16T18:21:22.293Z"}
+{"level":"info","message":"Get All Tag DataTypes","timestamp":"2024-01-16T18:21:22.295Z"}
+{"level":"info","message":"Get All Tag DataTypes","timestamp":"2024-01-16T18:21:22.298Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2024-01-16T18:21:22.300Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:21:22.344Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-16T18:21:22.808Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-16T18:21:22.810Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-16T18:21:22.811Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-16T18:21:22.812Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-16T18:21:22.814Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-16T18:21:22.815Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:21:22.877Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:21:22.929Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:21:22.966Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:21:23.008Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:21:23.043Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-16T18:21:23.046Z"}
+{"level":"error","message":"No Id is provided","timestamp":"2024-01-16T18:21:23.047Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-16T18:21:23.048Z"}
+{"level":"error","message":"No Id is provided","timestamp":"2024-01-16T18:21:23.049Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-16T18:21:23.053Z"}
+{"level":"error","message":"No Id is provided","timestamp":"2024-01-16T18:21:23.058Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-16T18:21:23.060Z"}
+{"level":"error","message":"No Id is provided","timestamp":"2024-01-16T18:21:23.064Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-16T18:21:23.071Z"}
+{"level":"error","message":"NO Id is provided","timestamp":"2024-01-16T18:21:23.072Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:21:23.172Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-16T18:21:23.175Z"}
+{"level":"error","message":"No Id is provided","timestamp":"2024-01-16T18:21:23.175Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:21:23.191Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-16T18:21:23.198Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:21:23.327Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-16T18:21:23.330Z"}
+{"level":"error","message":"No Id is provided","timestamp":"2024-01-16T18:21:23.331Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:21:24.714Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-16T18:21:24.716Z"}
+{"level":"error","message":"No Id is provided","timestamp":"2024-01-16T18:21:24.716Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:21:25.323Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-16T18:21:25.331Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-16T18:21:57.129Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:21:57.174Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-16T18:21:57.176Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-16T18:22:22.180Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:22:22.237Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-16T18:22:22.240Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-16T18:26:46.304Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:26:46.363Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-16T18:26:46.365Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-16T18:27:10.996Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:27:11.066Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-16T18:27:11.069Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-16T18:27:22.715Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:27:22.762Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-16T18:27:22.767Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-16T18:27:35.485Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:27:35.538Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-16T18:27:35.541Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-16T18:28:53.491Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:28:53.582Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-16T18:28:53.585Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-16T18:29:00.712Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-16T18:29:00.714Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:29:00.772Z"}
+{"level":"info","message":"Error Handler","timestamp":"2024-01-16T18:29:00.773Z"}
+{"level":"error","message":"UnauthorizedError","timestamp":"2024-01-16T18:29:00.774Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:29:00.838Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-16T18:29:01.165Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-16T18:29:01.166Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-16T18:29:01.167Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:29:01.212Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:29:01.243Z"}
+{"level":"info","message":"Get All Tag DataTypes","timestamp":"2024-01-16T18:29:01.245Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2024-01-16T18:29:01.246Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:29:01.281Z"}
+{"level":"info","message":"Get All Tag DataTypes","timestamp":"2024-01-16T18:29:01.284Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:29:03.514Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-16T18:29:03.518Z"}
+{"level":"error","message":"No Id is provided","timestamp":"2024-01-16T18:29:03.519Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-16T18:29:03.862Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-16T18:29:03.863Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-16T18:29:03.864Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-16T18:29:03.865Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:29:03.955Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:29:03.996Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:29:04.034Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-16T18:29:04.037Z"}
+{"level":"error","message":"No Id is provided","timestamp":"2024-01-16T18:29:04.037Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-16T18:29:04.039Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-16T18:29:04.045Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:29:04.087Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-16T18:29:04.090Z"}
+{"level":"error","message":"No Id is provided","timestamp":"2024-01-16T18:29:04.090Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:29:04.156Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-16T18:29:04.159Z"}
+{"level":"error","message":"No Id is provided","timestamp":"2024-01-16T18:29:04.159Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:29:04.182Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-16T18:29:04.185Z"}
+{"level":"error","message":"No Id is provided","timestamp":"2024-01-16T18:29:04.186Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:29:05.654Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-16T18:29:05.657Z"}
+{"level":"error","message":"No Id is provided","timestamp":"2024-01-16T18:29:05.658Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:29:06.332Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-16T18:29:06.334Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-16T18:29:32.432Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:29:32.476Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-16T18:29:32.479Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-16T18:29:34.100Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:29:34.132Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-16T18:29:34.135Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-16T18:29:37.954Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:29:37.992Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-16T18:29:37.994Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:30:15.310Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-16T18:30:15.314Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:30:16.993Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-16T18:30:16.998Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:30:18.125Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-16T18:30:18.134Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-16T18:30:54.563Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:30:54.642Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-16T18:30:54.647Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-16T18:32:04.303Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-16T18:32:04.372Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-16T18:32:04.375Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-17T04:44:44.075Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-17T04:44:44.751Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-17T04:44:47.496Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-17T04:44:47.568Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-17T04:49:21.612Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-17T04:49:21.622Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-17T04:49:21.624Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-17T04:49:21.703Z"}
+{"level":"info","message":"Get All Tag DataTypes","timestamp":"2024-01-17T04:49:21.713Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-17T04:49:21.770Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-17T04:49:21.823Z"}
+{"level":"info","message":"Error Handler","timestamp":"2024-01-17T04:49:21.830Z"}
+{"level":"error","message":"UnauthorizedError","timestamp":"2024-01-17T04:49:21.830Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2024-01-17T04:49:21.834Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-17T04:49:21.905Z"}
+{"level":"info","message":"Get All Tag DataTypes","timestamp":"2024-01-17T04:49:21.908Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-17T04:49:22.951Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-17T04:49:22.953Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-17T04:49:22.954Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-17T04:49:22.955Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-17T04:49:23.014Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-17T04:49:23.059Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-17T04:49:23.118Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-17T04:49:23.120Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-17T04:49:23.125Z"}
+{"level":"error","message":"No Id is provided","timestamp":"2024-01-17T04:49:23.126Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-17T04:49:23.127Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-17T04:49:23.178Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-17T04:49:23.181Z"}
+{"level":"error","message":"No Id is provided","timestamp":"2024-01-17T04:49:23.181Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-17T04:49:23.212Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-17T04:49:23.218Z"}
+{"level":"error","message":"No Id is provided","timestamp":"2024-01-17T04:49:23.218Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-17T04:49:23.289Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-17T04:49:23.293Z"}
+{"level":"error","message":"No Id is provided","timestamp":"2024-01-17T04:49:23.294Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-17T04:49:23.315Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-17T04:49:23.317Z"}
+{"level":"error","message":"No Id is provided","timestamp":"2024-01-17T04:49:23.317Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-17T04:49:30.471Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-17T04:49:30.474Z"}
+{"level":"error","message":"No Id is provided","timestamp":"2024-01-17T04:49:30.475Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-17T04:49:31.358Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-17T04:49:31.362Z"}
+{"level":"error","message":"No Id is provided","timestamp":"2024-01-17T04:49:31.363Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-17T04:49:31.377Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-17T04:49:31.379Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-17T04:49:31.440Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-17T04:49:31.444Z"}
+{"level":"error","message":"No Id is provided","timestamp":"2024-01-17T04:49:31.444Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-17T04:49:34.133Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-17T04:49:34.136Z"}
+{"level":"error","message":"No Id is provided","timestamp":"2024-01-17T04:49:34.137Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-17T04:49:35.893Z"}
+{"level":"info","message":"Fetching Objects, ClassTags, and ObjectValues data","timestamp":"2024-01-17T04:49:35.897Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-17T06:56:55.374Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-17T06:56:55.503Z"}
