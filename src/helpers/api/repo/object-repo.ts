@@ -85,7 +85,7 @@ async function get(id: any) {
         },
         {
           model: db.AddValues,
-          attributes: ["values", "createdAt"],
+          attributes: ["id","values", "createdAt"],
         },
       ],
     });
@@ -145,7 +145,7 @@ async function getObjectById(params: any) {
         },
         {
           model: db.AddValues,
-          attributes: ["values", "createdAt"],
+          attributes: ["id","values", "createdAt"],
         },
       ],
     });
