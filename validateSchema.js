@@ -175,7 +175,7 @@ export const updateObjectValidation = (data) => {
     objectId: Joi.number().required(),
     deleteValueId: Joi.array().items(Joi.number()),
     updatedValues: Joi.array().items({
-      classTagId: Joi.number().required(),
+      id: Joi.number().required(),
       values: Joi.string().required(),
     }),
   });

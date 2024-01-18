@@ -83,14 +83,13 @@ async function bulkCreate(params: any[], objectId: any, transaction: any) {
 async function update(params: any) {
   // Log information about the object value update process
   loggerInfo.info("Update Object Value for specific tag IDs");
-
   try {
     let updatedData: any = {};
     // Iterate through the provided parameters
     for (let x of params) {
       // Find the object value in the database by classTagId
       const valueData = await db.AddValues.findOne({
-        where: { classTagId: x.classTagId },
+        where: { id: x.id },
       });
 
       // Check if the object value exists
@@ -103,7 +102,7 @@ async function update(params: any) {
 
       // Save the updated object value
       valueData.save();
-      updatedData[`classTagId ${x.classTagId}`] = valueData.values;
+      updatedData[`objectValueId ${x.id}`] = valueData.values;
     }
 
     // Return a successful response after updating all object values
