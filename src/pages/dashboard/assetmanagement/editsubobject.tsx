@@ -35,7 +35,7 @@ export default function EditSubObject(props: any) {
             }).then(function (response) {
                 if (response) {
                     console.log({
-                        "RESPONSE": response?.data?.data
+                        "RESPONSE HERE": response?.data?.data
                     })
                     setObjectsData(response.data?.data)
                 }
@@ -181,7 +181,7 @@ export default function EditSubObject(props: any) {
                                                 <input
                                                     type="text"
                                                     id={`${items.values}`}
-                                                    name={`${items.values}_${items.id}`}
+                                                    name={`${items.values}_${linkContent.id}`}
                                                     className={`border border-gray-961 ${styles.form__field}`}
                                                     placeholder={`${items.values}`}
                                                     defaultValue={`${items.values}`}

@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import styles from '../../../styles/Common.module.css';
 import Image from "next/image";
 import { editObjectModalAction } from '@/store/actions/classAction';
+import { successMessageAction } from "@/store/actions/classAction";
 import axios from "axios";
 
 export default function EditObject(props: any) {
@@ -14,6 +15,7 @@ export default function EditObject(props: any) {
     const [objectsData, setObjectsData] = useState([] as any);
     const formData = useRef("");
     const [success, setSuccess] = useState(false);
+    const [json, setJson] = useState({} as any)
 
     const dispatch = useDispatch<any>();
 
@@ -22,22 +24,50 @@ export default function EditObject(props: any) {
         access_token = localStorage.getItem('authToken')
     }
 
+    // Creating a JSON Object
+    function CreateJSON(name: any, value: any) {
+        var myObject = {
+            name: value,
+        };
+        return myObject;
+    }
+
     // GET ALL DATATYPES
     async function fetchObjectData() {
+        console.log({
+            url: `/api/getObjectById?objectId=${props.selectedObjID}&classId=${props.selectedParentClass}`,
+        })
         try {
             await axios({
                 method: 'GET',
-                url: `/api/getObjectById?objectId=${props.objID}&classId=${props.selectedParentClass}`,
+                url: `/api/getObjectById?objectId=${props.selectedObjID}&classId=${props.selectedParentClass}`,
                 headers: {
                     "Authorization": `Bearer ${access_token}`,
                     "Content-Type": "application/json"
                 }
             }).then(function (response) {
                 if (response) {
-                    console.log({
-                        "RESPONSE": response?.data?.data
+                    
+                    let json1 = {};
+                    let json2 = {};
+                    setObjectsData(response?.data?.data)
+
+
+                    
+                    let jsonList = [] as any;
+                    // jsonList.push(json)
+                    // setDtObject(jsonList)
+
+                    response?.data?.data[0]?.Class?.ClassTags.map((item: any) => {
+                        let json: any = CreateJSON(item.tagName, "");
+                        jsonList.push(json);
                     })
-                    setObjectsData(response.data?.data)
+
+                    console.log({
+                        "RESPONSE_IN_GET_OBJECT": response?.data?.data,
+                        "JSON":jsonList
+                    })
+                    setJson(jsonList)
                 }
             }).catch(function (error) {
                 console.log({
@@ -51,8 +81,11 @@ export default function EditObject(props: any) {
         }
     }
     useEffect(() => {
-        fetchObjectData();
-    }, [access_token, props])
+        setTimeout(() => {
+            fetchObjectData();
+        }, 100)
+
+    }, [access_token, props.selectedObjID, props.selectedParentClass])
 
 
     // Close the modal
@@ -81,7 +114,7 @@ export default function EditObject(props: any) {
         const objectValue = [] as any;
         Object.values(form_values).map((item: any) => {
             objectValue.push({
-                "value": item
+                "values": item
             })
         })
 
@@ -99,7 +132,7 @@ export default function EditObject(props: any) {
 
         try {
             await axios({
-                method: 'POST',
+                method: 'PUT',
                 url: `/api/updateObjects`,
                 data: dataToSave,
                 headers: {
@@ -109,7 +142,7 @@ export default function EditObject(props: any) {
             }).then(function (response) {
                 if (response) {
                     setSuccess(true);
-                    // dispatch(successMessageAction(true))
+                    dispatch(successMessageAction(true))
                     setTimeout(() => {
                         setSuccess(false);
                         dispatch(editObjectModalAction(false));
@@ -123,18 +156,24 @@ export default function EditObject(props: any) {
         }
     }
 
-    const handelChange = (e:any) => {
+    const handelChange = (e: any) => {
         e.preventDefault();
         console.log("Clicked", e.target.name)
         formData.current = e.target.value
     }
+
+
+    console.log({
+        "OBJECT_DATA": objectsData,
+        "JSON":json
+    })
 
     return (
         <>
             <div className={`bg-white h-full z-[11] fixed top-0 right-0 p-5 shadow shadow-lg ${props.show === true ? `${styles.objectContainer} ${styles.sliderShow}` : `${styles.objectContainer}`}`}>
                 <div className="flex justify-between items-center w-full mb-3">
                     <h2 className="font-semibold text-lg">Edit Object
-                        (<span className="text-sm text-gray-800">{props.objID}</span>)
+                        (<span className="text-sm text-gray-800">{props.selectedObjID}</span>)
                     </h2>
                     <button onClick={closeModel} className="transition-all duration-[100ms] transition-opacity duration-100 outline-none transform active:scale-75 transition-transform">
                         <Image
@@ -181,10 +220,11 @@ export default function EditObject(props: any) {
                                                 <input
                                                     type="text"
                                                     id={`${items.values}`}
-                                                    name={`${items.values}_${items.id}`}
+                                                    name={`${items.values}_${linkContent.id}`}
                                                     className={`border border-gray-961 ${styles.form__field}`}
                                                     placeholder={`${items.values}`}
-                                                    defaultValue={`${items.values}`}
+                                                    value={`${items.values}`}
+                                                    // defaultValue={`${items.values}`}
                                                     onChange={(e) => (formData.current = e.target.value)}
                                                     // onChange={handelChange}
                                                     // onChange={(e) => (e.target.name = e.target.value)}

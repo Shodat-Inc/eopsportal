@@ -152,6 +152,10 @@ export default function ObjectManagement(props: any) {
                 }
             }).then(function (response) {
                 if (response) {
+
+                    console.log({
+                        "HERERERE":response
+                    })
                     setTableHeader(response?.data?.objects?.data[0]?.Class?.ClassTags)
                     setObjectData(response?.data?.objects?.data);
                 }
@@ -169,7 +173,7 @@ export default function ObjectManagement(props: any) {
     useEffect(() => {
         fetchData();
         if (fetchData.length) return;
-    }, [chooseAsset])
+    }, [chooseAsset, classSelector.successMessageReducer === true])
 
 
     // function for searching
@@ -200,7 +204,7 @@ export default function ObjectManagement(props: any) {
         dispatch(editObjectModalAction(true));
         setActions(false);
         console.log({
-            ITEM:item
+            "ITEM_HERE":item
         })
         setSelectedObjID(item);
     }
@@ -237,6 +241,10 @@ export default function ObjectManagement(props: any) {
 
     console.log({
         objectData:objectData
+    })
+
+    console.log({
+        "AMIT":selectedObjID
     })
 
 
@@ -390,7 +398,7 @@ export default function ObjectManagement(props: any) {
                                 objectData && objectData.length > 0 ?
                                     objectData.map((items: any, index: any) => (
                                         <tr key={index}>
-                                            <td>{index + 1}</td>
+                                            <td>{index + 1} {items?.id}</td>
                                             {
                                                 items?.ObjectValues?.map((item: any, i: any) => (
                                                     <td key={i}>
@@ -420,7 +428,7 @@ export default function ObjectManagement(props: any) {
                                                                 <span>Edit</span>
                                                             </button>
                                                             <button
-                                                                onClick={() => deleteModalFunction(items.id)}
+                                                                onClick={() => deleteModalFunction(items?.id)}
                                                                 className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
                                                                 <span>Delete</span>
                                                             </button>
@@ -540,7 +548,8 @@ export default function ObjectManagement(props: any) {
                 objectData={objectData}
                 selectedParentClass={chooseAsset}
                 classData={props.classData}
-                objID={selectedObjID}
+                objID={objID}
+                selectedObjID={selectedObjID}
             />
 
         </div>
