@@ -3,7 +3,7 @@ import sendResponseData from "../../constant";
 import { loggerInfo, loggerError } from "@/logger";
 import { error } from "console";
 import message from "@/util/responseMessage";
-import { generateRandomAlphaNumeric } from "../../../util/helper"
+import { generateRandomAlphaNumeric } from "../../../util/helper";
 
 /**
  * Repository for handling object related operations.
@@ -32,11 +32,14 @@ async function create(params: any, transaction: any) {
   }
 
   try {
-    const serialId = await generateRandomAlphaNumeric({ model: db.Object, transaction })
+    const serialId = await generateRandomAlphaNumeric({
+      model: db.Object,
+      transaction,
+    });
     const updatedData = {
       ...params,
-      serialId
-    }
+      serialId,
+    };
     // Create a new object instance using the provided parameters.
     const object = new db.object(updatedData, { transaction });
 
@@ -85,14 +88,14 @@ async function get(id: any) {
         },
         {
           model: db.AddValues,
-          attributes: ["id","values", "createdAt"],
+          attributes: ["id", "values", "createdAt"],
         },
       ],
     });
     if (!result) {
-      return sendResponseData(false, "Object Do not Exist", {})
+      return sendResponseData(false, "Object Do not Exist", {});
     }
-    return sendResponseData(true, "Object fetched Successfully", result)
+    return sendResponseData(true, "Object fetched Successfully", result);
     // return result.map((item: any, index: any) => ({
     //   S_No: index + 1,
     //   ...item.get(), // Convert Sequelize instance to plain JS object
@@ -139,27 +142,26 @@ async function getObjectById(params: any) {
           include: [
             {
               model: db.classTag,
-              attributes: ["id","tagName"],
+              attributes: ["id", "tagName"],
             },
           ],
         },
         {
           model: db.AddValues,
-          attributes: ["id","values", "createdAt"],
+          attributes: ["id", "values", "createdAt"],
         },
       ],
     });
     if (!result) {
-      return sendResponseData(false, "Object Do not Exist", {})
+      return sendResponseData(false, "Object Do not Exist", {});
     }
-    return sendResponseData(true, "Object fetched Successfully", result)
+    return sendResponseData(true, "Object fetched Successfully", result);
 
     // Map the result to add serial numbers
     // return result.map((item: any, index: any) => ({
     //   S_No: index + 1,
     //   ...item.get(), // Convert Sequelize instance to plain JS object
     // }));
-
   } catch (error) {
     // Log the error if there's an issue with fetching data.
     loggerError.error(
@@ -189,7 +191,6 @@ async function _delete(params: any) {
 
     // Return a successful response after deleting the object
     return sendResponseData(true, message.success.objectDeleted, response);
-
   } catch (error: any) {
     // Log the error if there's an issue with deleting the object.
     loggerError.error(error);
@@ -198,4 +199,3 @@ async function _delete(params: any) {
     return sendResponseData(false, message.error.errorDeleteObject, error);
   }
 }
-

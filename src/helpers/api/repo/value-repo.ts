@@ -85,6 +85,7 @@ async function update(params: any) {
   loggerInfo.info("Update Object Value for specific tag IDs");
 
   try {
+    let updatedData: any = {};
     // Iterate through the provided parameters
     for (let x of params) {
       // Find the object value in the database by classTagId
@@ -102,10 +103,11 @@ async function update(params: any) {
 
       // Save the updated object value
       valueData.save();
+      updatedData[`classTagId ${x.classTagId}`] = valueData.values;
     }
 
     // Return a successful response after updating all object values
-    return sendResponseData(true, message.success.updated, {});
+    return sendResponseData(true, message.success.updated, updatedData);
   } catch (error: any) {
     // Log error information in case of an exception during object value update
     loggerError.error("Error in updating object values");
@@ -145,6 +147,10 @@ async function _delete(params: any) {
     loggerError.error("Error in deleting object values");
 
     // Return an error response in case of an exception during object value deletion
-    return sendResponseData(false, message.error.errorDeletingObjectValues, error);
+    return sendResponseData(
+      false,
+      message.error.errorDeletingObjectValues,
+      error
+    );
   }
 }
