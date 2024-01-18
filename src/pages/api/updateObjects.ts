@@ -3,7 +3,6 @@ import { valueRepo } from "@/helpers/api/repo/value-repo";
 import { loggerError, loggerInfo } from "@/logger";
 import { updateObjectValidation } from "../../../validateSchema";
 
-
 // Export the API handler with the updateObject function.
 export default apiHandler({
   put: updateObject,
@@ -46,7 +45,7 @@ async function updateObject(req: any, res: any) {
     const updateData = await valueRepo.update(restData.updatedValues);
 
     // Send a success response.
-    return res.status(200).json("Updated successfully");
+    return res.status(200).json(updateData);
   } catch (error: any) {
     // Log an error if the update fails.
     loggerError.error("Error in updateValues API", error);
