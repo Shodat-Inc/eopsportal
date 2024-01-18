@@ -374,7 +374,7 @@ export default function EditSubClass(props: any) {
                                                 placeholder="Enter sub class name"
                                                 required
                                                 onChange={(e) => (assetname.current = e.target.value)}
-                                                value={allSubClassData[0]?.className}
+                                                defaultValue={allSubClassData[0]?.className}
                                             />
                                             <label htmlFor="assetname" className={`${styles.form__label}`}>Enter sub class name</label>
                                         </div>
@@ -573,7 +573,7 @@ export default function EditSubClass(props: any) {
                                                 required
                                                 onChange={(e) => (assetname.current = e.target.value)}
                                                 // value={pjk}
-                                                value={allSubClassData[0]?.ParentJoinKeys[0]?.tagname}
+                                                defaultValue={allSubClassData[0]?.ParentJoinKeys[0]?.tagname}
                                             // onChange={handleJoinKey}
                                             // multiple
                                             >

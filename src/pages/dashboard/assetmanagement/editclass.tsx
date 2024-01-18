@@ -318,13 +318,6 @@ export default function EditClass(props: any) {
 
                             <div className="mb-6 relative column-2 flex justify-start items-center sm:w-full small:w-full">
                                 <div className="lg:w-full small:w-full sm:w-full">
-                                    <input
-                                        type="hidden"
-                                        name="assetid"
-                                        placeholder="Enter asset ID"
-                                        value={classData[0]?.id}
-                                    />
-
                                     <div className={`mb-5 lg:w-full small:w-full small:w-full ${styles.form__wrap}`}>
                                         <div className={`relative ${styles.form__group} font-OpenSans`}>
                                             <input
@@ -335,7 +328,7 @@ export default function EditClass(props: any) {
                                                 placeholder="Enter class name"
                                                 required
                                                 onChange={(e) => (assetname.current = e.target.value)}
-                                                value={classData[0]?.className}
+                                                defaultValue={classData[0]?.className}
                                             />
                                             <label htmlFor="assetname" className={`${styles.form__label}`}>Enter class name</label>
                                         </div>

@@ -184,7 +184,7 @@ export default function EditObject(props: any) {
                                                     name={`${items.values}_${items.id}`}
                                                     className={`border border-gray-961 ${styles.form__field}`}
                                                     placeholder={`${items.values}`}
-                                                    value={`${items.values}`}
+                                                    defaultValue={`${items.values}`}
                                                     onChange={(e) => (formData.current = e.target.value)}
                                                     // onChange={handelChange}
                                                     // onChange={(e) => (e.target.name = e.target.value)}

@@ -15,6 +15,7 @@ export default function EditSubObject(props: any) {
     const [objectsData, setObjectsData] = useState([] as any);
     const [success, setSuccess] = useState(false);
     const formData = useRef("");
+    const [inputs, setInputs] = useState({});
 
     let access_token = "" as any;
     if (typeof window !== 'undefined') {
@@ -40,12 +41,12 @@ export default function EditSubObject(props: any) {
                 }
             }).catch(function (error) {
                 console.log({
-                    "ERROR IN AXIOS CATCH (GET DT)": error
+                    "ERROR IN AXIOS CATCH": error
                 })
             })
         } catch (err) {
             console.log({
-                "ERROR IN TRY CATCH (GET DT)": err
+                "ERROR IN TRY CATCH": err
             })
         }
     }
@@ -70,7 +71,7 @@ export default function EditSubObject(props: any) {
             let tagID = item.split("_")[1];
             let tagName = item.split("_")[0];
             objectKey.push({
-                "classTagId": tagID
+                "classTagId": parseInt(tagID)
             })
             objVal.push({
                 tagName: tagName
@@ -79,7 +80,7 @@ export default function EditSubObject(props: any) {
         const objectValue = [] as any;
         Object.values(form_values).map((item: any) => {
             objectValue.push({
-                "value": item
+                "values": item
             })
         })
 
@@ -97,7 +98,7 @@ export default function EditSubObject(props: any) {
 
         try {
             await axios({
-                method: 'POST',
+                method: 'PUT',
                 url: `/api/updateObjects`,
                 data: dataToSave,
                 headers: {
@@ -106,18 +107,22 @@ export default function EditSubObject(props: any) {
                 }
             }).then(function (response) {
                 if (response) {
+
+                    console.log({
+                        "RESULT_RESPONSE":response
+                    })
                     // setSuccess(true);
                     // dispatch(successMessageAction(true))
                     setTimeout(() => {
                         // setSuccess(false);
-                        dispatch(editSubObjectModalAction(false));
+                        dispatch(editSubObjectModalAction(false))
                     }, 50);
                 }
             }).catch(function (error) {
-                console.log("ERROR IN AXIOS CATCH (CREATE CLASS OBJECT):", error)
+                console.log("ERROR IN AXIOS CATCH (EDIT SUB OBJECT):", error)
             })
         } catch (err) {
-            console.log("ERROR IN TRY CATCH (CREATE CLASS OBJECT):", err)
+            console.log("ERROR IN TRY CATCH (EDIT SUB OBJECT):", err)
         }
     }
 
@@ -179,7 +184,7 @@ export default function EditSubObject(props: any) {
                                                     name={`${items.values}_${items.id}`}
                                                     className={`border border-gray-961 ${styles.form__field}`}
                                                     placeholder={`${items.values}`}
-                                                    value={`${items.values}`}
+                                                    defaultValue={`${items.values}`}
                                                     onChange={(e) => (formData.current = e.target.value)}
                                                     required
                                                 />
