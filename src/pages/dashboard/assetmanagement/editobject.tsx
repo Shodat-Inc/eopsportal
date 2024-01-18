@@ -97,30 +97,30 @@ export default function EditObject(props: any) {
             "DATA_TO_SAVE": dataToSave
         })
 
-        // try {
-        //     await axios({
-        //         method: 'POST',
-        //         url: `/api/createObjects`,
-        //         data: dataToSave,
-        //         headers: {
-        //             "Authorization": `Bearer ${tokenStr}`,
-        //             "Content-Type": "application/json"
-        //         }
-        //     }).then(function (response) {
-        //         if (response) {
-        //             setSuccess(true);
-        //             // dispatch(successMessageAction(true))
-        //             setTimeout(() => {
-        //                 setSuccess(false);
-        //                 dispatch(editObjectModalAction(false));
-        //             }, 50);
-        //         }
-        //     }).catch(function (error) {
-        //         console.log("ERROR IN AXIOS CATCH (CREATE CLASS OBJECT):", error)
-        //     })
-        // } catch (err) {
-        //     console.log("ERROR IN TRY CATCH (CREATE CLASS OBJECT):", err)
-        // }
+        try {
+            await axios({
+                method: 'POST',
+                url: `/api/updateObjects`,
+                data: dataToSave,
+                headers: {
+                    "Authorization": `Bearer ${tokenStr}`,
+                    "Content-Type": "application/json"
+                }
+            }).then(function (response) {
+                if (response) {
+                    setSuccess(true);
+                    // dispatch(successMessageAction(true))
+                    setTimeout(() => {
+                        setSuccess(false);
+                        dispatch(editObjectModalAction(false));
+                    }, 50);
+                }
+            }).catch(function (error) {
+                console.log("ERROR IN AXIOS CATCH (CREATE CLASS OBJECT):", error)
+            })
+        } catch (err) {
+            console.log("ERROR IN TRY CATCH (CREATE CLASS OBJECT):", err)
+        }
     }
 
     const handelChange = (e:any) => {
@@ -181,7 +181,7 @@ export default function EditObject(props: any) {
                                                 <input
                                                     type="text"
                                                     id={`${items.values}`}
-                                                    name={`${items.values}_${linkContent.id}`}
+                                                    name={`${items.values}_${items.id}`}
                                                     className={`border border-gray-961 ${styles.form__field}`}
                                                     placeholder={`${items.values}`}
                                                     value={`${items.values}`}

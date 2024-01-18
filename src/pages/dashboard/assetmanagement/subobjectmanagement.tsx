@@ -433,7 +433,7 @@ export default function SubObjectManagement(props: any) {
                                                     {(actions && actionCount === index + 1) &&
                                                         <div className="bg-black text-white border overflow-hidden border-black rounded rounded-lg w-[200px] flex flex-col flex-wrap items-start justify-start shadow-sm absolute top-[30px] right-[75px] z-[1]">
                                                             <button
-                                                                onClick={() => editSubObjectFunction(items?.tags?.ID)}
+                                                                onClick={() => editSubObjectFunction(items?.id)}
                                                                 className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
                                                                 <span>Edit</span>
                                                             </button>
@@ -505,10 +505,11 @@ export default function SubObjectManagement(props: any) {
 
             <EditSubObject
                 show={classSelector?.editSubObjectModalReducer}
-                parentClass={props?.defaultClass}
-                parentObject={props?.objectKey}
-                selectedObject={selectedObjectID}
-                subClass={chooseAsset}
+                selectedSubClass={chooseAsset}
+                subClassData={subClassData}
+                parentClass={classSelector?.setDataForSubObjectReducer?.parentClass}
+                objID={selectedObjectID}
+                subClassName={showClassNameFromID(chooseAsset)}
             />
 
             {/* Delete Modal */}
