@@ -101,30 +101,30 @@ Function to get all classes
 */
 export const getSingleUser = () => async (dispatch: any) => {
     let tokenStr = access_token;
-    try {
-        await axios({
-            method: 'GET',
-            url: `/api/getUsers`,
-            headers: {
-                "Authorization": `Bearer ${tokenStr}`,
-                "Content-Type": "application/json"
-            }
-        })
-            .then(function (response) {
-                dispatch({
-                    type: GET_ALL_CLASS_SUCCESS,
-                    payload: response.data,
-                });
-            })
-            .catch(function (error) {
-                dispatch({
-                    type: GET_ALL_CLASS_ERROR,
-                    payload: error,
-                });
-            })
-    } catch (err) {
-        console.log("err in action:", err)
-    }
+    // try {
+    //     await axios({
+    //         method: 'GET',
+    //         url: `/api/getUsers`,
+    //         headers: {
+    //             "Authorization": `Bearer ${tokenStr}`,
+    //             "Content-Type": "application/json"
+    //         }
+    //     })
+    //         .then(function (response) {
+    //             dispatch({
+    //                 type: GET_ALL_CLASS_SUCCESS,
+    //                 payload: response.data,
+    //             });
+    //         })
+    //         .catch(function (error) {
+    //             dispatch({
+    //                 type: GET_ALL_CLASS_ERROR,
+    //                 payload: error,
+    //             });
+    //         })
+    // } catch (err) {
+    //     console.log("err in action:", err)
+    // }
 };
 
 

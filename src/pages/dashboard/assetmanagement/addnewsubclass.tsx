@@ -1,22 +1,16 @@
-import React, { useState, useRef, useEffect, Component } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import styles from '../../../styles/Common.module.css';
 import { useRouter } from 'next/router'
-import Router from 'next/router'
 import Image from "next/image";
 import axios from "axios";
-import moment from "moment";
 import { successMessageAction } from '@/store/actions/classAction';
 
 export default function AddNewSubClass(props: any) {
 
-    console.log({
-        "PROPS_IN_ADD_UB_CLASS": props
-    })
 
     const dispatch = useDispatch<any>();
     const assetname = useRef("");
-    const router = useRouter();
     const [allTags, setAllTags] = useState<any[]>([]);
     const [newTag, setNewTag] = useState<string>("");
     const [showInput, setShowInput] = useState(false);
@@ -24,7 +18,6 @@ export default function AddNewSubClass(props: any) {
     const [toggleDT, setToggleDT] = useState(false);
     const [dataType, setDataType] = useState("");
     const [assetDataType, setAssetDataType] = useState<any[]>([]);
-    const [chooseAsset, setChooseAsset] = useState("");
     const [toggleAsset, setToggleAsset] = useState(false);
     const [dtObject, setDtObject] = useState<any[]>([]);
 
@@ -72,7 +65,6 @@ export default function AddNewSubClass(props: any) {
             let filtered = props.classData.filter((item: any) => {
                 return item.assetName === props.selectedParentClass;
             })
-            // setAllClassData(filtered)
 
             let label = [] as any;
             let val = [] as any;
@@ -83,19 +75,6 @@ export default function AddNewSubClass(props: any) {
                 let json: any = CreateJSONForSelect(item.tagName, item.tagName);
                 ajson.push(json)
             })
-
-
-
-
-            // let jsonList = dtObject.slice();
-            // jsonList.push(json)
-            // setDtObject(jsonList)
-
-            // console.log({
-            //     label: label,
-            //     val:val,
-            //     ajson:ajson
-            // })
         }
 
     }, [props.classData, props.selectedParentClass])
@@ -239,17 +218,6 @@ export default function AddNewSubClass(props: any) {
             parentJoinKey: parentJoinKeyArr,
             tags: dtObject
         };
-        // console.log({
-        //     formData: formData,
-        //     form_values: form_values,
-        //     tags:dtObject,
-        //     assetkey: allTags,
-        // })
-
-
-        // console.log({
-        //     dataToSave: dataToSave
-        // })
         let tokenStr = access_token;
         try {
             await axios({
@@ -267,7 +235,6 @@ export default function AddNewSubClass(props: any) {
                     setTimeout(() => {
                         setSuccess(false)
                         props.handleClick(false);
-                        // dispatch(openCloseNewClassModalAction(false))
                     }, 1500)
                 }
             }).catch(function (error) {

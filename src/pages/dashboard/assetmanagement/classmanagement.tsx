@@ -92,24 +92,24 @@ export default function ClassManagement(props: any) {
 
     // function for searching
     const handleSearchFUnction = (e: any) => {
-        setSearchClass(e.target.value);
-        if (e.target.value === "" || e.target.value.length <= 0) {
-            setSearchClass('');
-            setAllData(props.classData)
-            return;
-        }
-        if (props.classData && props.classData.length > 0) {
-            const filtered = props.classData.filter((item: any) => {
-                if (item.hasOwnProperty("assetName")) {
-                    if (item.assetName.toString().toLowerCase().includes(e.target.value.toString().toLowerCase())) {
-                        return item;
-                    }
-                }
-            })
-            setAllData(filtered)
-        } else {
-            setAllData(props.classData)
-        }
+        // setSearchClass(e.target.value);
+        // if (e.target.value === "" || e.target.value.length <= 0) {
+        //     setSearchClass('');
+        //     setAllData(props.classData)
+        //     return;
+        // }
+        // if (props.classData && props.classData.length > 0) {
+        //     const filtered = props.classData.filter((item: any) => {
+        //         if (item.hasOwnProperty("assetName")) {
+        //             if (item.assetName.toString().toLowerCase().includes(e.target.value.toString().toLowerCase())) {
+        //                 return item;
+        //             }
+        //         }
+        //     })
+        //     setAllData(filtered)
+        // } else {
+        //     setAllData(props.classData)
+        // }
     }
 
 
@@ -127,7 +127,6 @@ export default function ClassManagement(props: any) {
         try {
             await axios({
                 method: 'DELETE',
-                // url: `http://20.232.178.134:3000/api/deleteClasses?id=${index}`,
                 url: `/api/deleteClasses?id=${index}`,
                 headers: {
                     "Authorization": `Bearer ${access_token}`,
@@ -333,10 +332,10 @@ export default function ClassManagement(props: any) {
                         <div className='flex justify-center items-center w-full flex-wrap flex-col py-3 h-[250px]'>
                             <Image
                                 src="/img/not-found.svg"
-                                alt='not-found'
+                                alt="not-found"
                                 height={72}
                                 width={72}
-                                className='mb-6'
+                                className="mb-6"
                             />
                             <p className="text-black text-2xl font-semibold">No data found!!</p>
                             <p className="text-black text-lg mt-3 font-normal">Please create the class by clicking on the  <span className="text-black font-semibold text-lg]">"Add Class"</span> button.</p>

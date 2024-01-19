@@ -113,7 +113,7 @@ export default function Test() {
 
     var obj = {};
     Object.assign(obj, { "PlantID": "10011001", "Street": "ABC" })
-    console.log(obj)
+    // console.log(obj)
 
 
     const arr1 = [
@@ -208,11 +208,11 @@ export default function Test() {
 
     let arr5 = Object.fromEntries(arr3.map((v:any, i:any) => [v, arr4[i]]));
 
-    console.log({
-        "ARRAY_1":arr3,
-        "ARRAY_2":arr4,
-        "ARRAY_3": arr5
-    })
+    // console.log({
+    //     "ARRAY_1":arr3,
+    //     "ARRAY_2":arr4,
+    //     "ARRAY_3": arr5
+    // })
 
     const [data, setData] = useState(arr5)
 
@@ -224,9 +224,9 @@ export default function Test() {
         
     }
 
-    console.log({
-        "DATA": data
-    })
+    // console.log({
+    //     "DATA": data
+    // })
 
     return (
         <div className="p-5">

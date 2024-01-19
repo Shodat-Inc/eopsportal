@@ -1,8 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import styles from '../../../styles/Common.module.css';
-import { useRouter } from 'next/router'
-import Router from 'next/router'
 import Image from "next/image";
 import { openCloseNewClassModalAction } from '@/store/actions/classAction';
 import axios from "axios";
@@ -24,10 +22,6 @@ export default function AddNewClass(props: any) {
     if (typeof window !== 'undefined') {
         access_token = localStorage.getItem('authToken')
     }
-
-    // All class reducer states
-    // const allClassSelector = useSelector((state: any) => state.classReducer);
-
 
     // GET ALL DATATYPES
     async function fetchData() {
@@ -104,10 +98,6 @@ export default function AddNewClass(props: any) {
     const saveNewTag = () => {        
         if (newTag.trim().length !== 0) {
 
-            // console.log({
-            //     allTags:allTags
-            // })
-
             // Creating the array of all tags
             let updatedList = allTags.slice();
             updatedList.push(newTag)
@@ -138,11 +128,6 @@ export default function AddNewClass(props: any) {
 
     // Remove Element from all Tag Array
     const removeElement = (item: any) => {
-
-        // console.log({
-        //     allTags:allTags, 
-        //     item:item
-        // })
 
         // removing the item form all tags array
         let updatedList = allTags.slice();
@@ -179,9 +164,6 @@ export default function AddNewClass(props: any) {
             className: form_values.assetname,
             tags: dtObject
         };
-        // console.log({
-        //     dataToSave: dataToSave
-        // })
         let tokenStr = access_token;
         try {
             await axios({

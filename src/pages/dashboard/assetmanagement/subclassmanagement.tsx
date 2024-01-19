@@ -10,9 +10,6 @@ import EditSubClass from './editsubclass';
 import { editSubClassModalAction } from '@/store/actions/classAction';
 
 export default function SubClassManagement(props: any) {
-    // console.log({
-    //     "PROPS_IN_SUB_CLASS": props
-    // })
     const dispatch = useDispatch<any>();
     const [toggleFilter, setToggleFilter] = useState(false);
     const [toggleArrow, setToggleArrow] = useState(false);
