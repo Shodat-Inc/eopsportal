@@ -152,10 +152,6 @@ export default function ObjectManagement(props: any) {
                 }
             }).then(function (response) {
                 if (response) {
-
-                    console.log({
-                        "HERERERE":response
-                    })
                     setTableHeader(response?.data?.objects?.data[0]?.Class?.ClassTags)
                     setObjectData(response?.data?.objects?.data);
                 }
@@ -203,9 +199,6 @@ export default function ObjectManagement(props: any) {
     const editObjectFunction = (item: any) => {
         dispatch(editObjectModalAction(true));
         setActions(false);
-        console.log({
-            "ITEM_HERE":item
-        })
         setSelectedObjID(item);
     }
 
@@ -237,15 +230,6 @@ export default function ObjectManagement(props: any) {
             })
         }
     }
-
-
-    console.log({
-        objectData:objectData
-    })
-
-    console.log({
-        "AMIT":selectedObjID
-    })
 
 
     return (

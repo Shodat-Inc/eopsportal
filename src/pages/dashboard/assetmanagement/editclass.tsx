@@ -1,21 +1,15 @@
 import React, { useState, useRef, useEffect } from "react";
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import styles from '../../../styles/Common.module.css';
-import { useRouter } from 'next/router'
-import Router from 'next/router'
 import axios from "axios";
 import Image from "next/image";
 import { successMessageAction } from '@/store/actions/classAction';
 import { editClassModalAction } from "@/store/actions/classAction";
 
 export default function EditClass(props: any) {
-    // console.log({
-    //     "PROPS_IN_EDIT_CLASS": props
-    // })
     const dispatch = useDispatch<any>();
     const assetname = useRef("");
     const [allTags, setAllTags] = useState([] as any);
-    const [existingTags, setExistingTags] = useState<any[]>([]);
     const [newTag, setNewTag] = useState<string>("");
     const [showInput, setShowInput] = useState(false);
     const [showHideAddTagButton, setShowHideAddTagButton] = useState(false);
@@ -28,7 +22,6 @@ export default function EditClass(props: any) {
     const [success, setSuccess] = useState(false);
     const [deleteTagIDS, setDeleteTagIDS] = useState([] as any);
     const [addNewTag, setAddNewTag] = useState([] as any);
-    const [tagsToShow, setTagsToShow] = useState([] as any);
     const [newlyAddedTag, setNewlyAddedTag] = useState([] as any);
     let access_token = "" as any;
     if (typeof window !== 'undefined') {
@@ -77,7 +70,6 @@ export default function EditClass(props: any) {
             filtered[0]?.ClassTags.map((item: any) => {
                 arr.push(item.tagName)
             })
-            setExistingTags(arr);
         }
 
     }, [props])
@@ -123,30 +115,13 @@ export default function EditClass(props: any) {
         if (newTag.trim().length !== 0) {
 
             let arr = [] as any;
-
-
-            // allTags.map((item:any)=>{
-            //     arr.push(item?.tagName)
-            // })
-
-
-
             // Create New array
             arr.push(newTag);
             let newAddedTag = newlyAddedTag.slice();
             newAddedTag.push(newTag);
             setNewlyAddedTag(newAddedTag)
 
-            // console.log({
-            //     allTags: allTags,
-            //     arr: arr,
-            //     newTag: newTag
-            // })
-
-            // Creating the array of all tags
-            // let updatedList = allTags.slice();
-            // updatedList.push(newTag)
-            // setAllTags(updatedList)
+            
             setShowInput(false);
             setNewTag("");
             setShowHideAddTagButton(false);
@@ -174,38 +149,13 @@ export default function EditClass(props: any) {
         }
     }
 
-    // console.log({
-    //     dtObject: dtObject,
-    //     assetDataType: assetDataType
-    // })
-
-
 
     // Remove Element from all Tag Array
     const removeElement = (item: any) => {
-        // console.log({
-        //     allTags:allTags,
-        //     item:item
-        // })
         // removing the item form all tags array
         let updatedList = allTags.slice();
         var filteredArray = updatedList.filter(function (e: any) { return e.id !== item })
         setAllTags(filteredArray)
-
-        let arr = [] as any;
-        if (filteredArray) {
-            setExistingTags([])
-
-            filteredArray.map((itms: any) => {
-                arr.push(itms.tagName)
-            })
-            setExistingTags(arr)
-        }
-
-        // console.log({
-        //     allTags: allTags,
-        //     item: item
-        // })
 
         let deletedList = deleteTagIDS.slice();
         deletedList.push(item)
@@ -229,10 +179,6 @@ export default function EditClass(props: any) {
 
     }
 
-    // console.log({
-    //     deleteTagIDS: deleteTagIDS
-    // })
-
     // Cancel Adding new tags
     const cancelAddingTag = () => {
         setShowInput(false);
@@ -255,10 +201,6 @@ export default function EditClass(props: any) {
             addTag: dtObject
         };
 
-        // console.log({
-        //     "DATA_TO_SAVE":dataToSave
-        // })
-
         let tokenStr = access_token;
         try {
             await axios({
@@ -271,9 +213,6 @@ export default function EditClass(props: any) {
                 }
             }).then(function (response) {
                 if (response) {
-                    // console.log({
-                    //     "EDIT_CLASS_SUCCESSFULL":response?.data?.message
-                    // })
                     setSuccess(true)
                     setAllTags([]);
                     dispatch(editClassModalAction(false));

@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch } from 'react-redux';
 import styles from '../../../styles/Common.module.css';
 import Image from "next/image";
@@ -7,12 +7,6 @@ import { successMessageAction } from "@/store/actions/classAction";
 import axios from "axios";
 
 export default function EditObject(props: any) {
-
-    console.log({
-        "PROPS_IN_EDIT_OBJECT_COMPONENT": props
-    })
-
-
     const [objectsData, setObjectsData] = useState([] as any);
     const [success, setSuccess] = useState(false);
     const [json, setJson] = useState({} as any)
@@ -27,9 +21,6 @@ export default function EditObject(props: any) {
 
     // GET ALL DATATYPES
     async function fetchObjectData() {
-        console.log({
-            url: `/api/getObjectById?objectId=${props.selectedObjID}&classId=${props.selectedParentClass}`,
-        })
         try {
             await axios({
                 method: 'GET',
@@ -43,16 +34,11 @@ export default function EditObject(props: any) {
 
                     let arr1 = [] as any;
                     let arr2 = [] as any;
-                    let arr3 = [] as any;
-                    let arr4 = [] as any;
 
                     setObjectsData(response?.data?.data);
 
                     response?.data?.data[0]?.Class?.ClassTags.map((item: any, index: any) => {
                         const linkContentVal = response?.data?.data[0]?.ObjectValues[index];
-                        console.log({
-                            linkContentVal: linkContentVal.id
-                        })
                         let tagWithID = item?.tagName + "_" + linkContentVal?.id
                         arr1.push(tagWithID);
                     })
@@ -63,13 +49,6 @@ export default function EditObject(props: any) {
 
                     let arr5 = Object.fromEntries(arr1.map((v: any, i: any) => [v, arr2[i]]));
 
-                    console.log({
-                        "RESPONSE_IN_GET_OBJECT": response?.data?.data,
-                        "JSON": arr5,
-                        "ARRAY_1": arr1,
-                        "ARRAY_2": arr2,
-
-                    })
                     setJson(arr5)
                     setData(arr5)
                 }
@@ -88,7 +67,6 @@ export default function EditObject(props: any) {
         setTimeout(() => {
             fetchObjectData();
         }, 100)
-
     }, [access_token, props.selectedObjID, props.selectedParentClass])
 
 
@@ -101,13 +79,7 @@ export default function EditObject(props: any) {
     const handleSubmit = async (e: any) => {
         e.preventDefault();
         var formData = new FormData(e.target);
-
-        let currentDate = new Date().toISOString().split('T')[0];
         const form_values = Object.fromEntries(formData);
-
-        console.log({
-            formData: form_values
-        })
 
         const objectKey = [] as any;
         const objVal = [] as any;
@@ -115,7 +87,7 @@ export default function EditObject(props: any) {
             let tagID = item.split("_")[1];
             let tagName = item.split("_")[0];
             objectKey.push({
-                "classTagId": tagID
+                "id": tagID
             })
             objVal.push({
                 tagName: tagName
@@ -135,10 +107,6 @@ export default function EditObject(props: any) {
             "updatedValues": finalArray
         }
         let tokenStr = access_token;
-
-        console.log({
-            "DATA_TO_SAVE": dataToSave
-        })
 
         try {
             await axios({
@@ -166,22 +134,12 @@ export default function EditObject(props: any) {
         }
     }
 
-
-
     const handleChange = (e: any) => {
         setData({
             ...data,
             [e.target.name]: e.target.value,
         })
-
     }
-
-
-    console.log({
-        "OBJECT_DATA": objectsData,
-        "JSON": json,
-        "DATA": data
-    })
 
     return (
         <>
@@ -233,7 +191,6 @@ export default function EditObject(props: any) {
                                 const key = Object.keys(data)[index];
                                 return (
                                     <div key={index} className="w-full flex justify-start items-start flex-wrap flex-col">
-                                        {/* <span>{linkContent.id}</span> */}
                                         <div className={`mb-5 lg:w-full small:w-full small:w-full ${styles.form__wrap}`}>
                                             <div className={`relative ${styles.form__group} font-OpenSans`}>
                                                 <input

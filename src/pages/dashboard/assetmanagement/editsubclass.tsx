@@ -1,22 +1,14 @@
-import React, { useState, useRef, useEffect, Component } from "react";
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState, useRef, useEffect } from "react";
+import { useDispatch } from 'react-redux';
 import styles from '../../../styles/Common.module.css';
-import { useRouter } from 'next/router'
-import Router from 'next/router'
 import Image from "next/image";
 import axios from "axios";
-import moment from "moment";
-import { successMessageAction, editSubClassModalAction } from '@/store/actions/classAction';
+import { editSubClassModalAction } from '@/store/actions/classAction';
 
 export default function EditSubClass(props: any) {
 
-    // console.log({
-    //     "PROPS_IN_EDIT_SUB_CLASS": props
-    // })
-
     const dispatch = useDispatch<any>();
     const assetname = useRef("");
-    const router = useRouter();
     const [allTags, setAllTags] = useState<any[]>([]);
     const [newTag, setNewTag] = useState<string>("");
     const [showInput, setShowInput] = useState(false);
@@ -26,13 +18,10 @@ export default function EditSubClass(props: any) {
     const [assetDataType, setAssetDataType] = useState<any[]>([]);
     const [dtObject, setDtObject] = useState<any[]>([]);
     const [allClassData, setAllClassData] = useState([] as any);
-    const [pjk, setPjk] = useState([] as any);
     const [allSubClassData, setAllSubClassData] = useState([] as any);
-    const [existingTags, setExistingTags] = useState<any[]>([]);
     const [newlyAddedTag, setNewlyAddedTag] = useState([] as any);
     const [deleteTagIDS, setDeleteTagIDS] = useState([] as any);
     const [allDataTypes, setAllDataTypes] = useState([] as any);
-    const [data, setData] = useState();
     let access_token = "" as any;
     if (typeof window !== 'undefined') {
         access_token = localStorage.getItem('authToken')
@@ -66,21 +55,6 @@ export default function EditSubClass(props: any) {
         fetchData();
     }, [access_token])
 
-    // Get Selected Class Data
-    // useEffect(() => {
-    //     if (props.subClassData.length > 0 && props.selectedClass != "") {
-    //         const filtered = props.subClassData.filter((item: any) => {
-    //             return item.assetName === props.selectedSubClass
-    //         })
-    //         setData(filtered);
-    //         if (filtered) {
-    //             setAllTags(filtered[0]?.tags);
-    //             setPjk(filtered[0]?.parentJoinKey)
-    //         }
-    //     }
-
-    // }, [props.subClassData, props.selectedSubClass])
-
 
     // Get class data and filter parent tags based on selected class
     useEffect(() => {
@@ -89,24 +63,9 @@ export default function EditSubClass(props: any) {
                 return item.id === props.selectedParentClass;
             })
             setAllClassData(filtered)
-
-            // console.log({
-            //     "ALL_SUB_OBJ_DATA":filtered
-            // })
-
-            // let label = [] as any;
-            // let val = [] as any;
-            // let ajson = [] as any;
-            // filtered[0]?.tags?.map((item: any) => {
-            //     label.push(item.tagName)
-            //     val.push(item.tagName)
-            //     let json: any = CreateJSONForSelect(item.tagName, item.tagName);
-            //     ajson.push(json)
-            // })
         }
 
     }, [props.classData, props.selectedParentClass])
-
 
 
     // Get Selected Class Data
@@ -115,28 +74,13 @@ export default function EditSubClass(props: any) {
             const filtered = props.subClassData.filter((item: any) => {
                 return item.id === props.selectedSubClass
             })
-
-            // console.log({
-            //     filtered: filtered[0]?.className
-            // })
             setAllSubClassData(filtered);
-            setAllTags(filtered[0]?.ClassTags);
-            let arr = [] as any;
-            filtered[0]?.ClassTags.map((item: any) => {
-                arr.push(item.tagName)
-            })
-            setExistingTags(arr);
+            setAllTags(filtered[0]?.ClassTags);            
         }
-
     }, [props])
-
-    // console.log({
-
-    // })
 
 
     const closeModal = () => {
-        // props.handleClick(false);
         dispatch(editSubClassModalAction(false));
         setShowInput(false);
         setShowHideAddTagButton(false)
@@ -146,7 +90,6 @@ export default function EditSubClass(props: any) {
         setNewTag("");
     }
     const cancelModal = () => {
-        // props.handleClick(false);
         dispatch(editSubClassModalAction(false));
         setAllTags([]);
     }
@@ -178,14 +121,6 @@ export default function EditSubClass(props: any) {
         return myObject;
     }
 
-    function CreateJSONForSelect(value: any, label: any) {
-        var myObject = {
-            "value": value,
-            "label": label
-        };
-        return myObject;
-    }
-
     // Save New Tag
     const saveNewTag = () => {
         if (newTag.trim().length !== 0) {
@@ -193,7 +128,6 @@ export default function EditSubClass(props: any) {
             // Creating the array of all tags
             let updatedList = allTags.slice();
             updatedList.push(newTag)
-            // setAllTags(updatedList)
             setShowInput(false);
             setNewTag("");
             setShowHideAddTagButton(false);
@@ -206,13 +140,6 @@ export default function EditSubClass(props: any) {
             let newAddedTag = newlyAddedTag.slice();
             newAddedTag.push(newTag);
             setNewlyAddedTag(newAddedTag)
-
-            // console.log({
-            //     allTags: allTags,
-            //     arr: arr,
-            //     newTag: newTag
-            // })
-
 
             // Creating the array of data type
             let typeList = assetDataType;
@@ -238,27 +165,10 @@ export default function EditSubClass(props: any) {
         let updatedList = allTags.slice();
         var filteredArray = updatedList.filter(function (e) { return e.id !== item })
         setAllTags(filteredArray)
-
-
-        let arr = [] as any;
-        if (filteredArray) {
-            setExistingTags([])
-
-            filteredArray.map((itms: any) => {
-                arr.push(itms.tagName)
-            })
-            setExistingTags(arr)
-        }
-
-        // console.log({
-        //     allTags: allTags,
-        //     item: item
-        // })
-
+        
         let deletedList = deleteTagIDS.slice();
         deletedList.push(item)
         setDeleteTagIDS(deletedList)
-
 
         // removing the datatype from datatype array
         let updatedListType = assetDataType;
@@ -276,10 +186,6 @@ export default function EditSubClass(props: any) {
         setNewlyAddedTag(newAddedTag)
 
     }
-
-    // console.log({
-    //     deleteTagIDS: deleteTagIDS
-    // })
 
     // Cancel Adding new tags
     const cancelAddingTag = () => {
@@ -307,10 +213,6 @@ export default function EditSubClass(props: any) {
             addTag: dtObject
         };
 
-        // console.log({
-        //     "DATA_TO_SAVE":dataToSave
-        // })
-
         let tokenStr = access_token;
         try {
             await axios({
@@ -323,15 +225,8 @@ export default function EditSubClass(props: any) {
                 }
             }).then(function (response) {
                 if (response) {
-                    // console.log({
-                    //     "EDIT_SUB_CLASS_SUCCESSFULL":response?.data?.message
-                    // })
-                    // setSuccess(true)
                     setAllTags([]);
                     dispatch(editSubClassModalAction(false));
-                    setTimeout(() => {
-                        // setSuccess(false);
-                    }, 1500)
                 }
             }).catch(function (error) {
                 console.log("ERROR IN AXIOS CATCH (CREATE CLASS):", error)

@@ -6,17 +6,9 @@ import { editSubObjectModalAction, successMessageAction } from '@/store/actions/
 import axios from "axios";
 
 export default function EditSubObject(props: any) {
-
-
-    console.log({
-        "PROPS_IN_EDIT_SUB_OBJECT_COMPONENT": props
-    })
-    const [selectedObjectData, setSelectedObjectData] = useState([] as any);
+    
     const [objectsData, setObjectsData] = useState([] as any);
     const [success, setSuccess] = useState(false);
-    const formData = useRef("");
-    const [inputs, setInputs] = useState({});
-    const [json, setJson] = useState({} as any)
     const [data, setData] = useState({} as any)
 
     let access_token = "" as any;
@@ -36,22 +28,14 @@ export default function EditSubObject(props: any) {
                 }
             }).then(function (response) {
                 if (response) {
-                    console.log({
-                        "RESPONSE HERE": response?.data?.data
-                    })
 
                     let arr1 = [] as any;
                     let arr2 = [] as any;
-                    let arr3 = [] as any;
-                    let arr4 = [] as any;
 
                     setObjectsData(response.data?.data)
 
                     response?.data?.data[0]?.Class?.ClassTags.map((item: any, index: any) => {
                         const linkContentVal = response?.data?.data[0]?.ObjectValues[index];
-                        console.log({
-                            linkContentVal: linkContentVal.id
-                        })
                         let tagWithID = item?.tagName + "_" + linkContentVal?.id
                         arr1.push(tagWithID);
                     })
@@ -61,15 +45,6 @@ export default function EditSubObject(props: any) {
                     })
 
                     let arr5 = Object.fromEntries(arr1.map((v: any, i: any) => [v, arr2[i]]));
-
-                    console.log({
-                        "RESPONSE_IN_GET_OBJECT": response?.data?.data,
-                        "JSON": arr5,
-                        "ARRAY_1": arr1,
-                        "ARRAY_2": arr2,
-
-                    })
-                    setJson(arr5)
                     setData(arr5)
                 }
             }).catch(function (error) {
@@ -104,7 +79,7 @@ export default function EditSubObject(props: any) {
             let tagID = item.split("_")[1];
             let tagName = item.split("_")[0];
             objectKey.push({
-                "classTagId": parseInt(tagID)
+                "id": parseInt(tagID)
             })
             objVal.push({
                 tagName: tagName
@@ -125,10 +100,6 @@ export default function EditSubObject(props: any) {
         }
         let tokenStr = access_token;
 
-        console.log({
-            "DATA_TO_SAVE": dataToSave
-        })
-
         try {
             await axios({
                 method: 'PUT',
@@ -140,10 +111,6 @@ export default function EditSubObject(props: any) {
                 }
             }).then(function (response) {
                 if (response) {
-
-                    console.log({
-                        "RESULT_RESPONSE": response
-                    })
                     setSuccess(true);
                     dispatch(successMessageAction(true))
                     setTimeout(() => {
