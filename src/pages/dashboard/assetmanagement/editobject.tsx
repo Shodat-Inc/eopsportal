@@ -11,11 +11,13 @@ export default function EditObject(props: any) {
     console.log({
         "PROPS_IN_EDIT_OBJECT_COMPONENT": props
     })
+    
 
     const [objectsData, setObjectsData] = useState([] as any);
     const formData = useRef("");
     const [success, setSuccess] = useState(false);
     const [json, setJson] = useState({} as any)
+    const [data, setData] = useState({} as any)
 
     const dispatch = useDispatch<any>();
 
@@ -47,27 +49,43 @@ export default function EditObject(props: any) {
                 }
             }).then(function (response) {
                 if (response) {
-                    
-                    let json1 = {};
-                    let json2 = {};
+
+                    let arr1 = [] as any;
+                    let arr2 = [] as any;
+                    let arr3 = [] as any;
+                    let arr4 = [] as any;
                     setObjectsData(response?.data?.data)
 
 
-                    
+
                     let jsonList = [] as any;
                     // jsonList.push(json)
                     // setDtObject(jsonList)
 
-                    response?.data?.data[0]?.Class?.ClassTags.map((item: any) => {
-                        let json: any = CreateJSON(item.tagName, "");
-                        jsonList.push(json);
+                    response?.data?.data[0]?.Class?.ClassTags.map((item: any, index:any) => {
+                        const linkContentVal =  response?.data?.data[0]?.ObjectValues[index];
+                        console.log({
+                            linkContentVal:linkContentVal.id
+                        })
+                        let tagWithID = item?.tagName+"_"+linkContentVal?.id
+                        arr1.push(tagWithID);
                     })
+
+                    response?.data?.data[0]?.ObjectValues.map((item: any) => {
+                        arr2.push(item.values);
+                    })
+
+                    let arr5 = Object.fromEntries(arr1.map((v: any, i: any) => [v, arr2[i]]));
 
                     console.log({
                         "RESPONSE_IN_GET_OBJECT": response?.data?.data,
-                        "JSON":jsonList
+                        "JSON": arr5,
+                        "ARRAY_1": arr1,
+                        "ARRAY_2": arr2,
+
                     })
-                    setJson(jsonList)
+                    setJson(arr5)
+                    setData(arr5)
                 }
             }).catch(function (error) {
                 console.log({
@@ -97,8 +115,14 @@ export default function EditObject(props: any) {
     const handleSubmit = async (e: any) => {
         e.preventDefault();
         var formData = new FormData(e.target);
+        
         let currentDate = new Date().toISOString().split('T')[0];
         const form_values = Object.fromEntries(formData);
+
+        console.log({
+            formData:form_values
+        })
+
         const objectKey = [] as any;
         const objVal = [] as any;
         Object.keys(form_values).map((item: any) => {
@@ -120,7 +144,7 @@ export default function EditObject(props: any) {
 
         let finalArray = objectKey.map((item: any, i: any) => Object.assign({}, item, objectValue[i]));
         const dataToSave = {
-            "objectId": props.objID,
+            "objectId": props.selectedObjID,
             "deleteValueId": [],
             "updatedValues": finalArray
         }
@@ -156,16 +180,25 @@ export default function EditObject(props: any) {
         }
     }
 
-    const handelChange = (e: any) => {
-        e.preventDefault();
-        console.log("Clicked", e.target.name)
-        formData.current = e.target.value
+    // const handelChange = (e: any) => {
+    //     e.preventDefault();
+    //     console.log("Clicked", e.target.name)
+    //     formData.current = e.target.value
+    // }
+
+    const handleChange = (e: any) => {
+        setData({
+            ...data,
+            [e.target.name]: e.target.value,
+        })
+
     }
 
 
     console.log({
         "OBJECT_DATA": objectsData,
-        "JSON":json
+        "JSON": json,
+        "DATA": data
     })
 
     return (
@@ -210,8 +243,12 @@ export default function EditObject(props: any) {
                     >
 
                         {
+                            // Object.keys(data).map((key, index) => {
                             objectsData[0]?.ObjectValues.map((items: any, index: any) => {
                                 const linkContent = objectsData[0]?.Class?.ClassTags[index];
+                                const linkContentVal = objectsData[0]?.ObjectValues[index];
+                                const stateVal = Object.values(data)[index];
+                                const key = Object.keys(data)[index];
                                 return (
                                     <div key={index} className="w-full flex justify-start items-start flex-wrap flex-col">
                                         {/* <span>{linkContent.id}</span> */}
@@ -219,18 +256,15 @@ export default function EditObject(props: any) {
                                             <div className={`relative ${styles.form__group} font-OpenSans`}>
                                                 <input
                                                     type="text"
-                                                    id={`${items.values}`}
-                                                    name={`${items.values}_${linkContent.id}`}
+                                                    name={key}
+                                                    id={`${key}_${linkContentVal.id}`}
                                                     className={`border border-gray-961 ${styles.form__field}`}
-                                                    placeholder={`${items.values}`}
-                                                    value={`${items.values}`}
-                                                    // defaultValue={`${items.values}`}
-                                                    onChange={(e) => (formData.current = e.target.value)}
-                                                    // onChange={handelChange}
-                                                    // onChange={(e) => (e.target.name = e.target.value)}
+                                                    placeholder={key}
+                                                    value={stateVal as any}
+                                                    onChange={(e) => handleChange(e)}
                                                     required
                                                 />
-                                                <label htmlFor={`${items.values}`} className={`${styles.form__label}`}>{linkContent.tagName}</label>
+                                                <label htmlFor={`${key}`} className={`${styles.form__label}`}>{key}</label>
                                             </div>
                                         </div>
                                     </div>

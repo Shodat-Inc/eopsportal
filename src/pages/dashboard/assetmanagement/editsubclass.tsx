@@ -26,13 +26,13 @@ export default function EditSubClass(props: any) {
     const [assetDataType, setAssetDataType] = useState<any[]>([]);
     const [dtObject, setDtObject] = useState<any[]>([]);
     const [allClassData, setAllClassData] = useState([] as any);
-    const [data, setData] = useState([] as any);
     const [pjk, setPjk] = useState([] as any);
     const [allSubClassData, setAllSubClassData] = useState([] as any);
     const [existingTags, setExistingTags] = useState<any[]>([]);
     const [newlyAddedTag, setNewlyAddedTag] = useState([] as any);
     const [deleteTagIDS, setDeleteTagIDS] = useState([] as any);
     const [allDataTypes, setAllDataTypes] = useState([] as any);
+    const [data, setData] = useState();
     let access_token = "" as any;
     if (typeof window !== 'undefined') {
         access_token = localStorage.getItem('authToken')
@@ -90,15 +90,19 @@ export default function EditSubClass(props: any) {
             })
             setAllClassData(filtered)
 
-            let label = [] as any;
-            let val = [] as any;
-            let ajson = [] as any;
-            filtered[0]?.tags?.map((item: any) => {
-                label.push(item.tagName)
-                val.push(item.tagName)
-                let json: any = CreateJSONForSelect(item.tagName, item.tagName);
-                ajson.push(json)
-            })
+            // console.log({
+            //     "ALL_SUB_OBJ_DATA":filtered
+            // })
+
+            // let label = [] as any;
+            // let val = [] as any;
+            // let ajson = [] as any;
+            // filtered[0]?.tags?.map((item: any) => {
+            //     label.push(item.tagName)
+            //     val.push(item.tagName)
+            //     let json: any = CreateJSONForSelect(item.tagName, item.tagName);
+            //     ajson.push(json)
+            // })
         }
 
     }, [props.classData, props.selectedParentClass])
@@ -374,7 +378,7 @@ export default function EditSubClass(props: any) {
                                                 placeholder="Enter sub class name"
                                                 required
                                                 onChange={(e) => (assetname.current = e.target.value)}
-                                                defaultValue={allSubClassData[0]?.className}
+                                                value={allSubClassData[0]?.className}
                                             />
                                             <label htmlFor="assetname" className={`${styles.form__label}`}>Enter sub class name</label>
                                         </div>
@@ -573,7 +577,7 @@ export default function EditSubClass(props: any) {
                                                 required
                                                 onChange={(e) => (assetname.current = e.target.value)}
                                                 // value={pjk}
-                                                defaultValue={allSubClassData[0]?.ParentJoinKeys[0]?.tagname}
+                                                value={allSubClassData[0]?.ParentJoinKeys[0]?.tagname}
                                             // onChange={handleJoinKey}
                                             // multiple
                                             >
