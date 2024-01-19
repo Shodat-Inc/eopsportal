@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { useDispatch } from 'react-redux';
 import styles from '../../../styles/Common.module.css';
 import Image from "next/image";
-import { editSubObjectModalAction } from '@/store/actions/classAction';
+import { editSubObjectModalAction, successMessageAction } from '@/store/actions/classAction';
 import axios from "axios";
 
 export default function EditSubObject(props: any) {
@@ -16,6 +16,8 @@ export default function EditSubObject(props: any) {
     const [success, setSuccess] = useState(false);
     const formData = useRef("");
     const [inputs, setInputs] = useState({});
+    const [json, setJson] = useState({} as any)
+    const [data, setData] = useState({} as any)
 
     let access_token = "" as any;
     if (typeof window !== 'undefined') {
@@ -37,7 +39,38 @@ export default function EditSubObject(props: any) {
                     console.log({
                         "RESPONSE HERE": response?.data?.data
                     })
+
+                    let arr1 = [] as any;
+                    let arr2 = [] as any;
+                    let arr3 = [] as any;
+                    let arr4 = [] as any;
+
                     setObjectsData(response.data?.data)
+
+                    response?.data?.data[0]?.Class?.ClassTags.map((item: any, index: any) => {
+                        const linkContentVal = response?.data?.data[0]?.ObjectValues[index];
+                        console.log({
+                            linkContentVal: linkContentVal.id
+                        })
+                        let tagWithID = item?.tagName + "_" + linkContentVal?.id
+                        arr1.push(tagWithID);
+                    })
+
+                    response?.data?.data[0]?.ObjectValues.map((item: any) => {
+                        arr2.push(item.values);
+                    })
+
+                    let arr5 = Object.fromEntries(arr1.map((v: any, i: any) => [v, arr2[i]]));
+
+                    console.log({
+                        "RESPONSE_IN_GET_OBJECT": response?.data?.data,
+                        "JSON": arr5,
+                        "ARRAY_1": arr1,
+                        "ARRAY_2": arr2,
+
+                    })
+                    setJson(arr5)
+                    setData(arr5)
                 }
             }).catch(function (error) {
                 console.log({
@@ -109,14 +142,16 @@ export default function EditSubObject(props: any) {
                 if (response) {
 
                     console.log({
-                        "RESULT_RESPONSE":response
+                        "RESULT_RESPONSE": response
                     })
-                    // setSuccess(true);
-                    // dispatch(successMessageAction(true))
+                    setSuccess(true);
+                    dispatch(successMessageAction(true))
                     setTimeout(() => {
-                        // setSuccess(false);
                         dispatch(editSubObjectModalAction(false))
                     }, 50);
+                    setTimeout(() => {
+                        setSuccess(false);
+                    }, 1000);
                 }
             }).catch(function (error) {
                 console.log("ERROR IN AXIOS CATCH (EDIT SUB OBJECT):", error)
@@ -126,10 +161,11 @@ export default function EditSubObject(props: any) {
         }
     }
 
-    const handelChange = (e: any) => {
-        e.preventDefault();
-        console.log("Clicked", e.target.name)
-        formData.current = e.target.value
+    const handleChange = (e: any) => {
+        setData({
+            ...data,
+            [e.target.name]: e.target.value,
+        })
     }
 
     return (
@@ -171,24 +207,29 @@ export default function EditSubObject(props: any) {
                         className="w-full flex justify-start items-start flex-wrap flex-col"
                     >
 
-                        {
+{
+                            // Object.keys(data).map((key, index) => {
                             objectsData[0]?.ObjectValues.map((items: any, index: any) => {
                                 const linkContent = objectsData[0]?.Class?.ClassTags[index];
+                                const linkContentVal = objectsData[0]?.ObjectValues[index];
+                                const stateVal = Object.values(data)[index];
+                                const key = Object.keys(data)[index];
                                 return (
                                     <div key={index} className="w-full flex justify-start items-start flex-wrap flex-col">
+                                        {/* <span>{linkContent.id}</span> */}
                                         <div className={`mb-5 lg:w-full small:w-full small:w-full ${styles.form__wrap}`}>
                                             <div className={`relative ${styles.form__group} font-OpenSans`}>
                                                 <input
                                                     type="text"
-                                                    id={`${items.values}`}
-                                                    name={`${items.values}_${linkContent.id}`}
+                                                    name={key}
+                                                    id={`${key}_${linkContentVal.id}`}
                                                     className={`border border-gray-961 ${styles.form__field}`}
-                                                    placeholder={`${items.values}`}
-                                                    defaultValue={`${items.values}`}
-                                                    onChange={(e) => (formData.current = e.target.value)}
+                                                    placeholder={key}
+                                                    value={stateVal as any}
+                                                    onChange={(e) => handleChange(e)}
                                                     required
                                                 />
-                                                <label htmlFor={`${items.values}`} className={`${styles.form__label}`}>{linkContent.tagName}</label>
+                                                <label htmlFor={`${key}`} className={`${styles.form__label}`}>{key}</label>
                                             </div>
                                         </div>
                                     </div>

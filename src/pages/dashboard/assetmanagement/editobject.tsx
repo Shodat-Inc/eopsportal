@@ -11,10 +11,9 @@ export default function EditObject(props: any) {
     console.log({
         "PROPS_IN_EDIT_OBJECT_COMPONENT": props
     })
-    
+
 
     const [objectsData, setObjectsData] = useState([] as any);
-    const formData = useRef("");
     const [success, setSuccess] = useState(false);
     const [json, setJson] = useState({} as any)
     const [data, setData] = useState({} as any)
@@ -24,14 +23,6 @@ export default function EditObject(props: any) {
     let access_token = "" as any;
     if (typeof window !== 'undefined') {
         access_token = localStorage.getItem('authToken')
-    }
-
-    // Creating a JSON Object
-    function CreateJSON(name: any, value: any) {
-        var myObject = {
-            name: value,
-        };
-        return myObject;
     }
 
     // GET ALL DATATYPES
@@ -54,20 +45,15 @@ export default function EditObject(props: any) {
                     let arr2 = [] as any;
                     let arr3 = [] as any;
                     let arr4 = [] as any;
-                    setObjectsData(response?.data?.data)
 
+                    setObjectsData(response?.data?.data);
 
-
-                    let jsonList = [] as any;
-                    // jsonList.push(json)
-                    // setDtObject(jsonList)
-
-                    response?.data?.data[0]?.Class?.ClassTags.map((item: any, index:any) => {
-                        const linkContentVal =  response?.data?.data[0]?.ObjectValues[index];
+                    response?.data?.data[0]?.Class?.ClassTags.map((item: any, index: any) => {
+                        const linkContentVal = response?.data?.data[0]?.ObjectValues[index];
                         console.log({
-                            linkContentVal:linkContentVal.id
+                            linkContentVal: linkContentVal.id
                         })
-                        let tagWithID = item?.tagName+"_"+linkContentVal?.id
+                        let tagWithID = item?.tagName + "_" + linkContentVal?.id
                         arr1.push(tagWithID);
                     })
 
@@ -115,12 +101,12 @@ export default function EditObject(props: any) {
     const handleSubmit = async (e: any) => {
         e.preventDefault();
         var formData = new FormData(e.target);
-        
+
         let currentDate = new Date().toISOString().split('T')[0];
         const form_values = Object.fromEntries(formData);
 
         console.log({
-            formData:form_values
+            formData: form_values
         })
 
         const objectKey = [] as any;
@@ -180,11 +166,7 @@ export default function EditObject(props: any) {
         }
     }
 
-    // const handelChange = (e: any) => {
-    //     e.preventDefault();
-    //     console.log("Clicked", e.target.name)
-    //     formData.current = e.target.value
-    // }
+
 
     const handleChange = (e: any) => {
         setData({

@@ -176,7 +176,7 @@ export default function SubObjectManagement(props: any) {
         setTimeout(() => {
             fetchObjectData();
         }, 250)
-    }, [chooseAsset])
+    }, [chooseAsset, classSelector.successMessageReducer === true])
 
 
     // Set Sub Class in Breadcrumb
