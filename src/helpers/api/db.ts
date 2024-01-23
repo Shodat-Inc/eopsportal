@@ -129,9 +129,10 @@ export async function initialize() {
       aiModelData: "ModelData",
       modelObjectImages: "Image",
       crackDetectionResponse: "CrackResponse",
-      tyreDetectionResponse:"TyreResponse",
+      tyreDetectionResponse: "TyreResponse",
       subscription: "Subscription",
-      purchaseHistory: "PurchaseHistory"
+      purchaseHistory: "PurchaseHistory",
+      alert: "Alert"
     };
 
 

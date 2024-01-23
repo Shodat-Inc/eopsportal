@@ -17,3 +17,4 @@ export * from "./repo/image-table-repo";
 export * from "./repo/subscription-table-repo";
 export * from "./repo/purchase-history-table";
 export * from "./repo/test-repo";
+export * from "./repo/alert-repo"
