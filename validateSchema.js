@@ -310,12 +310,12 @@ export const createModelValidation = (data) => {
 };
 
 export const saveResponseValidation = (data) => {
-const schema = Joi.object({
-  coordinates: Joi.array().items(imageSchema).min(1).required(),
-  tag: Joi.string().required(),
-  modelObjectImageId: Joi.number().integer().required(),
-});
-return schema.validate(data);
+  const schema = Joi.object({
+    coordinates: Joi.array().items(imageSchema).min(1).required(),
+    tag: Joi.string().required(),
+    modelObjectImageId: Joi.number().integer().required(),
+  });
+  return schema.validate(data);
 }
 
 export const updateModelValidation = (data) => {
@@ -328,3 +328,25 @@ export const updateModelValidation = (data) => {
   });
   return schema.validate(data);
 };
+
+export const createAlertValidation = (data) => {
+  const schema = Joi.object({
+    alertName: Joi.string(),
+    thresholdValue: Joi.string(),
+    enable: Joi.boolean(),
+    emailSubject: Joi.string(),
+    emailContent: Joi.string()
+  });
+  return schema.validate(data)
+}
+
+export const updateAlertValidation = (data) => {
+  const schema = Joi.object({
+    alertName: Joi.string(),
+    thresholdValue: Joi.string(),
+    enable: Joi.boolean(),
+    emailSubject: Joi.string(),
+    emailContent: Joi.string()
+  });
+  return schema.validate(data)
+}
