@@ -21,6 +21,16 @@ export function RaisedAlert(sequelize: any) {
         modelDataId: {
             type: DataTypes.INTEGER,
             allowNull: false
+        },
+
+        objectId: {
+            type: DataTypes.INTEGER,
+            allowNull: false
+        },
+
+        alertId: {
+            type: DataTypes.INTEGER,
+            allowNull: false
         }
     };
 

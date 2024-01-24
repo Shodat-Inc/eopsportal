@@ -1,10 +1,8 @@
 import { db } from "../db";
 import sendResponseData from "../../constant";
 import { loggerInfo, loggerError } from "@/logger";
-import message from "@/util/responseMessage";
-import { Logger } from "winston";
-import { send } from "process";
 import { Sequelize } from "sequelize";
+import message from "@/util/responseMessage";
 
 export const raisedAlertRepo = {
   create,
@@ -27,7 +25,6 @@ async function create(params: any) {
 }
 
 async function get(params: any) {
-  console.log(params, "===pp")
   loggerInfo.info("Get API of Raised Alert Data");
   try {
     const alertDetails = await db.RaisedAlert.findAll({
@@ -59,7 +56,6 @@ async function get(params: any) {
       ],
     });
 
-    console.log(alertDetails, "====alertDetails");
     return sendResponseData(true, "Data fetched Successfully", alertDetails)
   } catch (error) {
     loggerError.error("Error in Raised Alert Repo", error);

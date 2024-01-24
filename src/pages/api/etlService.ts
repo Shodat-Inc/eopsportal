@@ -21,7 +21,7 @@ async function handler(req: any, res: any) {
     await db.sequelize.transaction(async (transaction: any) => {
       // Extract relevant data from the request body
       const data = req.body;
-      const { userId, type, classId, objectId, modelId, objectValueId, ...objdata } = data;
+      const { userId, type, classId, objectId, modelId, ...objdata } = data;
       const { url } = objdata;
 
       // Create a new ModelData record in the database
