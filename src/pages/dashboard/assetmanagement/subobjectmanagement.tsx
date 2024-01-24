@@ -30,6 +30,7 @@ export default function SubObjectManagement(props: any) {
     const [selectedObjectID, setSelectedObjectID] = useState("");
     const [deleteID, setDeleteID] = useState(0);
     const [deleteMessage, setDeleteMessage] = useState(false);
+    const [actionsToggle, setActionsToggle] = useState(false);
     let access_token = "" as any;
     if (typeof window !== 'undefined') {
         access_token = localStorage.getItem('authToken')
@@ -108,6 +109,11 @@ export default function SubObjectManagement(props: any) {
     const toggleActions = (item: any) => {
         setActionCount(item);
         setActions(!actions);
+        setActionsToggle(true);
+        setTimeout(() => {
+            setActionsToggle(false);
+        }, 1000)
+
     }
 
     const deleteModalFunction = (id: any) => {
@@ -125,6 +131,7 @@ export default function SubObjectManagement(props: any) {
             function handleClickOutside(event: any) {
                 if (ref.current && !ref.current.contains(event.target)) {
                     setToggleAsset(false)
+                    setActions(false)
                 }
             }
             document.addEventListener("mousedown", handleClickOutside);
@@ -238,6 +245,7 @@ export default function SubObjectManagement(props: any) {
                 }
             }).then(function (response) {
                 setDeleteMessage(true);
+                dispatch(successMessageAction(true))
                 setTimeout(() => {
                     setDeleteMessage(false)
                 }, 2000)
@@ -350,7 +358,7 @@ export default function SubObjectManagement(props: any) {
             {
                 classSelector.successMessageReducer === true &&
 
-                <div className={`bg-green-957 border-green-958 text-green-959 mb-1 mt-1 border text-md px-4 py-3 rounded rounded-xl relative flex items-center justify-start`}>
+                <div className={`bg-green-957 border-green-958 text-green-959 mb-1 mt-1 border text-md px-4 py-3 rounded rounded-xl relative flex items-center justify-start mx-4`}>
                     <Image
                         src="/img/AlertSuccess.svg"
                         alt="Alert Success"
@@ -359,16 +367,16 @@ export default function SubObjectManagement(props: any) {
                         className='mr-2'
                     />
                     <strong className="font-semibold">Success</strong>
-                    <span className="block sm:inline ml-2">Object stored successfully!</span>
+                    <span className="block sm:inline ml-2">Sub Object stored successfully!</span>
                 </div>
             }
 
 
 
             {/* Success / Error Message */}
-            <div className='flex justify-start items-center px-4'>
+            <div className='flex justify-start items-center px-4 w-full'>
                 {deleteMessage &&
-                    <div className={`bg-blue-957 border-blue-958 text-blue-959 mb-1 mt-1 border text-md px-4 py-3 rounded rounded-xl relative flex items-center justify-start`}>
+                    <div className={`bg-blue-957 border-blue-958 text-blue-959 mb-1 mt-1 border text-md px-4 py-3 rounded rounded-xl relative flex items-center justify-start w-full`}>
                         <Image
                             src="/img/AlertInfo.svg"
                             alt="Alert Success"
@@ -377,7 +385,7 @@ export default function SubObjectManagement(props: any) {
                             className='mr-2'
                         />
                         <strong className="font-semibold">Success</strong>
-                        <span className="block sm:inline ml-2">Object deleted successfully!</span>
+                        <span className="block sm:inline ml-2">Sub Object deleted successfully!</span>
                     </div>
                 }
             </div>
@@ -422,16 +430,30 @@ export default function SubObjectManagement(props: any) {
                                             }
                                             <td>
                                                 <div className="flex justify-start items-center relative">
-                                                    <button onClick={() => toggleActions(index + 1)}>
-                                                        <Image
-                                                            src="/img/more-vertical.svg"
-                                                            alt="more-vertical"
-                                                            height={24}
-                                                            width={24}
-                                                        />
-                                                    </button>
+                                                    {
+                                                        !actionsToggle ?
+                                                            <button
+                                                                className='flex justify-start items-center h-[35px] w-[35px]'
+                                                                onClick={() => toggleActions(index + 1)}>
+                                                                <Image
+                                                                    src="/img/more-vertical.svg"
+                                                                    alt="more-vertical"
+                                                                    height={24}
+                                                                    width={24}
+                                                                />
+                                                            </button>
+                                                            :
+                                                            <button className='flex justify-start items-center h-[35px] w-[35px]'>
+                                                                <Image
+                                                                    src="/img/more-vertical.svg"
+                                                                    alt="more-vertical"
+                                                                    height={24}
+                                                                    width={24}
+                                                                />
+                                                            </button>
+                                                    }
                                                     {(actions && actionCount === index + 1) &&
-                                                        <div className="bg-black text-white border overflow-hidden border-black rounded rounded-lg w-[200px] flex flex-col flex-wrap items-start justify-start shadow-sm absolute top-[30px] right-[75px] z-[1]">
+                                                        <div ref={wrapperRef} className="bg-black text-white border overflow-hidden border-black rounded rounded-lg w-[200px] flex flex-col flex-wrap items-start justify-start shadow-sm absolute top-[100%] right-[calc(100%-15px)] z-[1]">
                                                             <button
                                                                 onClick={() => editSubObjectFunction(items?.id)}
                                                                 className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">

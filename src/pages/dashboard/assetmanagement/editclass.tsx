@@ -215,6 +215,7 @@ export default function EditClass(props: any) {
                 if (response) {
                     setSuccess(true)
                     setAllTags([]);
+                    dispatch(successMessageAction(true))
                     dispatch(editClassModalAction(false));
                     setTimeout(() => {
                         setSuccess(false);

@@ -232,6 +232,7 @@ export default function AddNewSubClass(props: any) {
                 if (response) {
                     setSuccess(true)
                     setAllTags([]);
+                    dispatch(successMessageAction(true))
                     setTimeout(() => {
                         setSuccess(false)
                         props.handleClick(false);

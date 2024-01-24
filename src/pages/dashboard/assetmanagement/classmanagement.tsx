@@ -23,6 +23,7 @@ export default function ClassManagement(props: any) {
     const [selectedClass, setSelectedClass] = useState();
     const [deleteID, setDeleteID] = useState(0);
     const [deleteMessage, setDeleteMessage] = useState(false);
+    const [actionsToggle, setActionsToggle] = useState(false);
     let access_token = "" as any;
     if (typeof window !== 'undefined') {
         access_token = localStorage.getItem('authToken')
@@ -39,16 +40,47 @@ export default function ClassManagement(props: any) {
             }, 5000)
         }
 
-    }, [allClassSelector.successMessageReducer])
+    }, [allClassSelector?.successMessageReducer])
 
     useEffect(() => {
         setShowModal(props.addClassModal)
     }, [props.addClassModal])
 
     // Set class data on page load
+    // useEffect(() => {
+    //     setAllData(props.classData)
+    // }, [props, props.classData])
+
+    async function fetchData() {
+        try {
+            await axios({
+                method: 'GET',
+                url: `/api/getAssets`,
+                headers: {
+                    "Authorization": `Bearer ${access_token}`,
+                    "Content-Type": "application/json"
+                }
+
+            }).then(function (response) {
+                if (response) {
+                    setAllData(response?.data?.data)
+                }
+            }).catch(function (error) {
+                console.log({
+                    "ERROR IN AXIOS CATCH": error
+                })
+            })
+        } catch (err) {
+            console.log({
+                "ERROR IN TRY CATCH": err
+            })
+        }
+    }
     useEffect(() => {
-        setAllData(props.classData)
-    }, [props, props.classData])
+        fetchData();
+        if (fetchData.length) return;
+    }, [access_token, allClassSelector?.successMessageReducer === true])
+
 
     // Toggle Filters
     const toggleFilterFunction = () => {
@@ -66,6 +98,11 @@ export default function ClassManagement(props: any) {
         } else {
             setActions(true)
         }
+
+        setActionsToggle(true);
+        setTimeout(() => {
+            setActionsToggle(false);
+        }, 1000)
     }
     const handleClick = (item: any) => {
         setShowModal(false);
@@ -134,6 +171,7 @@ export default function ClassManagement(props: any) {
                 }
             }).then(function (response) {
                 setDeleteMessage(true);
+                dispatch(successMessageAction(true))
                 setTimeout(() => {
                     setDeleteMessage(false)
                 }, 2000)
@@ -223,7 +261,7 @@ export default function ClassManagement(props: any) {
             {
                 allClassSelector.successMessageReducer === true &&
 
-                <div className={`bg-green-957 border-green-958 text-green-959 mb-1 mt-1 border text-md px-4 py-3 rounded rounded-xl relative flex items-center justify-start`}>
+                <div className={`bg-green-957 border-green-958 text-green-959 mb-1 mt-1 border text-md px-4 py-3 rounded rounded-xl relative flex items-center justify-start mx-4`}>
                     <Image
                         src="/img/AlertSuccess.svg"
                         alt="Alert Success"
@@ -237,9 +275,9 @@ export default function ClassManagement(props: any) {
             }
 
             {/* Success / Error Message */}
-            <div className='flex justify-start items-center px-4'>
+            <div className='flex justify-start items-center px-4 w-full'>
                 {deleteMessage &&
-                    <div className={`bg-blue-957 border-blue-958 text-blue-959 mb-1 mt-1 border text-md px-4 py-3 rounded rounded-xl relative flex items-center justify-start`}>
+                    <div className={`bg-blue-957 border-blue-958 text-blue-959 mb-1 mt-1 border text-md px-4 py-3 rounded rounded-xl relative flex items-center justify-start w-full`}>
                         <Image
                             src="/img/AlertInfo.svg"
                             alt="Alert Success"
@@ -298,16 +336,30 @@ export default function ClassManagement(props: any) {
                                             <td>{moment(item.createdAt).format('DD-MM-YYYY')}</td>
                                             <td className='relative'>
                                                 <div className="flex justify-start items-center relative">
-                                                    <button onClick={() => toggleActions(index + 1)}>
-                                                        <Image
-                                                            src="/img/more-vertical.svg"
-                                                            alt="more-vertical"
-                                                            height={24}
-                                                            width={24}
-                                                        />
-                                                    </button>
+                                                {
+                                                        !actionsToggle ?
+                                                            <button
+                                                                className='flex justify-start items-center h-[35px] w-[35px]'
+                                                                onClick={() => toggleActions(index + 1)}>
+                                                                <Image
+                                                                    src="/img/more-vertical.svg"
+                                                                    alt="more-vertical"
+                                                                    height={24}
+                                                                    width={24}
+                                                                />
+                                                            </button>
+                                                            :
+                                                            <button className='flex justify-start items-center h-[35px] w-[35px]'>
+                                                                <Image
+                                                                    src="/img/more-vertical.svg"
+                                                                    alt="more-vertical"
+                                                                    height={24}
+                                                                    width={24}
+                                                                />
+                                                            </button>
+                                                    }
                                                     {(actions && actionCount === index + 1) &&
-                                                        <div ref={wrapperRef} className="bg-black text-white border overflow-hidden border-black rounded rounded-xl w-[100px] flex flex-col flex-wrap items-start justify-start shadow-sm absolute top-[30px] right-[75px] z-[1]">
+                                                        <div ref={wrapperRef} className="bg-black text-white border overflow-hidden border-black rounded rounded-xl w-[100px] flex flex-col flex-wrap items-start justify-start shadow-sm absolute  top-[100%] right-[calc(100%-15px)] z-[1]">
                                                             <button
                                                                 onClick={() => openEditClassModal(item.id)}
                                                                 className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[30px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">

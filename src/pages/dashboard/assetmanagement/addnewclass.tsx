@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import styles from '../../../styles/Common.module.css';
 import Image from "next/image";
-import { openCloseNewClassModalAction } from '@/store/actions/classAction';
+import { openCloseNewClassModalAction, successMessageAction } from '@/store/actions/classAction';
 import axios from "axios";
 
 export default function AddNewClass(props: any) {
@@ -178,6 +178,7 @@ export default function AddNewClass(props: any) {
                 if (response) {
                     setSuccess(true)
                     setAllTags([]);
+                    dispatch(successMessageAction(true))
                     setTimeout(() => {
                         setSuccess(false)
                         // props.handleClick(false);

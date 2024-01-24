@@ -8,7 +8,14 @@ import ClassManagement from "./classmanagement";
 import ObjectManagement from "./objectmanagement";
 import SubObjectManagement from "./subobjectmanagement";
 import SubClassManagement from "./subclassmanagement";
-import { setSelectedClass, toggleAddNewObjectModel, getSingleUser, toggleAddNewClassObjectModel, openCloseNewClassModalAction } from "@/store/actions/classAction";
+import {
+    setSelectedClass,
+    toggleAddNewObjectModel,
+    getSingleUser,
+    toggleAddNewClassObjectModel,
+    openCloseNewClassModalAction,
+    successMessageAction
+} from "@/store/actions/classAction";
 
 export default function AssetManagement() {
     const dispatch = useDispatch<any>();
@@ -26,6 +33,20 @@ export default function AssetManagement() {
     useEffect(() => {
         dispatch(getSingleUser())
     }, [])
+
+
+    // All class reducer states
+    const allClassSelector = useSelector((state: any) => state.classReducer);
+
+    // Close Success message after 5 second if true
+    useEffect(() => {
+        if (allClassSelector && allClassSelector.successMessageReducer === true) {
+            setTimeout(() => {
+                dispatch(successMessageAction(false))
+            }, 5000)
+        }
+
+    }, [allClassSelector?.successMessageReducer])
 
     async function fetchData() {
         try {
@@ -55,7 +76,7 @@ export default function AssetManagement() {
     useEffect(() => {
         fetchData();
         if (fetchData.length) return;
-    }, [access_token])
+    }, [access_token, allClassSelector?.successMessageReducer])
 
     useEffect(() => {
         setNav(getSelClass.classBreadcrumbs)
@@ -145,46 +166,46 @@ export default function AssetManagement() {
 
                 {/* Title */}
                 <div className="columns-2 flex justify-start items-center mb-2 relative">
-                    
+
                     <div className="flex justify-center items-center">
                         {
                             tab === 4 ?
-                            <div className="flex justify-start items-center mr-3 absolute left-0 z-[99]">
-                                <button
-                                    onClick={() => backToPrevComponent(4)}
-                                    className="flex justify-start items-center border border-black"
-                                >
-                                    <Image
-                                        src="/img/arrow-left-black.svg"
-                                        alt="arrow-left-black"
-                                        height={22}
-                                        width={22}
-                                        className=""
-                                    />
-                                    {/* <span>Back</span> */}
-                                </button>
-                            </div>
-                            :
-                            <div className="flex justify-start items-center mr-3 h-[22px] w-[24px] absolute left-0"></div>
+                                <div className="flex justify-start items-center mr-3 absolute left-0 z-[99]">
+                                    <button
+                                        onClick={() => backToPrevComponent(4)}
+                                        className="flex justify-start items-center border border-black"
+                                    >
+                                        <Image
+                                            src="/img/arrow-left-black.svg"
+                                            alt="arrow-left-black"
+                                            height={22}
+                                            width={22}
+                                            className=""
+                                        />
+                                        {/* <span>Back</span> */}
+                                    </button>
+                                </div>
+                                :
+                                <div className="flex justify-start items-center mr-3 h-[22px] w-[24px] absolute left-0"></div>
                         }
                         {
                             tab === 3 ?
-                            <div className="flex justify-start items-center mr-3 absolute left-0 z-[99]">
-                                <button
-                                    onClick={() => backToPrevComponent(3)}
-                                    className="flex justify-start items-center border border-black"
-                                >
-                                    <Image
-                                        src="/img/arrow-left-black.svg"
-                                        alt="arrow-left-black"
-                                        height={22}
-                                        width={22}
-                                    />
-                                    {/* <span>Back</span> */}
-                                </button>
-                            </div>
-                            :
-                            <div className="flex justify-start items-center mr-3 h-[22px] w-[24px] absolute left-0"></div>
+                                <div className="flex justify-start items-center mr-3 absolute left-0 z-[99]">
+                                    <button
+                                        onClick={() => backToPrevComponent(3)}
+                                        className="flex justify-start items-center border border-black"
+                                    >
+                                        <Image
+                                            src="/img/arrow-left-black.svg"
+                                            alt="arrow-left-black"
+                                            height={22}
+                                            width={22}
+                                        />
+                                        {/* <span>Back</span> */}
+                                    </button>
+                                </div>
+                                :
+                                <div className="flex justify-start items-center mr-3 h-[22px] w-[24px] absolute left-0"></div>
                         }
 
                     </div>
@@ -249,7 +270,7 @@ export default function AssetManagement() {
                         </ul>
                     </div>
                     : null
-                }                
+                }
 
                 {/* Tabs */}
                 <div className="flex justify-between items-center w-full">

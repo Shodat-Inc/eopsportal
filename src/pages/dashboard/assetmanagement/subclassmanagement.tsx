@@ -7,7 +7,7 @@ import AddNewSubClass from './addnewsubclass';
 import axios from 'axios';
 import moment from 'moment';
 import EditSubClass from './editsubclass';
-import { editSubClassModalAction } from '@/store/actions/classAction';
+import { editSubClassModalAction, successMessageAction } from '@/store/actions/classAction';
 
 export default function SubClassManagement(props: any) {
     const dispatch = useDispatch<any>();
@@ -23,6 +23,7 @@ export default function SubClassManagement(props: any) {
     const [selectedSubClass, setSelectedSubClass] = useState("");
     const [deleteID, setDeleteID] = useState(0);
     const [deleteMessage, setDeleteMessage] = useState(false);
+    const [actionsToggle, setActionsToggle] = useState(false);
 
     let access_token = "" as any;
     if (typeof window !== 'undefined') {
@@ -31,6 +32,15 @@ export default function SubClassManagement(props: any) {
 
     // All class reducer states
     const allClassSelector = useSelector((state: any) => state.classReducer);
+
+    useEffect(() => {
+        if (allClassSelector && allClassSelector.successMessageReducer === true) {
+            setTimeout(() => {
+                dispatch(successMessageAction(false))
+            }, 5000)
+        }
+
+    }, [allClassSelector?.successMessageReducer])
 
     useEffect(() => {
         setShowModal(props.addSubClassModal)
@@ -46,6 +56,11 @@ export default function SubClassManagement(props: any) {
     const toggleActions = (item: any) => {
         setActionCount(item);
         setActions(!actions);
+
+        setActionsToggle(true);
+        setTimeout(() => {
+            setActionsToggle(false);
+        }, 1000)
     }
     const selectedAction = (item: any) => {
         setActions(false);
@@ -99,7 +114,7 @@ export default function SubClassManagement(props: any) {
     }
     useEffect(() => {
         fetchData()
-    }, [props.selectedParentClass])
+    }, [props.selectedParentClass, allClassSelector?.successMessageReducer === true])
 
     // function for searching
     const handleSearchFUnction = (e: any) => {
@@ -144,6 +159,7 @@ export default function SubClassManagement(props: any) {
                     "Content-Type": "application/json"
                 }
             }).then(function (response) {
+                dispatch(successMessageAction(true))
                 setDeleteMessage(true);
                 setTimeout(() => {
                     setDeleteMessage(false)
@@ -160,6 +176,25 @@ export default function SubClassManagement(props: any) {
         }
 
     }
+
+
+    // Function to hide modals clicking outside
+    function useOutsideAlerter(ref: any) {
+        useEffect(() => {
+            function handleClickOutside(event: any) {
+                if (ref.current && !ref.current.contains(event.target)) {
+                    setActions(false)
+                }
+            }
+            document.addEventListener("mousedown", handleClickOutside);
+            return () => {
+                document.removeEventListener("mousedown", handleClickOutside);
+            };
+        }, [ref]);
+    }
+
+    const wrapperRef = useRef(null);
+    useOutsideAlerter(wrapperRef);
 
     return (
         <div className='px-0 py-3 font-OpenSans'>
@@ -211,10 +246,27 @@ export default function SubClassManagement(props: any) {
             </div>
 
 
+            {/* Response Messages */}
+            {
+                allClassSelector?.successMessageReducer === true &&
+
+                <div className={`bg-green-957 border-green-958 text-green-959 mb-1 mt-1 border text-md px-4 py-3 rounded rounded-xl relative flex items-center justify-start mx-4`}>
+                    <Image
+                        src="/img/AlertSuccess.svg"
+                        alt="Alert Success"
+                        height={24}
+                        width={24}
+                        className='mr-2'
+                    />
+                    <strong className="font-semibold">Success</strong>
+                    <span className="block sm:inline ml-2">Sub Class stored successfully!</span>
+                </div>
+            }
+            
             {/* Success / Error Message */}
-            <div className='flex justify-start items-center px-4'>
+            <div className='flex justify-start items-center px-4 w-full'>
                 {deleteMessage &&
-                    <div className={`bg-blue-957 border-blue-958 text-blue-959 mb-1 mt-1 border text-md px-4 py-3 rounded rounded-xl relative flex items-center justify-start`}>
+                    <div className={`bg-blue-957 border-blue-958 text-blue-959 mb-1 mt-1 border text-md px-4 py-3 rounded rounded-xl relative flex items-center justify-start  w-full`}>
                         <Image
                             src="/img/AlertInfo.svg"
                             alt="Alert Success"
@@ -279,16 +331,30 @@ export default function SubClassManagement(props: any) {
                                         <td>{moment(item.createdAt).format('DD-MM-YYYY')}</td>
                                         <td className='relative'>
                                             <div className="flex justify-start items-center relative">
-                                                <button onClick={() => toggleActions(index + 1)}>
-                                                    <Image
-                                                        src="/img/more-vertical.svg"
-                                                        alt="more-vertical"
-                                                        height={24}
-                                                        width={24}
-                                                    />
-                                                </button>
+                                                {
+                                                    !actionsToggle ?
+                                                        <button
+                                                            className='flex justify-start items-center h-[35px] w-[35px]'
+                                                            onClick={() => toggleActions(index + 1)}>
+                                                            <Image
+                                                                src="/img/more-vertical.svg"
+                                                                alt="more-vertical"
+                                                                height={24}
+                                                                width={24}
+                                                            />
+                                                        </button>
+                                                        :
+                                                        <button className='flex justify-start items-center h-[35px] w-[35px]'>
+                                                            <Image
+                                                                src="/img/more-vertical.svg"
+                                                                alt="more-vertical"
+                                                                height={24}
+                                                                width={24}
+                                                            />
+                                                        </button>
+                                                }
                                                 {(actions && actionCount === index + 1) &&
-                                                    <div className="bg-black text-white border overflow-hidden border-black rounded rounded-xl w-[100px] flex flex-col flex-wrap items-start justify-start shadow-sm absolute top-[30px] right-[75px] z-[1]">
+                                                    <div ref={wrapperRef} className="bg-black text-white border overflow-hidden border-black rounded rounded-xl w-[100px] flex flex-col flex-wrap items-start justify-start shadow-sm absolute  top-[100%] right-[calc(100%-15px)] z-[1]">
                                                         <button
                                                             onClick={() => openEditSubClassModal(item.id)}
                                                             className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[30px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">

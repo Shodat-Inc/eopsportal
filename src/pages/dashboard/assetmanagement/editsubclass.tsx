@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import styles from '../../../styles/Common.module.css';
 import Image from "next/image";
 import axios from "axios";
-import { editSubClassModalAction } from '@/store/actions/classAction';
+import { editSubClassModalAction, successMessageAction } from '@/store/actions/classAction';
 
 export default function EditSubClass(props: any) {
 
@@ -227,6 +227,7 @@ export default function EditSubClass(props: any) {
                 if (response) {
                     setAllTags([]);
                     dispatch(editSubClassModalAction(false));
+                    dispatch(successMessageAction(true))
                 }
             }).catch(function (error) {
                 console.log("ERROR IN AXIOS CATCH (CREATE CLASS):", error)
