@@ -332,10 +332,11 @@ export const updateModelValidation = (data) => {
 export const createAlertValidation = (data) => {
   const schema = Joi.object({
     alertName: Joi.string(),
-    thresholdValue: Joi.string(),
-    enable: Joi.boolean(),
-    emailSubject: Joi.string(),
-    emailContent: Joi.string()
+    rangeValue: Joi.string(),
+    thresholdValue: Joi.number(),
+    isEnabled: Joi.boolean(),
+    receiverEmailAddresses: Joi.array().items(Joi.string()),
+    emailTemplateId: Joi.number()
   });
   return schema.validate(data)
 }
@@ -343,10 +344,19 @@ export const createAlertValidation = (data) => {
 export const updateAlertValidation = (data) => {
   const schema = Joi.object({
     alertName: Joi.string(),
-    thresholdValue: Joi.string(),
-    enable: Joi.boolean(),
+    rangeValue: Joi.string(),
+    thresholdValue: Joi.number(),
+    isEnabled: Joi.boolean(),
+    receiverEmailAddresses: Joi.array().items(Joi.string()),
+    emailTemplateId: Joi.number()
+  });
+  return schema.validate(data)
+}
+
+export const createEmailTemplateValidation = (data) => {
+  const schema = Joi.object({
     emailSubject: Joi.string(),
-    emailContent: Joi.string()
+    emailContent: Joi.string(),
   });
   return schema.validate(data)
 }

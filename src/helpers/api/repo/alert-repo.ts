@@ -2,7 +2,6 @@ import { db } from "../db";
 import sendResponseData from "../../constant";
 import { loggerInfo, loggerError } from "@/logger";
 import message from "@/util/responseMessage";
-import { send } from "process";
 
 export const alertRepo = {
   create,
@@ -45,8 +44,10 @@ async function getAllAlert() {
       attributes: [
         "id",
         "alertName",
+        "rangeValue",
         "thresholdValue",
-        "enable",
+        "receiverEmailAddresses",
+        "isEnabled",
         "createdAt",
         "updatedAt",
       ],
@@ -85,31 +86,40 @@ async function update(params: any, reqAuth: any) {
   loggerInfo.info("Update Alert");
   try {
     const data = await db.Alert.findOne({
-      where: { id: reqAuth.sub },
+      where: { id: reqAuth.id },
     });
+    console.log(data, "==data")
+    if (!data) {
+      return sendResponseData(false, "Data doesn't exist", []);
+    }
+
+    params["updatedAt"] = new Date();
 
     // Define the properties to update
     const propertiesToUpdate = [
+      "id",
       "alertName",
+      "rangeValue",
       "thresholdValue",
-      "enable",
-      "emailSubject",
-      "emailContent",
+      "receiverEmailAddresses",
+      "isEnabled",
+      "createdAt",
+      "updatedAt",
     ];
 
     propertiesToUpdate.forEach((property) => {
-      if (params[property]) {
-        data[property] = params[property];
+      if (params[property] !== undefined) {
+        // Check if the property is an array and update accordingly
+        if (property === "receiverEmailAddresses" && Array.isArray(params[property])) {
+          data.setDataValue(property, params[property]);
+        } else {
+          data[property] = params[property];
+        }
       }
     });
 
     const response = await data.save();
 
-    if (!data) {
-      return sendResponseData(false, "Data doesn't exists", []);
-    }
-
-    // Return a successful response with the updated enterprise data
     return sendResponseData(true, "Data Updated Successfully", response);
   } catch (error) {
     loggerError.error("Error in Alert", error);
