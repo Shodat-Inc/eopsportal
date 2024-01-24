@@ -131,9 +131,6 @@ async function relationship(db: any) {
     db.ModelData.hasMany(db.Image, { foreignKey: "modelDataId" });
     db.Image.belongsTo(db.ModelData, { foreignKey: "modelDataId" });
 
-    db.AddValues.hasMany(db.ModelData, { foreignKey: "objectValueId" })
-    db.ModelData.belongsTo(db.AddValues, { foreignKey: "objectValueId" })
-
     db.Image.hasMany(db.CrackResponse, { foreignKey: "modelObjectImageId" });
     db.CrackResponse.belongsTo(db.Image, { foreignKey: "modelObjectImageId" });
 
@@ -171,9 +168,14 @@ async function relationship(db: any) {
     db.Image.belongsTo(db.ModelData, { foreignKey: "modelDataId" });
     db.ModelData.hasMany(db.Image, { foreignKey: "modelDataId" });
 
-    // New association to fix the error
     db.ModelData.hasMany(db.RaisedAlert, { foreignKey: "modelDataId" });
     db.RaisedAlert.belongsTo(db.ModelData, { foreignKey: "modelDataId" });
+
+    db.object.hasMany(db.RaisedAlert, { foreignKey: "objectId" });
+    db.RaisedAlert.belongsTo(db.object, { foreignKey: "objectId" });
+
+    db.Alert.hasMany(db.RaisedAlert, { foreignKey: "alertId" });
+    db.RaisedAlert.belongsTo(db.Alert, { foreignKey: "alertId" })
 
     resolve("Imported");
   });
