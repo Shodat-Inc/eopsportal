@@ -12,7 +12,8 @@ export default apiHandler({
 async function handler(req: any, res: any) {
     try {
         // Extract update data from the request body.
-        const reqAuth = req.auth
+        // const reqAuth = req.auth
+        const reqAuth=req.query
         const updateData = req.body;
         const validation = updateAlertValidation(updateData);
         if (validation.error) {

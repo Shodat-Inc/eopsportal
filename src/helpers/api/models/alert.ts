@@ -1,4 +1,5 @@
 import { DataTypes } from "sequelize";
+import { LessGreaterThan } from "@/util/enums";
 
 export function Alert(sequelize: any) {
     const attributes = {
@@ -12,10 +13,23 @@ export function Alert(sequelize: any) {
             type: DataTypes.STRING,
             allowNull: false
         },
-        thresholdValue: { type: DataTypes.STRING, allowNull: false },
-        enable: { type: DataTypes.BOOLEAN, defaultValue: false },
-        emailSubject: { type: DataTypes.STRING, allowNull: true },
-        emailContent: { type: DataTypes.STRING, allowNull: true },
+        rangeValue: {
+            type: LessGreaterThan,
+            defaultValue: 'lessThan',
+        },
+        thresholdValue: {
+            type: DataTypes.INTEGER,
+            allowNull: false
+        },
+        isEnabled: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false
+        },
+        receiverEmailAddresses: {
+            type: DataTypes.JSON,
+            allowNull: true,
+        },
     };
+
     return sequelize.define("Alert", attributes);
 }

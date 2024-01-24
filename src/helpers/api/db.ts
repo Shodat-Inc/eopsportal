@@ -132,7 +132,9 @@ export async function initialize() {
       tyreDetectionResponse: "TyreResponse",
       subscription: "Subscription",
       purchaseHistory: "PurchaseHistory",
-      alert: "Alert"
+      alert: "Alert",
+      emailTemplate: "EmailTemplate",
+      modelRaisedAlert: "RaisedAlert"
     };
 
 

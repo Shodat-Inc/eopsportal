@@ -31,6 +31,14 @@ export function ModelData(sequelize: any) {
             },
             comment: "Foreign key referencing the associated Object. Indicates the Model for which the object id is stored.",
         },
+        objectValueId: {
+            type: DataTypes.INTEGER,
+            references: {
+                model: "ObjectValues",
+                id: "id",
+            },
+            comment: "Foreign key referencing the associated Object Value Id.",
+        },
         classId: {
             type: DataTypes.INTEGER,
             references: {
