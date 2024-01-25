@@ -29,6 +29,18 @@ export function Alert(sequelize: any) {
             type: DataTypes.JSON,
             allowNull: true,
         },
+        userId: {
+            type: DataTypes.INTEGER,
+            allowNull: true
+        },
+        enterpriseUserId: {
+            type: DataTypes.INTEGER,
+            allowNull: true
+        },
+        enterpriseId: {
+            type: DataTypes.INTEGER,
+            allowNull: true
+        }
     };
 
     return sequelize.define("Alert", attributes);

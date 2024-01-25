@@ -23,6 +23,11 @@ export function RaisedAlert(sequelize: any) {
             allowNull: false
         },
 
+        classId: {
+            type: DataTypes.INTEGER,
+            allowNull: false
+        },
+
         objectId: {
             type: DataTypes.INTEGER,
             allowNull: false
@@ -31,7 +36,8 @@ export function RaisedAlert(sequelize: any) {
         alertId: {
             type: DataTypes.INTEGER,
             allowNull: false
-        }
+        },
+
     };
 
     return sequelize.define("RaisedAlert", attributes);
