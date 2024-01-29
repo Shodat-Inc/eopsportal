@@ -1,9 +1,9 @@
 import React, { useState, useRef, useEffect } from "react";
-import { useDispatch } from 'react-redux';
-import styles from '../../../styles/Common.module.css';
+import { useDispatch } from "react-redux";
+import styles from "../../../styles/Common.module.css";
 import axios from "axios";
 import Image from "next/image";
-import { successMessageAction } from '@/store/actions/classAction';
+import { successMessageAction } from "@/store/actions/classAction";
 import { editClassModalAction } from "@/store/actions/classAction";
 
 export default function EditClass(props: any) {
@@ -23,89 +23,90 @@ export default function EditClass(props: any) {
     const [deleteTagIDS, setDeleteTagIDS] = useState([] as any);
     const [addNewTag, setAddNewTag] = useState([] as any);
     const [newlyAddedTag, setNewlyAddedTag] = useState([] as any);
+    const [className, setClassName] = useState('' as any)
     let access_token = "" as any;
-    if (typeof window !== 'undefined') {
-        access_token = localStorage.getItem('authToken')
+    if (typeof window !== "undefined") {
+        access_token = localStorage.getItem("authToken");
     }
-
 
     // GET ALL DATATYPES
     async function fetchData() {
         try {
             await axios({
-                method: 'GET',
+                method: "GET",
                 url: `/api/getDataType`,
                 headers: {
-                    "Authorization": `Bearer ${access_token}`,
-                    "Content-Type": "application/json"
-                }
-            }).then(function (response) {
-                if (response) {
-                    setAllDataTypes(response.data?.data)
-                }
-            }).catch(function (error) {
-                console.log({
-                    "ERROR IN AXIOS CATCH (GET DT)": error
-                })
+                    Authorization: `Bearer ${access_token}`,
+                    "Content-Type": "application/json",
+                },
             })
+                .then(function (response) {
+                    if (response) {
+                        setAllDataTypes(response.data?.data);
+                    }
+                })
+                .catch(function (error) {
+                    console.log({
+                        "ERROR IN AXIOS CATCH (GET DT)": error,
+                    });
+                });
         } catch (err) {
             console.log({
-                "ERROR IN TRY CATCH (GET DT)": err
-            })
+                "ERROR IN TRY CATCH (GET DT)": err,
+            });
         }
     }
     useEffect(() => {
         fetchData();
-    }, [access_token])
+    }, [access_token]);
 
     // Get Selected Class Data
     useEffect(() => {
         if (props.allClassData && props.allClassData.length > 0) {
             const filtered = props.allClassData.filter((item: any) => {
-                return item.id === props.selectedClass
-            })
+                return item.id === props.selectedClass;
+            });
             setClassData(filtered);
+            setClassName(filtered[0]?.className)
             setAllTags(filtered[0]?.ClassTags);
             let arr = [] as any;
             filtered[0]?.ClassTags.map((item: any) => {
-                arr.push(item.tagName)
-            })
+                arr.push(item.tagName);
+            });
         }
-
-    }, [props])
-
+    }, [props]);
 
     const closeModal = () => {
-        dispatch(editClassModalAction(false))
+        dispatch(editClassModalAction(false));
         setShowInput(false);
-        setShowHideAddTagButton(false)
+        setShowHideAddTagButton(false);
         setToggleDT(false);
         setDataType("");
         setAllTags([]);
         setNewTag("");
-    }
+    };
     const cancelModal = () => {
-        dispatch(editClassModalAction(false))
+        dispatch(editClassModalAction(false));
         setAllTags([]);
-    }
+    };
 
     // Adding New Tags
     const addTags = () => {
         setShowInput(true);
         setShowHideAddTagButton(true);
         setToggleDT(true);
-    }
+    };
 
     // Get Radio Button Value
     const radioChange = (value: any) => {
         setDataType(value);
-    }
+    };
 
     // Creating a JSON Object
     function CreateJSON(tag: any, datatype: any) {
         var myObject = {
-            "tagName": tag,
-            "dataTypeId": datatype
+            tagName: tag,
+            dataTypeId: datatype,
         };
         return myObject;
     }
@@ -113,15 +114,13 @@ export default function EditClass(props: any) {
     // Save New Tag
     const saveNewTag = () => {
         if (newTag.trim().length !== 0) {
-
             let arr = [] as any;
             // Create New array
             arr.push(newTag);
             let newAddedTag = newlyAddedTag.slice();
             newAddedTag.push(newTag);
-            setNewlyAddedTag(newAddedTag)
+            setNewlyAddedTag(newAddedTag);
 
-            
             setShowInput(false);
             setNewTag("");
             setShowHideAddTagButton(false);
@@ -130,36 +129,36 @@ export default function EditClass(props: any) {
             // Adding new tag to seperate array
             let uList = addNewTag.slice();
             uList.push(newTag);
-            setAddNewTag(uList)
+            setAddNewTag(uList);
 
             // Creating the array of data type
             let typeList = assetDataType;
-            typeList.push(dataType)
+            typeList.push(dataType);
             setAssetDataType(typeList);
             setDataType("");
 
             // Creating json object for tag and datatype together
             let json: any = CreateJSON(newTag, dataType);
             let jsonList = dtObject.slice();
-            jsonList.push(json)
-            setDtObject(jsonList)
-
+            jsonList.push(json);
+            setDtObject(jsonList);
         } else {
-            console.log("Input must not be empty")
+            console.log("Input must not be empty");
         }
-    }
-
+    };
 
     // Remove Element from all Tag Array
     const removeElement = (item: any) => {
         // removing the item form all tags array
         let updatedList = allTags.slice();
-        var filteredArray = updatedList.filter(function (e: any) { return e.id !== item })
-        setAllTags(filteredArray)
+        var filteredArray = updatedList.filter(function (e: any) {
+            return e.id !== item;
+        });
+        setAllTags(filteredArray);
 
         let deletedList = deleteTagIDS.slice();
-        deletedList.push(item)
-        setDeleteTagIDS(deletedList)
+        deletedList.push(item);
+        setDeleteTagIDS(deletedList);
 
         // removing the datatype from datatype array
         let updatedListType = assetDataType;
@@ -168,25 +167,25 @@ export default function EditClass(props: any) {
 
         // remove the json item from json item array
         let updatedJSON = dtObject.slice();
-        var filteredJSON = updatedJSON.filter(function (e) { return e.tagName !== item })
+        var filteredJSON = updatedJSON.filter(function (e) {
+            return e.tagName !== item;
+        });
         setDtObject(filteredJSON);
-
 
         // delete from new array
         let newAddedTag = newlyAddedTag.slice();
         newAddedTag.splice(-1);
-        setNewlyAddedTag(newAddedTag)
-
-    }
+        setNewlyAddedTag(newAddedTag);
+    };
 
     // Cancel Adding new tags
     const cancelAddingTag = () => {
         setShowInput(false);
-        setShowHideAddTagButton(false)
+        setShowHideAddTagButton(false);
         setToggleDT(false);
         setDataType("");
         setNewTag("");
-    }
+    };
 
     // Store Data into JSON File
     const handleSubmit = async (e: any) => {
@@ -195,71 +194,81 @@ export default function EditClass(props: any) {
         const form_values = Object.fromEntries(formData);
 
         const dataToSave = {
-            id:classData[0]?.id,
-            className: form_values.assetname,
+            id: classData[0]?.id,
+            className: className,
             deleteTagId: deleteTagIDS && deleteTagIDS.length > 0 ? deleteTagIDS : [],
-            addTag: dtObject
+            addTag: dtObject,
         };
 
         let tokenStr = access_token;
         try {
             await axios({
-                method: 'PUT',
+                method: "PUT",
                 url: `/api/updateAssets`,
                 data: dataToSave,
                 headers: {
-                    "Authorization": `Bearer ${tokenStr}`,
-                    "Content-Type": "application/json"
-                }
-            }).then(function (response) {
-                if (response) {
-                    setSuccess(true)
-                    setAllTags([]);
-                    dispatch(successMessageAction(true))
-                    dispatch(editClassModalAction(false));
-                    setTimeout(() => {
-                        setSuccess(false);
-                    }, 1500)
-                }
-            }).catch(function (error) {
-                console.log("ERROR IN AXIOS CATCH (CREATE CLASS):", error)
+                    Authorization: `Bearer ${tokenStr}`,
+                    "Content-Type": "application/json",
+                },
             })
+                .then(function (response) {
+                    if (response) {
+                        setSuccess(true);
+                        setAllTags([]);
+                        dispatch(successMessageAction(true));
+                        dispatch(editClassModalAction(false));
+                        setTimeout(() => {
+                            setSuccess(false);
+                        }, 1500);
+                    }
+                })
+                .catch(function (error) {
+                    console.log("ERROR IN AXIOS CATCH (CREATE CLASS):", error);
+                });
         } catch (err) {
-            console.log("ERROR IN TRY CATCH (CREATE CLASS):", err)
+            console.log("ERROR IN TRY CATCH (CREATE CLASS):", err);
         }
+    };
+
+    const handleClassNameChange = (e:any) => {
+        setClassName(e.target.value)
     }
 
     return (
         <>
-            <div className={`bg-white h-full z-[11] fixed top-0 right-0 p-5 shadow shadow-lg ${props.show === true ? `${styles.objectContainer} ${styles.sliderShow}` : `${styles.objectContainer}`}`}>
-
+            <div
+                className={`bg-white h-full z-[11] fixed top-0 right-0 p-5 shadow-lg ${props.show === true
+                        ? `${styles.objectContainer} ${styles.sliderShow}`
+                        : `${styles.objectContainer}`
+                    }`}
+            >
                 <div className="flex justify-between items-center w-full mb-3">
                     <h2 className="font-semibold text-lg">Edit Class</h2>
                     <button
                         onClick={closeModal}
-                        className="transition-all duration-[100ms] transition-opacity duration-100 outline-none transform active:scale-75 transition-transform"
+                        className="duration-100 outline-none transform active:scale-75 transition-transform"
                     >
-                        <Image
-                            src="/img/x.svg"
-                            alt="close"
-                            height={27}
-                            width={27}
-                        />
+                        <Image src="/img/x.svg" alt="close" height={27} width={27} />
                     </button>
                 </div>
 
-                <div className={`flex justify-start items-start w-full overflow-auto h-full pb-10 ${styles.scroll} pr-3`}>
+                <div
+                    className={`flex justify-start items-start w-full overflow-auto h-full pb-10 ${styles.scroll} pr-3`}
+                >
                     <form
                         className="flex justify-center items-center flex-wrap flex-col lg:w-full"
-                        method='post'
+                        method="post"
                         onSubmit={handleSubmit}
                     >
                         <div className="mb-1 relative flex justify-center items-center flex-wrap flex-col sm:w-full small:w-full lg:w-full">
-
                             <div className="mb-6 relative column-2 flex justify-start items-center sm:w-full small:w-full">
                                 <div className="lg:w-full small:w-full sm:w-full">
-                                    <div className={`mb-5 lg:w-full small:w-full small:w-full ${styles.form__wrap}`}>
-                                        <div className={`relative ${styles.form__group} font-OpenSans`}>
+                                    <div
+                                        className={`mb-5 lg:w-full small:w-full ${styles.form__wrap}`}
+                                    >
+                                        <div
+                                            className={`relative ${styles.form__group} font-OpenSans`}
+                                        >
                                             <input
                                                 type="text"
                                                 id="assetname"
@@ -267,98 +276,118 @@ export default function EditClass(props: any) {
                                                 className={`border border-gray-961 ${styles.form__field}`}
                                                 placeholder="Enter class name"
                                                 required
-                                                onChange={(e) => (assetname.current = e.target.value)}
-                                                defaultValue={classData[0]?.className}
+                                                onChange={handleClassNameChange}
+                                                value={className}
                                             />
-                                            <label htmlFor="assetname" className={`${styles.form__label}`}>Enter class name</label>
+                                            <label
+                                                htmlFor="assetname"
+                                                className={`${styles.form__label}`}
+                                            >
+                                                Enter class name
+                                            </label>
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
 
                             <div className="mb-7 relative column-2 flex justify-start items-center sm:w-full small:w-full">
                                 <div className="lg:w-full small:w-full sm:w-full relative">
-                                    <span className="text-[13px] bg-white px-[2px] absolute top-[-10px] left-[10px]">Class Tags</span>
-                                    <div className={`rounded-lg border border-gray-961  pl-2 pr-2 lg:w-full small:w-full sm:w-full pt-3 pb-2 flex flex-wrap flex-col justify-start items-start min-h-[64px]`}>
-                                        <div className={`flex flex-wrap flex-row justify-start w-full ${allTags && allTags.length > 0 ? 'min-h-[150px]' : 'ok'}`}>
-                                            {
-                                                allTags && allTags.length > 0 ?
-                                                    allTags.map((items: any, index: any) => (
-                                                        <span
-                                                            key={index}
-                                                            className="rounded-lg inline-flex justify-center items-center h-8 pl-2 pr-2 bg-[#F2F1F1] text-black text-[14px] mr-2 mb-2">
-                                                            {items.tagName}
-                                                            <button
-                                                                className="rounded-full border-2 border-white h-[24px] w-[24px] inline-flex justify-center items-center ml-3 transition-all duration-[100ms] transition-opacity duration-100 outline-none transform active:scale-75 transition-transform"
-                                                                onClick={() => removeElement(items.id)}
-                                                            >
-                                                                <Image
-                                                                    src="/img/x-circle.svg"
-                                                                    alt="close"
-                                                                    height={24}
-                                                                    width={24}
-                                                                />
-                                                            </button>
-                                                        </span>
-                                                    )) : null
-                                            }
-                                            {
-                                                newlyAddedTag && newlyAddedTag.length > 0 ?
-                                                    newlyAddedTag.map((items: any, index: any) => (
-                                                        <span
-                                                            key={index}
-                                                            className="rounded-lg inline-flex justify-center items-center h-8 pl-2 pr-2 bg-[#F2F1F1] text-black text-[14px] mr-2 mb-2">
-                                                            {items}
-                                                            <button
-                                                                className="rounded-full border-2 border-white h-[24px] w-[24px] inline-flex justify-center items-center ml-3 transition-all duration-[100ms] transition-opacity duration-100 outline-none transform active:scale-75 transition-transform"
-                                                                onClick={() => removeElement(items)}
-                                                            >
-                                                                <Image
-                                                                    src="/img/x-circle.svg"
-                                                                    alt="close"
-                                                                    height={24}
-                                                                    width={24}
-                                                                />
-                                                            </button>
-                                                        </span>
-                                                    ))
-                                                    : null
-                                            }
+                                    <span className="text-[13px] bg-white px-[2px] absolute top-[-10px] left-[10px]">
+                                        Class Tags
+                                    </span>
+                                    <div
+                                        className={`rounded-lg border border-gray-961  pl-2 pr-2 lg:w-full small:w-full sm:w-full pt-3 pb-2 flex flex-wrap flex-col justify-start items-start min-h-[64px]`}
+                                    >
+                                        <div
+                                            className={`flex flex-wrap flex-row justify-start w-full ${allTags && allTags.length > 0 ? "min-h-[150px]" : "ok"
+                                                }`}
+                                        >
+                                            {allTags && allTags.length > 0
+                                                ? allTags.map((items: any, index: any) => (
+                                                    <span
+                                                        key={index}
+                                                        className="rounded-lg inline-flex justify-center items-center h-8 pl-2 pr-2 bg-[#F2F1F1] text-black text-[14px] mr-2 mb-2"
+                                                    >
+                                                        {items.tagName}
+                                                        <button
+                                                            className="rounded-full border-2 border-white h-[24px] w-[24px] inline-flex justify-center items-center ml-3 duration-100 outline-none transform active:scale-75 transition-transform"
+                                                            onClick={() => removeElement(items.id)}
+                                                        >
+                                                            <Image
+                                                                src="/img/x-circle.svg"
+                                                                alt="close"
+                                                                height={24}
+                                                                width={24}
+                                                            />
+                                                        </button>
+                                                    </span>
+                                                ))
+                                                : null}
+                                            {newlyAddedTag && newlyAddedTag.length > 0
+                                                ? newlyAddedTag.map((items: any, index: any) => (
+                                                    <span
+                                                        key={index}
+                                                        className="rounded-lg inline-flex justify-center items-center h-8 pl-2 pr-2 bg-[#F2F1F1] text-black text-[14px] mr-2 mb-2"
+                                                    >
+                                                        {items}
+                                                        <button
+                                                            className="rounded-full border-2 border-white h-[24px] w-[24px] inline-flex justify-center items-center ml-3 duration-100 outline-none transform active:scale-75 transition-transform"
+                                                            onClick={() => removeElement(items)}
+                                                        >
+                                                            <Image
+                                                                src="/img/x-circle.svg"
+                                                                alt="close"
+                                                                height={24}
+                                                                width={24}
+                                                            />
+                                                        </button>
+                                                    </span>
+                                                ))
+                                                : null}
                                         </div>
 
-                                        {
-                                            showInput ?
-                                                <span className="flex justify-center items-center mb-2 hidden">
-                                                    <input
-                                                        type="text"
-                                                        placeholder="Tag Name"
-                                                        className="border border-gray-951 rounded py-[3px] px-[3px] w-[100px] mr-2 h-8 text-sm"
-                                                        value={newTag}
-                                                        onChange={(e) => setNewTag(e.target.value)}
-                                                        required
-                                                    />
-                                                    <button
-                                                        className={`transition-all duration-[100ms] transition-opacity duration-100 outline-none transform active:scale-75 transition-transform text-black border border-transparent rounded inline-flex justify-center items-center text-sm h-8 px-2 ml-1 bg-yellow-951 ${dataType && (dataType != null || dataType != "") ? 'okay' : 'disabled disabled:bg-gray-300'}`}
-                                                        onClick={saveNewTag}
-                                                        disabled={dataType && (dataType != null || dataType != "") ? false : true}
-                                                    >
-                                                        Add
-                                                    </button>
-                                                    <button
-                                                        className="transition-all duration-[100ms] transition-opacity duration-100 outline-none transform active:scale-75 transition-transform text-white border border-transparent rounded inline-flex justify-center items-center text-sm h-8 px-2 ml-1 bg-red-600"
-                                                        onClick={cancelAddingTag}
-                                                    >
-                                                        Cancel
-                                                    </button>
-                                                </span>
-                                                : null
-                                        }
-                                        <input type="hidden" value={allTags} name="alltags" id="alltags" />
-
+                                        {showInput ? (
+                                            <span className="justify-center items-center mb-2 hidden">
+                                                <input
+                                                    type="text"
+                                                    placeholder="Tag Name"
+                                                    className="border border-gray-951 rounded py-[3px] px-[3px] w-[100px] mr-2 h-8 text-sm"
+                                                    value={newTag}
+                                                    onChange={(e) => setNewTag(e.target.value)}
+                                                    required
+                                                />
+                                                <button
+                                                    className={`duration-100 outline-none transform active:scale-75 transition-transform text-black border border-transparent rounded inline-flex justify-center items-center text-sm h-8 px-2 ml-1 bg-yellow-951 ${dataType && (dataType != null || dataType != "")
+                                                            ? "okay"
+                                                            : "disabled disabled:bg-gray-300"
+                                                        }`}
+                                                    onClick={saveNewTag}
+                                                    disabled={
+                                                        dataType && (dataType != null || dataType != "")
+                                                            ? false
+                                                            : true
+                                                    }
+                                                >
+                                                    Add
+                                                </button>
+                                                <button
+                                                    className="duration-100 outline-none transform active:scale-75 transition-transform text-white border border-transparent rounded inline-flex justify-center items-center text-sm h-8 px-2 ml-1 bg-red-600"
+                                                    onClick={cancelAddingTag}
+                                                >
+                                                    Cancel
+                                                </button>
+                                            </span>
+                                        ) : null}
+                                        <input
+                                            type="hidden"
+                                            value={allTags}
+                                            name="alltags"
+                                            id="alltags"
+                                        />
 
                                         <button
-                                            className={`transition-all duration-[100ms] transition-opacity duration-100 outline-none transform active:scale-75 transition-transform text-black text-sm inline-flex justify-center items-center text-lg h-8 mb-2 px-2 mt-0 rounded rounded-lg font-semibold ${showHideAddTagButton ? 'bg-gray-951' : 'bg-yellow-951'}`}
+                                            className={`duration-100 outline-none transform active:scale-75 transition-transform text-black  inline-flex justify-center items-center text-lg h-8 mb-2 px-2 mt-0 rounded-lg font-semibold ${showHideAddTagButton ? "bg-gray-951" : "bg-yellow-951"
+                                                }`}
                                             onClick={addTags}
                                             disabled={showHideAddTagButton}
                                         >
@@ -371,9 +400,9 @@ export default function EditClass(props: any) {
                                             <span>Add Tag</span>
                                         </button>
 
-
                                         <button
-                                            className={`transition-all duration-[100ms] transition-opacity duration-100 outline-none transform active:scale-75 transition-transform absolute right-1 top-5 ${allTags && allTags.length > 0 ? 'hidden' : ''} `}
+                                            className={`duration-100 outline-none transform active:scale-75 transition-transform absolute right-1 top-5 ${allTags && allTags.length > 0 ? "hidden" : ""
+                                                } `}
                                             onClick={addTags}
                                         >
                                             <Image
@@ -385,57 +414,63 @@ export default function EditClass(props: any) {
                                         </button>
                                     </div>
 
-                                    {toggleDT ?
-                                        <div className="rounded rounded-lg border border-gray-500 min-h-[150px] mt-[1px] pl-2 pr-2 w-full pt-2 pb-2 bg-white absolute top-[100%] right-0 z-10">
-
+                                    {toggleDT ? (
+                                        <div className="rounded-lg border border-gray-500 min-h-[150px] mt-[1px] pl-2 pr-2 w-full pt-2 pb-2 bg-white absolute top-[100%] right-0 z-10">
                                             <span className="flex justify-center items-center mb-3">
                                                 <input
                                                     type="text"
                                                     placeholder="Enter tag name"
-                                                    className="border border-gray-951 rounded rounded-lg py-[5px] px-[5px] w-full mr-2 h-12 text-sm"
+                                                    className="border border-gray-951 rounded-lg py-[5px] px-[5px] w-full mr-2 h-12 text-sm"
                                                     value={newTag}
                                                     onChange={(e) => setNewTag(e.target.value)}
-
                                                 />
                                             </span>
 
                                             <div className="text-sm font-bold color-black mb-2 flex items-center justify-between">
                                                 <span>Select Data Type</span>
                                             </div>
-                                            {
-                                                allDataTypes && allDataTypes.length >= 0 ?
-                                                    allDataTypes.map((item: any, index: any) => (
-                                                        <div key={index}>
-                                                            <div className="flex pt-1 pb-1">
-                                                                <div className={`${styles.customRadio} mr-2`}>
-                                                                    <input
-                                                                        id={item.type}
-                                                                        type="radio"
-                                                                        name="datatype"
-                                                                        className="scale-150"
-                                                                        value={item.type}
-                                                                        checked={dataType === item.id}
-                                                                        onChange={() => radioChange(item.id)}
-                                                                    />
-                                                                    <span></span>
-                                                                </div>
-                                                                <label htmlFor={item.type} className="text-black font-semibold">{item.name}<span className="text-gray-500 font-normal text-[14px] ml-2">
+                                            {allDataTypes && allDataTypes.length >= 0
+                                                ? allDataTypes.map((item: any, index: any) => (
+                                                    <div key={index}>
+                                                        <div className="flex pt-1 pb-1">
+                                                            <div className={`${styles.customRadio} mr-2`}>
+                                                                <input
+                                                                    id={item.type}
+                                                                    type="radio"
+                                                                    name="datatype"
+                                                                    className="scale-150"
+                                                                    value={item.type}
+                                                                    checked={dataType === item.id}
+                                                                    onChange={() => radioChange(item.id)}
+                                                                />
+                                                                <span></span>
+                                                            </div>
+                                                            <label
+                                                                htmlFor={item.type}
+                                                                className="text-black font-semibold"
+                                                            >
+                                                                {item.name}
+                                                                <span className="text-gray-500 font-normal text-[14px] ml-2">
                                                                     {item.description}
                                                                 </span>
-                                                                </label>
-                                                            </div>
+                                                            </label>
                                                         </div>
-                                                    ))
-                                                    :
-                                                    null
-                                            }
-
+                                                    </div>
+                                                ))
+                                                : null}
 
                                             <div className="flex justify-end items-center w-full">
                                                 <button
-                                                    className={`border border-black rounded-lg bg-black text-white text-md w-20 h-10 mr-5 hover:bg-yellow-951 hover:text-white hover:border-yellow-951 ease-in-out duration-300 disabled:bg-gray-951 disabled:hover:border-gray-951 disabled:border-gray-951 ${dataType && (dataType != null || dataType != "") ? 'okay' : 'disabled disabled:bg-gray-300'} `}
+                                                    className={`border border-black rounded-lg bg-black text-white text-md w-20 h-10 mr-5 hover:bg-yellow-951 hover:text-white hover:border-yellow-951 ease-in-out duration-300 disabled:bg-gray-951 disabled:hover:border-gray-951 disabled:border-gray-951 ${dataType && (dataType != null || dataType != "")
+                                                            ? "okay"
+                                                            : "disabled disabled:bg-gray-300"
+                                                        } `}
                                                     onClick={saveNewTag}
-                                                    disabled={dataType && (dataType != null || dataType != "") ? false : true}
+                                                    disabled={
+                                                        dataType && (dataType != null || dataType != "")
+                                                            ? false
+                                                            : true
+                                                    }
                                                 >
                                                     <span>Save</span>
                                                 </button>
@@ -446,34 +481,30 @@ export default function EditClass(props: any) {
                                                     <span>Cancel</span>
                                                 </button>
                                             </div>
-
                                         </div>
-                                        : null
-                                    }
+                                    ) : null}
                                 </div>
                             </div>
 
                             <div className="mb-0 relative flex justify-end items-center w-full">
                                 <button
-                                    className="border border-black rounded-lg bg-black text-white text-lg w-20 h-12 mr-5 hover:bg-yellow-951 hover:text-white hover:border-yellow-951 ease-in-out duration-300 disabled:bg-gray-951 disabled:hover:border-gray-951 disabled:border-gray-951 transition-all duration-[100ms] transition-opacity duration-100 outline-none transform active:scale-75 transition-transform"
-                                    disabled={(allTags && allTags.length > 0) ? false : true}
+                                    className="border border-black rounded-lg bg-black text-white text-lg w-20 h-12 mr-5 hover:bg-yellow-951 hover:text-white hover:border-yellow-951 ease-in-out disabled:bg-gray-951 disabled:hover:border-gray-951 disabled:border-gray-951 duration-100 outline-none transform active:scale-75 transition-transform"
+                                    disabled={allTags && allTags.length > 0 ? false : true}
                                 >
                                     Update
                                 </button>
                                 <button
-                                    className="border border-black rounded-lg bg-white text-black text-lg w-24 h-12 hover:text-white hover:bg-yellow-951 hover:border-yellow-951 ease-in-out duration-300 transition-all duration-[100ms] transition-opacity duration-100 outline-none transform active:scale-75 transition-transform"
+                                    className="border border-black rounded-lg bg-white text-black text-lg w-24 h-12 hover:text-white hover:bg-yellow-951 hover:border-yellow-951 ease-in-out duration-100 outline-none transform active:scale-75 transition-transform"
                                     onClick={cancelModal}
                                 >
                                     Cancel
                                 </button>
                             </div>
-
                         </div>
                     </form>
                 </div>
-
             </div>
             {props.show === true && <div className={styles.backdrop}></div>}
         </>
-    )
+    );
 }
