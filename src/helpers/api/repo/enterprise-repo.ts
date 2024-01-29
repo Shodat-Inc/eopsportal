@@ -107,7 +107,7 @@ async function getDataById(params: any) {
     });
 
     // If no data is found for the provided ID, return an error response
-    if (result.length === 0) {
+    if (!result.length) {
       return sendResponseData(false, message.error.dataNotExist, [])
     }
 

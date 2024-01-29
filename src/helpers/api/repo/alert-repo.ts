@@ -52,7 +52,7 @@ async function getAllAlert() {
         "updatedAt",
       ],
     });
-    if (!data) {
+    if (!data.length) {
       return sendResponseData(false, "Data doesn't Exists", {});
     }
     return sendResponseData(true, "Alert Data fetched successfully", data);
@@ -65,7 +65,6 @@ async function getAllAlert() {
 async function getAlertById(params: any) {
   loggerInfo.info("Get ALert Data By Id");
   try {
-    console.log(params);
     if (!params.id) {
       return sendResponseData(false, "Data is not provided in params", {});
     }
@@ -88,8 +87,7 @@ async function update(params: any, reqAuth: any) {
     const data = await db.Alert.findOne({
       where: { id: reqAuth.id },
     });
-    console.log(data, "==data")
-    if (!data) {
+    if (!data.length) {
       return sendResponseData(false, "Data doesn't exist", []);
     }
 
@@ -110,7 +108,10 @@ async function update(params: any, reqAuth: any) {
     propertiesToUpdate.forEach((property) => {
       if (params[property] !== undefined) {
         // Check if the property is an array and update accordingly
-        if (property === "receiverEmailAddresses" && Array.isArray(params[property])) {
+        if (
+          property === "receiverEmailAddresses" &&
+          Array.isArray(params[property])
+        ) {
           data.setDataValue(property, params[property]);
         } else {
           data[property] = params[property];

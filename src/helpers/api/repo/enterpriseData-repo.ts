@@ -151,7 +151,7 @@ async function getAllEnterpriseData(params: any) {
     });
 
     // If no data is found, return an error response
-    if (result.length === 0) {
+    if (!result.length) {
       return sendResponseData(false, "No Enterprise Class Data Found", []);
     }
 

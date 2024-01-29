@@ -51,7 +51,7 @@ async function get(modelId: any, userId: any) {
     });
 
     // If no data is found, return an error response
-    if (data.length === 0) {
+    if (!data.length) {
       return sendResponseData(false, "No data Found", []);
     }
 

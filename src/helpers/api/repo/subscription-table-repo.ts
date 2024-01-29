@@ -22,7 +22,7 @@ async function getDetails(params: any) {
     });
 
     // If no data is found, return an error response
-    if (data.length === 0) {
+    if (!data.length) {
       return sendResponseData(false, message.error.modelDataNotExist, []);
     }
 
