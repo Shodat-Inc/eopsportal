@@ -29,6 +29,10 @@ export function Alert(sequelize: any) {
             type: DataTypes.JSON,
             allowNull: true,
         },
+        modelObjectImageId: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        },
         userId: {
             type: DataTypes.INTEGER,
             allowNull: true

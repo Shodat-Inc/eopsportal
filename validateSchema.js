@@ -336,7 +336,11 @@ export const createAlertValidation = (data) => {
     thresholdValue: Joi.number(),
     isEnabled: Joi.boolean(),
     receiverEmailAddresses: Joi.array().items(Joi.string()),
-    emailTemplateId: Joi.number()
+    emailTemplateId: Joi.number(),
+    modelObjectImageId: Joi.number(),
+    userId: Joi.number(),
+    enterpriseId: Joi.number(),
+    enterpriseUserId: Joi.number(),
   });
   return schema.validate(data)
 }
@@ -348,7 +352,11 @@ export const updateAlertValidation = (data) => {
     thresholdValue: Joi.number(),
     isEnabled: Joi.boolean(),
     receiverEmailAddresses: Joi.array().items(Joi.string()),
-    emailTemplateId: Joi.number()
+    emailTemplateId: Joi.number(),
+    modelObjectImageId: Joi.number(),
+    userId: Joi.number(),
+    enterpriseId: Joi.number(),
+    enterpriseUserId: Joi.number(),
   });
   return schema.validate(data)
 }

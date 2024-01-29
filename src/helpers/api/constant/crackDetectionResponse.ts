@@ -3,7 +3,6 @@ export const crackDetectionResponse = {
   coordinates: [
     {
       responseCoordinates: {
-        thresholdValue:"20%",
         "coord-topLeft": [112, 31],
         "coord-topRight": [154, 32],
         "coord-bottomLeft": [104, 239],
@@ -13,7 +12,6 @@ export const crackDetectionResponse = {
     },
     {
       responseCoordinates: {
-        thresholdValue:"20%",
         "coord-topLeft": [102, 131],
         "coord-topRight": [154, 132],
         "coord-bottomLeft": [44, 39],

@@ -8,6 +8,7 @@ export function RaisedAlert(sequelize: any) {
             allowNull: false,
             autoIncrement: true,
         },
+
         tags: {
             type: DataTypes.STRING,
             allowNull: false
@@ -18,7 +19,12 @@ export function RaisedAlert(sequelize: any) {
             allowNull: false
         },
 
-        modelDataId: {
+        modelId: {
+            type: DataTypes.INTEGER,
+            allowNull: false
+        },
+
+        userId: {
             type: DataTypes.INTEGER,
             allowNull: false
         },
@@ -37,6 +43,11 @@ export function RaisedAlert(sequelize: any) {
             type: DataTypes.INTEGER,
             allowNull: false
         },
+
+        triggeredProbability: {
+            type: DataTypes.INTEGER,
+            allowNull: false
+        }
 
     };
 
