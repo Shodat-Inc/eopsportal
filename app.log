@@ -34040,3 +34040,17 @@
 {"level":"info","message":"get parent join tags","timestamp":"2024-01-24T17:42:28.622Z"}
 {"level":"info","message":"get parent join tags","timestamp":"2024-01-24T17:42:28.627Z"}
 {"level":"info","message":"get parent join tags","timestamp":"2024-01-24T17:42:28.633Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-29T03:26:34.571Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-29T03:26:34.729Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-29T03:26:36.258Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-29T03:26:36.305Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-29T03:26:39.792Z"}
+{"level":"info","message":"<+----|| DB connection ||-----+>","timestamp":"2024-01-29T03:26:39.797Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-29T03:26:39.841Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2024-01-29T03:26:39.845Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-29T03:26:39.879Z"}
+{"level":"info","message":"Get All Tag DataTypes","timestamp":"2024-01-29T03:26:39.883Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-29T03:26:39.920Z"}
+{"level":"info","message":"Get All Tag DataTypes","timestamp":"2024-01-29T03:26:39.923Z"}
+{"level":"info","message":"JWT","timestamp":"2024-01-29T03:26:39.927Z"}
+{"level":"info","message":"Fetching all class and classTags data","timestamp":"2024-01-29T03:26:39.930Z"}
