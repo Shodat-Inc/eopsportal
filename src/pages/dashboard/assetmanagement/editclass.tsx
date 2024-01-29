@@ -3,8 +3,11 @@ import { useDispatch } from "react-redux";
 import styles from "../../../styles/Common.module.css";
 import axios from "axios";
 import Image from "next/image";
-import { successMessageAction } from "@/store/actions/classAction";
-import { editClassModalAction } from "@/store/actions/classAction";
+import {
+    successMessageAction,
+    successMessagAdvancedAction,
+    editClassModalAction
+} from "@/store/actions/classAction";
 
 export default function EditClass(props: any) {
     const dispatch = useDispatch<any>();
@@ -39,17 +42,15 @@ export default function EditClass(props: any) {
                     Authorization: `Bearer ${access_token}`,
                     "Content-Type": "application/json",
                 },
-            })
-                .then(function (response) {
-                    if (response) {
-                        setAllDataTypes(response.data?.data);
-                    }
-                })
-                .catch(function (error) {
-                    console.log({
-                        "ERROR IN AXIOS CATCH (GET DT)": error,
-                    });
+            }).then(function (response) {
+                if (response) {
+                    setAllDataTypes(response.data?.data);
+                }
+            }).catch(function (error) {
+                console.log({
+                    "ERROR IN AXIOS CATCH (GET DT)": error,
                 });
+            });
         } catch (err) {
             console.log({
                 "ERROR IN TRY CATCH (GET DT)": err,
@@ -77,18 +78,19 @@ export default function EditClass(props: any) {
     }, [props]);
 
     const closeModal = () => {
-        dispatch(editClassModalAction(false));
         setShowInput(false);
         setShowHideAddTagButton(false);
         setToggleDT(false);
         setDataType("");
         setAllTags([]);
         setNewTag("");
-    };
-    const cancelModal = () => {
+        setNewlyAddedTag([]);
         dispatch(editClassModalAction(false));
-        setAllTags([]);
     };
+    // const cancelModal = () => {
+    //     dispatch(editClassModalAction(false));
+    //     setAllTags([]);
+    // };
 
     // Adding New Tags
     const addTags = () => {
@@ -149,6 +151,7 @@ export default function EditClass(props: any) {
 
     // Remove Element from all Tag Array
     const removeElement = (item: any) => {
+        setDtObject([])
         // removing the item form all tags array
         let updatedList = allTags.slice();
         var filteredArray = updatedList.filter(function (e: any) {
@@ -187,6 +190,10 @@ export default function EditClass(props: any) {
         setNewTag("");
     };
 
+    console.log({
+        "dtObject__2": dtObject
+    })
+
     // Store Data into JSON File
     const handleSubmit = async (e: any) => {
         e.preventDefault();
@@ -200,6 +207,11 @@ export default function EditClass(props: any) {
             addTag: dtObject,
         };
 
+        console.log({
+            dataToSave: dataToSave,
+            dtObject: dtObject
+        })
+
         let tokenStr = access_token;
         try {
             await axios({
@@ -210,18 +222,24 @@ export default function EditClass(props: any) {
                     Authorization: `Bearer ${tokenStr}`,
                     "Content-Type": "application/json",
                 },
+            }).then(function (response) {
+                if (response) {
+                    setSuccess(true);
+                    setAllTags([]);
+                    setNewlyAddedTag([]);
+                    setDtObject([]);
+                    dispatch(successMessageAction(true));
+                    dispatch(editClassModalAction(false));
+                    let data = {
+                        "type": "editClass",
+                        "action": true
+                    };
+                    dispatch(successMessagAdvancedAction(data))
+                    setTimeout(() => {
+                        setSuccess(false);
+                    }, 1500);
+                }
             })
-                .then(function (response) {
-                    if (response) {
-                        setSuccess(true);
-                        setAllTags([]);
-                        dispatch(successMessageAction(true));
-                        dispatch(editClassModalAction(false));
-                        setTimeout(() => {
-                            setSuccess(false);
-                        }, 1500);
-                    }
-                })
                 .catch(function (error) {
                     console.log("ERROR IN AXIOS CATCH (CREATE CLASS):", error);
                 });
@@ -230,7 +248,7 @@ export default function EditClass(props: any) {
         }
     };
 
-    const handleClassNameChange = (e:any) => {
+    const handleClassNameChange = (e: any) => {
         setClassName(e.target.value)
     }
 
@@ -238,8 +256,8 @@ export default function EditClass(props: any) {
         <>
             <div
                 className={`bg-white h-full z-[11] fixed top-0 right-0 p-5 shadow-lg ${props.show === true
-                        ? `${styles.objectContainer} ${styles.sliderShow}`
-                        : `${styles.objectContainer}`
+                    ? `${styles.objectContainer} ${styles.sliderShow}`
+                    : `${styles.objectContainer}`
                     }`}
             >
                 <div className="flex justify-between items-center w-full mb-3">
@@ -309,8 +327,8 @@ export default function EditClass(props: any) {
                                                         className="rounded-lg inline-flex justify-center items-center h-8 pl-2 pr-2 bg-[#F2F1F1] text-black text-[14px] mr-2 mb-2"
                                                     >
                                                         {items.tagName}
-                                                        <button
-                                                            className="rounded-full border-2 border-white h-[24px] w-[24px] inline-flex justify-center items-center ml-3 duration-100 outline-none transform active:scale-75 transition-transform"
+                                                        <span
+                                                            className="rounded-full border-2 border-white h-[24px] w-[24px] inline-flex justify-center items-center ml-3 duration-100 outline-none transform active:scale-75 transition-transform cursor-pointer"
                                                             onClick={() => removeElement(items.id)}
                                                         >
                                                             <Image
@@ -319,7 +337,7 @@ export default function EditClass(props: any) {
                                                                 height={24}
                                                                 width={24}
                                                             />
-                                                        </button>
+                                                        </span>
                                                     </span>
                                                 ))
                                                 : null}
@@ -330,7 +348,7 @@ export default function EditClass(props: any) {
                                                         className="rounded-lg inline-flex justify-center items-center h-8 pl-2 pr-2 bg-[#F2F1F1] text-black text-[14px] mr-2 mb-2"
                                                     >
                                                         {items}
-                                                        <button
+                                                        <span
                                                             className="rounded-full border-2 border-white h-[24px] w-[24px] inline-flex justify-center items-center ml-3 duration-100 outline-none transform active:scale-75 transition-transform"
                                                             onClick={() => removeElement(items)}
                                                         >
@@ -340,7 +358,7 @@ export default function EditClass(props: any) {
                                                                 height={24}
                                                                 width={24}
                                                             />
-                                                        </button>
+                                                        </span>
                                                     </span>
                                                 ))
                                                 : null}
@@ -358,8 +376,8 @@ export default function EditClass(props: any) {
                                                 />
                                                 <button
                                                     className={`duration-100 outline-none transform active:scale-75 transition-transform text-black border border-transparent rounded inline-flex justify-center items-center text-sm h-8 px-2 ml-1 bg-yellow-951 ${dataType && (dataType != null || dataType != "")
-                                                            ? "okay"
-                                                            : "disabled disabled:bg-gray-300"
+                                                        ? "okay"
+                                                        : "disabled disabled:bg-gray-300"
                                                         }`}
                                                     onClick={saveNewTag}
                                                     disabled={
@@ -386,7 +404,7 @@ export default function EditClass(props: any) {
                                         />
 
                                         <button
-                                            className={`duration-100 outline-none transform active:scale-75 transition-transform text-black  inline-flex justify-center items-center text-lg h-8 mb-2 px-2 mt-0 rounded-lg font-semibold ${showHideAddTagButton ? "bg-gray-951" : "bg-yellow-951"
+                                            className={`duration-100 outline-none transform active:scale-75 transition-transform text-black  inline-flex justify-center items-center text-sm h-8 mb-2 px-2 mt-0 rounded-lg font-semibold ${showHideAddTagButton ? "bg-gray-951" : "bg-yellow-951"
                                                 }`}
                                             onClick={addTags}
                                             disabled={showHideAddTagButton}
@@ -394,8 +412,8 @@ export default function EditClass(props: any) {
                                             <Image
                                                 src="/img/plusblack.svg"
                                                 alt="close"
-                                                height={24}
-                                                width={24}
+                                                height={20}
+                                                width={20}
                                             />
                                             <span>Add Tag</span>
                                         </button>
@@ -462,8 +480,8 @@ export default function EditClass(props: any) {
                                             <div className="flex justify-end items-center w-full">
                                                 <button
                                                     className={`border border-black rounded-lg bg-black text-white text-md w-20 h-10 mr-5 hover:bg-yellow-951 hover:text-white hover:border-yellow-951 ease-in-out duration-300 disabled:bg-gray-951 disabled:hover:border-gray-951 disabled:border-gray-951 ${dataType && (dataType != null || dataType != "")
-                                                            ? "okay"
-                                                            : "disabled disabled:bg-gray-300"
+                                                        ? "okay"
+                                                        : "disabled disabled:bg-gray-300"
                                                         } `}
                                                     onClick={saveNewTag}
                                                     disabled={
@@ -488,17 +506,17 @@ export default function EditClass(props: any) {
 
                             <div className="mb-0 relative flex justify-end items-center w-full">
                                 <button
-                                    className="border border-black rounded-lg bg-black text-white text-lg w-20 h-12 mr-5 hover:bg-yellow-951 hover:text-white hover:border-yellow-951 ease-in-out disabled:bg-gray-951 disabled:hover:border-gray-951 disabled:border-gray-951 duration-100 outline-none transform active:scale-75 transition-transform"
+                                    className="border border-black rounded-lg bg-black text-white w-20 h-12 mr-5 hover:bg-yellow-951 hover:text-white hover:border-yellow-951 ease-in-out disabled:bg-gray-951 disabled:hover:border-gray-951 disabled:border-gray-951 duration-100 outline-none transform active:scale-75 transition-transform"
                                     disabled={allTags && allTags.length > 0 ? false : true}
                                 >
                                     Update
                                 </button>
-                                <button
-                                    className="border border-black rounded-lg bg-white text-black text-lg w-24 h-12 hover:text-white hover:bg-yellow-951 hover:border-yellow-951 ease-in-out duration-100 outline-none transform active:scale-75 transition-transform"
-                                    onClick={cancelModal}
+                                <div
+                                    className="cursor-pointer flex justify-center items-center border border-black rounded-lg bg-white text-black w-24 h-12 hover:text-white hover:bg-yellow-951 hover:border-yellow-951 ease-in-out duration-100 outline-none transform active:scale-75 transition-transform"
+                                    onClick={closeModal}
                                 >
                                     Cancel
-                                </button>
+                                </div>
                             </div>
                         </div>
                     </form>

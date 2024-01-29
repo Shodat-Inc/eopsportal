@@ -14,7 +14,8 @@ import {
     getSingleUser,
     toggleAddNewClassObjectModel,
     openCloseNewClassModalAction,
-    successMessageAction
+    successMessageAction,
+    successMessagAdvancedAction
 } from "@/store/actions/classAction";
 
 export default function AssetManagement() {
@@ -38,6 +39,11 @@ export default function AssetManagement() {
     // All class reducer states
     const allClassSelector = useSelector((state: any) => state.classReducer);
 
+    // console.log({
+    //     "TYPE":allClassSelector?.successMessageAdvancedReducer?.type,
+    //     "ACTION": allClassSelector?.successMessageAdvancedReducer?.action
+    // })
+
     // Close Success message after 5 second if true
     useEffect(() => {
         if (allClassSelector && allClassSelector.successMessageReducer === true) {
@@ -45,6 +51,17 @@ export default function AssetManagement() {
                 dispatch(successMessageAction(false))
             }, 5000)
         }
+
+        if(allClassSelector && allClassSelector.successMessageAdvancedReducer) {
+            setTimeout(() => {
+                let data = {
+                    "type":"",
+                    "action":false
+                }
+                dispatch(successMessagAdvancedAction(data))
+            }, 4000)
+        }
+        
 
     }, [allClassSelector?.successMessageReducer])
 
@@ -215,7 +232,7 @@ export default function AssetManagement() {
 
                 {/* Breadcrumb */}
                 {nav && tab === 3 ?
-                    <div className="flex relative bg-white rounded rounded-lg px-3 py-1 inline-flex border border-[#E3E3E3] mb-5">
+                    <div className="relative bg-white rounded-lg px-3 py-1 inline-flex border border-[#E3E3E3] mb-5">
                         <ul className="flex justify-start items-center text-sm">
                             <li className="flex justify-start items-center">
                                 <Link
@@ -305,7 +322,7 @@ export default function AssetManagement() {
                         tab === 1 &&
                         <div className="flex justify-start items-center">
                             <button
-                                className="rounded rounded-xl bg-black h-[44px] px-4 flex justify-center items-center text-white text-sm hover:bg-[#303030] transition-all duration-[100ms] transition-opacity duration-100 outline-none transform active:scale-75 transition-transform "
+                                className="rounded-xl bg-black h-[44px] px-4 flex justify-center items-center text-white text-sm hover:bg-[#303030] duration-100 outline-none transform active:scale-75 transition-transform "
                                 onClick={openAddClassModal}
                             >
                                 <Image
@@ -318,7 +335,7 @@ export default function AssetManagement() {
                                 <span>Add Class</span>
                             </button>
                             <button
-                                className="rounded rounded-xl bg-black h-[44px] px-4 flex justify-center items-center text-white text-sm hover:bg-[#303030] transition-all duration-[100ms] transition-opacity duration-100 outline-none transform active:scale-75 transition-transform ml-4"
+                                className="rounded-xl bg-black h-[44px] px-4 flex justify-center items-center text-white text-sm hover:bg-[#303030] duration-100 outline-none transform active:scale-75 transition-transform ml-4"
                             >
                                 <Image
                                     src="/img/download.svg"
@@ -336,7 +353,7 @@ export default function AssetManagement() {
                         tab === 4 &&
                         <div className="flex justify-start items-center">
                             <button
-                                className="rounded rounded-xl bg-black h-[44px] px-4 flex justify-center items-center text-white text-sm hover:bg-[#303030] transition-all duration-[100ms] transition-opacity duration-100 outline-none transform active:scale-75 transition-transform"
+                                className="rounded-xl bg-black h-[44px] px-4 flex justify-center items-center text-white text-sm hover:bg-[#303030] duration-100 outline-none transform active:scale-75 transition-transform"
                                 onClick={openAddSubClassModal}
                             >
                                 <Image
@@ -354,7 +371,7 @@ export default function AssetManagement() {
                     {tab === 3 &&
                         <div className="flex justify-start items-center">
                             <button
-                                className="rounded rounded-xl bg-black h-[44px] px-4 flex justify-center items-center text-white text-sm hover:bg-[#303030] transition-all duration-[100ms] transition-opacity duration-100 outline-none transform active:scale-75 transition-transform"
+                                className="rounded-xl bg-black h-[44px] px-4 flex justify-center items-center text-white text-sm hover:bg-[#303030] duration-100 outline-none transform active:scale-75 transition-transform"
                                 onClick={openAddObjectModal}
                             >
                                 <Image
@@ -373,7 +390,7 @@ export default function AssetManagement() {
                     {tab === 2 &&
                         <div className="flex justify-start items-center">
                             <button
-                                className="rounded rounded-xl bg-black h-[44px] px-4 flex justify-center items-center text-white text-sm hover:bg-[#303030] transition-all duration-[400ms] transition-opacity duration-300 outline-none transform active:scale-75 transition-transform"
+                                className="rounded-xl bg-black h-[44px] px-4 flex justify-center items-center text-white text-sm hover:bg-[#303030] duration-300 outline-none transform active:scale-75 transition-transform"
                                 onClick={openAddClassObjectModal}
                             >
                                 <Image

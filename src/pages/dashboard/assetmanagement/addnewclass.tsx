@@ -1,10 +1,11 @@
 import React, { useState, useRef, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import styles from "../../../styles/Common.module.css";
 import Image from "next/image";
 import {
   openCloseNewClassModalAction,
   successMessageAction,
+  successMessagAdvancedAction
 } from "@/store/actions/classAction";
 import axios from "axios";
 
@@ -20,7 +21,7 @@ export default function AddNewClass(props: any) {
   const [assetDataType, setAssetDataType] = useState<any[]>([]);
   const [dtObject, setDtObject] = useState<any[]>([]);
   const [allDataTypes, setAllDataTypes] = useState([] as any);
-  const [success, setSuccess] = useState(false);
+  // const [success, setSuccess] = useState(false);
   let access_token = "" as any;
   if (typeof window !== "undefined") {
     access_token = localStorage.getItem("authToken");
@@ -180,14 +181,18 @@ export default function AddNewClass(props: any) {
       })
         .then(function (response) {
           if (response) {
-            setSuccess(true);
+            // setSuccess(true);
             setAllTags([]);
             dispatch(successMessageAction(true));
+            let data={
+              "type":"newClass",
+              "action":true
+            };
+            dispatch(successMessagAdvancedAction(data))
             setTimeout(() => {
-              setSuccess(false);
-              // props.handleClick(false);
+              // setSuccess(false);
               dispatch(openCloseNewClassModalAction(false));
-            }, 1500);
+            }, 100);
           }
         })
         .catch(function (error) {
@@ -217,7 +222,7 @@ export default function AddNewClass(props: any) {
           </button>
         </div>
 
-        {success && (
+        {/* {success && (
           <div
             className={`bg-green-957 border-green-958 text-green-959 mb-1 mt-1 border text-md px-4 py-3 rounded-xl relative flex items-center justify-start`}
           >
@@ -233,7 +238,7 @@ export default function AddNewClass(props: any) {
               Class has been added successfully!
             </span>
           </div>
-        )}
+        )} */}
 
         <div
           className={`flex justify-start items-start w-full overflow-auto h-full pb-10 ${styles.scroll} pr-3`}
@@ -323,7 +328,7 @@ export default function AddNewClass(props: any) {
                     />
 
                     <button
-                      className={`duration-100 outline-none transform active:scale-75 transition-transform text-black inline-flex justify-center items-center text-lg h-8 mb-2 px-2 mt-0 rounded  font-semibold ${
+                      className={`duration-100 outline-none transform active:scale-75 transition-transform text-black inline-flex justify-center items-center text-sm h-8 mb-2 px-2 mt-0 rounded-lg  font-semibold ${
                         showHideAddTagButton ? "bg-gray-951" : "bg-yellow-951"
                       }`}
                       onClick={addTags}
@@ -332,14 +337,14 @@ export default function AddNewClass(props: any) {
                       <Image
                         src="/img/plusblack.svg"
                         alt="close"
-                        height={24}
-                        width={24}
+                        height={20}
+                        width={20}
                       />
                       <span>Add Tag</span>
                     </button>
 
                     <div
-                      className={`duration-100 outline-none transform active:scale-75 transition-transform absolute right-1 top-5 ${
+                      className={`duration-100 outline-none transform active:scale-75 transition-transform absolute right-1 top-4 ${
                         toggleDT ? "rotate-180" : "rotate-0"
                       } cursor-pointer`}
                       onClick={closeAddTags}

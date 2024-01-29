@@ -13,6 +13,7 @@ import { EDIT_OBJECT_MODEL_ERROR, EDIT_OBJECT_MODEL_SUCCESS } from "../types";
 import { EDIT_SUB_OBJECT_MODEL_ERROR, EDIT_SUB_OBJECT_MODEL_SUCCESS } from "../types";
 import { NEW_CLASS_MODEL_ERROR, NEW_CLASS_MODEL_SUCCESS } from "../types";
 import { SET_DATA_FOR_SUB_OBJECT_ERROR, SET_DATA_FOR_SUB_OBJECT_SUCCESS } from "../types";
+import { SUCCESS_MESSAGE_WITH_TYPE_ERROR, SUCCESS_MESSAGE_WITH_TYPE_SUCCESS } from "../types";
 
 const initialState = {
   selectedClass: '',
@@ -23,6 +24,10 @@ const initialState = {
   objDefaultClassSelector: '',
   objDefaultSubClassSelector: '',
   successMessageReducer: false,
+  successMessageAdvancedReducer: {
+    "type":"",
+    "action":false
+  },
   dataforeopswatchReducer: {},
   editClassModalReducer: false,
   editSubClassModalReducer: false,
@@ -120,6 +125,17 @@ const classReducer = (state = initialState, action: any) => {
     case SUCCESS_MESSAGE_ERROR:
       return {
         successMessageReducer: action.payload,
+      };
+
+    case SUCCESS_MESSAGE_WITH_TYPE_SUCCESS:
+      return {
+        ...state,
+        successMessageAdvancedReducer: action.payload,
+      };
+
+    case SUCCESS_MESSAGE_WITH_TYPE_ERROR:
+      return {
+        successMessageAdvancedReducer: action.payload,
       };
 
 

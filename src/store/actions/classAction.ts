@@ -13,6 +13,7 @@ import { EDIT_OBJECT_MODEL_ERROR, EDIT_OBJECT_MODEL_SUCCESS } from "../types";
 import { EDIT_SUB_OBJECT_MODEL_ERROR, EDIT_SUB_OBJECT_MODEL_SUCCESS } from "../types";
 import { NEW_CLASS_MODEL_ERROR, NEW_CLASS_MODEL_SUCCESS } from "../types";
 import { SET_DATA_FOR_SUB_OBJECT_ERROR, SET_DATA_FOR_SUB_OBJECT_SUCCESS } from "../types";
+import { SUCCESS_MESSAGE_WITH_TYPE_ERROR, SUCCESS_MESSAGE_WITH_TYPE_SUCCESS } from "../types";
 
 import axios from "axios";
 let access_token = "" as any;
@@ -204,6 +205,24 @@ export const successMessageAction = (action:any) => async (dispatch: any) => {
             dispatch({
                 type: SUCCESS_MESSAGE_ERROR,
                 payload: action
+            });
+        }
+    } catch (err) {
+        console.log("err in action:", err)
+    }
+};
+
+export const successMessagAdvancedAction = (data:any) => async (dispatch: any) => {
+    try {
+        if (data) {
+            dispatch({
+                type: SUCCESS_MESSAGE_WITH_TYPE_SUCCESS,
+                payload: data
+            });
+        } else {
+            dispatch({
+                type: SUCCESS_MESSAGE_WITH_TYPE_ERROR,
+                payload: "ERROR"
             });
         }
     } catch (err) {
