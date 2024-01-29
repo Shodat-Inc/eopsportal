@@ -29,7 +29,7 @@ async function search(req: any, res: any) {
         const result = await generalizedSearch(db.Enterprise, fields, values);
 
         // Check if any data was found.
-        if (result.length === 0) {
+        if (!result.length) {
             res.status(404).json({ success: false, message: "Sorry, No Data found for requested search", data: [] });
         }
 
