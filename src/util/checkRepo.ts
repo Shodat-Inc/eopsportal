@@ -1,6 +1,6 @@
 import { trainModel } from "./trainModel";
 
-export default function repoName(inputData: string) {
+export default function repoName(inputData: string, auth: any) {
   return new Promise(async (resolve, reject) => {
     try {
       let name: string = "";

@@ -11,8 +11,8 @@ async function handler(req: any, res: any) {
   }
   try {
     loggerInfo.info("Test The Model");
-    const data = req.body;
-    const importRepo: any = await repoName(data.modelName);
+    const data = { body: req.body, userId: req.auth.sub };
+    const importRepo: any = await repoName(data.body.modelName, req.auth);
     const result = await importRepo.default(data);
     return res.status(200).json(result);
   } catch (error) {

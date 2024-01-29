@@ -168,8 +168,6 @@ async function relationship(db: any) {
     db.Image.belongsTo(db.ModelData, { foreignKey: "modelDataId" });
     db.ModelData.hasMany(db.Image, { foreignKey: "modelDataId" });
 
-    db.ModelData.hasMany(db.RaisedAlert, { foreignKey: "modelDataId" });
-    db.RaisedAlert.belongsTo(db.ModelData, { foreignKey: "modelDataId" });
 
     db.object.hasMany(db.RaisedAlert, { foreignKey: "objectId" });
     db.RaisedAlert.belongsTo(db.object, { foreignKey: "objectId" });
@@ -188,6 +186,13 @@ async function relationship(db: any) {
 
     db.AddClasses.hasMany(db.RaisedAlert, { foreignKey: "classId" })
     db.RaisedAlert.belongsTo(db.AddClasses, { foreignKey: "classId" })
+
+    db.Image.hasMany(db.Alert, { foreignKey: "modelObjectImageId" })
+    db.Alert.belongsTo(db.Image, { foreignKey: "modelObjectImageId" })
+
+    db.User.hasMany(db.Alert, { foreignKey: "userId" })
+    db.Alert.belongsTo(db.User, { foreignKey: "userId" })
+
     resolve("Imported");
   });
 }

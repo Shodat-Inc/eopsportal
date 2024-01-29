@@ -37,22 +37,22 @@ async function get(params: any) {
             id: Sequelize.col('RaisedAlert.modelObjectImageId')
           },
         },
-        {
-          model: db.ModelData,
-          attributes: ['objectValueId'],
-          where: {
-            id: Sequelize.col('RaisedAlert.modelDataId')
-          },
-          include: [
-            {
-              model: db.AddValues,
-              attributes: ['values'],
-              where: {
-                id: Sequelize.col('ModelDatum.ObjectValue.id')
-              },
-            },
-          ],
-        },
+        // {
+        //   model: db.ModelData,
+        //   attributes: ['objectValueId'],
+        //   where: {
+        //     id: Sequelize.col('RaisedAlert.modelDataId')
+        //   },
+        //   include: [
+        //     {
+        //       model: db.AddValues,
+        //       attributes: ['values'],
+        //       where: {
+        //         id: Sequelize.col('ModelDatum.ObjectValue.id')
+        //       },
+        //     },
+        //   ],
+        // },
       ],
     });
 
