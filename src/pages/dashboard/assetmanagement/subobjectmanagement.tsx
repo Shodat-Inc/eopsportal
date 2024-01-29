@@ -10,7 +10,7 @@ import { objDefaultSubClassSelectorFunction } from '@/store/actions/classAction'
 import { successMessageAction, setClassBreadcrumb, setDataForeOpsWatchAction } from '@/store/actions/classAction';
 import { setTimeout } from 'timers';
 import EditSubObject from './editsubobject';
-import { editSubObjectModalAction } from '@/store/actions/classAction';
+import { editSubObjectModalAction, successMessagAdvancedAction } from '@/store/actions/classAction';
 
 export default function SubObjectManagement(props: any) {
 
@@ -39,6 +39,7 @@ export default function SubObjectManagement(props: any) {
     // All class reducer states
     const classSelector = useSelector((state: any) => state.classReducer);
     const addNewObject = useSelector((state: any) => state.classReducer);
+    const allClassSelector = useSelector((state: any) => state.classReducer);
 
     const toggleFilterFunction = () => {
         setToggleArrow(!toggleArrow);
@@ -90,6 +91,17 @@ export default function SubObjectManagement(props: any) {
             setTimeout(() => {
                 dispatch(successMessageAction(false))
             }, 5000)
+
+            if (classSelector && classSelector.successMessageAdvancedReducer) {
+                setTimeout(() => {
+                    let data = {
+                        "type": "",
+                        "action": false
+                    }
+                    dispatch(successMessagAdvancedAction(data))
+                }, 4000)
+            }
+
         }
     }, [classSelector.successMessageReducer])
 
@@ -244,11 +256,18 @@ export default function SubObjectManagement(props: any) {
                     "Content-Type": "application/json"
                 }
             }).then(function (response) {
-                setDeleteMessage(true);
                 dispatch(successMessageAction(true))
-                setTimeout(() => {
-                    setDeleteMessage(false)
-                }, 2000)
+
+                let data = {
+                    "type": "deleteSubObject",
+                    "action": true
+                };
+                dispatch(successMessagAdvancedAction(data))
+
+                // setDeleteMessage(true);
+                // setTimeout(() => {
+                //     setDeleteMessage(false)
+                // }, 2000)
             }).catch(function (error) {
                 console.log({
                     "ERROR IN AXIOS CATCH (DELETE)": error
@@ -288,7 +307,7 @@ export default function SubObjectManagement(props: any) {
                         </div>
 
                         {toggleAsset ?
-                            <div className={`h-52 border rounded-xl border-gray-969 h-auto max-h-[250px] w-[400px]  absolute flex items-start justify-start mt-1 overflow-hidden overflow-y-auto bg-white ${styles.scroll} z-10`}>
+                            <div className={`h-52 border rounded-xl border-gray-969 max-h-[250px] w-[400px]  absolute flex items-start justify-start mt-1 overflow-hidden overflow-y-auto bg-white ${styles.scroll} z-10`}>
                                 <ul className="p-0 m-0 w-full">
                                     {
                                         subClassData.map((item: any, index: any) => (
@@ -332,7 +351,7 @@ export default function SubObjectManagement(props: any) {
                     </div>
                     <div className="relative ml-3">
                         <button
-                            className={`bg-white border  rounded-xl h-[44px] transition-all duration-[400ms] h-[44px] rounded rounded-lg px-2 py-2 flex items-center justify-start ${toggleFilter === true ? 'border-black' : 'border-gray-969'}`}
+                            className={`bg-white border  transition-all duration-[400ms] h-[44px] rounded-lg px-2 py-2 flex items-center justify-start ${toggleFilter === true ? 'border-black' : 'border-gray-969'}`}
                             onClick={toggleFilterFunction}
                         >
                             <Image
@@ -354,11 +373,11 @@ export default function SubObjectManagement(props: any) {
                 </div>
             </div>
 
-            {/* Response Messages */}
+            {/* Messages for Add Class */}
             {
-                classSelector.successMessageReducer === true &&
+                (allClassSelector?.successMessageAdvancedReducer?.action === true && allClassSelector?.successMessageAdvancedReducer?.type === "newSubObject") &&
 
-                <div className={`bg-green-957 border-green-958 text-green-959 mb-1 mt-1 border text-md px-4 py-3 rounded rounded-xl relative flex items-center justify-start mx-4`}>
+                <div className={`bg-green-957 border-green-958 text-green-959 mb-1 mt-1 border text-md px-4 py-3 rounded-xl relative flex items-center justify-start mx-4`}>
                     <Image
                         src="/img/AlertSuccess.svg"
                         alt="Alert Success"
@@ -367,16 +386,15 @@ export default function SubObjectManagement(props: any) {
                         className='mr-2'
                     />
                     <strong className="font-semibold">Success</strong>
-                    <span className="block sm:inline ml-2">Sub Object stored successfully!</span>
+                    <span className="block sm:inline ml-2">Sub Object added successfully!</span>
                 </div>
             }
 
-
-
-            {/* Success / Error Message */}
+            {/* Message for DeleteClass */}
             <div className='flex justify-start items-center px-4 w-full'>
-                {deleteMessage &&
-                    <div className={`bg-blue-957 border-blue-958 text-blue-959 mb-1 mt-1 border text-md px-4 py-3 rounded rounded-xl relative flex items-center justify-start w-full`}>
+                {
+                    (allClassSelector?.successMessageAdvancedReducer?.action === true && allClassSelector?.successMessageAdvancedReducer?.type === "deleteSubObject") &&
+                    <div className={`bg-blue-957 border-blue-958 text-blue-959 mb-1 mt-1 border text-md px-4 py-3  rounded-xl relative flex items-center justify-start w-full`}>
                         <Image
                             src="/img/AlertInfo.svg"
                             alt="Alert Success"
@@ -385,7 +403,25 @@ export default function SubObjectManagement(props: any) {
                             className='mr-2'
                         />
                         <strong className="font-semibold">Success</strong>
-                        <span className="block sm:inline ml-2">Sub Object deleted successfully!</span>
+                        <span className="block sm:inline ml-2">Sub Object is deleted successfully!</span>
+                    </div>
+                }
+            </div>
+
+            {/* Message for Edit Class */}
+            <div className='flex justify-start items-center px-4 w-full'>
+                {
+                    (allClassSelector?.successMessageAdvancedReducer?.action === true && allClassSelector?.successMessageAdvancedReducer?.type === "editSubObject") &&
+                    <div className={`bg-blue-957 border-blue-958 text-blue-959 mb-1 mt-1 border text-md px-4 py-3  rounded-xl relative flex items-center justify-start w-full`}>
+                        <Image
+                            src="/img/AlertInfo.svg"
+                            alt="Alert Success"
+                            height={24}
+                            width={24}
+                            className='mr-2'
+                        />
+                        <strong className="font-semibold">Success</strong>
+                        <span className="block sm:inline ml-2">Sub Object updated successfully!</span>
                     </div>
                 }
             </div>
@@ -453,7 +489,7 @@ export default function SubObjectManagement(props: any) {
                                                             </button>
                                                     }
                                                     {(actions && actionCount === index + 1) &&
-                                                        <div ref={wrapperRef} className="bg-black text-white border overflow-hidden border-black rounded rounded-lg w-[200px] flex flex-col flex-wrap items-start justify-start shadow-sm absolute top-[100%] right-[calc(100%-15px)] z-[1]">
+                                                        <div ref={wrapperRef} className="bg-black text-white border overflow-hidden border-black rounded-lg w-[200px] flex flex-col flex-wrap items-start justify-start shadow-sm absolute top-[100%] right-[calc(100%-15px)] z-[1]">
                                                             <button
                                                                 onClick={() => editSubObjectFunction(items?.id)}
                                                                 className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">

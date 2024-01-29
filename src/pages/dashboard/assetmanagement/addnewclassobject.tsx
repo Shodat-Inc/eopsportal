@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import styles from '../../../styles/Common.module.css';
 import Image from "next/image";
 import { toggleAddNewClassObjectModel } from "@/store/actions/classAction";
-import { successMessageAction } from '@/store/actions/classAction';
+import { successMessageAction, successMessagAdvancedAction } from '@/store/actions/classAction';
 import axios from "axios";
 
 export default function AddNewClassObject(props: any) {
@@ -78,6 +78,13 @@ export default function AddNewClassObject(props: any) {
                 if (response) {
                     setSuccess(true);
                     dispatch(successMessageAction(true))
+
+                    let data = {
+                        "type": "editObject",
+                        "action": true
+                    };
+                    dispatch(successMessagAdvancedAction(data))
+
                     setTimeout(() => {
                         setSuccess(false);
                         dispatch(toggleAddNewClassObjectModel(false));
@@ -106,7 +113,7 @@ export default function AddNewClassObject(props: any) {
 
     return (
         <>
-            <div className={`bg-white h-full z-[11] fixed top-0 right-0 p-5 shadow shadow-lg ${props.show === true ? `${styles.objectContainer} ${styles.sliderShow}` : `${styles.objectContainer}`}`}>
+            <div className={`bg-white h-full z-[11] fixed top-0 right-0 p-5 shadow-lg ${props.show === true ? `${styles.objectContainer} ${styles.sliderShow}` : `${styles.objectContainer}`}`}>
                 <div className="flex justify-between items-center w-full mb-3">
                     <h2 className="font-semibold text-lg">Add New Object (<span className="text-sm text-gray-800">{showClassNameFromID(props.selectedParentClass)}</span>)</h2>
                     <button onClick={closeModel}>
@@ -121,7 +128,7 @@ export default function AddNewClassObject(props: any) {
 
                 {
                     success &&
-                    <div className={`bg-green-957 border-green-958 text-green-959 mb-1 mt-1 border text-md px-4 py-3 rounded rounded-xl relative flex items-center justify-start`}>
+                    <div className={`bg-green-957 border-green-958 text-green-959 mb-1 mt-1 border text-md px-4 py-3 rounded-xl relative flex items-center justify-start`}>
                         <Image
                             src="/img/AlertSuccess.svg"
                             alt="Alert Success"
@@ -144,7 +151,7 @@ export default function AddNewClassObject(props: any) {
                             classData && classData.length != 0 ?
                                 classData?.map((item: any, index: any) => (
                                     <div key={index} className="w-full flex justify-start items-start flex-wrap flex-col">
-                                        <div className={`mb-5 lg:w-full small:w-full small:w-full ${styles.form__wrap}`}>
+                                        <div className={`mb-5 lg:w-full small:w-full ${styles.form__wrap}`}>
                                             <div className={`relative ${styles.form__group} font-OpenSans`}>
                                                 <input
                                                     type="text"

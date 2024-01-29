@@ -87,10 +87,7 @@ export default function EditClass(props: any) {
         setNewlyAddedTag([]);
         dispatch(editClassModalAction(false));
     };
-    // const cancelModal = () => {
-    //     dispatch(editClassModalAction(false));
-    //     setAllTags([]);
-    // };
+
 
     // Adding New Tags
     const addTags = () => {

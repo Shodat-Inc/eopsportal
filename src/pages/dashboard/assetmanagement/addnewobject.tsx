@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import styles from '../../../styles/Common.module.css';
 import Image from "next/image";
 import { toggleAddNewObjectModel } from "@/store/actions/classAction";
-import { successMessageAction } from '@/store/actions/classAction';
+import { successMessageAction, successMessagAdvancedAction } from '@/store/actions/classAction';
 import axios from 'axios';
 
 export default function AddNewObject(props: any) {
@@ -78,6 +78,11 @@ export default function AddNewObject(props: any) {
                 if (response) {
                     setSuccess(true);
                     dispatch(successMessageAction(true))
+                    let data = {
+                        "type": "newSubObject",
+                        "action": true
+                    };
+                    dispatch(successMessagAdvancedAction(data))
                     setTimeout(() => {
                         setSuccess(false);
                         dispatch(toggleAddNewObjectModel(false));
@@ -93,10 +98,10 @@ export default function AddNewObject(props: any) {
 
     return (
         <>
-            <div className={`bg-white h-full z-[11] fixed top-0 right-0 p-5 shadow shadow-lg ${props.show === true ? `${styles.objectContainer} ${styles.sliderShow}` : `${styles.objectContainer}`}`}>
+            <div className={`bg-white h-full z-[11] fixed top-0 right-0 p-5 shadow-lg ${props.show === true ? `${styles.objectContainer} ${styles.sliderShow}` : `${styles.objectContainer}`}`}>
                 <div className="flex justify-between items-center w-full mb-3">
                     <h2 className="font-semibold text-lg">Add New Object (<span className="text-sm text-gray-800">{props.subClassName}</span>)</h2>
-                    <button onClick={closeModel} className="transition-all duration-[100ms] transition-opacity duration-100 outline-none transform active:scale-75 transition-transform">
+                    <button onClick={closeModel} className="duration-100 outline-none transform active:scale-75 transition-transform">
                         <Image
                             src="/img/x.svg"
                             alt="close"
@@ -118,7 +123,7 @@ export default function AddNewObject(props: any) {
                             selectedObjectData && selectedObjectData.length != 0 ?
                                 selectedObjectData.map((item: any, index: any) => (
                                     <div key={index} className="w-full flex justify-start items-start flex-wrap flex-col">
-                                        <div className={`mb-5 lg:w-full small:w-full small:w-full ${styles.form__wrap}`}>
+                                        <div className={`mb-5 lg:w-full small:w-full ${styles.form__wrap}`}>
                                             <div className={`relative ${styles.form__group} font-OpenSans`}>
                                                 <input
                                                     type="text"
@@ -152,13 +157,13 @@ export default function AddNewObject(props: any) {
 
                         <div className="relative flex justify-end items-center w-full">
                             <button
-                                className="transition-all duration-[100ms] transition-opacity duration-100 outline-none transform active:scale-75 transition-transform border border-black rounded-lg bg-black text-white text-lg w-20 h-12 mr-5 hover:bg-yellow-951 hover:text-white hover:border-yellow-951 ease-in-out duration-300 disabled:bg-gray-951 disabled:hover:border-gray-951 disabled:border-gray-951"
+                                className="outline-none transform active:scale-75 transition-transform border border-black rounded-lg bg-black text-white text-lg w-20 h-12 mr-5 hover:bg-yellow-951 hover:text-white hover:border-yellow-951 ease-in-out duration-300 disabled:bg-gray-951 disabled:hover:border-gray-951 disabled:border-gray-951"
                             >
                                 <span>Save</span>
                             </button>
                             <button
                                 onClick={closeModel}
-                                className="transition-all duration-[100ms] transition-opacity duration-100 outline-none transform active:scale-75 transition-transform border border-black rounded-lg bg-white text-black text-lg w-24 h-12 hover:text-white hover:bg-yellow-951 hover:border-yellow-951 ease-in-out duration-300"
+                                className=" outline-none transform active:scale-75 transition-transform border border-black rounded-lg bg-white text-black text-lg w-24 h-12 hover:text-white hover:bg-yellow-951 hover:border-yellow-951 ease-in-out duration-300"
                             >
                                 <span>Cancel</span>
                             </button>

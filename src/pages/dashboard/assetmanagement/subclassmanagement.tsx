@@ -7,7 +7,11 @@ import AddNewSubClass from './addnewsubclass';
 import axios from 'axios';
 import moment from 'moment';
 import EditSubClass from './editsubclass';
-import { editSubClassModalAction, successMessageAction } from '@/store/actions/classAction';
+import {
+    editSubClassModalAction,
+    successMessageAction,
+    successMessagAdvancedAction
+} from '@/store/actions/classAction';
 
 export default function SubClassManagement(props: any) {
     const dispatch = useDispatch<any>();
@@ -38,6 +42,16 @@ export default function SubClassManagement(props: any) {
             setTimeout(() => {
                 dispatch(successMessageAction(false))
             }, 5000)
+        }
+
+        if(allClassSelector && allClassSelector.successMessageAdvancedReducer) {
+            setTimeout(() => {
+                let data = {
+                    "type":"",
+                    "action":false
+                }
+                dispatch(successMessagAdvancedAction(data))
+            }, 4000)
         }
 
     }, [allClassSelector?.successMessageReducer])
@@ -160,10 +174,15 @@ export default function SubClassManagement(props: any) {
                 }
             }).then(function (response) {
                 dispatch(successMessageAction(true))
-                setDeleteMessage(true);
-                setTimeout(() => {
-                    setDeleteMessage(false)
-                }, 2000)
+                let data = {
+                    "type": "deleteSubClass",
+                    "action": true
+                };
+                dispatch(successMessagAdvancedAction(data))
+                // setDeleteMessage(true);
+                // setTimeout(() => {
+                //     setDeleteMessage(false)
+                // }, 2000)
             }).catch(function (error) {
                 console.log({
                     "ERROR IN AXIOS CATCH (DELETE)": error
@@ -223,7 +242,7 @@ export default function SubClassManagement(props: any) {
                     </div>
                     <div className="relative ml-3">
                         <button
-                            className={`bg-white border  rounded-xl h-[44px] transition-all duration-[400ms] h-[44px] rounded rounded-lg px-2 py-2 flex items-center justify-start ${toggleFilter === true ? 'border-black' : 'border-gray-969'}`}
+                            className={`bg-white border transition-all duration-[400ms] h-[44px] rounded-lg px-2 py-2 flex items-center justify-start ${toggleFilter === true ? 'border-black' : 'border-gray-969'}`}
                             onClick={toggleFilterFunction}
                         >
                             <Image
@@ -246,11 +265,11 @@ export default function SubClassManagement(props: any) {
             </div>
 
 
-            {/* Response Messages */}
+            {/* Messages for Add Class */}
             {
-                allClassSelector?.successMessageReducer === true &&
+                (allClassSelector?.successMessageAdvancedReducer?.action === true && allClassSelector?.successMessageAdvancedReducer?.type === "newSubClass") &&
 
-                <div className={`bg-green-957 border-green-958 text-green-959 mb-1 mt-1 border text-md px-4 py-3 rounded rounded-xl relative flex items-center justify-start mx-4`}>
+                <div className={`bg-green-957 border-green-958 text-green-959 mb-1 mt-1 border text-md px-4 py-3 rounded-xl relative flex items-center justify-start mx-4`}>
                     <Image
                         src="/img/AlertSuccess.svg"
                         alt="Alert Success"
@@ -259,14 +278,15 @@ export default function SubClassManagement(props: any) {
                         className='mr-2'
                     />
                     <strong className="font-semibold">Success</strong>
-                    <span className="block sm:inline ml-2">Sub Class stored successfully!</span>
+                    <span className="block sm:inline ml-2">Sub Class added successfully!</span>
                 </div>
             }
-            
-            {/* Success / Error Message */}
+
+            {/* Message for DeleteClass */}
             <div className='flex justify-start items-center px-4 w-full'>
-                {deleteMessage &&
-                    <div className={`bg-blue-957 border-blue-958 text-blue-959 mb-1 mt-1 border text-md px-4 py-3 rounded rounded-xl relative flex items-center justify-start  w-full`}>
+                {
+                    (allClassSelector?.successMessageAdvancedReducer?.action === true && allClassSelector?.successMessageAdvancedReducer?.type === "deleteSubClass") &&
+                    <div className={`bg-blue-957 border-blue-958 text-blue-959 mb-1 mt-1 border text-md px-4 py-3  rounded-xl relative flex items-center justify-start w-full`}>
                         <Image
                             src="/img/AlertInfo.svg"
                             alt="Alert Success"
@@ -276,6 +296,24 @@ export default function SubClassManagement(props: any) {
                         />
                         <strong className="font-semibold">Success</strong>
                         <span className="block sm:inline ml-2">Sub Class deleted successfully!</span>
+                    </div>
+                }
+            </div>
+
+            {/* Message for Edit Class */}
+            <div className='flex justify-start items-center px-4 w-full'>
+                {
+                    (allClassSelector?.successMessageAdvancedReducer?.action === true && allClassSelector?.successMessageAdvancedReducer?.type === "editSubClass") &&
+                    <div className={`bg-blue-957 border-blue-958 text-blue-959 mb-1 mt-1 border text-md px-4 py-3  rounded-xl relative flex items-center justify-start w-full`}>
+                        <Image
+                            src="/img/AlertInfo.svg"
+                            alt="Alert Success"
+                            height={24}
+                            width={24}
+                            className='mr-2'
+                        />
+                        <strong className="font-semibold">Success</strong>
+                        <span className="block sm:inline ml-2">Sub Class updated successfully!</span>
                     </div>
                 }
             </div>
@@ -354,7 +392,7 @@ export default function SubClassManagement(props: any) {
                                                         </button>
                                                 }
                                                 {(actions && actionCount === index + 1) &&
-                                                    <div ref={wrapperRef} className="bg-black text-white border overflow-hidden border-black rounded rounded-xl w-[100px] flex flex-col flex-wrap items-start justify-start shadow-sm absolute  top-[100%] right-[calc(100%-15px)] z-[1]">
+                                                    <div ref={wrapperRef} className="bg-black text-white border overflow-hidden border-black rounded-xl w-[100px] flex flex-col flex-wrap items-start justify-start shadow-sm absolute  top-[100%] right-[calc(100%-15px)] z-[1]">
                                                         <button
                                                             onClick={() => openEditSubClassModal(item.id)}
                                                             className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[30px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">

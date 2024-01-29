@@ -8,7 +8,7 @@ import { setClassBreadcrumb, objDefaultClassSelectorFunction } from '@/store/act
 import AddNewClassObject from './addnewclassobject';
 import { successMessageAction } from '@/store/actions/classAction';
 import { editObjectModalAction } from '@/store/actions/classAction';
-import { setDataForSubObjectCompAction } from '@/store/actions/classAction';
+import { setDataForSubObjectCompAction, successMessagAdvancedAction } from '@/store/actions/classAction';
 import EditObject from './editobject';
 
 export default function ObjectManagement(props: any) {
@@ -36,6 +36,7 @@ export default function ObjectManagement(props: any) {
 
     // All class reducer states
     const classSelector = useSelector((state: any) => state.classReducer);
+    const allClassSelector = useSelector((state: any) => state.classReducer);
 
     // Close Success message after 5 second if true
     useEffect(() => {
@@ -43,6 +44,16 @@ export default function ObjectManagement(props: any) {
             setTimeout(() => {
                 dispatch(successMessageAction(false))
             }, 5000)
+        }
+
+        if (classSelector && classSelector.successMessageAdvancedReducer) {
+            setTimeout(() => {
+                let data = {
+                    "type": "",
+                    "action": false
+                }
+                dispatch(successMessagAdvancedAction(data))
+            }, 4000)
         }
 
     }, [classSelector])
@@ -83,7 +94,7 @@ export default function ObjectManagement(props: any) {
             setActionsToggle(false);
         }, 1000)
     }
-    const takeMeToSubObjectComponent = (item: any, objID:any) => {
+    const takeMeToSubObjectComponent = (item: any, objID: any) => {
         let classObjKey = chooseAsset === 1 ? 'PlantID' : 'VIN';
         let abc = {
             "flow": "Object Management",
@@ -100,8 +111,8 @@ export default function ObjectManagement(props: any) {
 
         // send parent class and selected object ID to sub object component
         let dataForSubObj = {
-            "parentClass":chooseAsset,
-            "objectID":item
+            "parentClass": chooseAsset,
+            "objectID": item
         }
         dispatch(setDataForSubObjectCompAction(dataForSubObj))
     }
@@ -221,11 +232,16 @@ export default function ObjectManagement(props: any) {
                     "Content-Type": "application/json"
                 }
             }).then(function (response) {
-                setDeleteMessage(true);
                 dispatch(successMessageAction(true))
-                setTimeout(() => {
-                    setDeleteMessage(false)
-                }, 2000)
+                let data = {
+                    "type": "deleteObject",
+                    "action": true
+                };
+                dispatch(successMessagAdvancedAction(data))
+                // setDeleteMessage(true);
+                // setTimeout(() => {
+                //     setDeleteMessage(false)
+                // }, 2000)
             }).catch(function (error) {
                 console.log({
                     "ERROR IN AXIOS CATCH (DELETE)": error
@@ -327,9 +343,9 @@ export default function ObjectManagement(props: any) {
             </div>
 
 
-            {/* Response Messages */}
+            {/* Messages for Add Class */}
             {
-                classSelector.successMessageReducer === true &&
+                (allClassSelector?.successMessageAdvancedReducer?.action === true && allClassSelector?.successMessageAdvancedReducer?.type === "newObject") &&
 
                 <div className={`bg-green-957 border-green-958 text-green-959 mb-1 mt-1 border text-md px-4 py-3 rounded-xl relative flex items-center justify-start mx-4`}>
                     <Image
@@ -340,15 +356,15 @@ export default function ObjectManagement(props: any) {
                         className='mr-2'
                     />
                     <strong className="font-semibold">Success</strong>
-                    <span className="block sm:inline ml-2">Object stored successfully!</span>
+                    <span className="block sm:inline ml-2">New Object added successfully!</span>
                 </div>
             }
 
-
-            {/* Success / Error Message */}
+            {/* Message for DeleteClass */}
             <div className='flex justify-start items-center px-4 w-full'>
-                {deleteMessage &&
-                    <div className={`bg-blue-957 border-blue-958 text-blue-959 mb-1 mt-1 border text-md px-4 py-3 rounded-xl relative flex items-center justify-start w-full`}>
+                {
+                    (allClassSelector?.successMessageAdvancedReducer?.action === true && allClassSelector?.successMessageAdvancedReducer?.type === "deleteObject") &&
+                    <div className={`bg-blue-957 border-blue-958 text-blue-959 mb-1 mt-1 border text-md px-4 py-3  rounded-xl relative flex items-center justify-start w-full`}>
                         <Image
                             src="/img/AlertInfo.svg"
                             alt="Alert Success"
@@ -358,6 +374,24 @@ export default function ObjectManagement(props: any) {
                         />
                         <strong className="font-semibold">Success</strong>
                         <span className="block sm:inline ml-2">Object deleted successfully!</span>
+                    </div>
+                }
+            </div>
+
+            {/* Message for Edit Class */}
+            <div className='flex justify-start items-center px-4 w-full'>
+                {
+                    (allClassSelector?.successMessageAdvancedReducer?.action === true && allClassSelector?.successMessageAdvancedReducer?.type === "editObject") &&
+                    <div className={`bg-blue-957 border-blue-958 text-blue-959 mb-1 mt-1 border text-md px-4 py-3  rounded-xl relative flex items-center justify-start w-full`}>
+                        <Image
+                            src="/img/AlertInfo.svg"
+                            alt="Alert Success"
+                            height={24}
+                            width={24}
+                            className='mr-2'
+                        />
+                        <strong className="font-semibold">Success</strong>
+                        <span className="block sm:inline ml-2">Object updated successfully!</span>
                     </div>
                 }
             </div>
@@ -374,7 +408,6 @@ export default function ObjectManagement(props: any) {
                                         tableHeader.map((item: any, i: any) => (
                                             <th className="capitalize" key={i}>
                                                 {
-                                                    // item?.tagName.split(/(?=[A-Z])/).join(" ")
                                                     item?.tagName
                                                 }
                                             </th>
@@ -389,7 +422,7 @@ export default function ObjectManagement(props: any) {
                                 objectData && objectData.length > 0 ?
                                     objectData.map((items: any, index: any) => (
                                         <tr key={index}>
-                                            <td>{index + 1} {items?.id}</td>
+                                            <td>{index + 1} <span className='hidden'>{items?.id}</span></td>
                                             {
                                                 items?.ObjectValues?.map((item: any, i: any) => (
                                                     <td key={i}>
@@ -403,7 +436,7 @@ export default function ObjectManagement(props: any) {
                                             }
                                             <td>
                                                 <div className="flex justify-start items-center relative">
-                                                {
+                                                    {
                                                         !actionsToggle ?
                                                             <button
                                                                 className='flex justify-start items-center h-[35px] w-[35px]'

@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import styles from '../../../styles/Common.module.css';
 import Image from "next/image";
 import { editObjectModalAction } from '@/store/actions/classAction';
-import { successMessageAction } from "@/store/actions/classAction";
+import { successMessageAction, successMessagAdvancedAction } from "@/store/actions/classAction";
 import axios from "axios";
 
 export default function EditObject(props: any) {
@@ -119,10 +119,17 @@ export default function EditObject(props: any) {
                 }
             }).then(function (response) {
                 if (response) {
-                    setSuccess(true);
+                    // setSuccess(true);
                     dispatch(successMessageAction(true))
+
+                    let data = {
+                        "type": "editObject",
+                        "action": true
+                    };
+                    dispatch(successMessagAdvancedAction(data))
+
                     setTimeout(() => {
-                        setSuccess(false);
+                        // setSuccess(false);
                         dispatch(editObjectModalAction(false));
                     }, 50);
                 }
@@ -159,7 +166,7 @@ export default function EditObject(props: any) {
                 </div>
 
 
-                {success &&
+                {/* {success &&
                     <div className={`bg-green-957 border-green-958 text-green-959 mb-1 mt-1 border text-md px-4 py-3 rounded-xl relative flex items-center justify-start`}>
                         <Image
                             src="/img/AlertSuccess.svg"
@@ -171,7 +178,7 @@ export default function EditObject(props: any) {
                         <strong className="font-semibold">Success</strong>
                         <span className="block sm:inline ml-2">Object has been added successfully!</span>
                     </div>
-                }
+                } */}
 
                 <div className={`flex justify-start items-start w-full overflow-auto h-full pb-10 ${styles.scroll} pr-3`}>
 
@@ -218,12 +225,12 @@ export default function EditObject(props: any) {
                             >
                                 <span>Update</span>
                             </button>
-                            <button
+                            <div
                                 onClick={closeModel}
-                                className=" outline-none transform active:scale-75 transition-transform border border-black rounded-lg bg-white text-black text-lg w-24 h-12 hover:text-white hover:bg-yellow-951 hover:border-yellow-951 ease-in-out duration-300"
+                                className="flex justify-center items-center outline-none transform active:scale-75 transition-transform border border-black rounded-lg bg-white text-black text-lg w-24 h-12 hover:text-white hover:bg-yellow-951 hover:border-yellow-951 ease-in-out duration-300"
                             >
                                 <span>Cancel</span>
-                            </button>
+                            </div>
                         </div>
 
                     </form>

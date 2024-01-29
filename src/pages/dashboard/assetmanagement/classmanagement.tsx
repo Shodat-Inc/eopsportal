@@ -107,14 +107,7 @@ export default function ClassManagement(props: any) {
             setActionsToggle(false);
         }, 1000)
     }
-    // const handleClick = (item: any) => {
-    //     setShowModal(false);
-    //     props.handleaddClassModal(item);
-    // }
-
-    // const handleClickForEditClass = (item: any) => {
-    //     setShowEditClassModal(false)
-    // }
+    
 
     const deleteModalFunction = (id: any) => {
         setDeleteID(id);
@@ -263,7 +256,7 @@ export default function ClassManagement(props: any) {
                         className='mr-2'
                     />
                     <strong className="font-semibold">Success</strong>
-                    <span className="block sm:inline ml-2">Class stored successfully!</span>
+                    <span className="block sm:inline ml-2">New Class added successfully!</span>
                 </div>
             }
 
@@ -280,7 +273,7 @@ export default function ClassManagement(props: any) {
                             className='mr-2'
                         />
                         <strong className="font-semibold">Success</strong>
-                        <span className="block sm:inline ml-2">Class has been deleted successfully!</span>
+                        <span className="block sm:inline ml-2">Class deleted successfully!</span>
                     </div>
                 }
             </div>
@@ -298,7 +291,7 @@ export default function ClassManagement(props: any) {
                             className='mr-2'
                         />
                         <strong className="font-semibold">Success</strong>
-                        <span className="block sm:inline ml-2">Class has been updated successfully!</span>
+                        <span className="block sm:inline ml-2">Class updated successfully!</span>
                     </div>
                 }
             </div>

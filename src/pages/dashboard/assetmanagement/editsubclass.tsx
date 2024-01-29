@@ -3,7 +3,11 @@ import { useDispatch } from 'react-redux';
 import styles from '../../../styles/Common.module.css';
 import Image from "next/image";
 import axios from "axios";
-import { editSubClassModalAction, successMessageAction } from '@/store/actions/classAction';
+import { 
+    editSubClassModalAction, 
+    successMessageAction, 
+    successMessagAdvancedAction 
+} from '@/store/actions/classAction';
 
 export default function EditSubClass(props: any) {
 
@@ -90,6 +94,7 @@ export default function EditSubClass(props: any) {
         setDataType("");
         setAllTags([]);
         setNewTag("");
+        setNewlyAddedTag([]);
     }
     const cancelModal = () => {
         dispatch(editSubClassModalAction(false));
@@ -228,8 +233,16 @@ export default function EditSubClass(props: any) {
             }).then(function (response) {
                 if (response) {
                     setAllTags([]);
+                    setAllTags([]);
+                    setNewlyAddedTag([]);
+                    setDtObject([]);
                     dispatch(editSubClassModalAction(false));
                     dispatch(successMessageAction(true))
+                    let data = {
+                        "type": "editSubClass",
+                        "action": true
+                    };
+                    dispatch(successMessagAdvancedAction(data))
                 }
             }).catch(function (error) {
                 console.log("ERROR IN AXIOS CATCH (CREATE CLASS):", error)
@@ -301,8 +314,8 @@ export default function EditSubClass(props: any) {
                                                             key={index}
                                                             className="rounded-lg inline-flex justify-center items-center h-8 pl-2 pr-2 bg-[#F2F1F1] text-black text-[14px] mr-2 mb-2">
                                                             {items.tagName}
-                                                            <button
-                                                                className="duration-100 outline-none transform active:scale-75 transition-transform rounded-full border-2 border-white h-[24px] w-[24px] inline-flex justify-center items-center ml-3"
+                                                            <span
+                                                                className="duration-100 outline-none transform active:scale-75 transition-transform rounded-full border-2 border-white h-[24px] w-[24px] inline-flex justify-center items-center ml-3 cursor-pointer"
                                                                 onClick={() => removeElement(items.id)}
                                                             >
                                                                 <Image
@@ -311,7 +324,7 @@ export default function EditSubClass(props: any) {
                                                                     height={24}
                                                                     width={24}
                                                                 />
-                                                            </button>
+                                                            </span>
                                                         </span>
                                                     )) : null
                                             }
@@ -322,8 +335,8 @@ export default function EditSubClass(props: any) {
                                                             key={index}
                                                             className="rounded-lg inline-flex justify-center items-center h-8 pl-2 pr-2 bg-[#F2F1F1] text-black text-[14px] mr-2 mb-2">
                                                             {items}
-                                                            <button
-                                                                className="rounded-full border-2 border-white h-[24px] w-[24px] inline-flex justify-center items-center ml-3 duration-100 outline-none transform active:scale-75 transition-transform"
+                                                            <span
+                                                                className="rounded-full border-2 border-white h-[24px] w-[24px] inline-flex justify-center items-center ml-3 duration-100 outline-none transform active:scale-75 transition-transform cursor-pointer"
                                                                 onClick={() => removeElement(items)}
                                                             >
                                                                 <Image
@@ -332,7 +345,7 @@ export default function EditSubClass(props: any) {
                                                                     height={24}
                                                                     width={24}
                                                                 />
-                                                            </button>
+                                                            </span>
                                                         </span>
                                                     ))
                                                     : null
@@ -483,7 +496,6 @@ export default function EditSubClass(props: any) {
                                             // onChange={handleJoinKey}
                                             // multiple
                                             >
-                                                {/* <option value="">Select</option> */}
                                                 {
                                                     allClassData && allClassData[0]?.ClassTags?.map((item: any, index: any) => (
                                                         <option key={index} value={item.id}>{item.tagName}</option>
@@ -492,7 +504,7 @@ export default function EditSubClass(props: any) {
                                             </select>
                                             <label htmlFor="parentJoinKey" className={`${styles.form__label}`}>Parent Join Key </label>
                                         </div>
-                                        <div className="mt-4  flex-wrap flex-col justify-start items-start hidden">
+                                        {/* <div className="mt-4  flex-wrap flex-col justify-start items-start hidden">
                                             <div className="flex flex-wrap justify-start items-center">
                                                 <span
                                                     className="rounded-lg inline-flex justify-center items-center h-8 pl-2 pr-2 bg-[#F2F1F1] text-black text-[14px] mr-2 mb-2">
@@ -540,7 +552,7 @@ export default function EditSubClass(props: any) {
                                             <div className="mt-3">
                                                 <button className="rounded-lg border border-black flex justify-center items-center py-1 px-3 text-sm duration-100 outline-none transform active:scale-75 transition-transform">Clear All</button>
                                             </div>
-                                        </div>
+                                        </div> */}
                                     </div>
 
                                 </div>
@@ -553,12 +565,12 @@ export default function EditSubClass(props: any) {
                                 >
                                     Save
                                 </button>
-                                <button
-                                    className="border border-black rounded-lg bg-white text-black text-lg w-24 h-12 hover:text-white hover:bg-yellow-951 hover:border-yellow-951 ease-in-out duration-100 outline-none transform active:scale-75 transition-transform"
+                                <div
+                                    className="cursor-pointer flex justify-center items-center border border-black rounded-lg bg-white text-black text-lg w-24 h-12 hover:text-white hover:bg-yellow-951 hover:border-yellow-951 ease-in-out duration-100 outline-none transform active:scale-75 transition-transform"
                                     onClick={cancelModal}
                                 >
                                     Cancel
-                                </button>
+                                </div>
                             </div>
 
                         </div>
