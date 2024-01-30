@@ -7,7 +7,8 @@ import AddNewClass from './addnewclass';
 import {
     editClassModalAction,
     successMessageAction,
-    successMessagAdvancedAction
+    successMessagAdvancedAction, 
+    selectedClassAction
 } from '@/store/actions/classAction';
 import EditClass from './editclass';
 import axios from 'axios';
@@ -19,13 +20,11 @@ export default function ClassManagement(props: any) {
     const [toggleSort, setToggleSort] = useState(false);
     const [actions, setActions] = useState(false);
     const [actionCount, setActionCount] = useState(1);
-    const [showModal, setShowModal] = useState(Boolean);
     const [deleteModal, setDeleteModal] = useState(false);
     const [searchClass, setSearchClass] = useState('');
     const [allData, setAllData] = useState(props.classData);
     const [selectedClass, setSelectedClass] = useState();
     const [deleteID, setDeleteID] = useState(0);
-    const [deleteMessage, setDeleteMessage] = useState(false);
     const [actionsToggle, setActionsToggle] = useState(false);
     let access_token = "" as any;
     if (typeof window !== 'undefined') {
@@ -45,15 +44,7 @@ export default function ClassManagement(props: any) {
 
     }, [allClassSelector?.successMessageReducer])
 
-    // useEffect(() => {
-    //     setShowModal(props.addClassModal)
-    // }, [props.addClassModal])
-
-    // Set class data on page load
-    // useEffect(() => {
-    //     setAllData(props.classData)
-    // }, [props, props.classData])
-
+    // Get All Assets
     async function fetchData() {
         try {
             await axios({
@@ -120,7 +111,8 @@ export default function ClassManagement(props: any) {
     }
 
     const takeMeToClassComponent = (item: any) => {
-        props.handelsubClass(item)
+        props.handelsubClass(item);        
+        dispatch(selectedClassAction(item))
     }
 
     // function for searching
@@ -134,6 +126,7 @@ export default function ClassManagement(props: any) {
     // Open Edit class modal
     const openEditClassModal = (item: any) => {
         setSelectedClass(item)
+        dispatch(selectedClassAction(item))
         dispatch(editClassModalAction(true));
         setActions(false);
     }
@@ -151,16 +144,12 @@ export default function ClassManagement(props: any) {
                     "Content-Type": "application/json"
                 }
             }).then(function (response) {
-                // setDeleteMessage(true);
                 dispatch(successMessageAction(true))
                 let data = {
                     "type": "deleteClass",
                     "action": true
                 };
                 dispatch(successMessagAdvancedAction(data))
-                // setTimeout(() => {
-                //     setDeleteMessage(false)
-                // }, 2000)
             }).catch(function (error) {
                 console.log({
                     "ERROR IN AXIOS CATCH (DELETE)": error
@@ -327,7 +316,7 @@ export default function ClassManagement(props: any) {
                                                     <span>{item.className}</span>
                                                 </button>
                                             </td>
-                                            <td>
+                                            <td className={`${styles.lastChildComma}`}>
                                                 {
                                                     item?.ClassTags.map((it: any, indx: any) => (
                                                         <span key={indx}>
@@ -337,7 +326,6 @@ export default function ClassManagement(props: any) {
 
                                                 }
                                             </td>
-                                            {/* <td>{item.createdAt}</td> */}
                                             <td>{moment(item.createdAt).format('DD-MM-YYYY')}</td>
                                             <td className='relative'>
                                                 <div className="flex justify-start items-center relative">
@@ -403,7 +391,6 @@ export default function ClassManagement(props: any) {
 
             {/* Add New Class */}
             <AddNewClass
-                // handleClick={handleClick}
                 show={allClassSelector?.newClassModalReducer}
             />
 

@@ -211,6 +211,7 @@ export default function AiModelDetection() {
         setShowSubClass(false)
         setShowObjLvlButton(false)
         setToggleObjectLevel(false)
+        setShowSubObjTable(false);
 
         setChooseClass("Select");
         setChooseObject("Select");
@@ -431,9 +432,10 @@ export default function AiModelDetection() {
 
     // =============== Dropdown function for sub-class ===============
     const toggleSubClassDropFunction = () => {
-        setToggleSubClass(!toggleSubClass)
+        setToggleSubClass(!toggleSubClass);
     }
     const selectSubClassItemFunction = (item: any) => {
+        setShowSubObjTable(false);
         setToggleSubClass(false);
         setChooseSubClass(item);
         setChooseSubObject("Select");
@@ -444,6 +446,7 @@ export default function AiModelDetection() {
 
     // =============== Dropdown function for sub-class ===============
     const toggleSubObjectDropFunction = () => {
+        setShowSubClass(false)
         setToggleSubObject(!toggleSubObject)
     }
 
@@ -776,7 +779,7 @@ export default function AiModelDetection() {
 
                 {/* Table of Information */}
                 <div className="w-full flex justify-end items-end flex-wrap flex-row mt-5">
-                    {showSubClass &&
+                    {showSubClass === true &&
                         <table className={`table-auto lg:min-w-full sm:w-full small:w-full text-left ${styles.tableV3} ${styles.tableV4}`}>
                             <thead className="text-sm font-normal">
                                 <tr>
@@ -815,14 +818,14 @@ export default function AiModelDetection() {
                     }
 
                     {
-                        showSubObjTable &&
+                        showSubObjTable === true &&
                         <table className={`table-auto lg:min-w-full sm:w-full small:w-full text-left ${styles.tableV3} ${styles.tableV4}`}>
                             <thead className="text-sm font-normal">
                                 <tr>
                                     <th>S.No</th>
                                     {
                                         subObjectData && subObjectData.length > 0 ?
-                                            tableSubObjectHeader.map((item: any, i: any) => (
+                                            tableSubObjectHeader?.map((item: any, i: any) => (
                                                 <th className="capitalize" key={i}>
                                                     {
                                                         item?.tagName

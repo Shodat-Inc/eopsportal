@@ -22,7 +22,6 @@ export default function EditClass(props: any) {
     const [dtObject, setDtObject] = useState<any[]>([]);
     const [classData, setClassData] = useState([] as any);
     const [allDataTypes, setAllDataTypes] = useState([] as any);
-    const [success, setSuccess] = useState(false);
     const [deleteTagIDS, setDeleteTagIDS] = useState([] as any);
     const [addNewTag, setAddNewTag] = useState([] as any);
     const [newlyAddedTag, setNewlyAddedTag] = useState([] as any);
@@ -187,9 +186,9 @@ export default function EditClass(props: any) {
         setNewTag("");
     };
 
-    console.log({
-        "dtObject__2": dtObject
-    })
+    // console.log({
+    //     "dtObject__2": dtObject
+    // })
 
     // Store Data into JSON File
     const handleSubmit = async (e: any) => {
@@ -204,10 +203,10 @@ export default function EditClass(props: any) {
             addTag: dtObject,
         };
 
-        console.log({
-            dataToSave: dataToSave,
-            dtObject: dtObject
-        })
+        // console.log({
+        //     dataToSave: dataToSave,
+        //     dtObject: dtObject
+        // })
 
         let tokenStr = access_token;
         try {
@@ -221,7 +220,6 @@ export default function EditClass(props: any) {
                 },
             }).then(function (response) {
                 if (response) {
-                    setSuccess(true);
                     setAllTags([]);
                     setNewlyAddedTag([]);
                     setDtObject([]);
@@ -232,9 +230,6 @@ export default function EditClass(props: any) {
                         "action": true
                     };
                     dispatch(successMessagAdvancedAction(data))
-                    setTimeout(() => {
-                        setSuccess(false);
-                    }, 1500);
                 }
             })
                 .catch(function (error) {

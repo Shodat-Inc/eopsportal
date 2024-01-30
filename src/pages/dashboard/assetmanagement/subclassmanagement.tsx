@@ -13,7 +13,7 @@ import {
     successMessagAdvancedAction
 } from '@/store/actions/classAction';
 
-export default function SubClassManagement(props: any) {
+export default function SubClassManagement(props: any) {    
     const dispatch = useDispatch<any>();
     const [toggleFilter, setToggleFilter] = useState(false);
     const [toggleArrow, setToggleArrow] = useState(false);
@@ -37,25 +37,10 @@ export default function SubClassManagement(props: any) {
     // All class reducer states
     const allClassSelector = useSelector((state: any) => state.classReducer);
 
-    useEffect(() => {
-        if (allClassSelector && allClassSelector.successMessageReducer === true) {
-            setTimeout(() => {
-                dispatch(successMessageAction(false))
-            }, 5000)
-        }
-
-        if(allClassSelector && allClassSelector.successMessageAdvancedReducer) {
-            setTimeout(() => {
-                let data = {
-                    "type":"",
-                    "action":false
-                }
-                dispatch(successMessagAdvancedAction(data))
-            }, 4000)
-        }
-
-    }, [allClassSelector?.successMessageReducer])
-
+    console.log({
+        allClassSelector:allClassSelector 
+    })
+   
     useEffect(() => {
         setShowModal(props.addSubClassModal)
     }, [props.addSubClassModal])
@@ -95,17 +80,13 @@ export default function SubClassManagement(props: any) {
         setDeleteModal(false)
     }
 
-    // const takeMeToClassComponent = (item: any) => {
-    //     props.handelsubClass(item)
-    // }
-
 
     // set default choose asset
     async function fetchData() {
         try {
             await axios({
                 method: 'GET',
-                url: `/api/getChildAssets?id=${props.selectedParentClass}`,
+                url: `/api/getChildAssets?id=${allClassSelector?.selectedClassReducer}`,
                 headers: {
                     "Authorization": `Bearer ${access_token}`,
                     "Content-Type": "application/json"
@@ -128,7 +109,7 @@ export default function SubClassManagement(props: any) {
     }
     useEffect(() => {
         fetchData()
-    }, [props.selectedParentClass, allClassSelector?.successMessageReducer === true])
+    }, [allClassSelector?.selectedClassReducer, allClassSelector?.successMessageReducer === true])
 
     // function for searching
     const handleSearchFUnction = (e: any) => {
@@ -214,6 +195,27 @@ export default function SubClassManagement(props: any) {
 
     const wrapperRef = useRef(null);
     useOutsideAlerter(wrapperRef);
+
+
+
+    useEffect(() => {
+        // if (allClassSelector && allClassSelector.successMessageReducer === true) {
+        //     setTimeout(() => {
+        //         dispatch(successMessageAction(false))
+        //     }, 5000)
+        // }
+
+        // if(allClassSelector && allClassSelector.successMessageAdvancedReducer) {
+        //     setTimeout(() => {
+        //         let data = {
+        //             "type":"",
+        //             "action":false
+        //         }
+        //         dispatch(successMessagAdvancedAction(data))
+        //     }, 4000)
+        // }
+
+    }, [dispatch, allClassSelector?.successMessageReducer])
 
     return (
         <div className='px-0 py-3 font-OpenSans'>
@@ -348,7 +350,7 @@ export default function SubClassManagement(props: any) {
                                                 <span>{item.className}</span>
                                             </button>
                                         </td>
-                                        <td>
+                                        <td className={`${styles.lastChildComma}`}>
                                             {
                                                 item?.ClassTags.map((it: any, indx: any) => (
                                                     <span key={indx}>
@@ -357,7 +359,7 @@ export default function SubClassManagement(props: any) {
                                                 ))
                                             }
                                         </td>
-                                        <td>
+                                        <td className={`${styles.lastChildComma}`}>
                                             {
                                                 item?.ParentJoinKeys.map((it: any, indx: any) => (
                                                     <span key={indx}>
@@ -437,7 +439,7 @@ export default function SubClassManagement(props: any) {
             <AddNewSubClass
                 handleClick={handleClick}
                 show={showModal}
-                selectedParentClass={props.selectedParentClass}
+                selectedParentClass={allClassSelector?.selectedClassReducer}
                 classData={props.classData}
             />
 
@@ -445,7 +447,7 @@ export default function SubClassManagement(props: any) {
             {/* Edit Sub Class Component */}
             <EditSubClass
                 show={allClassSelector?.editSubClassModalReducer}
-                selectedParentClass={props.selectedParentClass ? props.selectedParentClass : ''}
+                selectedParentClass={allClassSelector?.selectedClassReducer}
                 classData={props.classData ? props.classData : []}
                 subClassData={subClassData ? subClassData : []}
                 selectedSubClass={selectedSubClass}

@@ -1,7 +1,6 @@
 import { SET_CLASS_ERROR, SET_CLASS_SUCCESS } from "../types";
 import { TOGGLE_ADD_OBJECT_MODEL_ERROR, TOGGLE_ADD_OBJECT_MODEL_SUCCESS } from "../types";
 import { TOGGLE_ADD_CLASS_OBJECT_MODEL_ERROR, TOGGLE_ADD_CLASS_OBJECT_MODEL_SUCCESS } from "../types";
-import { GET_ALL_CLASS_ERROR, GET_ALL_CLASS_SUCCESS } from "../types";
 import { BREADCRUMB_SUCCESS, BREADCRUMB_ERROR } from "../types";
 import { OBJ_SELECT_DEFAULT_CLASS_ERROR, OBJ_SELECT_DEFAULT_CLASS_SUCCESS } from "../types";
 import { OBJ_SELECT_DEFAULT_SUB_CLASS_ERROR, OBJ_SELECT_DEFAULT_SUB_CLASS_SUCCESS } from "../types";
@@ -14,6 +13,7 @@ import { EDIT_SUB_OBJECT_MODEL_ERROR, EDIT_SUB_OBJECT_MODEL_SUCCESS } from "../t
 import { NEW_CLASS_MODEL_ERROR, NEW_CLASS_MODEL_SUCCESS } from "../types";
 import { SET_DATA_FOR_SUB_OBJECT_ERROR, SET_DATA_FOR_SUB_OBJECT_SUCCESS } from "../types";
 import { SUCCESS_MESSAGE_WITH_TYPE_ERROR, SUCCESS_MESSAGE_WITH_TYPE_SUCCESS } from "../types";
+import { SELECTED_CLASS_ERROR, SELECTED_CLASS_SUCCESS } from "../types";
 
 import axios from "axios";
 let access_token = "" as any;
@@ -194,7 +194,7 @@ export const objDefaultSubClassSelectorFunction = (selClass: any) => async (disp
 };
 
 // Function to toggle the success message
-export const successMessageAction = (action:any) => async (dispatch: any) => {
+export const successMessageAction = (action: any) => async (dispatch: any) => {
     try {
         if (action) {
             dispatch({
@@ -212,7 +212,7 @@ export const successMessageAction = (action:any) => async (dispatch: any) => {
     }
 };
 
-export const successMessagAdvancedAction = (data:any) => async (dispatch: any) => {
+export const successMessagAdvancedAction = (data: any) => async (dispatch: any) => {
     try {
         if (data) {
             dispatch({
@@ -232,7 +232,7 @@ export const successMessagAdvancedAction = (data:any) => async (dispatch: any) =
 
 
 // Store data for eopswatch
-export const setDataForeOpsWatchAction = (action:any) => async (dispatch: any) => {
+export const setDataForeOpsWatchAction = (action: any) => async (dispatch: any) => {
     try {
         if (action) {
             dispatch({
@@ -404,5 +404,27 @@ export const setDataForSubObjectCompAction = (data: any) => async (dispatch: any
         }
     } catch (err) {
         console.log("ERROR IN ACTION:", err)
+    }
+};
+
+
+/*
+* FUNCTION TO SET SELECTED CLASS FOR CLASS MANAGEMENT
+*/
+export const selectedClassAction = (data: any) => async (dispatch: any) => {
+    try {
+        if (data) {
+            dispatch({
+                type: SELECTED_CLASS_SUCCESS,
+                payload: data
+            });
+        } else {
+            dispatch({
+                type: SELECTED_CLASS_ERROR,
+                payload: "No Selected Class"
+            });
+        }
+    } catch (err) {
+        console.log("err in action:", err)
     }
 };

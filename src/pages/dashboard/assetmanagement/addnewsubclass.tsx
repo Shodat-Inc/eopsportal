@@ -8,6 +8,10 @@ import { successMessageAction, successMessagAdvancedAction } from '@/store/actio
 
 export default function AddNewSubClass(props: any) {
 
+    // console.log({
+    //     PROPS:props
+    // })
+
 
     const dispatch = useDispatch<any>();
     const assetname = useRef("");
@@ -20,8 +24,7 @@ export default function AddNewSubClass(props: any) {
     const [assetDataType, setAssetDataType] = useState<any[]>([]);
     const [toggleAsset, setToggleAsset] = useState(false);
     const [dtObject, setDtObject] = useState<any[]>([]);
-
-    // const [allClassData, setAllClassData] = useState([] as any);
+    const [parentJoinKey, setParentJoinKey] = useState([] as any);
     const [allDataTypes, setAllDataTypes] = useState([] as any);
     const [success, setSuccess] = useState(false);
     let access_token = "" as any;
@@ -63,8 +66,14 @@ export default function AddNewSubClass(props: any) {
     useEffect(() => {
         if (props.classData && props.classData.length > 0) {
             let filtered = props.classData.filter((item: any) => {
-                return item.assetName === props.selectedParentClass;
+                return item.id === props.selectedParentClass;
             })
+
+            // console.log({
+            //     filtered:filtered
+            // })
+
+            setParentJoinKey(filtered)
 
             let label = [] as any;
             let val = [] as any;
@@ -84,7 +93,7 @@ export default function AddNewSubClass(props: any) {
 
     const closeModal = () => {
         props.handleClick(false);
-        setShowInput(false);
+        // setShowInput(false);
         setShowHideAddTagButton(false)
         setToggleDT(false);
         setDataType("");
@@ -100,7 +109,7 @@ export default function AddNewSubClass(props: any) {
         useEffect(() => {
             function handleClickOutside(event: any) {
                 if (ref.current && !ref.current.contains(event.target)) {
-                    setToggleAsset(false)
+                    // setToggleAsset(false)
                 }
             }
             document.addEventListener("mousedown", handleClickOutside);
@@ -117,7 +126,7 @@ export default function AddNewSubClass(props: any) {
 
     // Adding New Tags
     const addTags = () => {
-        setShowInput(true);
+        // setShowInput(true);
         setShowHideAddTagButton(true);
         setToggleDT(true);
     }
@@ -152,7 +161,7 @@ export default function AddNewSubClass(props: any) {
             let updatedList = allTags.slice();
             updatedList.push(newTag)
             setAllTags(updatedList)
-            setShowInput(false);
+            // setShowInput(false);
             setNewTag("");
             setShowHideAddTagButton(false);
             setToggleDT(false);
@@ -196,7 +205,7 @@ export default function AddNewSubClass(props: any) {
 
     // Cancel Adding new tags
     const cancelAddingTag = () => {
-        setShowInput(false);
+        // setShowInput(false);
         setShowHideAddTagButton(false)
         setToggleDT(false);
         setDataType("");
@@ -230,7 +239,7 @@ export default function AddNewSubClass(props: any) {
                 }
             }).then(function (response) {
                 if (response) {
-                    setSuccess(true)
+                    // setSuccess(true)
                     setAllTags([]);
                     dispatch(successMessageAction(true))
                     let data = {
@@ -239,7 +248,7 @@ export default function AddNewSubClass(props: any) {
                     };
                     dispatch(successMessagAdvancedAction(data))
                     setTimeout(() => {
-                        setSuccess(false)
+                        // setSuccess(false)
                         props.handleClick(false);
                     }, 100)
                 }
@@ -480,12 +489,12 @@ export default function AddNewSubClass(props: any) {
                                             // onChange={handleJoinKey}
                                             // multiple
                                             >
+                                                <option value="">Select</option>
                                                 {
-                                                    props.classData && props.classData[0]?.ClassTags?.map((item: any, index: any) => (
+                                                    parentJoinKey && parentJoinKey[0]?.ClassTags?.map((item: any, index: any) => (
                                                         <option key={index} value={item.id}>{item.tagName}</option>
                                                     ))
                                                 }
-                                                <option value="">Select</option>
                                             </select>
                                             <label htmlFor="parentJoinKey" className={`${styles.form__label}`}>Parent Join Key </label>
                                         </div>

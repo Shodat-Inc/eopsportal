@@ -31,9 +31,9 @@ export default function AssetManagement() {
         access_token = localStorage.getItem('authToken')
     }
 
-    useEffect(() => {
-        dispatch(getSingleUser())
-    }, [])
+    // useEffect(() => {
+    //     dispatch(getSingleUser())
+    // }, [])
 
 
     // All class reducer states
@@ -45,25 +45,25 @@ export default function AssetManagement() {
     // })
 
     // Close Success message after 5 second if true
-    useEffect(() => {
-        if (allClassSelector && allClassSelector.successMessageReducer === true) {
-            setTimeout(() => {
-                dispatch(successMessageAction(false))
-            }, 5000)
-        }
+    // useEffect(() => {
+    //     if (allClassSelector && allClassSelector.successMessageReducer === true) {
+    //         setTimeout(() => {
+    //             dispatch(successMessageAction(false))
+    //         }, 5000)
+    //     }
 
-        if(allClassSelector && allClassSelector.successMessageAdvancedReducer) {
-            setTimeout(() => {
-                let data = {
-                    "type":"",
-                    "action":false
-                }
-                dispatch(successMessagAdvancedAction(data))
-            }, 4000)
-        }
+    //     if(allClassSelector && allClassSelector.successMessageAdvancedReducer) {
+    //         setTimeout(() => {
+    //             let data = {
+    //                 "type":"",
+    //                 "action":false
+    //             }
+    //             dispatch(successMessagAdvancedAction(data))
+    //         }, 4000)
+    //     }
         
 
-    }, [allClassSelector?.successMessageReducer])
+    // }, [allClassSelector?.successMessageReducer])
 
     async function fetchData() {
         try {
@@ -104,7 +104,7 @@ export default function AssetManagement() {
             setDefaultClass(classData[0]?.id)
             dispatch(setSelectedClass(classData[0]?.id))
         }
-    }, [classData, dispatch])
+    }, [classData])
 
     const toggleTab = (item: any) => {
         setTab(item)

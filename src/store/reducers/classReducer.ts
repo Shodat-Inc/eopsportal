@@ -14,6 +14,7 @@ import { EDIT_SUB_OBJECT_MODEL_ERROR, EDIT_SUB_OBJECT_MODEL_SUCCESS } from "../t
 import { NEW_CLASS_MODEL_ERROR, NEW_CLASS_MODEL_SUCCESS } from "../types";
 import { SET_DATA_FOR_SUB_OBJECT_ERROR, SET_DATA_FOR_SUB_OBJECT_SUCCESS } from "../types";
 import { SUCCESS_MESSAGE_WITH_TYPE_ERROR, SUCCESS_MESSAGE_WITH_TYPE_SUCCESS } from "../types";
+import { SELECTED_CLASS_ERROR, SELECTED_CLASS_SUCCESS } from "../types";
 
 const initialState = {
   selectedClass: '',
@@ -35,6 +36,7 @@ const initialState = {
   editSubObjectModalReducer: false,
   newClassModalReducer: false,
   setDataForSubObjectReducer: {},
+  selectedClassReducer:0
 };
 
 const classReducer = (state = initialState, action: any) => {
@@ -214,6 +216,32 @@ const classReducer = (state = initialState, action: any) => {
     case SET_DATA_FOR_SUB_OBJECT_ERROR:
       return {
         setDataForSubObjectReducer: action.payload,
+      };
+
+
+      case SET_DATA_FOR_SUB_OBJECT_SUCCESS:
+      return {
+        ...state,
+        setDataForSubObjectReducer: action.payload,
+      };
+
+    case SET_DATA_FOR_SUB_OBJECT_ERROR:
+      return {
+        ...state,
+        setDataForSubObjectReducer: action.payload,
+      };
+
+
+      case SELECTED_CLASS_SUCCESS:
+      return {
+        ...state,
+        selectedClassReducer: action.payload,
+      };
+
+    case SELECTED_CLASS_ERROR:
+      return {
+        ...state,
+        error: action.payload,
       };
 
     default:
