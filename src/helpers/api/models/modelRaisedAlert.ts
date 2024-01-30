@@ -39,14 +39,25 @@ export function RaisedAlert(sequelize: any) {
             allowNull: false
         },
 
-        alertId: {
+        triggeredProbability: {
             type: DataTypes.INTEGER,
             allowNull: false
         },
 
-        triggeredProbability: {
+        crackAlertId: {
             type: DataTypes.INTEGER,
-            allowNull: false
+            references: {
+                model: "CrackAlerts",
+                id: "id",
+            },
+        },
+
+        batteryAlertId: {
+            type: DataTypes.INTEGER,
+            references: {
+                model: "BatteryAlerts",
+                id: "id",
+            },
         }
 
     };

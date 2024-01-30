@@ -135,7 +135,9 @@ export async function initialize() {
       alert: "Alert",
       emailTemplate: "EmailTemplate",
       modelRaisedAlert: "RaisedAlert",
-      ticket: "Ticket"
+      ticket: "Ticket",
+      batteryAlert: "BatteryAlert",
+      batteryDetectionResponse: "BatteryResponse"
     };
 
 

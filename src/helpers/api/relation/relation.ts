@@ -168,12 +168,15 @@ async function relationship(db: any) {
     db.Image.belongsTo(db.ModelData, { foreignKey: "modelDataId" });
     db.ModelData.hasMany(db.Image, { foreignKey: "modelDataId" });
 
+    db.Model.hasMany(db.RaisedAlert, { foreignKey: "modelId" });
+    db.RaisedAlert.belongsTo(db.Model, { foreignKey: "modelId" });
+
 
     db.object.hasMany(db.RaisedAlert, { foreignKey: "objectId" });
     db.RaisedAlert.belongsTo(db.object, { foreignKey: "objectId" });
 
-    db.Alert.hasMany(db.RaisedAlert, { foreignKey: "alertId" });
-    db.RaisedAlert.belongsTo(db.Alert, { foreignKey: "alertId" })
+    db.Alert.hasMany(db.RaisedAlert, { foreignKey: "crackAlertId" });
+    db.RaisedAlert.belongsTo(db.Alert, { foreignKey: "crackAlertId" })
 
     db.User.hasMany(db.Alert, { foreignKey: "userId" })
     db.Alert.belongsTo(db.User, { foreignKey: "userId" })
@@ -192,6 +195,25 @@ async function relationship(db: any) {
 
     db.User.hasMany(db.Alert, { foreignKey: "userId" })
     db.Alert.belongsTo(db.User, { foreignKey: "userId" })
+
+    db.Image.hasMany(db.BatteryResponse, { foreignKey: "modelObjectImageId" })
+    db.BatteryResponse.belongsTo(db.Image, { foreignKey: "modelObjectImageId" })
+
+    db.Image.hasMany(db.BatteryAlert, { foreignKey: "modelObjectImageId" })
+    db.BatteryAlert.belongsTo(db.Image, { foreignKey: "modelObjectImageId" })
+
+    db.User.hasMany(db.BatteryAlert, { foreignKey: "userId" })
+    db.BatteryAlert.belongsTo(db.User, { foreignKey: "userId" })
+
+    db.EnterpriseUser.hasMany(db.BatteryAlert, { foreignKey: "enterpriseUserId" })
+    db.BatteryAlert.belongsTo(db.EnterpriseUser, { foreignKey: "enterpriseUserId" })
+
+    db.Enterprise.hasMany(db.BatteryAlert, { foreignKey: "enterpriseId" })
+    db.BatteryAlert.belongsTo(db.Enterprise, { foreignKey: "enterpriseId" })
+
+    db.BatteryAlert.hasMany(db.RaisedAlert, { foreignKey: "batteryAlertId" });
+    db.RaisedAlert.belongsTo(db.BatteryAlert, { foreignKey: "batteryAlertId" })
+
 
     resolve("Imported");
   });

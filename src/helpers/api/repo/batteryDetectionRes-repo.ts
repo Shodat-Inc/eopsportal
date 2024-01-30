@@ -6,7 +6,7 @@ import message from "@/util/responseMessage";
 /**
  * Repository for handling Crack Detection Response related operations.
  */
-export const crackDetectionResRepo = {
+export const batteryDetectionResRepo = {
     create,
     getResponse
 };
@@ -16,10 +16,9 @@ async function create(params: any) {
     try {
         // Log an information message using the 'loggerInfo' instance
         loggerInfo.info("Saving Response");
-        console.log(params,"==params")
 
         // Check if a CrackResponse with the given 'modelObjectImageId' already exists in the database
-        const data = await db.CrackResponse.findOne({
+        const data = await db.BatteryResponse.findOne({
             where: {
                 modelObjectImageId: params.modelObjectImageId
             }
@@ -72,14 +71,15 @@ async function getResponse(params: any) {
             return sendResponseData(false, message.error.modelObjectImageIdInParams, {});
         }
 
-        // Fetch all CrackResponse records with the given 'modelObjectImageId'
-        const data = await db.CrackResponse.findAll({
+        // Fetch all BatteryResponse records with the given 'modelObjectImageId'
+        const data = await db.BatteryResponse.findAll({
             where: {
                 modelObjectImageId: params.modelObjectImageId
             },
             // Specify the attributes to be included in the response
-            attributes: ["coordinates", "tag", "modelObjectImageId"]
+            attributes: ["tag", "batteryLifeResponse", "modelObjectImageId"]
         });
+        console.log(data,"==kkk")
 
         // If no response data is found
         if (!data) {

@@ -1,7 +1,7 @@
 import { DataTypes } from "sequelize";
 import { LessGreaterThan } from "@/util/enums";
 
-export function Alert(sequelize: any) {
+export function BatteryAlert(sequelize: any) {
     const attributes = {
         id: {
             type: DataTypes.INTEGER,
@@ -17,6 +17,7 @@ export function Alert(sequelize: any) {
             type: LessGreaterThan,
             defaultValue: 'lessThan',
         },
+        // battery utilization threshold
         thresholdValue: {
             type: DataTypes.INTEGER,
             allowNull: false
@@ -31,21 +32,33 @@ export function Alert(sequelize: any) {
         },
         modelObjectImageId: {
             type: DataTypes.INTEGER,
-            allowNull: false,
+            references: {
+                model: "ModelObjectImages",
+                id: "id",
+            },
         },
         userId: {
             type: DataTypes.INTEGER,
-            allowNull: true
+            references: {
+                model: "Users",
+                id: "id",
+            },
         },
         enterpriseUserId: {
             type: DataTypes.INTEGER,
-            allowNull: true
+            references: {
+                model: "EnterpriseUsers",
+                id: "id",
+            },
         },
         enterpriseId: {
             type: DataTypes.INTEGER,
-            allowNull: true
+            references: {
+                model: "Enterprises",
+                id: "id",
+            },
         }
     };
 
-    return sequelize.define("CrackAlert", attributes);
+    return sequelize.define("BatteryAlert", attributes);
 }
