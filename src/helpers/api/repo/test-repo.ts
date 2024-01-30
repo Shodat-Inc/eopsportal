@@ -65,8 +65,7 @@ export default async function runTest(params: any) {
     });
 
     if (!check) {
-      console.log("Alert not found or isEnabled is not true for the given image id.");
-      return sendResponseData(true, "Data Saved Successfully", result);
+      return sendResponseData(false, "Alert not found or isEnabled is not true for the given image id.", {});
     }
 
     const { id, modelObjectImageId } = check.dataValues;
@@ -93,7 +92,7 @@ export default async function runTest(params: any) {
     // Check if the highest probability is greater than the threshold and no entry has been created yet
     if (highestProbability >= thresholdValue) {
       const raisedAlertRecord = {
-        alertId: id,
+        crackAlertId: id,
         modelObjectImageId: imageid,
         tags: tag,
         userId: formattedData[0].userId,
