@@ -9,8 +9,10 @@ import axios from 'axios';
 export default function AddNewObject(props: any) {
 
     const [selectedObjectData, setSelectedObjectData] = useState([] as any);
+    const [objectData, setObjectData] = useState([] as any)
     const formData = useRef("");
-    const [success, setSuccess] = useState(false);
+
+    const classSelector = useSelector((state: any) => state.classReducer);
 
     let access_token = "" as any;
     if (typeof window !== 'undefined') {
@@ -23,7 +25,11 @@ export default function AddNewObject(props: any) {
                 return item.id === props.selectedSubClass
             })
             if (filtered) {
+                console.log({
+                    "__AMIT": filtered
+                })
                 setSelectedObjectData(filtered[0].ClassTags)
+                setObjectData(filtered);
             }
         }
     }, [props])
@@ -76,7 +82,6 @@ export default function AddNewObject(props: any) {
                 }
             }).then(function (response) {
                 if (response) {
-                    setSuccess(true);
                     dispatch(successMessageAction(true))
                     let data = {
                         "type": "newSubObject",
@@ -84,7 +89,6 @@ export default function AddNewObject(props: any) {
                     };
                     dispatch(successMessagAdvancedAction(data))
                     setTimeout(() => {
-                        setSuccess(false);
                         dispatch(toggleAddNewObjectModel(false));
                     }, 50);
                 }
@@ -119,41 +123,59 @@ export default function AddNewObject(props: any) {
                         onSubmit={handleSubmit}
                         className="w-full flex justify-start items-start flex-wrap flex-col"
                     >
-                        {
-                            selectedObjectData && selectedObjectData.length != 0 ?
-                                selectedObjectData.map((item: any, index: any) => (
-                                    <div key={index} className="w-full flex justify-start items-start flex-wrap flex-col">
-                                        <div className={`mb-5 lg:w-full small:w-full ${styles.form__wrap}`}>
-                                            <div className={`relative ${styles.form__group} font-OpenSans`}>
-                                                <input
-                                                    type="text"
-                                                    id={`${item.tagName}`}
-                                                    // name={`${item.tagName}`}
-                                                    name={`${item.tagName}_${item.id}`}
-                                                    className={`border border-gray-961 ${styles.form__field}`}
-                                                    placeholder={`${item.tagName}`}
-                                                    onChange={(e) => (formData.current = e.target.value)}
-                                                    required
-                                                />
-                                                <label htmlFor={`${item.tagName}`} className={`${styles.form__label}`}>{item.tagName}</label>
-                                            </div>
+                        {selectedObjectData && selectedObjectData.length != 0 ?
+                            selectedObjectData.map((item: any, index: any) => (
+                                <div key={index} className="w-full flex justify-start items-start flex-wrap flex-col">
+                                    <div className={`mb-5 lg:w-full small:w-full ${styles.form__wrap}`}>
+                                        <div className={`relative ${styles.form__group} font-OpenSans`}>
+                                            <input
+                                                type="text"
+                                                id={`${item.tagName}`}
+                                                // name={`${item.tagName}`}
+                                                name={`${item.tagName}_${item.id}`}
+                                                className={`border border-gray-961 ${styles.form__field}`}
+                                                placeholder={`${item.tagName}`}
+                                                onChange={(e) => (formData.current = e.target.value)}
+                                                required
+                                            />
+                                            <label htmlFor={`${item.tagName}`} className={`${styles.form__label}`}>{item.tagName}</label>
                                         </div>
                                     </div>
-                                ))
-                                :
-                                <div className="flex justify-center items-center flex-wrap flex-col font-OpenSans mt-20">
-                                    <div className="no-data-image">
-                                        <Image
-                                            src="/img/not-found.svg"
-                                            alt="no data found!"
-                                            className="inline-block"
-                                            height={72}
-                                            width={72}
-                                        />
-                                    </div>
-                                    <p className="text-black text-xl mt-8 font-semibold">No data found!!</p>
                                 </div>
+                            ))
+                            :
+                            <div className="flex justify-center items-center flex-wrap flex-col font-OpenSans mt-20">
+                                <div className="no-data-image">
+                                    <Image
+                                        src="/img/not-found.svg"
+                                        alt="no data found!"
+                                        className="inline-block"
+                                        height={72}
+                                        width={72}
+                                    />
+                                </div>
+                                <p className="text-black text-xl mt-8 font-semibold">No data found!!</p>
+                            </div>
                         }
+
+                        <div className="w-full flex justify-start items-start flex-wrap flex-col">
+                            <div className={`mb-5 lg:w-full small:w-full ${styles.form__wrap}`}>
+                                <div className={`relative ${styles.form__group} font-OpenSans`}>
+                                    <input
+                                        type="text"
+                                        id={`${objectData[0]?.ParentJoinKeys[0]?.parentTagId}`}
+                                        name={`${objectData[0]?.ParentJoinKeys[0]?.tagname}_${objectData[0]?.ParentJoinKeys[0]?.parentTagId}`}
+                                        className={`border border-gray-961 ${styles.form__field}`}
+                                        placeholder=""
+                                        value={`${classSelector?.classBreadcrumbs?.classObjValue}`}
+                                        onChange={(e) => (formData.current = e.target.value)}
+                                        required
+                                    />
+                                    <label htmlFor="" className={`${styles.form__label}`}>Parent Join Key ({objectData[0]?.ParentJoinKeys[0]?.tagname})</label>
+                                </div>
+                            </div>
+                        </div>
+
 
                         <div className="relative flex justify-end items-center w-full">
                             <button

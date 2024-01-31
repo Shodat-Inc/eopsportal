@@ -62,6 +62,7 @@ export default function SubObjectManagement(props: any) {
                     "Content-Type": "application/json"
                 }
             }).then(function (response) {
+                
                 if (response.data.success === true) {
                     setSubClassData(response?.data?.data);
                     setChooseAsset(response?.data?.data[0]?.id)
@@ -444,6 +445,7 @@ export default function SubObjectManagement(props: any) {
                                         ))
                                         : null
                                 }
+                                <th>Parent Join Key</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -464,6 +466,9 @@ export default function SubObjectManagement(props: any) {
                                                     </td>
                                                 ))
                                             }
+                                            <td>
+                                                <span>{Object.values(items?.parentJoinValues)}</span>
+                                            </td>
                                             <td>
                                                 <div className="flex justify-start items-center relative">
                                                     {
