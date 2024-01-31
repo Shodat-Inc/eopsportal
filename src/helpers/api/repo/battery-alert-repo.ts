@@ -39,13 +39,18 @@ async function get(params: any) {
     try {
         const data = await db.RaisedAlert.findOne({
             where: { userId: params.auth },
-            attributes: ['modelId'],
+            attributes: ['triggeredProbability'],
             include: [
                 {
                     model: db.Model,
                     attributes: ['modelName'],
-                    required: true, 
+                    required: true,
                 },
+                {
+                    model: db.Image,
+                    attributes: ['url']
+                },
+
                 {
                     model: db.object,
                     attributes: ['id', 'classId']

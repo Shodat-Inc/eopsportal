@@ -1,5 +1,5 @@
 import { DataTypes } from "sequelize";
-import { ticketStatus } from "@/util/enums"
+import { ticketStatus, priority } from "@/util/enums"
 
 export function Ticket(sequelize: any) {
     const attributes = {
@@ -9,7 +9,7 @@ export function Ticket(sequelize: any) {
             allowNull: false,
             autoIncrement: true,
         },
-        
+
         subject: {
             type: DataTypes.STRING,
             allowNull: false
@@ -17,12 +17,30 @@ export function Ticket(sequelize: any) {
 
         status: {
             type: ticketStatus,
-            defaultValue: 'inProcess'
+            defaultValue: 'open'
         },
 
-        assignTo: {
+        priority: {
+            type: priority,
+            defaultValue: 'low'
+        },
+
+        currentlyAssignedTo: {
             type: DataTypes.STRING,
             allowNull: false
+        },
+
+        assignedBy: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+
+        raisedAlertId: {
+            type: DataTypes.INTEGER,
+            references: {
+                model: "RaisedAlerts",
+                id: "id",
+            },
         },
 
     };
