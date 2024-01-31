@@ -405,7 +405,8 @@ export default function AiModelDetection() {
 
     // =============== Dropdown for object ===============
     const toggleObjectDropFunction = () => {
-        setToggleObject(!toggleObject)
+        setToggleObject(!toggleObject);
+        setShowSubObjTable(false)
     }
 
     // Get individual object when selection of any class OBJECT
@@ -421,7 +422,7 @@ export default function AiModelDetection() {
     // Select Object Items 
     const selectObjectItemFunction = (item: any, id: any) => {
         setChooseObject(item);
-        // setSelectObject(item)
+        setShowSubObjTable(false)
         setToggleObject(false);
         setShowObjLvlButton(true);
         setShowSubClass(true);
@@ -545,14 +546,14 @@ export default function AiModelDetection() {
                     <div className="w-full flex justify-start items-center flex-wrap flex-row">
                         <div className="w-[85%] flex justify-start items-center">
                             {/* Class */}
-                            <div className={`${styles.form__wrap} relative w-[50%]`}>
+                            <div className={`${styles.form__wrap} relative w-[50%] ${disable === 2 ? 'pointer-events-none' : 'pointer-events-auto'}`}>
                                 <div className='w-full'>
                                     <div className="relative" ref={wrapperRef}>
                                         <div
-                                            className="border rounded-xl border-gray-969 h-[55px] pl-2 pr-5 relative flex items-center justify-start bg-white w-[95%] cursor-pointer"
+                                            className={`border rounded-xl border-gray-969 h-[55px] pl-2 pr-5 relative flex items-center justify-start w-[95%] cursor-pointer ${disable === 2 ? 'pointer-events-none bg-[#F2F2F2]' : 'pointer-events-auto bg-[#FFFFFF]'}`}
                                             onClick={toggleClassDropFunction}
                                         >
-                                            <label className="absolute text-sm !top-[-10px] left-2 pl-2 pr-2 bg-white">Choose Industry type</label>
+                                            <label className={`absolute text-sm !top-[-10px] left-2 pl-2 pr-2 ${disable === 2 ? 'pointer-events-none bg-[#F2F2F2]' : 'pointer-events-auto bg-[#FFFFFF]'}`}>Choose Industry type</label>
                                             <Image
                                                 src="/img/arrow-down-black.svg"
                                                 alt="arrow-down"
@@ -779,7 +780,7 @@ export default function AiModelDetection() {
 
                 {/* Table of Information */}
                 <div className="w-full flex justify-end items-end flex-wrap flex-row mt-5">
-                    {showSubClass === true &&
+                    {showSubClass &&
                         <table className={`table-auto lg:min-w-full sm:w-full small:w-full text-left ${styles.tableV3} ${styles.tableV4}`}>
                             <thead className="text-sm font-normal">
                                 <tr>
@@ -818,7 +819,7 @@ export default function AiModelDetection() {
                     }
 
                     {
-                        showSubObjTable === true &&
+                        showSubObjTable &&
                         <table className={`table-auto lg:min-w-full sm:w-full small:w-full text-left ${styles.tableV3} ${styles.tableV4}`}>
                             <thead className="text-sm font-normal">
                                 <tr>
