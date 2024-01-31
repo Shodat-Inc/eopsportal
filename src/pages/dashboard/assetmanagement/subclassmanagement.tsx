@@ -271,7 +271,7 @@ export default function SubClassManagement(props: any) {
             {
                 (allClassSelector?.successMessageAdvancedReducer?.action === true && allClassSelector?.successMessageAdvancedReducer?.type === "newSubClass") &&
 
-                <div className={`bg-green-957 border-green-958 text-green-959 mb-1 mt-1 border text-md px-4 py-3 rounded-xl relative flex items-center justify-start mx-4`}>
+                <div className={`bg-green-957 border-green-958 text-green-959 mb-1 mt-1 border text-md px-4 py-3 rounded-xl relative flex-1 items-center justify-start mx-4 hidden`}>
                     <Image
                         src="/img/AlertSuccess.svg"
                         alt="Alert Success"
@@ -285,7 +285,7 @@ export default function SubClassManagement(props: any) {
             }
 
             {/* Message for DeleteClass */}
-            <div className='flex justify-start items-center px-4 w-full'>
+            <div className='flex-1 justify-start items-center px-4 w-full hidden'>
                 {
                     (allClassSelector?.successMessageAdvancedReducer?.action === true && allClassSelector?.successMessageAdvancedReducer?.type === "deleteSubClass") &&
                     <div className={`bg-blue-957 border-blue-958 text-blue-959 mb-1 mt-1 border text-md px-4 py-3  rounded-xl relative flex items-center justify-start w-full`}>
@@ -303,7 +303,7 @@ export default function SubClassManagement(props: any) {
             </div>
 
             {/* Message for Edit Class */}
-            <div className='flex justify-start items-center px-4 w-full'>
+            <div className='flex-1 justify-start items-center px-4 w-full hidden'>
                 {
                     (allClassSelector?.successMessageAdvancedReducer?.action === true && allClassSelector?.successMessageAdvancedReducer?.type === "editSubClass") &&
                     <div className={`bg-blue-957 border-blue-958 text-blue-959 mb-1 mt-1 border text-md px-4 py-3  rounded-xl relative flex items-center justify-start w-full`}>
