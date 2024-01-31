@@ -368,3 +368,16 @@ export const createEmailTemplateValidation = (data) => {
   });
   return schema.validate(data)
 }
+
+export const createTicketValidation = (data) => {
+  const schema = Joi.object({
+    subject: Joi.string(),
+    status: Joi.string(),
+    priority: Joi.string(),
+    currentlyAssignedTo: Joi.string(),
+    assignedBy: Joi.string(),
+    comments: Joi.string(),
+    raisedAlertId: Joi.number()
+  });
+  return schema.validate(data)
+}
