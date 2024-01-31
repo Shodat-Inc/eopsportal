@@ -214,6 +214,29 @@ async function relationship(db: any) {
     db.BatteryAlert.hasMany(db.RaisedAlert, { foreignKey: "batteryAlertId" });
     db.RaisedAlert.belongsTo(db.BatteryAlert, { foreignKey: "batteryAlertId" })
 
+    db.RaisedAlert.hasMany(db.Ticket, { foreignKey: "raisedAlertId" })
+    db.Ticket.belongsTo(db.RaisedAlert, { foreignKey: "raisedAlertId" })
+
+    db.Ticket.hasMany(db.Comment, { foreignKey: "ticketId" })
+    db.Comment.belongsTo(db.Ticket, { foreignKey: "ticketId" })
+
+    db.User.hasMany(db.Comment, { foreignKey: "userId" })
+    db.Comment.belongsTo(db.User, { foreignKey: "userId" })
+
+    db.Enterprise.hasMany(db.Comment, { foreignKey: "enterpriseId" })
+    db.Comment.belongsTo(db.Enterprise, { foreignKey: "enterpriseId" })
+
+    db.EnterpriseUser.hasMany(db.Comment, { foreignKey: "enterpriseUserId" })
+    db.Comment.belongsTo(db.EnterpriseUser, { foreignKey: "enterpriseUserId" })
+
+    db.User.hasMany(db.Attachment, { foreignKey: "userId" })
+    db.Attachment.belongsTo(db.User, { foreignKey: "userId" })
+
+    db.Enterprise.hasMany(db.Attachment, { foreignKey: "enterpriseId" })
+    db.Attachment.belongsTo(db.Enterprise, { foreignKey: "enterpriseId" })
+
+    db.EnterpriseUser.hasMany(db.Attachment, { foreignKey: "enterpriseUserId" })
+    db.Attachment.belongsTo(db.EnterpriseUser, { foreignKey: "enterpriseUserId" })
 
     resolve("Imported");
   });

@@ -144,7 +144,11 @@ export async function initialize() {
       alert: "Alert",
       emailTemplate: "EmailTemplate",
       modelRaisedAlert: "RaisedAlert",
-      ticket: "Ticket"
+      batteryAlert: "BatteryAlert",
+      batteryDetectionResponse: "BatteryResponse",
+      ticket: "Ticket",
+      ticketAttachments: "Attachment",
+      ticketComments: "Comment"
     };
 
     if (true) {
