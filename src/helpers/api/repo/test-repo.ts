@@ -3,6 +3,7 @@ import { db } from "../db";
 import sendResponseData from "@/helpers/constant";
 import { error } from "console";
 import { crackDetectionResponse } from "../constant/crackDetectionResponse";
+import { checkAlert } from "../constant/checkAlert";
 
 export default async function runTest(params: any) {
   try {
@@ -10,26 +11,7 @@ export default async function runTest(params: any) {
 
     const image_url = { image_url: params.body.image_url };
     const imageid = params.body.modelObjectImageId;
-
-    // Fetch user information from the database
-    const data = await db.Image.findAll({
-      where: { url: image_url.image_url },
-      attributes: [],
-      include: [{
-        model: db.ModelData,
-        attributes: ['userId', 'modelId', 'classId', 'objectId']
-      }]
-    });
-
-    const formattedData = data.map((item: { ModelDatum: { dataValues: any; }; }) => {
-      const modelDatum = item.ModelDatum.dataValues;
-      return {
-        userId: modelDatum.userId,
-        modelId: modelDatum.modelId,
-        classId: modelDatum.classId,
-        objectId: modelDatum.objectId
-      }
-    });
+    const userId = params.userId;
 
     const apiResponse = crackDetectionResponse;
     if (!apiResponse) {
@@ -51,33 +33,21 @@ export default async function runTest(params: any) {
     // Save the response in the CrackResponse table
     const result = await db.CrackResponse.create(workData);
 
+    if (!result) {
+      return sendResponseData(false, "Error In Saving Data", []);
+    }
     // Increase the count of testRanCount
     const ranCount = await db.Image.findByPk(imageid);
     ranCount.testRanCount += 1;
     await ranCount.save();
 
-    const check = await db.Alert.findOne({
-      where: {
-        isEnabled: 1,
-        userId: params.userId
-      },
-      attributes: ["id", "thresholdValue", "modelObjectImageId"]
-    });
-
-    if (!check) {
-      return sendResponseData(false, "Alert not found or isEnabled is not true for the given image id.", {});
-    }
-
-    const { id, modelObjectImageId } = check.dataValues;
-    const thresholdValue = check.thresholdValue;
-
     let highestProbability = 0;
     let keyWithHighestProbability = "";
 
-    // Find the highest probability before entering the loop
     for (const key in result.dataValues.coordinates) {
       if (result.dataValues.coordinates.hasOwnProperty(key)) {
-        const coordinates = result.dataValues.coordinates[key].responseCoordinates;
+        const coordinates =
+          result.dataValues.coordinates[key].responseCoordinates;
         const probability = parseInt(coordinates.probablity);
 
         if (probability > highestProbability) {
@@ -86,28 +56,8 @@ export default async function runTest(params: any) {
         }
       }
     }
-
-    console.log(`Highest probability detected in ${keyWithHighestProbability}. Probability: ${highestProbability}`);
-
-    // Check if the highest probability is greater than the threshold and no entry has been created yet
-    if (highestProbability >= thresholdValue) {
-      const raisedAlertRecord = {
-        crackAlertId: id,
-        modelObjectImageId: imageid,
-        tags: tag,
-        userId: formattedData[0].userId,
-        modelId: formattedData[0].modelId,
-        classId: formattedData[0].classId,
-        objectId: formattedData[0].objectId,
-        triggeredProbability: highestProbability
-      };
-
-      // Save the record if it hasn't been created yet
-      await db.RaisedAlert.create(raisedAlertRecord);
-    }
-
+    checkAlert(image_url, userId, result, highestProbability);
     return sendResponseData(true, "Data Saved Successfully", result);
-
   } catch (error) {
     loggerError.error("Error", error);
     return sendResponseData(false, "Error", error);
