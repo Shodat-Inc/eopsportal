@@ -11,3 +11,5 @@ export const LessGreaterThan = DataTypes.ENUM('lessThan', 'greaterThan')
 export const ticketStatus = DataTypes.ENUM('open', 'inProcess', 'closed')
 
 export const priority = DataTypes.ENUM('high', 'low')
+
+export const isFlagged = DataTypes.ENUM('true', 'false')

@@ -1,5 +1,5 @@
 import { DataTypes } from "sequelize";
-import { ticketStatus, priority } from "@/util/enums"
+import { ticketStatus, priority, isFlagged } from "@/util/enums"
 
 export function Ticket(sequelize: any) {
     const attributes = {
@@ -25,13 +25,38 @@ export function Ticket(sequelize: any) {
             defaultValue: 'low'
         },
 
-        currentlyAssignedTo: {
+        assignedTo: {
             type: DataTypes.STRING,
             allowNull: false
         },
 
         assignedBy: {
             type: DataTypes.STRING,
+            allowNull: false
+        },
+
+        ticketPoints: {
+            type: DataTypes.INTEGER,
+            allowNull: true
+        },
+
+        isFlagged: {
+            type: isFlagged,
+            defaultValue: 'false'
+        },
+
+        blockedBy: {
+            type: DataTypes.STRING,
+            allowNull: true
+        },
+
+        linkedTicket: {
+            type: DataTypes.JSON,
+            allowNull: true
+        },
+
+        completionDate: {
+            type: DataTypes.DATEONLY,
             allowNull: false
         },
 

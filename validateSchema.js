@@ -374,10 +374,31 @@ export const createTicketValidation = (data) => {
     subject: Joi.string(),
     status: Joi.string(),
     priority: Joi.string(),
-    currentlyAssignedTo: Joi.string(),
+    assignedTo: Joi.string(),
     assignedBy: Joi.string(),
+    ticketPoints: Joi.number(),
+    isFlagged: Joi.boolean(),
+    blockedBy: Joi.string(),
+    linkedTicket: Joi.array().items(Joi.string()),
+    completionDate: Joi.date().iso().required(),
     comments: Joi.string(),
-    raisedAlertId: Joi.number()
+    raisedAlertId: Joi.number().required()
+  });
+  return schema.validate(data)
+}
+
+export const updateTicketValidation = (data) => {
+  const schema = Joi.object({
+    subject: Joi.string(),
+    status: Joi.string(),
+    priority: Joi.string(),
+    assignedTo: Joi.string(),
+    assignedBy: Joi.string(),
+    ticketPoints: Joi.number(),
+    isFlagged: Joi.boolean(),
+    blockedBy: Joi.string(),
+    linkedTicket: Joi.array().items(Joi.string()),
+    completionDate: Joi.date().iso(),
   });
   return schema.validate(data)
 }
