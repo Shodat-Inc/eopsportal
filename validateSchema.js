@@ -310,12 +310,12 @@ export const createModelValidation = (data) => {
 };
 
 export const saveResponseValidation = (data) => {
-const schema = Joi.object({
-  coordinates: Joi.array().items(imageSchema).min(1).required(),
-  tag: Joi.string().required(),
-  modelObjectImageId: Joi.number().integer().required(),
-});
-return schema.validate(data);
+  const schema = Joi.object({
+    coordinates: Joi.array().items(imageSchema).min(1).required(),
+    tag: Joi.string().required(),
+    modelObjectImageId: Joi.number().integer().required(),
+  });
+  return schema.validate(data);
 }
 
 export const updateModelValidation = (data) => {
@@ -328,3 +328,56 @@ export const updateModelValidation = (data) => {
   });
   return schema.validate(data);
 };
+
+export const createAlertValidation = (data) => {
+  const schema = Joi.object({
+    alertName: Joi.string(),
+    rangeValue: Joi.string(),
+    thresholdValue: Joi.number(),
+    isEnabled: Joi.boolean(),
+    receiverEmailAddresses: Joi.array().items(Joi.string()),
+    emailTemplateId: Joi.number(),
+    modelObjectImageId: Joi.number(),
+    userId: Joi.number(),
+    enterpriseId: Joi.number(),
+    enterpriseUserId: Joi.number(),
+  });
+  return schema.validate(data)
+}
+
+export const updateAlertValidation = (data) => {
+  const schema = Joi.object({
+    alertName: Joi.string(),
+    rangeValue: Joi.string(),
+    thresholdValue: Joi.number(),
+    isEnabled: Joi.boolean(),
+    receiverEmailAddresses: Joi.array().items(Joi.string()),
+    emailTemplateId: Joi.number(),
+    modelObjectImageId: Joi.number(),
+    userId: Joi.number(),
+    enterpriseId: Joi.number(),
+    enterpriseUserId: Joi.number(),
+  });
+  return schema.validate(data)
+}
+
+export const createEmailTemplateValidation = (data) => {
+  const schema = Joi.object({
+    emailSubject: Joi.string(),
+    emailContent: Joi.string(),
+  });
+  return schema.validate(data)
+}
+
+export const createTicketValidation = (data) => {
+  const schema = Joi.object({
+    subject: Joi.string(),
+    status: Joi.string(),
+    priority: Joi.string(),
+    currentlyAssignedTo: Joi.string(),
+    assignedBy: Joi.string(),
+    comments: Joi.string(),
+    raisedAlertId: Joi.number()
+  });
+  return schema.validate(data)
+}

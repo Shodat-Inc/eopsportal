@@ -88,7 +88,7 @@ async function getClassData(params: any) {
         },
       ],
     });
-    if (result.length === 0) {
+    if (!result.length) {
       return sendResponseData(false, message.error.classData, []);
     }
     // const response = result.map((item: any, index: any) => ({
@@ -142,7 +142,7 @@ async function getClassDataByID(params: any) {
         },
       ],
     });
-    if (result.length === 0) {
+    if (!result.length) {
       return sendResponseData(false, message.error.noDataFound, []);
     }
 
@@ -196,7 +196,7 @@ async function getSubClass(param: any) {
         },
       ],
     });
-    if (result.length === 0) {
+    if (!result.length) {
       return sendResponseData(false, message.error.noDataFound, []);
     }
     // Get Parent Join Tag Name
@@ -257,7 +257,7 @@ async function getSubClassByID(param: any) {
         },
       ],
     });
-    if (result.length === 0) {
+    if (!result.length) {
       return sendResponseData(false, "No data found", []);
     }
     // Get Parent Join Tag Name

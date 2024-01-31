@@ -10,6 +10,7 @@ export const classTagRepo = {
   delete: _delete,
   getClassTags,
   getParentJoinTags,
+  getParentTagValue,
 };
 
 /**
@@ -66,7 +67,7 @@ async function bulkCreate(params: any[], classId: any, transaction: any) {
   } catch (error) {
     // Log the error if there's an issue with the bulk class tag creation.
     loggerError.error("Error in bulk class Tag repo");
-    return sendResponseData(false, message.error.errorBulkClassTag, error)
+    return sendResponseData(false, message.error.errorBulkClassTag, error);
   }
 }
 
@@ -79,9 +80,12 @@ async function bulkCreate(params: any[], classId: any, transaction: any) {
 async function getClassTags(id: any, transaction: any) {
   try {
     // Fetch class tags from the database using Sequelize findAll method
-    const result = await db.classTag.findAll({
-      where: { id },
-    }, { transaction });
+    const result = await db.classTag.findAll(
+      {
+        where: { id },
+      },
+      { transaction }
+    );
     // Return successful response with fetched class tags
     return sendResponseData(true, message.success.fetchClassTag, result);
   } catch (error: any) {
@@ -114,6 +118,21 @@ async function getParentJoinTags(params: any) {
     return error;
   }
 }
+async function getParentTagValue(params: number) {
+  try {
+    loggerInfo.info("Find Tag Values");
+    const result = await db.classTag.findOne({
+      include: [
+        {
+          model: db.AddValues,
+          where: { classTagid: params },
+          required: true,
+        },
+      ],
+    });
+    return result;
+  } catch (error) {}
+}
 
 /**
  * Deletes a class tag from the database based on the given ID.
@@ -130,4 +149,3 @@ async function _delete(id: any) {
     },
   });
 }
-

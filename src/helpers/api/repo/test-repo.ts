@@ -1,44 +1,65 @@
-import { loggerInfo } from "@/logger";
+import { loggerError, loggerInfo } from "@/logger";
 import { db } from "../db";
 import sendResponseData from "@/helpers/constant";
-
-import externalAPI from "@/util/externalAPI";
 import { error } from "console";
 import { crackDetectionResponse } from "../constant/crackDetectionResponse";
+import { checkAlert } from "../constant/checkAlert";
 
 export default async function runTest(params: any) {
   try {
     loggerInfo.info("Run Model Test");
-    const image_url = { image_url: params.image_url };
-    const imageid = params.modelObjectImageId;
-    const modelName=params.modelName;
-    // const apiResponse = await externalAPI(imageUrl,modelName);
+
+    const image_url = { image_url: params.body.image_url };
+    const imageid = params.body.modelObjectImageId;
+    const userId = params.userId;
+
     const apiResponse = crackDetectionResponse;
-    if (apiResponse == undefined) {
+    if (!apiResponse) {
       return sendResponseData(false, "Error In External Service", error);
     }
+
     const formatted: any = {};
-    for (let i = 0; i < apiResponse.coordinates.length; i++) {
-      formatted[`crackAreaCoordinates${i + 1}`] = apiResponse.coordinates[i];
-    }
+    apiResponse.coordinates.forEach((coord, index) => {
+      formatted[`crackAreaCoordinates${index + 1}`] = coord;
+    });
+
     const tag = apiResponse.tag;
     const workData = {
       modelObjectImageId: imageid,
       coordinates: formatted,
       tag,
     };
-    const result = new db.CrackResponse(workData);
-    const saveResponse = await result.save();
 
-    if (saveResponse !== undefined) {
-      const ranCount = await db.Image.findByPk(imageid);
-      ranCount.testRanCount += 1;
-      await ranCount.save();
-    } else {
-      return sendResponseData(false, "Error In Saving Data", error);
+    // Save the response in the CrackResponse table
+    const result = await db.CrackResponse.create(workData);
+
+    if (!result) {
+      return sendResponseData(false, "Error In Saving Data", []);
     }
-    return sendResponseData(true, "Data Saved Successfully", saveResponse);
+    // Increase the count of testRanCount
+    const ranCount = await db.Image.findByPk(imageid);
+    ranCount.testRanCount += 1;
+    await ranCount.save();
+
+    let highestProbability = 0;
+    let keyWithHighestProbability = "";
+
+    for (const key in result.dataValues.coordinates) {
+      if (result.dataValues.coordinates.hasOwnProperty(key)) {
+        const coordinates =
+          result.dataValues.coordinates[key].responseCoordinates;
+        const probability = parseInt(coordinates.probablity);
+
+        if (probability > highestProbability) {
+          highestProbability = probability;
+          keyWithHighestProbability = key;
+        }
+      }
+    }
+    checkAlert(image_url, userId, result, highestProbability);
+    return sendResponseData(true, "Data Saved Successfully", result);
   } catch (error) {
+    loggerError.error("Error", error);
     return sendResponseData(false, "Error", error);
   }
 }

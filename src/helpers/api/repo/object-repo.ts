@@ -4,6 +4,7 @@ import { loggerInfo, loggerError } from "@/logger";
 import { error } from "console";
 import message from "@/util/responseMessage";
 import { generateRandomAlphaNumeric } from "../../../util/helper";
+import { classTagRepo } from "./classTag-repo";
 
 /**
  * Repository for handling object related operations.
@@ -84,6 +85,10 @@ async function get(id: any) {
               model: db.classTag,
               attributes: ["tagName"],
             },
+            {
+              model: db.parentJoinKey,
+              attributes: ["id", "parentTagId", "createdAt"],
+            },
           ],
         },
         {
@@ -92,14 +97,19 @@ async function get(id: any) {
         },
       ],
     });
+    const data: any = {};
+    for (let i of result) {
+      const pjk = i.Class.ParentJoinKeys;
+      for (let j of pjk) {
+        let tagQuery = await classTagRepo.getParentTagValue(j.parentTagId);
+        data[`${tagQuery.tagName}`] = tagQuery.ObjectValues[0].values;
+        i.dataValues.parentJoinValues = data;
+      }
+    }
     if (!result) {
       return sendResponseData(false, "Object Do not Exist", {});
     }
     return sendResponseData(true, "Object fetched Successfully", result);
-    // return result.map((item: any, index: any) => ({
-    //   S_No: index + 1,
-    //   ...item.get(), // Convert Sequelize instance to plain JS object
-    // }));
   } catch (error) {
     // Log the error if there's an issue with fetching data.
     loggerError.error(
@@ -144,6 +154,10 @@ async function getObjectById(params: any) {
               model: db.classTag,
               attributes: ["id", "tagName"],
             },
+            {
+              model: db.parentJoinKey,
+              attributes: ["id", "parentTagId", "createdAt"],
+            },
           ],
         },
         {
@@ -152,6 +166,16 @@ async function getObjectById(params: any) {
         },
       ],
     });
+    
+    const data: any = {};
+    for (let i of result) {
+      const pjk = i.Class.ParentJoinKeys;
+      for (let j of pjk) {
+        let tagQuery = await classTagRepo.getParentTagValue(j.parentTagId);
+        data[`${tagQuery.tagName}`] = tagQuery.ObjectValues[0].values;
+        i.dataValues.parentJoinValues = data;
+      }
+    }
     if (!result) {
       return sendResponseData(false, "Object Do not Exist", {});
     }

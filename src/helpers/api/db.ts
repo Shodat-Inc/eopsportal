@@ -9,8 +9,9 @@ import { Reasons } from "../seedData/reason";
 import { TagDataType } from "../seedData/datatype";
 import { routes } from "../seedData/route";
 import { individualRole } from "../seedData/indvidualRole";
+import { emailTemplates } from "../seedData/emailTemplate";
 const { serverRuntimeConfig } = getConfig();
-let sequelize
+let sequelize;
 
 export const db: any = {
   initialized: false,
@@ -77,6 +78,14 @@ async function seedDemoIndvidualRole(Role: any) {
     });
   }
 }
+async function seedEmailTemplates(EmailTemplate: any) {
+  for (let temps of emailTemplates) {
+    await EmailTemplate.findOrCreate({
+      where: { emailSubject: temps.emailSubject },
+      defaults: temps,
+    });
+  }
+}
 
 export async function initialize() {
   loggerInfo.info("<+----|| DB connection ||-----+>");
@@ -129,11 +138,18 @@ export async function initialize() {
       aiModelData: "ModelData",
       modelObjectImages: "Image",
       crackDetectionResponse: "CrackResponse",
-      tyreDetectionResponse:"TyreResponse",
+      tyreDetectionResponse: "TyreResponse",
       subscription: "Subscription",
-      purchaseHistory: "PurchaseHistory"
+      purchaseHistory: "PurchaseHistory",
+      alert: "Alert",
+      emailTemplate: "EmailTemplate",
+      modelRaisedAlert: "RaisedAlert",
+      batteryAlert: "BatteryAlert",
+      batteryDetectionResponse: "BatteryResponse",
+      ticket: "Ticket",
+      ticketAttachments: "Attachment",
+      ticketComments: "Comment"
     };
-
 
     if (true) {
       for (let key in modelArray) {
@@ -164,6 +180,9 @@ export async function initialize() {
         }
         if (db.Reason) {
           await seedDemoReasons(db.Reason);
+        }
+        if (db.EmailTemplate) {
+          await seedEmailTemplates(db.EmailTemplate);
         }
       }
     }

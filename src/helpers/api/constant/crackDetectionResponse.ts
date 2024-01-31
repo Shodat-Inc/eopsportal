@@ -7,7 +7,7 @@ export const crackDetectionResponse = {
         "coord-topRight": [154, 32],
         "coord-bottomLeft": [104, 239],
         "coord-bottomRight": [146, 241],
-        probablity: "50%",
+        probablity: "55%",
       },
     },
     {
@@ -16,7 +16,7 @@ export const crackDetectionResponse = {
         "coord-topRight": [154, 132],
         "coord-bottomLeft": [44, 39],
         "coord-bottomRight": [14, 41],
-        probablity: "70%",
+        probablity: "78%",
       },
     },
   ],
