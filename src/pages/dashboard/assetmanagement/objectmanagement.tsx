@@ -17,10 +17,6 @@ import EditObject from './editobject';
 
 export default function ObjectManagement(props: any) {
 
-    console.log({
-        PROPS: props
-    })
-
     const dispatch = useDispatch<any>();
     const [toggleFilter, setToggleFilter] = useState(false);
     const [toggleArrow, setToggleArrow] = useState(false);
@@ -36,6 +32,11 @@ export default function ObjectManagement(props: any) {
     const [selectedObjID, setSelectedObjID] = useState('');
     const [deleteID, setDeleteID] = useState(0);
     const [actionsToggle, setActionsToggle] = useState(false);
+    
+    const [deleteMessage, setDeleteMessage] = useState(false);
+    const [successMessage, setSuccessMessage] = useState(false);
+    const [editMessage, setEditMessage] = useState(false);
+
     let access_token = "" as any;
     if (typeof window !== 'undefined') {
         access_token = localStorage.getItem('authToken')
@@ -47,25 +48,9 @@ export default function ObjectManagement(props: any) {
 
     // Close Success message after 5 second if true
     useEffect(() => {
-        // if (classSelector && classSelector.successMessageReducer === true) {
-        //     setTimeout(() => {
-        //         dispatch(successMessageAction(false))
-        //     }, 5000)
-        // }
-
-        // if (classSelector && classSelector.successMessageAdvancedReducer) {
-        //     setTimeout(() => {
-        //         let data = {
-        //             "type": "",
-        //             "action": false
-        //         }
-        //         dispatch(successMessagAdvancedAction(data))
-        //     }, 4000)
-        // }
         if (allClassSelector?.successMessageReducer === true) {
             dispatch(successMessageAction(false))
         }
-
     }, [allClassSelector?.successMessageReducer === true])
 
     // Toggle the filters dropdown
@@ -169,9 +154,6 @@ export default function ObjectManagement(props: any) {
 
     // Get objected based on selected class
     async function fetchData() {
-        console.log({
-            chooseAsset:chooseAsset
-        })
         try {
             await axios({
                 method: 'GET',
@@ -246,16 +228,14 @@ export default function ObjectManagement(props: any) {
                     "Content-Type": "application/json"
                 }
             }).then(function (response) {
-                // dispatch(successMessageAction(true))
                 let data = {
                     "type": "deleteObject",
                     "action": true
                 };
                 dispatch(successMessagAdvancedAction(data))
-                // setDeleteMessage(true);
-                // setTimeout(() => {
-                //     setDeleteMessage(false)
-                // }, 2000)
+                setTimeout(()=>{
+                    setDeleteMessage(false);
+                }, 4000)
             }).catch(function (error) {
                 console.log({
                     "ERROR IN AXIOS CATCH (DELETE)": error
@@ -266,6 +246,20 @@ export default function ObjectManagement(props: any) {
                 "ERROR IN TRY CATCH (DELETE)": err
             })
         }
+    }
+
+    const handleAddSuccessMessage = (msg:any) => {
+        setSuccessMessage(msg);
+        setTimeout(()=>{
+            setSuccessMessage(false);
+        }, 4000)
+    }
+
+    const handleEditSuccessMessage = (msg:any) => {
+        setEditMessage(msg);
+        setTimeout(()=>{
+            setEditMessage(false);
+        }, 4000)
     }
 
 
@@ -359,9 +353,8 @@ export default function ObjectManagement(props: any) {
 
             {/* Messages for Add Class */}
             {
-                (allClassSelector?.successMessageAdvancedReducer?.action === true && allClassSelector?.successMessageAdvancedReducer?.type === "newObject") &&
-
-                <div className={`bg-green-957 border-green-958 text-green-959 mb-1 mt-1 border text-md px-4 py-3 rounded-xl relative flex-1 hidden items-center justify-start mx-4`}>
+                (successMessage) &&
+                <div className={`bg-green-957 border-green-958 text-green-959 mb-1 mt-1 border text-md px-4 py-3 rounded-xl relative flex items-center justify-start mx-4`}>
                     <Image
                         src="/img/AlertSuccess.svg"
                         alt="Alert Success"
@@ -375,9 +368,9 @@ export default function ObjectManagement(props: any) {
             }
 
             {/* Message for DeleteClass */}
-            <div className='flex-1 hidden justify-start items-center px-4 w-full'>
+            <div className='flex justify-start items-center px-4 w-full'>
                 {
-                    (allClassSelector?.successMessageAdvancedReducer?.action === true && allClassSelector?.successMessageAdvancedReducer?.type === "deleteObject") &&
+                    (deleteMessage) &&
                     <div className={`bg-blue-957 border-blue-958 text-blue-959 mb-1 mt-1 border text-md px-4 py-3  rounded-xl relative flex items-center justify-start w-full`}>
                         <Image
                             src="/img/AlertInfo.svg"
@@ -393,9 +386,9 @@ export default function ObjectManagement(props: any) {
             </div>
 
             {/* Message for Edit Class */}
-            <div className='flex-1 hidden justify-start items-center px-4 w-full'>
+            <div className='flex justify-start items-center px-4 w-full'>
                 {
-                    (allClassSelector?.successMessageAdvancedReducer?.action === true && allClassSelector?.successMessageAdvancedReducer?.type === "editObject") &&
+                    (editMessage) &&
                     <div className={`bg-blue-957 border-blue-958 text-blue-959 mb-1 mt-1 border text-md px-4 py-3  rounded-xl relative flex items-center justify-start w-full`}>
                         <Image
                             src="/img/AlertInfo.svg"
@@ -593,6 +586,7 @@ export default function ObjectManagement(props: any) {
                 selectedParentClass={chooseAsset}
                 classData={props.classData}
                 objID={objID}
+                message={handleAddSuccessMessage}
             />
 
             <EditObject
@@ -602,6 +596,7 @@ export default function ObjectManagement(props: any) {
                 classData={props.classData}
                 objID={objID}
                 selectedObjID={selectedObjID}
+                message={handleEditSuccessMessage}
             />
 
         </div>

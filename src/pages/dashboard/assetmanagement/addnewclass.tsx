@@ -181,18 +181,15 @@ export default function AddNewClass(props: any) {
       })
         .then(function (response) {
           if (response) {
-            // setSuccess(true);
             setAllTags([]);
-            dispatch(successMessageAction(true));
+            // dispatch(successMessageAction(true));
             let data={
               "type":"newClass",
               "action":true
             };
             dispatch(successMessagAdvancedAction(data))
-            setTimeout(() => {
-              // setSuccess(false);
-              dispatch(openCloseNewClassModalAction(false));
-            }, 100);
+            dispatch(openCloseNewClassModalAction(false));
+            props.message(true);
           }
         })
         .catch(function (error) {

@@ -29,7 +29,7 @@ export default function Home() {
             <li>
               <Link
                 href=""
-                className="text-black h-[37px] px-4 bg-yellow-951 flex justify-center items-center rounded rounded-lg"
+                className="text-black h-[37px] px-4 bg-yellow-951 flex justify-center items-center rounded-lg"
               >
                 <span>Plans and pricing</span>
               </Link>
@@ -79,7 +79,7 @@ export default function Home() {
                 Have an account?
                 <Link
                 href="/authentication/signin"
-                  className="text-black text-sm h-[28px] px-4 bg-yellow-951 flex justify-center items-center rounded rounded-lg ml-4">
+                  className="text-black text-sm h-[28px] px-4 bg-yellow-951 flex justify-center items-center rounded-lg ml-4">
                   Sign in
                 </Link>
               </h2>
@@ -88,7 +88,7 @@ export default function Home() {
               <div className="text-sm text-[#8692A6] mb-8">To begin this journey, tell us what type of account you would be opening.</div>
 
               {/* Individual */}
-              <Link href="/authentication/individual" className="rounded rounded-lg shadow shadow-lg p-3 min-h-[100px] flex justify-between items-center mb-10 border border-white hover:border-yellow-951 cursor-pointer">
+              <Link href="/authentication/individual" className="rounded-lg shadow-lg p-3 min-h-[100px] flex justify-between items-center mb-10 border border-white hover:border-yellow-951 cursor-pointer">
                 <div className="relative flex w-[60%]">
                   <Image
                     alt="individual"
@@ -103,14 +103,14 @@ export default function Home() {
                   </div>
                 </div>
                 <div className="relative">
-                  <button className="text-sm bg-yellow-951 px-6 py-1 rounded rounded-lg flex justify-center items-center transition-all duration-[400ms] transition-opacity duration-300 outline-none transform active:scale-75 transition-transform bg-opacity-50 hover:bg-opacity-100">
+                  <button className="text-sm bg-yellow-951 px-6 py-1 rounded-lg flex justify-center items-center duration-300 outline-none transform active:scale-75 transition-transform bg-opacity-50 hover:bg-opacity-100">
                     <span>Free</span>
                   </button>
                 </div>
               </Link>
 
               {/* Enterprises */}
-              <Link href="/authentication/enterprise" className="rounded rounded-lg shadow shadow-lg p-3 min-h-[100px] flex justify-between items-center border border-white hover:border-yellow-951 cursor-pointer">
+              <Link href="/authentication/enterprise" className="rounded-lg  shadow-lg p-3 min-h-[100px] flex justify-between items-center border border-white hover:border-yellow-951 cursor-pointer">
                 <div className="relative flex w-[60%]">
                   <Image
                     alt="Enterprises"
@@ -125,7 +125,7 @@ export default function Home() {
                   </div>
                 </div>
                 <div className="relative">
-                  <button className="text-sm bg-yellow-951 px-6 py-1 rounded rounded-lg flex justify-center items-center transition-all duration-[400ms] transition-opacity duration-300 outline-none transform active:scale-75 transition-transform bg-opacity-50 hover:bg-opacity-100">
+                  <button className="text-sm bg-yellow-951 px-6 py-1 rounded-lg flex justify-center items-center duration-300 outline-none transform active:scale-75 transition-transform bg-opacity-50 hover:bg-opacity-100">
                     <span>Contact</span>
                   </button>
                 </div>

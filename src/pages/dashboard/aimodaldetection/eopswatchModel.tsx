@@ -123,7 +123,7 @@ export default function EopsWatchModel() {
                             <p className="w-[40%]">Please find your object using by search box or select class to run the available AI models below.</p>
                             <Link
                                 href="/dashboard/modelcatalog/myorders"
-                                className="text-sm text-black min-w-[100px] h-[45px] px-4 inline-flex justify-center items-center rounded-xl border border-yellow-951 bg-yellow-951 transition-opacity duration-300 outline-none transform active:scale-75 transition-transform relative">
+                                className="text-sm text-black min-w-[100px] h-[45px] px-4 inline-flex justify-center items-center rounded-xl border border-yellow-951 bg-yellow-951 duration-300 outline-none transform active:scale-75 transition-transform relative">
                                 {/* <Image
                                     src="/img/shopping-cart.svg"
                                     alt="shopping-cart"
@@ -142,7 +142,7 @@ export default function EopsWatchModel() {
                             <Carousel
                                 className="rounded-xl"
                                 navigation={({ setActiveIndex, activeIndex, length }) => (
-                                    <div className="absolute bottom-4 left-2/4 z-50 flex -translate-x-2/4 gap-2 hidden">
+                                    <div className="absolute bottom-4 left-2/4 z-50 flex1 -translate-x-2/4 gap-2 hidden">
                                         {new Array(length).fill("").map((_, i) => (
                                             <span
                                                 key={i}
@@ -159,7 +159,7 @@ export default function EopsWatchModel() {
                                         color="white"
                                         size="lg"
                                         onClick={handlePrev}
-                                        className="!absolute top-[40%] -translate-y-2/4 left-4 bg-white bg-opacity-90 rounded rounded-full"
+                                        className="!absolute top-[40%] -translate-y-2/4 left-4 bg-white bg-opacity-90 rounded-full"
                                     >
                                         <Image
                                             src="/img/arrow-left-black.svg"
@@ -176,7 +176,7 @@ export default function EopsWatchModel() {
                                         color="white"
                                         size="lg"
                                         onClick={handleNext}
-                                        className="!absolute top-[40%] -translate-y-2/4 !right-4 bg-white bg-opacity-90 rounded rounded-full z-10"
+                                        className="!absolute top-[40%] -translate-y-2/4 !right-4 bg-white bg-opacity-90 rounded-full z-10"
                                     >
                                         <Image
                                             src="/img/arrow-right-black.svg"
@@ -192,7 +192,7 @@ export default function EopsWatchModel() {
                                     splitEvery(automotiveModels, 3).map((itemsChunk: any) => (
                                         <div className="flex justify-start items-center mb-5 pt-3 pl-2">
                                             {itemsChunk.map((item: any, i: any) => (
-                                                <div key={i} className={`h-[422px] w-[320px] overflow-hidden rounded rounded-xl relative bg-white p-3 shadow ${i % 3 === 0 ? 'ml-0' : 'ml-5'}`}>
+                                                <div key={i} className={`h-[422px] w-[320px] overflow-hidden rounded-xl relative bg-white p-3 shadow ${i % 3 === 0 ? 'ml-0' : 'ml-5'}`}>
                                                     <Image
                                                         src={`/img/${item.image}`}
                                                         alt="crack detection"
@@ -269,8 +269,8 @@ export default function EopsWatchModel() {
                                                         <li>Type Setting Industries</li>
                                                     </ul>
                                                     <div className="flex">
-                                                        <button className="bg-yellow-951 border border-yellow-951 rounded rounded-xl text-black h-12 min-w-[108px] flex justify-center items-center py-2 px-4 mr-16">Subscribe Now</button>
-                                                        <button className="bg-black border border-black rounded rounded-xl text-white h-12 min-w-[108px] flex justify-center items-center py-2 px-4">Request Demo</button>
+                                                        <button className="bg-yellow-951 border border-yellow-951 rounded-xl text-black h-12 min-w-[108px] flex justify-center items-center py-2 px-4 mr-16">Subscribe Now</button>
+                                                        <button className="bg-black border border-black rounded-xl text-white h-12 min-w-[108px] flex justify-center items-center py-2 px-4">Request Demo</button>
                                                     </div>
                                                 </div>
                                             </div>

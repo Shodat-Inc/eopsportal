@@ -119,9 +119,9 @@ export default function EditClass(props: any) {
             newAddedTag.push(newTag);
             setNewlyAddedTag(newAddedTag);
 
-            console.log({
-                "__SAVE":newTag
-            })
+            // console.log({
+            //     "__SAVE":newTag
+            // })
             
 
             setShowInput(false);
@@ -160,10 +160,10 @@ export default function EditClass(props: any) {
             return e.id !== item;
         });
 
-        console.log({
-            "HERE":filteredArray,
-            "ITEM":item
-        })
+        // console.log({
+        //     "HERE":filteredArray,
+        //     "ITEM":item
+        // })
         setAllTags(filteredArray);
 
         let deletedList = deleteTagIDS.slice();
@@ -183,26 +183,26 @@ export default function EditClass(props: any) {
         setDtObject(filteredJSON);
 
 
-        console.log({
-            "__REMOVE":item
-        })
+        // console.log({
+        //     "__REMOVE":item
+        // })
 
         // delete from new array
         let newAddedTag = newlyAddedTag.slice();
         var filteredArray2 = newAddedTag.filter(function(e:any) { return e !== item })
 
-        console.log({
-            "AMITHERE":filteredArray2
-        })
+        // console.log({
+        //     "AMITHERE":filteredArray2
+        // })
 
         // newAddedTag.splice(-1);
         setNewlyAddedTag(filteredArray2);
     };
 
-    console.log({
-        "__newlyAddedTag":newlyAddedTag,
-        "__ALL_TAGS":allTags
-    })
+    // console.log({
+    //     "__newlyAddedTag":newlyAddedTag,
+    //     "__ALL_TAGS":allTags
+    // })
 
     // Cancel Adding new tags
     const cancelAddingTag = () => {
@@ -250,13 +250,14 @@ export default function EditClass(props: any) {
                     setAllTags([]);
                     setNewlyAddedTag([]);
                     setDtObject([]);
-                    dispatch(successMessageAction(true));
+                    // dispatch(successMessageAction(true));
                     dispatch(editClassModalAction(false));
                     let data = {
                         "type": "editClass",
                         "action": true
                     };
                     dispatch(successMessagAdvancedAction(data))
+                    props.message(true)
                 }
             })
                 .catch(function (error) {

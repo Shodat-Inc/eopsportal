@@ -37,17 +37,6 @@ export default function AssetManagement() {
 
     // Close Success message after 5 second if true
     useEffect(() => {
-        
-
-        // if(allClassSelector && allClassSelector.successMessageAdvancedReducer) {
-        //     setTimeout(() => {
-        //         let data = {
-        //             "type":"",
-        //             "action":false
-        //         }
-        //         dispatch(successMessagAdvancedAction(data))
-        //     }, 4000)
-        // }  
 
         if (allClassSelector?.successMessageReducer === true) {
             dispatch(successMessageAction(false))

@@ -76,19 +76,8 @@ export default function AddNewClassObject(props: any) {
                 }
             }).then(function (response) {
                 if (response) {
-                    setSuccess(true);
-                    dispatch(successMessageAction(true))
-
-                    let data = {
-                        "type": "editObject",
-                        "action": true
-                    };
-                    dispatch(successMessagAdvancedAction(data))
-
-                    setTimeout(() => {
-                        setSuccess(false);
-                        dispatch(toggleAddNewClassObjectModel(false));
-                    }, 50);
+                    dispatch(toggleAddNewClassObjectModel(false));
+                    props.message(true)
                 }
             }).catch(function (error) {
                 console.log("ERROR IN AXIOS CATCH (CREATE CLASS OBJECT):", error)

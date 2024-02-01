@@ -238,12 +238,7 @@ export default function EditSubClass(props: any) {
                     setNewlyAddedTag([]);
                     setDtObject([]);
                     dispatch(editSubClassModalAction(false));
-                    // dispatch(successMessageAction(true))
-                    let data = {
-                        "type": "editSubClass",
-                        "action": true
-                    };
-                    // dispatch(successMessagAdvancedAction(data))
+                    props.message(true)
                 }
             }).catch(function (error) {
                 console.log("ERROR IN AXIOS CATCH (CREATE CLASS):", error)

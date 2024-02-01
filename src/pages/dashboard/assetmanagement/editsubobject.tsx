@@ -1,15 +1,15 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch } from 'react-redux';
 import styles from '../../../styles/Common.module.css';
 import Image from "next/image";
-import { editSubObjectModalAction, successMessageAction, successMessagAdvancedAction } from '@/store/actions/classAction';
+import { editSubObjectModalAction } from '@/store/actions/classAction';
 import axios from "axios";
 
 export default function EditSubObject(props: any) {
 
     const [objectsData, setObjectsData] = useState([] as any);
-    const [success, setSuccess] = useState(false);
     const [data, setData] = useState({} as any);
+    const [json, setJson] = useState({} as any)
     const [parentJoinKey, setParentJoinKey] = useState('' as any)
     const [parentJoinValue, setParentJoinValue] = useState('' as any)
 
@@ -33,22 +33,24 @@ export default function EditSubObject(props: any) {
 
                     let arr1 = [] as any;
                     let arr2 = [] as any;
-                   
+                    let arr3 = [] as any;
+
                     setObjectsData(response.data?.data)
                     let objectsData = response.data?.data;
 
                     let key = Object.keys(objectsData[0]?.parentJoinValues);
                     let val = Object.values(objectsData[0]?.parentJoinValues)
                     setParentJoinKey(key[0])
-                    console.log({
-                        "__VAL":objectsData
-                    })
+                    // console.log({
+                    //     "__VAL": objectsData
+                    // })
                     setParentJoinValue(val[0])
 
                     response?.data?.data[0]?.Class?.ClassTags.map((item: any, index: any) => {
                         const linkContentVal = response?.data?.data[0]?.ObjectValues[index];
                         let tagWithID = item?.tagName + "_" + linkContentVal?.id
                         arr1.push(tagWithID);
+                        arr3.push(item?.tagName)
                     })
 
                     response?.data?.data[0]?.ObjectValues.map((item: any) => {
@@ -57,6 +59,12 @@ export default function EditSubObject(props: any) {
 
                     let arr5 = Object.fromEntries(arr1.map((v: any, i: any) => [v, arr2[i]]));
                     setData(arr5)
+                    setJson(arr3)
+
+                    // console.log({
+                    //     arr3:arr3,
+                    //     arr5:arr5
+                    // })
                 }
             }).catch(function (error) {
                 console.log({
@@ -122,21 +130,8 @@ export default function EditSubObject(props: any) {
                 }
             }).then(function (response) {
                 if (response) {
-                    // setSuccess(true);
-                    dispatch(successMessageAction(true))
-
-                    let data = {
-                        "type": "editSubObject",
-                        "action": true
-                    };
-                    dispatch(successMessagAdvancedAction(data))
-
-                    setTimeout(() => {
-                        dispatch(editSubObjectModalAction(false))
-                    }, 50);
-                    // setTimeout(() => {
-                    //     setSuccess(false);
-                    // }, 1000);
+                    dispatch(editSubObjectModalAction(false))
+                    props.message(true)
                 }
             }).catch(function (error) {
                 console.log("ERROR IN AXIOS CATCH (EDIT SUB OBJECT):", error)
@@ -154,17 +149,19 @@ export default function EditSubObject(props: any) {
     }
 
 
-    console.log({
-        "__AMIT__ID": objectsData[0]?.Class?.ParentJoinKeys[0]?.parentTagId,
-        "__AMIT__KEY": parentJoinKey,
-        "__AMIT__VALUES": parentJoinValue
-    })
+    // console.log({
+    //     "__AMIT__ID": objectsData[0]?.Class?.ParentJoinKeys[0]?.parentTagId,
+    //     "__AMIT__KEY": parentJoinKey,
+    //     "__AMIT__VALUES": parentJoinValue
+    // })
 
     return (
         <>
             <div className={`bg-white h-full z-[11] fixed top-0 right-0 p-5 shadow-lg ${props.show === true ? `${styles.objectContainer} ${styles.sliderShow}` : `${styles.objectContainer}`}`}>
                 <div className="flex justify-between items-center w-full mb-3">
-                    <h2 className="font-semibold text-lg">Edit Sub Object (<span className="text-sm text-gray-800">{props.parentClass} / {props.selectedSubClass} / <strong>{props.objID}</strong></span>)</h2>
+                    <h2 className="font-semibold text-lg">Edit Sub Object 
+                    <span className="hidden pl-2 text-sm text-gray-800">({props.parentClass} / {props.selectedSubClass} / <strong>{props.objID}</strong>)</span>
+                    </h2>
                     <button onClick={closeModel} className="duration-100 outline-none transform active:scale-75 transition-transform">
                         <Image
                             src="/img/x.svg"
@@ -176,20 +173,6 @@ export default function EditSubObject(props: any) {
                 </div>
 
 
-                {/* {success &&
-                    <div className={`bg-green-957 border-green-958 text-green-959 mb-1 mt-1 border text-md px-4 py-3 rounded-xl relative flex items-center justify-start`}>
-                        <Image
-                            src="/img/AlertSuccess.svg"
-                            alt="Alert Success"
-                            height={24}
-                            width={24}
-                            className='mr-2'
-                        />
-                        <strong className="font-semibold">Success</strong>
-                        <span className="block sm:inline ml-2">Object has been added successfully!</span>
-                    </div>
-                } */}
-
                 <div className={`flex justify-start items-start w-full overflow-auto h-full pb-10 ${styles.scroll} pr-3`}>
 
                     <form
@@ -200,15 +183,14 @@ export default function EditSubObject(props: any) {
                     >
 
                         {
-                            // Object.keys(data).map((key, index) => {
                             objectsData[0]?.ObjectValues.map((items: any, index: any) => {
                                 const linkContent = objectsData[0]?.Class?.ClassTags[index];
                                 const linkContentVal = objectsData[0]?.ObjectValues[index];
                                 const stateVal = Object.values(data)[index];
                                 const key = Object.keys(data)[index];
+                                let label1 = Object.values(json)[index] as any
                                 return (
                                     <div key={index} className="w-full flex justify-start items-start flex-wrap flex-col">
-                                        {/* <span>{linkContent.id}</span> */}
                                         <div className={`mb-5 lg:w-full small:w-full ${styles.form__wrap}`}>
                                             <div className={`relative ${styles.form__group} font-OpenSans`}>
                                                 <input
@@ -221,7 +203,7 @@ export default function EditSubObject(props: any) {
                                                     onChange={(e) => handleChange(e)}
                                                     required
                                                 />
-                                                <label htmlFor={`${key}`} className={`${styles.form__label}`}>{key}</label>
+                                                <label htmlFor={`${key}`} className={`${styles.form__label}`}>{label1} <span className="hidden">{key}</span></label>
                                             </div>
                                         </div>
                                     </div>

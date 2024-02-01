@@ -30,6 +30,9 @@ export default function ClassManagement(props: any) {
     if (typeof window !== 'undefined') {
         access_token = localStorage.getItem('authToken')
     }
+    const [deleteMessage, setDeleteMessage] = useState(false);
+    const [successMessage, setSuccessMessage] = useState(false);
+    const [editMessage, setEditMessage] = useState(false);
 
     // All class reducer states
     const allClassSelector = useSelector((state: any) => state.classReducer);
@@ -141,12 +144,16 @@ export default function ClassManagement(props: any) {
                     "Content-Type": "application/json"
                 }
             }).then(function (response) {
-                dispatch(successMessageAction(true))
+                // dispatch(successMessageAction(true))
                 let data = {
                     "type": "deleteClass",
                     "action": true
                 };
                 dispatch(successMessagAdvancedAction(data))
+                setDeleteMessage(true);
+                setTimeout(()=>{
+                    setDeleteMessage(false);
+                }, 4000)
             }).catch(function (error) {
                 console.log({
                     "ERROR IN AXIOS CATCH (DELETE)": error
@@ -177,6 +184,22 @@ export default function ClassManagement(props: any) {
 
     const wrapperRef = useRef(null);
     useOutsideAlerter(wrapperRef);
+
+    const handleAddSuccessMessage = (msg:any) => {
+        setSuccessMessage(msg);
+        setTimeout(()=>{
+            setSuccessMessage(false);
+        }, 4000)
+    }
+
+    const handleEditSuccessMessage = (msg:any) => {
+        setEditMessage(msg);
+        setTimeout(()=>{
+            setEditMessage(false);
+        }, 4000)
+    }
+
+    
 
 
     return (
@@ -231,9 +254,8 @@ export default function ClassManagement(props: any) {
 
             {/* Messages for Add Class */}
             {
-                (allClassSelector?.successMessageAdvancedReducer?.action === true && allClassSelector?.successMessageAdvancedReducer?.type === "newClass") &&
-
-                <div className={`bg-green-957 border-green-958 text-green-959 mb-1 mt-1 border text-md px-4 py-3 rounded-xl relative flex-1 hidden items-center justify-start mx-4`}>
+                (successMessage) &&
+                <div className={`bg-green-957 border-green-958 text-green-959 mb-1 mt-1 border text-md px-4 py-3 rounded-xl relative flex items-center justify-start mx-4`}>
                     <Image
                         src="/img/AlertSuccess.svg"
                         alt="Alert Success"
@@ -247,9 +269,9 @@ export default function ClassManagement(props: any) {
             }
 
             {/* Message for DeleteClass */}
-            <div className='flex-1 hidden justify-start items-center px-4 w-full'>
+            <div className='flex justify-start items-center px-4 w-full'>
                 {
-                    (allClassSelector?.successMessageAdvancedReducer?.action === true && allClassSelector?.successMessageAdvancedReducer?.type === "deleteClass") &&
+                    (deleteMessage) &&
                     <div className={`bg-blue-957 border-blue-958 text-blue-959 mb-1 mt-1 border text-md px-4 py-3  rounded-xl relative flex items-center justify-start w-full`}>
                         <Image
                             src="/img/AlertInfo.svg"
@@ -265,9 +287,9 @@ export default function ClassManagement(props: any) {
             </div>
 
             {/* Message for Edit Class */}
-            <div className='flex-1 hidden justify-start items-center px-4 w-full'>
+            <div className='flex justify-start items-center px-4 w-full'>
                 {
-                    (allClassSelector?.successMessageAdvancedReducer?.action === true && allClassSelector?.successMessageAdvancedReducer?.type === "editClass") &&
+                    (editMessage) &&
                     <div className={`bg-blue-957 border-blue-958 text-blue-959 mb-1 mt-1 border text-md px-4 py-3  rounded-xl relative flex items-center justify-start w-full`}>
                         <Image
                             src="/img/AlertInfo.svg"
@@ -389,6 +411,7 @@ export default function ClassManagement(props: any) {
             {/* Add New Class */}
             <AddNewClass
                 show={allClassSelector?.newClassModalReducer}
+                message={handleAddSuccessMessage}
             />
 
 
@@ -397,6 +420,7 @@ export default function ClassManagement(props: any) {
                 selectedClass={selectedClass}
                 allClassData={allData}
                 show={allClassSelector?.editClassModalReducer}
+                message={handleEditSuccessMessage}
             />
 
 

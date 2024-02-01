@@ -30,9 +30,9 @@ export default function AddNewSubClass(props: any) {
     }
 
     const allClassSelector = useSelector((state: any) => state.classReducer);
-    console.log({
-        allClassSelector:allClassSelector?.selectedClassReducer
-    })
+    // console.log({
+    //     allClassSelector:allClassSelector?.selectedClassReducer
+    // })
 
     // GET ALL DATATYPES
     async function fetchData() {
@@ -69,10 +69,6 @@ export default function AddNewSubClass(props: any) {
             let filtered = props.classData.filter((item: any) => {
                 return item.id === props.selectedParentClass;
             })
-
-            // console.log({
-            //     filtered:filtered
-            // })
 
             setParentJoinKey(filtered)
 
@@ -240,18 +236,14 @@ export default function AddNewSubClass(props: any) {
                 }
             }).then(function (response) {
                 if (response) {
-                    // setSuccess(true)
                     setAllTags([]);
-                    // dispatch(successMessageAction(true))
                     let data = {
                         "type": "newSubClass",
                         "action": true
                     };
                     dispatch(successMessagAdvancedAction(data))
                     props.handleClick(false);
-                    // setTimeout(() => {
-                    //     // setSuccess(false)
-                    // }, 100)
+                    props.message(true)
                 }
             }).catch(function (error) {
                 console.log("ERROR IN AXIOS CATCH (CREATE CLASS):", error)

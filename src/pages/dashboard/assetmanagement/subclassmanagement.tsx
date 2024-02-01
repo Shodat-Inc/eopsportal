@@ -15,10 +15,6 @@ import {
 
 export default function SubClassManagement(props: any) {
 
-    // console.log({
-    //     PROPS: props
-    // })
-
     const dispatch = useDispatch<any>();
     const [toggleFilter, setToggleFilter] = useState(false);
     const [toggleArrow, setToggleArrow] = useState(false);
@@ -33,6 +29,10 @@ export default function SubClassManagement(props: any) {
     const [deleteID, setDeleteID] = useState(0);
     const [actionsToggle, setActionsToggle] = useState(false);
 
+    const [deleteMessage, setDeleteMessage] = useState(false);
+    const [successMessage, setSuccessMessage] = useState(false);
+    const [editMessage, setEditMessage] = useState(false);
+
     let access_token = "" as any;
     if (typeof window !== 'undefined') {
         access_token = localStorage.getItem('authToken')
@@ -40,10 +40,6 @@ export default function SubClassManagement(props: any) {
 
     // All class reducer states
     const allClassSelector = useSelector((state: any) => state.classReducer);
-
-    console.log({
-        allClassSelector: allClassSelector
-    })
 
     useEffect(() => {
         setShowModal(props.addSubClassModal)
@@ -96,9 +92,6 @@ export default function SubClassManagement(props: any) {
 
             }).then(function (response: any) {
                 if (response) {
-                    console.log({
-                        "__RES":response?.data?.data
-                    })
                     setSubClassData(response?.data?.data);
                 }
             }).catch(function (error: any) {
@@ -165,6 +158,9 @@ export default function SubClassManagement(props: any) {
                     "action": true
                 };
                 dispatch(successMessagAdvancedAction(data))
+                setTimeout(()=>{
+                    setDeleteMessage(false);
+                }, 4000)
             }).catch(function (error) {
                 console.log({
                     "ERROR IN AXIOS CATCH (DELETE)": error
@@ -200,27 +196,25 @@ export default function SubClassManagement(props: any) {
 
 
     useEffect(() => {
-        // if (allClassSelector && allClassSelector.successMessageReducer === true) {
-        //     setTimeout(() => {
-        //         dispatch(successMessageAction(false))
-        //     }, 5000)
-        // }
-
-        // if(allClassSelector && allClassSelector.successMessageAdvancedReducer) {
-        //     setTimeout(() => {
-        //         let data = {
-        //             "type":"",
-        //             "action":false
-        //         }
-        //         dispatch(successMessagAdvancedAction(data))
-        //     }, 4000)
-        // }
-
         if (allClassSelector?.successMessageReducer === true) {
             dispatch(successMessageAction(false))
         }
-
     }, [allClassSelector?.successMessageReducer === true])
+
+
+    const handleAddSuccessMessage = (msg:any) => {
+        setSuccessMessage(msg);
+        setTimeout(()=>{
+            setSuccessMessage(false);
+        }, 4000)
+    }
+
+    const handleEditSuccessMessage = (msg:any) => {
+        setEditMessage(msg);
+        setTimeout(()=>{
+            setEditMessage(false);
+        }, 4000)
+    }
 
     return (
         <div className='px-0 py-3 font-OpenSans'>
@@ -274,9 +268,8 @@ export default function SubClassManagement(props: any) {
 
             {/* Messages for Add Class */}
             {
-                (allClassSelector?.successMessageAdvancedReducer?.action === true && allClassSelector?.successMessageAdvancedReducer?.type === "newSubClass") &&
-
-                <div className={`bg-green-957 border-green-958 text-green-959 mb-1 mt-1 border text-md px-4 py-3 rounded-xl relative flex-1 items-center justify-start mx-4 hidden`}>
+                (successMessage) &&
+                <div className={`bg-green-957 border-green-958 text-green-959 mb-1 mt-1 border text-md px-4 py-3 rounded-xl relative flex items-center justify-start mx-4`}>
                     <Image
                         src="/img/AlertSuccess.svg"
                         alt="Alert Success"
@@ -290,9 +283,9 @@ export default function SubClassManagement(props: any) {
             }
 
             {/* Message for DeleteClass */}
-            <div className='flex-1 justify-start items-center px-4 w-full hidden'>
+            <div className='flex justify-start items-center px-4 w-full'>
                 {
-                    (allClassSelector?.successMessageAdvancedReducer?.action === true && allClassSelector?.successMessageAdvancedReducer?.type === "deleteSubClass") &&
+                    (deleteMessage) &&
                     <div className={`bg-blue-957 border-blue-958 text-blue-959 mb-1 mt-1 border text-md px-4 py-3  rounded-xl relative flex items-center justify-start w-full`}>
                         <Image
                             src="/img/AlertInfo.svg"
@@ -308,9 +301,9 @@ export default function SubClassManagement(props: any) {
             </div>
 
             {/* Message for Edit Class */}
-            <div className='flex-1 justify-start items-center px-4 w-full hidden'>
+            <div className='flex justify-start items-center px-4 w-full'>
                 {
-                    (allClassSelector?.successMessageAdvancedReducer?.action === true && allClassSelector?.successMessageAdvancedReducer?.type === "editSubClass") &&
+                    editMessage &&
                     <div className={`bg-blue-957 border-blue-958 text-blue-959 mb-1 mt-1 border text-md px-4 py-3  rounded-xl relative flex items-center justify-start w-full`}>
                         <Image
                             src="/img/AlertInfo.svg"
@@ -446,6 +439,7 @@ export default function SubClassManagement(props: any) {
                 show={showModal}
                 selectedParentClass={allClassSelector?.selectedClassReducer}
                 classData={props.classData}
+                message={handleAddSuccessMessage}
             />
 
 
@@ -456,6 +450,7 @@ export default function SubClassManagement(props: any) {
                 classData={props.classData ? props.classData : []}
                 subClassData={subClassData ? subClassData : []}
                 selectedSubClass={selectedSubClass}
+                message={handleEditSuccessMessage}
             />
 
 

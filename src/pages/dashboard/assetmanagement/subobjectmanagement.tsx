@@ -29,8 +29,12 @@ export default function SubObjectManagement(props: any) {
     const [search, setSearch] = useState('');
     const [selectedObjectID, setSelectedObjectID] = useState("");
     const [deleteID, setDeleteID] = useState(0);
-    const [deleteMessage, setDeleteMessage] = useState(false);
     const [actionsToggle, setActionsToggle] = useState(false);
+
+    const [deleteMessage, setDeleteMessage] = useState(false);
+    const [successMessage, setSuccessMessage] = useState(false);
+    const [editMessage, setEditMessage] = useState(false);
+
     let access_token = "" as any;
     if (typeof window !== 'undefined') {
         access_token = localStorage.getItem('authToken')
@@ -62,7 +66,7 @@ export default function SubObjectManagement(props: any) {
                     "Content-Type": "application/json"
                 }
             }).then(function (response) {
-                
+
                 if (response.data.success === true) {
                     setSubClassData(response?.data?.data);
                     setChooseAsset(response?.data?.data[0]?.id)
@@ -85,24 +89,6 @@ export default function SubObjectManagement(props: any) {
 
     // Close Success message after 5 second if true
     useEffect(() => {
-        // if (classSelector && classSelector.successMessageReducer === true) {
-        //     setTimeout(() => {
-        //         fetchData();
-        //     }, 2500)
-        //     setTimeout(() => {
-        //         dispatch(successMessageAction(false))
-        //     }, 5000)
-
-        //     if (classSelector && classSelector.successMessageAdvancedReducer) {
-        //         setTimeout(() => {
-        //             let data = {
-        //                 "type": "",
-        //                 "action": false
-        //             }
-        //             dispatch(successMessagAdvancedAction(data))
-        //         }, 4000)
-        //     }
-        // }
         if (classSelector?.successMessageReducer === true) {
             dispatch(successMessageAction(false))
         }
@@ -266,11 +252,9 @@ export default function SubObjectManagement(props: any) {
                     "action": true
                 };
                 dispatch(successMessagAdvancedAction(data))
-
-                // setDeleteMessage(true);
-                // setTimeout(() => {
-                //     setDeleteMessage(false)
-                // }, 2000)
+                setTimeout(() => {
+                    setDeleteMessage(false);
+                }, 4000)
             }).catch(function (error) {
                 console.log({
                     "ERROR IN AXIOS CATCH (DELETE)": error
@@ -283,9 +267,24 @@ export default function SubObjectManagement(props: any) {
         }
     }
 
-    useEffect(() => {
-        fetchData();
-    }, [deleteMessage === true])
+    // useEffect(() => {
+    //     fetchData();
+    // }, [deleteMessage === true])
+
+
+    const handleAddSuccessMessage = (msg:any) => {
+        setSuccessMessage(msg);
+        setTimeout(()=>{
+            setSuccessMessage(false);
+        }, 4000)
+    }
+
+    const handleEditSuccessMessage = (msg:any) => {
+        setEditMessage(msg);
+        setTimeout(()=>{
+            setEditMessage(false);
+        }, 4000)
+    }
 
     return (
         <div className='py-3 font-OpenSans'>
@@ -378,9 +377,8 @@ export default function SubObjectManagement(props: any) {
 
             {/* Messages for Add Class */}
             {
-                (allClassSelector?.successMessageAdvancedReducer?.action === true && allClassSelector?.successMessageAdvancedReducer?.type === "newSubObject") &&
-
-                <div className={`bg-green-957 border-green-958 text-green-959 mb-1 mt-1 border text-md px-4 py-3 rounded-xl relative flex-1 hidden items-center justify-start mx-4`}>
+                (successMessage) &&
+                <div className={`bg-green-957 border-green-958 text-green-959 mb-1 mt-1 border text-md px-4 py-3 rounded-xl relative flex items-center justify-start mx-4`}>
                     <Image
                         src="/img/AlertSuccess.svg"
                         alt="Alert Success"
@@ -394,9 +392,9 @@ export default function SubObjectManagement(props: any) {
             }
 
             {/* Message for DeleteClass */}
-            <div className='flex-1 hidden justify-start items-center px-4 w-full'>
+            <div className='flex justify-start items-center px-4 w-full'>
                 {
-                    (allClassSelector?.successMessageAdvancedReducer?.action === true && allClassSelector?.successMessageAdvancedReducer?.type === "deleteSubObject") &&
+                    (deleteMessage) &&
                     <div className={`bg-blue-957 border-blue-958 text-blue-959 mb-1 mt-1 border text-md px-4 py-3  rounded-xl relative flex items-center justify-start w-full`}>
                         <Image
                             src="/img/AlertInfo.svg"
@@ -412,9 +410,9 @@ export default function SubObjectManagement(props: any) {
             </div>
 
             {/* Message for Edit Class */}
-            <div className='flex-1 hidden justify-start items-center px-4 w-full'>
+            <div className='flex justify-start items-center px-4 w-full'>
                 {
-                    (allClassSelector?.successMessageAdvancedReducer?.action === true && allClassSelector?.successMessageAdvancedReducer?.type === "editSubObject") &&
+                    (editMessage) &&
                     <div className={`bg-blue-957 border-blue-958 text-blue-959 mb-1 mt-1 border text-md px-4 py-3  rounded-xl relative flex items-center justify-start w-full`}>
                         <Image
                             src="/img/AlertInfo.svg"
@@ -566,6 +564,7 @@ export default function SubObjectManagement(props: any) {
                 parentClass={classSelector?.setDataForSubObjectReducer?.parentClass}
                 objID={classSelector?.setDataForSubObjectReducer?.objectKey}
                 subClassName={showClassNameFromID(chooseAsset)}
+                message={handleAddSuccessMessage}
             />
 
             <EditSubObject
@@ -575,6 +574,7 @@ export default function SubObjectManagement(props: any) {
                 parentClass={classSelector?.setDataForSubObjectReducer?.parentClass}
                 objID={selectedObjectID}
                 subClassName={showClassNameFromID(chooseAsset)}
+                message={handleEditSuccessMessage}
             />
 
             {/* Delete Modal */}

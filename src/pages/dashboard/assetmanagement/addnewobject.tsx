@@ -25,9 +25,6 @@ export default function AddNewObject(props: any) {
                 return item.id === props.selectedSubClass
             })
             if (filtered) {
-                // console.log({
-                //     "__AMIT": filtered
-                // })
                 setSelectedObjectData(filtered[0].ClassTags)
                 setObjectData(filtered);
             }
@@ -82,15 +79,8 @@ export default function AddNewObject(props: any) {
                 }
             }).then(function (response) {
                 if (response) {
-                    dispatch(successMessageAction(true))
-                    let data = {
-                        "type": "newSubObject",
-                        "action": true
-                    };
-                    dispatch(successMessagAdvancedAction(data))
-                    setTimeout(() => {
-                        dispatch(toggleAddNewObjectModel(false));
-                    }, 50);
+                    dispatch(toggleAddNewObjectModel(false));
+                    props.message(true)
                 }
             }).catch(function (error) {
                 console.log("ERROR IN AXIOS CATCH (CREATE CLASS OBJECT):", error)
