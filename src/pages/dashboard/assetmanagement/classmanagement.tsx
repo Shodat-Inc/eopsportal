@@ -36,12 +36,7 @@ export default function ClassManagement(props: any) {
 
     // Close Success message after 5 second if true
     useEffect(() => {
-        if (allClassSelector && allClassSelector.successMessageReducer === true) {
-            setTimeout(() => {
-                dispatch(successMessageAction(false))
-            }, 5000)
-        }
-
+        dispatch(successMessageAction(false))
     }, [allClassSelector?.successMessageReducer])
 
     // Get All Assets
@@ -54,7 +49,6 @@ export default function ClassManagement(props: any) {
                     "Authorization": `Bearer ${access_token}`,
                     "Content-Type": "application/json"
                 }
-
             }).then(function (response) {
                 if (response) {
                     setAllData(response?.data?.data)
@@ -73,7 +67,7 @@ export default function ClassManagement(props: any) {
     useEffect(() => {
         fetchData();
         if (fetchData.length) return;
-    }, [access_token, allClassSelector?.successMessageReducer === true])
+    }, [access_token, allClassSelector])
 
 
     // Toggle Filters
@@ -125,6 +119,9 @@ export default function ClassManagement(props: any) {
 
     // Open Edit class modal
     const openEditClassModal = (item: any) => {
+        // console.log({
+        //     "__ITEM":item
+        // })
         setSelectedClass(item)
         dispatch(selectedClassAction(item))
         dispatch(editClassModalAction(true));

@@ -20,19 +20,15 @@ export default function AiModelDetection() {
     const [tab, setTab] = useState(1);
     const [search, setSearch] = useState('');
     const [selectClass, setSelectClass] = useState('');
-    const [selectObject, setSelectObject] = useState('');
     const [showObject, setShowObject] = useState(false);
     const [showSubClass, setShowSubClass] = useState(false);
     const [showObjLvlButton, setShowObjLvlButton] = useState(false);
     const [getAllClass, setGetAllClass] = useState([] as any);
     const [classObject, setClassObject] = useState([] as any);
-    const [selObjectData, setSelObjectData] = useState([] as any);
-    const [selectSubClass, setSelectSubClass] = useState("");
     const [selectSubObject, setSelectSubObject] = useState("");
     const [toggleObjectLevel, setToggleObjectLevel] = useState(false);
     const [getAllSubClass, setGetAllSubClass] = useState([] as any);
     const [getAllSubObject, setGetAllSubObject] = useState([] as any);
-    const [tableDataSubObject, setTableDataSubObject] = useState([] as any);
     const [toggleAsset, setToggleAsset] = useState(false);
     const [chooseClass, setChooseClass] = useState('Select');
     const [chooseObject, setChooseObject] = useState('Select')
@@ -48,6 +44,8 @@ export default function AiModelDetection() {
 
     const [tableSubObjectHeader, setSubObjectTableHeader] = useState({} as any);
     const [subObjectData, setSubObjectData] = useState([] as any);
+
+    const [allModelData, setAllModelData] = useState([] as any);
 
 
     let access_token = "" as any;
@@ -148,9 +146,9 @@ export default function AiModelDetection() {
                     return item?.ObjectValues[0]?.id === id
                 })
                 if (filter) {
-                    console.log({
-                        filter: filter[0]?.ObjectValues[0]?.values
-                    })
+                    // console.log({
+                    //     filter: filter[0]?.ObjectValues[0]?.values
+                    // })
                     return filter[0]?.ObjectValues[0]?.values
                 }
             }
@@ -184,9 +182,9 @@ export default function AiModelDetection() {
                     return item?.ObjectValues[0]?.id === id
                 })
                 if (filter) {
-                    console.log({
-                        filter: filter[0]?.ObjectValues[0]?.values
-                    })
+                    // console.log({
+                    //     filter: filter[0]?.ObjectValues[0]?.values
+                    // })
                     return filter[0]?.ObjectValues[0]?.values
                 }
             }
@@ -232,9 +230,9 @@ export default function AiModelDetection() {
                 }
             }).then(function (response) {
                 if (response) {
-                    console.log({
-                        "__RESPONSE__123": response?.data?.objects?.data
-                    })
+                    // console.log({
+                    //     "__RESPONSE__123": response?.data?.objects?.data
+                    // })
                     setTableHeader(response?.data?.objects?.data[0]?.Class?.ClassTags)
                     setClassObject(response?.data?.objects?.data);
                 }
@@ -254,11 +252,6 @@ export default function AiModelDetection() {
 
     }, [chooseClass, access_token])
 
-    // console.log({
-    //     "__getAllClass": getAllClass,
-    //     "___classObject": classObject,
-    //     "__selObjectData": selObjectData
-    // })
 
     // ============= Set dropdown title ============= 
     const title = 'Class Objects'
@@ -314,9 +307,9 @@ export default function AiModelDetection() {
         fetchSubClassData()
     }, [chooseClass, access_token])
 
-    console.log({
-        "__GET_ALL_SUB_CLASS": getAllSubClass
-    })
+    // console.log({
+    //     "__GET_ALL_SUB_CLASS": getAllSubClass
+    // })
 
 
     // ============== Get Sub Object bases on selection of sub class ================= 
@@ -332,13 +325,8 @@ export default function AiModelDetection() {
                 }
             }).then(function (response) {
                 if (response) {
-
-                    console.log({
-                        "__PANDEY": response?.data
-                    })
                     setSubObjectTableHeader(response?.data?.objects?.data[0]?.Class?.ClassTags)
                     setGetAllSubObject(response?.data?.objects?.data);
-                    // setSubObjectData(response?.data?.objects?.data);
 
                 }
             }).catch(function (error) {
@@ -501,6 +489,39 @@ export default function AiModelDetection() {
             setTab(2)
         }
     }, [classSelector?.dataforeopswatchReducer?.datafor])
+
+
+    // ============= GET ALL MODELS ==============
+    async function fetchAllModels() {
+        try {
+            await axios({
+                method: 'GET',
+                url: `/api/getModel`,
+                headers: {
+                    "Authorization": `Bearer ${access_token}`,
+                    "Content-Type": "application/json"
+                }
+            }).then(function (response) {
+                if (response) {
+                    console.log({
+                        "__ALL_MODELS:": response?.data?.message?.data
+                    })
+                    setAllModelData(response?.data?.message?.data)
+                }
+            }).catch(function (error) {
+                console.log({
+                    "ERROR IN AXIOS CATCH": error
+                })
+            })
+        } catch (err) {
+            console.log({
+                "ERROR IN TRY CATCH": err
+            })
+        }
+    }
+    useEffect(() => {
+        fetchAllModels()
+    }, [access_token])
 
 
     return (
@@ -894,6 +915,7 @@ export default function AiModelDetection() {
                                     <EopsWatch
                                         nextDataProps={nextDataProps}
                                         active={chooseSubObject !== "Select" ? true : false}
+                                        modelData={allModelData}
                                     />
                                     :
                                     <EopsWatchModel />
@@ -907,6 +929,7 @@ export default function AiModelDetection() {
                                     ?
                                     <EopsTrace
                                         nextDataProps={nextDataProps}
+                                        modelData={allModelData}
                                     />
                                     :
                                     <EopsTraceModel />

@@ -4,14 +4,22 @@ import styles from '../../../styles/Common.module.css';
 import Image from "next/image";
 import axios from 'axios';
 import Link from 'next/dist/client/link';
-import { setClassBreadcrumb, objDefaultClassSelectorFunction } from '@/store/actions/classAction';
+import { 
+    setClassBreadcrumb, 
+    objDefaultClassSelectorFunction,
+    successMessageAction,
+    editObjectModalAction,
+    setDataForSubObjectCompAction,
+    successMessagAdvancedAction
+ } from '@/store/actions/classAction';
 import AddNewClassObject from './addnewclassobject';
-import { successMessageAction } from '@/store/actions/classAction';
-import { editObjectModalAction } from '@/store/actions/classAction';
-import { setDataForSubObjectCompAction, successMessagAdvancedAction } from '@/store/actions/classAction';
 import EditObject from './editobject';
 
 export default function ObjectManagement(props: any) {
+
+    console.log({
+        PROPS: props
+    })
 
     const dispatch = useDispatch<any>();
     const [toggleFilter, setToggleFilter] = useState(false);
@@ -27,7 +35,6 @@ export default function ObjectManagement(props: any) {
     const [search, setSearch] = useState('');
     const [selectedObjID, setSelectedObjID] = useState('');
     const [deleteID, setDeleteID] = useState(0);
-    const [deleteMessage, setDeleteMessage] = useState(false);
     const [actionsToggle, setActionsToggle] = useState(false);
     let access_token = "" as any;
     if (typeof window !== 'undefined') {
@@ -162,6 +169,9 @@ export default function ObjectManagement(props: any) {
 
     // Get objected based on selected class
     async function fetchData() {
+        console.log({
+            chooseAsset:chooseAsset
+        })
         try {
             await axios({
                 method: 'GET',
@@ -187,9 +197,10 @@ export default function ObjectManagement(props: any) {
         }
     }
     useEffect(() => {
-        fetchData();
-        if (fetchData.length) return;
-    }, [chooseAsset, classSelector.successMessageReducer === true])
+        if(chooseAsset) {
+            fetchData();
+        }
+    }, [access_token, chooseAsset, classSelector])
 
 
     // function for searching
@@ -235,7 +246,7 @@ export default function ObjectManagement(props: any) {
                     "Content-Type": "application/json"
                 }
             }).then(function (response) {
-                dispatch(successMessageAction(true))
+                // dispatch(successMessageAction(true))
                 let data = {
                     "type": "deleteObject",
                     "action": true

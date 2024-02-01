@@ -198,7 +198,7 @@ export default function SubObjectManagement(props: any) {
         setTimeout(() => {
             fetchObjectData();
         }, 250)
-    }, [chooseAsset, classSelector.successMessageReducer === true])
+    }, [chooseAsset, classSelector])
 
 
     // Set Sub Class in Breadcrumb
@@ -259,7 +259,7 @@ export default function SubObjectManagement(props: any) {
                     "Content-Type": "application/json"
                 }
             }).then(function (response) {
-                dispatch(successMessageAction(true))
+                // dispatch(successMessageAction(true))
 
                 let data = {
                     "type": "deleteSubObject",

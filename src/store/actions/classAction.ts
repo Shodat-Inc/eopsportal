@@ -256,22 +256,10 @@ Function to toggle "EDIT Class " model
 */
 export const editClassModalAction = (item: any) => async (dispatch: any) => {
     try {
-        if (item === true) {
-            dispatch({
-                type: EDIT_CLASS_MODEL_SUCCESS,
-                payload: item
-            });
-        } else if (item === false) {
-            dispatch({
-                type: EDIT_CLASS_MODEL_SUCCESS,
-                payload: item
-            });
-        } else {
-            dispatch({
-                type: EDIT_CLASS_MODEL_ERROR,
-                payload: "Failed!"
-            });
-        }
+        dispatch({
+            type: EDIT_CLASS_MODEL_SUCCESS,
+            payload: item
+        });
     } catch (err) {
         console.log("err in action:", err)
     }

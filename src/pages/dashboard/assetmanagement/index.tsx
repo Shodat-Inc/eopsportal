@@ -31,26 +31,13 @@ export default function AssetManagement() {
         access_token = localStorage.getItem('authToken')
     }
 
-    // useEffect(() => {
-    //     dispatch(getSingleUser())
-    // }, [])
-
-
     // All class reducer states
     const allClassSelector = useSelector((state: any) => state.classReducer);
 
-    // console.log({
-    //     "TYPE":allClassSelector?.successMessageAdvancedReducer?.type,
-    //     "ACTION": allClassSelector?.successMessageAdvancedReducer?.action
-    // })
 
     // Close Success message after 5 second if true
     useEffect(() => {
-        // if (allClassSelector && allClassSelector.successMessageReducer === true) {
-        //     setTimeout(() => {
-        //         dispatch(successMessageAction(false))
-        //     }, 5000)
-        // }
+        
 
         // if(allClassSelector && allClassSelector.successMessageAdvancedReducer) {
         //     setTimeout(() => {
@@ -61,12 +48,12 @@ export default function AssetManagement() {
         //         dispatch(successMessagAdvancedAction(data))
         //     }, 4000)
         // }  
-        
+
         if (allClassSelector?.successMessageReducer === true) {
             dispatch(successMessageAction(false))
         }
 
-    }, [allClassSelector?.successMessageReducer===true])
+    }, [allClassSelector?.successMessageReducer === true])
 
     async function fetchData() {
         try {
@@ -77,7 +64,6 @@ export default function AssetManagement() {
                     "Authorization": `Bearer ${access_token}`,
                     "Content-Type": "application/json"
                 }
-
             }).then(function (response) {
                 if (response) {
                     setClassData(response?.data?.data)

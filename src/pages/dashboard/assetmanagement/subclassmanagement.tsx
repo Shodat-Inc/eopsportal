@@ -13,7 +13,12 @@ import {
     successMessagAdvancedAction
 } from '@/store/actions/classAction';
 
-export default function SubClassManagement(props: any) {    
+export default function SubClassManagement(props: any) {
+
+    // console.log({
+    //     PROPS: props
+    // })
+
     const dispatch = useDispatch<any>();
     const [toggleFilter, setToggleFilter] = useState(false);
     const [toggleArrow, setToggleArrow] = useState(false);
@@ -26,7 +31,6 @@ export default function SubClassManagement(props: any) {
     const [search, setSearch] = useState('');
     const [selectedSubClass, setSelectedSubClass] = useState("");
     const [deleteID, setDeleteID] = useState(0);
-    const [deleteMessage, setDeleteMessage] = useState(false);
     const [actionsToggle, setActionsToggle] = useState(false);
 
     let access_token = "" as any;
@@ -38,9 +42,9 @@ export default function SubClassManagement(props: any) {
     const allClassSelector = useSelector((state: any) => state.classReducer);
 
     console.log({
-        allClassSelector:allClassSelector 
+        allClassSelector: allClassSelector
     })
-   
+
     useEffect(() => {
         setShowModal(props.addSubClassModal)
     }, [props.addSubClassModal])
@@ -61,9 +65,7 @@ export default function SubClassManagement(props: any) {
             setActionsToggle(false);
         }, 1000)
     }
-    const selectedAction = (item: any) => {
-        setActions(false);
-    }
+
 
     const handleClick = (item: any) => {
         setShowModal(false);
@@ -94,6 +96,9 @@ export default function SubClassManagement(props: any) {
 
             }).then(function (response: any) {
                 if (response) {
+                    console.log({
+                        "__RES":response?.data?.data
+                    })
                     setSubClassData(response?.data?.data);
                 }
             }).catch(function (error: any) {
@@ -109,7 +114,7 @@ export default function SubClassManagement(props: any) {
     }
     useEffect(() => {
         fetchData()
-    }, [allClassSelector?.selectedClassReducer, allClassSelector?.successMessageReducer === true])
+    }, [allClassSelector, access_token])
 
     // function for searching
     const handleSearchFUnction = (e: any) => {
@@ -154,16 +159,12 @@ export default function SubClassManagement(props: any) {
                     "Content-Type": "application/json"
                 }
             }).then(function (response) {
-                dispatch(successMessageAction(true))
+                // dispatch(successMessageAction(true))
                 let data = {
                     "type": "deleteSubClass",
                     "action": true
                 };
                 dispatch(successMessagAdvancedAction(data))
-                // setDeleteMessage(true);
-                // setTimeout(() => {
-                //     setDeleteMessage(false)
-                // }, 2000)
             }).catch(function (error) {
                 console.log({
                     "ERROR IN AXIOS CATCH (DELETE)": error
@@ -219,7 +220,7 @@ export default function SubClassManagement(props: any) {
             dispatch(successMessageAction(false))
         }
 
-    }, [allClassSelector?.successMessageReducer===true])
+    }, [allClassSelector?.successMessageReducer === true])
 
     return (
         <div className='px-0 py-3 font-OpenSans'>

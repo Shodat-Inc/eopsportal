@@ -119,6 +119,11 @@ export default function EditClass(props: any) {
             newAddedTag.push(newTag);
             setNewlyAddedTag(newAddedTag);
 
+            console.log({
+                "__SAVE":newTag
+            })
+            
+
             setShowInput(false);
             setNewTag("");
             setShowHideAddTagButton(false);
@@ -147,12 +152,18 @@ export default function EditClass(props: any) {
 
     // Remove Element from all Tag Array
     const removeElement = (item: any) => {
+        
         setDtObject([])
         // removing the item form all tags array
         let updatedList = allTags.slice();
         var filteredArray = updatedList.filter(function (e: any) {
             return e.id !== item;
         });
+
+        console.log({
+            "HERE":filteredArray,
+            "ITEM":item
+        })
         setAllTags(filteredArray);
 
         let deletedList = deleteTagIDS.slice();
@@ -171,11 +182,27 @@ export default function EditClass(props: any) {
         });
         setDtObject(filteredJSON);
 
+
+        console.log({
+            "__REMOVE":item
+        })
+
         // delete from new array
         let newAddedTag = newlyAddedTag.slice();
-        newAddedTag.splice(-1);
-        setNewlyAddedTag(newAddedTag);
+        var filteredArray2 = newAddedTag.filter(function(e:any) { return e !== item })
+
+        console.log({
+            "AMITHERE":filteredArray2
+        })
+
+        // newAddedTag.splice(-1);
+        setNewlyAddedTag(filteredArray2);
     };
+
+    console.log({
+        "__newlyAddedTag":newlyAddedTag,
+        "__ALL_TAGS":allTags
+    })
 
     // Cancel Adding new tags
     const cancelAddingTag = () => {
@@ -332,7 +359,9 @@ export default function EditClass(props: any) {
                                                         </span>
                                                     </span>
                                                 ))
-                                                : null}
+                                                : null
+                                            }
+
                                             {newlyAddedTag && newlyAddedTag.length > 0
                                                 ? newlyAddedTag.map((items: any, index: any) => (
                                                     <span

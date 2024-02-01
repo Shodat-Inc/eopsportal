@@ -17,21 +17,22 @@ export default function AddNewSubClass(props: any) {
     const assetname = useRef("");
     const [allTags, setAllTags] = useState<any[]>([]);
     const [newTag, setNewTag] = useState<string>("");
-    const [showInput, setShowInput] = useState(false);
     const [showHideAddTagButton, setShowHideAddTagButton] = useState(false);
     const [toggleDT, setToggleDT] = useState(false);
     const [dataType, setDataType] = useState("");
     const [assetDataType, setAssetDataType] = useState<any[]>([]);
-    const [toggleAsset, setToggleAsset] = useState(false);
     const [dtObject, setDtObject] = useState<any[]>([]);
     const [parentJoinKey, setParentJoinKey] = useState([] as any);
     const [allDataTypes, setAllDataTypes] = useState([] as any);
-    const [success, setSuccess] = useState(false);
     let access_token = "" as any;
     if (typeof window !== 'undefined') {
         access_token = localStorage.getItem('authToken')
     }
 
+    const allClassSelector = useSelector((state: any) => state.classReducer);
+    console.log({
+        allClassSelector:allClassSelector?.selectedClassReducer
+    })
 
     // GET ALL DATATYPES
     async function fetchData() {
@@ -241,16 +242,16 @@ export default function AddNewSubClass(props: any) {
                 if (response) {
                     // setSuccess(true)
                     setAllTags([]);
-                    dispatch(successMessageAction(true))
+                    // dispatch(successMessageAction(true))
                     let data = {
                         "type": "newSubClass",
                         "action": true
                     };
                     dispatch(successMessagAdvancedAction(data))
-                    setTimeout(() => {
-                        // setSuccess(false)
-                        props.handleClick(false);
-                    }, 100)
+                    props.handleClick(false);
+                    // setTimeout(() => {
+                    //     // setSuccess(false)
+                    // }, 100)
                 }
             }).catch(function (error) {
                 console.log("ERROR IN AXIOS CATCH (CREATE CLASS):", error)

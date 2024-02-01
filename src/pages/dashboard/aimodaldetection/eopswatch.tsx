@@ -162,15 +162,36 @@ const jsonDataVehicles = [
         "activePlan": false
     }
 ]
+
+const modelLogo = [
+    {
+        "model": "Workplace Safety Detection",
+        "logo": "/img/parts-detection.svg"
+    },
+    {
+        "model": "Crystallization Detection",
+        "logo": "/img/wortkplace-safety-detection.svg"
+    },
+    {
+        "model": "Crack Detection",
+        "logo": "/img/crack-detection.svg"
+    }
+]
 export default function EopsWatch(props: any) {
+    console.log({
+        "__PROPS_EOPSWATCH": props?.modelData
+    })
     const router = useRouter();
     const routerParams = router.query;
     const [data, setData] = useState(jsonData[0]);
+    const [selectedModel, setSelectedModel] = useState('');
     const setModelInformation = (model: any) => {
         const filterData = jsonData.filter((item: any) => {
             return item.name === model
         })
         setData(filterData[0]);
+
+        setSelectedModel(model)
     }
 
     useEffect(() => {
@@ -181,6 +202,11 @@ export default function EopsWatch(props: any) {
         }
 
     }, [props.nextDataProps])
+
+    useEffect(() => {
+        setSelectedModel(props?.modelData[0]?.modelName)
+        // props?.modelData[0]?.modelName
+    }, [props?.modelDatal])
 
 
     const redirectToNext = () => {
@@ -200,7 +226,43 @@ export default function EopsWatch(props: any) {
     return (
         <div className="flex w-full h-full mt-1">
             <div className="w-[20%] bg-[#F2F2F2]">
+
                 <div className="flex flex-wrap flex-row">
+                    {
+                        props?.modelData && props?.modelData.length > 0 ?
+                            props?.modelData?.map((item: any, index: any) => {
+                                let logo = '';
+                                let obj = modelLogo.find(o => o.model === item?.modelName);
+                                if (obj) {
+                                    logo = obj?.logo
+                                }
+                                return (
+                                    <>
+                                        <button
+                                            key={index}
+                                            onClick={() => setModelInformation(item?.modelName)}
+                                            className={`flex items-center justify-between rounded-l-xl-1 p-4 h-[106px] w-full bg-white relative text-left ${item?.modelName === selectedModel ? 'border-t-0 border-b-2 border-l-0 border-[#E3E3E3] left-[2px]' : 'border-b-2 border-t-2 border-l-0 border-[#E3E3E3] left-[0px]'}`}>
+                                            <span className="text-gray-967 text-sm font-semibold w-full">
+                                                {
+                                                    item?.modelName
+                                                }
+                                            </span>
+                                            <Image
+                                                src={logo}
+                                                alt={item?.modelName}
+                                                height={54}
+                                                width={54}
+                                            />
+                                        </button>
+                                    </>
+                                )
+                            })
+                            :
+                            null
+                    }
+                </div>
+
+                <div className="flex-1 flex-wrap flex-row hidden">
                     {
                         props?.nextDataProps?.objectID && props?.nextDataProps?.objectID === "Manufacturing Plants"
                             ?

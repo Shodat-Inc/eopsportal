@@ -189,8 +189,9 @@ export default function EditSubClass(props: any) {
 
         // delete from new array
         let newAddedTag = newlyAddedTag.slice();
-        newAddedTag.splice(-1);
-        setNewlyAddedTag(newAddedTag)
+        // newAddedTag.splice(-1);
+        var filteredArray2 = newAddedTag.filter(function(e:any) { return e !== item })
+        setNewlyAddedTag(filteredArray2)
 
     }
 
@@ -237,12 +238,12 @@ export default function EditSubClass(props: any) {
                     setNewlyAddedTag([]);
                     setDtObject([]);
                     dispatch(editSubClassModalAction(false));
-                    dispatch(successMessageAction(true))
+                    // dispatch(successMessageAction(true))
                     let data = {
                         "type": "editSubClass",
                         "action": true
                     };
-                    dispatch(successMessagAdvancedAction(data))
+                    // dispatch(successMessagAdvancedAction(data))
                 }
             }).catch(function (error) {
                 console.log("ERROR IN AXIOS CATCH (CREATE CLASS):", error)
