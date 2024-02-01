@@ -9,7 +9,9 @@ export default function EditSubObject(props: any) {
 
     const [objectsData, setObjectsData] = useState([] as any);
     const [success, setSuccess] = useState(false);
-    const [data, setData] = useState({} as any)
+    const [data, setData] = useState({} as any);
+    const [parentJoinKey, setParentJoinKey] = useState('' as any)
+    const [parentJoinValue, setParentJoinValue] = useState('' as any)
 
     let access_token = "" as any;
     if (typeof window !== 'undefined') {
@@ -31,8 +33,17 @@ export default function EditSubObject(props: any) {
 
                     let arr1 = [] as any;
                     let arr2 = [] as any;
-
+                   
                     setObjectsData(response.data?.data)
+                    let objectsData = response.data?.data;
+
+                    let key = Object.keys(objectsData[0]?.parentJoinValues);
+                    let val = Object.values(objectsData[0]?.parentJoinValues)
+                    setParentJoinKey(key[0])
+                    console.log({
+                        "__VAL":objectsData
+                    })
+                    setParentJoinValue(val[0])
 
                     response?.data?.data[0]?.Class?.ClassTags.map((item: any, index: any) => {
                         const linkContentVal = response?.data?.data[0]?.ObjectValues[index];
@@ -142,6 +153,13 @@ export default function EditSubObject(props: any) {
         })
     }
 
+
+    console.log({
+        "__AMIT__ID": objectsData[0]?.Class?.ParentJoinKeys[0]?.parentTagId,
+        "__AMIT__KEY": parentJoinKey,
+        "__AMIT__VALUES": parentJoinValue
+    })
+
     return (
         <>
             <div className={`bg-white h-full z-[11] fixed top-0 right-0 p-5 shadow-lg ${props.show === true ? `${styles.objectContainer} ${styles.sliderShow}` : `${styles.objectContainer}`}`}>
@@ -210,6 +228,25 @@ export default function EditSubObject(props: any) {
                                 )
                             })
                         }
+
+
+                        <div className="w-full flex justify-start items-start flex-wrap flex-col">
+                            <div className={`mb-5 lg:w-full small:w-full ${styles.form__wrap}`}>
+                                <div className={`relative ${styles.form__group} font-OpenSans`}>
+                                    <input
+                                        type="text"
+                                        id={`${objectsData[0]?.Class?.ParentJoinKeys[0]?.parentTagId}`}
+                                        name={`${parentJoinKey}_${objectsData[0]?.Class?.ParentJoinKeys[0]?.parentTagId}`}
+                                        className={`border border-gray-961 ${styles.form__field}`}
+                                        placeholder=""
+                                        value={`${parentJoinValue}`}
+                                        // onChange={(e) => (formData.current = e.target.value)}
+                                        required
+                                    />
+                                    <label htmlFor="" className={`${styles.form__label}`}>Parent Join Key ({parentJoinKey})</label>
+                                </div>
+                            </div>
+                        </div>
 
 
                         <div className="relative flex justify-end items-center w-full">

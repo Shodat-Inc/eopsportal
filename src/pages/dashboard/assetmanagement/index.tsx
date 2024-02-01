@@ -45,25 +45,28 @@ export default function AssetManagement() {
     // })
 
     // Close Success message after 5 second if true
-    // useEffect(() => {
-    //     if (allClassSelector && allClassSelector.successMessageReducer === true) {
-    //         setTimeout(() => {
-    //             dispatch(successMessageAction(false))
-    //         }, 5000)
-    //     }
+    useEffect(() => {
+        // if (allClassSelector && allClassSelector.successMessageReducer === true) {
+        //     setTimeout(() => {
+        //         dispatch(successMessageAction(false))
+        //     }, 5000)
+        // }
 
-    //     if(allClassSelector && allClassSelector.successMessageAdvancedReducer) {
-    //         setTimeout(() => {
-    //             let data = {
-    //                 "type":"",
-    //                 "action":false
-    //             }
-    //             dispatch(successMessagAdvancedAction(data))
-    //         }, 4000)
-    //     }
+        // if(allClassSelector && allClassSelector.successMessageAdvancedReducer) {
+        //     setTimeout(() => {
+        //         let data = {
+        //             "type":"",
+        //             "action":false
+        //         }
+        //         dispatch(successMessagAdvancedAction(data))
+        //     }, 4000)
+        // }  
         
+        if (allClassSelector?.successMessageReducer === true) {
+            dispatch(successMessageAction(false))
+        }
 
-    // }, [allClassSelector?.successMessageReducer])
+    }, [allClassSelector?.successMessageReducer===true])
 
     async function fetchData() {
         try {

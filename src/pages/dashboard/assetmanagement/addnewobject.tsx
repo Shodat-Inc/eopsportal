@@ -25,9 +25,9 @@ export default function AddNewObject(props: any) {
                 return item.id === props.selectedSubClass
             })
             if (filtered) {
-                console.log({
-                    "__AMIT": filtered
-                })
+                // console.log({
+                //     "__AMIT": filtered
+                // })
                 setSelectedObjectData(filtered[0].ClassTags)
                 setObjectData(filtered);
             }

@@ -215,7 +215,11 @@ export default function SubClassManagement(props: any) {
         //     }, 4000)
         // }
 
-    }, [dispatch, allClassSelector?.successMessageReducer])
+        if (allClassSelector?.successMessageReducer === true) {
+            dispatch(successMessageAction(false))
+        }
+
+    }, [allClassSelector?.successMessageReducer===true])
 
     return (
         <div className='px-0 py-3 font-OpenSans'>

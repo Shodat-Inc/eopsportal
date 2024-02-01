@@ -39,24 +39,27 @@ export default function ObjectManagement(props: any) {
     const allClassSelector = useSelector((state: any) => state.classReducer);
 
     // Close Success message after 5 second if true
-    // useEffect(() => {
-    //     if (classSelector && classSelector.successMessageReducer === true) {
-    //         setTimeout(() => {
-    //             dispatch(successMessageAction(false))
-    //         }, 5000)
-    //     }
+    useEffect(() => {
+        // if (classSelector && classSelector.successMessageReducer === true) {
+        //     setTimeout(() => {
+        //         dispatch(successMessageAction(false))
+        //     }, 5000)
+        // }
 
-    //     if (classSelector && classSelector.successMessageAdvancedReducer) {
-    //         setTimeout(() => {
-    //             let data = {
-    //                 "type": "",
-    //                 "action": false
-    //             }
-    //             dispatch(successMessagAdvancedAction(data))
-    //         }, 4000)
-    //     }
+        // if (classSelector && classSelector.successMessageAdvancedReducer) {
+        //     setTimeout(() => {
+        //         let data = {
+        //             "type": "",
+        //             "action": false
+        //         }
+        //         dispatch(successMessagAdvancedAction(data))
+        //     }, 4000)
+        // }
+        if (allClassSelector?.successMessageReducer === true) {
+            dispatch(successMessageAction(false))
+        }
 
-    // }, [classSelector])
+    }, [allClassSelector?.successMessageReducer === true])
 
     // Toggle the filters dropdown
     const toggleFilterFunction = () => {

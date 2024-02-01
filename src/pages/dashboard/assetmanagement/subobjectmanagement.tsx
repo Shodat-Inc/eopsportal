@@ -84,27 +84,29 @@ export default function SubObjectManagement(props: any) {
     }, [access_token])
 
     // Close Success message after 5 second if true
-    // useEffect(() => {
-    //     if (classSelector && classSelector.successMessageReducer === true) {
-    //         setTimeout(() => {
-    //             fetchData();
-    //         }, 2500)
-    //         setTimeout(() => {
-    //             dispatch(successMessageAction(false))
-    //         }, 5000)
+    useEffect(() => {
+        // if (classSelector && classSelector.successMessageReducer === true) {
+        //     setTimeout(() => {
+        //         fetchData();
+        //     }, 2500)
+        //     setTimeout(() => {
+        //         dispatch(successMessageAction(false))
+        //     }, 5000)
 
-    //         if (classSelector && classSelector.successMessageAdvancedReducer) {
-    //             setTimeout(() => {
-    //                 let data = {
-    //                     "type": "",
-    //                     "action": false
-    //                 }
-    //                 dispatch(successMessagAdvancedAction(data))
-    //             }, 4000)
-    //         }
-
-    //     }
-    // }, [classSelector.successMessageReducer])
+        //     if (classSelector && classSelector.successMessageAdvancedReducer) {
+        //         setTimeout(() => {
+        //             let data = {
+        //                 "type": "",
+        //                 "action": false
+        //             }
+        //             dispatch(successMessagAdvancedAction(data))
+        //         }, 4000)
+        //     }
+        // }
+        if (classSelector?.successMessageReducer === true) {
+            dispatch(successMessageAction(false))
+        }
+    }, [classSelector?.successMessageReducer === true])
 
 
     // convert selected id to classname
