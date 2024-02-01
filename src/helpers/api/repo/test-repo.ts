@@ -32,6 +32,7 @@ export default async function runTest(params: any) {
 
     // Save the response in the CrackResponse table
     const result = await db.CrackResponse.create(workData);
+    const responseId = result.dataValues.id;
 
     if (!result) {
       return sendResponseData(false, "Error In Saving Data", []);
@@ -56,7 +57,7 @@ export default async function runTest(params: any) {
         }
       }
     }
-    checkAlert(image_url, userId, result, highestProbability);
+    checkAlert(image_url, userId, highestProbability, tag, imageid, responseId);
     return sendResponseData(true, "Data Saved Successfully", result);
   } catch (error) {
     loggerError.error("Error", error);
