@@ -143,7 +143,7 @@ export async function initialize() {
       purchaseHistory: "PurchaseHistory",
       alert: "Alert",
       emailTemplate: "EmailTemplate",
-      modelRaisedAlert: "RaisedAlert",
+      RaisedAlert: "RaisedAlert",
       batteryAlert: "BatteryAlert",
       batteryDetectionResponse: "BatteryResponse",
       ticket: "Ticket",
