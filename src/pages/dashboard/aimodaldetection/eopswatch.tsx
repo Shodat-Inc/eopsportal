@@ -183,29 +183,40 @@ export default function EopsWatch(props: any) {
     })
     const router = useRouter();
     const routerParams = router.query;
-    const [data, setData] = useState(jsonData[0]);
+    const [data, setData] = useState([] as any);
+    const [singleModel, setSingleModel] = useState([] as any);
     const [selectedModel, setSelectedModel] = useState('');
+
+    // ===== Setting initial values based on props =====
+    useEffect(()=> {
+        let dta = JSON.parse(props?.modelData[0]?.benefits);        
+        let arr = [] as any;
+        Object.values(dta).map((item:any, index:any) => {
+            arr.push(item)
+        })
+        setSingleModel(arr)
+    }, [props?.modelData])
+
+    
+    // ===== Update state based on selection of modal =====
     const setModelInformation = (model: any) => {
-        const filterData = jsonData.filter((item: any) => {
-            return item.name === model
+        const filterData = props?.modelData.filter((item: any) => {
+            return item.modelName === model
         })
         setData(filterData[0]);
-
+        let dta = JSON.parse(filterData[0]?.benefits);
+        let arr = [] as any;
+        Object.values(dta).map((item:any, index:any) => {
+            arr.push(item)
+        })
+        setSingleModel(arr)
         setSelectedModel(model)
     }
 
-    useEffect(() => {
-        if (props.nextDataProps && props.nextDataProps.objectID === "Manufacturing Plants") {
-            setData(jsonData[0]);
-        } else {
-            setData(jsonDataVehicles[0]);
-        }
-
-    }, [props.nextDataProps])
-
+    // ===== Initial loading of data =====
     useEffect(() => {
         setSelectedModel(props?.modelData[0]?.modelName)
-        // props?.modelData[0]?.modelName
+        setData(props?.modelData[0])
     }, [props?.modelDatal])
 
 
@@ -222,6 +233,10 @@ export default function EopsWatch(props: any) {
             }
         })
     }
+
+    console.log({
+        "__DATA":singleModel
+    })
 
     return (
         <div className="flex w-full h-full mt-1">
@@ -262,7 +277,7 @@ export default function EopsWatch(props: any) {
                     }
                 </div>
 
-                <div className="flex-1 flex-wrap flex-row hidden">
+                {/* <div className="flex-1 flex-wrap flex-row hidden">
                     {
                         props?.nextDataProps?.objectID && props?.nextDataProps?.objectID === "Manufacturing Plants"
                             ?
@@ -339,7 +354,7 @@ export default function EopsWatch(props: any) {
                             </>
                     }
 
-                </div>
+                </div> */}
             </div>
             <div className="w-[80%] px-8 py-5 rounded-r-xl rounded-bl-xl border border-[#E3E3E3] border-l-2 border-t-0 border-b-2 border-r-0 bg-white min-h-[500px]">
                 <div className='relative'>
@@ -363,26 +378,26 @@ export default function EopsWatch(props: any) {
                     <div className="text-md font-semibold mb-4">Model Details</div>
                     <div className="mb-10 flex justify-start item-center">
                         <div className="ml-0">
-                            <h3 className="font-semibold text-xl text-[#666666] mb-4">{data.name}</h3>
+                            <h3 className="font-semibold text-xl text-[#666666] mb-4">{data.modelName}</h3>
                             <p className="font-semibold text-md text-[#666666] mb-1">How it works</p>
-                            <p className="text-[14px] text-[#666666]">{data.description}</p>
+                            <p className="text-[14px] text-[#666666]">{data.howItWorks}</p>
                         </div>
                     </div>
                     <div className="relative">
                         <div className="flex justify-start items-center">
                             <div className="relative">
                                 <Image
-                                    src={`/img/${data.image}`}
+                                    src={`/img/crack-detection-large.svg`}
                                     alt="crack-detection-large"
                                     height={136}
                                     width={152}
                                 />
                             </div>
-                            <div className='ml-10'>
+                            <div className='ml-10 w-[60%]'>
                                 <p className="font-semibold text-md text-black mb-2">Benifits</p>
                                 <ul className="text-sm flex flex-between items-center flex-wrap flex-row list-disc pl-5">
                                     {
-                                        data.benifits.map((item: any, index: any) => (
+                                       singleModel?.map((item: any, index: any) => (
                                             <li key={index} className="w-1/2 mb-3">{item}</li>
                                         ))
                                     }

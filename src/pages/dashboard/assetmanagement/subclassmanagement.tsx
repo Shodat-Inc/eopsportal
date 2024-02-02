@@ -32,6 +32,8 @@ export default function SubClassManagement(props: any) {
     const [deleteMessage, setDeleteMessage] = useState(false);
     const [successMessage, setSuccessMessage] = useState(false);
     const [editMessage, setEditMessage] = useState(false);
+    const [allClassData, setAllClassData] = useState([] as any);
+    const [searchClass, setSearchClass] = useState('');
 
     let access_token = "" as any;
     if (typeof window !== 'undefined') {
@@ -93,6 +95,7 @@ export default function SubClassManagement(props: any) {
             }).then(function (response: any) {
                 if (response) {
                     setSubClassData(response?.data?.data);
+                    setAllClassData(response?.data?.data);
                 }
             }).catch(function (error: any) {
                 console.log({
@@ -110,24 +113,19 @@ export default function SubClassManagement(props: any) {
     }, [allClassSelector, access_token])
 
     // function for searching
-    const handleSearchFUnction = (e: any) => {
-        setSearch(e.target.value);
+    const handleSearchFunction = (e: any) => {
+        setSearchClass(e.target.value)
         if (e.target.value === "" || e.target.value.length <= 0) {
-            fetchData();
-            setSearch('');
+            setSubClassData(allClassData)
             return;
         }
         if (subClassData && subClassData.length > 0) {
             const filtered = subClassData.filter((item: any) => {
-                if (item.hasOwnProperty("assetName")) {
-                    if (item.assetName.toString().toLowerCase().includes(e.target.value.toString().toLowerCase())) {
-                        return item;
-                    }
+                if (item.className.toString().toLowerCase().includes(e.target.value.toString().toLowerCase())) {
+                    return item;
                 }
             })
             setSubClassData(filtered)
-        } else {
-            fetchData();
         }
     }
 
@@ -232,13 +230,13 @@ export default function SubClassManagement(props: any) {
                         />
                         <input
                             type="text"
-                            placeholder={`Search`}
-                            id="searchobjects"
-                            name="searchobjects"
+                            placeholder="Search by class name"
+                            id="searchClass"
+                            name="searchClass"
                             className="border border-gray-969 rounded-lg h-[44px] w-[310px] pl-10 pr-2"
                             autoComplete="off"
-                            value={search}
-                            onChange={handleSearchFUnction}
+                            value={searchClass}
+                            onChange={handleSearchFunction}
                         />
                     </div>
                     <div className="relative ml-3">

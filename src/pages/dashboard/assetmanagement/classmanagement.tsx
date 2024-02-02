@@ -7,7 +7,7 @@ import AddNewClass from './addnewclass';
 import {
     editClassModalAction,
     successMessageAction,
-    successMessagAdvancedAction, 
+    successMessagAdvancedAction,
     selectedClassAction
 } from '@/store/actions/classAction';
 import EditClass from './editclass';
@@ -23,6 +23,7 @@ export default function ClassManagement(props: any) {
     const [deleteModal, setDeleteModal] = useState(false);
     const [searchClass, setSearchClass] = useState('');
     const [allData, setAllData] = useState(props.classData);
+    const [allClassData, setAllClassData] = useState([] as any);
     const [selectedClass, setSelectedClass] = useState();
     const [deleteID, setDeleteID] = useState(0);
     const [actionsToggle, setActionsToggle] = useState(false);
@@ -54,7 +55,8 @@ export default function ClassManagement(props: any) {
                 }
             }).then(function (response) {
                 if (response) {
-                    setAllData(response?.data?.data)
+                    setAllData(response?.data?.data);
+                    setAllClassData(response?.data?.data);
                 }
             }).catch(function (error) {
                 console.log({
@@ -95,7 +97,7 @@ export default function ClassManagement(props: any) {
             setActionsToggle(false);
         }, 1000)
     }
-    
+
 
     const deleteModalFunction = (id: any) => {
         setDeleteID(id);
@@ -108,15 +110,25 @@ export default function ClassManagement(props: any) {
     }
 
     const takeMeToClassComponent = (item: any) => {
-        props.handelsubClass(item);        
+        props.handelsubClass(item);
         dispatch(selectedClassAction(item))
     }
 
     // function for searching
     const handleSearchFunction = (e: any) => {
-        let name = e.target.name;
-        let value = e.target.value;
-        setSearchClass(value)
+        setSearchClass(e.target.value)
+        if (e.target.value === "" || e.target.value.length <= 0) {
+            setAllData(allClassData)
+            return;
+        }
+        if (allData && allData.length > 0) {
+            const filtered = allData.filter((item: any) => {
+                if (item.className.toString().toLowerCase().includes(e.target.value.toString().toLowerCase())) {
+                    return item;
+                }
+            })
+            setAllData(filtered)
+        }
     }
 
 
@@ -151,7 +163,7 @@ export default function ClassManagement(props: any) {
                 };
                 dispatch(successMessagAdvancedAction(data))
                 setDeleteMessage(true);
-                setTimeout(()=>{
+                setTimeout(() => {
                     setDeleteMessage(false);
                 }, 4000)
             }).catch(function (error) {
@@ -185,21 +197,21 @@ export default function ClassManagement(props: any) {
     const wrapperRef = useRef(null);
     useOutsideAlerter(wrapperRef);
 
-    const handleAddSuccessMessage = (msg:any) => {
+    const handleAddSuccessMessage = (msg: any) => {
         setSuccessMessage(msg);
-        setTimeout(()=>{
+        setTimeout(() => {
             setSuccessMessage(false);
         }, 4000)
     }
 
-    const handleEditSuccessMessage = (msg:any) => {
+    const handleEditSuccessMessage = (msg: any) => {
         setEditMessage(msg);
-        setTimeout(()=>{
+        setTimeout(() => {
             setEditMessage(false);
         }, 4000)
     }
 
-    
+
 
 
     return (
@@ -218,7 +230,7 @@ export default function ClassManagement(props: any) {
                         />
                         <input
                             type="text"
-                            placeholder="Search"
+                            placeholder="Search by class name"
                             id="searchClass"
                             name="searchClass"
                             className="border border-gray-969 rounded-lg h-[44px] w-[310px] pl-10 pr-2"
