@@ -62,6 +62,13 @@ export function RaisedAlert(sequelize: any) {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    ticketRaisedAlertLinkId: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: "TicketRaisedAlertLinks",
+        id: "id",
+      },
+    },
   };
 
   return sequelize.define("RaisedAlert", attributes);

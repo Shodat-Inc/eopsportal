@@ -211,10 +211,7 @@ async function relationship(db: any) {
     });
 
     db.Enterprise.hasMany(db.BatteryAlert, { foreignKey: "enterpriseId" });
-    db.BatteryAlert.belongsTo(db.Enterprise, { foreignKey: "enterpriseId" }); 
-
-    db.RaisedAlert.hasMany(db.Ticket, { foreignKey: "raisedAlertId" });
-    db.Ticket.belongsTo(db.RaisedAlert, { foreignKey: "raisedAlertId" });
+    db.BatteryAlert.belongsTo(db.Enterprise, { foreignKey: "enterpriseId" });
 
     db.User.hasMany(db.RaisedAlert, { foreignKey: "userId" });
     db.RaisedAlert.belongsTo(db.User, { foreignKey: "userId" });
@@ -243,6 +240,15 @@ async function relationship(db: any) {
     db.Attachment.belongsTo(db.EnterpriseUser, {
       foreignKey: "enterpriseUserId",
     });
+
+    db.Ticket.hasMany(db.Attachment, { foreignKey: "ticketId" });
+    db.Attachment.belongsTo(db.Ticket, { foreignKey: "ticketId" });
+
+    db.Ticket.belongsTo(db.Link, { foreignKey: "ticketRaisedAlertLinkId" })
+    db.Link.hasMany(db.Ticket, { foreignKey: "ticketRaisedAlertLinkId" })
+
+    db.RaisedAlert.belongsTo(db.Link, { foreignKey: "ticketRaisedAlertLinkId" })
+    db.Link.hasMany(db.RaisedAlert, { foreignKey: "ticketRaisedAlertLinkId" })
 
     resolve("Imported");
   });
