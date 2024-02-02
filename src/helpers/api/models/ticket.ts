@@ -54,18 +54,19 @@ export function Ticket(sequelize: any) {
             type: DataTypes.JSON,
             allowNull: true
         },
+        
+        ticketRaisedAlertLinkId: {
+            type: DataTypes.INTEGER,
+            references: {
+              model: "TicketRaisedAlertLinks",
+              id: "id",
+            },
+            allowNull: true
+        },
 
         completionDate: {
             type: DataTypes.DATEONLY,
             allowNull: false
-        },
-
-        raisedAlertId: {
-            type: DataTypes.INTEGER,
-            references: {
-                model: "RaisedAlerts",
-                id: "id",
-            },
         },
 
     };
