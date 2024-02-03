@@ -1,34 +1,20 @@
 const responseTableName: any = {
   Crack: "CrackDetectionResponses",
-  BatteryDetection: "BatteryDetectionResponses",
-  TyreDetection: "TyreDetectionResponses",
+  Battery: "BatteryDetectionResponses",
+  Tyre: "TyreDetectionResponses",
 };
 
 const alertTableName: any = {
-  Crack: "CrackAlerts",
-  BatteryDetection: "BatteryDetectionResponses",
-  TyreDetection: "TyreDetectionResponses",
+  Crack: "CrackAlert",
+  Battery: "BatteryAlert",
+  Tyre: "TyreAlerts",
 };
 
-export const checkTableName = {
-  checkResponseTable,
-  checkAlertTable,
-};
 
 export function checkResponseTable(tag: string) {
-  for (let key in responseTableName) {
-    if (key === tag) {
-      return responseTableName[key];
-    }
-  }
-  return undefined;
+  return responseTableName[tag];
 }
 
 export function checkAlertTable(tag: string) {
-  for (let key in alertTableName) {
-    if (key === tag) {
-      return alertTableName[key];
-    }
-  }
-  return undefined;
+  return alertTableName[tag];
 }

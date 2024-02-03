@@ -141,15 +141,16 @@ export async function initialize() {
       tyreDetectionResponse: "TyreResponse",
       subscription: "Subscription",
       purchaseHistory: "PurchaseHistory",
-      alert: "Alert",
+      crackAlert: "CrackAlert",
+      batteryAlert: "BatteryAlert",
+      tyreAlert: "TyreAlerts",
       emailTemplate: "EmailTemplate",
       RaisedAlert: "RaisedAlert",
-      batteryAlert: "BatteryAlert",
       batteryDetectionResponse: "BatteryResponse",
       ticket: "Ticket",
       ticketAttachments: "Attachment",
       ticketComments: "Comment",
-      ticketRaisedAlertLink: "Link"
+      ticketRaisedAlertLink: "Link",
     };
 
     if (true) {

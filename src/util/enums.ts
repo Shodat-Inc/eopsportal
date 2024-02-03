@@ -1,15 +1,17 @@
 import { DataTypes } from "sequelize";
 
-export const TestProductionDataType = DataTypes.ENUM('test', 'production')
+export const TestProductionDataType = DataTypes.ENUM("test", "production");
 
-export const ActiveInactiveDataType = DataTypes.ENUM('active', 'inactive')
+export const ActiveInactiveDataType = DataTypes.ENUM("active", "inactive");
 
-export const OnOffDataType = DataTypes.ENUM('on', 'off')
+export const OnOffDataType = DataTypes.ENUM("on", "off");
 
-export const LessGreaterThan = DataTypes.ENUM('lessThan', 'greaterThan')
+export const LessGreaterThan = DataTypes.ENUM("lessThan", "greaterThan");
 
-export const ticketStatus = DataTypes.ENUM('open', 'inProcess', 'closed')
+export const ticketStatus = DataTypes.ENUM("open", "inProcess", "closed");
 
-export const priority = DataTypes.ENUM('high', 'low')
+export const priority = DataTypes.ENUM("high", "low");
 
-export const isFlagged = DataTypes.ENUM('true', 'false')
+export const isFlagged = DataTypes.ENUM("true", "false");
+
+export const Condition = DataTypes.ENUM("Severe", "Moderate", "No");

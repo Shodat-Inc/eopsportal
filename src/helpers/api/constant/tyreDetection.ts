@@ -1,6 +1,6 @@
 export const tyreDetection = {
   tag: "Tyre",
-  responseCoordinates: [
+  response: [
     {
       data: {
         distance: 50,
@@ -16,7 +16,7 @@ export const tyreDetection = {
       },
     },
     {
-      data3: {
+      data: {
         distance: 30,
         uom: "Miles",
         recomendation: "No",

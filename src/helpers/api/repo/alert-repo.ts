@@ -1,7 +1,6 @@
 import { db } from "../db";
 import sendResponseData from "../../constant";
 import { loggerInfo, loggerError } from "@/logger";
-import message from "@/util/responseMessage";
 
 export const alertRepo = {
   create,
@@ -15,7 +14,7 @@ async function create(params: any) {
   loggerInfo.info("Post api/createAlerts to create Alerts");
 
   try {
-    const data = await db.Alert.findOne({
+    const data = await db.CrackAlert.findOne({
       where: {
         alertName: params.alertName,
       },
@@ -25,7 +24,7 @@ async function create(params: any) {
       return sendResponseData(false, "Alert Name already Exists", {});
     }
 
-    const newAlert = new db.Alert(params);
+    const newAlert = new db.CrackAlert(params);
 
     const save = await newAlert.save();
 
@@ -40,7 +39,7 @@ async function create(params: any) {
 async function getAllAlert() {
   loggerInfo.info("Get all Alerts");
   try {
-    const data = await db.Alert.findAll({
+    const data = await db.CrackAlert.findAll({
       attributes: [
         "id",
         "alertName",
@@ -68,7 +67,7 @@ async function getAlertById(params: any) {
     if (!params.id) {
       return sendResponseData(false, "Data is not provided in params", {});
     }
-    const data = await db.Alert.findOne({
+    const data = await db.CrackAlert.findOne({
       where: { id: params.id },
     });
     if (!data) {
@@ -84,7 +83,7 @@ async function getAlertById(params: any) {
 async function update(params: any, reqAuth: any) {
   loggerInfo.info("Update Alert");
   try {
-    const data = await db.Alert.findOne({
+    const data = await db.CrackAlert.findOne({
       where: { id: reqAuth.id },
     });
     if (!data.length) {
@@ -129,7 +128,7 @@ async function update(params: any, reqAuth: any) {
 }
 
 async function _delete(id: number) {
-  const alert = await db.Alert.findByPk(id);
+  const alert = await db.CrackAlert.findByPk(id);
   if (!alert) {
     return sendResponseData(false, "Alert not found", {});
   }

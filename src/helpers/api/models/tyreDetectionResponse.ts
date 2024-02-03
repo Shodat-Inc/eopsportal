@@ -8,7 +8,7 @@ export function TyreResponse(sequelize: any) {
       allowNull: false,
       autoIncrement: true,
     },
-    coordinates: { type: DataTypes.JSON, allowNull: true },
+    response: { type: DataTypes.JSON, allowNull: true },
     tag: {
       type: DataTypes.STRING,
       allowNull: false,
