@@ -159,8 +159,8 @@ async function relationship(db: any) {
     db.User.hasMany(db.ModelData, { foreignKey: "userId" });
     db.ModelData.belongsTo(db.User, { foreignKey: "userId" });
 
-    db.EmailTemplate.hasMany(db.Alert, { foreignKey: "emailTemplateId" });
-    db.Alert.belongsTo(db.EmailTemplate, { foreignKey: "emailTemplateId" });
+    db.EmailTemplate.hasMany(db.CrackAlert, { foreignKey: "emailTemplateId" });
+    db.CrackAlert.belongsTo(db.EmailTemplate, { foreignKey: "emailTemplateId" });
 
     db.Image.hasMany(db.RaisedAlert, { foreignKey: "modelObjectImageId" });
     db.RaisedAlert.belongsTo(db.Image, { foreignKey: "modelObjectImageId" });
@@ -174,23 +174,20 @@ async function relationship(db: any) {
     db.object.hasMany(db.RaisedAlert, { foreignKey: "objectId" });
     db.RaisedAlert.belongsTo(db.object, { foreignKey: "objectId" });
 
-    db.User.hasMany(db.Alert, { foreignKey: "userId" });
-    db.Alert.belongsTo(db.User, { foreignKey: "userId" });
+    db.User.hasMany(db.CrackAlert, { foreignKey: "userId" });
+    db.CrackAlert.belongsTo(db.User, { foreignKey: "userId" });
 
-    db.Enterprise.hasMany(db.Alert, { foreignKey: "enterpriseId" });
-    db.Alert.belongsTo(db.Enterprise, { foreignKey: "enterpriseId" });
+    db.Enterprise.hasMany(db.CrackAlert, { foreignKey: "enterpriseId" });
+    db.CrackAlert.belongsTo(db.Enterprise, { foreignKey: "enterpriseId" });
 
-    db.EnterpriseUser.hasMany(db.Alert, { foreignKey: "enterpriseUserId" });
-    db.Alert.belongsTo(db.Alert, { foreignKey: "enterpriseId" });
+    db.EnterpriseUser.hasMany(db.CrackAlert, { foreignKey: "enterpriseUserId" });
+    db.CrackAlert.belongsTo(db.EnterpriseUser, { foreignKey: "enterpriseId" });
 
     db.AddClasses.hasMany(db.RaisedAlert, { foreignKey: "classId" });
     db.RaisedAlert.belongsTo(db.AddClasses, { foreignKey: "classId" });
 
-    db.Image.hasMany(db.Alert, { foreignKey: "modelObjectImageId" });
-    db.Alert.belongsTo(db.Image, { foreignKey: "modelObjectImageId" });
-
-    db.User.hasMany(db.Alert, { foreignKey: "userId" });
-    db.Alert.belongsTo(db.User, { foreignKey: "userId" });
+    db.Image.hasMany(db.CrackAlert, { foreignKey: "modelObjectImageId" });
+    db.CrackAlert.belongsTo(db.Image, { foreignKey: "modelObjectImageId" });
 
     db.Image.hasMany(db.BatteryResponse, { foreignKey: "modelObjectImageId" });
     db.BatteryResponse.belongsTo(db.Image, {
@@ -244,11 +241,28 @@ async function relationship(db: any) {
     db.Ticket.hasMany(db.Attachment, { foreignKey: "ticketId" });
     db.Attachment.belongsTo(db.Ticket, { foreignKey: "ticketId" });
 
-    db.Ticket.belongsTo(db.Link, { foreignKey: "ticketRaisedAlertLinkId" })
     db.Link.hasMany(db.Ticket, { foreignKey: "ticketRaisedAlertLinkId" })
+    db.Ticket.belongsTo(db.Link, { foreignKey: "ticketRaisedAlertLinkId" })
 
-    db.RaisedAlert.belongsTo(db.Link, { foreignKey: "ticketRaisedAlertLinkId" })
     db.Link.hasMany(db.RaisedAlert, { foreignKey: "ticketRaisedAlertLinkId" })
+    db.RaisedAlert.belongsTo(db.Link, { foreignKey: "ticketRaisedAlertLinkId" })
+
+    db.EmailTemplate.hasMany(db.TyreAlerts, { foreignKey: "emailTemplateId" });
+    db.TyreAlerts.belongsTo(db.EmailTemplate, { foreignKey: "emailTemplateId" });
+
+    db.User.hasMany(db.TyreAlerts, { foreignKey: "userId" });
+    db.TyreAlerts.belongsTo(db.User, { foreignKey: "userId" });
+
+    db.Image.hasMany(db.TyreAlerts, { foreignKey: "modelObjectImageId" });
+    db.TyreAlerts.belongsTo(db.Image, { foreignKey: "modelObjectImageId" });
+
+
+    db.Enterprise.hasMany(db.TyreAlerts, { foreignKey: "enterpriseId" });
+    db.TyreAlerts.belongsTo(db.Enterprise, { foreignKey: "enterpriseId" });
+
+    db.EnterpriseUser.hasMany(db.TyreAlerts, { foreignKey: "enterpriseUserId" });
+    db.TyreAlerts.belongsTo(db.EnterpriseUser, { foreignKey: "enterpriseId" });
+
 
     resolve("Imported");
   });

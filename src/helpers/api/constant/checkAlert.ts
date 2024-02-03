@@ -1,91 +1,56 @@
 import sendResponseData from "@/helpers/constant";
-import { db } from "../db";
-import { Sequelize } from "sequelize";
-import isGreater from "./isGreater";
-import { checkTableName } from "./checkTable";
+import { getAlertData, getImageData } from "./extractData";
+import checkToNotify from "./checkToNotify";
 
-export async function checkAlert(
-  params: any,
-  userId: number,
-  highestProbability: number,
-  tag: string,
-  imageId: number,
-  responseId: number
-) {
+export default async function checkAlert(AlertParams: {
+  url: string;
+  userId: number;
+  response: any;
+}) {
   try {
-    const data = await db.Image.findAll({
-      where: { url: params.image_url },
-      include: [
-        {
-          model: db.ModelData,
-          attributes: ["userId", "modelId", "classId", "objectId"],
-        },
-      ],
-    });
+    const tag = AlertParams.response.dataValues.tag;
 
-    const check = await db.Alert.findAll({
-      where: {
-        isEnabled: 1,
-        userId: userId,
-      },
-      attributes: ["id", "thresholdValue", "modelObjectImageId", "rangeValue"],
-      order: [
-        [
-          Sequelize.literal(`ABS(thresholdValue - ${highestProbability})`),
-          "ASC",
-        ], // Order by the absolute difference
-      ],
-      limit: 1,
-      raw: true,
-    });
 
-    const alertId = check[0].id;
-    if (!check) {
+    const apiResponse = AlertParams.response;
+
+    const userId = AlertParams.userId;
+
+    const data = await getImageData(AlertParams.url);
+
+    if (!data) {
+      return sendResponseData(false, "Image Data not found ", {});
+    }
+
+    const extData = data[0].dataValues.ModelDatum.dataValues;
+
+    const formattedData = {
+      userId: extData.userId,
+      modelId: extData.modelId,
+      classId: extData.classId,
+      objectId: extData.objectId,
+    };
+
+    const alertData = await getAlertData(tag, userId);
+
+    if (!alertData) {
       return sendResponseData(
         false,
-        "Alert not found or isEnabled is not true for the given image id.",
+        "Alert not found or isEnabled is not true for the given user.",
         {}
       );
     }
 
-    const formattedData = data.map(
-      (item: { ModelDatum: { dataValues: any } }) => {
-        const modelDatum = item.ModelDatum.dataValues;
-        return {
-          userId: modelDatum.userId,
-          modelId: modelDatum.modelId,
-          classId: modelDatum.classId,
-          objectId: modelDatum.objectId,
-        };
-      }
-    );
-    //Calculation To Send Alert
-    for (let i of check) {
-      const rangeString = isGreater(i.rangeValue);
-      const tableName = checkTableName.checkResponseTable(tag);
-      const alertTableName = checkTableName.checkAlertTable(tag);
+    const notificationParams = {
+      alertData,
+      apiResponse,
+      tag,
+      imageData: formattedData,
+    };
 
-      if (rangeString && highestProbability > i.thresholdValue) {
-        console.log("notification Send", i.thresholdValue);
-        const raisedAlertRecord = {
-          alertId,
-          modelObjectImageId: imageId,
-          tags: tag,
-          userId: formattedData[0].userId,
-          modelId: formattedData[0].modelId,
-          classId: formattedData[0].classId,
-          objectId: formattedData[0].objectId,
-          responseId,
-          alertTableName,
-          tableName,
-        };
+    const notification = await checkToNotify(notificationParams);
 
-        // Save the record if it hasn't been created yet
-        await db.RaisedAlert.create(raisedAlertRecord);
-      }
-    }
-    return sendResponseData(true, "Alert Send Successfully", []);
+    return notification;
   } catch (error) {
-    sendResponseData(false, "Error In Sending Alert", []);
+    return sendResponseData(false, "Error In Sending Alert", []);
   }
 }

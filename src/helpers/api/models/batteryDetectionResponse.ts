@@ -8,7 +8,7 @@ export function BatteryResponse(sequelize: any) {
             allowNull: false,
             autoIncrement: true,
         },
-        batteryLifeResponse: { type: DataTypes.JSON, allowNull: true },
+        response: { type: DataTypes.JSON, allowNull: true },
         tag: {
             type: DataTypes.STRING,
             allowNull: false

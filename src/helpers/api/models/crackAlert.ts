@@ -1,7 +1,7 @@
 import { DataTypes } from "sequelize";
 import { LessGreaterThan } from "@/util/enums";
 
-export function Alert(sequelize: any) {
+export function CrackAlert(sequelize: any) {
   const attributes = {
     id: {
       type: DataTypes.INTEGER,
