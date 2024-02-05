@@ -1,27 +1,18 @@
-import {
-  checkBatteryAlert,
-  checkCrackAlert,
-  checkTyreAlert,
-} from "./alertAlgo";
-
+import * as alert from "./alertAlgo";
 export default async function checkToNotify(notificationParams: {
   alertData: any;
   apiResponse: any;
   tag: any;
   imageData: any;
 }) {
-  const tag = notificationParams.tag;
-
-  if (tag === "Crack") {
-    const result = await checkCrackAlert(notificationParams);
+  const obj: any = {
+    Crack: alert.checkCrackAlert,
+    Battery: alert.checkBatteryAlert,
+  };
+  const tag: any = notificationParams.tag;
+  if (obj[tag]) {
+    const result = await obj[tag](notificationParams);
     return result;
   }
-  if (tag === "Battery") {
-    const result = await checkBatteryAlert(notificationParams);
-    return result;
-  }
-  if (tag === "Tyre") {
-    const result = await checkTyreAlert(notificationParams);
-    return result;
-  }
+  return null;
 }

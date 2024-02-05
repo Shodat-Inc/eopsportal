@@ -3,19 +3,21 @@ import { getAlertData, getImageData } from "./extractData";
 import checkToNotify from "./checkToNotify";
 
 export default async function checkAlert(AlertParams: {
-  url: string;
   userId: number;
   response: any;
 }) {
   try {
     const tag = AlertParams.response.dataValues.tag;
 
+    const modelObjectImageId =
+      AlertParams.response.dataValues.modelObjectImageId;
 
     const apiResponse = AlertParams.response;
 
     const userId = AlertParams.userId;
 
-    const data = await getImageData(AlertParams.url);
+    const data = await getImageData(modelObjectImageId);
+
 
     if (!data) {
       return sendResponseData(false, "Image Data not found ", {});
@@ -51,6 +53,7 @@ export default async function checkAlert(AlertParams: {
 
     return notification;
   } catch (error) {
-    return sendResponseData(false, "Error In Sending Alert", []);
+    console.log(error);
+    return sendResponseData(false, "Error In Sending Alert", error);
   }
 }

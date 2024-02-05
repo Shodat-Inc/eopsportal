@@ -3,12 +3,12 @@ import { db } from "../db";
 import { checkAlertTable } from "./checkTable";
 import sendResponseData from "@/helpers/constant";
 
-export async function getImageData(image_url: string) {
+export async function getImageData(image_id: number) {
   try {
     loggerInfo.info("Get Image Data");
 
     const data = await db.Image.findAll({
-      where: { url: image_url },
+      where: { id: image_id },
       include: [
         {
           model: db.ModelData,

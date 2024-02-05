@@ -49,7 +49,6 @@ export default async function runTest(params: any) {
     await ranCount.save();
 
     const AlertParams = {
-      url: image_url,
       userId,
       response: result,
     };
