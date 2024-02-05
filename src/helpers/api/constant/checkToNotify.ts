@@ -8,6 +8,7 @@ export default async function checkToNotify(notificationParams: {
   const obj: any = {
     Crack: alert.checkCrackAlert,
     Battery: alert.checkBatteryAlert,
+    Tyre: alert.checkTyreAlert,
   };
   const tag: any = notificationParams.tag;
   if (obj[tag]) {

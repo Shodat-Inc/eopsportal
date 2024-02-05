@@ -18,15 +18,15 @@ export default async function runTest(params: any) {
     if (!apiResponse) {
       return sendResponseData(false, "Error In External Service", error);
     }
-    const formatted: any = {};
-    for (let i = 0; i < apiResponse.response.length; i++) {
-      formatted[`tyreDetectionData:${i + 1}`] = apiResponse.response[i];
-    }
+    // const formatted: any = {};
+    // for (let i = 0; i < apiResponse.response.length; i++) {
+    //   formatted[`tyreDetectionData:${i + 1}`] = apiResponse.response[i];
+    // }
 
     const tag = apiResponse.tag;
     const workData = {
       modelObjectImageId: imageid,
-      response: formatted,
+      response: apiResponse,
       tag,
     };
     const result = new db.TyreResponse(workData);
