@@ -77,15 +77,16 @@ async function getTicketByAlertId(params: any) {
             include: [{
                 model: db.Ticket,
                 attributes: ['id', 'subject', 'status', 'updatedAt', 'priority', 'assignedTo'],
-                include: [{
-                    model: db.Comment,
-                    attributes: ['text',], // Adjust properties accordingly
-                }, 
-                {
-                    model: db.Attachment,
-                    attributes: ['fileURL', ], // Adjust properties accordingly
-                }
-            ]
+                include: [
+                    {
+                        model: db.Comment,
+                        attributes: ['comment'],
+                    },
+                    {
+                        model: db.Attachment,
+                        attributes: ['fileURL'],
+                    }
+                ]
             }]
         });
 
