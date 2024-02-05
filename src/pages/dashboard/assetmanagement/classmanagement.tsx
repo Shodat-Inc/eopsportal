@@ -10,6 +10,9 @@ import {
     successMessagAdvancedAction,
     selectedClassAction
 } from '@/store/actions/classAction';
+import {
+    getClassDataAction
+} from '@/store/actions/apiAction';
 import EditClass from './editclass';
 import axios from 'axios';
 
@@ -36,7 +39,8 @@ export default function ClassManagement(props: any) {
     const [editMessage, setEditMessage] = useState(false);
 
     // All class reducer states
-    const allClassSelector = useSelector((state: any) => state.classReducer);
+    const allClassSelector = useSelector((state: any) => state.classReducer);  
+    const apiSelector = useSelector((state: any) => state.apiReducer);  
 
     // Close Success message after 5 second if true
     useEffect(() => {
@@ -45,34 +49,55 @@ export default function ClassManagement(props: any) {
 
     // Get All Assets
     async function fetchData() {
-        try {
-            await axios({
-                method: 'GET',
-                url: `/api/getAssets`,
-                headers: {
-                    "Authorization": `Bearer ${access_token}`,
-                    "Content-Type": "application/json"
-                }
-            }).then(function (response) {
-                if (response) {
-                    setAllData(response?.data?.data);
-                    setAllClassData(response?.data?.data);
-                }
-            }).catch(function (error) {
-                console.log({
-                    "ERROR IN AXIOS CATCH": error
-                })
-            })
-        } catch (err) {
-            console.log({
-                "ERROR IN TRY CATCH": err
-            })
-        }
+        dispatch(getClassDataAction())
+    //     try {
+    //         await axios({
+    //             method: 'GET',
+    //             url: `/api/getAssets`,
+    //             headers: {
+    //                 "Authorization": `Bearer ${access_token}`,
+    //                 "Content-Type": "application/json"
+    //             }
+    //         }).then(function (response) {
+    //             if (response) {
+
+    //                 // console.log({
+    //                 //     "RESPONSE":response?.data?.data
+    //                 // })
+    //                 setAllData(response?.data?.data);
+    //                 setAllClassData(response?.data?.data);
+    //             }
+    //         }).catch(function (error) {
+    //             console.log({
+    //                 "ERROR IN AXIOS CATCH": error
+    //             })
+    //         })
+    //     } catch (err) {
+    //         console.log({
+    //             "ERROR IN TRY CATCH": err
+    //         })
+    //     }
     }
     useEffect(() => {
-        fetchData();
-        if (fetchData.length) return;
-    }, [access_token, allClassSelector])
+        dispatch(getClassDataAction())
+        // fetchData();
+        // if (fetchData.length) return;
+    }, [access_token])
+
+    
+    console.log({
+        "apiSelector-1":apiSelector
+    })
+    
+    useEffect(()=>{
+        console.log({
+            "apiSelector-2":apiSelector?.classDataReducer
+        })
+        setAllData(apiSelector?.classDataReducer);
+        setAllClassData(apiSelector?.classDataReducer);
+        
+    }, [apiSelector?.classDataReducer])
+    
 
 
     // Toggle Filters
@@ -157,11 +182,12 @@ export default function ClassManagement(props: any) {
                 }
             }).then(function (response) {
                 // dispatch(successMessageAction(true))
-                let data = {
-                    "type": "deleteClass",
-                    "action": true
-                };
-                dispatch(successMessagAdvancedAction(data))
+                // let data = {
+                //     "type": "deleteClass",
+                //     "action": true
+                // };
+                // dispatch(successMessagAdvancedAction(data))
+                dispatch(getClassDataAction())
                 setDeleteMessage(true);
                 setTimeout(() => {
                     setDeleteMessage(false);

@@ -18,6 +18,8 @@ import {
     successMessagAdvancedAction
 } from "@/store/actions/classAction";
 
+import { getClassDataAction } from "@/store/actions/apiAction";
+
 export default function AssetManagement() {
     const dispatch = useDispatch<any>();
     const [tab, setTab] = useState(1);
@@ -33,6 +35,7 @@ export default function AssetManagement() {
 
     // All class reducer states
     const allClassSelector = useSelector((state: any) => state.classReducer);
+    const apiSelector = useSelector((state: any) => state.apiReducer);
 
 
     // Close Success message after 5 second if true
@@ -44,34 +47,37 @@ export default function AssetManagement() {
 
     }, [allClassSelector?.successMessageReducer === true])
 
-    async function fetchData() {
-        try {
-            await axios({
-                method: 'GET',
-                url: `/api/getAssets`,
-                headers: {
-                    "Authorization": `Bearer ${access_token}`,
-                    "Content-Type": "application/json"
-                }
-            }).then(function (response) {
-                if (response) {
-                    setClassData(response?.data?.data)
-                }
-            }).catch(function (error) {
-                console.log({
-                    "ERROR IN AXIOS CATCH": error
-                })
-            })
-        } catch (err) {
-            console.log({
-                "ERROR IN TRY CATCH": err
-            })
-        }
-    }
+    // async function fetchData() {
+    //     try {
+    //         await axios({
+    //             method: 'GET',
+    //             url: `/api/getAssets`,
+    //             headers: {
+    //                 "Authorization": `Bearer ${access_token}`,
+    //                 "Content-Type": "application/json"
+    //             }
+    //         }).then(function (response) {
+    //             if (response) {
+    //                 setClassData(response?.data?.data)
+    //             }
+    //         }).catch(function (error) {
+    //             console.log({
+    //                 "ERROR IN AXIOS CATCH": error
+    //             })
+    //         })
+    //     } catch (err) {
+    //         console.log({
+    //             "ERROR IN TRY CATCH": err
+    //         })
+    //     }
+    // }
     useEffect(() => {
-        fetchData();
-        if (fetchData.length) return;
-    }, [access_token, allClassSelector?.successMessageReducer])
+        dispatch(getClassDataAction())
+    }, [access_token])
+
+    useEffect(()=>{
+        setClassData(apiSelector?.classDataReducer);        
+    }, [apiSelector?.classDataReducer])
 
     useEffect(() => {
         setNav(getSelClass.classBreadcrumbs)

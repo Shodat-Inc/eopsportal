@@ -15,6 +15,10 @@ import {
 
 export default function SubClassManagement(props: any) {
 
+    console.log({
+        "__PROPS_IN_SUB_CLASS_MANAGEMENT":props
+    })
+    
     const dispatch = useDispatch<any>();
     const [toggleFilter, setToggleFilter] = useState(false);
     const [toggleArrow, setToggleArrow] = useState(false);

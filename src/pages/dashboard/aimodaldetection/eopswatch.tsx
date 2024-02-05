@@ -188,29 +188,34 @@ export default function EopsWatch(props: any) {
     const [selectedModel, setSelectedModel] = useState('');
 
     // ===== Setting initial values based on props =====
-    useEffect(()=> {
-        let dta = JSON.parse(props?.modelData[0]?.benefits);        
-        let arr = [] as any;
-        Object.values(dta).map((item:any, index:any) => {
-            arr.push(item)
-        })
-        setSingleModel(arr)
+    useEffect(() => {
+        if (props?.modelData && props?.modelData.length > 0) {
+
+            let dta = JSON.parse(props?.modelData[0]?.benefits);
+            let arr = [] as any;
+            Object.values(dta).map((item: any, index: any) => {
+                arr.push(item)
+            })
+            setSingleModel(arr);
+        }
     }, [props?.modelData])
 
-    
+
     // ===== Update state based on selection of modal =====
     const setModelInformation = (model: any) => {
         const filterData = props?.modelData.filter((item: any) => {
             return item.modelName === model
         })
-        setData(filterData[0]);
-        let dta = JSON.parse(filterData[0]?.benefits);
-        let arr = [] as any;
-        Object.values(dta).map((item:any, index:any) => {
-            arr.push(item)
-        })
-        setSingleModel(arr)
-        setSelectedModel(model)
+        if (filterData && filterData.length > 0) {
+            setData(filterData[0]);
+            let dta = JSON.parse(filterData[0]?.benefits);
+            let arr = [] as any;
+            Object.values(dta).map((item: any, index: any) => {
+                arr.push(item)
+            })
+            setSingleModel(arr)
+            setSelectedModel(model)
+        }
     }
 
     // ===== Initial loading of data =====
@@ -228,14 +233,14 @@ export default function EopsWatch(props: any) {
                 subObject: props?.nextDataProps?.subObject,
                 key: props?.nextDataProps?.key,
                 id: props?.nextDataProps?.id,
-                model: data.name ? data.name : props?.nextDataProps?.model,
+                model: data?.name ? data?.name : props?.nextDataProps?.model,
                 industryID: props?.nextDataProps?.industryID
             }
         })
     }
 
     console.log({
-        "__DATA":singleModel
+        "__DATA": singleModel
     })
 
     return (
@@ -378,9 +383,9 @@ export default function EopsWatch(props: any) {
                     <div className="text-md font-semibold mb-4">Model Details</div>
                     <div className="mb-10 flex justify-start item-center">
                         <div className="ml-0">
-                            <h3 className="font-semibold text-xl text-[#666666] mb-4">{data.modelName}</h3>
+                            <h3 className="font-semibold text-xl text-[#666666] mb-4">{data?.modelName}</h3>
                             <p className="font-semibold text-md text-[#666666] mb-1">How it works</p>
-                            <p className="text-[14px] text-[#666666]">{data.howItWorks}</p>
+                            <p className="text-[14px] text-[#666666]">{data?.howItWorks}</p>
                         </div>
                     </div>
                     <div className="relative">
@@ -397,7 +402,7 @@ export default function EopsWatch(props: any) {
                                 <p className="font-semibold text-md text-black mb-2">Benifits</p>
                                 <ul className="text-sm flex flex-between items-center flex-wrap flex-row list-disc pl-5">
                                     {
-                                       singleModel?.map((item: any, index: any) => (
+                                        singleModel?.map((item: any, index: any) => (
                                             <li key={index} className="w-1/2 mb-3">{item}</li>
                                         ))
                                     }
@@ -405,7 +410,7 @@ export default function EopsWatch(props: any) {
                             </div>
                         </div>
                     </div>
-                    {data.activePlan == true ?
+                    {data?.activePlan == true ?
                         <div className='bg-[#F2F2F2] w-[290px] h-[104px] flex justify-start items-center p-3 flex-wrap flex-row rounded-lg absolute top-[-12px] right-[-20px]'>
                             <div className="flex justify-end items-center w-full">
                                 <div className="flex justify-end items-center w-full">
@@ -419,7 +424,7 @@ export default function EopsWatch(props: any) {
                                 </div>
                             </div>
 
-                            <div className="flex justify-start items-start font-semibold mt-3 text-[13px] text-[#666666]">Your model will be expire on : {data.planExpire}</div>
+                            <div className="flex justify-start items-start font-semibold mt-3 text-[13px] text-[#666666]">Your model will be expire on : {data?.planExpire}</div>
                         </div>
                         :
                         <div className="font-semibold mt-3 text-[13px] bg-[#F2F2F2] min-w-[290px] h-[104px] flex justify-start items-center p-3 flex-wrap flex-row rounded-lg absolute top-[-12px] right-[-20px]">

@@ -8,6 +8,7 @@ import {
     successMessagAdvancedAction,
     editClassModalAction
 } from "@/store/actions/classAction";
+import { getClassDataAction } from "@/store/actions/apiAction";
 
 export default function EditClass(props: any) {
     const dispatch = useDispatch<any>();
@@ -250,13 +251,14 @@ export default function EditClass(props: any) {
                     setAllTags([]);
                     setNewlyAddedTag([]);
                     setDtObject([]);
-                    // dispatch(successMessageAction(true));
                     dispatch(editClassModalAction(false));
-                    let data = {
-                        "type": "editClass",
-                        "action": true
-                    };
-                    dispatch(successMessagAdvancedAction(data))
+                    dispatch(getClassDataAction())
+                    // dispatch(successMessageAction(true));
+                    // let data = {
+                    //     "type": "editClass",
+                    //     "action": true
+                    // };
+                    // dispatch(successMessagAdvancedAction(data))
                     props.message(true)
                 }
             })

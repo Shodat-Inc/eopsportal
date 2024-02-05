@@ -7,6 +7,7 @@ import {
   successMessageAction,
   successMessagAdvancedAction
 } from "@/store/actions/classAction";
+import { getClassDataAction } from "@/store/actions/apiAction";
 import axios from "axios";
 
 export default function AddNewClass(props: any) {
@@ -183,11 +184,12 @@ export default function AddNewClass(props: any) {
           if (response) {
             setAllTags([]);
             // dispatch(successMessageAction(true));
-            let data={
-              "type":"newClass",
-              "action":true
-            };
-            dispatch(successMessagAdvancedAction(data))
+            dispatch(getClassDataAction())
+            // let data={
+            //   "type":"newClass",
+            //   "action":true
+            // };
+            // dispatch(successMessagAdvancedAction(data))
             dispatch(openCloseNewClassModalAction(false));
             props.message(true);
           }

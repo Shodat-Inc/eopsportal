@@ -8,9 +8,9 @@ import { successMessageAction, successMessagAdvancedAction } from '@/store/actio
 
 export default function AddNewSubClass(props: any) {
 
-    // console.log({
-    //     PROPS:props
-    // })
+    console.log({
+        "__PROPS_IN_ADD_SUB_CLASS":props
+    })
 
 
     const dispatch = useDispatch<any>();
@@ -236,6 +236,7 @@ export default function AddNewSubClass(props: any) {
                 }
             }).then(function (response) {
                 if (response) {
+                    dispatch(successMessageAction(true))
                     setAllTags([]);
                     let data = {
                         "type": "newSubClass",
