@@ -1,3 +1,3 @@
-export default function isGreater(range: string) {
+export function isGreater(range: string) {
   return range === "greaterThan";
 }

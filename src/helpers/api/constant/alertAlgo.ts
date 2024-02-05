@@ -1,5 +1,5 @@
 import { loggerInfo } from "@/logger";
-import isGreater from "./isGreater";
+import { isGreater } from "./isGreater";
 import { saveRaisedAlert } from "./saveData";
 
 export async function checkCrackAlert(exportData: {
@@ -32,32 +32,35 @@ export async function checkCrackAlert(exportData: {
       responseId,
     };
 
-    for (const probability of outputProbablity) {
-      for (const alert of exportData.alertData) {
-        const alertId = alert.id;
+    const finalResult = [];
 
-        dt.alertId = alertId;
+    for (const alert of exportData.alertData) {
+      const alertId = alert.id;
 
-        const rangeValue = alert.rangeValue;
+      dt.alertId = alertId;
 
-        const thresholdValue = alert.thresholdValue;
+      const rangeValue = alert.rangeValue;
 
-        const checkRange = isGreater(rangeValue);
+      const thresholdValue = alert.thresholdValue;
 
+      const checkRange = isGreater(rangeValue);
+
+      for (const probability of outputProbablity) {
         if (checkRange) {
           if (probability > thresholdValue) {
             console.log("Notification Send On Threshold", probability);
             const result = await saveRaisedAlert(dt);
-            return result;
+            finalResult.push(result);
           }
         } else {
           if (probability < thresholdValue) {
             console.log("Notification Send On Threshold", probability);
             const result = await saveRaisedAlert(dt);
-            return result;
+            finalResult.push(result);
           }
         }
       }
+      return finalResult;
     }
   } catch (error) {
     return error;
@@ -75,12 +78,12 @@ export async function checkBatteryAlert(exportData: {
       "Validating the Notification CheckPoints For Battery Alerts"
     );
 
-    const outputProbablity: number[] = [];
-
     const modelObjectImageId =
       exportData.apiResponse.dataValues.modelObjectImageId;
 
     const responseId = exportData.apiResponse.dataValues.id;
+
+    const outputProbablity: number[] = [];
 
     for (const key in exportData.apiResponse.dataValues.response) {
       const coords =
@@ -96,32 +99,35 @@ export async function checkBatteryAlert(exportData: {
       responseId,
     };
 
-    for (const probability of outputProbablity) {
-      for (const alert of exportData.alertData) {
-        const alertId = alert.id;
+    const finalResult = [];
 
-        dt.alertId = alertId;
+    for (const alert of exportData.alertData) {
+      const alertId = alert.id;
 
-        const rangeValue = alert.rangeValue;
+      dt.alertId = alertId;
 
-        const thresholdValue = alert.thresholdValue;
+      const rangeValue = alert.rangeValue;
 
-        const checkRange = isGreater(rangeValue);
+      const thresholdValue = alert.thresholdValue;
 
+      const checkRange = isGreater(rangeValue);
+
+      for (const probability of outputProbablity) {
         if (checkRange) {
           if (probability > thresholdValue) {
             console.log("Notification Send On Threshold", probability);
             const result = await saveRaisedAlert(dt);
-            return result;
+            finalResult.push(result);
           }
         } else {
           if (probability < thresholdValue) {
             console.log("Notification Send On Threshold", probability);
             const result = await saveRaisedAlert(dt);
-            return result;
+            finalResult.push(result);
           }
         }
       }
+      return finalResult;
     }
   } catch (error) {
     return error;
@@ -135,5 +141,88 @@ export async function checkTyreAlert(exportData: {
   imageData: any;
 }) {
   try {
-  } catch (error) {}
+    loggerInfo.info("Validating the Notification CheckPoints For Tyre Alerts");
+
+    const modelObjectImageId =
+      exportData.apiResponse.dataValues.modelObjectImageId;
+
+    const responseId = exportData.apiResponse.dataValues.id;
+
+    const data = exportData.apiResponse.response.tyreDamage.data;
+    const outputDistance = data.distance;
+    const outputRecommendation = data.recomendation;
+
+    const dt: any = {
+      imageData: exportData.imageData,
+      imageId: modelObjectImageId,
+      tag: exportData.tag,
+      responseId,
+    };
+
+    const finalResult = [];
+
+    for (const alert of exportData.alertData) {
+      const alertId = alert.id;
+      dt.alertId = alertId;
+      const distance = alert.value;
+      const recommendation = alert.recommendation;
+
+      const distanceRange = alert.distanceRange;
+      const checkRange = isGreater(distanceRange);
+
+      if (recommendation === outputRecommendation) {
+        if (checkRange) {
+          if (outputDistance > distance) {
+            console.log(
+              "Notification Send On Threshold",
+              outputDistance,
+              "Severity",
+              outputRecommendation
+            );
+            const result = await saveRaisedAlert(dt);
+            finalResult.push(result);
+          }
+        } else {
+          if (outputDistance < distance) {
+            console.log(
+              "Notification Send On Threshold",
+              outputDistance,
+              "Severity",
+              outputRecommendation
+            );
+            const result = await saveRaisedAlert(dt);
+            finalResult.push(result);
+          }
+        }
+      } else {
+        if (checkRange) {
+          if (outputDistance > distance) {
+            console.log(
+              "Notification Send On Threshold",
+              outputDistance,
+              "Severity",
+              recommendation
+            );
+            const result = await saveRaisedAlert(dt);
+            finalResult.push(result);
+          }
+        } else {
+          if (outputDistance < distance) {
+            console.log(
+              "Notification Send On Threshold",
+              outputDistance,
+              "Severity",
+              recommendation
+            );
+            const result = await saveRaisedAlert(dt);
+            finalResult.push(result);
+          }
+        }
+      }
+
+      return finalResult;
+    }
+  } catch (error) {
+    return error;
+  }
 }

@@ -160,7 +160,6 @@ export async function initialize() {
         const modelModule = await import(`./models/${key}.ts`);
         const model = modelModule[modelName](sequelize);
         db[modelName] = model;
-        // loggerInfo.info(key, "Reached AT END");
       }
       // sync all models with database
       await relationship(db);
