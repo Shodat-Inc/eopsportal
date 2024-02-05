@@ -1,4 +1,4 @@
-import { apiHandler, attachmentRepo } from "@/helpers/api";
+import { apiHandler, commentAttachmentRepo } from "@/helpers/api";
 import { loggerError, loggerInfo } from "@/logger";
 
 // Define DELETE API endpoint using apiHandler
@@ -15,7 +15,7 @@ async function _delete(req: any, res: any) {
         const reqParams = req.query;
         const reqAuth = req.auth
 
-        const commentDel = await attachmentRepo.delete(reqParams, reqAuth);
+        const commentDel = await commentAttachmentRepo.delete(reqParams, reqAuth);
 
         // Send a success response with the result of the delete operation
         res.status(200).json({ message: commentDel });

@@ -1,6 +1,6 @@
 // import { db } from "../db";
 
-import { Attachment } from "../models/attachments";
+import { Attachment } from "../models/ticketAttachments";
 
 async function relationship(db: any) {
   // Establishing relationships for the User models:
@@ -240,9 +240,6 @@ async function relationship(db: any) {
       foreignKey: "enterpriseUserId",
     });
 
-    // db.Ticket.hasMany(db.Attachment, { foreignKey: "ticketId" });
-    // db.Attachment.belongsTo(db.Ticket, { foreignKey: "ticketId" });
-
     db.Link.hasMany(db.Ticket, { foreignKey: "ticketRaisedAlertLinkId" })
     db.Ticket.belongsTo(db.Link, { foreignKey: "ticketRaisedAlertLinkId" })
 
@@ -258,16 +255,29 @@ async function relationship(db: any) {
     db.Image.hasMany(db.TyreAlerts, { foreignKey: "modelObjectImageId" });
     db.TyreAlerts.belongsTo(db.Image, { foreignKey: "modelObjectImageId" });
 
-
     db.Enterprise.hasMany(db.TyreAlerts, { foreignKey: "enterpriseId" });
     db.TyreAlerts.belongsTo(db.Enterprise, { foreignKey: "enterpriseId" });
 
     db.EnterpriseUser.hasMany(db.TyreAlerts, { foreignKey: "enterpriseUserId" });
     db.TyreAlerts.belongsTo(db.EnterpriseUser, { foreignKey: "enterpriseId" });
 
+    db.Ticket.hasMany(db.Attachment, { foreignKey: "ticketId" });
+    db.Attachment.belongsTo(db.Ticket, { foreignKey: "ticketId" });
 
-    db.Attachment.belongsTo(db.Ticket, { foreignKey: "referenceTableId" })
-    db.Attachment.belongsTo(db.Comment, { foreignKey: "referenceTableId" })
+    db.Comment.hasMany(db.CommentAttachment, { foreignKey: "commentId" });
+    db.CommentAttachment.belongsTo(db.Comment, { foreignKey: "commentId" });
+
+    db.User.hasMany(db.CommentAttachment, { foreignKey: "userId" });
+    db.CommentAttachment.belongsTo(db.User, { foreignKey: "userId" });
+
+    db.Enterprise.hasMany(db.CommentAttachment, { foreignKey: "enterpriseId" });
+    db.CommentAttachment.belongsTo(db.Enterprise, { foreignKey: "enterpriseId" });
+
+    db.EnterpriseUser.hasMany(db.CommentAttachment, { foreignKey: "enterpriseUserId" });
+    db.CommentAttachment.belongsTo(db.EnterpriseUser, { foreignKey: "enterpriseUserId" });
+
+    // db.Attachment.belongsTo(db.Ticket, { foreignKey: "referenceTableId" })
+    // db.Attachment.belongsTo(db.Comment, { foreignKey: "referenceTableId" })
 
     // db.Comment.hasMany(db.Attachment, { foreignKey: "ticketCommentId" })
     // db.Attachment.belongsTo(db.Comment, { foreignKey: "ticketCommentId" })

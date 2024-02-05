@@ -16,14 +16,14 @@ async function create(params: any) {
         loggerInfo.info("Creating POST API of ticket");
 
         // Check if a ticket already exists for the provided raisedAlertId
-        const existingTicket = await db.Ticket.findOne({
-            where: { ticketRaisedAlertLinkId: params.raisedAlertId }
-        });
+        // const existingTicket = await db.Ticket.findOne({
+        //     where: { ticketRaisedAlertLinkId: params.raisedAlertId }
+        // });
 
-        if (existingTicket) {
-            // Return response if a ticket already exists
-            return sendResponseData(false, "Ticket already exists for the provided raisedAlertId", {});
-        }
+        // if (existingTicket) {
+        //     // Return response if a ticket already exists
+        //     return sendResponseData(false, "Ticket already exists for the provided raisedAlertId", {});
+        // }
 
         // Extract raisedAlertId from params and store the remaining properties in ticketParams
         const { raisedAlertId, ...ticketParams } = params;
