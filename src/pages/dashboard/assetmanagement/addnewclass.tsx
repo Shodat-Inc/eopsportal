@@ -22,7 +22,8 @@ export default function AddNewClass(props: any) {
   const [assetDataType, setAssetDataType] = useState<any[]>([]);
   const [dtObject, setDtObject] = useState<any[]>([]);
   const [allDataTypes, setAllDataTypes] = useState([] as any);
-  // const [success, setSuccess] = useState(false);
+  const [primaryKey, setPrimaryKey] = useState([] as any);
+  const [selectedPK, setSelectedPK] = useState()
   let access_token = "" as any;
   if (typeof window !== "undefined") {
     access_token = localStorage.getItem("authToken");
@@ -183,15 +184,15 @@ export default function AddNewClass(props: any) {
         .then(function (response) {
           if (response) {
             setAllTags([]);
-            // dispatch(successMessageAction(true));
+            dispatch(openCloseNewClassModalAction(false));
             dispatch(getClassDataAction())
+            props.message(true);
+            // dispatch(successMessageAction(true));
             // let data={
             //   "type":"newClass",
             //   "action":true
             // };
             // dispatch(successMessagAdvancedAction(data))
-            dispatch(openCloseNewClassModalAction(false));
-            props.message(true);
           }
         })
         .catch(function (error) {
@@ -202,14 +203,21 @@ export default function AddNewClass(props: any) {
     }
   };
 
+  useEffect(() => {
+    setPrimaryKey(allTags)
+  }, [allTags])
+
+  const handlePrimaryKey = (e:any) => {
+    setSelectedPK(e.target.value)
+  }
+
   return (
     <>
       <div
-        className={`bg-white h-full z-[11] fixed top-0 right-0 p-5 shadow ${
-          props.show === true
-            ? `${styles.objectContainer} ${styles.sliderShow}`
-            : `${styles.objectContainer}`
-        }`}
+        className={`bg-white h-full z-[11] fixed top-0 right-0 p-5 shadow ${props.show === true
+          ? `${styles.objectContainer} ${styles.sliderShow}`
+          : `${styles.objectContainer}`
+          }`}
       >
         <div className="flex justify-between items-center w-full mb-3">
           <h2 className="font-semibold text-lg">Add New Class</h2>
@@ -220,24 +228,6 @@ export default function AddNewClass(props: any) {
             <Image src="/img/x.svg" alt="close" height={27} width={27} />
           </button>
         </div>
-
-        {/* {success && (
-          <div
-            className={`bg-green-957 border-green-958 text-green-959 mb-1 mt-1 border text-md px-4 py-3 rounded-xl relative flex items-center justify-start`}
-          >
-            <Image
-              src="/img/AlertSuccess.svg"
-              alt="Alert Success"
-              height={24}
-              width={24}
-              className="mr-2"
-            />
-            <strong className="font-semibold">Success</strong>
-            <span className="block sm:inline ml-2">
-              Class has been added successfully!
-            </span>
-          </div>
-        )} */}
 
         <div
           className={`flex justify-start items-start w-full overflow-auto h-full pb-10 ${styles.scroll} pr-3`}
@@ -292,30 +282,29 @@ export default function AddNewClass(props: any) {
                     className={`rounded-lg border border-gray-961  pl-2 pr-2 lg:w-full small:w-full sm:w-full pt-3 pb-2 flex flex-wrap flex-col justify-start items-start min-h-[64px]`}
                   >
                     <div
-                      className={`flex flex-wrap flex-row justify-start w-full ${
-                        allTags && allTags.length > 0 ? "min-h-[150px]" : "ok"
-                      }`}
+                      className={`flex flex-wrap flex-row justify-start w-full ${allTags && allTags.length > 0 ? "min-h-[150px]" : "ok"
+                        }`}
                     >
                       {allTags && allTags.length > 0
                         ? allTags.map((items: any, index: any) => (
-                            <span
-                              key={index}
-                              className="rounded-lg inline-flex justify-center items-center h-8 pl-2 pr-2 bg-[#F2F1F1] text-black text-[14px] mr-2 mb-2"
+                          <span
+                            key={index}
+                            className="rounded-lg inline-flex justify-center items-center h-8 pl-2 pr-2 bg-[#F2F1F1] text-black text-[14px] mr-2 mb-2"
+                          >
+                            {items}
+                            <button
+                              className="rounded-full border-2 border-white h-[24px] w-[24px] inline-flex justify-center items-center ml-3  duration-100 outline-none transform active:scale-75 transition-transform"
+                              onClick={() => removeElement(items)}
                             >
-                              {items}
-                              <button
-                                className="rounded-full border-2 border-white h-[24px] w-[24px] inline-flex justify-center items-center ml-3  duration-100 outline-none transform active:scale-75 transition-transform"
-                                onClick={() => removeElement(items)}
-                              >
-                                <Image
-                                  src="/img/x-circle.svg"
-                                  alt="close"
-                                  height={24}
-                                  width={24}
-                                />
-                              </button>
-                            </span>
-                          ))
+                              <Image
+                                src="/img/x-circle.svg"
+                                alt="close"
+                                height={24}
+                                width={24}
+                              />
+                            </button>
+                          </span>
+                        ))
                         : null}
                     </div>
 
@@ -327,9 +316,8 @@ export default function AddNewClass(props: any) {
                     />
 
                     <button
-                      className={`duration-100 outline-none transform active:scale-75 transition-transform text-black inline-flex justify-center items-center text-sm h-8 mb-2 px-2 mt-0 rounded-lg  font-semibold ${
-                        showHideAddTagButton ? "bg-gray-951" : "bg-yellow-951"
-                      }`}
+                      className={`duration-100 outline-none transform active:scale-75 transition-transform text-black inline-flex justify-center items-center text-sm h-8 mb-2 px-2 mt-0 rounded-lg  font-semibold ${showHideAddTagButton ? "bg-gray-951" : "bg-yellow-951"
+                        }`}
                       onClick={addTags}
                       disabled={showHideAddTagButton}
                     >
@@ -343,9 +331,8 @@ export default function AddNewClass(props: any) {
                     </button>
 
                     <div
-                      className={`duration-100 outline-none transform active:scale-75 transition-transform absolute right-1 top-4 ${
-                        toggleDT ? "rotate-180" : "rotate-0"
-                      } cursor-pointer`}
+                      className={`duration-100 outline-none transform active:scale-75 transition-transform absolute right-1 top-4 ${toggleDT ? "rotate-180" : "rotate-0"
+                        } cursor-pointer`}
                       onClick={closeAddTags}
                     >
                       <Image
@@ -375,41 +362,40 @@ export default function AddNewClass(props: any) {
 
                       {allDataTypes && allDataTypes.length >= 0
                         ? allDataTypes.map((item: any, index: any) => (
-                            <div key={index}>
-                              <div className="flex pt-1 pb-1">
-                                <div className={`${styles.customRadio} mr-2`}>
-                                  <input
-                                    id={item.type}
-                                    type="radio"
-                                    name="datatype"
-                                    className="scale-150"
-                                    value={item.type}
-                                    checked={dataType === item.id}
-                                    onChange={() => radioChange(item.id)}
-                                  />
-                                  <span></span>
-                                </div>
-                                <label
-                                  htmlFor={item.type}
-                                  className="text-black font-semibold"
-                                >
-                                  {item.name}
-                                  <span className="text-gray-500 font-normal text-[14px] ml-2">
-                                    {item.description}
-                                  </span>
-                                </label>
+                          <div key={index}>
+                            <div className="flex pt-1 pb-1">
+                              <div className={`${styles.customRadio} mr-2`}>
+                                <input
+                                  id={item.type}
+                                  type="radio"
+                                  name="datatype"
+                                  className="scale-150"
+                                  value={item.type}
+                                  checked={dataType === item.id}
+                                  onChange={() => radioChange(item.id)}
+                                />
+                                <span></span>
                               </div>
+                              <label
+                                htmlFor={item.type}
+                                className="text-black font-semibold"
+                              >
+                                {item.name}
+                                <span className="text-gray-500 font-normal text-[14px] ml-2">
+                                  {item.description}
+                                </span>
+                              </label>
                             </div>
-                          ))
+                          </div>
+                        ))
                         : null}
 
                       <div className="flex justify-end items-center w-full">
                         <button
-                          className={`border border-black rounded-lg bg-black text-white text-md w-20 h-10 mr-5 hover:bg-yellow-951 hover:text-white hover:border-yellow-951 ease-in-out duration-300 disabled:bg-gray-951 disabled:hover:border-gray-951 disabled:border-gray-951 ${
-                            dataType && (dataType != null || dataType != "")
-                              ? "okay"
-                              : "disabled disabled:bg-gray-300"
-                          } `}
+                          className={`border border-black rounded-lg bg-black text-white text-md w-20 h-10 mr-5 hover:bg-yellow-951 hover:text-white hover:border-yellow-951 ease-in-out duration-300 disabled:bg-gray-951 disabled:hover:border-gray-951 disabled:border-gray-951 ${dataType && (dataType != null || dataType != "")
+                            ? "okay"
+                            : "disabled disabled:bg-gray-300"
+                            } `}
                           onClick={saveNewTag}
                           disabled={
                             dataType && (dataType != null || dataType != "")
@@ -430,6 +416,35 @@ export default function AddNewClass(props: any) {
                   ) : null}
                 </div>
               </div>
+
+
+              <div className="mb-6 relative flex justify-end items-center w-full">
+                <div className={`mb-5 lg:w-full small:w-full ${styles.form__wrap}`}>
+                  <div className={`relative ${styles.form__group} font-OpenSans`}>
+                    <select
+                      id="primaryKeySelection"
+                      name="primaryKeySelection"
+                      className={`border border-gray-961 ${styles.form__field}`}
+                      placeholder="Primary Key"
+                      value={selectedPK}
+                      required
+                      onChange={handlePrimaryKey}
+                    >
+                      <option value="">-Select-</option>
+                      {
+                        primaryKey && primaryKey.length > 0 ?
+                          primaryKey?.map((item: any, index: any) => (
+                            <option key={index} value={item}>{item}</option>
+                          ))
+                          : null
+                      }
+
+                    </select>
+                    <label htmlFor="parentJoinKey" className={`${styles.form__label}`}>Select Primary Key</label>
+                  </div>
+                </div>
+              </div>
+
 
               <div className="mb-0 relative flex justify-end items-center w-full">
                 <button
