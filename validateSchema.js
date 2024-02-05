@@ -381,7 +381,6 @@ export const createTicketValidation = (data) => {
     blockedBy: Joi.string(),
     linkedTicket: Joi.array().items(Joi.string()),
     completionDate: Joi.date().iso().required(),
-    comments: Joi.string(),
     raisedAlertId: Joi.number().required()
   });
   return schema.validate(data)
@@ -399,6 +398,46 @@ export const updateTicketValidation = (data) => {
     blockedBy: Joi.string(),
     linkedTicket: Joi.array().items(Joi.string()),
     completionDate: Joi.date().iso(),
+  });
+  return schema.validate(data)
+}
+
+export const createCommentValidation = (data) => {
+  const schema = Joi.object({
+    comment: Joi.string(),
+    parentId: Joi.number(),
+    ticketId: Joi.number()
+  });
+  return schema.validate(data)
+}
+
+export const updateCommentValidation = (data) => {
+  const schema = Joi.object({
+    comment: Joi.string(),
+    parentId: Joi.number(),
+    ticketId: Joi.number()
+  });
+  return schema.validate(data)
+}
+
+export const createAttachmentValidation = (data) => {
+  const schema = Joi.object({
+    fileName: Joi.string(),
+    fileUrl: Joi.string(),
+    fileType: Joi.string(),
+    referenceTableName: Joi.string(),
+    referenceTableId: Joi.number()
+  });
+  return schema.validate(data)
+}
+
+export const updateAttachmentValidation = (data) => {
+  const schema = Joi.object({
+    fileName: Joi.string(),
+    fileUrl: Joi.string(),
+    fileType: Joi.string(),
+    referenceTableName: Joi.string(),
+    referenceTableId: Joi.number()
   });
   return schema.validate(data)
 }

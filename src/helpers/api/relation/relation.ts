@@ -1,5 +1,7 @@
 // import { db } from "../db";
 
+import { Attachment } from "../models/attachments";
+
 async function relationship(db: any) {
   // Establishing relationships for the User models:
   return new Promise((resolve, reject) => {
@@ -238,8 +240,8 @@ async function relationship(db: any) {
       foreignKey: "enterpriseUserId",
     });
 
-    db.Ticket.hasMany(db.Attachment, { foreignKey: "ticketId" });
-    db.Attachment.belongsTo(db.Ticket, { foreignKey: "ticketId" });
+    // db.Ticket.hasMany(db.Attachment, { foreignKey: "ticketId" });
+    // db.Attachment.belongsTo(db.Ticket, { foreignKey: "ticketId" });
 
     db.Link.hasMany(db.Ticket, { foreignKey: "ticketRaisedAlertLinkId" })
     db.Ticket.belongsTo(db.Link, { foreignKey: "ticketRaisedAlertLinkId" })
@@ -263,6 +265,12 @@ async function relationship(db: any) {
     db.EnterpriseUser.hasMany(db.TyreAlerts, { foreignKey: "enterpriseUserId" });
     db.TyreAlerts.belongsTo(db.EnterpriseUser, { foreignKey: "enterpriseId" });
 
+
+    db.Attachment.belongsTo(db.Ticket, { foreignKey: "referenceTableId" })
+    db.Attachment.belongsTo(db.Comment, { foreignKey: "referenceTableId" })
+
+    // db.Comment.hasMany(db.Attachment, { foreignKey: "ticketCommentId" })
+    // db.Attachment.belongsTo(db.Comment, { foreignKey: "ticketCommentId" })
 
     resolve("Imported");
   });
