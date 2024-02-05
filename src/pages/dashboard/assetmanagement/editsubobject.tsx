@@ -219,10 +219,11 @@ export default function EditSubObject(props: any) {
                                         type="text"
                                         id={`${objectsData[0]?.Class?.ParentJoinKeys[0]?.parentTagId}`}
                                         name={`${parentJoinKey}_${objectsData[0]?.Class?.ParentJoinKeys[0]?.parentTagId}`}
-                                        className={`border border-gray-961 ${styles.form__field}`}
+                                        className={`border border-gray-961 ${styles.form__field} ${styles.form__field__disabled}`}
                                         placeholder=""
                                         value={`${parentJoinValue}`}
                                         // onChange={(e) => (formData.current = e.target.value)}
+                                        disabled
                                         required
                                     />
                                     <label htmlFor="" className={`${styles.form__label}`}>Parent Join Key ({parentJoinKey})</label>

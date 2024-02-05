@@ -3,11 +3,12 @@ import { useDispatch } from 'react-redux';
 import styles from '../../../styles/Common.module.css';
 import Image from "next/image";
 import axios from "axios";
-import { 
-    editSubClassModalAction, 
-    successMessageAction, 
-    successMessagAdvancedAction 
+import {
+    editSubClassModalAction,
+    successMessageAction,
+    successMessagAdvancedAction
 } from '@/store/actions/classAction';
+import { parentJoinKey } from "@/helpers/api/models";
 
 export default function EditSubClass(props: any) {
 
@@ -27,6 +28,8 @@ export default function EditSubClass(props: any) {
     const [deleteTagIDS, setDeleteTagIDS] = useState([] as any);
     const [allDataTypes, setAllDataTypes] = useState([] as any);
     const [className, setClassName] = useState('' as any)
+    const [pjkID, setPjkID] = useState();
+    const [pjkData, setPjkData] = useState([] as any)
     let access_token = "" as any;
     if (typeof window !== 'undefined') {
         access_token = localStorage.getItem('authToken')
@@ -82,6 +85,7 @@ export default function EditSubClass(props: any) {
             setAllSubClassData(filtered);
             setClassName(filtered[0]?.className)
             setAllTags(filtered[0]?.ClassTags);
+            setPjkData(filtered[0]?.ParentJoinKeys)
         }
     }, [props])
 
@@ -190,7 +194,7 @@ export default function EditSubClass(props: any) {
         // delete from new array
         let newAddedTag = newlyAddedTag.slice();
         // newAddedTag.splice(-1);
-        var filteredArray2 = newAddedTag.filter(function(e:any) { return e !== item })
+        var filteredArray2 = newAddedTag.filter(function (e: any) { return e !== item })
         setNewlyAddedTag(filteredArray2)
 
     }
@@ -251,6 +255,26 @@ export default function EditSubClass(props: any) {
     const handleClassNameChange = (e: any) => {
         setClassName(e.target.value)
     }
+
+    useEffect(() => {
+        setPjkID(allSubClassData[0]?.ParentJoinKeys[0]?.parentTagId)
+    }, [allSubClassData])
+    const handleJoinKey = (e: any) => {
+        setPjkID(e.target.value)
+        // console.log({
+        //     "__HERE": e.target.value
+        // })
+    }
+
+    useEffect(()=>{
+        setPjkID(pjkData?.parentTagId)
+    }, [pjkData])
+
+    // console.log({
+    //     "pjkData":pjkData,
+    //     pjkID:pjkID, 
+    //     allSubClassData:allSubClassData[0]
+    // })
 
     return (
         <>
@@ -486,15 +510,15 @@ export default function EditSubClass(props: any) {
                                                 className={`border border-gray-961 ${styles.form__field}`}
                                                 placeholder="Parent Join Key"
                                                 required
-                                                onChange={(e) => (assetname.current = e.target.value)}
+                                                // onChange={(e) => (assetname.current = e.target.value)}
                                                 // value={pjk}
-                                                value={allSubClassData[0]?.ParentJoinKeys[0]?.tagname}
-                                            // onChange={handleJoinKey}
+                                                value={pjkID}
+                                                onChange={handleJoinKey}
                                             // multiple
                                             >
                                                 {
                                                     allClassData && allClassData[0]?.ClassTags?.map((item: any, index: any) => (
-                                                        <option key={index} value={item.id}>{item.tagName}</option>
+                                                        pjkID === item.id? <option selected key={index} value={item.id}>{item.tagName}</option> : <option key={index} value={item.id}>{item.tagName}</option>
                                                     ))
                                                 }
                                             </select>

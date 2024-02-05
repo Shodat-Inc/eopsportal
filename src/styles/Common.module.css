@@ -340,7 +340,6 @@
 .form__field {
     font-family: inherit;
     width: 100%;
-    /* border: 1px solid #000000; */
     height: 50px;
     border-radius: 10px;
     outline: 0;
@@ -349,6 +348,12 @@
     padding: 6px 15px;
     background: transparent;
     transition: border-color 0.2s;
+}
+.form__field__disabled {
+    background: #F0F0F0 !important;
+}
+.form__field__disabled~.form__label{
+    background: #F0F0F0 !important;
 }
 
 .form__field::placeholder {

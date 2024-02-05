@@ -155,11 +155,12 @@ export default function AddNewObject(props: any) {
                                         type="text"
                                         id={`${objectData[0]?.ParentJoinKeys[0]?.parentTagId}`}
                                         name={`${objectData[0]?.ParentJoinKeys[0]?.tagname}_${objectData[0]?.ParentJoinKeys[0]?.parentTagId}`}
-                                        className={`border border-gray-961 ${styles.form__field}`}
+                                        className={`border border-gray-961 ${styles.form__field} ${styles.form__field__disabled}`}
                                         placeholder=""
                                         value={`${classSelector?.classBreadcrumbs?.classObjValue}`}
                                         onChange={(e) => (formData.current = e.target.value)}
                                         required
+                                        disabled
                                     />
                                     <label htmlFor="" className={`${styles.form__label}`}>Parent Join Key ({objectData[0]?.ParentJoinKeys[0]?.tagname})</label>
                                 </div>
