@@ -1,4 +1,4 @@
-import { apiHandler, attachmentRepo } from "@/helpers/api";
+import { apiHandler, commentAttachmentRepo } from "@/helpers/api";
 import { loggerError, loggerInfo } from "@/logger";
 
 
@@ -14,8 +14,7 @@ async function allhandler(req: any, res: any) {
             userId: req.auth.sub,
             params: req.query
         }
-        console.log(data,"==data")
-        const getAttachment = await attachmentRepo.get(data);
+        const getAttachment = await commentAttachmentRepo.get(data);
 
         res.status(200).json({ message: getAttachment });
     } catch (error: any) {

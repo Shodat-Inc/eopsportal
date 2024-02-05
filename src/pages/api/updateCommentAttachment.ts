@@ -1,4 +1,4 @@
-import { apiHandler, attachmentRepo } from "@/helpers/api";
+import { apiHandler, commentAttachmentRepo } from "@/helpers/api";
 import { loggerError } from "@/logger";
 import { updateAttachmentValidation } from "../../../validateSchema";
 
@@ -22,7 +22,7 @@ async function handler(req: any, res: any) {
             });
             return;
         }
-        const updatedData = await attachmentRepo.update(validation.value, reqAuth, reqParams);
+        const updatedData = await commentAttachmentRepo.update(validation.value, reqAuth, reqParams);
 
         res.status(200).json({ message: updatedData });
     } catch (error: any) {

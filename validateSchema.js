@@ -376,7 +376,7 @@ export const createTicketValidation = (data) => {
     priority: Joi.string(),
     assignedTo: Joi.string(),
     assignedBy: Joi.string(),
-    ticketPoints: Joi.number(),
+    severity: Joi.string(),
     isFlagged: Joi.boolean(),
     blockedBy: Joi.string(),
     linkedTicket: Joi.array().items(Joi.string()),
@@ -393,7 +393,7 @@ export const updateTicketValidation = (data) => {
     priority: Joi.string(),
     assignedTo: Joi.string(),
     assignedBy: Joi.string(),
-    ticketPoints: Joi.number(),
+    severity: Joi.string(),
     isFlagged: Joi.boolean(),
     blockedBy: Joi.string(),
     linkedTicket: Joi.array().items(Joi.string()),
@@ -425,8 +425,8 @@ export const createAttachmentValidation = (data) => {
     fileName: Joi.string(),
     fileUrl: Joi.string(),
     fileType: Joi.string(),
-    referenceTableName: Joi.string(),
-    referenceTableId: Joi.number()
+    ticketId: Joi.number(),
+    commentId: Joi.number()
   });
   return schema.validate(data)
 }
@@ -436,8 +436,8 @@ export const updateAttachmentValidation = (data) => {
     fileName: Joi.string(),
     fileUrl: Joi.string(),
     fileType: Joi.string(),
-    referenceTableName: Joi.string(),
-    referenceTableId: Joi.number()
+    ticketId: Joi.number(),
+    commentId: Joi.number()
   });
   return schema.validate(data)
 }

@@ -148,8 +148,9 @@ export async function initialize() {
       RaisedAlert: "RaisedAlert",
       batteryDetectionResponse: "BatteryResponse",
       ticket: "Ticket",
-      attachments: "Attachment",
+      ticketAttachments: "Attachment",
       ticketComments: "Comment",
+      commentAttachments: "CommentAttachment",
       ticketRaisedAlertLink: "Link",
     };
 

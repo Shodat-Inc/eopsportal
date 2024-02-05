@@ -1,4 +1,4 @@
-import { attachmentRepo, apiHandler } from "@/helpers/api";
+import { ticketAttachmentRepo, apiHandler } from "@/helpers/api";
 import { loggerError, loggerInfo } from "@/logger";
 import { createAttachmentValidation } from "../../../validateSchema";
 
@@ -27,8 +27,8 @@ export default apiHandler({
                 });
                 return;
             }
-            
-            const attachment = await attachmentRepo.create(validation.value, reqData);
+
+            const attachment = await ticketAttachmentRepo.create(validation.value, reqData);
 
             // Send a success response
             res.status(200).json(attachment);

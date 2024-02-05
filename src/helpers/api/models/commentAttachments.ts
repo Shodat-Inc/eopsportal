@@ -1,6 +1,6 @@
 import { DataTypes } from "sequelize";
 
-export function Attachment(sequelize: any) {
+export function CommentAttachment(sequelize: any) {
     const attributes = {
         id: {
             type: DataTypes.INTEGER,
@@ -24,16 +24,14 @@ export function Attachment(sequelize: any) {
             allowNull: false,
         },
 
-        referenceTableName: {
-            type: DataTypes.STRING,
-            allowNull: true
-        },
-
-        referenceTableId: {
+        commentId: {
             type: DataTypes.INTEGER,
-            allowNull: true
+            allowNull: true,
+            references: {
+                model: "TicketComments",
+                id: "id"
+            }
         },
-
 
         userId: {
             type: DataTypes.INTEGER,
@@ -43,6 +41,7 @@ export function Attachment(sequelize: any) {
                 id: "id"
             }
         },
+
         enterpriseId: {
             type: DataTypes.INTEGER,
             allowNull: true,
@@ -51,6 +50,7 @@ export function Attachment(sequelize: any) {
                 id: "id"
             }
         },
+
         enterpriseUserId: {
             type: DataTypes.INTEGER,
             allowNull: true,
@@ -61,5 +61,5 @@ export function Attachment(sequelize: any) {
         },
     };
 
-    return sequelize.define("Attachment", attributes);
+    return sequelize.define("CommentAttachment", attributes);
 }

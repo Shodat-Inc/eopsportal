@@ -15,3 +15,5 @@ export const priority = DataTypes.ENUM("high", "low");
 export const isFlagged = DataTypes.ENUM("true", "false");
 
 export const Condition = DataTypes.ENUM("Severe", "Moderate", "No");
+
+export const Severity = DataTypes.ENUM("high", "medium", "low")
