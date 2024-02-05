@@ -24,14 +24,16 @@ export function Attachment(sequelize: any) {
             allowNull: false,
         },
 
-        ticketId: {
-            type: DataTypes.INTEGER,
-            references: {
-                model: "Tickets",
-                id: "id",
-            },
-            allowNull: true,
+        referenceTableName: {
+            type: DataTypes.STRING,
+            allowNull: true
         },
+
+        referenceTableId: {
+            type: DataTypes.INTEGER,
+            allowNull: true
+        },
+
 
         userId: {
             type: DataTypes.INTEGER,
@@ -59,5 +61,5 @@ export function Attachment(sequelize: any) {
         },
     };
 
-    return sequelize.define("TicketAttachments", attributes);
+    return sequelize.define("Attachment", attributes);
 }

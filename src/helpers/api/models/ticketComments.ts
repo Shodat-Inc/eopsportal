@@ -9,7 +9,7 @@ export function Comment(sequelize: any) {
             autoIncrement: true,
         },
 
-        text: {
+        comment: {
             type: DataTypes.TEXT,
             allowNull: true,
         },
