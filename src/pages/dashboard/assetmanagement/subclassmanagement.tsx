@@ -218,6 +218,22 @@ export default function SubClassManagement(props: any) {
         }, 4000)
     }
 
+    // convert selected id to classname
+    const showClassNameFromID = (id: any) => {
+        if (props.classData && props.classData.length > 0) {
+            let filter = props.classData.filter((item: any) => {
+                return item.id === id
+            })
+            if (filter) {
+                return filter[0]?.className
+            }
+        }
+    }
+
+    console.log({
+        "__subClassData":subClassData,
+        "__CLASS":showClassNameFromID(allClassSelector?.selectedClassReducer)
+    })
     return (
         <div className='px-0 py-3 font-OpenSans'>
             {/* Title, search and filters */}
@@ -335,7 +351,8 @@ export default function SubClassManagement(props: any) {
                                     </button>
                                 </th>
                                 <th>Tags</th>
-                                <th>Parent Join Keys</th>
+                                <th>
+                                    {subClassData[0]?.ParentJoinKeys[0]?.tagname} ({showClassNameFromID(allClassSelector?.selectedClassReducer)})</th>
                                 <th>Date of creation</th>
                                 <th>Actions</th>
                             </tr>

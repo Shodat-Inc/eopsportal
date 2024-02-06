@@ -123,7 +123,7 @@ export default function EditClass(props: any) {
             // console.log({
             //     "__SAVE":newTag
             // })
-            
+
 
             setShowInput(false);
             setNewTag("");
@@ -153,7 +153,7 @@ export default function EditClass(props: any) {
 
     // Remove Element from all Tag Array
     const removeElement = (item: any) => {
-        
+
         setDtObject([])
         // removing the item form all tags array
         let updatedList = allTags.slice();
@@ -190,7 +190,7 @@ export default function EditClass(props: any) {
 
         // delete from new array
         let newAddedTag = newlyAddedTag.slice();
-        var filteredArray2 = newAddedTag.filter(function(e:any) { return e !== item })
+        var filteredArray2 = newAddedTag.filter(function (e: any) { return e !== item })
 
         // console.log({
         //     "AMITHERE":filteredArray2
@@ -525,6 +525,33 @@ export default function EditClass(props: any) {
                                             </div>
                                         </div>
                                     ) : null}
+                                </div>
+                            </div>
+
+                            <div className="mb-6 relative flex justify-end items-center w-full">
+                                <div className={`mb-5 lg:w-full small:w-full ${styles.form__wrap}`}>
+                                    <div className={`relative ${styles.form__group} font-OpenSans`}>
+                                        <select
+                                            id="primaryKeySelection"
+                                            name="primaryKeySelection"
+                                            className={`border border-gray-961 ${styles.form__field}`}
+                                            placeholder="Primary Key"
+                                            // value={selectedPK}
+                                            required
+                                            // onChange={handlePrimaryKey}
+                                        >
+                                            <option value="">-Select-</option>
+                                            {/* {
+                                                primaryKey && primaryKey.length > 0 ?
+                                                    primaryKey?.map((item: any, index: any) => (
+                                                        <option key={index} value={item}>{item}</option>
+                                                    ))
+                                                    : null
+                                            } */}
+
+                                        </select>
+                                        <label htmlFor="parentJoinKey" className={`${styles.form__label}`}>Select Primary Key</label>
+                                    </div>
                                 </div>
                             </div>
 
