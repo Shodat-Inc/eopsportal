@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from '../../../styles/Common.module.css';
 import Image from "next/image";
-import Link from 'next/dist/client/link';
 import AddNewSubClass from './addnewsubclass';
 import axios from 'axios';
 import moment from 'moment';
@@ -28,11 +27,9 @@ export default function SubClassManagement(props: any) {
     const [showModal, setShowModal] = useState(Boolean);
     const [deleteModal, setDeleteModal] = useState(false);
     const [subClassData, setSubClassData] = useState([] as any);
-    const [search, setSearch] = useState('');
     const [selectedSubClass, setSelectedSubClass] = useState("");
     const [deleteID, setDeleteID] = useState(0);
     const [actionsToggle, setActionsToggle] = useState(false);
-
     const [deleteMessage, setDeleteMessage] = useState(false);
     const [successMessage, setSuccessMessage] = useState(false);
     const [editMessage, setEditMessage] = useState(false);

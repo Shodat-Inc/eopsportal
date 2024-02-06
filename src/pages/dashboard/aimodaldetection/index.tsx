@@ -3,13 +3,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import styles from '../../../styles/Common.module.css';
 import Layout from "../../../components/Layout";
 import Image from "next/image";
-import Link from "next/link";
 import EopsWatch from "./eopswatch";
 import EopsTrace from "./eopstrace";
 import EopsWatchModel from "./eopswatchModel";
 import EopsTraceModel from "./eopstracemodel";
 import axios from "axios";
 import { setDataForeOpsWatchAction, } from "@/store/actions/classAction";
+import { dataForModalAction } from "@/store/actions/aimodaldetectionAction";
 import Router from 'next/router'
 import { useRouter } from 'next/router'
 
@@ -196,8 +196,14 @@ export default function AiModelDetection() {
 
     // ========== Search input box on changes function ============
     const searchFunction = (e: any) => {
+        if (e.target.value === "") {
+            setDisable(0)
+            setSearch('');
+            return;
+        }
         setSearch(e.target.value)
-        setDisable(2)
+        setDisable(2);
+
     }
 
     // ============= Reset button on click function =============
