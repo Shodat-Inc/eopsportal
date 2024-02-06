@@ -71,6 +71,25 @@ async function create(params: any) {
 async function getTicketByAlertId(params: any) {
     try {
         // Query the database to find a Link with the provided raisedAlertId
+        // const data = await db.Link.findOne({
+        //     where: { raisedAlertId: params.raisedAlertId },
+        //     attributes: [], // Exclude unnecessary attributes from the result
+        //     include: [{
+        //         model: db.Ticket,
+        //         attributes: ['id', 'subject', 'status', 'updatedAt', 'priority', 'assignedTo'],
+        //         include: [
+        //             {
+        //                 model: db.Comment,
+        //                 attributes: ['comment', 'parentId', 'ticketId', 'userId'],
+        //             },
+        //             {   
+        //                 model: db.Attachment,
+        //                 attributes: ['fileName', 'fileURL', 'fileType'],
+        //             }
+        //         ]
+        //     }]
+        // });
+
         const data = await db.Link.findOne({
             where: { raisedAlertId: params.raisedAlertId },
             attributes: [], // Exclude unnecessary attributes from the result
@@ -80,15 +99,67 @@ async function getTicketByAlertId(params: any) {
                 include: [
                     {
                         model: db.Comment,
-                        attributes: ['comment'],
+
+                        include: [
+                            {
+                                model: db.Comment,
+                                as: 'replies', // Alias for the self-association
+                                // include: [
+                                //     // Include any additional associations for replies if needed
+                                // ]
+                            }
+                        ],
+                        attributes: ['id', 'comment', 'parentId', 'ticketId', 'userId'],
+                        order: [['parentId', 'ASC'], ['createdAt', 'ASC']], // Order comments by parentId and creation time
+
                     },
                     {
                         model: db.Attachment,
-                        attributes: ['fileURL'],
+                        attributes: ['fileName', 'fileURL', 'fileType'],
+
                     }
-                ]
+                ], raw: true
             }]
+
+
         });
+        // console.log(data, "===data")
+        // console.log(data?.dataValues?.Tickets[0].TicketComments[0].dataValues,"=====data?.dataValues?.Tickets")
+        const extractedComments = data?.dataValues?.Tickets[0].TicketComments;
+        for (let key of extractedComments) {
+            const obj = key.dataValues
+            
+        }
+        // Process the nested structure in your code
+        const comments = data?.dataValues?.Tickets || [];
+
+        // Create a map to store comments by parentId
+        const commentsMap = new Map();
+
+        // console.log(comments,"==comments")
+
+        // Organize comments by parentId
+        // comments.forEach(comment => {
+        //     const parentId = comment.parentId || 'null';
+        //     if (!commentsMap.has(parentId)) {
+        //         commentsMap.set(parentId, []);
+        //     }
+        //     commentsMap.get(parentId).push(comment);
+        // });
+
+        // // Create a function to recursively build the nested structure
+        // const buildNestedStructure = parentId => {
+        //     const nestedComments = commentsMap.get(parentId) || [];
+        //     nestedComments.forEach(comment => {
+        //         comment.children = buildNestedStructure(comment.id);
+        //     });
+        //     return nestedComments;
+        // };
+
+        // // Build the nested structure starting with parentId=null
+        // const nestedComments = buildNestedStructure('null');
+        // console.log(nestedComments);
+
 
         // Check if the data exists
         if (!data) {
