@@ -1,16 +1,18 @@
 import React, { useState, useRef, useEffect } from "react";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import styles from '../../../styles/Common.module.css';
 import Image from "next/image";
 import axios from "axios";
 import {
-    editSubClassModalAction,
-    successMessageAction,
-    successMessagAdvancedAction
+    editSubClassModalAction
 } from '@/store/actions/classAction';
-import { parentJoinKey } from "@/helpers/api/models";
+import { getSubClassDataAction } from "@/store/actions/apiAction";
 
 export default function EditSubClass(props: any) {
+
+    console.log({
+        "PROPS_IN_EDIT_SB_CLASS":props
+    })
 
     const dispatch = useDispatch<any>();
     const assetname = useRef("");
@@ -34,6 +36,9 @@ export default function EditSubClass(props: any) {
     if (typeof window !== 'undefined') {
         access_token = localStorage.getItem('authToken')
     }
+
+    const apiSelector = useSelector((state: any) => state.apiReducer);
+
     // GET ALL DATATYPES
     async function fetchData() {
         try {
@@ -238,11 +243,11 @@ export default function EditSubClass(props: any) {
             }).then(function (response) {
                 if (response) {
                     setAllTags([]);
-                    setAllTags([]);
                     setNewlyAddedTag([]);
                     setDtObject([]);
                     dispatch(editSubClassModalAction(false));
                     props.message(true)
+                    dispatch(getSubClassDataAction(apiSelector?.selectedClassReducer))
                 }
             }).catch(function (error) {
                 console.log("ERROR IN AXIOS CATCH (CREATE CLASS):", error)
@@ -270,11 +275,12 @@ export default function EditSubClass(props: any) {
         setPjkID(pjkData?.parentTagId)
     }, [pjkData])
 
-    // console.log({
-    //     "pjkData":pjkData,
-    //     pjkID:pjkID, 
-    //     allSubClassData:allSubClassData[0]
-    // })
+    console.log({
+        "pjkData":pjkData,
+        pjkID:pjkID, 
+        allSubClassData:allSubClassData[0],
+        allClassData:allClassData
+    })
 
     return (
         <>

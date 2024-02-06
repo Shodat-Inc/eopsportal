@@ -1,9 +1,9 @@
 import React, { useState, useRef, useEffect } from "react";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import styles from '../../../styles/Common.module.css';
 import Image from "next/image";
 import { toggleAddNewClassObjectModel } from "@/store/actions/classAction";
-import { successMessageAction, successMessagAdvancedAction } from '@/store/actions/classAction';
+import { getSubClassDataAction } from "@/store/actions/apiAction";
 import axios from "axios";
 
 export default function AddNewClassObject(props: any) {
@@ -11,11 +11,12 @@ export default function AddNewClassObject(props: any) {
     const dispatch = useDispatch<any>();
     const [classData, setClassData] = useState([] as any);
     const formData = useRef("");
-    const [success, setSuccess] = useState(false);
     let access_token = "" as any;
     if (typeof window !== 'undefined') {
         access_token = localStorage.getItem('authToken')
     }
+
+    const apiSelector = useSelector((state: any) => state.apiReducer);
 
     // Filter the selected class data from class data array
     useEffect(() => {
@@ -77,6 +78,7 @@ export default function AddNewClassObject(props: any) {
             }).then(function (response) {
                 if (response) {
                     dispatch(toggleAddNewClassObjectModel(false));
+                    dispatch(getSubClassDataAction(apiSelector?.selectedClassReducer))
                     props.message(true)
                 }
             }).catch(function (error) {
@@ -114,21 +116,6 @@ export default function AddNewClassObject(props: any) {
                         />
                     </button>
                 </div>
-
-                {
-                    success &&
-                    <div className={`bg-green-957 border-green-958 text-green-959 mb-1 mt-1 border text-md px-4 py-3 rounded-xl relative flex items-center justify-start`}>
-                        <Image
-                            src="/img/AlertSuccess.svg"
-                            alt="Alert Success"
-                            height={24}
-                            width={24}
-                            className='mr-2'
-                        />
-                        <strong className="font-semibold">Success</strong>
-                        <span className="block sm:inline ml-2">New Object has been created successfuly!</span>
-                    </div>
-                }
 
                 <div className={`flex justify-start items-start w-full overflow-auto h-full pb-10 ${styles.scroll} pr-3`}>
                     <form

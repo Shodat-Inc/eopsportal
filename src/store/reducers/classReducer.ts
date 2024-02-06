@@ -236,12 +236,14 @@ const classReducer = (state = initialState, action: any) => {
       return {
         ...state,
         selectedClassReducer: action.payload,
+        loading: false,
       };
 
     case SELECTED_CLASS_ERROR:
       return {
         ...state,
         error: action.payload,
+        loading: false,
       };
 
     default:

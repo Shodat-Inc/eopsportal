@@ -12,6 +12,8 @@ import {
     successMessagAdvancedAction
 } from '@/store/actions/classAction';
 
+import { getSubClassDataAction } from '@/store/actions/apiAction';
+
 export default function SubClassManagement(props: any) {
 
     console.log({
@@ -43,6 +45,11 @@ export default function SubClassManagement(props: any) {
 
     // All class reducer states
     const allClassSelector = useSelector((state: any) => state.classReducer);
+    const apiSelector = useSelector((state: any) => state.apiReducer);
+
+    console.log({
+        "ALL DATA": apiSelector?.selectedClassReducer
+    })
 
     useEffect(() => {
         setShowModal(props.addSubClassModal)
@@ -82,36 +89,16 @@ export default function SubClassManagement(props: any) {
     }
 
 
-    // set default choose asset
-    async function fetchData() {
-        try {
-            await axios({
-                method: 'GET',
-                url: `/api/getChildAssets?id=${allClassSelector?.selectedClassReducer}`,
-                headers: {
-                    "Authorization": `Bearer ${access_token}`,
-                    "Content-Type": "application/json"
-                }
-
-            }).then(function (response: any) {
-                if (response) {
-                    setSubClassData(response?.data?.data);
-                    setAllClassData(response?.data?.data);
-                }
-            }).catch(function (error: any) {
-                console.log({
-                    "ERROR IN AXIOS CATCH": error
-                })
-            })
-        } catch (err) {
-            console.log({
-                "ERROR IN TRY CATCH": err
-            })
-        }
-    }
+    // Dispatch sub class action
     useEffect(() => {
-        fetchData()
-    }, [allClassSelector, access_token])
+        dispatch(getSubClassDataAction(apiSelector?.selectedClassReducer))
+    }, [access_token])
+
+    // get sub class data
+    useEffect(() => {
+        setSubClassData(apiSelector?.subClassDataReducer);
+        setAllClassData(apiSelector?.subClassDataReducer);
+    }, [apiSelector?.subClassDataReducer])
 
     // function for searching
     const handleSearchFunction = (e: any) => {
@@ -151,12 +138,8 @@ export default function SubClassManagement(props: any) {
                     "Content-Type": "application/json"
                 }
             }).then(function (response) {
-                // dispatch(successMessageAction(true))
-                let data = {
-                    "type": "deleteSubClass",
-                    "action": true
-                };
-                dispatch(successMessagAdvancedAction(data))
+                dispatch(getSubClassDataAction(apiSelector?.selectedClassReducer));
+                setDeleteMessage(true);
                 setTimeout(()=>{
                     setDeleteMessage(false);
                 }, 4000)
@@ -194,11 +177,11 @@ export default function SubClassManagement(props: any) {
 
 
 
-    useEffect(() => {
-        if (allClassSelector?.successMessageReducer === true) {
-            dispatch(successMessageAction(false))
-        }
-    }, [allClassSelector?.successMessageReducer === true])
+    // useEffect(() => {
+    //     if (allClassSelector?.successMessageReducer === true) {
+    //         dispatch(successMessageAction(false))
+    //     }
+    // }, [allClassSelector?.successMessageReducer === true])
 
 
     const handleAddSuccessMessage = (msg:any) => {
@@ -349,7 +332,7 @@ export default function SubClassManagement(props: any) {
                                 </th>
                                 <th>Tags</th>
                                 <th>
-                                    {subClassData[0]?.ParentJoinKeys[0]?.tagname} ({showClassNameFromID(allClassSelector?.selectedClassReducer)})</th>
+                                    {subClassData[0]?.ParentJoinKeys[0]?.tagname} ({showClassNameFromID(props?.selectedParentClass)})</th>
                                 <th>Date of creation</th>
                                 <th>Actions</th>
                             </tr>

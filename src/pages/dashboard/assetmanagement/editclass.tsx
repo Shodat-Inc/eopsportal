@@ -4,8 +4,6 @@ import styles from "../../../styles/Common.module.css";
 import axios from "axios";
 import Image from "next/image";
 import {
-    successMessageAction,
-    successMessagAdvancedAction,
     editClassModalAction
 } from "@/store/actions/classAction";
 import { getClassDataAction } from "@/store/actions/apiAction";
@@ -26,7 +24,8 @@ export default function EditClass(props: any) {
     const [deleteTagIDS, setDeleteTagIDS] = useState([] as any);
     const [addNewTag, setAddNewTag] = useState([] as any);
     const [newlyAddedTag, setNewlyAddedTag] = useState([] as any);
-    const [className, setClassName] = useState('' as any)
+    const [className, setClassName] = useState('' as any);
+    const [tagMessage, setTagMessage] = useState(false);
     let access_token = "" as any;
     if (typeof window !== "undefined") {
         access_token = localStorage.getItem("authToken");
@@ -120,11 +119,6 @@ export default function EditClass(props: any) {
             newAddedTag.push(newTag);
             setNewlyAddedTag(newAddedTag);
 
-            // console.log({
-            //     "__SAVE":newTag
-            // })
-
-
             setShowInput(false);
             setNewTag("");
             setShowHideAddTagButton(false);
@@ -160,12 +154,20 @@ export default function EditClass(props: any) {
         var filteredArray = updatedList.filter(function (e: any) {
             return e.id !== item;
         });
-
-        // console.log({
-        //     "HERE":filteredArray,
-        //     "ITEM":item
-        // })
         setAllTags(filteredArray);
+
+        // if(filteredArray.length > 1) {
+        //     setAllTags(filteredArray);
+        // } else {
+        //     setTagMessage(true);
+        //     return
+        // }
+
+        // Check if all tags array contains one value atleast
+        // if (filteredArray.length === 1) {
+        //     console.log("you are here")
+        //     setTagMessage(true)
+        // }
 
         let deletedList = deleteTagIDS.slice();
         deletedList.push(item);
@@ -183,27 +185,14 @@ export default function EditClass(props: any) {
         });
         setDtObject(filteredJSON);
 
-
-        // console.log({
-        //     "__REMOVE":item
-        // })
-
         // delete from new array
         let newAddedTag = newlyAddedTag.slice();
         var filteredArray2 = newAddedTag.filter(function (e: any) { return e !== item })
-
-        // console.log({
-        //     "AMITHERE":filteredArray2
-        // })
 
         // newAddedTag.splice(-1);
         setNewlyAddedTag(filteredArray2);
     };
 
-    // console.log({
-    //     "__newlyAddedTag":newlyAddedTag,
-    //     "__ALL_TAGS":allTags
-    // })
 
     // Cancel Adding new tags
     const cancelAddingTag = () => {
@@ -213,10 +202,6 @@ export default function EditClass(props: any) {
         setDataType("");
         setNewTag("");
     };
-
-    // console.log({
-    //     "dtObject__2": dtObject
-    // })
 
     // Store Data into JSON File
     const handleSubmit = async (e: any) => {
@@ -231,10 +216,6 @@ export default function EditClass(props: any) {
             addTag: dtObject,
         };
 
-        // console.log({
-        //     dataToSave: dataToSave,
-        //     dtObject: dtObject
-        // })
 
         let tokenStr = access_token;
         try {
@@ -252,13 +233,7 @@ export default function EditClass(props: any) {
                     setNewlyAddedTag([]);
                     setDtObject([]);
                     dispatch(editClassModalAction(false));
-                    dispatch(getClassDataAction())
-                    // dispatch(successMessageAction(true));
-                    // let data = {
-                    //     "type": "editClass",
-                    //     "action": true
-                    // };
-                    // dispatch(successMessagAdvancedAction(data))
+                    dispatch(getClassDataAction());
                     props.message(true)
                 }
             })
@@ -272,6 +247,43 @@ export default function EditClass(props: any) {
 
     const handleClassNameChange = (e: any) => {
         setClassName(e.target.value)
+    }
+
+
+    const updateButton = () => {
+        if (allTags?.length === 0 && newlyAddedTag?.length > 0) {
+            return (
+                <button
+                    className="border border-black rounded-lg bg-black text-white w-20 h-12 mr-5 hover:bg-yellow-951 hover:text-white hover:border-yellow-951 ease-in-out disabled:bg-gray-951 disabled:hover:border-gray-951 disabled:border-gray-951 duration-100 outline-none transform active:scale-75 transition-transform"
+                    disabled
+                >
+                    Update
+                </button>
+            )
+        } else if (newlyAddedTag?.length === 0 && allTags?.length > 0 ) {
+            return (
+                <button
+                    className="border border-black rounded-lg bg-black text-white w-20 h-12 mr-5 hover:bg-yellow-951 hover:text-white hover:border-yellow-951 ease-in-out disabled:bg-gray-951 disabled:hover:border-gray-951 disabled:border-gray-951 duration-100 outline-none transform active:scale-75 transition-transform"
+                    disabled
+                >
+                    Update
+                </button>
+            )
+        } else if (newlyAddedTag?.length === 0 && allTags?.length === 0) {
+            <button
+                className="border border-black rounded-lg bg-black text-white w-20 h-12 mr-5 hover:bg-yellow-951 hover:text-white hover:border-yellow-951 ease-in-out disabled:bg-gray-951 disabled:hover:border-gray-951 disabled:border-gray-951 duration-100 outline-none transform active:scale-75 transition-transform"
+                disabled
+            >
+                Update
+            </button>
+        } else {
+            <button
+                className="border border-black rounded-lg bg-black text-white w-20 h-12 mr-5 hover:bg-yellow-951 hover:text-white hover:border-yellow-951 ease-in-out disabled:bg-gray-951 disabled:hover:border-gray-951 disabled:border-gray-951 duration-100 outline-none transform active:scale-75 transition-transform"
+            >
+                Update
+            </button>
+        }
+
     }
 
     return (
@@ -330,6 +342,10 @@ export default function EditClass(props: any) {
                                 </div>
                             </div>
 
+                            {
+                                tagMessage &&
+                                <div className="text-red-500">Must Add new tag before delete all existing tags</div>
+                            }
                             <div className="mb-7 relative column-2 flex justify-start items-center sm:w-full small:w-full">
                                 <div className="lg:w-full small:w-full sm:w-full relative">
                                     <span className="text-[13px] bg-white px-[2px] absolute top-[-10px] left-[10px]">
@@ -528,7 +544,7 @@ export default function EditClass(props: any) {
                                 </div>
                             </div>
 
-                            <div className="mb-6 relative flex justify-end items-center w-full">
+                            {/* <div className="mb-6 relative flex justify-end items-center w-full">
                                 <div className={`mb-5 lg:w-full small:w-full ${styles.form__wrap}`}>
                                     <div className={`relative ${styles.form__group} font-OpenSans`}>
                                         <select
@@ -541,27 +557,28 @@ export default function EditClass(props: any) {
                                             // onChange={handlePrimaryKey}
                                         >
                                             <option value="">-Select-</option>
-                                            {/* {
+                                            {
                                                 primaryKey && primaryKey.length > 0 ?
                                                     primaryKey?.map((item: any, index: any) => (
                                                         <option key={index} value={item}>{item}</option>
                                                     ))
                                                     : null
-                                            } */}
+                                            }
 
                                         </select>
                                         <label htmlFor="parentJoinKey" className={`${styles.form__label}`}>Select Primary Key</label>
                                     </div>
                                 </div>
-                            </div>
+                            </div> */}
 
                             <div className="mb-0 relative flex justify-end items-center w-full">
                                 <button
                                     className="border border-black rounded-lg bg-black text-white w-20 h-12 mr-5 hover:bg-yellow-951 hover:text-white hover:border-yellow-951 ease-in-out disabled:bg-gray-951 disabled:hover:border-gray-951 disabled:border-gray-951 duration-100 outline-none transform active:scale-75 transition-transform"
-                                    disabled={allTags && allTags.length > 0 ? false : true}
+                                    // disabled={(allTags && allTags.length > 0) || (newlyAddedTag && newlyAddedTag > 0) ? false : true}
                                 >
                                     Update
                                 </button>
+                                {/* {updateButton()} */}
                                 <div
                                     className="cursor-pointer flex justify-center items-center border border-black rounded-lg bg-white text-black w-24 h-12 hover:text-white hover:bg-yellow-951 hover:border-yellow-951 ease-in-out duration-100 outline-none transform active:scale-75 transition-transform"
                                     onClick={closeModal}

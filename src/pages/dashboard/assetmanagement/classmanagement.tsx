@@ -6,10 +6,9 @@ import moment from 'moment';
 import AddNewClass from './addnewclass';
 import {
     editClassModalAction,
-    successMessageAction,
-    successMessagAdvancedAction,
-    selectedClassAction
+    // selectedClassAction
 } from '@/store/actions/classAction';
+import { selectedClassAction } from '@/store/actions/apiAction';
 import {
     getClassDataAction
 } from '@/store/actions/apiAction';
@@ -39,65 +38,20 @@ export default function ClassManagement(props: any) {
     const [editMessage, setEditMessage] = useState(false);
 
     // All class reducer states
-    const allClassSelector = useSelector((state: any) => state.classReducer);  
-    const apiSelector = useSelector((state: any) => state.apiReducer);  
+    const allClassSelector = useSelector((state: any) => state.classReducer);
+    const apiSelector = useSelector((state: any) => state.apiReducer);
 
-    // Close Success message after 5 second if true
-    useEffect(() => {
-        dispatch(successMessageAction(false))
-    }, [allClassSelector?.successMessageReducer])
-
-    // Get All Assets
-    async function fetchData() {
-        dispatch(getClassDataAction())
-    //     try {
-    //         await axios({
-    //             method: 'GET',
-    //             url: `/api/getAssets`,
-    //             headers: {
-    //                 "Authorization": `Bearer ${access_token}`,
-    //                 "Content-Type": "application/json"
-    //             }
-    //         }).then(function (response) {
-    //             if (response) {
-
-    //                 // console.log({
-    //                 //     "RESPONSE":response?.data?.data
-    //                 // })
-    //                 setAllData(response?.data?.data);
-    //                 setAllClassData(response?.data?.data);
-    //             }
-    //         }).catch(function (error) {
-    //             console.log({
-    //                 "ERROR IN AXIOS CATCH": error
-    //             })
-    //         })
-    //     } catch (err) {
-    //         console.log({
-    //             "ERROR IN TRY CATCH": err
-    //         })
-    //     }
-    }
+    // Calling Get Class Data API
     useEffect(() => {
         dispatch(getClassDataAction())
-        // fetchData();
-        // if (fetchData.length) return;
     }, [access_token])
 
-    
-    console.log({
-        "apiSelector-1":apiSelector
-    })
-    
-    useEffect(()=>{
-        console.log({
-            "apiSelector-2":apiSelector?.classDataReducer
-        })
+    useEffect(() => {
         setAllData(apiSelector?.classDataReducer);
         setAllClassData(apiSelector?.classDataReducer);
-        
+
     }, [apiSelector?.classDataReducer])
-    
+
 
 
     // Toggle Filters
@@ -135,8 +89,8 @@ export default function ClassManagement(props: any) {
     }
 
     const takeMeToClassComponent = (item: any) => {
-        props.handelsubClass(item);
         dispatch(selectedClassAction(item))
+        props.handelsubClass(item);
     }
 
     // function for searching
@@ -159,9 +113,6 @@ export default function ClassManagement(props: any) {
 
     // Open Edit class modal
     const openEditClassModal = (item: any) => {
-        // console.log({
-        //     "__ITEM":item
-        // })
         setSelectedClass(item)
         dispatch(selectedClassAction(item))
         dispatch(editClassModalAction(true));
@@ -181,12 +132,6 @@ export default function ClassManagement(props: any) {
                     "Content-Type": "application/json"
                 }
             }).then(function (response) {
-                // dispatch(successMessageAction(true))
-                // let data = {
-                //     "type": "deleteClass",
-                //     "action": true
-                // };
-                // dispatch(successMessagAdvancedAction(data))
                 dispatch(getClassDataAction())
                 setDeleteMessage(true);
                 setTimeout(() => {

@@ -1,17 +1,15 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import styles from '../../../styles/Common.module.css';
-import { useRouter } from 'next/router'
 import Image from "next/image";
 import axios from "axios";
-import { successMessageAction, successMessagAdvancedAction } from '@/store/actions/classAction';
+import { getSubClassDataAction } from '@/store/actions/apiAction';
 
 export default function AddNewSubClass(props: any) {
 
     console.log({
         "__PROPS_IN_ADD_SUB_CLASS":props
     })
-
 
     const dispatch = useDispatch<any>();
     const assetname = useRef("");
@@ -30,9 +28,7 @@ export default function AddNewSubClass(props: any) {
     }
 
     const allClassSelector = useSelector((state: any) => state.classReducer);
-    // console.log({
-    //     allClassSelector:allClassSelector?.selectedClassReducer
-    // })
+    const apiSelector = useSelector((state: any) => state.apiReducer);
 
     // GET ALL DATATYPES
     async function fetchData() {
@@ -90,7 +86,6 @@ export default function AddNewSubClass(props: any) {
 
     const closeModal = () => {
         props.handleClick(false);
-        // setShowInput(false);
         setShowHideAddTagButton(false)
         setToggleDT(false);
         setDataType("");
@@ -123,7 +118,6 @@ export default function AddNewSubClass(props: any) {
 
     // Adding New Tags
     const addTags = () => {
-        // setShowInput(true);
         setShowHideAddTagButton(true);
         setToggleDT(true);
     }
@@ -158,7 +152,6 @@ export default function AddNewSubClass(props: any) {
             let updatedList = allTags.slice();
             updatedList.push(newTag)
             setAllTags(updatedList)
-            // setShowInput(false);
             setNewTag("");
             setShowHideAddTagButton(false);
             setToggleDT(false);
@@ -202,7 +195,6 @@ export default function AddNewSubClass(props: any) {
 
     // Cancel Adding new tags
     const cancelAddingTag = () => {
-        // setShowInput(false);
         setShowHideAddTagButton(false)
         setToggleDT(false);
         setDataType("");
@@ -235,16 +227,11 @@ export default function AddNewSubClass(props: any) {
                     "Content-Type": "application/json"
                 }
             }).then(function (response) {
-                if (response) {
-                    dispatch(successMessageAction(true))
-                    setAllTags([]);
-                    let data = {
-                        "type": "newSubClass",
-                        "action": true
-                    };
-                    dispatch(successMessagAdvancedAction(data))
+                if (response) {                    
+                    setAllTags([]);                    
                     props.handleClick(false);
                     props.message(true)
+                    dispatch(getSubClassDataAction(apiSelector?.selectedClassReducer))
                 }
             }).catch(function (error) {
                 console.log("ERROR IN AXIOS CATCH (CREATE CLASS):", error)

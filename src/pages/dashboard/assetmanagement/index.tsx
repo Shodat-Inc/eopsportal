@@ -38,45 +38,12 @@ export default function AssetManagement() {
     const apiSelector = useSelector((state: any) => state.apiReducer);
 
 
-    // Close Success message after 5 second if true
-    useEffect(() => {
-
-        if (allClassSelector?.successMessageReducer === true) {
-            dispatch(successMessageAction(false))
-        }
-
-    }, [allClassSelector?.successMessageReducer === true])
-
-    // async function fetchData() {
-    //     try {
-    //         await axios({
-    //             method: 'GET',
-    //             url: `/api/getAssets`,
-    //             headers: {
-    //                 "Authorization": `Bearer ${access_token}`,
-    //                 "Content-Type": "application/json"
-    //             }
-    //         }).then(function (response) {
-    //             if (response) {
-    //                 setClassData(response?.data?.data)
-    //             }
-    //         }).catch(function (error) {
-    //             console.log({
-    //                 "ERROR IN AXIOS CATCH": error
-    //             })
-    //         })
-    //     } catch (err) {
-    //         console.log({
-    //             "ERROR IN TRY CATCH": err
-    //         })
-    //     }
-    // }
     useEffect(() => {
         dispatch(getClassDataAction())
     }, [access_token])
 
-    useEffect(()=>{
-        setClassData(apiSelector?.classDataReducer);        
+    useEffect(() => {
+        setClassData(apiSelector?.classDataReducer);
     }, [apiSelector?.classDataReducer])
 
     useEffect(() => {
@@ -253,7 +220,12 @@ export default function AssetManagement() {
                                     onClick={() => toggleTab(2)}
                                     className="font-semibold"
                                 >
-                                    <span>{nav.classObjKey}: {nav.classObjValue}</span>
+                                    {
+                                        nav.classObjKey ?
+                                            <span>{nav.classObjKey}: {nav.classObjValue}</span>
+                                            :
+                                            <span>{nav.classObjValue}</span>
+                                    }
                                 </button>
                             </li>
 

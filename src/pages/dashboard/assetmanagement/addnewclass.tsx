@@ -180,24 +180,16 @@ export default function AddNewClass(props: any) {
           Authorization: `Bearer ${tokenStr}`,
           "Content-Type": "application/json",
         },
-      })
-        .then(function (response) {
-          if (response) {
-            setAllTags([]);
-            dispatch(openCloseNewClassModalAction(false));
-            dispatch(getClassDataAction())
-            props.message(true);
-            // dispatch(successMessageAction(true));
-            // let data={
-            //   "type":"newClass",
-            //   "action":true
-            // };
-            // dispatch(successMessagAdvancedAction(data))
-          }
-        })
-        .catch(function (error) {
-          console.log("ERROR IN AXIOS CATCH (CREATE CLASS):", error);
-        });
+      }).then(function (response) {
+        if (response) {
+          setAllTags([]);
+          dispatch(openCloseNewClassModalAction(false));
+          dispatch(getClassDataAction())
+          props.message(true);
+        }
+      }).catch(function (error) {
+        console.log("ERROR IN AXIOS CATCH (CREATE CLASS):", error);
+      });
     } catch (err) {
       console.log("ERROR IN TRY CATCH (CREATE CLASS):", err);
     }
@@ -207,7 +199,7 @@ export default function AddNewClass(props: any) {
     setPrimaryKey(allTags)
   }, [allTags])
 
-  const handlePrimaryKey = (e:any) => {
+  const handlePrimaryKey = (e: any) => {
     setSelectedPK(e.target.value)
   }
 
@@ -418,7 +410,7 @@ export default function AddNewClass(props: any) {
               </div>
 
 
-              <div className="mb-6 relative flex justify-end items-center w-full">
+              {/* <div className="mb-6 relative flex justify-end items-center w-full">
                 <div className={`mb-5 lg:w-full small:w-full ${styles.form__wrap}`}>
                   <div className={`relative ${styles.form__group} font-OpenSans`}>
                     <select
@@ -443,7 +435,7 @@ export default function AddNewClass(props: any) {
                     <label htmlFor="parentJoinKey" className={`${styles.form__label}`}>Select Primary Key</label>
                   </div>
                 </div>
-              </div>
+              </div> */}
 
 
               <div className="mb-0 relative flex justify-end items-center w-full">

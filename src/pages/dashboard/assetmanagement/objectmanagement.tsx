@@ -94,7 +94,7 @@ export default function ObjectManagement(props: any) {
         let abc = {
             "flow": "Object Management",
             "class": showClassNameFromID(chooseAsset),
-            "classObjKey": classObjKey,
+            "classObjKey": "",
             "classObjValue": objID,
             "subClass": "Batteries",
             "subClassObjKey": "",
@@ -228,11 +228,7 @@ export default function ObjectManagement(props: any) {
                     "Content-Type": "application/json"
                 }
             }).then(function (response) {
-                let data = {
-                    "type": "deleteObject",
-                    "action": true
-                };
-                dispatch(successMessagAdvancedAction(data))
+                setDeleteMessage(true);
                 setTimeout(()=>{
                     setDeleteMessage(false);
                 }, 4000)

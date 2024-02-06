@@ -401,7 +401,7 @@ export const setDataForSubObjectCompAction = (data: any) => async (dispatch: any
 */
 export const selectedClassAction = (data: any) => async (dispatch: any) => {
     try {
-        if (data) {
+        if (data!=="" || data!==undefined) {
             dispatch({
                 type: SELECTED_CLASS_SUCCESS,
                 payload: data
