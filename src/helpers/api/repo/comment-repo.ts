@@ -32,7 +32,10 @@ async function get(params: any) {
     try {
         const data = await db.Comment.findAll({
             where: { ticketId: params.ticketId },
-            attributes: ['comment', 'parentId', 'ticketId', 'userId']
+            attributes: ['comment', 'parentId', 'ticketId', 'userId'],
+            include: [{
+                model: db.Ticket,
+            }]
         })
         if (!data.length) {
             return sendResponseData(false, "No comments are avaiable for requested Ticket Id", {})

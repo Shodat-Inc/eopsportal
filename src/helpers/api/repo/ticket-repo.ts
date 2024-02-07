@@ -82,6 +82,7 @@ async function getTicketByAlertId(params: any) {
                     {
                         model: db.Comment,
                         as: 'TicketComments', // Alias for comments association
+                        required: false,
                         attributes: ['id', 'comment', 'parentId', 'ticketId', 'userId'],
                         where: { parentId: null },
                         order: [['parentId', 'ASC'], ['createdAt', 'ASC']], // Order comments by parentId and creation time
@@ -108,6 +109,7 @@ async function getTicketByAlertId(params: any) {
                     {
                         model: db.Attachment,
                         attributes: ['fileName', 'fileURL', 'fileType'],
+                        required: false,
                     }
                 ]
             }]
