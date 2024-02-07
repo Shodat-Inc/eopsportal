@@ -225,7 +225,7 @@ export default function ClassManagement(props: any) {
                                                     <span>{item.assetName}</span>
                                                 </button>
                                             </td>
-                                            <td>
+                                            <td className={`${styles.removeComma}`}>
                                                 {
                                                     item?.tags.map((it: any, indx: any) => (
                                                         <span key={indx}>
@@ -292,7 +292,7 @@ export default function ClassManagement(props: any) {
                                 className='mb-6'
                             />
                             <p className="text-black text-2xl font-semibold">No data found!!</p>
-                            <p className="text-black text-lg mt-3 font-normal">Please create the class by clicking on the  <span className="text-black font-semibold text-lg]">"Add Class"</span> button.</p>
+                            <p className="text-black text-lg mt-3 font-normal">Please create the class by clicking on the  <span className="text-black font-semibold text-lg]">{"Add Class"}</span> button.</p>
                         </div>
                 }
             </div>

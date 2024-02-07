@@ -32,7 +32,7 @@
         "dateCreated": "29-05-2023",
         "tags": {
             "ID": "TPC71810-01-011",
-            "PlantID": "TPC71810-01",
+            "PlantID": "TPC3305-01",
             "Description": "Power Generator Engine",
             "Floor": "1",
             "Room": "PGER",
@@ -46,7 +46,7 @@
         "dateCreated": "29-05-2023",
         "tags": {
             "ID": "TPC71810-01-012",
-            "PlantID": "TPC71810-01",
+            "PlantID": "TPC3305-01",
             "Description": "Power Generator Engine",
             "Floor": "1",
             "Room": "PGER",
@@ -60,7 +60,7 @@
         "dateCreated": "29-05-2023",
         "tags": {
             "ID": "TPC71810-01-021",
-            "PlantID": "TPC71810-01",
+            "PlantID": "TPC3305-01",
             "Description": "Gamma Reactor",
             "Floor": "2",
             "Room": "GRR",
@@ -74,7 +74,7 @@
         "dateCreated": "29-05-2023",
         "tags": {
             "ID": "TPC71810-01-022",
-            "PlantID": "TPC71810-01",
+            "PlantID": "TPC3305-01",
             "Description": "Gamma Reactor",
             "Floor": "2",
             "Room": "GRR",
@@ -88,7 +88,7 @@
         "dateCreated": "29-05-2023",
         "tags": {
             "ID": "TPC3305-01-011",
-            "PlantID": "TPC71810-01",
+            "PlantID": "TPC3305-01",
             "Description": "Gas Incubating Suction",
             "Floor": "1",
             "Room": "Loading Zone",

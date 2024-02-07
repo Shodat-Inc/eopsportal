@@ -13,10 +13,10 @@ import Image from "next/image";
 export default function TopBar({ showNav, setShowNav }) {
   const { push } = useRouter();
   const router = useRouter();
-  const [username, setUsername] = useState("Amit");
+  const [username, setUsername] = useState("Chinmay");
   const [user, setUser] = useState({
-    firstName:"Amit",
-    lastName:"Pandey"
+    firstName:"Chinmay",
+    lastName:"Naik"
   })
   const [userData, setUserData] = useState([]);
 
@@ -114,7 +114,7 @@ export default function TopBar({ showNav, setShowNav }) {
                 width={25}
               />
               <span>
-                <span className="animate-ping bg-red-400 w-[19px] h-[19px] absolute top-[-8px] right-[-6px] rounded-full"></span>
+                {/* <span className="animate-ping bg-red-400 w-[19px] h-[19px] absolute top-[-8px] right-[-6px] rounded-full"></span> */}
                 <span className="bg-red-500 text-white text-sm rounded-full flex items-center justify-center w-[19px] h-[19px] absolute top-[-8px] right-[-6px]">5</span>
               </span>
             </Popover.Button>
@@ -202,7 +202,7 @@ export default function TopBar({ showNav, setShowNav }) {
                     <div className="flex justify-start items-start">
                       <span className="bg-[#5B5A59] rounded rounded-full flex justify-center items-center text-white text-lg font-semiboild h-[40px] w-[40px] relative">{user.firstName.charAt(0).toUpperCase()}{user.lastName.charAt(0).toUpperCase()}</span>
                       <div className="flex justify-start items-start flex-wrap flex-col ml-3">
-                        <span className="text-sm font-semibold mb-1">Amit Pandey</span>
+                        <span className="text-sm font-semibold mb-1">Chinmay Naik</span>
                         <span className="bg-[#E7E6E2] text-[#666666] text-[11px] rounded rounded-md flex justify-center items-center py-[2px] w-[60px]">Admin</span>
                       </div>
                     </div>

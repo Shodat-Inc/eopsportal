@@ -7,7 +7,7 @@ import axios from 'axios';
 import Link from 'next/dist/client/link';
 import AddNewObject from './addnewobject';
 import { objDefaultSubClassSelectorFunction } from '@/store/actions/classAction';
-import { successMessageAction, setClassBreadcrumb, setDataForeOpsWatchAction, setDataForeOpsTraceAction } from '@/store/actions/classAction';
+import { successMessageAction, setClassBreadcrumb, setDataForeOpsWatchAction } from '@/store/actions/classAction';
 import { setTimeout } from 'timers';
 import EditSubObject from './editsubobject';
 import { editSubObjectModalAction } from '@/store/actions/classAction';

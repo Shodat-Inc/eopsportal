@@ -221,7 +221,7 @@ export default function SubClassManagement(props: any) {
                                                 <span>{item.assetName}</span>
                                             </button>
                                         </td>
-                                        <td>
+                                        <td className={`${styles.removeComma}`}>
                                             {
                                                 item?.tagsWithDataType.map((it: any, indx: any) => (
                                                     <span key={indx}>
@@ -231,7 +231,7 @@ export default function SubClassManagement(props: any) {
 
                                             }
                                         </td>
-                                        <td>
+                                        <td className={`${styles.removeComma}`}>
                                             {
                                                 item?.parentJoinKey.map((it: any, indx: any) => (
                                                     <span key={indx}>
