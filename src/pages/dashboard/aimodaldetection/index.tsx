@@ -270,6 +270,18 @@ export default function AiModelDetection() {
         key: chooseSubObject ? chooseSubObject : "TPC71810-01-012",
         model: "Crack Detection"
     }
+    const nextData = {
+        "class":chooseClass,
+        "subClass":chooseSubClass,
+        "object":chooseObject,
+        "subObject":chooseSubObject,
+        "model":''
+    }
+
+    console.log({
+        nextDataProps:nextDataProps,
+        nextData:nextData
+    })
 
     // Toggle sub class and object dropdowns
     const toggleSubClassObjectOption = () => {
@@ -920,6 +932,7 @@ export default function AiModelDetection() {
                                     ?
                                     <EopsWatch
                                         nextDataProps={nextDataProps}
+                                        nextData={nextData}
                                         active={chooseSubObject !== "Select" ? true : false}
                                         modelData={allModelData}
                                     />

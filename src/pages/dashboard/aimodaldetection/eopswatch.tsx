@@ -24,9 +24,9 @@ const modelLogo = [
     }
 ]
 export default function EopsWatch(props: any) {
-    console.log({
-        "__PROPS_EOPSWATCH": props?.modelData
-    })
+    // console.log({
+    //     "__PROPS_EOPSWATCH": props
+    // })
     const dispatch = useDispatch<any>()
     const router = useRouter();
     const routerParams = router.query;
@@ -73,6 +73,7 @@ export default function EopsWatch(props: any) {
 
 
     const redirectToNext = () => {
+        // SubClassObject is also named as key
         const sendData = {
             objectID: props?.nextDataProps?.objectID,
             subObject: props?.nextDataProps?.subObject,
@@ -82,36 +83,27 @@ export default function EopsWatch(props: any) {
             industryID: props?.nextDataProps?.industryID
         }
         const nextData = {
-            "class": '1',
-            "classObject": "1",
-            "subClass": "1",
-            "subClassObject": '1',
+            "class": props?.nextData?.class,
+            "classObject": props?.nextData?.object,
+            "subClass": props?.nextData?.subClass,
+            "subClassObject": props?.nextData?.subObject,
             "Model": selectedModel
         }
-        console.log({
-            sendData: sendData,
-            selectedModel: selectedModel
-        })
+
+        // console.log({
+        //     sendData: sendData,
+        //     selectedModel: selectedModel,
+        //     nextData: nextData
+        // })
 
         dispatch(dataForModalAction(nextData))
 
-        // Router.push({
-        //     pathname: '/dashboard/eopswatch/preview',
-        //     query: {
-        //         objectID: props?.nextDataProps?.objectID,
-        //         subObject: props?.nextDataProps?.subObject,
-        //         key: props?.nextDataProps?.key,
-        //         id: props?.nextDataProps?.id,
-        //         model: data?.name ? data?.name : props?.nextDataProps?.model,
-        //         industryID: props?.nextDataProps?.industryID
-        //     }
-        // })
+        setTimeout(() => {
+            Router.push({
+                pathname: '/dashboard/eopswatch/preview',
+            })
+        }, 50)
     }
-
-    console.log({
-        "__DATA": singleModel
-    })
-
     return (
         <div className="flex w-full h-full mt-1">
             <div className="w-[20%] bg-[#F2F2F2]">
