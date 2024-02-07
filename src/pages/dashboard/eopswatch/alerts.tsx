@@ -65,7 +65,8 @@ export default function Alerts() {
                         <nav className="flex" aria-label="Breadcrumb">
                             <ol className="inline-flex items-center space-x-1 md:space-x-1">
                                 <li className="inline-flex items-center">
-                                    <Link href="/dashboard/assetmanagement"
+                                    <Link 
+                                        href="/dashboard/aimodaldetection"
                                         className="inline-flex items-center text-sm font-medium text-black hover:text-yellow-950">
                                         <Image
                                             src="/img/home.svg"
@@ -79,13 +80,7 @@ export default function Alerts() {
                                 <li>
                                     <Link
                                         href={{
-                                            pathname: "/dashboard/assetmanagement/subchildobject",
-                                            query: {
-                                                class: parentAsset.objectID,
-                                                object: parentAsset.id,
-                                                id: parentAsset.key,
-                                                subObject: parentAsset.subObject,
-                                            }
+                                            pathname: "/dashboard/aimodaldetection",
                                         }}
                                         className="flex items-center">
                                         <Image
@@ -101,12 +96,15 @@ export default function Alerts() {
                                 <li>
                                     <Link
                                         href={{
-                                            pathname: "/dashboard/eopswatch/eopswatchmodel",
+                                            pathname: "/dashboard/eopswatch/preview",
                                             query: {
                                                 objectID: parentAsset.objectID,
                                                 key: parentAsset.key,
                                                 id: parentAsset.id,
+                                                industryID: parentAsset.id,
                                                 subObject: parentAsset.subObject,
+                                                model: parentAsset.model,
+                                                from:"eopswatch"
                                             }
                                         }}
                                         className="flex items-center"
@@ -122,15 +120,19 @@ export default function Alerts() {
                                     </Link>
                                 </li>
                                 <li>
+
+                                {/* http://localhost:3000/dashboard/eopswatch/preview?objectID=Vehicles&subObject=Tire&key=NEC1TT01522&id=5PVBE7AJ8R5T50001&model=Tire+Wear+Detection&industryID=5PVBE7AJ8R5T50001&from=eopswatch */}
                                     <Link
                                         href={{
-                                            pathname: "/dashboard/eopswatch/productionmodel",
+                                            pathname: "/dashboard/eopswatch/preview",
                                             query: {
                                                 objectID: parentAsset.objectID,
                                                 key: parentAsset.key,
                                                 id: parentAsset.id,
+                                                industryID: parentAsset.id,
                                                 subObject: parentAsset.subObject,
                                                 model: parentAsset.model,
+                                                from:"eopswatch"
                                             }
                                         }}
                                         className="flex items-center"
@@ -161,6 +163,7 @@ export default function Alerts() {
                         </nav>
 
                         <div className="relative flex">
+                        {/* https://eops-portal.vercel.app/dashboard/eopswatch/raisedalerts?objectID=Vehicles&key=NEC1TT01522&id=5PVBE7AJ8R5T50001&subObject=Tire&model=Tire+Wear+Detection */}
                             <Link
                                 href={{
                                     pathname: "/dashboard/eopswatch/raisedalerts",
@@ -172,7 +175,7 @@ export default function Alerts() {
                                         model: parentAsset.model,
                                     }
                                 }}
-                                className="flex justify-center items-center text-black bg-yellow-951 rounded rounded-xl h-12 px-4 transition-opacity duration-300 mr-5 outline-none transform active:scale-75 transition-transform"
+                                className="flex justify-center items-center text-black bg-yellow-951 rounded-xl h-12 px-4 ` duration-300 mr-5 outline-none transform active:scale-75 transition-transform"
                             // onClick={() => setRaisedAlert(true)}
                             >
                                 <Image
@@ -185,7 +188,7 @@ export default function Alerts() {
                                 <span>Raised Alerts</span>
                             </Link>
                             <Link
-                                className="flex justify-center items-center text-black bg-yellow-951 rounded rounded-xl h-12 px-4 transition-opacity duration-300 outline-none transform active:scale-75 transition-transform"
+                                className="flex justify-center items-center text-black bg-yellow-951 rounded-xl h-12 px-4  duration-300 outline-none transform active:scale-75 transition-transform"
                                 href={{
                                     pathname: "/dashboard/eopswatch/addalerts",
                                     query: {
@@ -309,7 +312,7 @@ export default function Alerts() {
                                 </div>
                                 {/*body*/}
                                 <div className="relative pt-2 pb-8 pl-3 pr-3 flex-auto">
-                                    <div className={`rounded rounded-xl shadow-xl px-6 py-3 border-gray-956 border h-20 flex items-center justify-start ${styles.filters} mb-0`}>
+                                    <div className={`rounded-xl shadow-xl px-6 py-3 border-gray-956 border h-20 flex items-center justify-start ${styles.filters} mb-0`}>
                                         <div className="relative flex justify-start items-center mr-8 w-[180px]">
                                             <Image
                                                 src="/img/sort.svg"
@@ -359,7 +362,7 @@ export default function Alerts() {
                                     </div>
 
                                     <div className="relative px-4 py-0 mt-4 pb-10">
-                                        <div className={`lg:overflow-x-auto md:overflow-x-scroll sm:overflow-x-scroll rounded-xl lg:w-full md:w-full lg:w-full sm:w-full small:w-full small:overflow-x-scroll max-h-[300px] ${styles.proTableWrap}`}>
+                                        <div className={`lg:overflow-x-auto md:overflow-x-scroll sm:overflow-x-scroll rounded-xl md:w-full lg:w-full sm:w-full small:w-full small:overflow-x-scroll max-h-[300px] ${styles.proTableWrap}`}>
                                             <table className={`table-auto lg:min-w-full sm:w-full small:w-full text-left ${styles.proSenseTable}`}>
                                                 <thead className="text-sm font-normal">
                                                     <tr>
@@ -414,10 +417,10 @@ export default function Alerts() {
                                                         <td>112233445566</td>
                                                         <td>20%</td>
                                                         <td>Crack</td>
-                                                        <td><span className="text-white bg-red-960 inline-flex justify-center items-center rounded rounded-md py-1 px-2 text-sm">High</span></td>
+                                                        <td><span className="text-white bg-red-960 inline-flex justify-center items-center rounded-md py-1 px-2 text-sm">High</span></td>
                                                         <td><span className="text-gray-951">16-06-2023</span></td>
                                                         <td>
-                                                            <button className="flex justify-center items-center bg-yellow-951 text-black text-sm h-[40px] p-1 rounded rounded-lg min-w-[90px]">
+                                                            <button className="flex justify-center items-center bg-yellow-951 text-black text-sm h-[40px] p-1 rounded-lg min-w-[90px]">
                                                                 <Image
                                                                     src="/img/prosense-action-icon.svg"
                                                                     alt="home"
@@ -444,10 +447,10 @@ export default function Alerts() {
                                                         <td>112233445567</td>
                                                         <td>15%</td>
                                                         <td>Crack</td>
-                                                        <td><span className="text-white bg-orange-952 inline-flex justify-center items-center rounded rounded-md p-1 text-sm">Medium</span></td>
+                                                        <td><span className="text-white bg-orange-952 inline-flex justify-center items-center rounded-md p-1 text-sm">Medium</span></td>
                                                         <td><span className="text-gray-951">16-06-2023</span></td>
                                                         <td>
-                                                            <button className="flex justify-center items-center bg-yellow-951 text-black text-sm h-[40px] p-1 rounded rounded-lg min-w-[90px]">
+                                                            <button className="flex justify-center items-center bg-yellow-951 text-black text-sm h-[40px] p-1 rounded-lg min-w-[90px]">
                                                                 <Image
                                                                     src="/img/prosense-action-icon.svg"
                                                                     alt="home"
@@ -474,10 +477,10 @@ export default function Alerts() {
                                                         <td>112233445568</td>
                                                         <td>15%</td>
                                                         <td>Crack</td>
-                                                        <td><span className="text-white bg-orange-952 inline-flex justify-center items-center rounded rounded-md p-1 text-sm">Medium</span></td>
+                                                        <td><span className="text-white bg-orange-952 inline-flex justify-center items-center rounded-md p-1 text-sm">Medium</span></td>
                                                         <td><span className="text-gray-951">15-06-2023</span></td>
                                                         <td>
-                                                            <button className="flex justify-center items-center bg-yellow-951 text-black text-sm h-[40px] p-1 rounded rounded-lg min-w-[90px]">
+                                                            <button className="flex justify-center items-center bg-yellow-951 text-black text-sm h-[40px] p-1 rounded-lg min-w-[90px]">
                                                                 <Image
                                                                     src="/img/prosense-action-icon.svg"
                                                                     alt="home"
@@ -504,10 +507,10 @@ export default function Alerts() {
                                                         <td>112233445569</td>
                                                         <td>5%</td>
                                                         <td>Crack</td>
-                                                        <td><span className="text-white bg-blue-960 inline-flex justify-center items-center rounded rounded-md p-1 text-sm">Low</span></td>
+                                                        <td><span className="text-white bg-blue-960 inline-flex justify-center items-center rounded-md p-1 text-sm">Low</span></td>
                                                         <td><span className="text-gray-951">14-06-2023</span></td>
                                                         <td>
-                                                            <button className="flex justify-center items-center bg-yellow-951 text-black text-sm h-[40px] p-1 rounded rounded-lg min-w-[90px]">
+                                                            <button className="flex justify-center items-center bg-yellow-951 text-black text-sm h-[40px] p-1 rounded-lg min-w-[90px]">
                                                                 <Image
                                                                     src="/img/prosense-action-icon.svg"
                                                                     alt="home"

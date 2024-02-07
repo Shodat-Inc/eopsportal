@@ -178,7 +178,7 @@ export default function AddAlerts(localData: any) {
                         <nav className="flex" aria-label="Breadcrumb">
                             <ol className="inline-flex items-center space-x-1 md:space-x-1">
                                 <li className="inline-flex items-center">
-                                    <Link href="/dashboard/assetmanagement"
+                                    <Link href="/dashboard/aimodaldetection"
                                         className="inline-flex items-center text-sm font-medium text-black hover:text-yellow-950">
                                         <Image
                                             src="/img/home.svg"
@@ -192,13 +192,7 @@ export default function AddAlerts(localData: any) {
                                 <li>
                                     <Link
                                         href={{
-                                            pathname: "/dashboard/assetmanagement/subchildobject",
-                                            query: {
-                                                class: parentAsset.objectID,
-                                                object: parentAsset.id,
-                                                id: parentAsset.key,
-                                                subObject: parentAsset.subObject,
-                                            }
+                                            pathname: "/dashboard/aimodaldetection",
                                         }}
                                         className="flex items-center">
                                         <Image
@@ -214,13 +208,7 @@ export default function AddAlerts(localData: any) {
                                 <li>
                                     <Link
                                         href={{
-                                            pathname: "/dashboard/eopswatch/eopswatchmodel",
-                                            query: {
-                                                objectID: parentAsset.objectID,
-                                                key: parentAsset.key,
-                                                id: parentAsset.id,
-                                                subObject: parentAsset.subObject,
-                                            }
+                                            pathname: "/dashboard/aimodaldetection"
                                         }}
                                         className="flex items-center"
                                     >
@@ -237,13 +225,15 @@ export default function AddAlerts(localData: any) {
                                 <li>
                                     <Link
                                         href={{
-                                            pathname: "/dashboard/eopswatch/productionmodel",
+                                            pathname: "/dashboard/eopswatch/preview",
                                             query: {
                                                 objectID: parentAsset.objectID,
                                                 key: parentAsset.key,
                                                 id: parentAsset.id,
+                                                industryID: parentAsset.id,
                                                 subObject: parentAsset.subObject,
                                                 model: parentAsset.model,
+                                                from:"eopswatch"
                                             }
                                         }}
                                         className="flex items-center"

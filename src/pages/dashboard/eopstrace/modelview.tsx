@@ -94,14 +94,17 @@ export default function ModelView() {
                                 </li>
                                 <li>
                                     <Link
+                                        // http://localhost:3000/dashboard/eopstrace/testmodel?objectID=Vehicles&subObject=Battery&key=LI7481&id=5PVBE7AJ8R5T50001&model=Battery+Life+Prediction&industryID=5PVBE7AJ8R5T50001&from=eopstrace
                                         href={{
-                                            pathname: "/dashboard/eopstrace/preview",
+                                            pathname: "/dashboard/eopstrace/testmodel",
                                             query: {
                                                 objectID: parentAsset.objectID,
                                                 key: parentAsset.key,
                                                 id: parentAsset.id,
+                                                industryID: parentAsset.id,
                                                 subObject: parentAsset.subObject,
-                                                model: parentAsset.model
+                                                model: parentAsset.model,
+                                                from: "eopstrace"
                                             }
                                         }}
                                         className="flex items-center"
@@ -119,13 +122,15 @@ export default function ModelView() {
                                 <li>
                                     <Link
                                         href={{
-                                            pathname: "/dashboard/eopstrace/preview",
+                                            pathname: "/dashboard/eopstrace/testmodel",
                                             query: {
                                                 objectID: parentAsset.objectID,
                                                 key: parentAsset.key,
                                                 id: parentAsset.id,
+                                                industryID: parentAsset.id,
                                                 subObject: parentAsset.subObject,
-                                                model: parentAsset.model
+                                                model: parentAsset.model,
+                                                from: "eopstrace"
                                             }
                                         }}
                                         className="flex items-center"
@@ -156,8 +161,8 @@ export default function ModelView() {
                         </nav>
 
                         <div className="flex justify-center items-center">
-                            <button className="bg-yellow-951 text-black rounded rounded-xl border b order-yellow-951 flex justify-center items-center px-3 h-[44px] ml-2 transition-all duration-[400ms] mr-3 transition-opacity duration-300 outline-none transform active:scale-75 transition-transform">Generate RCA</button>
-                            <button className="bg-yellow-951 text-black rounded rounded-xl border b order-yellow-951 flex justify-center items-center px-3 h-[44px] ml-2 transition-all duration-[400ms] mr-3 transition-opacity duration-300 outline-none transform active:scale-75 transition-transform">Track Issue</button>
+                            <button className="bg-yellow-951 text-black rounded-xl border b order-yellow-951 flex justify-center items-center px-3 h-[44px] ml-2  mr-3  duration-300 outline-none transform active:scale-75 transition-transform">Generate RCA</button>
+                            <button className="bg-yellow-951 text-black rounded-xl border b order-yellow-951 flex justify-center items-center px-3 h-[44px] ml-2  mr-3  duration-300 outline-none transform active:scale-75 transition-transform">Track Issue</button>
                         </div>
                     </div>
 
@@ -178,9 +183,9 @@ export default function ModelView() {
                             <>
                                 {
                                     data ?
-                                        <div className="relative mt-10 rounded overflow-hidden rounded-xl text-center flex flex-wrap flex-rpw items-center justify-around">
+                                        <div className="relative mt-10 overflow-hidden rounded-xl text-center flex flex-wrap flex-rpw items-center justify-around">
 
-                                            <div className="border border-gray-951 rounded rounded-xl p-4 w-56 h-48 flex items-center justify-center flex-wrap flex-col">
+                                            <div className="border border-gray-951 rounded-xl p-4 w-56 h-48 flex items-center justify-center flex-wrap flex-col">
                                                 <p className="text-black font-bold mb-2">{data[0]?.result.batteryUtilization}</p>
                                                 <Image
                                                     src="/img/BatteryUtilization.svg"
@@ -192,7 +197,7 @@ export default function ModelView() {
                                                 <p className="text-black font-semibold mb-10">Battery Utilization</p>
                                             </div>
 
-                                            <div className="border border-gray-951 rounded rounded-xl p-4 w-56 h-48 flex items-center justify-center flex-wrap flex-col">
+                                            <div className="border border-gray-951 rounded-xl p-4 w-56 h-48 flex items-center justify-center flex-wrap flex-col">
                                                 <p className="text-black font-bold mb-2">{data[0]?.result.remainingCyclesLeft}</p>
                                                 <Image
                                                     src="/img/RemainingCycle.svg"
@@ -204,7 +209,7 @@ export default function ModelView() {
                                                 <p className="text-black font-semibold mb-10">Remaining cycles left</p>
                                             </div>
 
-                                            <div className="border border-gray-951 rounded rounded-xl p-4 w-56 h-48 flex items-center justify-center flex-wrap flex-col">
+                                            <div className="border border-gray-951 rounded-xl p-4 w-56 h-48 flex items-center justify-center flex-wrap flex-col">
                                                 <p className="text-black font-bold mb-2">{data[0]?.result.estTotalCycle}</p>
                                                 <Image
                                                     src="/img/totalCycle.svg"

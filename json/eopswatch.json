@@ -355,6 +355,28 @@
                 "thresholdTags": [],
                 "thresholdValue":"",
                 "plots": []
+            },
+            {
+                "imageID":6,
+                "folder": "Production",
+                "path": "/img/TireWearPrediction/NEC1TT01522/Test/TireTest4.png",
+                "resultImage":"/img/TireWearPrediction/NEC1TT01522/Test/TireTest4.png",
+                "dateUploaded": "05-11-2023",
+                "threshold":"/img/TireWearPrediction/NEC1TT01522/Test/60k-miles.png",
+                "thresholdTags": [],
+                "thresholdValue":"",
+                "plots": []
+            },
+            {
+                "imageID":7,
+                "folder": "Production",
+                "path": "/img/TireWearPrediction/NEC1TT01522/Test/TireTest5.png",
+                "resultImage":"/img/TireWearPrediction/NEC1TT01522/Test/TireTest5.png", 
+                "dateUploaded": "05-11-2023",
+                "threshold":"/img/TireWearPrediction/NEC1TT01522/Test/0k-miles.png",
+                "thresholdTags": [],
+                "thresholdValue":"",
+                "plots": []
             }
            
         ]

@@ -5,9 +5,9 @@ import Link from "next/dist/client/link";
 
 export default function Test(props: any) {
     const { data, routerParams } = props;
-    // console.log({
-    //     "HERE PROPS":props
-    // })
+    console.log({
+        "HERE PROPS TEST":props
+    })
     const [showImageModal, setShowImageModal] = useState(false);
     const [resImage, setResImage] = useState("");
     const imageModalFunction = (image: any) => {
@@ -37,8 +37,8 @@ export default function Test(props: any) {
                 {
                     data && data.length > 0 ?
                         data.map((item: any, index: any) => (
-                            <div className="w-[246px] overflow-hidden rounded rounded-xl mr-4 mb-4 relative" key={index}>
-                                <div className="h-[200px] w-[246px] overflow-hidden rounded rounded-xl relative">
+                            <div className="w-[246px] overflow-hidden rounded-xl mr-4 mb-4 relative" key={index}>
+                                <div className="h-[200px] w-[246px] overflow-hidden rounded-xl relative">
                                     <div className="flex justify-start items-center absolute top-0 right-0">
                                         <Link
                                             href={{
@@ -54,7 +54,7 @@ export default function Test(props: any) {
                                                     from:"eopswatch"
                                                 }
                                             }}
-                                            className={`text-sm font-semibold h-[32px] px-2 rounded rounded-lg inline-flex justify-center items-center mr-4 ${item.resultImage==="" ? 'pointer-events-none cursor-not-allowed bg-gray-951' : ' bg-yellow-951'}`}>
+                                            className={`text-sm font-semibold h-[32px] px-2 rounded-lg inline-flex justify-center items-center mr-4 ${item.resultImage==="" ? 'pointer-events-none cursor-not-allowed bg-gray-951' : ' bg-yellow-951'}`}>
                                             <Image
                                                 src="/img/test-icon.svg"
                                                 alt="Test Icon"
@@ -65,7 +65,7 @@ export default function Test(props: any) {
                                         </Link>
                                         <button
                                             onClick={() => imageModalFunction(item.path)}
-                                            className="text-sm font-semibold h-[32px] px-1 rounded rounded-lg inline-flex justify-center items-center bg-[#333333]">
+                                            className="text-sm font-semibold h-[32px] px-1 rounded-lg inline-flex justify-center items-center bg-[#333333]">
                                             <Image
                                                 src="/img/external-link-white.svg"
                                                 alt="Test Icon"
@@ -103,18 +103,18 @@ export default function Test(props: any) {
                     <div
                         className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
                     >
-                        <div className="relative my-0 w-[450px] bg-transparent border border-yellow-951 rounded rounded-xl">
-                            <div className="border-0 shadow-lg-1 relative flex flex-col w-full bg-white outline-none focus:outline-none w-[450px] h-[420px] overflow-hidden-1 bg-transparent rounded rounded-xl">
+                        <div className="relative my-0 w-[450px] bg-transparent border border-yellow-951 rounded-xl">
+                            <div className="border-0 shadow-lg-1 relative flex flex-col  bg-white outline-none focus:outline-none w-[450px] h-[420px] overflow-hidden-1 bg-transparent rounded-xl">
                                 {/*header*/}
                                 <div className="flex items-start justify-between p-0">
                                     <button
-                                        className="bg-transparent border border-white hover:border-yellow-951 text-black float-right leading-none font-semibold outline-none focus:outline-none bg-white absolute right-[-40px] top-[-40px] rounded rounded-full p-1 hover:bg-yellow-951"
+                                        className="bg-transparent border border-white hover:border-yellow-951 text-black float-right leading-none font-semibold outline-none focus:outline-none bg-white absolute right-[-40px] top-[-40px] rounded-full p-1 hover:bg-yellow-951"
                                         onClick={() => setShowImageModal(false)}
                                     >
                                         <Image
                                             src="/img/close.svg"
                                             alt="close"
-                                            className="h-6 h-[24px] w-[24px]"
+                                            className="h-[24px] w-[24px]"
                                             height={24}
                                             width={24}
                                         />
@@ -127,7 +127,7 @@ export default function Test(props: any) {
                                             <Image
                                                 src={resImage}
                                                 alt="result"
-                                                className="h-[100%] w-[100%] object-cover rounded rounded-xl"
+                                                className="h-[100%] w-[100%] object-cover rounded-xl"
                                                 height={420}
                                                 width={450}
                                             />
@@ -138,7 +138,7 @@ export default function Test(props: any) {
                                                     alt="no image"
                                                     height={100}
                                                     width={100}
-                                                    className="h-[100%] w-[100%] object-cover rounded rounded-xl"
+                                                    className="h-[100%] w-[100%] object-cover rounded-xl"
                                                 />
                                                 <span className="mt-3">No Image Found!! </span>
                                             </div>

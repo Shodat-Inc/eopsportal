@@ -116,11 +116,11 @@ export default function Preview() {
         return item.folder === "Production"
     })
 
-    // console.log({
-    //     data:data,
-    //     filteredDataTest:filteredDataTest,
-    //     filteredDataProduction:filteredDataProduction
-    // })
+    console.log({
+        data:data,
+        filteredDataTest:filteredDataTest,
+        filteredDataProduction:filteredDataProduction
+    })
 
     const hasParams = routerParams.hasOwnProperty("PlantID");
     const hasObjectParams = routerParams.hasOwnProperty("subObject")
@@ -135,9 +135,9 @@ export default function Preview() {
 
     return (
         <div className="w-full h-full font-OpenSans">
-            <p className="text-black text-lg mb-4 font-semibold text-xl">eOps Watch</p>
+            <p className="text-black mb-4 font-semibold text-xl">eOps Watch</p>
             {/* Breadcrumb */}
-            <div className="flex relative bg-white rounded rounded-lg px-3 py-1 inline-flex border border-[#E3E3E3]">
+            <div className="relative bg-white rounded-lg px-3 py-1 inline-flex border border-[#E3E3E3]">
                 <ul className="flex justify-start items-center text-sm">
                 <li className="flex justify-start items-center">
                         <Link
@@ -189,7 +189,7 @@ export default function Preview() {
                             
                         </Link>
                     </li>
-                    <li className="flex justify-start items-center hidden">
+                    <li className="flex1 justify-start items-center hidden">
                         <Image
                             src="/img/chevron-right.svg"
                             alt="chevron-right"
@@ -295,8 +295,18 @@ export default function Preview() {
                                 </div>
                             </div>
                             <Link
-                                href="/dashboard/eopswatch/raisedalerts"
-                                className={`border-2 rounded rounded-lg border-gray-969 h-[44px] px-2 py-1 flex justify-center items-center mr-4`}
+                                // href="/dashboard/eopswatch/alerts"
+                                href={{
+                                    pathname: '/dashboard/eopswatch/alerts',
+                                    query: {
+                                        objectID: routerParams.objectID,
+                                        key: routerParams.key,
+                                        model:routerParams.model,
+                                        id: routerParams.id,
+                                        subObject: routerParams.subObject
+                                    }
+                                }}
+                                className={`border-2 rounded-lg border-gray-969 h-[44px] px-2 py-1 flex justify-center items-center mr-4`}
                             >
                                 <Image
                                     src="/img/message-square.svg"
@@ -311,7 +321,7 @@ export default function Preview() {
                         <div className="relative">
                             <button
                                 onClick={toggleDropFunction}
-                                className={`border-2 rounded rounded-lg border-gray-969 h-[44px] px-2 py-1 flex justify-center items-center mr-4 relative ${toggleDrop ? 'bg-gray-969' : 'bg-white'}`}
+                                className={`border-2 rounded-lg border-gray-969 h-[44px] px-2 py-1 flex justify-center items-center mr-4 relative ${toggleDrop ? 'bg-gray-969' : 'bg-white'}`}
                             >
                                 <Image
                                     src="/img/upload-black.svg"
@@ -328,7 +338,7 @@ export default function Preview() {
                                 />
                             </button>
                             {toggleDrop &&
-                                <div className="bg-black text-white border overflow-hidden border-black rounded rounded-xl w-56 flex flex-col flex-wrap items-start justify-start shadow-sm absolute top-[50px] right-[14px] z-[1]">
+                                <div className="bg-black text-white border overflow-hidden border-black rounded-xl w-56 flex flex-col flex-wrap items-start justify-start shadow-sm absolute top-[50px] right-[14px] z-[1]">
                                     <button
                                         onClick={() => { setShowModal(true); setToggleDrop(false) }}
                                         className="text-white text-sm hover:bg-white hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left">
@@ -344,7 +354,7 @@ export default function Preview() {
 
                         <div className="relative">
                             <button
-                                className={` border-2  rounded-xl h-[44px] transition-all duration-[400ms] h-[44px] rounded rounded-xl px-2 py-2 flex items-center justify-start border-gray-969 ${toggleFilter ? 'bg-gray-969' : 'bg-white'}`}
+                                className={` border-2  h-[44px] transition-all duration-[400ms]   rounded-xl px-2 py-2 flex items-center justify-start border-gray-969 ${toggleFilter ? 'bg-gray-969' : 'bg-white'}`}
                                 onClick={toggleFilterFunction}
                             >
                                 <Image
@@ -363,10 +373,10 @@ export default function Preview() {
                                 />
                             </button>
                             {toggleFilter &&
-                                <div className={`w-[376px] shadow shadow-xl min-h-[300px] bg-white text-black border overflow-hidden1 border-gray-969 rounded rounded-xl flex flex-col flex-wrap items-start justify-start absolute top-[50px] right-[0px] z-[1] px-2 py-2`}>
+                                <div className={`w-[376px] shadow-xl min-h-[300px] bg-white text-black border overflow-hidden1 border-gray-969 rounded-xl flex flex-col flex-wrap items-start justify-start absolute top-[50px] right-[0px] z-[1] px-2 py-2`}>
                                     <div className="flex justify-end items-center w-full mb-1">
-                                        <button onClick={() => setToggleFilter(false)} className="rounded rounded-lg bg-gray-969 border border-black flex items-center jsutify-center text-black h-[30px] px-2 text-[13px] mr-3">Reset</button>
-                                        <button onClick={() => setToggleFilter(false)} className="rounded rounded-lg bg-black border border-black flex items-center jsutify-center text-white h-[30px] px-2 text-[13px] mr-2">Apply</button>
+                                        <button onClick={() => setToggleFilter(false)} className="rounded-lg bg-gray-969 border border-black flex items-center jsutify-center text-black h-[30px] px-2 text-[13px] mr-3">Reset</button>
+                                        <button onClick={() => setToggleFilter(false)} className="rounded-lg bg-black border border-black flex items-center jsutify-center text-white h-[30px] px-2 text-[13px] mr-2">Apply</button>
                                         <button>
                                             <Image alt="close" src="/img/x-thin.svg" height={34} width={34} onClick={() => setToggleFilter(false)} />
                                         </button>
@@ -460,7 +470,7 @@ export default function Preview() {
 
                                                 <div>
                                                     <label htmlFor="" className="font-bold mb-3 text-sm">From</label>
-                                                    <div className="relative border border-gray-962 rounded rounded-md h-[50px] w-[160px]">
+                                                    <div className="relative border border-gray-962 rounded-md h-[50px] w-[160px]">
                                                         <div className="rounded-lg border border-gray-954 h-[50px] small lg:w-full small:w-full sm:w-full focus:outline-none focus:border-yellow-951 outline-none">
                                                             <div className={`${styles.datepicker} ${styles.datepicker2} pl-5`}>
                                                                 <Datepicker
@@ -487,7 +497,7 @@ export default function Preview() {
 
                                                 <div>
                                                     <label htmlFor="" className="font-bold mb-3 text-sm">To</label>
-                                                    <div className="relative border border-gray-962 rounded rounded-md h-[50px] w-[160px]">
+                                                    <div className="relative border border-gray-962 rounded-md h-[50px] w-[160px]">
                                                         <div className="rounded-lg border border-gray-954 h-[50px] small lg:w-full small:w-full sm:w-full focus:outline-none focus:border-yellow-951 outline-none">
                                                             <div className={`${styles.datepicker} ${styles.datepicker2} pl-5`}>
                                                                 <Datepicker
@@ -569,7 +579,7 @@ export default function Preview() {
                                                         type="text"
                                                         id="url"
                                                         name="url"
-                                                        className={`${styles.form__field} border border-black border-black`}
+                                                        className={`${styles.form__field} border border-black`}
                                                         placeholder="URL"
                                                         value="https://aws.amazon.com/opendata/?wwps-cards.sort-by=item.additionalFields.sortDate&wwps-cards.sort-rder=desc"
                                                     />
