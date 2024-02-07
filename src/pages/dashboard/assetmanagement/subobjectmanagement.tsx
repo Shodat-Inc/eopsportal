@@ -7,10 +7,10 @@ import axios from 'axios';
 import Link from 'next/dist/client/link';
 import AddNewObject from './addnewobject';
 import { objDefaultSubClassSelectorFunction } from '@/store/actions/classAction';
-import { successMessageAction, setClassBreadcrumb, setDataForeOpsWatchAction } from '@/store/actions/classAction';
+import { setClassBreadcrumb, setDataForeOpsWatchAction } from '@/store/actions/classAction';
 import { setTimeout } from 'timers';
 import EditSubObject from './editsubobject';
-import { editSubObjectModalAction, successMessagAdvancedAction } from '@/store/actions/classAction';
+import { editSubObjectModalAction } from '@/store/actions/classAction';
 
 export default function SubObjectManagement(props: any) {
 
@@ -43,7 +43,10 @@ export default function SubObjectManagement(props: any) {
     // All class reducer states
     const classSelector = useSelector((state: any) => state.classReducer);
     const addNewObject = useSelector((state: any) => state.classReducer);
-    const allClassSelector = useSelector((state: any) => state.classReducer);
+
+    console.log({
+        "AMIT":classSelector?.setDataForSubObjectReducer?.parentClass
+    })
 
     const toggleFilterFunction = () => {
         setToggleArrow(!toggleArrow);
@@ -86,13 +89,6 @@ export default function SubObjectManagement(props: any) {
         fetchData();
         if (fetchData.length) return;
     }, [access_token])
-
-    // Close Success message after 5 second if true
-    useEffect(() => {
-        if (classSelector?.successMessageReducer === true) {
-            dispatch(successMessageAction(false))
-        }
-    }, [classSelector?.successMessageReducer === true])
 
 
     // convert selected id to classname
@@ -205,22 +201,17 @@ export default function SubObjectManagement(props: any) {
     const router = useRouter();
     // Save data for eopswatch section
     const eOpsWatchFunction = (item: any) => {
-        let obj = '';
-        if (props.defaultClass === "Manufacturing Plants") {
-            obj = item.ID
-        } else {
-            obj = item.VIN
-        }
         const eopsData = {
-            "class": props.defaultClass,
+            "class": classSelector?.setDataForSubObjectReducer?.parentClass,
             "subClass": chooseAsset,
-            "classObject": props.objectKey,
-            "object": obj
+            "object": item,
+            "classObject": props.objectKey
         }
+        setActions(false);
         dispatch(setDataForeOpsWatchAction(eopsData));
         setTimeout(() => {
             router.push('/dashboard/aimodaldetection');
-        }, 1000)
+        }, 50)
     }
 
 
@@ -245,13 +236,7 @@ export default function SubObjectManagement(props: any) {
                     "Content-Type": "application/json"
                 }
             }).then(function (response) {
-                // dispatch(successMessageAction(true))
-
-                let data = {
-                    "type": "deleteSubObject",
-                    "action": true
-                };
-                dispatch(successMessagAdvancedAction(data))
+                setDeleteMessage(true);
                 setTimeout(() => {
                     setDeleteMessage(false);
                 }, 4000)
@@ -267,11 +252,7 @@ export default function SubObjectManagement(props: any) {
         }
     }
 
-    // useEffect(() => {
-    //     fetchData();
-    // }, [deleteMessage === true])
-
-
+    // Success Mesage
     const handleAddSuccessMessage = (msg:any) => {
         setSuccessMessage(msg);
         setTimeout(()=>{
@@ -279,6 +260,7 @@ export default function SubObjectManagement(props: any) {
         }, 4000)
     }
 
+    // Edit Message
     const handleEditSuccessMessage = (msg:any) => {
         setEditMessage(msg);
         setTimeout(()=>{
@@ -458,11 +440,7 @@ export default function SubObjectManagement(props: any) {
                                             {
                                                 items?.ObjectValues?.map((item: any, i: any) => (
                                                     <td key={i}>
-                                                        <button
-                                                        // onClick={() => takeMeToSubObjectComponent(items.subObjectID)}
-                                                        >
-                                                            <span>{item.values ? item.values : '-'}</span>
-                                                        </button>
+                                                        <span>{item.values ? item.values : '-'}</span>
                                                     </td>
                                                 ))
                                             }
@@ -506,7 +484,7 @@ export default function SubObjectManagement(props: any) {
                                                                 <span>Delete</span>
                                                             </button>
                                                             <button
-                                                                onClick={() => eOpsWatchFunction(items?.tags)}
+                                                                onClick={() => eOpsWatchFunction(items?.id)}
                                                                 className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
                                                                 <span>eOps Watch</span>
                                                             </button>
