@@ -39,6 +39,7 @@ async function get(params: any) {
             include: [
                 {
                     model: db.Ticket,
+                    attributes: ['id', 'subject', 'priority', 'assignedTo', 'assignedBy', 'createdAt', 'updatedAt']
                 },
             ]
         })

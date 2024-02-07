@@ -34,10 +34,11 @@ export function Ticket(sequelize: any) {
             type: DataTypes.STRING,
             allowNull: false
         },
-        
+
         severity: {
             type: Severity,
-            allowNull: true
+            allowNull: true,
+            defaultValue: 'low'
         },
 
         isFlagged: {
