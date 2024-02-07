@@ -208,7 +208,7 @@ export default function TestModel() {
                         {/* Upload Button */}
                         <div className="flex items-end justify-end">
                             <button
-                                className="flex justify-center items-center text-black bg-yellow-951 rounded rounded-xl h-12 px-4 transition-opacity duration-300"
+                                className="flex justify-center items-center text-black bg-yellow-951 rounded-xl h-12 px-4 transition-opacity duration-300"
                                 onClick={() => setShowModal(true)}
                             >
                                 <Image
@@ -273,12 +273,12 @@ export default function TestModel() {
                                 {
                                     objdata[0]?.subData.map((item: any, k: any) => (
 
-                                        <table className={`table-auto min-w-full text-left ${styles.table} ${styles.table2} mb-10`}>
+                                        <table key={k} className={`table-auto min-w-full text-left ${styles.table} ${styles.table2} mb-10`}>
                                             <thead className="bg-gray-952 text-white rounded-xl h-10 text-[13px] font-light">
                                                 <tr>
                                                     {
                                                         Object.keys(item?.batteryInfo[0]).map((items: any, i: any) => (
-                                                            <th>{items}</th>
+                                                            <th key={i}>{items}</th>
                                                         ))
                                                     }
                                                     <th></th>
@@ -288,7 +288,7 @@ export default function TestModel() {
                                                 <tr>
                                                     {
                                                         Object.values(item?.batteryInfo[0]).map((items: any, i: any) => (
-                                                            <td>{items}</td>
+                                                            <td key={i}>{items}</td>
                                                         ))
                                                     }
                                                     <td className="w-[200px] relative">
@@ -305,7 +305,7 @@ export default function TestModel() {
                                                                         pid: item.ID
                                                                     }
                                                                 }}
-                                                                className="bg-yellow-951 rounded rounded-md flex justify-center items-center texxt-black font-semibold text-sm p-2 w-24"
+                                                                className="bg-yellow-951 rounded-md flex justify-center items-center texxt-black font-semibold text-sm p-2 w-24"
                                                             >
                                                                 <Image
                                                                     src="/img/carIcon.svg"
@@ -329,7 +329,7 @@ export default function TestModel() {
                             <div className="overflow-hidden border rounded-xl w-full mb-12 hidden">
                                 {
                                     batteryJSON[0].subData.map((item: any, k: any) => (
-                                        <table className={`table-auto min-w-full text-left mb-14 ${styles.table}`}>
+                                        <table key={k} className={`table-auto min-w-full text-left mb-14 ${styles.table}`}>
                                             <thead className="bg-gray-952 text-white rounded-xl h-10 text-sm font-light">
                                                 <tr>
                                                     {
@@ -414,13 +414,13 @@ export default function TestModel() {
                                                     <input
                                                         type="text"
                                                         placeholder="Enter API"
-                                                        className="border border-gray-951 h-12 text-md pl-2 pr-2 mt-2 w-full rounded rounded-xl"
+                                                        className="border border-gray-951 h-12 text-md pl-2 pr-2 mt-2 w-full rounded-xl"
                                                     />
                                                     <div className="mt-8 mb-8 text-black text-center font-semibold">Or</div>
                                                     <p className="text-black text-lg font-semibold">Upload images from your local</p>
                                                     <div className="relative mt-10 w-[500px] items-center justify-center mb-10">
                                                         <input type="file" name="uploadImages" id="uploadImages" className="scale-150 relative left-32 z-10 opacity-0" />
-                                                        <div className="text-white rounded rounded-xl shadow-xl flex justify-center items-center bg-gray-955  w-full h-16 flex-wrap flex-col absolute top-[-13px]">
+                                                        <div className="text-white rounded-xl shadow-xl flex justify-center items-center bg-gray-955  w-full h-16 flex-wrap flex-col absolute top-[-13px]">
                                                             <Image
                                                                 src="/img/upload-cloud.svg"
                                                                 alt="browse"
