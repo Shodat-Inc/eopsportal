@@ -279,8 +279,14 @@ async function relationship(db: any) {
     db.Comment.hasMany(db.Comment, {
       foreignKey: 'parentId', // Foreign key referencing the parent comment
       as: 'replies' // Alias for the self-association
-  });
-  
+    });
+
+    db.User.hasMany(db.PrimaryKey, { foreignKey: "userId" })
+    db.PrimaryKey.belongsTo(db.User, { foreignKey: "userId" })
+
+    db.classTag.hasMany(db.PrimaryKey, { foreignKey: "classTagId" })
+    db.PrimaryKey.belongsTo(db.classTag, { foreignKey: "classTagId" })
+
     // db.Attachment.belongsTo(db.Ticket, { foreignKey: "referenceTableId" })
     // db.Attachment.belongsTo(db.Comment, { foreignKey: "referenceTableId" })
 
