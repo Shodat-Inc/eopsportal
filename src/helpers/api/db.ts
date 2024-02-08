@@ -152,6 +152,7 @@ export async function initialize() {
       ticketComments: "Comment",
       commentAttachments: "CommentAttachment",
       ticketRaisedAlertLink: "Link",
+      primaryKey: "PrimaryKey"
     };
 
     if (true) {

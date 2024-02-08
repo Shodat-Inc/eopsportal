@@ -10,7 +10,7 @@ export const ticketRepo = {
     delete: _delete
 };
 
-async function create(params: any) {
+async function create(params: any, transaction: any) {
     try {
         // Log information about the creation of the POST API for a ticket
         loggerInfo.info("Creating POST API of ticket");
@@ -29,35 +29,35 @@ async function create(params: any) {
         const { raisedAlertId, ...ticketParams } = params;
 
         // Create a new Ticket instance with the extracted ticketParams
-        const newTicket = new db.Ticket(ticketParams);
+        const newTicket = new db.Ticket(ticketParams, { transaction });
 
         // Save the new ticket in the database
-        const savedTicket = await newTicket.save();
+        const savedTicket = await newTicket.save({ transaction });
 
         // Create or update the LinkTable with the relationship between the ticket and raisedAlertId
         const linkData = {
             raisedAlertId: params.raisedAlertId,
             ticketId: savedTicket.dataValues.id
         };
-        const savedLink = await db.Link.create(linkData);
+        const savedLink = await db.Link.create(linkData, { transaction });
 
         // Update ticketRaisedAlertLinkId in the Ticket table with the ID of the created Link
         await db.Ticket.update(
             { ticketRaisedAlertLinkId: savedLink.id },
-            { where: { id: savedTicket.dataValues.id } }
+            { where: { id: savedTicket.dataValues.id }, transaction }
         );
 
         // Update ticketRaisedAlertLinkId in the RaisedAlert table with the ID of the created Link
         await db.RaisedAlert.update(
             { ticketRaisedAlertLinkId: savedLink.id },
-            { where: { id: params.raisedAlertId } }
+            { where: { id: params.raisedAlertId }, transaction }
         );
 
         // Return success response along with the created Ticket and Link
         return sendResponseData(true, "Ticket and Link created Successfully", {
             ticket: savedTicket,
             link: savedLink
-        });
+        },);
 
     } catch (error) {
         // Log an error if there's an issue during the ticket creation process
@@ -131,15 +131,18 @@ async function getTicketByAlertId(params: any) {
     }
 }
 
-async function update(params: any, reqData: any) {
+async function update(params: any, reqData: any, transaction: any) {
     try {
         // Log information about the ticket update
         loggerInfo.info("Updating ticket");
 
         // Find the Link associated with the provided raisedAlertId
         const link = await db.Link.findOne({
-            where: { raisedAlertId: reqData.raisedAlertId }
-        });
+            where: {
+                raisedAlertId: reqData.raisedAlertId,
+                ticketId: reqData.ticketId
+            }
+        }, { transaction });
 
         // Check if the Link exists
         if (!link) {
@@ -149,7 +152,7 @@ async function update(params: any, reqData: any) {
         // Find the Ticket associated with the Link
         const data = await db.Ticket.findOne({
             where: { ticketRaisedAlertLinkId: link.dataValues.id },
-        });
+        }, { transaction });
 
         // Check if the Ticket data exists
         if (!data) {
@@ -192,7 +195,7 @@ async function update(params: any, reqData: any) {
         });
 
         // Save the updated Ticket data
-        const response = await data.save();
+        const response = await data.save({ transaction });
 
         // Return success response with the updated data
         return sendResponseData(true, "Data Updated Successfully", response);

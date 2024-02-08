@@ -139,6 +139,7 @@ export const createClassValidation = (data) => {
       tagName: Joi.string().required(),
       dataTypeId: Joi.number().required(),
     }),
+    primaryKeys: Joi.array().items(Joi.string())
   });
 
   return schema.validate(data);
