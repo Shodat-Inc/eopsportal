@@ -269,7 +269,7 @@ export default function SubObjectManagement(props: any) {
             "subClass": chooseAsset,
             "classObject": props.objectKey,
             "object": obj,
-            "datafor":"eopstrace",
+            "datafor":"eopswatch",
             "type":type
         }
         dispatch(setDataForeOpsWatchAction(eopsData));

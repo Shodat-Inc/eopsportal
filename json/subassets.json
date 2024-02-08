@@ -219,48 +219,5 @@
             "string",
             "string"
         ]
-    },
-    {
-        "assetID": "1234567890",
-        "assetName": "Test",
-        "slug": "Test",
-        "parentAssetID": "Manufacturing Plants",
-        "parentAssetName": "Manufacturing Plants",
-        "tags": [
-            "ID",
-            "PlantID",
-            "Description",
-            "State"
-        ],
-        "parentJoinKey": [
-            "PlantID"
-        ],
-        "dateModified": "29-05-2023",
-        "dateCreated": "26-05-2023",
-        "geoScopeLink": "",
-        "tagsWithDataType": [
-            {
-                "tagName": "ID",
-                "dataType": "string"
-            },
-            {
-                "tagName": "PlantID",
-                "dataType": "boolean"
-            },
-            {
-                "tagName": "Description",
-                "dataType": "string"
-            },
-            {
-                "tagName": "State",
-                "dataType": "string"
-            }
-        ],
-        "assetTypes": [
-            "string",
-            "boolean",
-            "string",
-            "string"
-        ]
     }
 ]
