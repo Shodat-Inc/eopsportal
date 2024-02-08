@@ -2,9 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from '../../../styles/Common.module.css';
 import Image from "next/image";
-import CustomDrop from '@/common/customdrop';
-import axios from 'axios';
-import Link from 'next/dist/client/link';
 import Router from 'next/router'
 import { useRouter } from 'next/router'
 import { dataForModalAction } from '@/store/actions/aimodaldetectionAction';
@@ -28,8 +25,6 @@ export default function EopsWatch(props: any) {
     //     "__PROPS_EOPSWATCH": props
     // })
     const dispatch = useDispatch<any>()
-    const router = useRouter();
-    const routerParams = router.query;
     const [data, setData] = useState([] as any);
     const [singleModel, setSingleModel] = useState([] as any);
     const [selectedModel, setSelectedModel] = useState('');
@@ -90,17 +85,17 @@ export default function EopsWatch(props: any) {
             "Model": selectedModel
         }
 
-        // console.log({
-        //     sendData: sendData,
-        //     selectedModel: selectedModel,
-        //     nextData: nextData
-        // })
+        console.log({
+            sendData: sendData,
+            selectedModel: selectedModel,
+            nextData: nextData
+        })
 
         dispatch(dataForModalAction(nextData))
 
         setTimeout(() => {
             Router.push({
-                pathname: '/dashboard/eopswatch/preview',
+                pathname: '/dashboard/aimodaldetection/preview',
             })
         }, 50)
     }

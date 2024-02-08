@@ -41,6 +41,7 @@ export default function AiModelDetection() {
     const [showSubObjTable, setShowSubObjTable] = useState(false);
     const [tableHeader, setTableHeader] = useState({} as any);
     const [objectData, setObjectData] = useState([] as any);
+    const [individualObjectID, setIndividualObjectID] = useState(0)
 
     const [tableSubObjectHeader, setSubObjectTableHeader] = useState({} as any);
     const [subObjectData, setSubObjectData] = useState([] as any);
@@ -274,8 +275,8 @@ export default function AiModelDetection() {
         "class":chooseClass,
         "subClass":chooseSubClass,
         "object":chooseObject,
-        "subObject":chooseSubObject,
-        "model":''
+        "subObject":individualObjectID,
+        "model":'',
     }
 
     console.log({
@@ -467,12 +468,17 @@ export default function AiModelDetection() {
         }
     }
     const selectSubClassObjectItemFunction = (item: any, id: any) => {
+        console.log({
+            "__ITEM":item, 
+            "__ID":id
+        })
         setShowSubClass(false);
         setChooseSubObject(item)
         setToggleSubObject(false)
         setShowSubObjTable(true);
 
-        getIndividualSubObject(id)
+        getIndividualSubObject(id);
+        setIndividualObjectID(id)
 
         let type = "";
         if (chooseClass === "Manufacturing Plants") {
