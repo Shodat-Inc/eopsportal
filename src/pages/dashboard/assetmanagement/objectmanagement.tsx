@@ -164,10 +164,15 @@ export default function ObjectManagement(props: any) {
             setSearch('');
             return;
         }
+        let classObjKey = chooseAsset === 'Manufacturing Plants' ? 'PlantID' : 'VIN';
+        console.log({
+            SearchString:   e.target.value,
+            objectData:objectData
+        })
         if (objectData && objectData.length > 0) {
             const filtered = objectData.filter((item: any) => {
-                if (item.hasOwnProperty("Name")) {
-                    if (item.Name.toString().toLowerCase().includes(e.target.value.toString().toLowerCase())) {
+                if (item.hasOwnProperty("subObjectName")) {
+                    if (item.subObjectName.toString().toLowerCase().includes(e.target.value.toString().toLowerCase())) {
                         return item;
                     }
                 }
@@ -281,7 +286,7 @@ export default function ObjectManagement(props: any) {
                         />
                         <input
                             type="text"
-                            placeholder={`Search`}
+                            placeholder={`Search by Name or Assembly Plant`}
                             id="searchobjects"
                             name="searchobjects"
                             className="border border-gray-969 rounded-lg h-[44px] w-[310px] pl-10 pr-2"
