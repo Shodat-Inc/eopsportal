@@ -152,6 +152,8 @@ export const createObjectValidation = (data) => {
       classTagId: Joi.number().required(),
       value: Joi.string().required(),
     }),
+    superParentId: Joi.number(),
+    parentId: Joi.number()
   });
 
   return schema.validate(data);
@@ -166,6 +168,7 @@ export const updateClassValidation = (data) => {
       tagName: Joi.string().required(),
       dataTypeId: Joi.number().required(),
     }),
+    parentJoinKeysUpdate: Joi.array().items(Joi.number())
   });
 
   return schema.validate(data);
@@ -176,7 +179,7 @@ export const updateObjectValidation = (data) => {
     objectId: Joi.number().required(),
     deleteValueId: Joi.array().items(Joi.number()),
     updatedValues: Joi.array().items({
-      id: Joi.number().required(),
+      classTagId: Joi.number().required(),
       values: Joi.string().required(),
     }),
   });

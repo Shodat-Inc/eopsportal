@@ -63,40 +63,94 @@ async function create(params: any, transaction: any) {
  * @param {Object} req - The request object containing the ID.
  * @returns {Array} - An array of objects, class tags, and values or an error response.
  */
-async function get(id: any) {
+async function get(params: any) {
   // Log the initiation of fetching Objects, ClassTags, and ObjectValues data.
   loggerInfo.info("Fetching Objects, ClassTags, and ObjectValues data");
 
-  // Validate that an ID is provided.
-  if (!id) {
-    loggerError.error("NO Id is provided");
-    return sendResponseData(false, message.error.noID, error);
-  }
-
   try {
-    const result = await db.object.findAll({
-      include: [
-        {
-          model: db.AddClasses,
-          where: { id }, // This will filter by classId
-          attributes: ["id", "superParentId", "parentId", "serialId"],
-          include: [
-            {
-              model: db.classTag,
-              attributes: ["tagName"],
-            },
-            {
-              model: db.parentJoinKey,
-              attributes: ["id", "parentTagId", "createdAt"],
-            },
-          ],
+    let result;
+    if (params.query.id) {
+      result = await db.object.findAll({
+        include: [
+          {
+            model: db.AddClasses,
+            where: { id: params.query.id }, // This will filter by classId
+            attributes: ["id", "superParentId", "parentId", "serialId"],
+            include: [
+              {
+                model: db.classTag,
+                attributes: ["tagName"],
+              },
+              {
+                model: db.parentJoinKey,
+                attributes: ["id", "parentTagId", "createdAt"],
+              },
+            ],
+          },
+          {
+            model: db.AddValues,
+            attributes: ["id", "values", "createdAt"],
+          },
+        ],
+      });
+    }
+    else if (params.query.keyword) {
+      const data = await db.AddValues.findAll({
+        where: { values: params.query.keyword },
+        required: true,
+        include: [
+          {
+            model: db.classTag,
+            required: true,
+            attributes: ['tagName', 'dataTypeId', 'classId'],
+            include: [
+              {
+                model: db.AddClasses,
+                required: true,
+                // attributes: [],
+                where: { userId: params.userId }
+              },
+            ],
+          }]
+      })
+      const modifiedData = data.map((item: {
+        values: any;
+        classTagId: any;
+        objectId: any;
+        createdAt: any;
+        updatedAt: any;
+        id: any; ClassTag: { Class: { id: any; serialId: any; className: any; userId: any; createdAt: any; updatedAt: any; }; tagName: any; dataTypeId: any; classId: any; };
+      }) => ({
+
+        Class: {
+          id: item.ClassTag.Class.id,
+          serialId: item.ClassTag.Class.serialId,
+          className: item.ClassTag.Class.className,
+          userId: item.ClassTag.Class.userId,
+          createdAt: item.ClassTag.Class.createdAt,
+          updatedAt: item.ClassTag.Class.updatedAt,
+          ClassTags: [{
+            tagName: item.ClassTag.tagName,
+            dataTypeId: item.ClassTag.dataTypeId,
+            classId: item.ClassTag.classId,
+          }],
         },
-        {
-          model: db.AddValues,
-          attributes: ["id", "values", "createdAt"],
-        },
-      ],
-    });
+        ObjectValues: [{
+          id: item.id,
+          values: item.values,
+          classTagId: item.classTagId,
+          objectId: item.objectId,
+          createdAt: item.createdAt,
+          updatedAt: item.updatedAt,
+        }]
+      }));
+
+      if (!data.length) {
+        return sendResponseData(false, "Data Not Found", {})
+      }
+      return sendResponseData(true, "Object with its tag value fetched successfully", modifiedData)
+    }
+
     const data: any = {};
     for (let i of result) {
       const pjk = i.Class.ParentJoinKeys;
@@ -166,7 +220,7 @@ async function getObjectById(params: any) {
         },
       ],
     });
-    
+
     const data: any = {};
     for (let i of result) {
       const pjk = i.Class.ParentJoinKeys;

@@ -13,9 +13,9 @@ export default apiHandler({
  */
 async function allhandler(req: any, res: any) {
   try {
-    const id = req.query.id;
+    const data = { query: req.query, userId: req.auth.sub };
     // Retrieve objects using the objectRepo and the provided request data.
-    const objects = await objectRepo.get(id);
+    const objects = await objectRepo.get(data);
 
     // Check if the retrieved objects are empty or if the response is an empty array.
     if (!objects || (Array.isArray(objects) && objects.length === 0)) {

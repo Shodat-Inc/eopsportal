@@ -1,4 +1,4 @@
-import { apiHandler, classRepo, classTagRepo } from "@/helpers/api";
+import { apiHandler, classRepo, classTagRepo, db } from "@/helpers/api";
 import sendResponseData from "@/helpers/constant";
 import { loggerError, loggerInfo } from "@/logger";
 import { updateClassValidation } from "../../../validateSchema";
@@ -36,35 +36,52 @@ async function updateClass(req: any, res: any) {
   const { id, className, ...tagData } = validation.value;
 
   try {
-    // Update class name if provided.
-    if (className) {
-      await classRepo.update({ id, className });
-    }
+    await db.sequelize.transaction(async (transaction: any) => {
 
-    // Process tags - delete and add.
-    const { deleteTagId, addTag } = tagData;
+      // Update class name if provided.
+      if (className) {
+        await classRepo.update({ id, className });
+      }
 
-    // Delete tags with specified IDs.
-    if (deleteTagId) {
-      await classTagRepo.delete(deleteTagId);
-    }
+      // Process tags - delete and add.
+      const { deleteTagId, addTag, parentJoinKeysUpdate } = tagData;
 
-    // Add new tags if provided.
-    if (addTag) {
-      // Set classId for each new tag.
-      addTag.forEach((ele: any) => {
-        ele.classId = id;
-      });
+      // Delete tags with specified IDs.
+      if (deleteTagId) {
+        await classTagRepo.delete(deleteTagId);
+      }
 
-      // Bulk create new tags.
-      await classTagRepo.bulkCreate(addTag, id);
-    }
+      // Add new tags if provided.
+      if (addTag) {
+        // Set classId for each new tag.
+        addTag.forEach((ele: any) => {
+          ele.classId = id;
+        });
 
-    // Send a success response.
-    return res
-      .status(200)
-      .send(sendResponseData(true, "Class updated successfully", {}));
-  } catch (error: any) {
+        // Bulk create new tags.
+        await classTagRepo.bulkCreate(addTag, id, transaction);
+      }
+
+      // to update parentJoinKeys
+      if (parentJoinKeysUpdate) {
+        await db.parentJoinKey.destroy({
+          where: { classId: id }
+        });
+        for (const pjk of parentJoinKeysUpdate) {
+          await db.parentJoinKey.create({
+            classId: id,
+            parentTagId: pjk
+          });
+        }
+      }
+
+      // Send a success response.
+      return res
+        .status(200)
+        .send(sendResponseData(true, "Class updated successfully", {}));
+    })
+  }
+  catch (error: any) {
     // Log an error if update fails.
     loggerError.error("Cannot update class", error);
 

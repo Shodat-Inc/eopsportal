@@ -69,11 +69,11 @@ async function getClassData(params: any) {
         userId: params.id,
         parentId: null,
       },
-      attributes: ["id", "className", "createdAt", "serialId"],
+      attributes: ["id", "className", "serialId", "createdAt", "updatedAt"],
       include: [
         {
           model: db.classTag,
-          attributes: ["id", "tagName", "createdAt", "dataTypeId"],
+          attributes: ["id", "tagName", "dataTypeId", "createdAt", "updatedAt"],
           required: true, // Makes it an INNER JOIN
           include: [
             {
@@ -123,11 +123,11 @@ async function getClassDataByID(params: any) {
         id: params.id,
         parentId: null,
       },
-      attributes: ["id", "className", "createdAt", "serialId"],
+      attributes: ["id", "className", "serialId", "createdAt", "updatedAt"],
       include: [
         {
           model: db.classTag,
-          attributes: ["id", "tagName", "createdAt", "dataTypeId"],
+          attributes: ["id", "tagName", "dataTypeId", "createdAt", "updatedAt"],
           required: true, // Makes it an INNER JOIN
           include: [
             {
@@ -172,11 +172,11 @@ async function getSubClass(param: any) {
         userId: param.id,
         parentId: param.query.id,
       },
-      attributes: ["id", "className", "createdAt", "serialId"],
+      attributes: ["id", "className", "serialId", "createdAt", "updatedAt"],
       include: [
         {
           model: db.classTag,
-          attributes: ["id", "tagName", "createdAt", "dataTypeId"],
+          attributes: ["id", "tagName", "dataTypeId", "createdAt", "updatedAt"],
           required: true, // Makes it an INNER JOIN
           include: [
             {
@@ -233,11 +233,11 @@ async function getSubClassByID(param: any) {
         id: param.query.classId,
         parentId: param.query.parentId,
       },
-      attributes: ["id", "className", "createdAt", "serialId"],
+      attributes: ["id", "className", "serialId", "createdAt", "updatedAt"],
       include: [
         {
           model: db.classTag,
-          attributes: ["id", "tagName", "createdAt", "dataTypeId"],
+          attributes: ["id", "tagName", "dataTypeId", "createdAt", "updatedAt"],
           required: true, // Makes it an INNER JOIN
           include: [
             {
@@ -300,7 +300,11 @@ async function update(params: any) {
       throw 'Class Name"' + params.className + '" is already taken';
     }
     classes.className = params.className;
-    return await classes.save();
+    // Set updatedAt to the current date/time
+    classes.updatedAt = new Date();
+
+    const response = await classes.save();
+    return sendResponseData(true, "Class Updated Successfully", response)
   } catch (error: any) {
     loggerError.error("Error in Updating class", error);
     return sendResponseData(false, message.error.error, error);

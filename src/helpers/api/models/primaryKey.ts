@@ -18,6 +18,15 @@ export function PrimaryKey(sequelize: any) {
             allowNull: true
         },
 
+        classId: {
+            type: DataTypes.INTEGER,
+            references: {
+                model: "Classes",
+                id: "id",
+            },
+            allowNull: true
+        },
+
         userId: {
             type: DataTypes.INTEGER,
             references: {
