@@ -69,6 +69,10 @@ async function get(params: any) {
 
   try {
     let result;
+    let obj = {};
+    if (params.query.parentJoinKey) {
+      obj = { id: params.query.parentJoinKey }
+    }
     if (params.query.id) {
       result = await db.object.findAll({
         include: [
@@ -83,6 +87,7 @@ async function get(params: any) {
               },
               {
                 model: db.parentJoinKey,
+                where: obj, // This will filter by classId
                 attributes: ["id", "parentTagId", "createdAt"],
               },
             ],
@@ -150,6 +155,7 @@ async function get(params: any) {
       }
       return sendResponseData(true, "Object with its tag value fetched successfully", modifiedData)
     }
+
 
     const data: any = {};
     for (let i of result) {
