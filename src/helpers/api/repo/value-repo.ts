@@ -89,7 +89,7 @@ async function update(params: any) {
     for (let x of params) {
       // Find the object value in the database by classTagId
       const valueData = await db.AddValues.findOne({
-        where: { id: x.id },
+        where: { id: x.classTagId },
       });
 
       // Check if the object value exists
@@ -99,10 +99,11 @@ async function update(params: any) {
 
       // Update the object value with the provided values, if available
       valueData.values = x.values || valueData.values;
+      valueData.updatedAt = new Date();
 
       // Save the updated object value
       valueData.save();
-      updatedData[`objectValueId ${x.id}`] = valueData.values;
+      updatedData[`objectValueId ${x.classTagId}`] = valueData.values;
     }
 
     // Return a successful response after updating all object values

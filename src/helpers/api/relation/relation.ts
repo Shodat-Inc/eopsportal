@@ -287,6 +287,10 @@ async function relationship(db: any) {
     db.classTag.hasMany(db.PrimaryKey, { foreignKey: "classTagId" })
     db.PrimaryKey.belongsTo(db.classTag, { foreignKey: "classTagId" })
 
+    db.AddClasses.hasMany(db.PrimaryKey, { foreignKey: "classId" });
+    db.PrimaryKey.belongsTo(db.AddClasses, { foreignKey: "classId" })
+
+
     // db.Attachment.belongsTo(db.Ticket, { foreignKey: "referenceTableId" })
     // db.Attachment.belongsTo(db.Comment, { foreignKey: "referenceTableId" })
 
