@@ -326,6 +326,7 @@ export default function SubClassManagement(props: any) {
                                 <th>
                                     {subClassData[0]?.ParentJoinKeys[0]?.tagname} ({showClassNameFromID(props?.selectedParentClass)})</th>
                                 <th>Date of creation</th>
+                                <th>Last Modified</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -358,6 +359,7 @@ export default function SubClassManagement(props: any) {
                                             }
                                         </td>
                                         <td>{moment(item.createdAt).format('DD-MM-YYYY')}</td>
+                                        <td>{moment(item.updatedAt).format('DD-MM-YYYY')}</td>
                                         <td className='relative'>
                                             <div className="flex justify-start items-center relative">
                                                 {
