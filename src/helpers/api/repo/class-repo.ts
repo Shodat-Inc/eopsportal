@@ -5,6 +5,7 @@ import message from "@/util/responseMessage";
 import { Sequelize } from "sequelize";
 import { classTagRepo } from "./classTag-repo";
 import { generateRandomAlphaNumeric } from "../../../util/helper"
+import { paginateQuery } from "../constant/pagination";
 
 
 // Repository for Class-related operations.
@@ -59,14 +60,18 @@ async function create(params: any, transaction: any) {
  * @param {Object} req - The request object containing the user ID.
  * @returns {Array} - An array of classes and associated tags or an error response.
  */
+
 async function getClassData(params: any) {
   try {
     // Log the initiation of fetching classes and tags.
     loggerInfo.info("Fetching all class and classTags data");
 
-    const result = await db.AddClasses.findAll({
+    const page = params.query.page || 1;
+    const pageSize = params.query.pageSize || 10;
+
+    const result = await paginateQuery(db.AddClasses, page, pageSize, {
       where: {
-        userId: params.id,
+        userId: params.userId,
         parentId: null,
       },
       attributes: ["id", "className", "serialId", "createdAt", "updatedAt"],
@@ -74,7 +79,7 @@ async function getClassData(params: any) {
         {
           model: db.classTag,
           attributes: ["id", "tagName", "dataTypeId", "createdAt", "updatedAt"],
-          required: true, // Makes it an INNER JOIN
+          // required: true, // Makes it an INNER JOIN
           include: [
             {
               model: db.tagDataType,
@@ -88,13 +93,11 @@ async function getClassData(params: any) {
         },
       ],
     });
-    if (!result.length) {
+
+    if (!result.rows.length) {
       return sendResponseData(false, message.error.classData, []);
     }
-    // const response = result.map((item: any, index: any) => ({
-    //   serialNumber: index + 1,
-    //   ...item.get(), // Convert Sequelize instance to plain JS object
-    // }));
+
     return sendResponseData(true, message.success.fetchClass, result);
   } catch (error) {
     // Log the error if fetching classes and tags fails.
@@ -118,7 +121,11 @@ async function getClassDataByID(params: any) {
     if (!params.id) {
       throw "NO ID exist";
     }
-    const result = await db.AddClasses.findAll({
+
+    const page = params.page || 1; // Default to page 1 if not provided
+    const pageSize = params.pageSize || 10; // Default page size to 10 if not provided
+
+    const result = await paginateQuery(db.AddClasses, page, pageSize, {
       where: {
         id: params.id,
         parentId: null,
@@ -128,7 +135,7 @@ async function getClassDataByID(params: any) {
         {
           model: db.classTag,
           attributes: ["id", "tagName", "dataTypeId", "createdAt", "updatedAt"],
-          required: true, // Makes it an INNER JOIN
+          // required: true, // Makes it an INNER JOIN
           include: [
             {
               model: db.tagDataType,
@@ -142,14 +149,12 @@ async function getClassDataByID(params: any) {
         },
       ],
     });
-    if (!result.length) {
+
+    if (!result.rows.length) {
       return sendResponseData(false, message.error.noDataFound, []);
     }
 
-    // const response = result.map((item: any, index: any) => ({
-    //   serialNumber: index + 1,
-    //   ...item.get(), // Convert Sequelize instance to plain JS object
-    // }));
+    // Here, `result` contains paginated data
     return sendResponseData(true, message.success.fetchClass, result);
   } catch (error) {
     // Log the error if fetching classes and tags fails.
@@ -157,6 +162,7 @@ async function getClassDataByID(params: any) {
     return sendResponseData(false, message.error.error, error);
   }
 }
+
 /**
  * Fetch all subclasses and associated tags for a given user based on a parent class ID.
  *
@@ -167,7 +173,12 @@ async function getSubClass(param: any) {
   try {
     // Log the initiation of fetching subclasses and tags.
     loggerInfo.info("Fetching all subclass and subclassTags data");
-    const result = await db.AddClasses.findAll({
+
+    const page = param.query.page || 1; // Default to page 1 if not provided
+    const pageSize = param.query.pageSize || 10; // Default page size to 10 if not provided
+
+    const result = await paginateQuery(db.AddClasses, page, pageSize, {
+      // const result = await db.AddClasses.findAll({
       where: {
         userId: param.id,
         parentId: param.query.id,
@@ -177,7 +188,7 @@ async function getSubClass(param: any) {
         {
           model: db.classTag,
           attributes: ["id", "tagName", "dataTypeId", "createdAt", "updatedAt"],
-          required: true, // Makes it an INNER JOIN
+          // required: true, // Makes it an INNER JOIN
           include: [
             {
               model: db.tagDataType,
@@ -196,11 +207,11 @@ async function getSubClass(param: any) {
         },
       ],
     });
-    if (!result.length) {
+    if (!result.rows.length) {
       return sendResponseData(false, message.error.noDataFound, []);
     }
     // Get Parent Join Tag Name
-    for (let x of result) {
+    for (let x of result.rows) {
       let parentKey = x.ParentJoinKeys;
       for (let y of parentKey) {
         let tagQuery = await classTagRepo.getParentJoinTags(y.parentTagId);
@@ -211,6 +222,7 @@ async function getSubClass(param: any) {
     //   S_No: index + 1,
     //   ...item.get(),
     // }));
+
     return sendResponseData(true, message.success.fetchClass, result);
   } catch (error) {
     // Log the error if fetching subclasses and tags fails.
@@ -228,7 +240,11 @@ async function getSubClassByID(param: any) {
   try {
     // Log the initiation of fetching subclasses and tags.
     loggerInfo.info("Fetching subclass and subclassTags data by ID");
-    const result = await db.AddClasses.findAll({
+
+    const page = param.query.page || 1; // Default to page 1 if not provided
+    const pageSize = param.query.pageSize || 10; // Default page size to 10 if not provided
+
+    const result = await paginateQuery(db.AddClasses, page, pageSize, {
       where: {
         id: param.query.classId,
         parentId: param.query.parentId,
@@ -238,7 +254,7 @@ async function getSubClassByID(param: any) {
         {
           model: db.classTag,
           attributes: ["id", "tagName", "dataTypeId", "createdAt", "updatedAt"],
-          required: true, // Makes it an INNER JOIN
+          // required: true, // Makes it an INNER JOIN
           include: [
             {
               model: db.tagDataType,
@@ -257,11 +273,11 @@ async function getSubClassByID(param: any) {
         },
       ],
     });
-    if (!result.length) {
+    if (!result.rows.length) {
       return sendResponseData(false, "No data found", []);
     }
     // Get Parent Join Tag Name
-    for (let x of result) {
+    for (let x of result.rows) {
       let parentKey = x.ParentJoinKeys;
       for (let y of parentKey) {
         let tagQuery = await classTagRepo.getParentJoinTags(y.parentTagId);
@@ -272,6 +288,7 @@ async function getSubClassByID(param: any) {
     //   S_No: index + 1,
     //   ...item.get(),
     // }));
+
     return sendResponseData(true, message.success.fetchSubClass, result);
   } catch (error) {
     // Log the error if fetching subclasses and tags fails.
