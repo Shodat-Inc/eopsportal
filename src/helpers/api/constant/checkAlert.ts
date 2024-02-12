@@ -1,81 +1,59 @@
 import sendResponseData from "@/helpers/constant";
-import { db } from "../db";
-import { Op, Sequelize } from "sequelize";
-import checkRange from "./checkRange";
+import { getAlertData, getImageData } from "./extractData";
+import checkToNotify from "./checkToNotify";
 
-export async function checkAlert(
-  params: any,
-  userId: number,
-  result: any,
-  highestProbability: number
-) {
-  const data = await db.Image.findAll({
-    where: { url: params.image_url },
-    include: [
-      {
-        model: db.ModelData,
-        attributes: ["userId", "modelId", "classId", "objectId"],
-      },
-    ],
-  });
+export default async function checkAlert(AlertParams: {
+  userId: number;
+  response: any;
+}) {
+  try {
+    const tag = AlertParams.response.dataValues.tag;
 
-  const formattedData = data.map(
-    (item: { ModelDatum: { dataValues: any } }) => {
-      const modelDatum = item.ModelDatum.dataValues;
-      return {
-        userId: modelDatum.userId,
-        modelId: modelDatum.modelId,
-        classId: modelDatum.classId,
-        objectId: modelDatum.objectId,
-      };
+    const modelObjectImageId =
+      AlertParams.response.dataValues.modelObjectImageId;
+
+    const apiResponse = AlertParams.response;
+
+    const userId = AlertParams.userId;
+
+    const data = await getImageData(modelObjectImageId);
+
+
+    if (!data) {
+      return sendResponseData(false, "Image Data not found ", {});
     }
-  );
-  const check = await db.Alert.findAll({
-    where: {
-      isEnabled: 1,
-      userId: userId,
-    },
-    attributes: ["id", "thresholdValue", "modelObjectImageId", "rangeValue"],
-    raw: true,
-  });
-  if (!check) {
-    return sendResponseData(
-      false,
-      "Alert not found or isEnabled is not true for the given image id.",
-      {}
-    );
-  }
 
-  //Calculation To Send Alert
+    const extData = data[0].dataValues.ModelDatum.dataValues;
 
-  let flag = false;
-  for (let i of check) {
-    const rangeString = checkRange(i.rangeValue);
-    if (rangeString) {
-      if (highestProbability > i.thresholdValue) {
-        console.log("notification Send", i.thresholdValue);
-      }
-    } else {
-      if (highestProbability < i.thresholdValue) {
-        console.log("Less than Notification send", i.thresholdValue);
-      }
+    const formattedData = {
+      userId: extData.userId,
+      modelId: extData.modelId,
+      classId: extData.classId,
+      objectId: extData.objectId,
+    };
+
+    const alertData = await getAlertData(tag, userId);
+
+    if (!alertData) {
+      return sendResponseData(
+        false,
+        "Alert not found or isEnabled is not true for the given user.",
+        {}
+      );
     }
+
+    const notificationParams = {
+      alertData,
+      apiResponse,
+      tag,
+      imageData: formattedData,
+    };
+
+    const notification = await checkToNotify(notificationParams);
+
+    return notification;
+  } catch (error) {
+    console.log(error);
+    return sendResponseData(false, "Error In Sending Alert", error);
   }
-
-  // Check if the highest probability is greater than the threshold and no entry has been created yet
-  //   if (highestProbability >= thresholdValue) {
-  //     const raisedAlertRecord = {
-  //       crackAlertId: id,
-  //       modelObjectImageId: params.imageid,
-  //       //   tags: tag,
-  //       userId: formattedData[0].userId,
-  //       modelId: formattedData[0].modelId,
-  //       classId: formattedData[0].classId,
-  //       objectId: formattedData[0].objectId,
-  //       triggeredProbability: highestProbability,
-  //     };
-
-  //     // Save the record if it hasn't been created yet
-  //     await db.RaisedAlert.create(raisedAlertRecord);
-  //   }
 }

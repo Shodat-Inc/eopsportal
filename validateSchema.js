@@ -139,6 +139,7 @@ export const createClassValidation = (data) => {
       tagName: Joi.string().required(),
       dataTypeId: Joi.number().required(),
     }),
+    primaryKeys: Joi.array().items(Joi.string())
   });
 
   return schema.validate(data);
@@ -151,6 +152,8 @@ export const createObjectValidation = (data) => {
       classTagId: Joi.number().required(),
       value: Joi.string().required(),
     }),
+    superParentId: Joi.number(),
+    parentId: Joi.number()
   });
 
   return schema.validate(data);
@@ -165,6 +168,7 @@ export const updateClassValidation = (data) => {
       tagName: Joi.string().required(),
       dataTypeId: Joi.number().required(),
     }),
+    parentJoinKeysUpdate: Joi.array().items(Joi.number())
   });
 
   return schema.validate(data);
@@ -175,7 +179,7 @@ export const updateObjectValidation = (data) => {
     objectId: Joi.number().required(),
     deleteValueId: Joi.array().items(Joi.number()),
     updatedValues: Joi.array().items({
-      id: Joi.number().required(),
+      classTagId: Joi.number().required(),
       values: Joi.string().required(),
     }),
   });
@@ -374,10 +378,70 @@ export const createTicketValidation = (data) => {
     subject: Joi.string(),
     status: Joi.string(),
     priority: Joi.string(),
-    currentlyAssignedTo: Joi.string(),
+    assignedTo: Joi.string(),
     assignedBy: Joi.string(),
-    comments: Joi.string(),
-    raisedAlertId: Joi.number()
+    severity: Joi.string(),
+    isFlagged: Joi.boolean(),
+    blockedBy: Joi.string(),
+    linkedTicket: Joi.array().items(Joi.string()),
+    completionDate: Joi.date().iso().required(),
+    raisedAlertId: Joi.number().required()
+  });
+  return schema.validate(data)
+}
+
+export const updateTicketValidation = (data) => {
+  const schema = Joi.object({
+    subject: Joi.string(),
+    status: Joi.string(),
+    priority: Joi.string(),
+    assignedTo: Joi.string(),
+    assignedBy: Joi.string(),
+    severity: Joi.string(),
+    isFlagged: Joi.boolean(),
+    blockedBy: Joi.string(),
+    linkedTicket: Joi.array().items(Joi.string()),
+    completionDate: Joi.date().iso(),
+  });
+  return schema.validate(data)
+}
+
+export const createCommentValidation = (data) => {
+  const schema = Joi.object({
+    comment: Joi.string(),
+    parentId: Joi.number(),
+    ticketId: Joi.number()
+  });
+  return schema.validate(data)
+}
+
+export const updateCommentValidation = (data) => {
+  const schema = Joi.object({
+    comment: Joi.string(),
+    parentId: Joi.number(),
+    ticketId: Joi.number()
+  });
+  return schema.validate(data)
+}
+
+export const createAttachmentValidation = (data) => {
+  const schema = Joi.object({
+    fileName: Joi.string(),
+    fileUrl: Joi.string(),
+    fileType: Joi.string(),
+    ticketId: Joi.number(),
+    commentId: Joi.number()
+  });
+  return schema.validate(data)
+}
+
+export const updateAttachmentValidation = (data) => {
+  const schema = Joi.object({
+    fileName: Joi.string(),
+    fileUrl: Joi.string(),
+    fileType: Joi.string(),
+    ticketId: Joi.number(),
+    commentId: Joi.number()
   });
   return schema.validate(data)
 }

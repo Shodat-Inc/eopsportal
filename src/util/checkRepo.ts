@@ -4,18 +4,13 @@ export default function repoName(inputData: string, auth: any) {
   return new Promise(async (resolve, reject) => {
     try {
       let name: string = "";
-      console.log(inputData,"===inputData")
-      console.log(trainModel,"==trainModel")
       for (let key in trainModel) {
         if (key == inputData) {
           const modelName = trainModel[key];
-          console.log(trainModel[key],"====trainModel[key]")
-          console.log(modelName,"==modelName")
           const modelModule = await import(
             `../helpers/api/repo/${modelName}.ts`
           );
           name = modelModule;
-          console.log(modelModule,"===modelModule")
         }
       }
       resolve(name);

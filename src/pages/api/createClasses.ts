@@ -57,9 +57,27 @@ async function handler(req: any, res: any) {
           classId: classId,
         });
       }
-
+      const data = req.body.primaryKeys
       // Bulk create class tags using the populated tag data.
       const classTags = await classTagRepo.bulkCreate(tagData, classId, transaction);
+
+      const classTagData = classTags.data
+      if (data) {
+        const primaryKeyIds = (data.forEach((primaryKey: any) => {
+          classTagData.forEach(async (classTagData: any) => {
+            if (classTagData.dataValues.tagName === primaryKey) {
+              var insertData = {
+                classTagId: classTagData.dataValues.id,
+                classId: classId,
+                userId: req.id
+              }
+              const newTicket = new db.PrimaryKey(insertData);
+              await newTicket.save(newTicket);
+            }
+          })
+        }));
+      }
+
       const tagIdArr: any = [];
       if (reqData.parentJoinKey && reqData.parentJoinKey.length) {
         const classTagId = await classTagRepo.getClassTags(reqData.parentJoinKey, transaction);

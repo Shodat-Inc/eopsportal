@@ -141,14 +141,18 @@ export async function initialize() {
       tyreDetectionResponse: "TyreResponse",
       subscription: "Subscription",
       purchaseHistory: "PurchaseHistory",
-      alert: "Alert",
-      emailTemplate: "EmailTemplate",
-      modelRaisedAlert: "RaisedAlert",
+      crackAlert: "CrackAlert",
       batteryAlert: "BatteryAlert",
+      tyreAlert: "TyreAlerts",
+      emailTemplate: "EmailTemplate",
+      RaisedAlert: "RaisedAlert",
       batteryDetectionResponse: "BatteryResponse",
       ticket: "Ticket",
       ticketAttachments: "Attachment",
-      ticketComments: "Comment"
+      ticketComments: "Comment",
+      commentAttachments: "CommentAttachment",
+      ticketRaisedAlertLink: "Link",
+      primaryKey: "PrimaryKey"
     };
 
     if (true) {
@@ -157,7 +161,6 @@ export async function initialize() {
         const modelModule = await import(`./models/${key}.ts`);
         const model = modelModule[modelName](sequelize);
         db[modelName] = model;
-        // loggerInfo.info(key, "Reached AT END");
       }
       // sync all models with database
       await relationship(db);

@@ -34,3 +34,6 @@ uom : string,
 recomendation: "severe , moderate, no",
 }
 ##
+
+
+Id bhejni ha model ki na ki nam ;
