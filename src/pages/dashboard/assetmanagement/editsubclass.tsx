@@ -6,13 +6,25 @@ import axios from "axios";
 import {
     editSubClassModalAction
 } from '@/store/actions/classAction';
+import Select from "react-select";
 import { getSubClassDataAction } from "@/store/actions/apiAction";
+type OptionType = {
+    value: string;
+    label: string;
+};
 
 export default function EditSubClass(props: any) {
 
-    console.log({
-        "PROPS_IN_EDIT_SB_CLASS":props
-    })
+    // console.log({
+    //     "PROPS_IN_EDIT_SB_CLASS":props
+    // })
+
+    const options: OptionType[]  = [
+        { value: "React", label: "React" },
+        { value: "Vue", label: "Vue" },
+        { value: "Angular", label: "Angular" },
+        { value: "Java", label: "Java" }
+    ];
 
     const dispatch = useDispatch<any>();
     const assetname = useRef("");
@@ -32,6 +44,12 @@ export default function EditSubClass(props: any) {
     const [className, setClassName] = useState('' as any)
     const [pjkID, setPjkID] = useState();
     const [pjkData, setPjkData] = useState([] as any)
+
+    const [selectPJK, setSelectPJK] = useState([] as any);
+    const [allParentTag, setAllParentTag] = useState([] as any);
+    const [parentJoinKey, setParentJoinKey] = useState([] as any);
+    const [selectedParentKeys, setSelectedParentKeys] = useState([] as any);
+
     let access_token = "" as any;
     if (typeof window !== 'undefined') {
         access_token = localStorage.getItem('authToken')
@@ -87,13 +105,38 @@ export default function EditSubClass(props: any) {
             const filtered = props.subClassData.filter((item: any) => {
                 return item.id === props.selectedSubClass
             })
+            setParentJoinKey(filtered)
             setAllSubClassData(filtered);
             setClassName(filtered[0]?.className)
             setAllTags(filtered[0]?.ClassTags);
             setPjkData(filtered[0]?.ParentJoinKeys)
+
+            
+            let ajson = [] as any;
+            filtered[0]?.ParentJoinKeys?.map((items:any)=>{
+                let json: any = CreateJSONForSelect(items.parentTagId, items.tagname);
+                ajson.push(json)
+            })
+
+            console.log({
+                filtered:filtered,
+                ajson:ajson
+            })
+
+            setSelectedParentKeys(ajson)
+            setSelectPJK(ajson || [])
+
         }
     }, [props])
 
+    
+function CreateJSONForSelect(value: any, label: any) {
+        var myObject = {
+            "value": value,
+            "label": label
+        };
+        return myObject;
+    }
 
     const closeModal = () => {
         dispatch(editSubClassModalAction(false));
@@ -222,14 +265,23 @@ export default function EditSubClass(props: any) {
         let parentJoinKeyArr = [] as any;
         parentJoinKeyArr.push(form_values.parentJoinKey)
 
-
+        let pjk = [] as any;
+        selectPJK.map((item:any)=>{
+            pjk.push(item.value)
+        })
+        
         const dataToSave = {
             id: allSubClassData[0]?.id,
             className: form_values.assetname,
             deleteTagId: deleteTagIDS && deleteTagIDS.length > 0 ? deleteTagIDS : [],
-            addTag: dtObject
+            addTag: dtObject,
+            parentJoinKeysUpdate:pjk || []
         };
 
+
+        console.log({
+            dataToSave:dataToSave
+        })
         let tokenStr = access_token;
         try {
             await axios({
@@ -275,10 +327,36 @@ export default function EditSubClass(props: any) {
         setPjkID(pjkData?.parentTagId)
     }, [pjkData])
 
+
+    function createOptions(value: any, label: any) {
+        var myObject = {
+            "value": value,
+            "label": label
+        };
+        return myObject;
+    }
+    useEffect(()=>{
+        let label = [] as any;
+        let val = [] as any;
+        let ajson = [] as any;
+        parentJoinKey[0]?.ClassTags?.map((item: any) => {
+            label.push(item.tagName)
+            val.push(item.id)
+            let json: any = createOptions(item.id, item.tagName);
+            ajson.push(json)
+        })
+        setAllParentTag(ajson)
+
+    }, [parentJoinKey])
+
+    const handleChange = (tags: any) => {
+        setSelectPJK(tags || []);
+    };
+
     console.log({
-        "pjkData":pjkData,
-        pjkID:pjkID, 
-        allSubClassData:allSubClassData[0],
+        // "pjkData":pjkData,
+        // pjkID:pjkID, 
+        // allSubClassData:allSubClassData[0],
         allClassData:allClassData
     })
 
@@ -510,7 +588,7 @@ export default function EditSubClass(props: any) {
 
                                     <div className={`mb-5 lg:w-full small:w-full ${styles.form__wrap}`}>
                                         <div className={`relative ${styles.form__group} font-OpenSans`}>
-                                            <select
+                                            {/* <select
                                                 id="parentJoinKey"
                                                 name="parentJoinKey"
                                                 className={`border border-gray-961 ${styles.form__field}`}
@@ -527,7 +605,14 @@ export default function EditSubClass(props: any) {
                                                         pjkID === item.id? <option selected key={index} value={item.id}>{item.tagName}</option> : <option key={index} value={item.id}>{item.tagName}</option>
                                                     ))
                                                 }
-                                            </select>
+                                            </select> */}
+                                            <Select
+                                                options={allParentTag}
+                                                onChange={handleChange}
+                                                value={selectPJK}
+                                                isMulti
+                                                className={`${styles.form__field__select} ${styles.form__field1}`}
+                                            />
                                             <label htmlFor="parentJoinKey" className={`${styles.form__label}`}>Parent Join Key </label>
                                         </div>
                                         {/* <div className="mt-4  flex-wrap flex-col justify-start items-start hidden">

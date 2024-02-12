@@ -4,11 +4,22 @@ import styles from '../../../styles/Common.module.css';
 import Image from "next/image";
 import axios from "axios";
 import { getSubClassDataAction } from '@/store/actions/apiAction';
-
+import Select from "react-select";
+type OptionType = {
+    value: string;
+    label: string;
+};
 export default function AddNewSubClass(props: any) {
 
+    const options: OptionType[]  = [
+        { value: "React", label: "React" },
+        { value: "Vue", label: "Vue" },
+        { value: "Angular", label: "Angular" },
+        { value: "Java", label: "Java" }
+    ];
+
     console.log({
-        "__PROPS_IN_ADD_SUB_CLASS":props
+        "__PROPS_IN_ADD_SUB_CLASS": props
     })
 
     const dispatch = useDispatch<any>();
@@ -22,12 +33,12 @@ export default function AddNewSubClass(props: any) {
     const [dtObject, setDtObject] = useState<any[]>([]);
     const [parentJoinKey, setParentJoinKey] = useState([] as any);
     const [allDataTypes, setAllDataTypes] = useState([] as any);
+    const [selectPJK, setSelectPJK] = useState([] as any);
+    const [allParentTag, setAllParentTag] = useState([] as any);
     let access_token = "" as any;
     if (typeof window !== 'undefined') {
         access_token = localStorage.getItem('authToken')
     }
-
-    const allClassSelector = useSelector((state: any) => state.classReducer);
     const apiSelector = useSelector((state: any) => state.apiReducer);
 
     // GET ALL DATATYPES
@@ -66,6 +77,11 @@ export default function AddNewSubClass(props: any) {
                 return item.id === props.selectedParentClass;
             })
 
+            console.log({
+                filtered:filtered
+            })
+
+            
             setParentJoinKey(filtered)
 
             let label = [] as any;
@@ -77,10 +93,37 @@ export default function AddNewSubClass(props: any) {
                 let json: any = CreateJSONForSelect(item.tagName, item.tagName);
                 ajson.push(json)
             })
+            // setAllParentTag(ajson)
         }
 
     }, [props.classData, props.selectedParentClass])
 
+
+    function createOptions(value: any, label: any) {
+        var myObject = {
+            "value": value,
+            "label": label
+        };
+        return myObject;
+    }
+    useEffect(()=>{
+        let label = [] as any;
+        let val = [] as any;
+        let ajson = [] as any;
+        parentJoinKey[0]?.ClassTags?.map((item: any) => {
+            label.push(item.tagName)
+            val.push(item.id)
+            let json: any = CreateJSONForSelect(item.id, item.tagName);
+            ajson.push(json)
+        })
+        setAllParentTag(ajson)
+
+    }, [parentJoinKey])
+
+    console.log({
+        "__SELECT":allParentTag,
+        "__PARENTJOINKEY":parentJoinKey[0]?.ClassTags
+    })
 
 
 
@@ -209,13 +252,23 @@ export default function AddNewSubClass(props: any) {
         let parentJoinKeyArr = [] as any;
         parentJoinKeyArr.push(form_values.parentJoinKey)
 
+        let pjk = [] as any;
+        selectPJK.map((item:any)=>{
+            pjk.push(item.value)
+        })
+
         const dataToSave = {
             className: form_values.assetname,
             superParentId: props.selectedParentClass,
             parentId: props.selectedParentClass,
-            parentJoinKey: parentJoinKeyArr,
+            parentJoinKey: pjk,
             tags: dtObject
         };
+
+        console.log({
+            dataToSave:dataToSave
+        })
+
         let tokenStr = access_token;
         try {
             await axios({
@@ -227,8 +280,8 @@ export default function AddNewSubClass(props: any) {
                     "Content-Type": "application/json"
                 }
             }).then(function (response) {
-                if (response) {                    
-                    setAllTags([]);                    
+                if (response) {
+                    setAllTags([]);
                     props.handleClick(false);
                     props.message(true)
                     dispatch(getSubClassDataAction(apiSelector?.selectedClassReducer))
@@ -255,6 +308,15 @@ export default function AddNewSubClass(props: any) {
             }
         }
     }
+
+
+    const handleChange = (tags: any) => {
+        setSelectPJK(tags || []);
+    };
+
+    console.log({
+        "___parentJoinKey": parentJoinKey[0]?.ClassTags
+    })
 
 
     return (
@@ -460,74 +522,16 @@ export default function AddNewSubClass(props: any) {
 
                                     <div className={`mb-5 lg:w-full small:w-full ${styles.form__wrap}`}>
                                         <div className={`relative ${styles.form__group} font-OpenSans`}>
-                                            <select
-                                                id="parentJoinKey"
-                                                name="parentJoinKey"
-                                                className={`border border-gray-961 ${styles.form__field}`}
-                                                placeholder="Parent Join Key"
-                                                required
-                                                onChange={(e) => (assetname.current = e.target.value)}
-                                            // onChange={handleJoinKey}
-                                            // multiple
-                                            >
-                                                <option value="">Select</option>
-                                                {
-                                                    parentJoinKey && parentJoinKey[0]?.ClassTags?.map((item: any, index: any) => (
-                                                        <option key={index} value={item.id}>{item.tagName}</option>
-                                                    ))
-                                                }
-                                            </select>
+
+                                            <Select
+                                                options={allParentTag}
+                                                onChange={handleChange}
+                                                value={selectPJK}
+                                                isMulti
+                                                className={`${styles.form__field__select} ${styles.form__field1}`}
+                                            />
                                             <label htmlFor="parentJoinKey" className={`${styles.form__label}`}>Parent Join Key </label>
                                         </div>
-                                        {/* <div className="mt-4 flex-wrap flex-col justify-start items-start hidden">
-                                            <div className="flex flex-wrap justify-start items-center">
-                                                <span
-                                                    className="rounded-lg inline-flex justify-center items-center h-8 pl-2 pr-2 bg-[#F2F1F1] text-black text-[14px] mr-2 mb-2">
-                                                    VinNo
-                                                    <button
-                                                        className="rounded-full border-2 border-white h-[24px] w-[24px] inline-flex justify-center items-center ml-3 transition-all duration-[100ms] transition-opacity duration-100 outline-none transform active:scale-75 transition-transform"
-                                                    >
-                                                        <Image
-                                                            src="/img/x-circle.svg"
-                                                            alt="close"
-                                                            height={24}
-                                                            width={24}
-                                                        />
-                                                    </button>
-                                                </span>
-                                                <span
-                                                    className="rounded-lg inline-flex justify-center items-center h-8 pl-2 pr-2 bg-[#F2F1F1] text-black text-[14px] mr-2 mb-2">
-                                                    MfdDate
-                                                    <button
-                                                        className="rounded-full border-2 border-white h-[24px] w-[24px] inline-flex justify-center items-center ml-3 transition-all duration-[100ms] transition-opacity duration-100 outline-none transform active:scale-75 transition-transform"
-                                                    >
-                                                        <Image
-                                                            src="/img/x-circle.svg"
-                                                            alt="close"
-                                                            height={24}
-                                                            width={24}
-                                                        />
-                                                    </button>
-                                                </span>
-                                                <span
-                                                    className="rounded-lg inline-flex justify-center items-center h-8 pl-2 pr-2 bg-[#F2F1F1] text-black text-[14px] mr-2 mb-2">
-                                                    Model
-                                                    <button
-                                                        className="rounded-full border-2 border-white h-[24px] w-[24px] inline-flex justify-center items-center ml-3 transition-all duration-[100ms] transition-opacity duration-100 outline-none transform active:scale-75 transition-transform"
-                                                    >
-                                                        <Image
-                                                            src="/img/x-circle.svg"
-                                                            alt="close"
-                                                            height={24}
-                                                            width={24}
-                                                        />
-                                                    </button>
-                                                </span>
-                                            </div>
-                                            <div className="mt-3">
-                                                <button className="rounded rounded-lg border border-black flex justify-center items-center py-1 px-3 text-sm transition-all duration-[100ms] transition-opacity duration-100 outline-none transform active:scale-75 transition-transform">Clear All</button>
-                                            </div>
-                                        </div> */}
                                     </div>
 
                                 </div>

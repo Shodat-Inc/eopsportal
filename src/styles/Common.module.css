@@ -1102,3 +1102,7 @@ table.proSenseTable tbody tr td {
 .lastChildComma span:last-child em{
     display: none;
 }
+
+.form__field__select > .css-13cymwt-control {
+    border: none;
+}

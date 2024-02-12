@@ -16,9 +16,9 @@ import { getSubClassDataAction } from '@/store/actions/apiAction';
 
 export default function SubClassManagement(props: any) {
 
-    console.log({
-        "__PROPS_IN_SUB_CLASS_MANAGEMENT":props
-    })
+    // console.log({
+    //     "__PROPS_IN_SUB_CLASS_MANAGEMENT":props
+    // })
     
     const dispatch = useDispatch<any>();
     const [toggleFilter, setToggleFilter] = useState(false);
@@ -47,9 +47,9 @@ export default function SubClassManagement(props: any) {
     const allClassSelector = useSelector((state: any) => state.classReducer);
     const apiSelector = useSelector((state: any) => state.apiReducer);
 
-    console.log({
-        "ALL DATA": apiSelector?.selectedClassReducer
-    })
+    // console.log({
+    //     "ALL DATA": apiSelector?.selectedClassReducer
+    // })
 
     useEffect(() => {
         setShowModal(props.addSubClassModal)
@@ -176,14 +176,6 @@ export default function SubClassManagement(props: any) {
     useOutsideAlerter(wrapperRef);
 
 
-
-    // useEffect(() => {
-    //     if (allClassSelector?.successMessageReducer === true) {
-    //         dispatch(successMessageAction(false))
-    //     }
-    // }, [allClassSelector?.successMessageReducer === true])
-
-
     const handleAddSuccessMessage = (msg:any) => {
         setSuccessMessage(msg);
         setTimeout(()=>{
@@ -210,10 +202,10 @@ export default function SubClassManagement(props: any) {
         }
     }
 
-    console.log({
-        "__subClassData":subClassData,
-        "__CLASS":showClassNameFromID(allClassSelector?.selectedClassReducer)
-    })
+    // console.log({
+    //     "__subClassData":subClassData,
+    //     "__CLASS":showClassNameFromID(allClassSelector?.selectedClassReducer)
+    // })
     return (
         <div className='px-0 py-3 font-OpenSans'>
             {/* Title, search and filters */}
