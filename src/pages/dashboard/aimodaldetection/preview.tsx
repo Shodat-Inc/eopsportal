@@ -185,15 +185,17 @@ export default function Preview() {
                     {
                         defaultTab === "Test" &&
                         <Test
-                            data={data}
+                            data={aimodaldetectionReducer?.dataForModalReducer}
                             routerParams={routerParams}
+                            type="test"
                         />
                     }
                     {
                         defaultTab === "Production" &&
                         <Production
-                            data={data}
+                            data={aimodaldetectionReducer?.dataForModalReducer}
                             routerParams={routerParams}
+                            type="production"
                         />
                     }
                 </>

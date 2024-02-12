@@ -28,23 +28,23 @@ export default function EopsWatch(props: any) {
     const [data, setData] = useState([] as any);
     const [singleModel, setSingleModel] = useState([] as any);
     const [selectedModel, setSelectedModel] = useState('');
+    const [selectedModelID, setSelectedModelID] = useState(0);
 
     // ===== Setting initial values based on props =====
     useEffect(() => {
         if (props?.modelData && props?.modelData.length > 0) {
-
             let dta = JSON.parse(props?.modelData[0]?.benefits);
             let arr = [] as any;
             Object.values(dta).map((item: any, index: any) => {
                 arr.push(item)
             })
             setSingleModel(arr);
+            setSelectedModelID(props?.modelData[0]?.id)
         }
     }, [props?.modelData])
 
-
     // ===== Update state based on selection of modal =====
-    const setModelInformation = (model: any) => {
+    const setModelInformation = (model: any, id:any) => {
         const filterData = props?.modelData.filter((item: any) => {
             return item.modelName === model
         })
@@ -57,6 +57,7 @@ export default function EopsWatch(props: any) {
             })
             setSingleModel(arr)
             setSelectedModel(model)
+            setSelectedModelID(id)
         }
     }
 
@@ -75,6 +76,7 @@ export default function EopsWatch(props: any) {
             key: props?.nextDataProps?.key,
             id: props?.nextDataProps?.id,
             model: selectedModel,
+            modelID:selectedModelID,
             industryID: props?.nextDataProps?.industryID
         }
         const nextData = {
@@ -82,7 +84,8 @@ export default function EopsWatch(props: any) {
             "classObject": props?.nextData?.object,
             "subClass": props?.nextData?.subClass,
             "subClassObject": props?.nextData?.subObject,
-            "Model": selectedModel
+            "model": selectedModel,
+            "modelID":selectedModelID
         }
 
         console.log({
@@ -116,7 +119,7 @@ export default function EopsWatch(props: any) {
                                     <>
                                         <button
                                             key={index}
-                                            onClick={() => setModelInformation(item?.modelName)}
+                                            onClick={() => setModelInformation(item?.modelName, item?.id)}
                                             className={`flex items-center justify-between rounded-l-xl-1 p-4 h-[106px] w-full bg-white relative text-left ${item?.modelName === selectedModel ? 'border-t-0 border-b-2 border-l-0 border-[#E3E3E3] left-[2px]' : 'border-b-2 border-t-2 border-l-0 border-[#E3E3E3] left-[0px]'}`}>
                                             <span className="text-gray-967 text-sm font-semibold w-full">
                                                 {

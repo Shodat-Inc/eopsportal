@@ -1,12 +1,26 @@
 import React, { useState, useRef, useEffect } from "react";
+import { useDispatch, useSelector } from 'react-redux';
 import Image from "next/image";
 import NoDataFound from "../../../common/nodatafound";
 import Link from "next/dist/client/link";
+import axios from "axios";
+import moment from 'moment';
+import { boolean } from "joi";
 
 export default function Production(props: any) {
-    const { data, routerParams } = props;
+    const dispatch = useDispatch<any>()
+    const aimodaldetectionReducer = useSelector((state: any) => state.aimodaldetectionReducer);
+    console.log({
+        "PRODUCTION_PROPS": props
+    })
+    let access_token = "" as any;
+    if (typeof window !== 'undefined') {
+        access_token = localStorage.getItem('authToken')
+    }
     const [showImageModal, setShowImageModal] = useState(false);
     const [resImage, setResImage] = useState("");
+    const [data, setData] = useState([] as any)
+
     const imageModalFunction = (image: any) => {
         setShowImageModal(true);
         setResImage(image);
@@ -27,66 +41,128 @@ export default function Production(props: any) {
     }
     const wrapperRef = useRef(null);
     useOutsideAlerter(wrapperRef);
+
+
+    // =============== function to get all classes =============== 
+    async function getImageUrlData() {
+        try {
+            await axios({
+                method: 'GET',
+                url: `/api/getImageUrl?type=production&modelId=3`,
+                headers: {
+                    "Authorization": `Bearer ${access_token}`,
+                    "Content-Type": "application/json"
+                }
+
+            }).then(function (response) {
+                if (response) {
+
+                    let filtered = response?.data?.data.filter((item:any) => {
+                        return item.type==="production"
+                    })
+                    setData(filtered)
+                }
+            }).catch(function (error) {
+                console.log({
+                    "ERROR IN AXIOS CATCH": error
+                })
+            })
+        } catch (err) {
+            console.log({
+                "ERROR IN TRY CATCH": err
+            })
+        }
+    }
+    useEffect(() => {
+        getImageUrlData();
+    }, [access_token])
+    
+
+    console.log({
+        "__DATA": data
+    })
+    
+
     return (
         <div className="w-full">
             <div className="mt-5 relative flex flex-wrap justify-start items-start w-full h-full p-3">
 
+
+
                 {
                     data && data.length > 0 ?
-                        data.map((item: any, index: any) => (
-                            <div className="w-[246px] overflow-hidden rounded rounded-xl mr-4 mb-4 relative" key={index}>
-                                <div className="h-[200px] w-[246px] overflow-hidden rounded rounded-xl relative">
-                                    <div className="flex justify-start items-center absolute top-0 right-0">
-                                        <Link
-                                            href={{
-                                                pathname: "/dashboard/eopswatch/productionview",
-                                                query: {
-                                                    objectID: routerParams.objectID,
-                                                    key: routerParams.key,
-                                                    model: routerParams.model,
-                                                    id: routerParams.id,
-                                                    subObject: routerParams.subObject,
-                                                    result: item.resultImage ? item.resultImage : '',
-                                                    imageID: item.imageID,
-                                                    from: "eopswatch"
-                                                }
-                                            }}
-                                            className="text-sm font-semibold h-[32px] px-2 rounded rounded-lg inline-flex justify-center items-center bg-yellow-951 mr-4">
-                                            <Image
-                                                src="/img/test-icon.svg"
-                                                alt="Test Icon"
-                                                height={20}
-                                                width={20}
-                                            />
-                                            <span className="pl-2">Test</span>
-                                        </Link>
-                                        <button
-                                            onClick={() => imageModalFunction(item.path)}
-                                            className="text-sm font-semibold h-[32px] px-1 rounded rounded-lg inline-flex justify-center items-center bg-[#333333]">
-                                            <Image
-                                                src="/img/external-link-white.svg"
-                                                alt="Test Icon"
-                                                height={26}
-                                                width={26}
-                                            />
-                                        </button>
+                        data.map((item: any, index: any) => {
+                            let check = item.url.split(".");
+                            let ret = false;
+                            if (check.indexOf("jpg") !== -1 || check.indexOf("jpeg") !== -1 || check.indexOf("png") !== -1 || check.indexOf("bmp") !== -1 || check.indexOf("JPG") !== -1 || check.indexOf("JPEG") !== -1 ) {
+                                ret = true
+                            } else {
+                                ret = false
+                            }
+                            console.log({
+                                "__CHECK":check,
+                                "RETURNS": console.log(check.indexOf("jpg") !== -1) // true
+
+                            })
+
+                            return (
+                                ret===true ?
+                                <div className="w-[246px] overflow-hidden rounded-xl mr-4 mb-4 relative" key={index}>
+                                    <div className="h-[200px] w-[246px] overflow-hidden rounded-xl relative">
+                                        <div className="flex justify-start items-center absolute top-0 right-0">
+                                            <Link
+                                                href={""}
+                                                // href={{
+                                                //     pathname: "/dashboard/eopswatch/trainingview",
+                                                //     query: {
+                                                //         objectID: routerParams.objectID,
+                                                //         key: routerParams.key,
+                                                //         model: routerParams.model,
+                                                //         id: routerParams.id,
+                                                //         subObject: routerParams.subObject,
+                                                //         result: item.resultImage ? item.resultImage : '',
+                                                //         imageID: item.imageID,
+                                                //         from:"eopswatch"
+                                                //     }
+                                                // }}
+                                                className={`text-sm font-semibold h-[32px] px-2 rounded-lg inline-flex justify-center items-center mr-4 ${item.url === "" ? 'pointer-events-none cursor-not-allowed bg-gray-951' : ' bg-yellow-951'}`}>
+                                                <Image
+                                                    src="/img/test-icon.svg"
+                                                    alt="Test Icon"
+                                                    height={20}
+                                                    width={20}
+                                                />
+                                                <span className="pl-2">Test</span>
+                                            </Link>
+                                            <button
+                                                onClick={() => imageModalFunction(item.url)}
+                                                className="text-sm font-semibold h-[32px] px-1 rounded-lg inline-flex justify-center items-center bg-[#333333]">
+                                                <Image
+                                                    src="/img/external-link-white.svg"
+                                                    alt="Test Icon"
+                                                    height={26}
+                                                    width={26}
+                                                />
+                                            </button>
+                                        </div>
+                                        <Image
+                                            src={`${item.url}`}
+                                            alt="Crack Detection"
+                                            height={200}
+                                            width={246}
+                                            className="object-cover h-full w-full"
+                                        />
                                     </div>
-                                    <Image
-                                        src={item.path}
-                                        alt="Crack Detection"
-                                        height={200}
-                                        width={246}
-                                        className="object-cover h-full w-full"
-                                    />
+                                    <p className="mt-1 text-[13px] text-[#666666]">Uploaded Date: {moment(item.updatedAt).format('DD-MM-YYYY')}</p>
                                 </div>
-                                <p className="mt-1 text-[13px] text-[#666666]">Uploaded Date: {item.dateUploaded}</p>
-                            </div>
-                        ))
+                                : null
+                            )
+                        })
                         :
                         <div className="h-48 flex justify-center items-center flex-wrap flex-col mt-8 w-full">
                             <NoDataFound
                                 titleText="No Data Found!"
-                                messageText="No image are found for PRODUCTION folder"
+                                messageText="No image are found for TEST folder"
                                 createText={''}
                             />
                         </div>
@@ -100,18 +176,18 @@ export default function Production(props: any) {
                     <div
                         className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
                     >
-                        <div className="relative my-0 w-[450px] bg-transparent border border-yellow-951 rounded rounded-xl">
-                            <div className="border-0 shadow-lg-1 relative flex flex-col w-full bg-white outline-none focus:outline-none w-[450px] h-[420px] overflow-hidden-1 bg-transparent rounded rounded-xl">
+                        <div className="relative my-0 w-[450px] bg-transparent border border-yellow-951 rounded-xl">
+                            <div className="border-0 shadow-lg-1 relative flex flex-col  bg-white outline-none focus:outline-none w-[450px] h-[420px] overflow-hidden-1 bg-transparent rounded-xl">
                                 {/*header*/}
                                 <div className="flex items-start justify-between p-0">
                                     <button
-                                        className="bg-transparent border border-white hover:border-yellow-951 text-black float-right leading-none font-semibold outline-none focus:outline-none bg-white absolute right-[-40px] top-[-40px] rounded rounded-full p-1 hover:bg-yellow-951"
+                                        className="bg-transparent border border-white hover:border-yellow-951 text-black float-right leading-none font-semibold outline-none focus:outline-none bg-white absolute right-[-40px] top-[-40px] rounded-full p-1 hover:bg-yellow-951"
                                         onClick={() => setShowImageModal(false)}
                                     >
                                         <Image
                                             src="/img/close.svg"
                                             alt="close"
-                                            className="h-6 h-[24px] w-[24px]"
+                                            className="h-[24px] w-[24px]"
                                             height={24}
                                             width={24}
                                         />
@@ -124,7 +200,7 @@ export default function Production(props: any) {
                                             <Image
                                                 src={resImage}
                                                 alt="result"
-                                                className="h-[100%] w-[100%] object-cover rounded rounded-xl"
+                                                className="h-[100%] w-[100%] object-cover rounded-xl"
                                                 height={420}
                                                 width={450}
                                             />
@@ -135,7 +211,7 @@ export default function Production(props: any) {
                                                     alt="no image"
                                                     height={100}
                                                     width={100}
-                                                    className="h-[100%] w-[100%] object-cover rounded rounded-xl"
+                                                    className="h-[100%] w-[100%] object-cover rounded-xl"
                                                 />
                                                 <span className="mt-3">No Image Found!! </span>
                                             </div>

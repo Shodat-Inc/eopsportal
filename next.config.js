@@ -23,6 +23,10 @@ const nextConfig = {
         ? "http://localhost:3000/api" // development api
         : "http://localhost:3000/api", // production api
   },
+  reactStrictMode: true,
+  images: {
+    domains: ['www.shutterstock.com'],
+  },
 };
 
 module.exports = nextConfig;
