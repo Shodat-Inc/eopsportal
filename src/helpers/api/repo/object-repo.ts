@@ -5,6 +5,7 @@ import { error } from "console";
 import message from "@/util/responseMessage";
 import { generateRandomAlphaNumeric } from "../../../util/helper";
 import { classTagRepo } from "./classTag-repo";
+import { paginate } from "../constant/pagination";
 
 /**
  * Repository for handling object related operations.
@@ -89,6 +90,7 @@ async function get(params: any) {
                 model: db.parentJoinKey,
                 where: obj, // This will filter by classId
                 attributes: ["id", "parentTagId", "createdAt"],
+                required: false
               },
             ],
           },
@@ -153,6 +155,9 @@ async function get(params: any) {
       if (!data.length) {
         return sendResponseData(false, "Data Not Found", {})
       }
+
+      // const paginatedResult = await paginate(data, params.query.page || 1, params.query.pageSize || 5);
+
       return sendResponseData(true, "Object with its tag value fetched successfully", modifiedData)
     }
 
@@ -169,6 +174,8 @@ async function get(params: any) {
     if (!result) {
       return sendResponseData(false, "Object Do not Exist", {});
     }
+    // const paginatedResult = await paginate(result, params.query.page || 1, params.query.pageSize || 5);
+
     return sendResponseData(true, "Object fetched Successfully", result);
   } catch (error) {
     // Log the error if there's an issue with fetching data.
