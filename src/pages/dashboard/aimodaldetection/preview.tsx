@@ -79,7 +79,7 @@ export default function Preview() {
                             className="font-semibold"
                         >
                             {/* <span>Manufacturing Plants</span> */}
-                            <span>{aimodaldetectionReducer?.getClassFromIDReducer && aimodaldetectionReducer?.getClassFromIDReducer[0]?.className}</span>
+                            <span>{aimodaldetectionReducer?.getClassFromIDReducer && aimodaldetectionReducer?.getClassFromIDReducer?.rows[0]?.className}</span>
                         </Link>
                     </li>
                     <li className="flex justify-start items-center">
@@ -98,9 +98,9 @@ export default function Preview() {
                             {/* VIN / PlantID */}
                             {/* <span>TPC3305-01</span> */}
                             {aimodaldetectionReducer?.getObjectFromIDReducer &&
-                            <span> {aimodaldetectionReducer?.getObjectFromIDReducer[0]?.Class?.ClassTags[0]?.tagName} : </span>
+                            <span> {aimodaldetectionReducer?.getObjectFromIDReducer?.rows[0]?.Class?.ClassTags[0]?.tagName} : </span>
                             }
-                            <span>{aimodaldetectionReducer?.getObjectFromIDReducer && aimodaldetectionReducer?.getObjectFromIDReducer[0]?.ObjectValues[0]?.values}</span>
+                            <span>{aimodaldetectionReducer?.getObjectFromIDReducer && aimodaldetectionReducer?.getObjectFromIDReducer?.rows[0]?.ObjectValues[0]?.values}</span>
                         </Link>
                     </li>
                     <li className="flex justify-start items-center">
@@ -117,10 +117,10 @@ export default function Preview() {
                             className="font-semibold"
                         >
                             {/* <span>Wall </span>  */}
-                            <span>{aimodaldetectionReducer?.getSubClassFromIDReducer && aimodaldetectionReducer?.getSubClassFromIDReducer[0]?.className}</span>
+                            <span>{aimodaldetectionReducer?.getSubClassFromIDReducer && aimodaldetectionReducer?.getSubClassFromIDReducer?.rows[0]?.className}</span>
                             <span> : </span> 
                             {/* <span>TPC71810-01-011</span> */}
-                            <span>{aimodaldetectionReducer?.getSubObjectFromIDReducer && aimodaldetectionReducer?.getSubObjectFromIDReducer[0]?.ObjectValues[0]?.values}</span>
+                            <span>{aimodaldetectionReducer?.getSubObjectFromIDReducer && aimodaldetectionReducer?.getSubObjectFromIDReducer?.rows[0]?.ObjectValues[0]?.values}</span>
                         </Link>
                     </li>
                     <li className="flex justify-start items-center">

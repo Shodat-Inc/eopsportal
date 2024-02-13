@@ -34,7 +34,6 @@ export default function AssetManagement() {
     }
 
     // All class reducer states
-    const allClassSelector = useSelector((state: any) => state.classReducer);
     const apiSelector = useSelector((state: any) => state.apiReducer);
 
 
@@ -378,14 +377,14 @@ export default function AssetManagement() {
                             <SubClassManagement
                                 handleaddSubClassModal={handleaddSubClassModal}
                                 addSubClassModal={addSubClassModal}
-                                classData={classData && classData.length > 0 ? classData : []}
+                                classData={classData || []}
                                 selectedParentClass={defaultClass ? defaultClass : getSelClass.selectedClass}
                             />
                         }
                         {tab === 2 &&
                             <ObjectManagement
                                 handelObject={handelObject}
-                                classData={classData && classData.length > 0 ? classData : []}
+                                classData={classData || []}
                                 defaultClass={defaultClass ? defaultClass : getSelClass.selectedClass}
                             />
                         }

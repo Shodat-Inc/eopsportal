@@ -30,10 +30,10 @@ export default function AiModelDetection() {
     const [getAllSubClass, setGetAllSubClass] = useState([] as any);
     const [getAllSubObject, setGetAllSubObject] = useState([] as any);
     const [toggleAsset, setToggleAsset] = useState(false);
-    const [chooseClass, setChooseClass] = useState('Select');
-    const [chooseObject, setChooseObject] = useState('Select')
-    const [chooseSubClass, setChooseSubClass] = useState('Select')
-    const [chooseSubObject, setChooseSubObject] = useState('Select')
+    const [chooseClass, setChooseClass] = useState(0);
+    const [chooseObject, setChooseObject] = useState(0)
+    const [chooseSubClass, setChooseSubClass] = useState(0)
+    const [chooseSubObject, setChooseSubObject] = useState(0)
     const [toggleObject, setToggleObject] = useState(false);
     const [toggleSubClass, setToggleSubClass] = useState(false);
     const [toggleSubObject, setToggleSubObject] = useState(false);
@@ -63,34 +63,34 @@ export default function AiModelDetection() {
     const classSelector = useSelector((state: any) => state.classReducer);
 
     // Set Selected sub Object 
-    useEffect(() => {
-        if (classSelector.dataforeopswatchReducer?.object !== "") {
-            // setSelectSubObject(classSelector.dataforeopswatchReducer?.object)
-            setChooseSubObject(classSelector.dataforeopswatchReducer?.object)
-        }
-    }, [classSelector.dataforeopswatchReducer?.object])
+    // useEffect(() => {
+    //     if (classSelector.dataforeopswatchReducer?.object !== "") {
+    //         // setSelectSubObject(classSelector.dataforeopswatchReducer?.object)
+    //         setChooseSubObject(classSelector.dataforeopswatchReducer?.object)
+    //     }
+    // }, [classSelector.dataforeopswatchReducer?.object])
 
     // Set Selected sub object 
-    useEffect(() => {
-        if (classSelector.dataforeopswatchReducer?.subClass !== "") {
-            // setSelectSubClass(classSelector.dataforeopswatchReducer?.subClass)
-            setChooseSubClass(classSelector.dataforeopswatchReducer?.subClass)
-        }
-    }, [classSelector.dataforeopswatchReducer?.subClass])
+    // useEffect(() => {
+    //     if (classSelector.dataforeopswatchReducer?.subClass !== "") {
+    //         // setSelectSubClass(classSelector.dataforeopswatchReducer?.subClass)
+    //         setChooseSubClass(classSelector.dataforeopswatchReducer?.subClass)
+    //     }
+    // }, [classSelector.dataforeopswatchReducer?.subClass])
 
 
     // Set VIN/PlantID on page load
-    useEffect(() => {
-        if (classSelector?.dataforeopswatchReducer?.classObject && classSelector?.dataforeopswatchReducer?.classObject !== "") {
-            // setSelectObject(classSelector.dataforeopswatchReducer.classObject);
-            setChooseObject(classSelector?.dataforeopswatchReducer?.classObject);
-            setShowSubClass(true)
-            setShowObjLvlButton(true)
-        } else {
-            setShowSubClass(false)
-            setShowObjLvlButton(false)
-        }
-    }, [classSelector?.dataforeopswatchReducer?.classObject])
+    // useEffect(() => {
+    //     if (classSelector?.dataforeopswatchReducer?.classObject && classSelector?.dataforeopswatchReducer?.classObject !== "") {
+    //         // setSelectObject(classSelector.dataforeopswatchReducer.classObject);
+    //         setChooseObject(classSelector?.dataforeopswatchReducer?.classObject);
+    //         setShowSubClass(true)
+    //         setShowObjLvlButton(true)
+    //     } else {
+    //         setShowSubClass(false)
+    //         setShowObjLvlButton(false)
+    //     }
+    // }, [classSelector?.dataforeopswatchReducer?.classObject])
 
     // =============== function to get all classes =============== 
     async function fetchClassData() {
@@ -105,7 +105,7 @@ export default function AiModelDetection() {
 
             }).then(function (response) {
                 if (response) {
-                    setGetAllClass(response?.data?.data)
+                    setGetAllClass(response?.data?.data?.rows)
                 }
             }).catch(function (error) {
                 console.log({
@@ -218,10 +218,10 @@ export default function AiModelDetection() {
         setToggleObjectLevel(false)
         setShowSubObjTable(false);
 
-        setChooseClass("Select");
-        setChooseObject("Select");
-        setChooseSubClass("Select");
-        setChooseSubObject("Select");
+        setChooseClass(0);
+        setChooseObject(0);
+        setChooseSubClass(0);
+        setChooseSubObject(0);
         setToggleReset(false);
     }
 
@@ -240,8 +240,8 @@ export default function AiModelDetection() {
                     // console.log({
                     //     "__RESPONSE__123": response?.data?.objects?.data
                     // })
-                    setTableHeader(response?.data?.objects?.data[0]?.Class?.ClassTags)
-                    setClassObject(response?.data?.objects?.data);
+                    setTableHeader(response?.data?.objects?.data?.rows[0]?.Class?.ClassTags)
+                    setClassObject(response?.data?.objects?.data?.rows);
                 }
             }).catch(function (error) {
                 console.log({
@@ -255,7 +255,9 @@ export default function AiModelDetection() {
         }
     }
     useEffect(() => {
-        fetchClassObjectData();
+        if (chooseClass !== 0) {
+            fetchClassObjectData();
+        }
 
     }, [chooseClass, access_token])
 
@@ -272,16 +274,16 @@ export default function AiModelDetection() {
         model: "Crack Detection"
     }
     const nextData = {
-        "class":chooseClass,
-        "subClass":chooseSubClass,
-        "object":chooseObject,
-        "subObject":individualObjectID,
-        "model":'',
+        "class": chooseClass,
+        "subClass": chooseSubClass,
+        "object": chooseObject,
+        "subObject": individualObjectID,
+        "model": '',
     }
 
     console.log({
-        nextDataProps:nextDataProps,
-        nextData:nextData
+        nextDataProps: nextDataProps,
+        nextData: nextData
     })
 
     // Toggle sub class and object dropdowns
@@ -309,7 +311,7 @@ export default function AiModelDetection() {
 
             }).then(function (response: any) {
                 if (response) {
-                    setGetAllSubClass(response?.data?.data);
+                    setGetAllSubClass(response?.data?.data?.rows);
                 }
             }).catch(function (error: any) {
                 console.log({
@@ -344,8 +346,8 @@ export default function AiModelDetection() {
                 }
             }).then(function (response) {
                 if (response) {
-                    setSubObjectTableHeader(response?.data?.objects?.data[0]?.Class?.ClassTags)
-                    setGetAllSubObject(response?.data?.objects?.data);
+                    setSubObjectTableHeader(response?.data?.objects?.data?.rows[0]?.Class?.ClassTags)
+                    setGetAllSubObject(response?.data?.objects?.data?.rows);
 
                 }
             }).catch(function (error) {
@@ -360,9 +362,13 @@ export default function AiModelDetection() {
         }
     }
     useEffect(() => {
-        setTimeout(() => {
-            fetchSubObjectData();
-        }, 250)
+        if (chooseSubClass !== 0) {
+
+
+            setTimeout(() => {
+                fetchSubObjectData();
+            }, 250)
+        }
     }, [chooseSubClass, access_token])
 
 
@@ -397,6 +403,9 @@ export default function AiModelDetection() {
         setToggleAsset(!toggleAsset)
     }
     const selectItemFunction = (item: any) => {
+        console.log({
+            "__ITEM": item
+        })
         setDisable(1);
         setChooseClass(item);
         setToggleAsset(false);
@@ -404,9 +413,9 @@ export default function AiModelDetection() {
         setSelectClass(item)
         setShowObject(true);
 
-        setChooseObject("Select");
-        setChooseSubClass("Select");
-        setChooseSubObject("Select");
+        setChooseObject(0);
+        setChooseSubClass(0);
+        setChooseSubObject(0);
         setToggleReset(true)
     }
 
@@ -446,7 +455,7 @@ export default function AiModelDetection() {
         setShowSubObjTable(false);
         setToggleSubClass(false);
         setChooseSubClass(item);
-        setChooseSubObject("Select");
+        setChooseSubObject(0);
         setToggleSubObject(false);
     }
 
@@ -469,8 +478,8 @@ export default function AiModelDetection() {
     }
     const selectSubClassObjectItemFunction = (item: any, id: any) => {
         console.log({
-            "__ITEM":item, 
-            "__ID":id
+            "__ITEM": item,
+            "__ID": id
         })
         setShowSubClass(false);
         setChooseSubObject(item)
@@ -480,16 +489,16 @@ export default function AiModelDetection() {
         getIndividualSubObject(id);
         setIndividualObjectID(id)
 
-        let type = "";
-        if (chooseClass === "Manufacturing Plants") {
-            type = "ID"
-        } else {
-            if (chooseSubClass === "Battery") {
-                type = "SerialNo"
-            } else {
-                type = "SerialID"
-            }
-        }
+        // let type = "";
+        // if (chooseClass === "Manufacturing Plants") {
+        //     type = "ID"
+        // } else {
+        //     if (chooseSubClass === "Battery") {
+        //         type = "SerialNo"
+        //     } else {
+        //         type = "SerialID"
+        //     }
+        // }
 
         // Save data for redux
         let eopsData: any = {
@@ -498,7 +507,7 @@ export default function AiModelDetection() {
             "classObject": chooseObject,
             "object": item,
             "datafor": "eopwatch",
-            "type": type
+            "type": ""
         }
         // if (Object.keys(classSelector?.dataforeopswatchReducer).length === 0) {
         dispatch(setDataForeOpsWatchAction(eopsData));
@@ -606,7 +615,9 @@ export default function AiModelDetection() {
                                                 width={20}
                                                 className={`absolute right-3 top-4 ${toggleAsset ? 'rotate-180' : 'rotate-0'}`}
                                             />
-                                            <span className="text-lg text-black pl-2">{showClassNameFromID(chooseClass)}</span>
+                                            <span className="text-lg text-black pl-2">
+                                                {chooseClass === 0 ? '-Select-' : showClassNameFromID(chooseClass)}
+                                            </span>
                                         </div>
 
                                         {toggleAsset ?
@@ -652,7 +663,10 @@ export default function AiModelDetection() {
                                             >
                                                 <label className="absolute text-sm !top-[-10px] left-2 pl-2 pr-2 bg-white">{title}</label>
                                                 <Image src="/img/arrow-down-black.svg" alt="arrow-down" height={20} width={20} className={`absolute right-3 top-4 ${toggleObject ? 'rotate-180' : 'rotate-0'}`} />
-                                                <span className="text-lg text-black pl-2">{showObjectsIDFromID(chooseObject)}</span>
+                                                <span className="text-lg text-black pl-2">
+                                                    {/* {showObjectsIDFromID(chooseObject)} */}
+                                                    {chooseObject === 0 ? '-Select-' : showObjectsIDFromID(chooseObject)}
+                                                    </span>
                                             </div>
 
                                             {toggleObject ?
@@ -719,7 +733,10 @@ export default function AiModelDetection() {
                                             >
                                                 <label className="absolute text-sm !top-[-10px] left-2 pl-2 pr-2 bg-white">Sub Class</label>
                                                 <Image src="/img/arrow-down-black.svg" alt="arrow-down" height={20} width={20} className={`absolute right-3 top-4 ${toggleSubClass ? 'rotate-180' : 'rotate-0'}`} />
-                                                <span className="text-lg text-black pl-2">{showSubClassNameFromID(chooseSubClass)}</span>
+                                                <span className="text-lg text-black pl-2">
+                                                    {/* {showSubClassNameFromID(chooseSubClass)} */}
+                                                    {chooseSubClass === 0 ? '-Select-' : showSubClassNameFromID(chooseSubClass)}
+                                                    </span>
                                             </div>
 
                                             {toggleSubClass ?
@@ -755,7 +772,10 @@ export default function AiModelDetection() {
                                             >
                                                 <label className="absolute text-sm !top-[-10px] left-2 pl-2 pr-2 bg-white">Objects</label>
                                                 <Image src="/img/arrow-down-black.svg" alt="arrow-down" height={20} width={20} className={`absolute right-3 top-4 ${toggleSubObject ? 'rotate-180' : 'rotate-0'}`} />
-                                                <span className="text-lg text-black pl-2">{showSubObjectsIDFromID(chooseSubObject)}</span>
+                                                <span className="text-lg text-black pl-2">
+                                                    {/* {showSubObjectsIDFromID(chooseSubObject)} */}
+                                                    {chooseSubObject === 0 ? '-Select-' : showSubObjectsIDFromID(chooseSubObject)}
+                                                    </span>
                                             </div>
 
                                             {toggleSubObject ?
@@ -939,7 +959,7 @@ export default function AiModelDetection() {
                                     <EopsWatch
                                         nextDataProps={nextDataProps}
                                         nextData={nextData}
-                                        active={chooseSubObject !== "Select" ? true : false}
+                                        active={chooseSubObject !== 0 ? true : false}
                                         modelData={allModelData}
                                     />
                                     :

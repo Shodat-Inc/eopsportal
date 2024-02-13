@@ -183,6 +183,9 @@ export default function ClassManagement(props: any) {
     }
 
 
+    // console.log({
+    //     "__allData":allData?.rows
+    // })
 
 
     return (
@@ -290,7 +293,7 @@ export default function ClassManagement(props: any) {
             {/* Table */}
             <div className='w-full mt-6 min-h-[400px]'>
                 {
-                    allData && allData.length > 0 ?
+                    allData && allData?.rows?.length > 0 ?
                         <table className={`table-auto lg:min-w-full sm:w-full small:w-full text-left ${styles.tableV3} ${styles.tableV4}`}>
                             <thead className="text-sm font-normal">
                                 <tr>
@@ -309,7 +312,7 @@ export default function ClassManagement(props: any) {
                             </thead>
                             <tbody>
                                 {
-                                    allData.map((item: any, index: any) => (
+                                    allData?.rows?.map((item: any, index: any) => (
                                         <tr key={index}>
                                             <td>{index + 1}</td>
                                             <td>

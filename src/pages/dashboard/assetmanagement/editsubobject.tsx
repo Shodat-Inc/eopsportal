@@ -35,8 +35,8 @@ export default function EditSubObject(props: any) {
                     let arr2 = [] as any;
                     let arr3 = [] as any;
 
-                    setObjectsData(response.data?.data)
-                    let objectsData = response.data?.data;
+                    setObjectsData(response.data?.data?.rows)
+                    let objectsData = response.data?.data?.rows;
 
                     let key = Object.keys(objectsData[0]?.parentJoinValues);
                     let val = Object.values(objectsData[0]?.parentJoinValues)
@@ -46,14 +46,14 @@ export default function EditSubObject(props: any) {
                     // })
                     setParentJoinValue(val[0])
 
-                    response?.data?.data[0]?.Class?.ClassTags.map((item: any, index: any) => {
-                        const linkContentVal = response?.data?.data[0]?.ObjectValues[index];
+                    response?.data?.data?.rows[0]?.Class?.ClassTags.map((item: any, index: any) => {
+                        const linkContentVal = response?.data?.data?.rows[0]?.ObjectValues[index];
                         let tagWithID = item?.tagName + "_" + linkContentVal?.id
                         arr1.push(tagWithID);
                         arr3.push(item?.tagName)
                     })
 
-                    response?.data?.data[0]?.ObjectValues.map((item: any) => {
+                    response?.data?.data?.rows[0]?.ObjectValues.map((item: any) => {
                         arr2.push(item.values);
                     })
 
@@ -98,7 +98,7 @@ export default function EditSubObject(props: any) {
             let tagID = item.split("_")[1];
             let tagName = item.split("_")[0];
             objectKey.push({
-                "id": parseInt(tagID)
+                "classTagId": parseInt(tagID)
             })
             objVal.push({
                 tagName: tagName

@@ -21,6 +21,9 @@ export default function AddNewObject(props: any) {
 
     useEffect(() => {
         if (props.subClassData && props.subClassData.length > 0) {
+            // console.log({
+            //    "__props.subClassData":props.subClassData 
+            // })
             let filtered = props.subClassData.filter((item: any) => {
                 return item.id === props.selectedSubClass
             })
@@ -48,7 +51,7 @@ export default function AddNewObject(props: any) {
             let tagID = item.split("_")[1];
             let tagName = item.split("_")[0];
             objectKey.push({
-                "classTagId": tagID
+                "classTagId": parseInt(tagID)
             })
             objVal.push({
                 tagName: tagName
@@ -57,7 +60,7 @@ export default function AddNewObject(props: any) {
         const objectValue = [] as any;
         Object.values(form_values).map((item: any) => {
             objectValue.push({
-                "value": item
+                "values": item
             })
         })
 

@@ -18,9 +18,9 @@ export default function AddNewSubClass(props: any) {
         { value: "Java", label: "Java" }
     ];
 
-    console.log({
-        "__PROPS_IN_ADD_SUB_CLASS": props
-    })
+    // console.log({
+    //     "__PROPS_IN_ADD_SUB_CLASS": props
+    // })
 
     const dispatch = useDispatch<any>();
     const assetname = useRef("");
@@ -53,7 +53,7 @@ export default function AddNewSubClass(props: any) {
                 }
             }).then(function (response) {
                 if (response) {
-                    setAllDataTypes(response.data?.data)
+                    setAllDataTypes(response.data?.data?.rows)
                 }
             }).catch(function (error) {
                 console.log({
@@ -72,14 +72,14 @@ export default function AddNewSubClass(props: any) {
 
     // Get class data and filter parent tags based on selected class
     useEffect(() => {
-        if (props.classData && props.classData.length > 0) {
-            let filtered = props.classData.filter((item: any) => {
+        if (props.classData && props.classData.rows.length > 0) {
+            let filtered = props.classData.rows.filter((item: any) => {
                 return item.id === props.selectedParentClass;
             })
 
-            console.log({
-                filtered:filtered
-            })
+            // console.log({
+            //     filtered:filtered
+            // })
 
             
             setParentJoinKey(filtered)
@@ -120,10 +120,10 @@ export default function AddNewSubClass(props: any) {
 
     }, [parentJoinKey])
 
-    console.log({
-        "__SELECT":allParentTag,
-        "__PARENTJOINKEY":parentJoinKey[0]?.ClassTags
-    })
+    // console.log({
+    //     "__SELECT":allParentTag,
+    //     "__PARENTJOINKEY":parentJoinKey[0]?.ClassTags
+    // })
 
 
 
@@ -265,9 +265,9 @@ export default function AddNewSubClass(props: any) {
             tags: dtObject
         };
 
-        console.log({
-            dataToSave:dataToSave
-        })
+        // console.log({
+        //     dataToSave:dataToSave
+        // })
 
         let tokenStr = access_token;
         try {
@@ -299,8 +299,8 @@ export default function AddNewSubClass(props: any) {
 
     // convert selected id to classname
     const showClassNameFromID = (id: any) => {
-        if (props.classData && props.classData.length > 0) {
-            let filter = props.classData.filter((item: any) => {
+        if (props.classData && props.classData?.rows?.length > 0) {
+            let filter = props.classData?.rows?.filter((item: any) => {
                 return item.id === id
             })
             if (filter) {
@@ -314,9 +314,9 @@ export default function AddNewSubClass(props: any) {
         setSelectPJK(tags || []);
     };
 
-    console.log({
-        "___parentJoinKey": parentJoinKey[0]?.ClassTags
-    })
+    // console.log({
+    //     "___parentJoinKey": parentJoinKey[0]?.ClassTags
+    // })
 
 
     return (

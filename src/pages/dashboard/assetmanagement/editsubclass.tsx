@@ -69,7 +69,7 @@ export default function EditSubClass(props: any) {
                 }
             }).then(function (response) {
                 if (response) {
-                    setAllDataTypes(response.data?.data)
+                    setAllDataTypes(response.data?.data?.rows)
                 }
             }).catch(function (error) {
                 console.log({
@@ -89,8 +89,8 @@ export default function EditSubClass(props: any) {
 
     // Get class data and filter parent tags based on selected class
     useEffect(() => {
-        if (props.classData && props.classData.length > 0) {
-            let filtered = props.classData.filter((item: any) => {
+        if (props.classData && props.classData?.rows?.length > 0) {
+            let filtered = props.classData?.rows?.filter((item: any) => {
                 return item.id === props.selectedParentClass;
             })
             setAllClassData(filtered)
@@ -101,8 +101,8 @@ export default function EditSubClass(props: any) {
 
     // Get Selected Class Data
     useEffect(() => {
-        if (props.subClassData && props.subClassData.length > 0) {
-            const filtered = props.subClassData.filter((item: any) => {
+        if (props.subClassData && props.subClassData?.rows?.length > 0) {
+            const filtered = props.subClassData?.rows?.filter((item: any) => {
                 return item.id === props.selectedSubClass
             })
             setParentJoinKey(filtered)

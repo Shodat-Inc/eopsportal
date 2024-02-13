@@ -20,8 +20,8 @@ export default function AddNewClassObject(props: any) {
 
     // Filter the selected class data from class data array
     useEffect(() => {
-        if (props.classData && props.classData.length >= 0) {
-            let filtered = props.classData.filter((item: any) => {
+        if (props.classData && props.classData?.rows?.length >= 0) {
+            let filtered = props.classData?.rows?.filter((item: any) => {
                 return item.id === props.selectedParentClass
             })
             if (filtered) {
@@ -92,8 +92,8 @@ export default function AddNewClassObject(props: any) {
 
     // convert selected id to classname
     const showClassNameFromID = (id: any) => {
-        if (props.classData && props.classData.length > 0) {
-            let filter = props.classData.filter((item: any) => {
+        if (props.classData && props.classData?.rows?.length > 0) {
+            let filter = props.classData?.rows?.filter((item: any) => {
                 return item.id === id
             })
             if (filter) {

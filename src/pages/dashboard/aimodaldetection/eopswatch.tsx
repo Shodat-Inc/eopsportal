@@ -21,9 +21,9 @@ const modelLogo = [
     }
 ]
 export default function EopsWatch(props: any) {
-    // console.log({
-    //     "__PROPS_EOPSWATCH": props
-    // })
+    console.log({
+        "__PROPS_EOPSWATCH": props
+    })
     const dispatch = useDispatch<any>()
     const [data, setData] = useState([] as any);
     const [singleModel, setSingleModel] = useState([] as any);

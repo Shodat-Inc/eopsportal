@@ -18,7 +18,7 @@ export default function SubObjectManagement(props: any) {
     const [toggleFilter, setToggleFilter] = useState(false);
     const [toggleArrow, setToggleArrow] = useState(false);
     const [subClassData, setSubClassData] = useState([] as any);
-    const [chooseAsset, setChooseAsset] = useState('');
+    const [chooseAsset, setChooseAsset] = useState(0);
     const [toggleAsset, setToggleAsset] = useState(false);
     const [actions, setActions] = useState(false);
     const [actionCount, setActionCount] = useState(1);
@@ -44,9 +44,9 @@ export default function SubObjectManagement(props: any) {
     const classSelector = useSelector((state: any) => state.classReducer);
     const addNewObject = useSelector((state: any) => state.classReducer);
 
-    console.log({
-        "AMIT":classSelector?.setDataForSubObjectReducer?.parentClass
-    })
+    // console.log({
+    //     "AMIT":classSelector?.setDataForSubObjectReducer?.parentClass
+    // })
 
     const toggleFilterFunction = () => {
         setToggleArrow(!toggleArrow);
@@ -70,9 +70,13 @@ export default function SubObjectManagement(props: any) {
                 }
             }).then(function (response) {
 
+                // console.log({
+                //     "__response":response
+                // })
+
                 if (response.data.success === true) {
-                    setSubClassData(response?.data?.data);
-                    setChooseAsset(response?.data?.data[0]?.id)
+                    setSubClassData(response?.data?.data?.rows);
+                    setChooseAsset(response?.data?.data?.rows[0]?.id)
                 }
             }).catch(function (error) {
                 console.log({
@@ -93,8 +97,12 @@ export default function SubObjectManagement(props: any) {
 
     // convert selected id to classname
     const showClassNameFromID = (id: any) => {
-        if (subClassData && subClassData.length > 0) {
-            let filter = subClassData.filter((item: any) => {
+        // console.log({
+        //     "__ID":id,
+        //     "__subClassData":subClassData
+        // })
+        if (subClassData && subClassData?.length > 0) {
+            let filter = subClassData?.filter((item: any) => {
                 return item.id === id
             })
             if (filter) {
@@ -162,8 +170,8 @@ export default function SubObjectManagement(props: any) {
                 }
             }).then(function (response) {
                 if (response) {
-                    setObjectData(response?.data?.objects?.data)
-                    setTableHeader(response?.data?.objects?.data[0]?.Class?.ClassTags)
+                    setObjectData(response?.data?.objects?.data?.rows)
+                    setTableHeader(response?.data?.objects?.data?.rows[0]?.Class?.ClassTags)
                 }
             }).catch(function (error) {
                 console.log({

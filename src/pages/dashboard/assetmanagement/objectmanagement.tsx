@@ -17,10 +17,14 @@ import EditObject from './editobject';
 
 export default function ObjectManagement(props: any) {
 
+    // console.log({
+    //     "___AMIT":props
+    // })
+
     const dispatch = useDispatch<any>();
     const [toggleFilter, setToggleFilter] = useState(false);
     const [toggleArrow, setToggleArrow] = useState(false);
-    const [chooseAsset, setChooseAsset] = useState(props.classData && props.classData.length > 0 ? props.classData[0]?.assetName : '');
+    const [chooseAsset, setChooseAsset] = useState(props.classData && props.classData?.rows?.length > 0 ? props.classData?.rows[0]?.id : '');
     const [toggleAsset, setToggleAsset] = useState(false);
     const [actions, setActions] = useState(false);
     const [actionCount, setActionCount] = useState(1);
@@ -44,14 +48,6 @@ export default function ObjectManagement(props: any) {
 
     // All class reducer states
     const classSelector = useSelector((state: any) => state.classReducer);
-    const allClassSelector = useSelector((state: any) => state.classReducer);
-
-    // Close Success message after 5 second if true
-    useEffect(() => {
-        if (allClassSelector?.successMessageReducer === true) {
-            dispatch(successMessageAction(false))
-        }
-    }, [allClassSelector?.successMessageReducer === true])
 
     // Toggle the filters dropdown
     const toggleFilterFunction = () => {
@@ -62,18 +58,23 @@ export default function ObjectManagement(props: any) {
 
     // Set the choose asset on page load
     useEffect(() => {
-        if (props.classData && props.classData.length > 0) {
-            setChooseAsset(props.classData[0]?.id);
-            dispatch(objDefaultClassSelectorFunction(props.classData[0]?.className))
+        if (props?.classData && props?.rows?.classData.length > 0) {
+            setChooseAsset(props.classData?.rows[0]?.id);
+            dispatch(objDefaultClassSelectorFunction(props.classData?.rows[0]?.className))
         }
     }, [props.classData, dispatch]);
 
     // convert selected id to classname
     const showClassNameFromID = (id: any) => {
-        if (props.classData && props.classData.length > 0) {
-            let filter = props.classData.filter((item: any) => {
+        if (props?.classData && props?.classData?.rows?.length > 0) {
+            let filter = props?.classData?.rows?.filter((item: any) => {
                 return item.id === id
             })
+            // console.log({
+            //     "___id":id,
+            //     "___filter":filter,
+            //     "___classData":props?.classData?.rows
+            // })
             if (filter) {
                 return filter[0]?.className
             }
@@ -163,9 +164,13 @@ export default function ObjectManagement(props: any) {
                     "Content-Type": "application/json"
                 }
             }).then(function (response) {
+
+                // console.log({
+                //     "__RESPONSE":response?.data
+                // })
                 if (response) {
-                    setTableHeader(response?.data?.objects?.data[0]?.Class?.ClassTags)
-                    setObjectData(response?.data?.objects?.data);
+                    setTableHeader(response?.data?.objects?.data?.rows[0]?.Class?.ClassTags)
+                    setObjectData(response?.data?.objects?.data?.rows);
                 }
             }).catch(function (error) {
                 console.log({
@@ -284,7 +289,7 @@ export default function ObjectManagement(props: any) {
                             <div className={`h-52 border rounded-xl border-gray-969 max-h-[250px] w-[400px]  absolute flex items-start justify-start mt-1 overflow-hidden overflow-y-auto bg-white ${styles.scroll} z-10`}>
                                 <ul className="p-0 m-0 w-full">
                                     {
-                                        props.classData.map((item: any, index: any) => (
+                                        props.classData?.rows?.map((item: any, index: any) => (
                                             <li
                                                 className="px-5 py-2 bg-white cursor-pointer hover:bg-yellow-951 w-full font-normal"
                                                 onClick={() => selectItemFunction(item.id)}

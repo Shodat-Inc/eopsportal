@@ -192,8 +192,8 @@ export default function SubClassManagement(props: any) {
 
     // convert selected id to classname
     const showClassNameFromID = (id: any) => {
-        if (props.classData && props.classData.length > 0) {
-            let filter = props.classData.filter((item: any) => {
+        if (props.classData && props.classData?.rows?.length > 0) {
+            let filter = props.classData?.rows?.filter((item: any) => {
                 return item.id === id
             })
             if (filter) {
@@ -312,7 +312,7 @@ export default function SubClassManagement(props: any) {
 
             {/* Table */}
             <div className='w-full mt-6 min-h-[400px]'>
-                {subClassData && subClassData.length > 0 ?
+                {subClassData && subClassData?.rows?.length > 0 ?
                     <table className={`table-auto lg:min-w-full sm:w-full small:w-full text-left ${styles.tableV3} ${styles.tableV4}`}>
                         <thead className="text-sm font-normal">
                             <tr>
@@ -325,7 +325,7 @@ export default function SubClassManagement(props: any) {
                                 </th>
                                 <th>Tags</th>
                                 <th>
-                                    {subClassData[0]?.ParentJoinKeys[0]?.tagname} ({showClassNameFromID(props?.selectedParentClass)})</th>
+                                    {subClassData?.rows[0]?.ParentJoinKeys[0]?.tagname} ({showClassNameFromID(props?.selectedParentClass)})</th>
                                 <th>Date of creation</th>
                                 <th>Last Modified</th>
                                 <th>Actions</th>
@@ -333,7 +333,7 @@ export default function SubClassManagement(props: any) {
                         </thead>
                         <tbody>
                             {
-                                subClassData.map((item: any, index: any) => (
+                                subClassData?.rows?.map((item: any, index: any) => (
                                     <tr key={index}>
                                         <td>{index + 1}</td>
                                         <td>
