@@ -69,6 +69,17 @@ export const updateUserValidation = (data) => {
     state: Joi.string(),
     pincode: Joi.number(),
     countryId: Joi.number(),
+    primary: Joi.boolean(),
+    username: Joi.string(),
+    email: Joi.string().email(),
+    firstName: Joi.string(),
+    lastName: Joi.string(),
+    password: Joi.string(),
+    companyName: Joi.string(),
+    countryCodeId: Joi.number(),
+    phoneNumber: Joi.number(),
+    isPrimary: Joi.boolean(),
+    primary: Joi.boolean(),
   });
 
   return schema.validate(data);

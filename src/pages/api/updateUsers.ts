@@ -2,7 +2,6 @@ import { apiHandler, usersRepo } from "@/helpers/api";
 import { loggerError } from "@/logger";
 import { updateUserValidation } from "../../../validateSchema";
 
-
 // Default API handler for the PUT method to handle user update operations.
 export default apiHandler({
   put: handler,
@@ -16,7 +15,6 @@ export default apiHandler({
  */
 async function handler(req: any, res: any) {
   try {
-    
     const userId = req.id; // Extract user ID from the request object.
 
     // Check if user ID is provided. If not, return a bad request response.
@@ -46,7 +44,7 @@ async function handler(req: any, res: any) {
     }
 
     // If successful, return a success response with the updated user data.
-    res.status(200).json({ message: "Updated Successfully", updateData });
+    res.status(200).json(updatedUser);
   } catch (error: any) {
     // If there's an error during the update operation, log the error and return a server error response.
     loggerError.error("Cannot update user", error);

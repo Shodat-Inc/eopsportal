@@ -13,25 +13,19 @@ export const addressRepo = {
  * @param {Object} params - The parameters containing information to save the address.
  * @returns {Object} - Response object indicating the success or failure of the operation.
  */
-async function create(params: any) {
+async function create(params: {
+  address?: string;
+  city?: string;
+  state?: string;
+  pincode?: number;
+  countryId?: number;
+  userId: number;
+}) {
   // Logging the initiation of an address creation.
-  loggerInfo.info(`POST api/createUsers Save Address`);
+  loggerInfo.info("Create New Address");
 
   try {
-    // Validate that the userId is provided.
-    if (params.userId) {
-      // Retrieve the user by its primary key (ID) from the database.
-      const user = await db.User.findByPk(params.userId);
-
-      // If no user is found with the given ID, return an error response.
-      if (!user) {
-        return sendResponseData(false, message.error.userNotFound, {});
-      }
-    } else {
-      // If userId isn't provided, return an error response.
-      return sendResponseData(false, message.error.idReq, {});
-    }
-
+    console.log(params);
     // Create a new address instance using the provided parameters.
     const address = new db.Address(params);
 
