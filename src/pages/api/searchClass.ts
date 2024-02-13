@@ -1,4 +1,5 @@
 import { apiHandler, db } from "@/helpers/api";
+import { paginateQuery } from "@/helpers/api/constant/pagination";
 import { generalizedSearch } from "@/helpers/api/search/search";
 import { loggerError, loggerInfo } from "@/logger";
 import { Sequelize } from "sequelize";
@@ -16,7 +17,11 @@ async function search(req: any, res: any) {
   try {
     // Extract the query parameter from the request
     const query = req.query;
-    const data = await db.AddClasses.findAll({
+
+    const page = req.query.page || 1; // Default to page 1 if not provided
+    const pageSize = req.query.pageSize || 10; // Default page size to 10 if not provided
+
+    const result = await paginateQuery(db.AddClasses, page, pageSize, {
       where: {
         userId: req.auth.sub,
         [Op.or]: [
@@ -29,12 +34,12 @@ async function search(req: any, res: any) {
         {
           model: db.classTag,
           attributes: ["id", "tagName", "createdAt", "dataTypeId"],
-          required: true, 
+          // required: true, 
           include: [
             {
               model: db.tagDataType,
               attributes: ["name"],
-              required: true, 
+              required: true,
               where: {
                 id: Sequelize.col("dataTypeId"),
               },
@@ -51,7 +56,7 @@ async function search(req: any, res: any) {
     // const result = await generalizedSearch(db.AddClasses, field, value);
 
     // Return the result as a JSON response
-    return res.status(200).json(data);
+    return res.status(200).json(result);
   } catch (error: any) {
     // Log the error
     loggerError.error("Error in searching class");
