@@ -210,7 +210,7 @@ export default function ClassManagement(props: any) {
                             onChange={handleSearchFunction}
                         />
                     </div>
-                    <div className="relative ml-3">
+                    <div className="relative ml-3 hidden">
                         <button
                             className={`bg-white border transition-all duration-[400ms] h-[44px] rounded-lg px-2 py-2 flex items-center justify-start ${toggleFilter === true ? 'border-black' : 'border-gray-969'}`}
                             onClick={toggleFilterFunction}

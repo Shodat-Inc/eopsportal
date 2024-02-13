@@ -11,7 +11,7 @@ import {
     successMessageAction,
     successMessagAdvancedAction
 } from '@/store/actions/classAction';
-
+import Filter from './filter';
 import { getSubClassDataAction } from '@/store/actions/apiAction';
 
 export default function SubClassManagement(props: any) {
@@ -232,7 +232,8 @@ export default function SubClassManagement(props: any) {
                         />
                     </div>
                     <div className="relative ml-3">
-                        <button
+                        <Filter />
+                        {/* <button
                             className={`bg-white border transition-all duration-[400ms] h-[44px] rounded-lg px-2 py-2 flex items-center justify-start ${toggleFilter === true ? 'border-black' : 'border-gray-969'}`}
                             onClick={toggleFilterFunction}
                         >
@@ -250,7 +251,7 @@ export default function SubClassManagement(props: any) {
                                 width={24}
                                 className={`${toggleArrow === true ? 'rotate-180' : 'rotate-0'}`}
                             />
-                        </button>
+                        </button> */}
                     </div>
                 </div>
             </div>
