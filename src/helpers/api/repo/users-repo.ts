@@ -4,7 +4,6 @@ import bcrypt from "bcryptjs";
 import { db } from "../db";
 import sendResponseData from "../../constant";
 import { loggerInfo, loggerError } from "@/logger";
-import { info } from "console";
 import message from "@/util/responseMessage";
 
 const { serverRuntimeConfig } = getConfig();
@@ -37,11 +36,15 @@ async function authenticate(data: any) {
       attributes: [
         "id",
         "username",
-        "password",
         "email",
         "firstName",
         "lastName",
         "roleId",
+        "password",
+        "parentId",
+        "enterpriseId",
+        "createdAt",
+        "updatedAt",
       ],
       where: { email: email },
     });
@@ -57,13 +60,25 @@ async function authenticate(data: any) {
     }
 
     // Create a JWT token that is valid for 7 days
-    const token = jwt.sign(
-      { sub: user.id, role: user.roleId },
-      serverRuntimeConfig.secret,
-      {
-        expiresIn: "7d",
-      }
-    );
+    let token: string = "";
+
+    if (user.dataValues.enterpriseId) {
+      token = jwt.sign(
+        { sub: user.id, role: user.roleId, enterpriseId: user.enterpriseId },
+        serverRuntimeConfig.secret,
+        {
+          expiresIn: "7d",
+        }
+      );
+    } else {
+      token = jwt.sign(
+        { sub: user.id, role: user.roleId },
+        serverRuntimeConfig.secret,
+        {
+          expiresIn: "7d",
+        }
+      );
+    }
 
     // Remove hash from the return value
     const userJson = user.get();
@@ -83,7 +98,6 @@ async function authenticate(data: any) {
       ...userJson,
       token,
     });
-
   } catch (error) {
     loggerError.error("Authentication Error", error);
     return sendResponseData(false, message.error.error, error);
@@ -138,7 +152,6 @@ async function getAll() {
 
     // Return a successful response with the fetched users and associated information
     return sendResponseData(true, message.success.userFetched, result);
-
   } catch (error: any) {
     // Log error information in case of an exception during user fetching
     loggerError.error("Error in fetching users");
@@ -147,7 +160,6 @@ async function getAll() {
     return sendResponseData(false, message.error.errorFetchingUser, []);
   }
 }
-
 
 /**
  * Fetches a user by ID with associated address, phone records, and company records from the database.
@@ -191,7 +203,6 @@ async function getById(id: any) {
 
     // Return a successful response with the fetched user and associated information
     return sendResponseData(true, message.success.userFetched, result);
-
   } catch (error: any) {
     // Log error information in case of an exception during user fetching by ID
     loggerError.error("Error in fetching user by ID");
@@ -208,15 +219,17 @@ async function getById(id: any) {
  * @returns {Promise<object>} A promise that resolves with the result of creating the user.
  */
 async function create(params: any, transaction: any) {
-
   try {
     // Log information about the user creation process
     loggerInfo.info("Create User");
 
     // Validate if a user with the same email already exists
-    let user_data = await db.User.findOne({
-      where: { email: params.email },
-    }, { transaction });
+    let user_data = await db.User.findOne(
+      {
+        where: { email: params.email },
+      },
+      { transaction }
+    );
     if (user_data) {
       return sendResponseData(false, message.error.alreadyExist, {});
     }
@@ -248,7 +261,6 @@ async function create(params: any, transaction: any) {
 
     // Return a successful response with the created user data
     return sendResponseData(true, message.success.userCreated, data);
-
   } catch (error) {
     // Log error information in case of an exception during user creation
     loggerError.error("Error in creating user:", error);
@@ -302,34 +314,51 @@ async function update(id: any, params: any) {
 
     // Update address information if provided
     if (params.address) {
-      await db.Address.update({ address: params.address }, { where: { userId: id } });
+      await db.Address.update(
+        { address: params.address },
+        { where: { userId: id } }
+      );
     }
     if (params.state) {
-      await db.Address.update({ state: params.state }, { where: { userId: id } });
+      await db.Address.update(
+        { state: params.state },
+        { where: { userId: id } }
+      );
     }
     if (params.city) {
       await db.Address.update({ city: params.city }, { where: { userId: id } });
     }
     if (params.pincode) {
-      await db.Address.update({ pincode: params.pincode }, { where: { userId: id } });
+      await db.Address.update(
+        { pincode: params.pincode },
+        { where: { userId: id } }
+      );
     }
     if (params.countryId) {
-      await db.Address.update({ countryId: params.countryId }, { where: { userId: id } });
+      await db.Address.update(
+        { countryId: params.countryId },
+        { where: { userId: id } }
+      );
     }
 
     // Update phone record if provided
     if (params.phoneNumber) {
-      await db.phoneRecord.update({ phoneNumber: params.phoneNumber }, { where: { userId: id } });
+      await db.phoneRecord.update(
+        { phoneNumber: params.phoneNumber },
+        { where: { userId: id } }
+      );
     }
 
     // Update company record if provided
     if (params.companyName) {
-      await db.companyRecord.update({ companyName: params.companyName }, { where: { userId: id } });
+      await db.companyRecord.update(
+        { companyName: params.companyName },
+        { where: { userId: id } }
+      );
     }
 
     // Save the updated user information
     return await user.save();
-
   } catch (error) {
     // Log error information in case of an exception during user update
     loggerError.error("Error in updating user:", error);
@@ -354,4 +383,3 @@ async function _delete(id: number) {
   // delete user
   return await user.destroy();
 }
-

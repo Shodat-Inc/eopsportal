@@ -5,10 +5,10 @@ const passwordRegex =
 const usernameRegex = /^([a-zA-Z0-9]|[-._](?![-._])){4,14}$/;
 
 const coordinateSchema = Joi.object({
-  'coord-topLeft': Joi.string().required(),
-  'coord-topRight': Joi.string().required(),
-  'coord-bottomRight': Joi.string().required(),
-  'coord-bottomLeft': Joi.string().required(),
+  "coord-topLeft": Joi.string().required(),
+  "coord-topRight": Joi.string().required(),
+  "coord-bottomRight": Joi.string().required(),
+  "coord-bottomLeft": Joi.string().required(),
   probability: Joi.string(),
 });
 const imageSchema = Joi.object().pattern(/^image\d+$/, coordinateSchema);
@@ -39,6 +39,8 @@ export const createUserValidation = (data) => {
     email: Joi.string().email().required(),
     firstName: Joi.string().required(),
     lastName: Joi.string().required(),
+    enterpriseId: Joi.number(),
+    parentId: Joi.number(),
     password: Joi.string()
       .regex(passwordRegex)
       .min(6)
@@ -54,7 +56,7 @@ export const createUserValidation = (data) => {
     countryCodeId: Joi.number().required(),
     phoneNumber: Joi.number().required(),
     isPrimary: Joi.boolean(),
-    primary: Joi.boolean()
+    primary: Joi.boolean(),
   });
 
   return schema.validate(data);
@@ -130,7 +132,6 @@ export const createClassValidation = (data) => {
   const schema = Joi.object({
     userId: Joi.number(),
     enterpriseId: Joi.number(),
-    enterpriseUserId: Joi.number(),
     superParentId: Joi.number(),
     parentId: Joi.number(),
     parentJoinKey: Joi.array(),
@@ -139,7 +140,7 @@ export const createClassValidation = (data) => {
       tagName: Joi.string().required(),
       dataTypeId: Joi.number().required(),
     }),
-    primaryKeys: Joi.array().items(Joi.string())
+    primaryKeys: Joi.array().items(Joi.string()),
   });
 
   return schema.validate(data);
@@ -153,7 +154,7 @@ export const createObjectValidation = (data) => {
       value: Joi.string().required(),
     }),
     superParentId: Joi.number(),
-    parentId: Joi.number()
+    parentId: Joi.number(),
   });
 
   return schema.validate(data);
@@ -168,7 +169,7 @@ export const updateClassValidation = (data) => {
       tagName: Joi.string().required(),
       dataTypeId: Joi.number().required(),
     }),
-    parentJoinKeysUpdate: Joi.array().items(Joi.number())
+    parentJoinKeysUpdate: Joi.array().items(Joi.number()),
   });
 
   return schema.validate(data);
@@ -218,7 +219,7 @@ export const deleteRoleValidation = (data) => {
 
 export const createEnterpriseUserValidation = (data) => {
   const schema = Joi.object({
-    username: Joi.string().regex(usernameRegex).min(4).max(10).messages({
+    username: Joi.string().regex(usernameRegex).min(4).max(12).messages({
       "string.pattern.base":
         "Username should be atleast 4 and maximum 10 characters long.",
       "string.empty": "Username cannot be empty",
@@ -308,7 +309,7 @@ export const createModelValidation = (data) => {
     modelSubTitle: Joi.string(),
     howItWorks: Joi.string(),
     benefits: Joi.object(),
-    iconUrl: Joi.string()
+    iconUrl: Joi.string(),
   });
   return schema.validate(data);
 };
@@ -320,7 +321,7 @@ export const saveResponseValidation = (data) => {
     modelObjectImageId: Joi.number().integer().required(),
   });
   return schema.validate(data);
-}
+};
 
 export const updateModelValidation = (data) => {
   const schema = Joi.object({
@@ -328,7 +329,7 @@ export const updateModelValidation = (data) => {
     modelTitle: Joi.string(),
     modelSubTitle: Joi.string(),
     howItWorks: Joi.string(),
-    benefits: Joi.object()
+    benefits: Joi.object(),
   });
   return schema.validate(data);
 };
@@ -344,10 +345,9 @@ export const createAlertValidation = (data) => {
     modelObjectImageId: Joi.number(),
     userId: Joi.number(),
     enterpriseId: Joi.number(),
-    enterpriseUserId: Joi.number(),
   });
-  return schema.validate(data)
-}
+  return schema.validate(data);
+};
 
 export const updateAlertValidation = (data) => {
   const schema = Joi.object({
@@ -360,18 +360,18 @@ export const updateAlertValidation = (data) => {
     modelObjectImageId: Joi.number(),
     userId: Joi.number(),
     enterpriseId: Joi.number(),
-    enterpriseUserId: Joi.number(),
+    // enterpriseUserId: Joi.number(),
   });
-  return schema.validate(data)
-}
+  return schema.validate(data);
+};
 
 export const createEmailTemplateValidation = (data) => {
   const schema = Joi.object({
     emailSubject: Joi.string(),
     emailContent: Joi.string(),
   });
-  return schema.validate(data)
-}
+  return schema.validate(data);
+};
 
 export const createTicketValidation = (data) => {
   const schema = Joi.object({
@@ -385,10 +385,10 @@ export const createTicketValidation = (data) => {
     blockedBy: Joi.string(),
     linkedTicket: Joi.array().items(Joi.string()),
     completionDate: Joi.date().iso().required(),
-    raisedAlertId: Joi.number().required()
+    raisedAlertId: Joi.number().required(),
   });
-  return schema.validate(data)
-}
+  return schema.validate(data);
+};
 
 export const updateTicketValidation = (data) => {
   const schema = Joi.object({
@@ -403,26 +403,26 @@ export const updateTicketValidation = (data) => {
     linkedTicket: Joi.array().items(Joi.string()),
     completionDate: Joi.date().iso(),
   });
-  return schema.validate(data)
-}
+  return schema.validate(data);
+};
 
 export const createCommentValidation = (data) => {
   const schema = Joi.object({
     comment: Joi.string(),
     parentId: Joi.number(),
-    ticketId: Joi.number()
+    ticketId: Joi.number(),
   });
-  return schema.validate(data)
-}
+  return schema.validate(data);
+};
 
 export const updateCommentValidation = (data) => {
   const schema = Joi.object({
     comment: Joi.string(),
     parentId: Joi.number(),
-    ticketId: Joi.number()
+    ticketId: Joi.number(),
   });
-  return schema.validate(data)
-}
+  return schema.validate(data);
+};
 
 export const createAttachmentValidation = (data) => {
   const schema = Joi.object({
@@ -430,10 +430,10 @@ export const createAttachmentValidation = (data) => {
     fileUrl: Joi.string(),
     fileType: Joi.string(),
     ticketId: Joi.number(),
-    commentId: Joi.number()
+    commentId: Joi.number(),
   });
-  return schema.validate(data)
-}
+  return schema.validate(data);
+};
 
 export const updateAttachmentValidation = (data) => {
   const schema = Joi.object({
@@ -441,7 +441,7 @@ export const updateAttachmentValidation = (data) => {
     fileUrl: Joi.string(),
     fileType: Joi.string(),
     ticketId: Joi.number(),
-    commentId: Joi.number()
+    commentId: Joi.number(),
   });
-  return schema.validate(data)
-}
+  return schema.validate(data);
+};

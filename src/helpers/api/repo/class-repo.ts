@@ -31,17 +31,50 @@ async function create(params: any, transaction: any) {
 
   try {
     // Validate that the class name doesn't already exist.
-    let class_data = await db.AddClasses.findOne({
-      where: { className: params.className },
-    }, { transaction });
-    if (class_data) {
-      return sendResponseData(false, message.error.classExist, {});
+    if (params.enterpriseId) {
+      let class_data = await db.AddClasses.findOne(
+        {
+          where: {
+            className: params.className,
+            enterpriseId: params.enterpriseId,
+          },
+        },
+        { transaction }
+      );
+      if (class_data) {
+        return sendResponseData(false, message.error.classExist, {});
+      }
+    } else {
+      let class_data = await db.AddClasses.findOne(
+        {
+          where: { className: params.className, enterpriseId: null },
+        },
+        { transaction }
+      );
+      if (class_data) {
+        return sendResponseData(false, message.error.classExist, {});
+      }
     }
-    const serialId = await generateRandomAlphaNumeric({ model: db.AddClasses, transaction })
+
+    let serialId: string = "";
+    if (params.parentId) {
+      serialId = await generateRandomAlphaNumeric({
+        model: db.AddClasses,
+        transaction,
+        prefix: "SUBCLS",
+      });
+    } else {
+      serialId = await generateRandomAlphaNumeric({
+        model: db.AddClasses,
+        transaction,
+        prefix: "CLS",
+      });
+    }
+
     const updatedData = {
       ...params,
-      serialId
-    }
+      serialId,
+    };
 
     // Create and save the new class instance.
     const classes = new db.AddClasses(updatedData, { transaction });
@@ -97,7 +130,6 @@ async function getClassData(params: any) {
     if (!result.rows.length) {
       return sendResponseData(false, message.error.classData, []);
     }
-
     return sendResponseData(true, message.success.fetchClass, result);
   } catch (error) {
     // Log the error if fetching classes and tags fails.
@@ -321,7 +353,7 @@ async function update(params: any) {
     classes.updatedAt = new Date();
 
     const response = await classes.save();
-    return sendResponseData(true, "Class Updated Successfully", response)
+    return sendResponseData(true, "Class Updated Successfully", response);
   } catch (error: any) {
     loggerError.error("Error in Updating class", error);
     return sendResponseData(false, message.error.error, error);

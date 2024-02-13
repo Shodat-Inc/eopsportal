@@ -26,14 +26,35 @@ Doubts
 
 Now for the ETL Engineer, i have created an API which he will use to make entry in database in such a way that he will have access for this API and now only we have to give him info and moreover he will have urls of image .
 
-The third API IS FOR GETTING ALL MODEL DATA FOR CLASSID 
+The third API IS FOR GETTING ALL MODEL DATA FOR CLASSID
 
 ## response for tyre Detection :-->{
+
 distance: int,
 uom : string,
 recomendation: "severe , moderate, no",
 }
+
 ##
 
+We have to send ModelID instead of name.
 
-Id bhejni ha model ki na ki nam ;
+
+Flow Changes :-
+
+# Api routes
+
+## Login :-
+
+Inv User :- api/login user UID role :-
+Ent User:- api/login Ent UId EntID Role :-
+
+Result :- Single API Route
+
+
+## Class Creation :-
+
+Result :- Single API Route
+
+Validation :- For enterprise :- enterpriseID  For Individual :- uID
+

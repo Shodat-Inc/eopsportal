@@ -27,7 +27,6 @@ async function handler(req: any, res: any) {
     const reqData = {
       ...req.body,
       userId: req.id,
-      enterpriseUserId: req.enterpriseUserId,
       enterpriseId: req.enterpriseId,
     };
     const validation = createClassValidation(req.body);
@@ -57,41 +56,52 @@ async function handler(req: any, res: any) {
           classId: classId,
         });
       }
-      const data = req.body.primaryKeys
+      const data = req.body.primaryKeys;
       // Bulk create class tags using the populated tag data.
-      const classTags = await classTagRepo.bulkCreate(tagData, classId, transaction);
+      const classTags = await classTagRepo.bulkCreate(
+        tagData,
+        classId,
+        transaction
+      );
 
-      const classTagData = classTags.data
+      const classTagData = classTags.data;
       if (data) {
-        const primaryKeyIds = (data.forEach((primaryKey: any) => {
+        const primaryKeyIds = data.forEach((primaryKey: any) => {
           classTagData.forEach(async (classTagData: any) => {
             if (classTagData.dataValues.tagName === primaryKey) {
               var insertData = {
                 classTagId: classTagData.dataValues.id,
                 classId: classId,
-                userId: req.id
-              }
+                userId: req.id,
+              };
               const newTicket = new db.PrimaryKey(insertData);
               await newTicket.save(newTicket);
             }
-          })
-        }));
+          });
+        });
       }
 
       const tagIdArr: any = [];
       if (reqData.parentJoinKey && reqData.parentJoinKey.length) {
-        const classTagId = await classTagRepo.getClassTags(reqData.parentJoinKey, transaction);
+        const classTagId = await classTagRepo.getClassTags(
+          reqData.parentJoinKey,
+          transaction
+        );
         classTagId.data.forEach((element: any) => {
           tagIdArr.push({
             classId,
             parentTagId: element.id,
           });
         });
-        const values = await parentJoinKeyRepo.bulkCreate(tagIdArr, classId, transaction);
+        const values = await parentJoinKeyRepo.bulkCreate(
+          tagIdArr,
+          classId,
+          transaction
+        );
       }
       // Send back a successful response with the class and tag data.
       res.send({ classData, classTags });
-    })
+    });
   } catch (error: any) {
     // In case of any error during the class creation process, log the error and send back an error response.
     loggerError.error("Error in saving class", error);
