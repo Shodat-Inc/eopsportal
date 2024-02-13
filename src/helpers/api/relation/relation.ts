@@ -1,7 +1,3 @@
-// import { db } from "../db";
-
-import { Attachment } from "../models/ticketAttachments";
-
 async function relationship(db: any) {
   // Establishing relationships for the User models:
   return new Promise((resolve, reject) => {
@@ -99,24 +95,29 @@ async function relationship(db: any) {
       foreignKey: "enterpriseId",
     });
 
+    db.Enterprise.hasMany(db.User, { foreignKey: "enterpriseId" });
+    db.User.belongsTo(db.Enterprise, {
+      foreignKey: "enterpriseId",
+    });
+
     db.Role.hasMany(db.Routes);
     db.Routes.belongsTo(db.Role);
 
-    db.Role.hasMany(db.EnterpriseUser, { foreignKey: "roleId" });
-    db.EnterpriseUser.belongsTo(db.Role, { foreignKey: "roleId" });
+    // db.Role.hasMany(db.EnterpriseUser, { foreignKey: "roleId" });
+    // db.EnterpriseUser.belongsTo(db.Role, { foreignKey: "roleId" });
 
-    db.Enterprise.hasMany(db.EnterpriseUser, { foreignKey: "enterpriseId" });
-    db.EnterpriseUser.belongsTo(db.Enterprise, { foreignKey: "enterpriseId" });
+    // db.Enterprise.hasMany(db.EnterpriseUser, { foreignKey: "enterpriseId" });
+    // db.EnterpriseUser.belongsTo(db.Enterprise, { foreignKey: "enterpriseId" });
 
     db.Enterprise.hasMany(db.AddClasses, { foreignKey: "enterpriseId" });
     db.AddClasses.belongsTo(db.Enterprise, { foreignKey: "enterpriseId" });
 
-    db.EnterpriseUser.hasMany(db.AddClasses, {
-      foreignKey: "enterpriseUserId",
-    });
-    db.AddClasses.belongsTo(db.EnterpriseUser, {
-      foreignKey: "enterpriseUserId",
-    });
+    // db.EnterpriseUser.hasMany(db.AddClasses, {
+    //   foreignKey: "enterpriseUserId",
+    // });
+    // db.AddClasses.belongsTo(db.EnterpriseUser, {
+    //   foreignKey: "enterpriseUserId",
+    // });
 
     db.Enterprise.hasMany(db.Invite, { foreignKey: "enterpriseId" });
     db.Invite.belongsTo(db.Enterprise, { foreignKey: "enterpriseId" });
@@ -162,7 +163,9 @@ async function relationship(db: any) {
     db.ModelData.belongsTo(db.User, { foreignKey: "userId" });
 
     db.EmailTemplate.hasMany(db.CrackAlert, { foreignKey: "emailTemplateId" });
-    db.CrackAlert.belongsTo(db.EmailTemplate, { foreignKey: "emailTemplateId" });
+    db.CrackAlert.belongsTo(db.EmailTemplate, {
+      foreignKey: "emailTemplateId",
+    });
 
     db.Image.hasMany(db.RaisedAlert, { foreignKey: "modelObjectImageId" });
     db.RaisedAlert.belongsTo(db.Image, { foreignKey: "modelObjectImageId" });
@@ -182,8 +185,10 @@ async function relationship(db: any) {
     db.Enterprise.hasMany(db.CrackAlert, { foreignKey: "enterpriseId" });
     db.CrackAlert.belongsTo(db.Enterprise, { foreignKey: "enterpriseId" });
 
-    db.EnterpriseUser.hasMany(db.CrackAlert, { foreignKey: "enterpriseUserId" });
-    db.CrackAlert.belongsTo(db.EnterpriseUser, { foreignKey: "enterpriseId" });
+    // db.EnterpriseUser.hasMany(db.CrackAlert, {
+    //   foreignKey: "enterpriseUserId",
+    // });
+    // db.CrackAlert.belongsTo(db.EnterpriseUser, { foreignKey: "enterpriseId" });
 
     db.AddClasses.hasMany(db.RaisedAlert, { foreignKey: "classId" });
     db.RaisedAlert.belongsTo(db.AddClasses, { foreignKey: "classId" });
@@ -202,12 +207,12 @@ async function relationship(db: any) {
     db.User.hasMany(db.BatteryAlert, { foreignKey: "userId" });
     db.BatteryAlert.belongsTo(db.User, { foreignKey: "userId" });
 
-    db.EnterpriseUser.hasMany(db.BatteryAlert, {
-      foreignKey: "enterpriseUserId",
-    });
-    db.BatteryAlert.belongsTo(db.EnterpriseUser, {
-      foreignKey: "enterpriseUserId",
-    });
+    // db.EnterpriseUser.hasMany(db.BatteryAlert, {
+    //   foreignKey: "enterpriseUserId",
+    // });
+    // db.BatteryAlert.belongsTo(db.EnterpriseUser, {
+    //   foreignKey: "enterpriseUserId",
+    // });
 
     db.Enterprise.hasMany(db.BatteryAlert, { foreignKey: "enterpriseId" });
     db.BatteryAlert.belongsTo(db.Enterprise, { foreignKey: "enterpriseId" });
@@ -224,8 +229,8 @@ async function relationship(db: any) {
     db.Enterprise.hasMany(db.Comment, { foreignKey: "enterpriseId" });
     db.Comment.belongsTo(db.Enterprise, { foreignKey: "enterpriseId" });
 
-    db.EnterpriseUser.hasMany(db.Comment, { foreignKey: "enterpriseUserId" });
-    db.Comment.belongsTo(db.EnterpriseUser, { foreignKey: "enterpriseUserId" });
+    // db.EnterpriseUser.hasMany(db.Comment, { foreignKey: "enterpriseUserId" });
+    // db.Comment.belongsTo(db.EnterpriseUser, { foreignKey: "enterpriseUserId" });
 
     db.User.hasMany(db.Attachment, { foreignKey: "userId" });
     db.Attachment.belongsTo(db.User, { foreignKey: "userId" });
@@ -233,21 +238,25 @@ async function relationship(db: any) {
     db.Enterprise.hasMany(db.Attachment, { foreignKey: "enterpriseId" });
     db.Attachment.belongsTo(db.Enterprise, { foreignKey: "enterpriseId" });
 
-    db.EnterpriseUser.hasMany(db.Attachment, {
-      foreignKey: "enterpriseUserId",
-    });
-    db.Attachment.belongsTo(db.EnterpriseUser, {
-      foreignKey: "enterpriseUserId",
-    });
+    // db.EnterpriseUser.hasMany(db.Attachment, {
+    //   foreignKey: "enterpriseUserId",
+    // });
+    // db.Attachment.belongsTo(db.EnterpriseUser, {
+    //   foreignKey: "enterpriseUserId",
+    // });
 
-    db.Link.hasMany(db.Ticket, { foreignKey: "ticketRaisedAlertLinkId" })
-    db.Ticket.belongsTo(db.Link, { foreignKey: "ticketRaisedAlertLinkId" })
+    db.Link.hasMany(db.Ticket, { foreignKey: "ticketRaisedAlertLinkId" });
+    db.Ticket.belongsTo(db.Link, { foreignKey: "ticketRaisedAlertLinkId" });
 
-    db.Link.hasMany(db.RaisedAlert, { foreignKey: "ticketRaisedAlertLinkId" })
-    db.RaisedAlert.belongsTo(db.Link, { foreignKey: "ticketRaisedAlertLinkId" })
+    db.Link.hasMany(db.RaisedAlert, { foreignKey: "ticketRaisedAlertLinkId" });
+    db.RaisedAlert.belongsTo(db.Link, {
+      foreignKey: "ticketRaisedAlertLinkId",
+    });
 
     db.EmailTemplate.hasMany(db.TyreAlerts, { foreignKey: "emailTemplateId" });
-    db.TyreAlerts.belongsTo(db.EmailTemplate, { foreignKey: "emailTemplateId" });
+    db.TyreAlerts.belongsTo(db.EmailTemplate, {
+      foreignKey: "emailTemplateId",
+    });
 
     db.User.hasMany(db.TyreAlerts, { foreignKey: "userId" });
     db.TyreAlerts.belongsTo(db.User, { foreignKey: "userId" });
@@ -258,8 +267,10 @@ async function relationship(db: any) {
     db.Enterprise.hasMany(db.TyreAlerts, { foreignKey: "enterpriseId" });
     db.TyreAlerts.belongsTo(db.Enterprise, { foreignKey: "enterpriseId" });
 
-    db.EnterpriseUser.hasMany(db.TyreAlerts, { foreignKey: "enterpriseUserId" });
-    db.TyreAlerts.belongsTo(db.EnterpriseUser, { foreignKey: "enterpriseId" });
+    // db.EnterpriseUser.hasMany(db.TyreAlerts, {
+    //   foreignKey: "enterpriseUserId",
+    // });
+    // db.TyreAlerts.belongsTo(db.EnterpriseUser, { foreignKey: "enterpriseId" });
 
     db.Ticket.hasMany(db.Attachment, { foreignKey: "ticketId" });
     db.Attachment.belongsTo(db.Ticket, { foreignKey: "ticketId" });
@@ -271,25 +282,30 @@ async function relationship(db: any) {
     db.CommentAttachment.belongsTo(db.User, { foreignKey: "userId" });
 
     db.Enterprise.hasMany(db.CommentAttachment, { foreignKey: "enterpriseId" });
-    db.CommentAttachment.belongsTo(db.Enterprise, { foreignKey: "enterpriseId" });
-
-    db.EnterpriseUser.hasMany(db.CommentAttachment, { foreignKey: "enterpriseUserId" });
-    db.CommentAttachment.belongsTo(db.EnterpriseUser, { foreignKey: "enterpriseUserId" });
-
-    db.Comment.hasMany(db.Comment, {
-      foreignKey: 'parentId', // Foreign key referencing the parent comment
-      as: 'replies' // Alias for the self-association
+    db.CommentAttachment.belongsTo(db.Enterprise, {
+      foreignKey: "enterpriseId",
     });
 
-    db.User.hasMany(db.PrimaryKey, { foreignKey: "userId" })
-    db.PrimaryKey.belongsTo(db.User, { foreignKey: "userId" })
+    // db.EnterpriseUser.hasMany(db.CommentAttachment, {
+    //   foreignKey: "enterpriseUserId",
+    // });
+    // db.CommentAttachment.belongsTo(db.EnterpriseUser, {
+    //   foreignKey: "enterpriseUserId",
+    // });
 
-    db.classTag.hasMany(db.PrimaryKey, { foreignKey: "classTagId" })
-    db.PrimaryKey.belongsTo(db.classTag, { foreignKey: "classTagId" })
+    db.Comment.hasMany(db.Comment, {
+      foreignKey: "parentId", // Foreign key referencing the parent comment
+      as: "replies", // Alias for the self-association
+    });
+
+    db.User.hasMany(db.PrimaryKey, { foreignKey: "userId" });
+    db.PrimaryKey.belongsTo(db.User, { foreignKey: "userId" });
+
+    db.classTag.hasMany(db.PrimaryKey, { foreignKey: "classTagId" });
+    db.PrimaryKey.belongsTo(db.classTag, { foreignKey: "classTagId" });
 
     db.AddClasses.hasMany(db.PrimaryKey, { foreignKey: "classId" });
-    db.PrimaryKey.belongsTo(db.AddClasses, { foreignKey: "classId" })
-
+    db.PrimaryKey.belongsTo(db.AddClasses, { foreignKey: "classId" });
 
     // db.Attachment.belongsTo(db.Ticket, { foreignKey: "referenceTableId" })
     // db.Attachment.belongsTo(db.Comment, { foreignKey: "referenceTableId" })

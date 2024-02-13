@@ -49,14 +49,6 @@ export function Attachment(sequelize: any) {
                 id: "id"
             }
         },
-        enterpriseUserId: {
-            type: DataTypes.INTEGER,
-            allowNull: true,
-            references: {
-                model: "EnterpriseUsers",
-                id: "id"
-            }
-        },
     };
 
     return sequelize.define("TicketAttachment", attributes);

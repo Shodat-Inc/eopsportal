@@ -46,15 +46,6 @@ export function Comment(sequelize: any) {
             }
         },
 
-        enterpriseUserId: {
-            type: DataTypes.INTEGER,
-            allowNull: true,
-            references: {
-                model: "EnterpriseUsers",
-                id: "id"
-            }
-        }
-
     };
 
     return sequelize.define("TicketComments", attributes);

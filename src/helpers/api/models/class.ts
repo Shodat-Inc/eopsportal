@@ -30,10 +30,7 @@ export function AddClasses(sequelize: {
         type: DataTypes.IntegerDataTypeConstructor;
         references: { model: string; id: string };
       };
-      enterpriseUserId: {
-        type: DataTypes.IntegerDataTypeConstructor;
-        references: { model: string; id: string };
-      };
+
       enterpriseId: {
         type: DataTypes.IntegerDataTypeConstructor;
         references: { model: string; id: string };
@@ -64,10 +61,7 @@ export function AddClasses(sequelize: {
       type: DataTypes.INTEGER,
       allowNull: true,
     },
-    enterpriseUserId: {
-      type: DataTypes.INTEGER,
-      references: { model: "EnterpriseUsers", id: "id" },
-    },
+
     enterpriseId: {
       type: DataTypes.INTEGER,
       references: { model: "Enterprises", id: "id" },

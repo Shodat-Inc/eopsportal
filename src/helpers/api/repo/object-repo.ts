@@ -1,11 +1,10 @@
 import { db } from "../db";
 import sendResponseData from "../../constant";
 import { loggerInfo, loggerError } from "@/logger";
-import { error } from "console";
 import message from "@/util/responseMessage";
 import { generateRandomAlphaNumeric } from "../../../util/helper";
 import { classTagRepo } from "./classTag-repo";
-import { paginate } from "../constant/pagination";
+import { paginateQuery } from "../constant/pagination";
 
 /**
  * Repository for handling object related operations.
@@ -37,6 +36,7 @@ async function create(params: any, transaction: any) {
     const serialId = await generateRandomAlphaNumeric({
       model: db.Object,
       transaction,
+      prefix: "OBJ",
     });
     const updatedData = {
       ...params,
@@ -72,10 +72,10 @@ async function get(params: any) {
     let result;
     let obj = {};
     if (params.query.parentJoinKey) {
-      obj = { id: params.query.parentJoinKey }
+      obj = { id: params.query.parentJoinKey };
     }
     if (params.query.id) {
-      result = await db.object.findAll({
+      result = await paginateQuery(db.object, params.query.page || 1, params.query.pageSize || 10, {
         include: [
           {
             model: db.AddClasses,
@@ -90,7 +90,7 @@ async function get(params: any) {
                 model: db.parentJoinKey,
                 where: obj, // This will filter by classId
                 attributes: ["id", "parentTagId", "createdAt"],
-                required: false
+                required: false,
               },
             ],
           },
@@ -101,69 +101,76 @@ async function get(params: any) {
         ],
       });
     }
+
     else if (params.query.keyword) {
-      const data = await db.AddValues.findAll({
+      const page = params.query.page || 1; // Default to page 1 if not provided
+      const pageSize = params.query.pageSize || 10; // Default page size to 10 if not provided
+
+      const { totalItems, totalPages, currentPage, rows } = await paginateQuery(db.AddValues, page, pageSize, {
         where: { values: params.query.keyword },
         required: true,
         include: [
           {
             model: db.classTag,
             required: true,
-            attributes: ['tagName', 'dataTypeId', 'classId'],
+            attributes: ["tagName", "dataTypeId", "classId"],
             include: [
               {
                 model: db.AddClasses,
                 required: true,
-                // attributes: [],
-                where: { userId: params.userId }
+                where: { userId: params.userId },
               },
             ],
-          }]
-      })
-      const modifiedData = data.map((item: {
-        values: any;
-        classTagId: any;
-        objectId: any;
-        createdAt: any;
-        updatedAt: any;
-        id: any; ClassTag: { Class: { id: any; serialId: any; className: any; userId: any; createdAt: any; updatedAt: any; }; tagName: any; dataTypeId: any; classId: any; };
-      }) => ({
+          }
+        ]
+      });
 
+      const modifiedData = rows.map((item: any) => ({
         Class: {
-          id: item.ClassTag.Class.id,
-          serialId: item.ClassTag.Class.serialId,
-          className: item.ClassTag.Class.className,
-          userId: item.ClassTag.Class.userId,
-          createdAt: item.ClassTag.Class.createdAt,
-          updatedAt: item.ClassTag.Class.updatedAt,
-          ClassTags: [{
-            tagName: item.ClassTag.tagName,
-            dataTypeId: item.ClassTag.dataTypeId,
-            classId: item.ClassTag.classId,
-          }],
+          id: item.classTag?.classId,
+          serialId: item.classTag?.Class?.serialId,
+          className: item.classTag?.Class?.className,
+          userId: item.classTag?.Class?.userId,
+          createdAt: item.classTag?.Class?.createdAt,
+          updatedAt: item.classTag?.Class?.updatedAt,
+          ClassTags: [
+            {
+              tagName: item.classTag?.tagName,
+              dataTypeId: item.classTag?.dataTypeId,
+              classId: item.classTag?.classId,
+            },
+          ],
         },
-        ObjectValues: [{
-          id: item.id,
-          values: item.values,
-          classTagId: item.classTagId,
-          objectId: item.objectId,
-          createdAt: item.createdAt,
-          updatedAt: item.updatedAt,
-        }]
+        ObjectValues: [
+          {
+            id: item.id,
+            values: item.values,
+            classTagId: item.classTagId,
+            objectId: item.objectId,
+            createdAt: item.createdAt,
+            updatedAt: item.updatedAt,
+          },
+        ],
       }));
 
-      if (!data.length) {
-        return sendResponseData(false, "Data Not Found", {})
+      if (!modifiedData.length) {
+        return sendResponseData(false, "Data Not Found", {});
       }
 
-      // const paginatedResult = await paginate(data, params.query.page || 1, params.query.pageSize || 5);
-
-      return sendResponseData(true, "Object with its tag value fetched successfully", modifiedData)
+      return sendResponseData(true, "Object with its tag value fetched successfully", {
+        totalItems,
+        totalPages,
+        currentPage,
+        pageSize,
+        rows: modifiedData
+      });
+    }
+    if (!result || !result.rows.length) {
+      return sendResponseData(false, "Object Do not Exist", {});
     }
 
-
     const data: any = {};
-    for (let i of result) {
+    for (let i of result.rows) {
       const pjk = i.Class.ParentJoinKeys;
       for (let j of pjk) {
         let tagQuery = await classTagRepo.getParentTagValue(j.parentTagId);
@@ -171,11 +178,6 @@ async function get(params: any) {
         i.dataValues.parentJoinValues = data;
       }
     }
-    if (!result) {
-      return sendResponseData(false, "Object Do not Exist", {});
-    }
-    // const paginatedResult = await paginate(result, params.query.page || 1, params.query.pageSize || 5);
-
     return sendResponseData(true, "Object fetched Successfully", result);
   } catch (error) {
     // Log the error if there's an issue with fetching data.
@@ -209,7 +211,7 @@ async function getObjectById(params: any) {
 
   try {
     // Fetch data from the database based on ObjectId and ClassId
-    const result = await db.object.findAll({
+    const result = await paginateQuery(db.object, params.query.page || 1, params.query.pageSize || 10, {
       where: { id: params.query.objectId }, // This will filter by ObjectId
       include: [
         {
@@ -235,7 +237,7 @@ async function getObjectById(params: any) {
     });
 
     const data: any = {};
-    for (let i of result) {
+    for (let i of result.rows) {
       const pjk = i.Class.ParentJoinKeys;
       for (let j of pjk) {
         let tagQuery = await classTagRepo.getParentTagValue(j.parentTagId);
@@ -243,7 +245,7 @@ async function getObjectById(params: any) {
         i.dataValues.parentJoinValues = data;
       }
     }
-    if (!result) {
+    if (!result.rows.length) {
       return sendResponseData(false, "Object Do not Exist", {});
     }
     return sendResponseData(true, "Object fetched Successfully", result);

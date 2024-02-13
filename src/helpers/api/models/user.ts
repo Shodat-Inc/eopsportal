@@ -16,6 +16,18 @@ export function User(sequelize: any) {
     password: { type: DataTypes.STRING, allowNull: false },
     resetToken: { type: DataTypes.STRING, allowNull: true },
     resetTokenExpires: { type: DataTypes.DATE, allowNull: true },
+    parentId: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+    enterpriseId: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+        model: "Enterprises",
+        id: "id",
+      },
+    },
   };
 
   const options = {

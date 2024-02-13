@@ -5,8 +5,11 @@ import message from "@/util/responseMessage";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import getConfig from "next/config";
-import { enterpriseUserMail } from "../constant/nodemailer"
-import { inviteEnterpriseUserMail, enterpriseAdminMail } from "../constant/nodemailer"
+import { enterpriseUserMail } from "../constant/nodemailer";
+import {
+  inviteEnterpriseUserMail,
+  enterpriseAdminMail,
+} from "../constant/nodemailer";
 
 const { serverRuntimeConfig } = getConfig();
 
@@ -22,7 +25,7 @@ export const EnterpriseUsersRepo = {
   getEnterpriseUserById,
   updateProfile,
   inviteEnterpriseUser,
-  cancelInvite
+  cancelInvite,
 };
 
 /**
@@ -61,11 +64,12 @@ async function authenticate(data: any) {
     if (!bcrypt.compareSync(String(password), String(user.password))) {
       return sendResponseData(false, message.error.incorrectPassword, {});
     }
-
+    //uer.ent id = null
+ // user.parentid = null 
     // Create a JWT token that is valid for 7 days
     const token = jwt.sign(
       {
-        enterpriseUserId: user.id,
+        // enterpriseUserId: user.id,
         role: user.roleId,
         enterpriseId: user.enterpriseId,
       },
@@ -84,7 +88,6 @@ async function authenticate(data: any) {
       ...userJson,
       token,
     });
-
   } catch (error) {
     // Log error information in case of an exception during authentication
     loggerError.error("Authentication Error", error);
@@ -103,11 +106,11 @@ async function authenticate(data: any) {
 async function create(params: any) {
   // Log information about the function execution
   loggerInfo.info("Create User Enterprise Repo");
-
+  console.log(params);
   try {
     // Check if an enterprise user with the same username already exists
-    const existingUser = await db.EnterpriseUser.findOne({
-      where: { username: params.username },
+    const existingUser = await db.User.findOne({
+      where: { username: params.username, enterpriseId: params.enterpriseId },
     });
 
     // If the user already exists, return an error response
@@ -116,11 +119,11 @@ async function create(params: any) {
     }
 
     // Create a new instance of EnterpriseUser model with the provided parameters
-    const newEnterpriseUser = new db.EnterpriseUser(params);
+    const newEnterpriseUser = new db.User(params);
 
-    //Fetching mail and sending mail to the enterprise user 
-    const userMail = newEnterpriseUser.dataValues.email
-    enterpriseUserMail(userMail)
+    //Fetching mail and sending mail to the enterprise user
+    const userMail = newEnterpriseUser.dataValues.email;
+    enterpriseUserMail(userMail);
 
     // Hash the password before saving it to the database
     if (params.password) {
@@ -132,7 +135,6 @@ async function create(params: any) {
 
     // Return a successful response after creating the enterprise user
     return sendResponseData(true, message.success.enterpriseUserCreated, save);
-
   } catch (error: any) {
     // Log error information in case of an exception during user creation
     loggerError.error("Error in User Enterprise Repo", error);
@@ -173,7 +175,6 @@ async function getAllEnterpriseUser() {
  */
 // async function update(params: any,reqData:any) {
 async function update(params: any, reqAuth: any) {
-
   try {
     // Find the enterprise user in the database based on the provided ID
     const data = await db.EnterpriseUser.findOne({
@@ -195,7 +196,7 @@ async function update(params: any, reqAuth: any) {
       "roleId",
     ];
 
-    let newObj: any = {}
+    let newObj: any = {};
     // Update the enterprise user data fields based on the provided parameters
     propertiesToUpdate.forEach((property) => {
       if (params[property]) {
@@ -241,7 +242,6 @@ async function _delete(params: any) {
 
     // Return a successful response after deleting the enterprise user
     return sendResponseData(true, message.success.enterpriseUserDeleted, []);
-
   } catch (error: any) {
     // Return an error response in case of an exception during data deletion
     return sendResponseData(
@@ -272,7 +272,14 @@ async function getEnterpriseUserById(params: any) {
     // Find the enterprise user in the database based on the provided ID.
     const data = await db.EnterpriseUser.findOne({
       where: { id: params.id },
-      attributes: ["username", "email", "firstName", "lastName", "enterpriseId", "roleId"]
+      attributes: [
+        "username",
+        "email",
+        "firstName",
+        "lastName",
+        "enterpriseId",
+        "roleId",
+      ],
     });
 
     // Check if the user data is available.
@@ -288,32 +295,32 @@ async function getEnterpriseUserById(params: any) {
     loggerError.error("Error in enterprise user repo", error);
 
     // Return an error response with details about the encountered error.
-    return sendResponseData(false, message.error.errorFetchingEnterpriseUser, error);
+    return sendResponseData(
+      false,
+      message.error.errorFetchingEnterpriseUser,
+      error
+    );
   }
 }
 
 async function updateProfile(params: any, reqData: any) {
   try {
-    loggerInfo.info("Updating Enterprise User profile while viewing data")
+    loggerInfo.info("Updating Enterprise User profile while viewing data");
     const data = await db.EnterpriseUser.findOne({
       where: { id: params.enterpriseUserId },
-    })
-    const profileToUpdate = [
-      "username",
-      "firstName",
-      "lastName"
-    ];
+    });
+    const profileToUpdate = ["username", "firstName", "lastName"];
     profileToUpdate.forEach((property) => {
       if (reqData[property]) {
-        data[property] = reqData[property]
+        data[property] = reqData[property];
       }
-    })
+    });
     const response = await data.save();
 
-    return sendResponseData(true, message.success.profileUpdated, response)
+    return sendResponseData(true, message.success.profileUpdated, response);
   } catch (error: any) {
-    loggerError.error("Error in Enterprise user repo", error)
-    return sendResponseData(false, message.error.errorUpdatingData, error)
+    loggerError.error("Error in Enterprise user repo", error);
+    return sendResponseData(false, message.error.errorUpdatingData, error);
   }
 }
 
@@ -325,31 +332,34 @@ async function inviteEnterpriseUser(params: any, reqData: any) {
     }
     // To identify that the user sending invitation is Admin
     const adminData = await db.EnterpriseUser.findOne({
-      where: { roleId: reqData.role }
+      where: { roleId: reqData.role },
     });
 
     if (!adminData) {
-      return sendResponseData(false, message.error.apologiesEnterpriseAdminAccess, adminData);
+      return sendResponseData(
+        false,
+        message.error.apologiesEnterpriseAdminAccess,
+        adminData
+      );
     }
 
     const [invite, created] = await db.Invite.findOrCreate({
       where: { email: params.email },
       defaults: {
         ...params,
-        enterpriseId: reqData.enterpriseId
-      }
+        enterpriseId: reqData.enterpriseId,
+      },
     });
 
     // If the email already existed, update the record
     if (!created) {
       await invite.update({
         ...params,
-        enterpriseId: reqData.enterpriseId
+        enterpriseId: reqData.enterpriseId,
       });
     }
-    inviteEnterpriseUserMail(params.email)
+    inviteEnterpriseUserMail(params.email);
     return sendResponseData(true, message.success.emailSent, invite);
-
   } catch (error: any) {
     loggerError.error("Error in inviting Enterprise User", error);
     return sendResponseData(false, message.error.errorInvitingUser, {});
@@ -358,7 +368,7 @@ async function inviteEnterpriseUser(params: any, reqData: any) {
 
 async function cancelInvite(params: any, reqData: any) {
   try {
-    loggerInfo.info("Cancel Invite of Enterprise User")
+    loggerInfo.info("Cancel Invite of Enterprise User");
     //check if the enterprise user email exist in invite table
     const user = await db.Invite.findOne({
       where: { email: params.email },
@@ -369,18 +379,18 @@ async function cancelInvite(params: any, reqData: any) {
 
     // check if the enterprise user exist in enterpriseUser table too
     const check = await db.EnterpriseUser.findOne({
-      where: { email: user.dataValues.email }
-    })
+      where: { email: user.dataValues.email },
+    });
 
     //fetching admin email
     const adminMail = await db.EnterpriseUser.findOne({
-      where: { id: reqData.enterpriseUserId }
-    })
+      where: { id: reqData.enterpriseUserId },
+    });
 
     if (check) {
-      //send mail to admin 
-      enterpriseAdminMail(adminMail.dataValues.email, check.dataValues.email)
-      return sendResponseData(true, message.success.emailSentAdmin, {})
+      //send mail to admin
+      enterpriseAdminMail(adminMail.dataValues.email, check.dataValues.email);
+      return sendResponseData(true, message.success.emailSentAdmin, {});
     } else {
       const res = await user.update(
         {
@@ -390,11 +400,16 @@ async function cancelInvite(params: any, reqData: any) {
         },
         {
           where: { email: params.email },
-        })
-      return sendResponseData(true, message.success.invitationCanceled, res)
+        }
+      );
+      return sendResponseData(true, message.success.invitationCanceled, res);
     }
   } catch (error: any) {
-    loggerError.error("Error in Inviting Enterprise User")
-    return sendResponseData(false, message.error.errorCancelInvite, error.message)
+    loggerError.error("Error in Inviting Enterprise User");
+    return sendResponseData(
+      false,
+      message.error.errorCancelInvite,
+      error.message
+    );
   }
 }

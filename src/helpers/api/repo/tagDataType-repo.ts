@@ -2,6 +2,7 @@ import { db } from "../db";
 import sendResponseData from "../../constant";
 import { loggerInfo, loggerError } from "@/logger";
 import message from "@/util/responseMessage";
+import { paginateQuery } from "../constant/pagination";
 
 /**
  * Repository for handling tagDataType-related operations.
@@ -43,13 +44,16 @@ async function create(params: any) {
  *
  * @returns {Promise<object>} A promise that resolves with the result of the Tag DataTypes fetching process.
  */
-async function get() {
+async function get(params: any) {
   // Log information about the function execution
   loggerInfo.info("Get All Tag DataTypes");
 
   try {
+    const page = params.query.page || 1; // Default to page 1 if not provided
+    const pageSize = params.query.pageSize || 10; // Default page size to 10 if not provided
+
     // Fetch all Tag DataTypes from the database
-    const result = await db.tagDataType.findAll();
+    const result = await paginateQuery(db.tagDataType, page, pageSize, {})
 
     // Return a successful response with the fetched Tag DataTypes
     return sendResponseData(true, message.success.tagDataTypeFetched, result);

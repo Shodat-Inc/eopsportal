@@ -8,7 +8,7 @@ export default apiHandler({
 
 async function handleGetRequest(req: any, res: any) {
   try {
-    const result = await tagDataTypeRepo.get();
+    const result = await tagDataTypeRepo.get(req);
     res.status(200).json(result);
   } catch (error: any) {
     // If there's an error during user retrieval, log the error and send back a 500 Internal Server Error response.

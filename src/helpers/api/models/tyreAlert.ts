@@ -47,13 +47,6 @@ export function TyreAlerts(sequelize: any) {
         id: "id",
       },
     },
-    enterpriseUserId: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: "EnterpriseUsers",
-        id: "id",
-      },
-    },
     enterpriseId: {
       type: DataTypes.INTEGER,
       references: {

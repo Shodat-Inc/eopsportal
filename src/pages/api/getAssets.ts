@@ -13,8 +13,12 @@ export default apiHandler({
  */
 async function allhandler(req: any, res: any) {
   try {
+    const data = {
+      query: req.query,
+      userId: req.auth.sub
+    }
     // Retrieve class data using the classRepo and the provided request data.
-    const classes = await classRepo.getClassData(req);
+    const classes = await classRepo.getClassData(data);
 
     // If class data is successfully retrieved, send back a 200 OK response with the class data.
     res.status(200).json(classes);

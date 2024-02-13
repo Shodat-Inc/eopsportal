@@ -1,7 +1,6 @@
 import getConfig from "next/config";
 import mysql from "mysql2/promise";
 import { Sequelize } from "sequelize";
-import * as models from "./models/index";
 import { loggerInfo, loggerError } from "@/logger";
 import { dialData } from "../seedData/countryCode";
 import relationship from "./relation/relation";
@@ -10,6 +9,7 @@ import { TagDataType } from "../seedData/datatype";
 import { routes } from "../seedData/route";
 import { individualRole } from "../seedData/indvidualRole";
 import { emailTemplates } from "../seedData/emailTemplate";
+import { modelArray } from "./constant/modelArray";
 const { serverRuntimeConfig } = getConfig();
 let sequelize;
 
@@ -112,48 +112,6 @@ export async function initialize() {
     //   db[key] = (models as any)[key](sequelize);
     //   loggerInfo.info(key);
     // }\
-    const modelArray: any = {
-      countryData: "countryCodeModel",
-      tagDataType: "tagDataType",
-      routeTable: "Routes",
-      role: "Role",
-      address: "Address",
-      phoneRecords: "phoneRecord",
-      companyRecords: "companyRecord",
-      user: "User",
-      value: "AddValues",
-      object: "object",
-      classTag: "classTag",
-      parentJoinKey: "parentJoinKey",
-      class: "AddClasses",
-      enterpriseUser: "EnterpriseUser",
-      enterprise: "Enterprise",
-      deleteTableRecord: "deleteRecord",
-      reason: "Reason",
-      otpverify: "otpVerify",
-      contactSales: "ContactSale",
-      enterpriseAddress: "EnterpriseAddress",
-      invite: "Invite",
-      aiModel: "Model",
-      aiModelData: "ModelData",
-      modelObjectImages: "Image",
-      crackDetectionResponse: "CrackResponse",
-      tyreDetectionResponse: "TyreResponse",
-      subscription: "Subscription",
-      purchaseHistory: "PurchaseHistory",
-      crackAlert: "CrackAlert",
-      batteryAlert: "BatteryAlert",
-      tyreAlert: "TyreAlerts",
-      emailTemplate: "EmailTemplate",
-      RaisedAlert: "RaisedAlert",
-      batteryDetectionResponse: "BatteryResponse",
-      ticket: "Ticket",
-      ticketAttachments: "Attachment",
-      ticketComments: "Comment",
-      commentAttachments: "CommentAttachment",
-      ticketRaisedAlertLink: "Link",
-      primaryKey: "PrimaryKey"
-    };
 
     if (true) {
       for (let key in modelArray) {
