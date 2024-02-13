@@ -3,6 +3,7 @@ import { GET_CLASS_FROM_ID_ERROR, GET_CLASS_FROM_ID_SUCCESS } from "../types";
 import { GET_SUB_CLASS_FROM_ID_ERROR, GET_SUB_CLASS_FROM_ID_SUCCESS } from "../types";
 import { GET_OBJECT_FROM_ID_ERROR, GET_OBJECT_FROM_ID_SUCCESS } from "../types";
 import { GET_SUB_OBJECT_FROM_ID_ERROR, GET_SUB_OBJECT_FROM_ID_SUCCESS } from "../types";
+import { GET_MODEL_IMAGES_ERROR, GET_MODEL_IMAGES_SUCCESS } from "../types";
 
 const initialState = {
     dataForModalReducer: {},
@@ -10,6 +11,7 @@ const initialState = {
     getSubClassFromIDReducer: [],
     getObjectFromIDReducer: [],
     getSubObjectFromIDReducer: [],
+    getImageUrlDataReducer: []
 };
 
 const aimodaldetectionReducer = (state = initialState, action: any) => {
@@ -82,6 +84,21 @@ const aimodaldetectionReducer = (state = initialState, action: any) => {
             };
 
         case GET_SUB_OBJECT_FROM_ID_ERROR:
+            return {
+                loading: false,
+                error: action.payload,
+            };
+
+
+        // Get model images url from model ID
+        case GET_MODEL_IMAGES_SUCCESS:
+            return {
+                ...state,
+                getImageUrlDataReducer: action.payload,
+                loading: false,
+            };
+
+        case GET_MODEL_IMAGES_ERROR:
             return {
                 loading: false,
                 error: action.payload,

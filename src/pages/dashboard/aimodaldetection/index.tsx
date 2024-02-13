@@ -42,6 +42,7 @@ export default function AiModelDetection() {
     const [tableHeader, setTableHeader] = useState({} as any);
     const [objectData, setObjectData] = useState([] as any);
     const [individualObjectID, setIndividualObjectID] = useState(0)
+    const [individualClassObjectID, setIndividualClassObjectID] = useState(0)
 
     const [tableSubObjectHeader, setSubObjectTableHeader] = useState({} as any);
     const [subObjectData, setSubObjectData] = useState([] as any);
@@ -276,15 +277,15 @@ export default function AiModelDetection() {
     const nextData = {
         "class": chooseClass,
         "subClass": chooseSubClass,
-        "object": chooseObject,
+        "object": individualClassObjectID,
         "subObject": individualObjectID,
         "model": '',
     }
 
-    console.log({
-        nextDataProps: nextDataProps,
-        nextData: nextData
-    })
+    // console.log({
+    //     nextDataProps: nextDataProps,
+    //     nextData: nextData
+    // })
 
     // Toggle sub class and object dropdowns
     const toggleSubClassObjectOption = () => {
@@ -403,9 +404,9 @@ export default function AiModelDetection() {
         setToggleAsset(!toggleAsset)
     }
     const selectItemFunction = (item: any) => {
-        console.log({
-            "__ITEM": item
-        })
+        // console.log({
+        //     "__ITEM": item
+        // })
         setDisable(1);
         setChooseClass(item);
         setToggleAsset(false);
@@ -438,6 +439,7 @@ export default function AiModelDetection() {
     // Select Object Items 
     const selectObjectItemFunction = (item: any, id: any) => {
         setChooseObject(item);
+        setIndividualClassObjectID(id)
         setShowSubObjTable(false)
         setToggleObject(false);
         setShowObjLvlButton(true);
@@ -477,10 +479,10 @@ export default function AiModelDetection() {
         }
     }
     const selectSubClassObjectItemFunction = (item: any, id: any) => {
-        console.log({
-            "__ITEM": item,
-            "__ID": id
-        })
+        // console.log({
+        //     "__ITEM": item,
+        //     "__ID": id
+        // })
         setShowSubClass(false);
         setChooseSubObject(item)
         setToggleSubObject(false)
@@ -536,9 +538,9 @@ export default function AiModelDetection() {
                 }
             }).then(function (response) {
                 if (response) {
-                    console.log({
-                        "__ALL_MODELS:": response?.data?.message?.data
-                    })
+                    // console.log({
+                    //     "__ALL_MODELS:": response?.data?.message?.data
+                    // })
                     setAllModelData(response?.data?.message?.data)
                 }
             }).catch(function (error) {

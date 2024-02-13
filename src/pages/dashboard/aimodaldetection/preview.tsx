@@ -9,7 +9,7 @@ import Production from "./production";
 import { useRouter } from 'next/router'
 import ImageConfig from "./imageconfig";
 import Filter from "./filter";
-import { getClassFromIDAction, getSubClassFromIDAction, getObjectFromIDAction, getSubObjectFromIDAction } from "@/store/actions/aimodaldetectionAction"; 
+import { getClassFromIDAction, getSubClassFromIDAction, getObjectFromIDAction, getSubObjectFromIDAction } from "@/store/actions/aimodaldetectionAction";
 
 export default function Preview() {
     const router = useRouter();
@@ -22,16 +22,28 @@ export default function Preview() {
         access_token = localStorage.getItem('authToken')
     }
     const aimodaldetectionReducer = useSelector((state: any) => state.aimodaldetectionReducer);
-    
+
+    // console.log({
+    //     "__aimodaldetectionReducer": aimodaldetectionReducer?.dataForModalReducer
+    // })
+
     const toggleTabFunction = (preview: any) => {
         setDefaultTab(preview)
     }
-    useEffect(()=>{
-        dispatch(getClassFromIDAction(1));
-        let subClassID = 5;
-        let ParentClassID = 1;
-        let objectID = 2;
-        let subObject = 17;
+    useEffect(() => {
+        let classID = aimodaldetectionReducer?.dataForModalReducer?.class; //1
+        dispatch(getClassFromIDAction(classID));
+        let subClassID = aimodaldetectionReducer?.dataForModalReducer?.subClass; //5
+        let ParentClassID = aimodaldetectionReducer?.dataForModalReducer?.class; //1
+        let objectID = aimodaldetectionReducer?.dataForModalReducer?.classObject; //2
+        let subObject = aimodaldetectionReducer?.dataForModalReducer?.subClassObject; //17
+
+        // console.log({
+        //     subClassID: subClassID,
+        //     ParentClassID: ParentClassID,
+        //     objectID: objectID,
+        //     subObject: subObject,
+        // })
         dispatch(getSubClassFromIDAction(subClassID, ParentClassID));
         dispatch(getObjectFromIDAction(objectID, ParentClassID));
         dispatch(getSubObjectFromIDAction(subObject, subClassID))
@@ -44,112 +56,115 @@ export default function Preview() {
     // subClassObject(pin):106
     // Model(pin):"Crack Detection"
 
-    console.log({
-        aimodaldetectionReducer: aimodaldetectionReducer,
-        "OBJECT":aimodaldetectionReducer?.getObjectFromIDReducer[0]?.ObjectValues[0]?.values
+    // console.log({
+    //     aimodaldetectionReducer: aimodaldetectionReducer,
+    //     "OBJECT":aimodaldetectionReducer?.getObjectFromIDReducer[0]?.ObjectValues[0]?.values
 
-    })
+    // })
 
     return (
         <div className="w-full h-full font-OpenSans">
             <p className="text-black mb-4 font-semibold text-xl">eOps Watch</p>
 
             {/* Breadcrumb */}
-            <div className="relative bg-white rounded-lg px-3 py-1 inline-flex border border-[#E3E3E3]">
-                <ul className="flex justify-start items-center text-sm">
-                    <li className="flex justify-start items-center">
-                        <Link
-                            href="/dashboard/aimodaldetection"
-                            className="font-semibold"
-                        >
-                            <span>Home</span>
-                        </Link>
-                    </li>
-                    <li className="flex justify-start items-center">
-                        <Image
-                            src="/img/chevron-right.svg"
-                            alt="chevron-right"
-                            height={28}
-                            width={28}
-                        />
-                        <Link
-                            href={{
-                                pathname: '/dashboard/aimodaldetection/',
-                            }}
-                            className="font-semibold"
-                        >
-                            {/* <span>Manufacturing Plants</span> */}
-                            <span>{aimodaldetectionReducer?.getClassFromIDReducer && aimodaldetectionReducer?.getClassFromIDReducer[0]?.className}</span>
-                        </Link>
-                    </li>
-                    <li className="flex justify-start items-center">
-                        <Image
-                            src="/img/chevron-right.svg"
-                            alt="chevron-right"
-                            height={28}
-                            width={28}
-                        />
-                        <Link
-                            href={{
-                                pathname: '/dashboard/aimodaldetection/',
-                            }}
-                            className="font-semibold"
-                        >
-                            {/* VIN / PlantID */}
-                            {/* <span>TPC3305-01</span> */}
-                            {aimodaldetectionReducer?.getObjectFromIDReducer &&
-                            <span> {aimodaldetectionReducer?.getObjectFromIDReducer[0]?.Class?.ClassTags[0]?.tagName} : </span>
-                            }
-                            <span>{aimodaldetectionReducer?.getObjectFromIDReducer && aimodaldetectionReducer?.getObjectFromIDReducer[0]?.ObjectValues[0]?.values}</span>
-                        </Link>
-                    </li>
-                    <li className="flex justify-start items-center">
-                        <Image
-                            src="/img/chevron-right.svg"
-                            alt="chevron-right"
-                            height={28}
-                            width={28}
-                        />
-                        <Link
-                            href={{
-                                pathname: '/dashboard/aimodaldetection',
-                            }}
-                            className="font-semibold"
-                        >
-                            {/* <span>Wall </span>  */}
-                            <span>{aimodaldetectionReducer?.getSubClassFromIDReducer && aimodaldetectionReducer?.getSubClassFromIDReducer[0]?.className}</span>
-                            <span> : </span> 
-                            {/* <span>TPC71810-01-011</span> */}
-                            <span>{aimodaldetectionReducer?.getSubObjectFromIDReducer && aimodaldetectionReducer?.getSubObjectFromIDReducer[0]?.ObjectValues[0]?.values}</span>
-                        </Link>
-                    </li>
-                    <li className="flex justify-start items-center">
-                        <Image
-                            src="/img/chevron-right.svg"
-                            alt="chevron-right"
-                            height={28}
-                            width={28}
-                        />
-                        <Link
-                            href={{
-                                pathname: '/dashboard/aimodaldetection',
-                            }}
-                            className="font-semibold"
-                        >
-                            <span>Crack Detection</span>
-                        </Link>
-                    </li>
-                    <li className="flex justify-start items-center">
-                        <Image
-                            src="/img/chevron-right.svg"
-                            alt="chevron-right"
-                            height={28}
-                            width={28}
-                        />
-                        <span className="text-gray-967 capitalize">{defaultTab}</span>
-                    </li>
-                </ul>
-            </div>
+            {aimodaldetectionReducer?.getClassFromIDReducer &&
+                <div className="relative bg-white rounded-lg px-3 py-1 inline-flex border border-[#E3E3E3]">
+                    <ul className="flex justify-start items-center text-sm">
+                        <li className="flex justify-start items-center">
+                            <Link
+                                href="/dashboard/aimodaldetection"
+                                className="font-semibold"
+                            >
+                                <span>Home</span>
+                            </Link>
+                        </li>
+                        <li className="flex justify-start items-center">
+                            <Image
+                                src="/img/chevron-right.svg"
+                                alt="chevron-right"
+                                height={28}
+                                width={28}
+                            />
+                            <Link
+                                href={{
+                                    pathname: '/dashboard/aimodaldetection/',
+                                }}
+                                className="font-semibold"
+                            >
+                                {/* <span>Manufacturing Plants</span> */}
+                                <span>{aimodaldetectionReducer?.getClassFromIDReducer && aimodaldetectionReducer?.getClassFromIDReducer[0]?.className}</span>
+                            </Link>
+                        </li>
+                        <li className="flex justify-start items-center">
+                            <Image
+                                src="/img/chevron-right.svg"
+                                alt="chevron-right"
+                                height={28}
+                                width={28}
+                            />
+                            <Link
+                                href={{
+                                    pathname: '/dashboard/aimodaldetection/',
+                                }}
+                                className="font-semibold"
+                            >
+                                {/* VIN / PlantID */}
+                                {/* <span>TPC3305-01</span> */}
+                                {/* {aimodaldetectionReducer?.getObjectFromIDReducer && */}
+                                <span> {aimodaldetectionReducer?.getObjectFromIDReducer && aimodaldetectionReducer?.getObjectFromIDReducer[0]?.Class?.ClassTags[0]?.tagName} : </span>
+
+                                <span>{aimodaldetectionReducer?.getObjectFromIDReducer && aimodaldetectionReducer?.getObjectFromIDReducer[0]?.ObjectValues[0]?.values}</span>
+                            </Link>
+                        </li>
+                        <li className="flex justify-start items-center">
+                            <Image
+                                src="/img/chevron-right.svg"
+                                alt="chevron-right"
+                                height={28}
+                                width={28}
+                            />
+                            <Link
+                                href={{
+                                    pathname: '/dashboard/aimodaldetection',
+                                }}
+                                className="font-semibold"
+                            >
+                                {/* <span>Wall </span>  */}
+                                <span>{aimodaldetectionReducer?.getSubClassFromIDReducer && aimodaldetectionReducer?.getSubClassFromIDReducer[0]?.className}</span>
+                                <span> : </span>
+                                {/* <span>TPC71810-01-011</span> */}
+                                <span>{aimodaldetectionReducer?.getSubObjectFromIDReducer && aimodaldetectionReducer?.getSubObjectFromIDReducer[0]?.ObjectValues[0]?.values}</span>
+                            </Link>
+                        </li>
+                        <li className="flex justify-start items-center">
+                            <Image
+                                src="/img/chevron-right.svg"
+                                alt="chevron-right"
+                                height={28}
+                                width={28}
+                            />
+                            <Link
+                                href={{
+                                    pathname: '/dashboard/aimodaldetection',
+                                }}
+                                className="font-semibold"
+                            >
+                                {/* <span>Crack Detection</span> */}
+                                <span>{aimodaldetectionReducer?.dataForModalReducer?.model}</span>
+                            </Link>
+                        </li>
+                        <li className="flex justify-start items-center">
+                            <Image
+                                src="/img/chevron-right.svg"
+                                alt="chevron-right"
+                                height={28}
+                                width={28}
+                            />
+                            <span className="text-gray-967 capitalize">{defaultTab}</span>
+                        </li>
+                    </ul>
+                </div>
+            }
 
             {/* content TABS */}
             <div className="flex relative justify-start items-start h-[54px] mt-5">

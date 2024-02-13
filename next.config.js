@@ -25,7 +25,7 @@ const nextConfig = {
   },
   reactStrictMode: true,
   images: {
-    domains: ['www.shutterstock.com'],
+    domains: ['www.shutterstock.com', 'cdn3.vectorstock.com'],
   },
 };
 

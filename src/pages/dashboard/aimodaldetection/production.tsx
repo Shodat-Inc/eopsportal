@@ -3,16 +3,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import Image from "next/image";
 import NoDataFound from "../../../common/nodatafound";
 import Link from "next/dist/client/link";
-import axios from "axios";
+import Router from 'next/router'
 import moment from 'moment';
-import { boolean } from "joi";
+import { getImageUrlDataAction } from "@/store/actions/aimodaldetectionAction";
 
 export default function Production(props: any) {
     const dispatch = useDispatch<any>()
     const aimodaldetectionReducer = useSelector((state: any) => state.aimodaldetectionReducer);
-    console.log({
-        "PRODUCTION_PROPS": props
-    })
     let access_token = "" as any;
     if (typeof window !== 'undefined') {
         access_token = localStorage.getItem('authToken')
@@ -42,46 +39,31 @@ export default function Production(props: any) {
     const wrapperRef = useRef(null);
     useOutsideAlerter(wrapperRef);
 
-
-    // =============== function to get all classes =============== 
-    async function getImageUrlData() {
-        try {
-            await axios({
-                method: 'GET',
-                url: `/api/getImageUrl?type=production&modelId=3`,
-                headers: {
-                    "Authorization": `Bearer ${access_token}`,
-                    "Content-Type": "application/json"
-                }
-
-            }).then(function (response) {
-                if (response) {
-
-                    let filtered = response?.data?.data.filter((item:any) => {
-                        return item.type==="production"
-                    })
-                    setData(filtered)
-                }
-            }).catch(function (error) {
-                console.log({
-                    "ERROR IN AXIOS CATCH": error
-                })
-            })
-        } catch (err) {
-            console.log({
-                "ERROR IN TRY CATCH": err
-            })
-        }
-    }
+    // Dispatch Action for get model images
     useEffect(() => {
-        getImageUrlData();
-    }, [access_token])
-    
+        let type = "production";
+        dispatch(getImageUrlDataAction(aimodaldetectionReducer?.dataForModalReducer?.modelID, type))
+    }, [access_token, aimodaldetectionReducer?.dataForModalReducer?.modelID])
 
-    console.log({
-        "__DATA": data
-    })
-    
+    // Setting data to state from reducers
+    useEffect(() => {
+        if (aimodaldetectionReducer?.getImageUrlDataReducer && aimodaldetectionReducer?.getImageUrlDataReducer.length > 0) {
+            let filtered = aimodaldetectionReducer?.getImageUrlDataReducer.filter((item: any) => {
+                return item.type === "production"
+            })
+            setData(filtered)
+        }
+    }, [aimodaldetectionReducer?.getImageUrlDataReducer])
+
+
+    // Function to redirect to result page
+    const redirectToResultPage = () => {
+        setTimeout(() => {
+            Router.push({
+                pathname: '/dashboard/aimodaldetection/result',
+            })
+        }, 50)
+    }
 
     return (
         <div className="w-full">
@@ -94,68 +76,50 @@ export default function Production(props: any) {
                         data.map((item: any, index: any) => {
                             let check = item.url.split(".");
                             let ret = false;
-                            if (check.indexOf("jpg") !== -1 || check.indexOf("jpeg") !== -1 || check.indexOf("png") !== -1 || check.indexOf("bmp") !== -1 || check.indexOf("JPG") !== -1 || check.indexOf("JPEG") !== -1 ) {
+                            if (check.indexOf("jpg") !== -1 || check.indexOf("jpeg") !== -1 || check.indexOf("png") !== -1 || check.indexOf("bmp") !== -1 || check.indexOf("JPG") !== -1 || check.indexOf("JPEG") !== -1) {
                                 ret = true
                             } else {
                                 ret = false
                             }
-                            console.log({
-                                "__CHECK":check,
-                                "RETURNS": console.log(check.indexOf("jpg") !== -1) // true
-
-                            })
 
                             return (
-                                ret===true ?
-                                <div className="w-[246px] overflow-hidden rounded-xl mr-4 mb-4 relative" key={index}>
-                                    <div className="h-[200px] w-[246px] overflow-hidden rounded-xl relative">
-                                        <div className="flex justify-start items-center absolute top-0 right-0">
-                                            <Link
-                                                href={""}
-                                                // href={{
-                                                //     pathname: "/dashboard/eopswatch/trainingview",
-                                                //     query: {
-                                                //         objectID: routerParams.objectID,
-                                                //         key: routerParams.key,
-                                                //         model: routerParams.model,
-                                                //         id: routerParams.id,
-                                                //         subObject: routerParams.subObject,
-                                                //         result: item.resultImage ? item.resultImage : '',
-                                                //         imageID: item.imageID,
-                                                //         from:"eopswatch"
-                                                //     }
-                                                // }}
-                                                className={`text-sm font-semibold h-[32px] px-2 rounded-lg inline-flex justify-center items-center mr-4 ${item.url === "" ? 'pointer-events-none cursor-not-allowed bg-gray-951' : ' bg-yellow-951'}`}>
-                                                <Image
-                                                    src="/img/test-icon.svg"
-                                                    alt="Test Icon"
-                                                    height={20}
-                                                    width={20}
-                                                />
-                                                <span className="pl-2">Test</span>
-                                            </Link>
-                                            <button
-                                                onClick={() => imageModalFunction(item.url)}
-                                                className="text-sm font-semibold h-[32px] px-1 rounded-lg inline-flex justify-center items-center bg-[#333333]">
-                                                <Image
-                                                    src="/img/external-link-white.svg"
-                                                    alt="Test Icon"
-                                                    height={26}
-                                                    width={26}
-                                                />
-                                            </button>
+                                ret === true ?
+                                    <div className="w-[246px] overflow-hidden rounded-xl mr-4 mb-4 relative" key={index}>
+                                        <div className="h-[200px] w-[246px] overflow-hidden rounded-xl relative">
+                                            <div className="flex justify-start items-center absolute top-0 right-0">
+                                                <button
+                                                    onClick={redirectToResultPage}                                                 
+                                                    className={`text-sm font-semibold h-[32px] px-2 rounded-lg inline-flex justify-center items-center mr-4 ${item.url === "" ? 'pointer-events-none cursor-not-allowed bg-gray-951' : ' bg-yellow-951'}`}>
+                                                    <Image
+                                                        src="/img/test-icon.svg"
+                                                        alt="Test Icon"
+                                                        height={20}
+                                                        width={20}
+                                                    />
+                                                    <span className="pl-2">Test</span>
+                                                </button>
+                                                <button
+                                                    onClick={() => imageModalFunction(item.url)}
+                                                    className="text-sm font-semibold h-[32px] px-1 rounded-lg inline-flex justify-center items-center bg-[#333333]">
+                                                    <Image
+                                                        src="/img/external-link-white.svg"
+                                                        alt="Test Icon"
+                                                        height={26}
+                                                        width={26}
+                                                    />
+                                                </button>
+                                            </div>
+                                            <Image
+                                                src={`${item.url}`}
+                                                alt="Crack Detection"
+                                                height={200}
+                                                width={246}
+                                                className="object-cover h-full w-full"
+                                            />
                                         </div>
-                                        <Image
-                                            src={`${item.url}`}
-                                            alt="Crack Detection"
-                                            height={200}
-                                            width={246}
-                                            className="object-cover h-full w-full"
-                                        />
+                                        <p className="mt-1 text-[13px] text-[#666666]">Uploaded Date: {moment(item.updatedAt).format('DD-MM-YYYY')}</p>
                                     </div>
-                                    <p className="mt-1 text-[13px] text-[#666666]">Uploaded Date: {moment(item.updatedAt).format('DD-MM-YYYY')}</p>
-                                </div>
-                                : null
+                                    : null
                             )
                         })
                         :

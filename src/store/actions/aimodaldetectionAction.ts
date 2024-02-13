@@ -3,6 +3,7 @@ import { GET_CLASS_FROM_ID_ERROR, GET_CLASS_FROM_ID_SUCCESS } from "../types";
 import { GET_SUB_CLASS_FROM_ID_ERROR, GET_SUB_CLASS_FROM_ID_SUCCESS } from "../types";
 import { GET_OBJECT_FROM_ID_ERROR, GET_OBJECT_FROM_ID_SUCCESS } from "../types";
 import { GET_SUB_OBJECT_FROM_ID_ERROR, GET_SUB_OBJECT_FROM_ID_SUCCESS } from "../types";
+import { GET_MODEL_IMAGES_ERROR, GET_MODEL_IMAGES_SUCCESS } from "../types";
 import axios from "axios";
 
 // storing data to transfer to modals
@@ -137,6 +138,37 @@ export const getSubObjectFromIDAction = (objectID: any, classID: any) => async (
         }).catch(function (error) {
             dispatch({
                 type: GET_SUB_OBJECT_FROM_ID_ERROR,
+                payload: error,
+            });
+        })
+    } catch (err) {
+        console.log("err in action:", err)
+    }
+}
+
+
+// Get Image URL data
+export const getImageUrlDataAction = (modelID: any, type:any) => async (dispatch: any) => {
+    let access_token = "" as any;
+    if (typeof window !== 'undefined') {
+        access_token = localStorage.getItem('authToken')
+    }
+    try {
+        await axios({
+            method: 'GET',
+            url: `/api/getImageUrl?type=test&modelId=${modelID}`,
+            headers: {
+                "Authorization": `Bearer ${access_token}`,
+                "Content-Type": "application/json"
+            }
+        }).then(function (response) {
+            dispatch({
+                type: GET_MODEL_IMAGES_SUCCESS,
+                payload: response?.data?.data,
+            });
+        }).catch(function (error) {
+            dispatch({
+                type: GET_MODEL_IMAGES_ERROR,
                 payload: error,
             });
         })
