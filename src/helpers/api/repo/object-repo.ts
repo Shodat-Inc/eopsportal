@@ -1,7 +1,6 @@
 import { db } from "../db";
 import sendResponseData from "../../constant";
 import { loggerInfo, loggerError } from "@/logger";
-import { error } from "console";
 import message from "@/util/responseMessage";
 import { generateRandomAlphaNumeric } from "../../../util/helper";
 import { classTagRepo } from "./classTag-repo";
@@ -37,6 +36,7 @@ async function create(params: any, transaction: any) {
     const serialId = await generateRandomAlphaNumeric({
       model: db.Object,
       transaction,
+      prefix: "OBJ",
     });
     const updatedData = {
       ...params,
@@ -113,7 +113,7 @@ async function get(params: any) {
           {
             model: db.classTag,
             required: true,
-            attributes: ['tagName', 'dataTypeId', 'classId'],
+            attributes: ["tagName", "dataTypeId", "classId"],
             include: [
               {
                 model: db.AddClasses,
