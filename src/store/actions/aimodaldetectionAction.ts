@@ -41,7 +41,7 @@ export const getClassFromIDAction = (id: any) => async (dispatch: any) => {
         }).then(function (response) {
             dispatch({
                 type: GET_CLASS_FROM_ID_SUCCESS,
-                payload: response?.data?.data,
+                payload: response?.data?.data?.rows,
             });
         }).catch(function (error) {
             dispatch({
@@ -71,7 +71,7 @@ export const getSubClassFromIDAction = (classId: any, parentId: any) => async (d
         }).then(function (response) {
             dispatch({
                 type: GET_SUB_CLASS_FROM_ID_SUCCESS,
-                payload: response?.data?.data,
+                payload: response?.data?.data?.rows,
             });
         }).catch(function (error) {
             dispatch({
@@ -102,7 +102,7 @@ export const getObjectFromIDAction = (objectID: any, classID: any) => async (dis
         }).then(function (response) {
             dispatch({
                 type: GET_OBJECT_FROM_ID_SUCCESS,
-                payload: response?.data?.data,
+                payload: response?.data?.data?.rows,
             });
         }).catch(function (error) {
             dispatch({
@@ -132,7 +132,7 @@ export const getSubObjectFromIDAction = (objectID: any, classID: any) => async (
         }).then(function (response) {
             dispatch({
                 type: GET_SUB_OBJECT_FROM_ID_SUCCESS,
-                payload: response?.data?.data,
+                payload: response?.data?.data?.rows,
             });
         }).catch(function (error) {
             dispatch({
