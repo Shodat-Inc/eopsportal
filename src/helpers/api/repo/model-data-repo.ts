@@ -16,7 +16,7 @@ async function create(params: any, transaction: any) {
     loggerInfo.info("Model Data Entry");
 
     // Create a new ModelData instance with the provided 'params'
-    const data = new db.ModelData(params,{transaction});
+    const data = new db.ModelData(params, { transaction });
 
     // Save the new ModelData instance to the database
     const result = await data.save({ transaction });
@@ -39,7 +39,7 @@ async function get(modelId: any, userId: any) {
   try {
     // Fetch all Image records with specific attributes and associated ModelData
     const data = await db.Image.findAll({
-      attributes: ["url", "type"],
+      attributes: [["id", "modelObjectImageId"], "url", "type"],
       include: [
         {
           // Specify the association with the ModelData model
