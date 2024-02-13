@@ -32,7 +32,7 @@ async function create(params: any, transaction: any) {
   }
 }
 
-async function get(modelId: any, userId: any) {
+async function get(modelId: any, userId: any, type: string) {
   // Log an information message using the 'loggerInfo' instance
   loggerInfo.info("Get Images");
 
@@ -40,6 +40,7 @@ async function get(modelId: any, userId: any) {
     // Fetch all Image records with specific attributes and associated ModelData
     const data = await db.Image.findAll({
       attributes: [["id", "modelObjectImageId"], "url", "type"],
+      where: { type: type },
       include: [
         {
           // Specify the association with the ModelData model
