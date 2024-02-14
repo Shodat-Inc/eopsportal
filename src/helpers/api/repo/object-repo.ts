@@ -82,8 +82,11 @@ async function get(params: any) {
         include: [
           {
             model: db.AddClasses,
-            where: { id: params.query.id }, // This will filter by classId
-            attributes: ["id", "superParentId", "parentId", "serialId"],
+            where: {
+              id: params.query.id,      // This will filter by classId
+              userId: params.userId
+            },
+            attributes: ["id", "superParentId", "parentId", "serialId", "userId", "enterpriseId"],
             include: [
               {
                 model: db.classTag,
@@ -314,11 +317,12 @@ async function getObjectValues(params: any) {
         {
           model: db.object,
           attributes: [],
+          required: true,
           include: [
             {
               model: db.AddClasses,
               where: { userId: params.auth.sub },
-              attributes: []
+              attributes: [],
             }
           ]
         },
