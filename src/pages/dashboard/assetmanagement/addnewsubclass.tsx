@@ -72,7 +72,7 @@ export default function AddNewSubClass(props: any) {
 
     // Get class data and filter parent tags based on selected class
     useEffect(() => {
-        if (props.classData && props.classData.rows.length > 0) {
+        if (props.classData && props?.classData?.rows.length > 0) {
             let filtered = props.classData.rows.filter((item: any) => {
                 return item.id === props.selectedParentClass;
             })

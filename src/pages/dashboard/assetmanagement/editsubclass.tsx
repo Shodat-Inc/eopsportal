@@ -99,13 +99,40 @@ export default function EditSubClass(props: any) {
     }, [props.classData, props.selectedParentClass])
 
 
+    useEffect(() => {
+        if (props.classData && props?.classData?.rows.length > 0) {
+            let filtered = props.classData.rows.filter((item: any) => {
+                return item.id === props.selectedParentClass;
+            })
+
+            // console.log({
+            //     filtered:filtered
+            // })
+
+            
+            setParentJoinKey(filtered)
+
+            let label = [] as any;
+            let val = [] as any;
+            let ajson = [] as any;
+            filtered[0]?.tags?.map((item: any) => {
+                label.push(item.tagName)
+                val.push(item.tagName)
+                let json: any = CreateJSONForSelect(item.tagName, item.tagName);
+                ajson.push(json)
+            })
+            // setAllParentTag(ajson)
+        }
+
+    }, [props.classData, props.selectedParentClass])
+
     // Get Selected Class Data
     useEffect(() => {
         if (props.subClassData && props.subClassData?.rows?.length > 0) {
             const filtered = props.subClassData?.rows?.filter((item: any) => {
                 return item.id === props.selectedSubClass
             })
-            setParentJoinKey(filtered)
+            // setParentJoinKey(filtered)
             setAllSubClassData(filtered);
             setClassName(filtered[0]?.className)
             setAllTags(filtered[0]?.ClassTags);
@@ -342,7 +369,7 @@ function CreateJSONForSelect(value: any, label: any) {
         parentJoinKey[0]?.ClassTags?.map((item: any) => {
             label.push(item.tagName)
             val.push(item.id)
-            let json: any = createOptions(item.id, item.tagName);
+            let json: any = CreateJSONForSelect(item.id, item.tagName);
             ajson.push(json)
         })
         setAllParentTag(ajson)
@@ -353,12 +380,13 @@ function CreateJSONForSelect(value: any, label: any) {
         setSelectPJK(tags || []);
     };
 
-    console.log({
-        // "pjkData":pjkData,
-        // pjkID:pjkID, 
-        // allSubClassData:allSubClassData[0],
-        allClassData:allClassData
-    })
+    // console.log({
+    //     // "pjkData":pjkData,
+    //     // pjkID:pjkID, 
+    //     // allSubClassData:allSubClassData[0],
+    //     allClassData:allClassData,
+    //     "__PARENTJOINKEY":parentJoinKey[0]?.ClassTags
+    // })
 
     return (
         <>
