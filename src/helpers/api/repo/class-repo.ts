@@ -154,15 +154,16 @@ async function getClassDataByID(params: any) {
       throw "NO ID exist";
     }
 
-    const page = params.page || 1; // Default to page 1 if not provided
-    const pageSize = params.pageSize || 10; // Default page size to 10 if not provided
+    const page = params.query.page || 1; // Default to page 1 if not provided
+    const pageSize = params.query.pageSize || 10; // Default page size to 10 if not provided
 
     const result = await paginateQuery(db.AddClasses, page, pageSize, {
       where: {
-        id: params.id,
+        id: params.query.id,
         parentId: null,
+        userId: params.auth.sub
       },
-      attributes: ["id", "className", "serialId", "createdAt", "updatedAt"],
+      attributes: ["id", "className", "serialId", "userId", "enterpriseId", "createdAt", "updatedAt"],
       include: [
         {
           model: db.classTag,
@@ -210,12 +211,11 @@ async function getSubClass(param: any) {
     const pageSize = param.query.pageSize || 10; // Default page size to 10 if not provided
 
     const result = await paginateQuery(db.AddClasses, page, pageSize, {
-      // const result = await db.AddClasses.findAll({
       where: {
-        userId: param.id,
+        userId: param.auth.sub,
         parentId: param.query.id,
       },
-      attributes: ["id", "className", "serialId", "createdAt", "updatedAt"],
+      attributes: ["id", "className", "serialId", "userId", "enterpriseId", "createdAt", "updatedAt"],
       include: [
         {
           model: db.classTag,
@@ -280,6 +280,7 @@ async function getSubClassByID(param: any) {
       where: {
         id: param.query.classId,
         parentId: param.query.parentId,
+        userId: param.auth.sub
       },
       attributes: ["id", "className", "serialId", "createdAt", "updatedAt"],
       include: [
