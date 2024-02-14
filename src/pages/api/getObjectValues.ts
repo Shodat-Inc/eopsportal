@@ -14,7 +14,7 @@ export default apiHandler({
 async function allhandler(req: any, res: any) {
   try {
     // Retrieve objects value based on objevt value and classname using the objectRepo and the provided request data.
-    const objects = await objectRepo.getObjectValues(req);
+    const objects = await objectRepo.getObjectValuesOnValues(req);
 
     // Check if the retrieved objects are empty or if the response is an empty array.
     if (!objects || (Array.isArray(objects) && objects.length === 0)) {

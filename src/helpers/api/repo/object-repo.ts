@@ -5,7 +5,7 @@ import message from "@/util/responseMessage";
 import { generateRandomAlphaNumeric } from "../../../util/helper";
 import { classTagRepo } from "./classTag-repo";
 import { paginateQuery } from "../constant/pagination";
-import { Op, Sequelize } from "sequelize";
+import { Sequelize } from "sequelize";
 
 /**
  * Repository for handling object related operations.
@@ -15,7 +15,8 @@ export const objectRepo = {
   get,
   getObjectById,
   delete: _delete,
-  getObjectValues
+  getObjectValues,
+  getObjectValuesOnValues
 };
 
 /**
@@ -105,7 +106,6 @@ async function get(params: any) {
     }
 
     else if (params.query.keyword) {
-      console.log(params.query.keyword, "===params.query.keyword")
       const page = params.query.page || 1; // Default to page 1 if not provided
       const pageSize = params.query.pageSize || 10; // Default page size to 10 if not provided
 
@@ -297,67 +297,96 @@ async function _delete(params: any) {
 }
 
 async function getObjectValues(params: any) {
-  loggerInfo.info("Get all the Object Values")
+  loggerInfo.info("Get all the Object Values");
   try {
     let result
-    if (params.query.objectvalue) {
-      result = await db.AddValues.findAll({
-        where: {
-          values: params.query.objectvalue,
-        },
-        // include: [
-        //   {
-        //     model: db.AddValues,
-        //     as: 'RelatedObjectValues',
-        //     // where: {
-        //     //   objectId: Sequelize.col('ObjectValues.objectId'), 
-        //     // },
-        //     // on: {
-        //     //   '$AddValues.objectId$': Sequelize.col('RelatedObjectValues.objectId'),
-        //     // },
-        //     // where: {
-        //     //   '$RelatedObjectValues.objectId$': Sequelize.col('RelatedObjectValues.objectId'),
-        //     // },
-        //   },
-        // ],
-      })
-      if (!result.length) {
-        return sendResponseData(true, "Object Value doesn't Exist", {})
-      }
-      return sendResponseData(true, "Object Value and its related object values fetched Successfully", result)
-    }
-    else if (params.query.classname) {
-      result = await db.AddClasses.findAll({
-        where: {
-          className: params.query.classname,
-          userId: params.auth.sub,
-        },
-        attributes: ['id', 'serialId', 'className', 'superParentId', 'parentId', 'enterpriseId', 'userId'],
-        include: [
-          {
-            model: db.object,
-            where: { id: Sequelize.col('Class.id') },
-            attributes: ['id', 'serialId', 'classId', 'superParentId', 'parentId'],
-            required: false,
-            include: [
-              {
-                model: db.AddValues,
-                where: { objectId: Sequelize.col('Objects.id') },
-                attributes: ['id', 'values', 'classTagId', 'objectId'],
-                required: false,
-              }
-            ]
-          },
-        ]
-      })
-      if (!result.length) {
-        return sendResponseData(true, "Class doesn't Exist", {})
-      }
+    // Convert keyword to lowercase for case-insensitive comparison
+    const keyword = params.query.keyword.toLowerCase();
+    const page = params.query.page || 1;
+    const pageSize = params.query.pageSize || 10;
 
-      return sendResponseData(true, "Class with its object and values fetched successfully", result)
+    // Object Value and its related object values fetched Successfully
+    result = await paginateQuery(db.AddValues, page, pageSize, {
+      where: {
+        values: keyword,
+      },
+      include: [
+        {
+          model: db.object,
+          attributes: [],
+          include: [
+            {
+              model: db.AddClasses,
+              where: { userId: params.auth.sub },
+              attributes: []
+            }
+          ]
+        },
+      ],
+    });
+
+    // If data found in db.AddValues, return the result
+    if (result.rows.length > 0) {
+      return sendResponseData(true, "Object Value fetched Successfully", result);
     }
+
+    // If data not found in db.AddValues, search in db.AddClasses
+    // Class with its object and values
+    result = await paginateQuery(db.AddClasses, page, pageSize, {
+      where: {
+        className: keyword,
+        userId: params.auth.sub,
+      },
+      attributes: ['id', 'serialId', 'className', 'userId', 'enterpriseId', 'superParentId', 'parentId'],
+      include: [
+        {
+          model: db.object,
+          where: { id: Sequelize.col('Class.id') },
+          attributes: ['id', 'serialId', 'classId', 'superParentId', 'parentId'],
+          required: false,
+          include: [
+            {
+              model: db.AddValues,
+              where: { objectId: Sequelize.col('Objects.id') },
+              attributes: ['id', 'values', 'classTagId', 'objectId'],
+              required: false,
+            }
+          ]
+        },
+      ]
+    });
+
+    // If data found in db.AddClasses, return the result
+    if (result.rows.length > 0) {
+      return sendResponseData(true, "Class with its object and values fetched successfully", result);
+    }
+
+    // If data not found in both tables
+    return sendResponseData(true, "No data found for the specified Search.", {});
   } catch (error) {
-    loggerError.error("Error in fetching object values", error)
-    return sendResponseData(false, "Error in fetching object values", error)
+    loggerError.error("Error in fetching object values", error);
+    return sendResponseData(false, "Error in fetching object values", error);
+  }
+}
+
+async function getObjectValuesOnValues(params: any) {
+  loggerInfo.info("Getting Object Values on Values")
+  try {
+    let result
+    const page = params.query.page || 1;
+    const pageSize = params.query.pageSize || 10;
+
+    result = await paginateQuery(db.AddValues, page, pageSize, {
+      where: {
+        objectId: params.query.objectId
+      }
+    })
+    if (!result.rows.length) {
+      return sendResponseData(false, "No Data Found", {})
+    }
+    return sendResponseData(true, "Object Values and its related object Values fetched Successfully", result)
+  } catch (error) {
+    loggerError.error("Error in getting Object Values related to value", error)
+    return sendResponseData(false, "Error in getting Object Values related to value", error)
   }
 }
