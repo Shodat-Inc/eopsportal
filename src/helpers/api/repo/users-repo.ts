@@ -18,6 +18,7 @@ export const usersRepo = {
   getById,
   create,
   update,
+  getEnterpriseUserById,
   delete: _delete,
 };
 
@@ -392,4 +393,53 @@ async function _delete(id: number) {
 
   // delete user
   return await user.destroy();
+}
+
+async function getEnterpriseUserById(
+  params: Partial<{
+    [key: string]: string | string[];
+  }>
+) {
+  try {
+    // Log information about the operation.
+    loggerInfo.info("Get Enterprise User by ID");
+
+    // Check if the ID is provided in the parameters.
+    if (!params.id) {
+      // Return a response indicating that the ID is not provided.
+      return sendResponseData(false, message.error.idNotProvided, []);
+    }
+
+    // Find the enterprise user in the database based on the provided ID.
+    const data = await db.User.findOne({
+      where: { id: params.id },
+      attributes: [
+        "username",
+        "email",
+        "firstName",
+        "lastName",
+        "enterpriseId",
+        "roleId",
+      ],
+    });
+
+    // Check if the user data is available.
+    if (!data.enterpriseId || !data) {
+      // Return a response indicating that the enterprise user doesn't exist.
+      return sendResponseData(false, message.error.enterpriseUserNotExist, []);
+    }
+
+    // Return a successful response with the fetched enterprise user data.
+    return sendResponseData(true, message.success.enterpriseUserFetched, data);
+  } catch (error: any) {
+    // Log an error message if an exception occurs during the operation.
+    loggerError.error("Error in enterprise user repo", error);
+
+    // Return an error response with details about the encountered error.
+    return sendResponseData(
+      false,
+      message.error.errorFetchingEnterpriseUser,
+      error
+    );
+  }
 }
