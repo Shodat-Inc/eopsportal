@@ -5,6 +5,7 @@ import message from "@/util/responseMessage";
 import { generateRandomAlphaNumeric } from "../../../util/helper";
 import { classTagRepo } from "./classTag-repo";
 import { paginateQuery } from "../constant/pagination";
+import { Op, Sequelize } from "sequelize";
 
 /**
  * Repository for handling object related operations.
@@ -14,6 +15,7 @@ export const objectRepo = {
   get,
   getObjectById,
   delete: _delete,
+  getObjectValues
 };
 
 /**
@@ -103,6 +105,7 @@ async function get(params: any) {
     }
 
     else if (params.query.keyword) {
+      console.log(params.query.keyword, "===params.query.keyword")
       const page = params.query.page || 1; // Default to page 1 if not provided
       const pageSize = params.query.pageSize || 10; // Default page size to 10 if not provided
 
@@ -290,5 +293,71 @@ async function _delete(params: any) {
 
     // Return an error response in case of an exception during object deletion.
     return sendResponseData(false, message.error.errorDeleteObject, error);
+  }
+}
+
+async function getObjectValues(params: any) {
+  loggerInfo.info("Get all the Object Values")
+  try {
+    let result
+    if (params.query.objectvalue) {
+      result = await db.AddValues.findAll({
+        where: {
+          values: params.query.objectvalue,
+        },
+        // include: [
+        //   {
+        //     model: db.AddValues,
+        //     as: 'RelatedObjectValues',
+        //     // where: {
+        //     //   objectId: Sequelize.col('ObjectValues.objectId'), 
+        //     // },
+        //     // on: {
+        //     //   '$AddValues.objectId$': Sequelize.col('RelatedObjectValues.objectId'),
+        //     // },
+        //     // where: {
+        //     //   '$RelatedObjectValues.objectId$': Sequelize.col('RelatedObjectValues.objectId'),
+        //     // },
+        //   },
+        // ],
+      })
+      if (!result.length) {
+        return sendResponseData(true, "Object Value doesn't Exist", {})
+      }
+      return sendResponseData(true, "Object Value and its related object values fetched Successfully", result)
+    }
+    else if (params.query.classname) {
+      result = await db.AddClasses.findAll({
+        where: {
+          className: params.query.classname,
+          userId: params.auth.sub,
+        },
+        attributes: ['id', 'serialId', 'className', 'superParentId', 'parentId', 'enterpriseId', 'userId'],
+        include: [
+          {
+            model: db.object,
+            where: { id: Sequelize.col('Class.id') },
+            attributes: ['id', 'serialId', 'classId', 'superParentId', 'parentId'],
+            required: false,
+            include: [
+              {
+                model: db.AddValues,
+                where: { objectId: Sequelize.col('Objects.id') },
+                attributes: ['id', 'values', 'classTagId', 'objectId'],
+                required: false,
+              }
+            ]
+          },
+        ]
+      })
+      if (!result.length) {
+        return sendResponseData(true, "Class doesn't Exist", {})
+      }
+
+      return sendResponseData(true, "Class with its object and values fetched successfully", result)
+    }
+  } catch (error) {
+    loggerError.error("Error in fetching object values", error)
+    return sendResponseData(false, "Error in fetching object values", error)
   }
 }

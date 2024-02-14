@@ -252,6 +252,7 @@ export const createEnterpriseUserValidation = (data) => {
     enterpriseId: Joi.number(),
     roleId: Joi.number(),
     status: Joi.number(),
+    parentId: Joi.number()
   });
 
   return schema.validate(data);
