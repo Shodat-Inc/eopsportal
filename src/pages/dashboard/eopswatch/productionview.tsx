@@ -145,94 +145,156 @@ export default function ProductionView() {
                         {/* Breadcrumb */}
                         {
                             parentAsset.from === "eopswatch" ?
-                                <div className="flex relative bg-white rounded rounded-lg px-3 py-1 inline-flex border border-[#E3E3E3]">
-                                    <ul className="flex justify-start items-center text-sm">
-                                        <li className="flex justify-start items-center">
-                                            <Link
-                                                href="/dashboard/aimodaldetection"
-                                                className="font-semibold"
-                                            >
-                                                {parentAsset.key}
-                                            </Link>
-                                        </li>
-                                        <li className="flex justify-start items-center">
-                                            <Image
-                                                src="/img/chevron-right.svg"
-                                                alt="chevron-right"
-                                                height={28}
-                                                width={28}
-                                            />
-                                            <Link
-                                                href={{
-                                                    pathname: '/dashboard/aimodaldetection',
-                                                    query: {
-                                                        objectID: parentAsset.objectID,
-                                                        subObject: parentAsset.subObject,
-                                                        key: parentAsset.key,
-                                                        id: parentAsset.id,
-                                                    }
-                                                }}
-                                                className="font-semibold"
-                                            >
-                                                Models
-                                            </Link>
-                                        </li>
-                                        <li className="flex justify-start items-center">
-                                            <Image
-                                                src="/img/chevron-right.svg"
-                                                alt="chevron-right"
-                                                height={28}
-                                                width={28}
-                                            />
-                                            <Link
-                                                href={{
-                                                    pathname: '/dashboard/aimodaldetection',
-                                                    query: {
-                                                        objectID: parentAsset.objectID,
-                                                        subObject: parentAsset.subObject,
-                                                        key: parentAsset.key,
-                                                        id: parentAsset.id,
-                                                    }
-                                                }}
-                                                className="font-semibold"
-                                            >
-                                                {parentAsset.model}
-                                            </Link>
-                                        </li>
-                                        <li className="flex justify-start items-center">
-                                            <Image
-                                                src="/img/chevron-right.svg"
-                                                alt="chevron-right"
-                                                height={28}
-                                                width={28}
-                                            />
-                                            <Link
-                                                href={{
-                                                    pathname: '/dashboard/eopswatch/preview',
-                                                    query: {
-                                                        objectID: parentAsset.objectID,
-                                                        subObject: parentAsset.subObject,
-                                                        key: parentAsset.key,
-                                                        id: parentAsset.id,
-                                                        model: parentAsset.model
-                                                    }
-                                                }}
-                                                className="font-semibold"
-                                            >
-                                                Production
-                                            </Link>
-                                        </li>
-                                        <li className="flex justify-start items-center">
-                                            <Image
-                                                src="/img/chevron-right.svg"
-                                                alt="chevron-right"
-                                                height={28}
-                                                width={28}
-                                            />
-                                            <span className="text-gray-967 capitalize">Result</span>
-                                        </li>
-                                    </ul>
-                                </div>
+                            <div className="relative bg-white rounded-lg px-3 py-1 inline-flex border border-[#E3E3E3]">
+                            <ul className="flex justify-start items-center text-sm">
+                                <li className="flex justify-start items-center">
+                                    <Link
+                                        href="/dashboard/aimodaldetection"
+                                        className="font-semibold"
+                                    >
+                                        Home
+                                    </Link>
+                                </li>
+                                <li className="flex justify-start items-center">
+                                    <Image
+                                        src="/img/chevron-right.svg"
+                                        alt="chevron-right"
+                                        height={28}
+                                        width={28}
+                                    />
+                                    <Link
+                                        href={{
+                                            pathname: '/dashboard/aimodaldetection/',
+                                            query: {
+                                                objectID: parentAsset.objectID
+                                            }
+                                        }}
+                                        className="font-semibold"
+                                    >
+                                        {parentAsset.objectID}
+                                    </Link>
+                                </li>
+                                <li className="flex justify-start items-center">
+                                    <Image
+                                        src="/img/chevron-right.svg"
+                                        alt="chevron-right"
+                                        height={28}
+                                        width={28}
+                                    />
+                                    <Link
+                                        href={{
+                                            pathname: '/dashboard/aimodaldetection/',
+                                        }}
+                                        className="font-semibold"
+                                    >
+                                        {
+                                            parentAsset.objectID === "Manufacturing Plants"
+                                                ?
+                                                <span>Plant ID : {parentAsset.id}</span>
+                                                :
+                                                <span>VIN : {parentAsset.id}</span>
+                                        }
+
+                                    </Link>
+                                </li>
+                                <li className="flex1 justify-start items-center hidden">
+                                    <Image
+                                        src="/img/chevron-right.svg"
+                                        alt="chevron-right"
+                                        height={28}
+                                        width={28}
+                                    />
+                                    <Link
+                                        href={{
+                                            pathname: '/dashboard/aimodaldetection/',
+                                        }}
+                                        className="font-semibold"
+                                    >
+                                        <span>{parentAsset.subObject}</span> : <span>{parentAsset.key}</span>
+                                    </Link>
+                                </li>
+                                <li className="flex justify-start items-center">
+                                    <Image
+                                        src="/img/chevron-right.svg"
+                                        alt="chevron-right"
+                                        height={28}
+                                        width={28}
+                                    />
+                                    <Link
+                                        href={{
+                                            pathname: '/dashboard/aimodaldetection',
+                                            query: {
+                                                objectID: parentAsset.objectID,
+                                                subObject: parentAsset.subObject,
+                                                key: parentAsset.key,
+                                                id: parentAsset.id,
+                                                industryID: parentAsset.industryID
+                                            }
+                                        }}
+                                        className="font-semibold"
+                                    >
+                                        <span>{parentAsset.subObject}</span> : <span>{parentAsset.key}</span>
+                                    </Link>
+                                </li>
+                                <li className="flex justify-start items-center">
+                                    <Image
+                                        src="/img/chevron-right.svg"
+                                        alt="chevron-right"
+                                        height={28}
+                                        width={28}
+                                    />
+                                    <Link
+                                        href={{
+                                            pathname: '/dashboard/aimodaldetection',
+                                            query: {
+                                                objectID: parentAsset.objectID,
+                                                subObject: parentAsset.subObject,
+                                                key: parentAsset.key,
+                                                id: parentAsset.id,
+                                                industryID: parentAsset.industryID
+                                            }
+                                        }}
+                                        className="font-semibold"
+                                    >
+                                        {parentAsset.model}
+                                    </Link>
+                                </li>
+                                <li className="flex justify-start items-center">
+                                {/* http://localhost:3000/dashboard/eopswatch/preview?objectID=Manufacturing+Plants&subObject=Walls&key=TPC71810-01-012&id=TPC3305-01&model=Crack+Detection&industryID=TPC3305-01&from=eopswatch */}
+                                    <Image
+                                        src="/img/chevron-right.svg"
+                                        alt="chevron-right"
+                                        height={28}
+                                        width={28}
+                                    />
+                                    <Link
+                                        href={{
+                                            pathname: '/dashboard/eopswatch/preview',
+                                            query: {
+                                                objectID: parentAsset.objectID,
+                                                subObject: parentAsset.subObject,
+                                                key: parentAsset.key,
+                                                id: parentAsset.id,
+                                                industryID: parentAsset.industryID,
+                                                model:parentAsset.model
+                                            }
+                                        }}
+                                        className="font-semibold"
+                                    >
+                                        {parentAsset.tab}
+                                    </Link>
+                                </li>
+                                <li className="flex justify-start items-center">
+                                    <Image
+                                        src="/img/chevron-right.svg"
+                                        alt="chevron-right"
+                                        height={28}
+                                        width={28}
+                                    />
+                                    <span className="text-gray-967 capitalize">Result</span>
+                                </li>
+                            </ul>
+                        </div>
                                 :
                                 <nav className="flex" aria-label="Breadcrumb">
                                     <ol className="inline-flex items-center space-x-1 md:space-x-1">

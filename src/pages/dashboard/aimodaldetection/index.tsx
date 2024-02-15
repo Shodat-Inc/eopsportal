@@ -191,6 +191,7 @@ export default function AiModelDetection() {
         // setSelectObject('')
         setToggleObjectLevel(false)
 
+        setChooseClass("Select")
         setChooseObject("Select");
         setChooseSubClass("Select");
         setChooseSubObject("Select");
@@ -232,11 +233,11 @@ export default function AiModelDetection() {
         }
     }, [chooseObject])
 
-    console.log({
-        "__getAllClass": getAllClass,
-        "___classObject": classObject,
-        "__selObjectData": selObjectData
-    })
+    // console.log({
+    //     "__getAllClass": getAllClass,
+    //     "___classObject": classObject,
+    //     "__selObjectData": selObjectData
+    // })
 
     // ============= Set dropdown title ============= 
     const title = (selectClass === 'Vehicles') ? 'VIN' : 'PlantID'
@@ -252,12 +253,18 @@ export default function AiModelDetection() {
     // Toggle sub class and object dropdowns
     const toggleSubClassObjectOption = () => {
         setToggleObjectLevel(!toggleObjectLevel)
+        setChooseSubClass("Select")
+        setChooseSubObject("Select")
+        // showSubObjTable
+        setShowSubObjTable(false)
 
     }
 
     // Close Sub class and Object Dropdowns
     const closeObjectLevel = () => {
         setToggleObjectLevel(false);
+        setShowSubObjTable(false)
+        setShowSubClass(false)
     }
 
     // =============== Get object data based on selected class and object ============== 
@@ -350,12 +357,12 @@ export default function AiModelDetection() {
                         setTableDataSubObject(filtered[0]?.tags)
                     }
 
-                    console.log({
-                        "___RESPONSE": response.data,
-                        "___filtered": filtered,
-                        "__chooseClass": chooseClass,
-                        "___chooseSubClass": chooseSubClass
-                    })
+                    // console.log({
+                    //     "___RESPONSE": response.data,
+                    //     "___filtered": filtered,
+                    //     "__chooseClass": chooseClass,
+                    //     "___chooseSubClass": chooseSubClass
+                    // })
                 }
             }).catch(function (error) {
                 console.log({
@@ -374,9 +381,9 @@ export default function AiModelDetection() {
         }
     }, [chooseClass, chooseSubClass, chooseSubObject])
 
-    console.log({
-        "____tableDataSubObject": tableDataSubObject
-    })
+    // console.log({
+    //     "____tableDataSubObject": tableDataSubObject
+    // })
 
 
     useEffect(() => {
@@ -392,6 +399,9 @@ export default function AiModelDetection() {
             function handleClickOutside(event: any) {
                 if (ref.current && !ref.current.contains(event.target)) {
                     // setToggleAsset(false);
+                    // setToggleObject(false);
+                    // setToggleSubObject(false)
+                    // setToggleSubClass(false)
                 }
             }
             document.addEventListener("mousedown", handleClickOutside);
@@ -439,6 +449,9 @@ export default function AiModelDetection() {
     // =============== Dropdown function for sub-class ===============
     const toggleSubClassDropFunction = () => {
         setToggleSubClass(!toggleSubClass)
+        // showSubClass
+        setShowSubClass(false);
+        setShowSubObjTable(false)
     }
     const selectSubClassItemFunction = (item: any) => {
         setToggleSubClass(false);
@@ -451,13 +464,16 @@ export default function AiModelDetection() {
 
     // =============== Dropdown function for sub-class ===============
     const toggleSubObjectDropFunction = () => {
-        setToggleSubObject(!toggleSubObject)
+        setToggleSubObject(!toggleSubObject);
+        setShowSubClass(false);
+        // showSubObjTable
+        setShowSubObjTable(false)
     }
     const selectSubClassObjectItemFunction = (item: any) => {
-        setChooseSubObject(item)
-        setToggleSubObject(false)
-        setShowSubObjTable(true);
         setShowSubClass(false);
+        setToggleSubObject(false)
+        setChooseSubObject(item)
+        setShowSubObjTable(true);
 
         let type = "";
         if (chooseClass === "Manufacturing Plants") {
@@ -480,9 +496,11 @@ export default function AiModelDetection() {
             "type": type
         }
         // if (Object.keys(classSelector?.dataforeopswatchReducer).length === 0) {
-            dispatch(setDataForeOpsWatchAction(eopsData));
+            // dispatch(setDataForeOpsWatchAction(eopsData));
         // }
         localStorage.setItem('eopsData', eopsData);
+
+        setShowSubClass(false); 
     }
 
 
@@ -493,6 +511,10 @@ export default function AiModelDetection() {
         }
     }, [classSelector?.dataforeopswatchReducer?.datafor])
 
+    console.log({
+        "__showSubClassTABLE":showSubClass,
+        "__showSubObjTableTABLE":showSubObjTable
+    })
 
     return (
         <div className="font-OpenSans w-full">
@@ -784,7 +806,7 @@ export default function AiModelDetection() {
 
                 {/* Table of Information */}
                 <div className="w-full flex justify-end items-end flex-wrap flex-row mt-5">
-                    {showSubClass &&
+                    {showSubClass === true ?
                         <table className={`table-auto lg:min-w-full sm:w-full small:w-full text-left ${styles.tableV3} ${styles.tableV41}`}>
                             <thead className="text-sm font-normal">
                                 <tr>
@@ -814,10 +836,11 @@ export default function AiModelDetection() {
                                 </tr>
                             </tbody>
                         </table>
+                        : null
                     }
 
                     {
-                        showSubObjTable &&
+                        showSubObjTable === true ?
                         <table className={`table-auto lg:min-w-full sm:w-full small:w-full text-left ${styles.tableV3} ${styles.tableV41}`}>
                             <thead className="text-sm font-normal">
                                 <tr>
@@ -848,6 +871,7 @@ export default function AiModelDetection() {
                                 </tr>
                             </tbody>
                         </table>
+                        : null
                     }
                 </div>
 

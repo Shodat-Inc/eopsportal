@@ -55,96 +55,133 @@ export default function ModelView() {
                 <div className="border min-h-full rounded-xl mt-3 px-4 py-4">
                     <div className="flex justify-between items-center">
                         {/* Breadcrumb */}
-                        <nav className="flex" aria-label="Breadcrumb">
-                            <ol className="inline-flex items-center space-x-1 md:space-x-1">
-                                <li className="inline-flex items-center">
-                                    <Link href="/dashboard/aimodaldetection"
-                                        className="inline-flex items-center text-sm font-medium text-black hover:text-yellow-950">
-                                        <Image
-                                            src="/img/home.svg"
-                                            alt="home"
-                                            className="h-6"
-                                            height={24}
-                                            width={24}
-                                        />
-                                    </Link>
-                                </li>
-                                <li>
+                        <div className="relative bg-white rounded-lg px-3 py-1 inline-flex border border-[#E3E3E3]">
+                            <ul className="flex justify-start items-center text-sm">
+                            <li className="flex justify-start items-center">
                                     <Link
-                                        href={{
-                                            pathname: "/dashboard/aimodaldetection",
-                                            query: {
-                                                objectID: parentAsset.objectID,
-                                                key: parentAsset.key,
-                                                id: parentAsset.id,
-                                                subObject: parentAsset.subObject,
-                                                model: parentAsset.model
-                                            }
-                                        }}
-                                        className="flex items-center">
-                                        <Image
-                                            src="/img/arrow-right.svg"
-                                            alt="arrow-right"
-                                            className="h-6"
-                                            height={24}
-                                            width={24}
-                                        />
-                                        <span className="ml-1 text-sm text-black hover:text-yellow-950 md:ml-1 font-bold">{parentAsset.key}</span>
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link
-                                        // http://localhost:3000/dashboard/eopstrace/testmodel?objectID=Vehicles&subObject=Battery&key=LI7481&id=5PVBE7AJ8R5T50001&model=Battery+Life+Prediction&industryID=5PVBE7AJ8R5T50001&from=eopstrace
-                                        href={{
-                                            pathname: "/dashboard/eopstrace/testmodel",
-                                            query: {
-                                                objectID: parentAsset.objectID,
-                                                key: parentAsset.key,
-                                                id: parentAsset.id,
-                                                industryID: parentAsset.id,
-                                                subObject: parentAsset.subObject,
-                                                model: parentAsset.model,
-                                                from: "eopstrace"
-                                            }
-                                        }}
-                                        className="flex items-center"
+                                        href="/dashboard/aimodaldetection"
+                                        className="font-semibold"
                                     >
-                                        <Image
-                                            src="/img/arrow-right.svg"
-                                            alt="arrow-right"
-                                            className="h-6"
-                                            height={24}
-                                            width={24}
-                                        />
-                                        <span className="ml-1 text-sm font-medium text-black hover:text-yellow-950 md:ml-1">{parentAsset.model}</span>
+                                        Home
                                     </Link>
                                 </li>
-                                <li>
+                                <li className="flex justify-start items-center">
+                                    <Image
+                                        src="/img/chevron-right.svg"
+                                        alt="chevron-right"
+                                        height={28}
+                                        width={28}
+                                    />
                                     <Link
                                         href={{
-                                            pathname: "/dashboard/eopstrace/testmodel",
+                                            pathname: '/dashboard/aimodaldetection/',
                                             query: {
-                                                objectID: parentAsset.objectID,
-                                                key: parentAsset.key,
-                                                id: parentAsset.id,
-                                                industryID: parentAsset.id,
-                                                subObject: parentAsset.subObject,
-                                                model: parentAsset.model,
-                                                from: "eopstrace"
+                                                objectID: parentAsset.objectID
                                             }
                                         }}
-                                        className="flex items-center"
+                                        className="font-semibold"
                                     >
-                                        <Image
-                                            src="/img/arrow-right.svg"
-                                            alt="arrow-right"
-                                            className="h-6"
-                                            height={24}
-                                            width={24}
-                                        />
-                                        <span className="ml-1 text-sm font-medium text-black hover:text-yellow-950 md:ml-1">Test</span>
+                                        {parentAsset.objectID}
                                     </Link>
                                 </li>
+                                <li className="flex justify-start items-center">
+                                    <Image
+                                        src="/img/chevron-right.svg"
+                                        alt="chevron-right"
+                                        height={28}
+                                        width={28}
+                                    />
+                                    <Link
+                                        href={{
+                                            pathname: '/dashboard/aimodaldetection/',
+                                        }}
+                                        className="font-semibold"
+                                    >
+                                        {
+                                            parentAsset.objectID === "Manufacturing Plants"
+                                                ?
+                                                <span>Plant ID : {parentAsset.id}</span>
+                                                :
+                                                <span>VIN : {parentAsset.id}</span>
+                                        }
+
+                                    </Link>
+                                </li>
+                                <li className="flex justify-start items-center">
+                                    <Image
+                                        src="/img/chevron-right.svg"
+                                        alt="chevron-right"
+                                        height={28}
+                                        width={28}
+                                    />
+                                    <Link
+                                        href={{
+                                            pathname: '/dashboard/aimodaldetection',
+                                            query: {
+                                                objectID: parentAsset.objectID,
+                                                subObject: parentAsset.subObject,
+                                                key: parentAsset.key,
+                                                id: parentAsset.id,
+                                                industryID: parentAsset.industryID
+                                            }
+                                        }}
+                                        className="font-semibold"
+                                    >
+                                        <span>{parentAsset.subObject}</span> : <span>{parentAsset.key}</span>
+                                    </Link>
+                                </li>
+                                <li className="flex justify-start items-center">
+                                    <Image
+                                        src="/img/chevron-right.svg"
+                                        alt="chevron-right"
+                                        height={28}
+                                        width={28}
+                                    />
+                                    <Link
+                                        href={{
+                                            pathname: '/dashboard/aimodaldetection',
+                                            query: {
+                                                objectID: parentAsset.objectID,
+                                                subObject: parentAsset.subObject,
+                                                key: parentAsset.key,
+                                                id: parentAsset.id,
+                                                industryID: parentAsset.industryID
+                                            }
+                                        }}
+                                        className="font-semibold"
+                                    >
+                                        {parentAsset.model}
+                                    </Link>
+                                </li>
+
+
+                                {/* http://localhost:3000/dashboard/eopstrace/testmodel?objectID=Vehicles&subObject=Battery&key=LI7481&id=5PVBE7AJ8R5T50001&model=Battery+Life+Prediction&industryID=5PVBE7AJ8R5T50001&from=eopstrace */}
+                                <li className="flex justify-start items-center">
+                                    <Image
+                                        src="/img/chevron-right.svg"
+                                        alt="chevron-right"
+                                        height={28}
+                                        width={28}
+                                    />
+                                    <Link
+                                        href={{
+                                            pathname: '/dashboard/eopstrace/testmodel',
+                                            query: {
+                                                objectID: parentAsset.objectID,
+                                                subObject: parentAsset.subObject,
+                                                key: parentAsset.key,
+                                                id: parentAsset.id,
+                                                industryID: parentAsset.industryID,
+                                                model:parentAsset.model,
+                                                from:'eopstrace'
+                                            }
+                                        }}
+                                        className="font-semibold"
+                                    >
+                                        Test
+                                    </Link>
+                                </li>
+
                                 <li>
                                     <div className="flex items-center">
                                         <Image
@@ -154,11 +191,12 @@ export default function ModelView() {
                                             height={24}
                                             width={24}
                                         />
-                                        <span className="ml-1 text-sm font-medium text-black md:ml-1">Result</span>
+                                        <span className="ml-1 text-sm font-medium text-black hover:text-yellow-950 md:ml-1">Result</span>
                                     </div>
                                 </li>
-                            </ol>
-                        </nav>
+
+                            </ul>
+                        </div>
 
                         <div className="flex justify-center items-center">
                             <button className="bg-yellow-951 text-black rounded-xl border b order-yellow-951 flex justify-center items-center px-3 h-[44px] ml-2  mr-3  duration-300 outline-none transform active:scale-75 transition-transform">Generate RCA</button>
