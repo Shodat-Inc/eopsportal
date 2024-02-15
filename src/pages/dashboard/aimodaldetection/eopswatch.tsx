@@ -14,12 +14,14 @@ const jsonData = [
         "image": "crack-detection-large.svg",
         "planExpire": "08.31.2023",
         "benifits": [
-            "Typesetting industry",
-            "Text of the printing",
-            "Lorem Ipsum is simply dummy",
-            "Lorem Ipsum is simply dummy",
-            "Typesetting industry",
-            "Text of the printing"
+            "Camera based image processing techniques",
+            "IR-based image processing techniques",
+            "Ultrasonic image based processing techniques",
+            "Laser image based processing technique",
+            "TOFD image based processing techniques",
+            "Electroluminescence image",
+            "UAV camera image",
+            "Data set based analysis"
         ],
         "activePlan": true
     },
@@ -29,12 +31,7 @@ const jsonData = [
         "image": "parts-detection-large.svg",
         "planExpire": "04.25.2024",
         "benifits": [
-            "Typesetting industry",
-            "Text of the printing",
-            "Lorem Ipsum is simply dummy",
-            "Typesetting industry",
-            "Lorem Ipsum is simply dummy",
-            "Text of the printing"
+
         ],
         "activePlan": false
     },
@@ -44,12 +41,7 @@ const jsonData = [
         "image": "workplace-safert-detection-large.svg",
         "planExpire": "11.22.2024",
         "benifits": [
-            "Lorem Ipsum is simply dummy",
-            "Text of the printing",
-            "Typesetting industry",
-            "Lorem Ipsum is simply dummy",
-            "Text of the printing",
-            "Typesetting industry"
+
         ],
         "activePlan": false
     },
@@ -59,12 +51,12 @@ const jsonData = [
         "image": "crystallizatiod-detection.png",
         "planExpire": "08.31.2023",
         "benifits": [
-            "Typesetting industry",
-            "Text of the printing",
-            "Lorem Ipsum is simply dummy",
-            "Lorem Ipsum is simply dummy",
-            "Typesetting industry",
-            "Text of the printing"
+            "Low temperature rise at low power input",
+            "Baffling allows slurry density control",
+            "Growing crystals are brought to the boiling surface where supersaturation is most intense, and growth is most rapid",
+            "The baffle permits separation of unwanted fine crystals from the suspension of growing crystals, thereby affecting control of the product size",
+            "Sufficient seed surface is maintained at the boiling surface to minimize harmful salt deposits on the equipment surfaces.",
+            "Low head loss in the internal circulation paths makes large flows at low power requirements feasible"
         ],
         "activePlan": true
     },
@@ -74,12 +66,11 @@ const jsonData = [
         "image": "Battery-Life-Prediction.png",
         "planExpire": "04.25.2024",
         "benifits": [
-            "Typesetting industry",
-            "Text of the printing",
-            "Lorem Ipsum is simply dummy",
-            "Typesetting industry",
-            "Lorem Ipsum is simply dummy",
-            "Text of the printing"
+            "Cloud platform-based in-situ prediction of battery life",
+            "Data generation",
+            "Feature extraction",
+            "Regression algorithm",
+            "Remaining useful life prediction"
         ],
         "activePlan": false
     },
@@ -89,12 +80,12 @@ const jsonData = [
         "image": "tyre-wear-modal-catalog.png",
         "planExpire": "11.22.2024",
         "benifits": [
-            "Lorem Ipsum is simply dummy",
-            "Text of the printing",
-            "Typesetting industry",
-            "Lorem Ipsum is simply dummy",
-            "Text of the printing",
-            "Typesetting industry"
+            "Rough/abrasive road surface",
+            "Paved road",
+            "Straight road",
+            "Broken up roads",
+            "Hilly windings roads",
+            "Unmade country roads"
         ],
         "activePlan": false
     }
@@ -107,12 +98,7 @@ const jsonDataVehicles = [
         "image": "crystallizatiod-detection.png",
         "planExpire": "08.31.2023",
         "benifits": [
-            "Typesetting industry",
-            "Text of the printing",
-            "Lorem Ipsum is simply dummy",
-            "Lorem Ipsum is simply dummy",
-            "Typesetting industry",
-            "Text of the printing"
+
         ],
         "activePlan": true
     },
@@ -122,12 +108,7 @@ const jsonDataVehicles = [
         "image": "Battery-Life-Prediction.png",
         "planExpire": "04.25.2024",
         "benifits": [
-            "Typesetting industry",
-            "Text of the printing",
-            "Lorem Ipsum is simply dummy",
-            "Typesetting industry",
-            "Lorem Ipsum is simply dummy",
-            "Text of the printing"
+
         ],
         "activePlan": false
     },
@@ -137,12 +118,7 @@ const jsonDataVehicles = [
         "image": "tyre-wear-modal-catalog.png",
         "planExpire": "11.22.2024",
         "benifits": [
-            "Lorem Ipsum is simply dummy",
-            "Text of the printing",
-            "Typesetting industry",
-            "Lorem Ipsum is simply dummy",
-            "Text of the printing",
-            "Typesetting industry"
+
         ],
         "activePlan": false
     },
@@ -152,12 +128,7 @@ const jsonDataVehicles = [
         "image": "Parts-Detection.png",
         "planExpire": "11.22.2024",
         "benifits": [
-            "Lorem Ipsum is simply dummy",
-            "Text of the printing",
-            "Typesetting industry",
-            "Lorem Ipsum is simply dummy",
-            "Text of the printing",
-            "Typesetting industry"
+
         ],
         "activePlan": false
     }
@@ -193,7 +164,7 @@ export default function EopsWatch(props: any) {
                 id: props?.nextDataProps?.id,
                 model: data.name ? data.name : props?.nextDataProps?.model,
                 industryID: props?.nextDataProps?.industryID,
-                from:"eopswatch"
+                from: "eopswatch"
             }
         })
     }
