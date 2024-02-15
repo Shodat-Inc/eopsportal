@@ -299,7 +299,7 @@ export default function TrainingView() {
                                             />
                                             <Link
                                                 href={{
-                                                    pathname: '/dashboard/preview',
+                                                    pathname: '/dashboard/eopswatch/preview',
                                                     query: {
                                                         objectID: parentAsset.objectID,
                                                         subObject: parentAsset.subObject,
