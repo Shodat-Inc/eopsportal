@@ -547,7 +547,7 @@ export default function ProductionView() {
                                                                             <tbody className="cursor-pointer">
                                                                                 {
                                                                                     data[0]?.thresholdTags.map((item: any, index: any) => (
-                                                                                        <tr>
+                                                                                        <tr key={index}>
                                                                                             <td className="text-black text-lg font-semibold">Crack</td>
                                                                                             <td><span className="text-black rounded rounded-xl bg-yellow-951 py-1 px-3">{item.Crack}%</span></td>
                                                                                         </tr>
