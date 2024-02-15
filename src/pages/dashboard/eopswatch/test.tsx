@@ -51,7 +51,9 @@ export default function Test(props: any) {
                                                     subObject: routerParams.subObject,
                                                     result: item.resultImage ? item.resultImage : '',
                                                     imageID: item.imageID,
-                                                    from:"eopswatch"
+                                                    industryID:routerParams.id,
+                                                    from:"eopswatch",
+                                                    tab:"Test"
                                                 }
                                             }}
                                             className={`text-sm font-semibold h-[32px] px-2 rounded-lg inline-flex justify-center items-center mr-4 ${item.resultImage==="" ? 'pointer-events-none cursor-not-allowed bg-gray-951' : ' bg-yellow-951'}`}>

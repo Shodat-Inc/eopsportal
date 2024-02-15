@@ -130,80 +130,171 @@ export default function TestModel() {
                 <div className="border min-h-full rounded-xl mt-3 px-4 py-4">
                     <div className="flex justify-between items-center">
                         {/* Breadcrumb */}
-                        <nav className="flex" aria-label="Breadcrumb">
-                            <ol className="inline-flex items-center space-x-1 md:space-x-1">
-                                <li className="inline-flex items-center">
-                                    <Link href="/dashboard/aimodaldetection"
-                                        className="inline-flex items-center text-sm font-medium text-black hover:text-yellow-950">
+                        <div className="relative bg-white rounded-lg px-3 py-1 inline-flex border border-[#E3E3E3]">
+                            <ul className="flex justify-start items-center text-sm">
+                                <ol className="inline-flex items-center space-x-1 md:space-x-1">
+                                    <li className="flex justify-start items-center">
+                                        <Link
+                                            href="/dashboard/aimodaldetection"
+                                            className="font-semibold"
+                                        >
+                                            Home
+                                        </Link>
+                                    </li>
+
+                                    <li className="flex justify-start items-center">
                                         <Image
-                                            src="/img/home.svg"
-                                            alt="home"
-                                            className="h-6"
-                                            height={24}
-                                            width={24}
+                                            src="/img/chevron-right.svg"
+                                            alt="chevron-right"
+                                            height={28}
+                                            width={28}
                                         />
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link
-                                        href={{
-                                            pathname: "/dashboard/aimodaldetection",
-                                            // query: {
-                                            //     class: parentAsset.objectID,
-                                            //     object: parentAsset.id,
-                                            //     id: parentAsset.key,
-                                            //     subObject: parentAsset.subObject,
-                                            // }
-                                        }}
-                                        className="flex items-center">
+                                        <Link
+                                            href={{
+                                                pathname: '/dashboard/aimodaldetection/',
+                                                query: {
+                                                    objectID: parentAsset.objectID
+                                                }
+                                            }}
+                                            className="font-semibold"
+                                        >
+                                            {parentAsset.objectID}
+                                        </Link>
+                                    </li>
+
+                                    <li className="flex justify-start items-center">
                                         <Image
-                                            src="/img/arrow-right.svg"
-                                            alt="arrow-right"
-                                            className="h-6"
-                                            height={24}
-                                            width={24}
+                                            src="/img/chevron-right.svg"
+                                            alt="chevron-right"
+                                            height={28}
+                                            width={28}
                                         />
-                                        <span className="ml-1 text-sm text-black hover:text-yellow-950 md:ml-1 font-bold">{parentAsset.key}</span>
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link
-                                        href={{
-                                            pathname: "/dashboard/aimodaldetection",
-                                            query: {
-                                                objectID: parentAsset.objectID,
-                                                key: parentAsset.key,
-                                                id: parentAsset.id,
-                                                subObject: parentAsset.subObject,
-                                                model: parentAsset.model
+                                        <Link
+                                            href={{
+                                                pathname: '/dashboard/aimodaldetection/',
+                                            }}
+                                            className="font-semibold"
+                                        >
+                                            {
+                                                parentAsset.objectID === "Manufacturing Plants"
+                                                    ?
+                                                    <span>Plant ID : {parentAsset.id}</span>
+                                                    :
+                                                    <span>VIN : {parentAsset.id}</span>
                                             }
-                                        }}
-                                        className="flex items-center"
-                                    >
+
+                                        </Link>
+                                    </li>
+
+                                    <li className="flex justify-start items-center">
                                         <Image
-                                            src="/img/arrow-right.svg"
-                                            alt="arrow-right"
-                                            className="h-6"
-                                            height={24}
-                                            width={24}
+                                            src="/img/chevron-right.svg"
+                                            alt="chevron-right"
+                                            height={28}
+                                            width={28}
                                         />
-                                        <span className="ml-1 text-sm font-medium text-black hover:text-yellow-950 md:ml-1">{parentAsset.model}</span>
-                                    </Link>
-                                </li>
-                                <li>
-                                    <div className="flex items-center">
+                                        <Link
+                                            href={{
+                                                pathname: '/dashboard/aimodaldetection',
+                                                query: {
+                                                    objectID: parentAsset.objectID,
+                                                    subObject: parentAsset.subObject,
+                                                    key: parentAsset.key,
+                                                    id: parentAsset.id,
+                                                    industryID: parentAsset.industryID
+                                                }
+                                            }}
+                                            className="font-semibold"
+                                        >
+                                            <span>{parentAsset.subObject}</span> : <span>{parentAsset.key}</span>
+                                        </Link>
+                                    </li>
+
+                                    <li className="flex justify-start items-center">
                                         <Image
-                                            src="/img/arrow-right.svg"
-                                            alt="arrow-right"
-                                            className="h-6"
-                                            height={24}
-                                            width={24}
+                                            src="/img/chevron-right.svg"
+                                            alt="chevron-right"
+                                            height={28}
+                                            width={28}
                                         />
-                                        <span className="ml-1 text-sm font-medium text-black hover:text-yellow-950 md:ml-1">Test</span>
-                                    </div>
-                                </li>
-                            </ol>
-                        </nav>
+                                        <Link
+                                            href={{
+                                                pathname: '/dashboard/aimodaldetection',
+                                                query: {
+                                                    objectID: parentAsset.objectID,
+                                                    subObject: parentAsset.subObject,
+                                                    key: parentAsset.key,
+                                                    id: parentAsset.id,
+                                                    industryID: parentAsset.industryID
+                                                }
+                                            }}
+                                            className="font-semibold"
+                                        >
+                                            {parentAsset.model}
+                                        </Link>
+                                    </li>
+
+                                    <li className="hidden">
+                                        <Link
+                                            href={{
+                                                pathname: "/dashboard/aimodaldetection",
+                                                // query: {
+                                                //     class: parentAsset.objectID,
+                                                //     object: parentAsset.id,
+                                                //     id: parentAsset.key,
+                                                //     subObject: parentAsset.subObject,
+                                                // }
+                                            }}
+                                            className="flex items-center">
+                                            <Image
+                                                src="/img/arrow-right.svg"
+                                                alt="arrow-right"
+                                                className="h-6"
+                                                height={24}
+                                                width={24}
+                                            />
+                                            <span className="ml-1 text-sm text-black hover:text-yellow-950 md:ml-1 font-bold">{parentAsset.key}</span>
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link
+                                            href={{
+                                                pathname: "/dashboard/aimodaldetection",
+                                                query: {
+                                                    objectID: parentAsset.objectID,
+                                                    key: parentAsset.key,
+                                                    id: parentAsset.id,
+                                                    subObject: parentAsset.subObject,
+                                                    model: parentAsset.model
+                                                }
+                                            }}
+                                            className="flex items-center"
+                                        >
+                                            <Image
+                                                src="/img/arrow-right.svg"
+                                                alt="arrow-right"
+                                                className="h-6"
+                                                height={24}
+                                                width={24}
+                                            />
+                                            <span className="ml-1 text-sm font-medium text-black hover:text-yellow-950 md:ml-1">{parentAsset.model}</span>
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <div className="flex items-center">
+                                            <Image
+                                                src="/img/arrow-right.svg"
+                                                alt="arrow-right"
+                                                className="h-6"
+                                                height={24}
+                                                width={24}
+                                            />
+                                            <span className="ml-1 text-sm font-medium text-black hover:text-yellow-950 md:ml-1">Test</span>
+                                        </div>
+                                    </li>
+                                </ol>
+                            </ul>
+                        </div>
 
                         {/* Upload Button */}
                         <div className="flex items-end justify-end">

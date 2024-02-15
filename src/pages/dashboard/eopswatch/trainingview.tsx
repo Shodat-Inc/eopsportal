@@ -175,21 +175,15 @@ export default function TrainingView() {
                         {/* Breadcrumb */}
                         {
                             parentAsset.from === "eopswatch" ?
-                                <div className="flex relative bg-white rounded rounded-lg px-3 py-1 inline-flex border border-[#E3E3E3]">
+                                <div className="relative bg-white rounded-lg px-3 py-1 inline-flex border border-[#E3E3E3]">
                                     <ul className="flex justify-start items-center text-sm">
                                         <li className="flex justify-start items-center">
-                                            {/* <Link
+                                            <Link
                                                 href="/dashboard/aimodaldetection"
                                                 className="font-semibold"
                                             >
-                                                {parentAsset.key}
-                                            </Link> */}
-                                            <button
-                                                className="font-semibold"
-                                                onClick={goBackToSubObjectManagement}
-                                            >
-                                                {parentAsset.key}
-                                            </button>
+                                                Home
+                                            </Link>
                                         </li>
                                         <li className="flex justify-start items-center">
                                             <Image
@@ -200,17 +194,53 @@ export default function TrainingView() {
                                             />
                                             <Link
                                                 href={{
-                                                    pathname: '/dashboard/aimodaldetection',
+                                                    pathname: '/dashboard/aimodaldetection/',
                                                     query: {
-                                                        objectID: parentAsset.objectID,
-                                                        subObject: parentAsset.subObject,
-                                                        key: parentAsset.key,
-                                                        id: parentAsset.id,
+                                                        objectID: parentAsset.objectID
                                                     }
                                                 }}
                                                 className="font-semibold"
                                             >
-                                                Models
+                                                {parentAsset.objectID}
+                                            </Link>
+                                        </li>
+                                        <li className="flex justify-start items-center">
+                                            <Image
+                                                src="/img/chevron-right.svg"
+                                                alt="chevron-right"
+                                                height={28}
+                                                width={28}
+                                            />
+                                            <Link
+                                                href={{
+                                                    pathname: '/dashboard/aimodaldetection/',
+                                                }}
+                                                className="font-semibold"
+                                            >
+                                                {
+                                                    parentAsset.objectID === "Manufacturing Plants"
+                                                        ?
+                                                        <span>Plant ID : {parentAsset.id}</span>
+                                                        :
+                                                        <span>VIN : {parentAsset.id}</span>
+                                                }
+
+                                            </Link>
+                                        </li>
+                                        <li className="flex1 justify-start items-center hidden">
+                                            <Image
+                                                src="/img/chevron-right.svg"
+                                                alt="chevron-right"
+                                                height={28}
+                                                width={28}
+                                            />
+                                            <Link
+                                                href={{
+                                                    pathname: '/dashboard/aimodaldetection/',
+                                                }}
+                                                className="font-semibold"
+                                            >
+                                                <span>{parentAsset.subObject}</span> : <span>{parentAsset.key}</span>
                                             </Link>
                                         </li>
                                         <li className="flex justify-start items-center">
@@ -228,6 +258,30 @@ export default function TrainingView() {
                                                         subObject: parentAsset.subObject,
                                                         key: parentAsset.key,
                                                         id: parentAsset.id,
+                                                        industryID: parentAsset.industryID
+                                                    }
+                                                }}
+                                                className="font-semibold"
+                                            >
+                                                <span>{parentAsset.subObject}</span> : <span>{parentAsset.key}</span>
+                                            </Link>
+                                        </li>
+                                        <li className="flex justify-start items-center">
+                                            <Image
+                                                src="/img/chevron-right.svg"
+                                                alt="chevron-right"
+                                                height={28}
+                                                width={28}
+                                            />
+                                            <Link
+                                                href={{
+                                                    pathname: '/dashboard/aimodaldetection',
+                                                    query: {
+                                                        objectID: parentAsset.objectID,
+                                                        subObject: parentAsset.subObject,
+                                                        key: parentAsset.key,
+                                                        id: parentAsset.id,
+                                                        industryID: parentAsset.industryID
                                                     }
                                                 }}
                                                 className="font-semibold"
@@ -236,6 +290,7 @@ export default function TrainingView() {
                                             </Link>
                                         </li>
                                         <li className="flex justify-start items-center">
+                                        {/* http://localhost:3000/dashboard/eopswatch/preview?objectID=Manufacturing+Plants&subObject=Walls&key=TPC71810-01-012&id=TPC3305-01&model=Crack+Detection&industryID=TPC3305-01&from=eopswatch */}
                                             <Image
                                                 src="/img/chevron-right.svg"
                                                 alt="chevron-right"
@@ -244,18 +299,19 @@ export default function TrainingView() {
                                             />
                                             <Link
                                                 href={{
-                                                    pathname: '/dashboard/eopswatch/preview',
+                                                    pathname: '/dashboard/preview',
                                                     query: {
                                                         objectID: parentAsset.objectID,
                                                         subObject: parentAsset.subObject,
                                                         key: parentAsset.key,
                                                         id: parentAsset.id,
-                                                        model: parentAsset.model
+                                                        industryID: parentAsset.industryID,
+                                                        model:parentAsset.model
                                                     }
                                                 }}
                                                 className="font-semibold"
                                             >
-                                                Test
+                                                {parentAsset.tab}
                                             </Link>
                                         </li>
                                         <li className="flex justify-start items-center">
@@ -521,7 +577,7 @@ export default function TrainingView() {
                                                                             <tbody className="cursor-pointer">
                                                                                 {
                                                                                     data[0]?.thresholdTags.map((item: any, index: any) => (
-                                                                                        <tr>
+                                                                                        <tr key={index}>
                                                                                             <td className="text-black text-lg font-semibold">Crack</td>
                                                                                             <td><span className="text-black rounded rounded-xl bg-yellow-951 py-1 px-3">{item.Crack}%</span></td>
                                                                                         </tr>

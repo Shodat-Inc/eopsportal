@@ -117,16 +117,16 @@ export default function Preview() {
     })
 
     console.log({
-        data:data,
-        filteredDataTest:filteredDataTest,
-        filteredDataProduction:filteredDataProduction
+        data: data,
+        filteredDataTest: filteredDataTest,
+        filteredDataProduction: filteredDataProduction
     })
 
     const hasParams = routerParams.hasOwnProperty("PlantID");
     const hasObjectParams = routerParams.hasOwnProperty("subObject")
 
-    const checkboxFunction = (event:any) => {
-        if(event.currentTarget.checked) {
+    const checkboxFunction = (event: any) => {
+        if (event.currentTarget.checked) {
             setEnabled(true)
         } else {
             setEnabled(false)
@@ -139,7 +139,7 @@ export default function Preview() {
             {/* Breadcrumb */}
             <div className="relative bg-white rounded-lg px-3 py-1 inline-flex border border-[#E3E3E3]">
                 <ul className="flex justify-start items-center text-sm">
-                <li className="flex justify-start items-center">
+                    <li className="flex justify-start items-center">
                         <Link
                             href="/dashboard/aimodaldetection"
                             className="font-semibold"
@@ -157,8 +157,8 @@ export default function Preview() {
                         <Link
                             href={{
                                 pathname: '/dashboard/aimodaldetection/',
-                                query:{
-                                    objectID:routerParams.objectID
+                                query: {
+                                    objectID: routerParams.objectID
                                 }
                             }}
                             className="font-semibold"
@@ -181,12 +181,12 @@ export default function Preview() {
                         >
                             {
                                 routerParams.objectID === "Manufacturing Plants"
-                                ?
-                                <span>Plant ID : {routerParams.id}</span>
-                                :
-                                <span>VIN : {routerParams.id}</span>
+                                    ?
+                                    <span>Plant ID : {routerParams.id}</span>
+                                    :
+                                    <span>VIN : {routerParams.id}</span>
                             }
-                            
+
                         </Link>
                     </li>
                     <li className="flex1 justify-start items-center hidden">
@@ -220,14 +220,14 @@ export default function Preview() {
                                     subObject: routerParams.subObject,
                                     key: routerParams.key,
                                     id: routerParams.id,
-                                    industryID:routerParams.industryID
+                                    industryID: routerParams.industryID
                                 }
                             }}
                             className="font-semibold"
                         >
                             <span>{routerParams.subObject}</span> : <span>{routerParams.key}</span>
                         </Link>
-                    </li>                 
+                    </li>
                     <li className="flex justify-start items-center">
                         <Image
                             src="/img/chevron-right.svg"
@@ -243,7 +243,7 @@ export default function Preview() {
                                     subObject: routerParams.subObject,
                                     key: routerParams.key,
                                     id: routerParams.id,
-                                    industryID:routerParams.industryID
+                                    industryID: routerParams.industryID
                                 }
                             }}
                             className="font-semibold"
@@ -285,7 +285,7 @@ export default function Preview() {
                     <div className="flex justify-start items-center relative pr-3 h-[65px]">
                         {defaultTab === "Production" && <>
                             <div className="flex items-center justify-start ml-7">
-                                <p className="text-gray mr-3 text-sm font-semibold">{enabled ? "Enabled" :"Disabled" }</p>
+                                <p className="text-gray mr-3 text-sm font-semibold">{enabled ? "Enabled" : "Disabled"}</p>
                                 <div className={`${styles.radioWrap} relative top-[2px]`}>
                                     <input
                                         type="checkbox"
@@ -301,7 +301,7 @@ export default function Preview() {
                                     query: {
                                         objectID: routerParams.objectID,
                                         key: routerParams.key,
-                                        model:routerParams.model,
+                                        model: routerParams.model,
                                         id: routerParams.id,
                                         subObject: routerParams.subObject
                                     }
