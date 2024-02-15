@@ -70,12 +70,12 @@ export default function RaisedAlerts() {
                         />
                         {/* http://localhost:3000/dashboard/eopswatch/alerts?objectID=Vehicles&key=NEC1TT01522&model=Tire+Wear+Detection&id=5PVBE7AJ8R5T50001&subObject=Tire */}
                         <Link
-                             href={{
+                            href={{
                                 pathname: '/dashboard/eopswatch/alerts',
                                 query: {
                                     objectID: routerParams.objectID,
                                     key: routerParams.key,
-                                    model:routerParams.model,
+                                    model: routerParams.model,
                                     id: routerParams.id,
                                     subObject: routerParams.subObject
                                 }
@@ -119,7 +119,15 @@ export default function RaisedAlerts() {
                     <tbody>
                         <tr>
                             <td>
-                                <span className="h-[60px] w-[80px] inline-block bg-gray-962 rounded-xl"></span>
+                                <span className="h-[60px] w-[80px] inline-block bg-gray-962 rounded-xl overflow-hidden">
+                                    <Image
+                                        src="/img/tire/tireware1.jpg"
+                                        alt="tireware1.jpg"
+                                        height={60}
+                                        width={80}
+                                        className="object-cover object-center"
+                                    />
+                                </span>
                             </td>
                             <td>112233445566</td>
                             <td>20%</td>
@@ -161,7 +169,15 @@ export default function RaisedAlerts() {
                         </tr>
                         <tr>
                             <td>
-                                <span className="h-[60px] w-[80px] inline-block bg-gray-962 rounded-xl"></span>
+                                <span className="h-[60px] w-[80px] inline-block bg-gray-962 rounded-xl overflow-hidden">
+                                    <Image
+                                        src="/img/tire/tireware2.jpg"
+                                        alt="tireware1.jpg"
+                                        height={60}
+                                        width={80}
+                                        className="object-cover object-center"
+                                    />
+                                </span>
                             </td>
                             <td>112233445567</td>
                             <td>20%</td>
@@ -203,7 +219,15 @@ export default function RaisedAlerts() {
                         </tr>
                         <tr>
                             <td>
-                                <span className="h-[60px] w-[80px] inline-block bg-gray-962 rounded-xl"></span>
+                                <span className="h-[60px] w-[80px] inline-block bg-gray-962 rounded-xl overflow-hidden">
+                                    <Image
+                                        src="/img/tire/tireware3.jpg"
+                                        alt="tireware1.jpg"
+                                        height={60}
+                                        width={80}
+                                        className="object-cover object-center"
+                                    />
+                                </span>
                             </td>
                             <td>112233445568</td>
                             <td>15%</td>
@@ -245,7 +269,15 @@ export default function RaisedAlerts() {
                         </tr>
                         <tr>
                             <td>
-                                <span className="h-[60px] w-[80px] inline-block bg-gray-962 rounded-xl"></span>
+                                <span className="h-[60px] w-[80px] inline-block bg-gray-962 rounded-xl overflow-hidden">
+                                    <Image
+                                        src="/img/tire/tireware4.jpg"
+                                        alt="tireware1.jpg"
+                                        height={60}
+                                        width={80}
+                                        className="object-cover object-center"
+                                    />
+                                </span>
                             </td>
                             <td>112233445569</td>
                             <td>20%</td>
@@ -287,7 +319,15 @@ export default function RaisedAlerts() {
                         </tr>
                         <tr>
                             <td>
-                                <span className="h-[60px] w-[80px] inline-block bg-gray-962 rounded-xl"></span>
+                                <span className="h-[60px] w-[80px] inline-block bg-gray-962 rounded-xl overflow-hidden">
+                                    <Image
+                                        src="/img/tire/tireware5.jpg"
+                                        alt="tireware1.jpg"
+                                        height={60}
+                                        width={80}
+                                        className="object-cover object-center"
+                                    />
+                                </span>
                             </td>
                             <td>112233445570</td>
                             <td>20%</td>

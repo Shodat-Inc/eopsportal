@@ -233,7 +233,7 @@ export default function ViewTicket() {
                                                         item.image != "" ?
                                                             <span className="h-[60px] w-[80px] inline-block bg-gray-962 rounded rounded-xl overflow-hidden">
                                                                 <Image
-                                                                    src={`/img/${item.image}`}
+                                                                    src={`/img/tire/${item.image}`}
                                                                     alt={item.alertName}
                                                                     height={60}
                                                                     width={80}
