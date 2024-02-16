@@ -11,6 +11,7 @@ import {
   enterpriseAdminMail,
 } from "../constant/nodemailer";
 import { Op } from "sequelize";
+import { paginateQuery } from "../constant/pagination";
 
 const { serverRuntimeConfig } = getConfig();
 
@@ -150,12 +151,21 @@ async function create(params: any) {
  *
  * @returns {Promise<Array<object>>} A promise that resolves with an array of retrieved enterprise user data.
  */
-async function getAllEnterpriseUser() {
+async function getAllEnterpriseUser(param: any) {
   // Log information about the function execution
   loggerInfo.info("GET all the Enterprise Users");
+  let sortOrder = 'DESC'; // Default sorting order is DESC
 
-  // Fetch all enterprise user data from the database using Sequelize findAll method
-  return await db.User.findAll({
+  // Check if sortBy parameter is provided and valid
+  if (param.sortBy && ['ASC', 'DESC'].includes(param.sortBy.toUpperCase())) {
+    sortOrder = param.sortBy.toUpperCase();
+  }
+  const page = param.page || 1; // Default to page 1 if not provided
+  const pageSize = param.pageSize || 10; // Default page size to 10 if not provided
+
+  const result = await paginateQuery(db.User, page, pageSize, {
+
+    // // Fetch all enterprise user data from the database using Sequelize findAll method
     where: {
       enterpriseId: {
         [Op.not]: null   // to get all the Enterprise User whose enterpriseId is not null
@@ -173,6 +183,10 @@ async function getAllEnterpriseUser() {
       "updatedAt"
     ],
   });
+  if (!result.rows.length) {
+    return sendResponseData(false, "Enterprise Users Not Found", {})
+  }
+  return sendResponseData(true, "Enterprise Users fetched Successfully", result)
 }
 
 /**
@@ -334,8 +348,6 @@ async function updateProfile(params: any, reqData: any) {
 
 async function inviteEnterpriseUser(params: any, reqData: any) {
   try {
-    console.log(params, "====params")
-    console.log(reqData, "===reqData")
     loggerInfo.info("Inviting Enterprise User");
     if (reqData.role !== 4) {
       return sendResponseData(false, message.error.enterpriseAdminAccess, {});
@@ -383,7 +395,7 @@ async function cancelInvite(params: any, reqData: any) {
     const user = await db.Invite.findOne({
       where: {
         email: params.email,
-        // enterpriseId:reqData.enterpriseId
+        enterpriseId: reqData.enterpriseId
       },
     });
     if (!user) {
