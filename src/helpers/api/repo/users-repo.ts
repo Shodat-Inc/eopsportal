@@ -5,6 +5,7 @@ import { db } from "../db";
 import sendResponseData from "../../constant";
 import { loggerInfo, loggerError } from "@/logger";
 import message from "@/util/responseMessage";
+import { addressRepo } from "./address-repo";
 
 const { serverRuntimeConfig } = getConfig();
 
@@ -17,6 +18,7 @@ export const usersRepo = {
   getById,
   create,
   update,
+  getEnterpriseUserById,
   delete: _delete,
 };
 
@@ -313,32 +315,41 @@ async function update(id: any, params: any) {
     user.lastName = params.lastName || user.lastName;
 
     // Update address information if provided
-    if (params.address) {
-      await db.Address.update(
-        { address: params.address },
-        { where: { userId: id } }
-      );
-    }
-    if (params.state) {
-      await db.Address.update(
-        { state: params.state },
-        { where: { userId: id } }
-      );
-    }
-    if (params.city) {
-      await db.Address.update({ city: params.city }, { where: { userId: id } });
-    }
-    if (params.pincode) {
-      await db.Address.update(
-        { pincode: params.pincode },
-        { where: { userId: id } }
-      );
-    }
-    if (params.countryId) {
-      await db.Address.update(
-        { countryId: params.countryId },
-        { where: { userId: id } }
-      );
+
+    const savedAddress = user.Addresses;
+
+    if (!savedAddress.length) {
+      // Create a new address entry if none exists
+      const addData = {
+        address: params.address,
+        city: params.city,
+        state: params.state,
+        pincode: params.pincode,
+        countryId: params.countryId,
+        primary: params.primary,
+        userId: id,
+      };
+      await addressRepo.create(addData);
+    } else {
+      const updateParams = [
+        "address",
+        "city",
+        "state",
+        "pincode",
+        "countryId",
+        "primary",
+      ];
+      const updatedAddressData: any = {};
+
+      for (const param of updateParams) {
+        if (params[param]) {
+          updatedAddressData[param] = params[param];
+        }
+      }
+
+      if (Object.keys(updatedAddressData).length > 0) {
+        await db.Address.update(updatedAddressData, { where: { userId: id } });
+      }
     }
 
     // Update phone record if provided
@@ -356,9 +367,9 @@ async function update(id: any, params: any) {
         { where: { userId: id } }
       );
     }
-
     // Save the updated user information
-    return await user.save();
+    await user.save();
+    return sendResponseData(true, "Data Updated Successfully", []);
   } catch (error) {
     // Log error information in case of an exception during user update
     loggerError.error("Error in updating user:", error);
@@ -382,4 +393,53 @@ async function _delete(id: number) {
 
   // delete user
   return await user.destroy();
+}
+
+async function getEnterpriseUserById(
+  params: Partial<{
+    [key: string]: string | string[];
+  }>
+) {
+  try {
+    // Log information about the operation.
+    loggerInfo.info("Get Enterprise User by ID");
+
+    // Check if the ID is provided in the parameters.
+    if (!params.id) {
+      // Return a response indicating that the ID is not provided.
+      return sendResponseData(false, message.error.idNotProvided, []);
+    }
+
+    // Find the enterprise user in the database based on the provided ID.
+    const data = await db.User.findOne({
+      where: { id: params.id },
+      attributes: [
+        "username",
+        "email",
+        "firstName",
+        "lastName",
+        "enterpriseId",
+        "roleId",
+      ],
+    });
+
+    // Check if the user data is available.
+    if (!data.enterpriseId || !data) {
+      // Return a response indicating that the enterprise user doesn't exist.
+      return sendResponseData(false, message.error.enterpriseUserNotExist, []);
+    }
+
+    // Return a successful response with the fetched enterprise user data.
+    return sendResponseData(true, message.success.enterpriseUserFetched, data);
+  } catch (error: any) {
+    // Log an error message if an exception occurs during the operation.
+    loggerError.error("Error in enterprise user repo", error);
+
+    // Return an error response with details about the encountered error.
+    return sendResponseData(
+      false,
+      message.error.errorFetchingEnterpriseUser,
+      error
+    );
+  }
 }

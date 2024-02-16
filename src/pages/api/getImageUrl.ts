@@ -16,13 +16,14 @@ async function handler(req: any, res: any) {
       res.status(405).send("Only GET method allowed");
       return;
     }
+    const type = req.query.type;
 
     // Extract the user ID and model ID from the request
     const userId = req.id;
     const modelId = req.query.modelId;
 
     // Get image URLs based on the provided model ID and user ID
-    const result = await modelDataRepo.get(modelId, userId);
+    const result = await modelDataRepo.get(modelId, userId, type);
 
     // Respond with a 200 OK status and the result data
     return res.status(200).json(result);

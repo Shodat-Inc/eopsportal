@@ -5,6 +5,7 @@ import message from "@/util/responseMessage";
 import { generateRandomAlphaNumeric } from "../../../util/helper";
 import { classTagRepo } from "./classTag-repo";
 import { paginateQuery } from "../constant/pagination";
+import { Sequelize } from "sequelize";
 
 /**
  * Repository for handling object related operations.
@@ -14,6 +15,8 @@ export const objectRepo = {
   get,
   getObjectById,
   delete: _delete,
+  getObjectValues,
+  getObjectValuesOnValues,
 };
 
 /**
@@ -71,59 +74,68 @@ async function get(params: any) {
   try {
     let result;
     let obj = {};
+    
     if (params.query.parentJoinKey) {
       obj = { id: params.query.parentJoinKey };
     }
     if (params.query.id) {
-      result = await paginateQuery(db.object, params.query.page || 1, params.query.pageSize || 10, {
-        include: [
-          {
-            model: db.AddClasses,
-            where: { id: params.query.id }, // This will filter by classId
-            attributes: ["id", "superParentId", "parentId", "serialId"],
-            include: [
-              {
-                model: db.classTag,
-                attributes: ["tagName"],
-              },
-              {
-                model: db.parentJoinKey,
-                where: obj, // This will filter by classId
-                attributes: ["id", "parentTagId", "createdAt"],
-                required: false,
-              },
-            ],
-          },
-          {
-            model: db.AddValues,
-            attributes: ["id", "values", "createdAt"],
-          },
-        ],
-      });
-    }
-
-    else if (params.query.keyword) {
+      result = await paginateQuery(
+        db.object,
+        params.query.page || 1,
+        params.query.pageSize || 10,
+        {
+          include: [
+            {
+              model: db.AddClasses,
+              where: { id: params.query.id }, // This will filter by classId
+              attributes: ["id", "superParentId", "parentId", "serialId"],
+              include: [
+                {
+                  model: db.classTag,
+                  attributes: ["tagName"],
+                },
+                {
+                  model: db.parentJoinKey,
+                  where: obj, // This will filter by classId
+                  attributes: ["id", "parentTagId", "createdAt"],
+                  required: false,
+                },
+              ],
+            },
+            {
+              model: db.AddValues,
+              attributes: ["id", "values", "createdAt"],
+            },
+          ],
+        }
+      );
+    } else if (params.query.keyword) {
       const page = params.query.page || 1; // Default to page 1 if not provided
       const pageSize = params.query.pageSize || 10; // Default page size to 10 if not provided
 
-      const { totalItems, totalPages, currentPage, rows } = await paginateQuery(db.AddValues, page, pageSize, {
-        where: { values: params.query.keyword },
-        required: true,
-        include: [
-          {
-            model: db.classTag,
-            required: true,
-            attributes: ["tagName", "dataTypeId", "classId"],
-            include: [
-              {
-                model: db.AddClasses,
-                required: true,
-                where: { userId: params.userId },
-              },
-            ],
-          }
-        ]
-      });
+      const { totalItems, totalPages, currentPage, rows } = await paginateQuery(
+        db.AddValues,
+        page,
+        pageSize,
+        {
+          where: { values: params.query.keyword },
+          required: true,
+          include: [
+            {
+              model: db.classTag,
+              required: true,
+              attributes: ["tagName", "dataTypeId", "classId"],
+              include: [
+                {
+                  model: db.AddClasses,
+                  required: true,
+                  where: { userId: params.userId },
+                },
+              ],
+            },
+          ],
+        }
+      );
 
       const modifiedData = rows.map((item: any) => ({
         Class: {
@@ -157,13 +169,17 @@ async function get(params: any) {
         return sendResponseData(false, "Data Not Found", {});
       }
 
-      return sendResponseData(true, "Object with its tag value fetched successfully", {
-        totalItems,
-        totalPages,
-        currentPage,
-        pageSize,
-        rows: modifiedData
-      });
+      return sendResponseData(
+        true,
+        "Object with its tag value fetched successfully",
+        {
+          totalItems,
+          totalPages,
+          currentPage,
+          pageSize,
+          rows: modifiedData,
+        }
+      );
     }
     if (!result || !result.rows.length) {
       return sendResponseData(false, "Object Do not Exist", {});
@@ -211,30 +227,35 @@ async function getObjectById(params: any) {
 
   try {
     // Fetch data from the database based on ObjectId and ClassId
-    const result = await paginateQuery(db.object, params.query.page || 1, params.query.pageSize || 10, {
-      where: { id: params.query.objectId }, // This will filter by ObjectId
-      include: [
-        {
-          model: db.AddClasses,
-          where: { id: params.query.classId },
-          attributes: ["id", "superParentId", "parentId", "serialId"],
-          include: [
-            {
-              model: db.classTag,
-              attributes: ["id", "tagName"],
-            },
-            {
-              model: db.parentJoinKey,
-              attributes: ["id", "parentTagId", "createdAt"],
-            },
-          ],
-        },
-        {
-          model: db.AddValues,
-          attributes: ["id", "values", "createdAt"],
-        },
-      ],
-    });
+    const result = await paginateQuery(
+      db.object,
+      params.query.page || 1,
+      params.query.pageSize || 10,
+      {
+        where: { id: params.query.objectId }, // This will filter by ObjectId
+        include: [
+          {
+            model: db.AddClasses,
+            where: { id: params.query.classId },
+            attributes: ["id", "superParentId", "parentId", "serialId"],
+            include: [
+              {
+                model: db.classTag,
+                attributes: ["id", "tagName"],
+              },
+              {
+                model: db.parentJoinKey,
+                attributes: ["id", "parentTagId", "createdAt"],
+              },
+            ],
+          },
+          {
+            model: db.AddValues,
+            attributes: ["id", "values", "createdAt"],
+          },
+        ],
+      }
+    );
 
     const data: any = {};
     for (let i of result.rows) {
@@ -290,5 +311,112 @@ async function _delete(params: any) {
 
     // Return an error response in case of an exception during object deletion.
     return sendResponseData(false, message.error.errorDeleteObject, error);
+  }
+}
+
+async function getObjectValues(params: any) {
+  loggerInfo.info("Get all the Object Values");
+  try {
+    // Convert keyword to lowercase for case-insensitive comparison
+    const keyword = params.query.keyword.toLowerCase();
+
+    const objResult = await db.AddValues.findAll({
+      where: {
+        values: keyword,
+      },
+      include: [
+        {
+          model: db.object,
+          attributes: [],
+          required: true,
+          include: [
+            {
+              model: db.AddClasses,
+              where: { userId: params.auth.sub },
+              attributes: []
+            }
+          ]
+        },
+      ],
+    });
+
+    const classResult = await db.AddClasses.findAll({
+      where: {
+        className: keyword,
+        userId: params.auth.sub,
+      },
+      attributes: [
+        "id",
+        "serialId",
+        "className",
+        "userId",
+        "enterpriseId",
+        "superParentId",
+        "parentId",
+      ],
+      include: [
+        {
+          model: db.object,
+          where: { id: Sequelize.col("Class.id") },
+          attributes: [
+            "id",
+            "serialId",
+            "classId",
+            "superParentId",
+            "parentId",
+          ],
+          required: false,
+          include: [
+            {
+              model: db.AddValues,
+              where: { objectId: Sequelize.col("Objects.id") },
+              attributes: ["id", "values", "classTagId", "objectId"],
+              required: false,
+            },
+          ],
+        },
+      ],
+    });
+
+    // If data found in db.AddClasses, return the result
+    const response = { objResult, classResult };
+    if (!response.objResult.length && !response.classResult.length) {
+      return sendResponseData(false, "No data Found", []);
+    }
+    // If data not found in both tables
+    return sendResponseData(true, "Data Fetched Sucessfully", response);
+  } catch (error) {
+    loggerError.error("Error in fetching object values", error);
+    return sendResponseData(false, "Error in fetching object values", error);
+  }
+}
+
+async function getObjectValuesOnValues(params: any) {
+  loggerInfo.info("Getting Object Values on Values");
+  try {
+    let result;
+    const page = params.query.page || 1;
+    const pageSize = params.query.pageSize || 10;
+
+    result = await paginateQuery(db.AddValues, page, pageSize, {
+      where: {
+        objectId: params.query.objectId,
+      },
+    });
+    if (!result.rows.length) {
+      return sendResponseData(false, "No Data Found", {});
+    }
+    return sendResponseData(
+      true,
+      "Object Values and its related object Values fetched Successfully",
+      result
+    );
+  } catch (error) {
+    loggerError.error("Error in getting Object Values related to value", error);
+    return sendResponseData(
+      false,
+      "Error in getting Object Values related to value",
+      error
+    );
   }
 }
