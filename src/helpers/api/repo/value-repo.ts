@@ -126,7 +126,7 @@ async function update(params: any) {
 async function _delete(params: any) {
   // Log information about the object value deletion process
   loggerInfo.info("Delete Object Value for specific tag IDs");
-
+  
   try {
     // Iterate through the provided tag IDs
     for (let x of params) {

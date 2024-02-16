@@ -16,8 +16,9 @@ export default apiHandler({
 async function getEnterpriseUser(req: any, res: any) {
     loggerInfo.info("GET Enterprise User");
     try {
+        const data = req.query
         // Retrieve all Enterprise Users using the EnterpriseUsers Repo.
-        const users = await EnterpriseUsersRepo.getAllEnterpriseUser();
+        const users = await EnterpriseUsersRepo.getAllEnterpriseUser(data);
         // If Enterprise Users are successfully retrieved, send back a 200 OK response with the Enterprise Users data.
         res.status(200).json({ message: users });
     } catch (error: any) {

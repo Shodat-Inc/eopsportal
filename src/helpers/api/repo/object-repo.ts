@@ -74,7 +74,14 @@ async function get(params: any) {
   try {
     let result;
     let obj = {};
-    
+
+    let sortOrder = 'DESC'; // Default sorting order is DESC
+
+    // Check if sortBy parameter is provided and valid
+    if (params.query.sortBy && ['ASC', 'DESC'].includes(params.query.sortBy.toUpperCase())) {
+      sortOrder = params.query.sortBy.toUpperCase();
+    }
+
     if (params.query.parentJoinKey) {
       obj = { id: params.query.parentJoinKey };
     }
@@ -88,16 +95,19 @@ async function get(params: any) {
             {
               model: db.AddClasses,
               where: { id: params.query.id }, // This will filter by classId
-              attributes: ["id", "superParentId", "parentId", "serialId"],
+              attributes: ["id", "superParentId", "parentId", "serialId", "createdAt",],
+              order: [['createdAt', sortOrder]],
               include: [
                 {
                   model: db.classTag,
                   attributes: ["tagName"],
+                  order: [['createdAt', sortOrder]],
                 },
                 {
                   model: db.parentJoinKey,
                   where: obj, // This will filter by classId
                   attributes: ["id", "parentTagId", "createdAt"],
+                  order: [['createdAt', sortOrder]],
                   required: false,
                 },
               ],
@@ -105,6 +115,7 @@ async function get(params: any) {
             {
               model: db.AddValues,
               attributes: ["id", "values", "createdAt"],
+              order: [['createdAt', sortOrder]],
             },
           ],
         }
@@ -125,11 +136,13 @@ async function get(params: any) {
               model: db.classTag,
               required: true,
               attributes: ["tagName", "dataTypeId", "classId"],
+              order: [['createdAt', sortOrder]],
               include: [
                 {
                   model: db.AddClasses,
                   required: true,
                   where: { userId: params.userId },
+                  order: [['createdAt', sortOrder]],
                 },
               ],
             },
@@ -226,6 +239,12 @@ async function getObjectById(params: any) {
   }
 
   try {
+    let sortOrder = 'DESC'; // Default sorting order is DESC
+
+    // Check if sortBy parameter is provided and valid
+    if (params.query.sortBy && ['ASC', 'DESC'].includes(params.query.sortBy.toUpperCase())) {
+      sortOrder = params.query.sortBy.toUpperCase();
+    }
     // Fetch data from the database based on ObjectId and ClassId
     const result = await paginateQuery(
       db.object,
@@ -233,25 +252,30 @@ async function getObjectById(params: any) {
       params.query.pageSize || 10,
       {
         where: { id: params.query.objectId }, // This will filter by ObjectId
+        order: [['createdAt', sortOrder]],
         include: [
           {
             model: db.AddClasses,
             where: { id: params.query.classId },
             attributes: ["id", "superParentId", "parentId", "serialId"],
+            order: [['createdAt', sortOrder]],
             include: [
               {
                 model: db.classTag,
                 attributes: ["id", "tagName"],
+                order: [['createdAt', sortOrder]],
               },
               {
                 model: db.parentJoinKey,
                 attributes: ["id", "parentTagId", "createdAt"],
+                order: [['createdAt', sortOrder]],
               },
             ],
           },
           {
             model: db.AddValues,
             attributes: ["id", "values", "createdAt"],
+            order: [['createdAt', sortOrder]],
           },
         ],
       }
@@ -319,21 +343,30 @@ async function getObjectValues(params: any) {
   try {
     // Convert keyword to lowercase for case-insensitive comparison
     const keyword = params.query.keyword.toLowerCase();
+    let sortOrder = 'DESC'; // Default sorting order is DESC
+
+    // Check if sortBy parameter is provided and valid
+    if (params.query.sortBy && ['ASC', 'DESC'].includes(params.query.sortBy.toUpperCase())) {
+      sortOrder = params.query.sortBy.toUpperCase();
+    }
 
     const objResult = await db.AddValues.findAll({
       where: {
         values: keyword,
       },
+      order: [['createdAt', sortOrder]],
       include: [
         {
           model: db.object,
           attributes: [],
           required: true,
+          order: [['createdAt', sortOrder]],
           include: [
             {
               model: db.AddClasses,
               where: { userId: params.auth.sub },
-              attributes: []
+              attributes: [],
+              order: [['createdAt', sortOrder]],
             }
           ]
         },
@@ -397,11 +430,18 @@ async function getObjectValuesOnValues(params: any) {
     let result;
     const page = params.query.page || 1;
     const pageSize = params.query.pageSize || 10;
+    let sortOrder = 'DESC'; // Default sorting order is DESC
+
+    // Check if sortBy parameter is provided and valid
+    if (params.query.sortBy && ['ASC', 'DESC'].includes(params.query.sortBy.toUpperCase())) {
+      sortOrder = params.query.sortBy.toUpperCase();
+    }
 
     result = await paginateQuery(db.AddValues, page, pageSize, {
       where: {
         objectId: params.query.objectId,
       },
+      order: [['createdAt', sortOrder]],
     });
     if (!result.rows.length) {
       return sendResponseData(false, "No Data Found", {});
