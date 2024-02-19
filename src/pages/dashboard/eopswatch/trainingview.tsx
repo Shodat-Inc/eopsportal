@@ -21,7 +21,7 @@ export default function TrainingView() {
     useEffect(() => {
         setTimeout(() => {
             setLoader(false)
-        }, 1)
+        }, 1000)
     }, [])
     const [value, setValue] = useState(0);
 
@@ -306,7 +306,8 @@ export default function TrainingView() {
                                                         key: parentAsset.key,
                                                         id: parentAsset.id,
                                                         industryID: parentAsset.industryID,
-                                                        model:parentAsset.model
+                                                        model:parentAsset.model,
+                                                        tab:parentAsset.tab
                                                     }
                                                 }}
                                                 className="font-semibold"

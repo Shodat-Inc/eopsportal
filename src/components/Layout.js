@@ -31,6 +31,11 @@ export default function Layout({ children }) {
     };
   }, []);
 
+  let newDate = new Date()
+  let date = newDate.getDate();
+  let month = newDate.getMonth() + 1;
+  let year = newDate.getFullYear();
+
   return (
     <>
       <TopBar showNav={showNav} setShowNav={setShowNav} />
@@ -52,7 +57,7 @@ export default function Layout({ children }) {
       >
         <div className="pb-5 pr-4">{children}</div>
 
-        <div className="text-sm py-2 text-gray-967 mt-4">Copyright 2023 eOps Fabric <span className="ml-4">Version 1.0</span> </div>
+        <div className="text-sm py-2 text-gray-967 mt-4">Copyright {year} eOps Fabric <span className="ml-4">Version 1.0</span> </div>
       </main>
     </>
   );

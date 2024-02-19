@@ -5,9 +5,9 @@ import Link from "next/dist/client/link";
 
 export default function Test(props: any) {
     const { data, routerParams } = props;
-    console.log({
-        "HERE PROPS TEST":props
-    })
+    // console.log({
+    //     "HERE PROPS TEST":props
+    // })
     const [showImageModal, setShowImageModal] = useState(false);
     const [resImage, setResImage] = useState("");
     const imageModalFunction = (image: any) => {

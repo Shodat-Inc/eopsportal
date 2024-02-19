@@ -28,6 +28,15 @@ export default function Preview() {
     const authenticationType = [
         "Basic", "Client Certificate", "Active Directory OAuth", "Raw", "Managed Identity"
     ];
+
+    useEffect(()=>{
+        if(routerParams?.tab && routerParams?.tab!=="") {
+            setDefaultTab(routerParams?.tab as any)
+            console.log({
+                "____TAB":routerParams?.tab
+            })
+        }
+    }, [routerParams?.tab])
     const [defaultAuthType, setDefaultAuthType] = useState(authenticationType[0]);
     const [filterData, setFilterData] = useState<any>({
         date: ""
