@@ -15,7 +15,10 @@ const nextConfig = {
     },
     secret: "97IoST9Ec8s5scvy49AMzT0TYArIInGZ",
     env: process.env.ENV,
-    isDBSync: true,
+    isDBSync: false,
+    // Make sure to false this after true
+    // This must be true if we want to generate the table / if the table is generated at once, then make this true for once and then make it false.
+    // this is related to only DB or Backend changes.
   },
   publicRuntimeConfig: {
     apiUrl:
