@@ -238,7 +238,9 @@ export default function SubObjectManagement(props: any) {
             "classObjValue": classSelector?.classBreadcrumbs?.classObjValue,
             "subClass": chooseAsset,
             "subClassObjKey": "",
-            "subClassObjValue": ""
+            "subClassObjValue": "",
+            "tab":props?.tab,
+            "parentTab":props?.parentTab
         }
         dispatch(setClassBreadcrumb(abc));
 
@@ -270,11 +272,28 @@ export default function SubObjectManagement(props: any) {
             "classObject": props.objectKey,
             "object": obj,
             "datafor":"eopswatch",
-            "type":type
+            "type":type,
+            "tab":props?.tab ? props?.tab : 0,
+            "parentTab":props?.parentTab ? props?.parentTab : 0
         }
         dispatch(setDataForeOpsWatchAction(eopsData));
+
+        let abc = {
+            "flow": "Object Management",
+            "class": classSelector?.classBreadcrumbs?.class,
+            "classObjKey": classSelector?.classBreadcrumbs?.classObjKey,
+            "classObjValue": classSelector?.classBreadcrumbs?.classObjValue,
+            "subClass": chooseAsset,
+            "subClassObjKey": type,
+            "subClassObjValue": obj,
+            "tab":props?.tab,
+            "parentTab":props?.parentTab
+        }
+        dispatch(setClassBreadcrumb(abc));
+
+
         setTimeout(() => {
-            router.push('/dashboard/aimodaldetection');
+            router.push('/dashboard/assetmanagement/models');
         }, 1000)
     }
 
@@ -326,6 +345,22 @@ export default function SubObjectManagement(props: any) {
         setSelectedObjectID(item)
     }
 
+    useEffect(()=>{
+        console.log({
+            "HERE":classSelector?.dataforeopswatchReducer?.subClass
+        })
+        if(classSelector?.dataforeopswatchReducer?.subClass==='' || classSelector?.dataforeopswatchReducer?.subClass===undefined) {
+            // setChooseAsset('')
+            
+        } else {
+            setChooseAsset(classSelector?.dataforeopswatchReducer?.subClass)
+            // setTimeout(()=>{
+            //     dispatch(setDataForeOpsWatchAction({}))
+            // }, 1000)
+        }
+
+    }, [classSelector])
+
 
     return (
         <div className='py-3 font-OpenSans'>
@@ -350,7 +385,7 @@ export default function SubObjectManagement(props: any) {
                         </div>
 
                         {toggleAsset ?
-                            <div className={`h-52 border rounded-xl border-gray-969 h-auto max-h-[250px] w-[400px]  absolute flex items-start justify-start mt-1 overflow-hidden overflow-y-auto bg-white ${styles.scroll} z-10`}>
+                            <div className={`border rounded-xl border-gray-969 h-auto max-h-[250px] w-[400px]  absolute flex items-start justify-start mt-1 overflow-hidden overflow-y-auto bg-white ${styles.scroll} z-10`}>
                                 <ul className="p-0 m-0 w-full">
                                     {
                                         subClassData.map((item: any, index: any) => (
@@ -394,7 +429,7 @@ export default function SubObjectManagement(props: any) {
                     </div>
                     <div className="relative ml-3">
                         <button
-                            className={`bg-white border  rounded-xl h-[44px] transition-all duration-[400ms] h-[44px] rounded rounded-lg px-2 py-2 flex items-center justify-start ${toggleFilter === true ? 'border-black' : 'border-gray-969'}`}
+                            className={`bg-white border transition-all duration-[400ms] h-[44px] rounded-lg px-2 py-2 flex items-center justify-start ${toggleFilter === true ? 'border-black' : 'border-gray-969'}`}
                             onClick={toggleFilterFunction}
                         >
                             <Image
@@ -426,7 +461,7 @@ export default function SubObjectManagement(props: any) {
             {
                 classSelector.successMessageReducer === true &&
 
-                <div className={`bg-green-957 border-green-958 text-green-959 mb-1 mt-1 border text-md px-4 py-3 rounded rounded-xl relative flex items-center justify-start`}>
+                <div className={`bg-green-957 border-green-958 text-green-959 mb-1 mt-1 border text-md px-4 py-3 rounded-xl relative flex items-center justify-start`}>
                     <Image
                         src="/img/AlertSuccess.svg"
                         alt="Alert Success"
@@ -502,7 +537,7 @@ export default function SubObjectManagement(props: any) {
                                                             </button>
                                                     }
                                                     {(actions && actionCount === index + 1) &&
-                                                        <div ref={wrapperRef} className="bg-black text-white border overflow-hidden border-black rounded rounded-lg w-[200px] flex flex-col flex-wrap items-start justify-start shadow-sm absolute top-[100%] right-[calc(100%-15px)] z-[1]">
+                                                        <div ref={wrapperRef} className="bg-black text-white border overflow-hidden border-black rounded-lg w-[200px] flex flex-col flex-wrap items-start justify-start shadow-sm absolute top-[100%] right-[calc(100%-15px)] z-[1]">
                                                             <button
                                                                 onClick={() => editSubObjectFunction(items?.tags?.ID)}
                                                                 className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">

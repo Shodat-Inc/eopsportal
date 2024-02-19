@@ -21,7 +21,6 @@ if (typeof window !== 'undefined') {
     access_token = localStorage.getItem('authenticationToken')
 }
 
-
 /*
 Function to set the selected class at CLASS Management Landing Page
 */

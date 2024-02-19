@@ -11,13 +11,14 @@ import { editObjectModalAction } from '@/store/actions/classAction';
 import { setDataForeOpsWatchAction } from '@/store/actions/classAction';
 import EditObject from './editobject';
 import { useRouter } from 'next/router';
+import { saveDataFlowObjectManagementAction } from '@/store/actions/assetsAction';
 
 export default function ObjectManagement(props: any) {
 
     const dispatch = useDispatch<any>();
     const [toggleFilter, setToggleFilter] = useState(false);
     const [toggleArrow, setToggleArrow] = useState(false);
-    const [chooseAsset, setChooseAsset] = useState(props.classData && props.classData.length > 0 ? props.classData[0]?.assetName : '');
+    const [chooseAsset, setChooseAsset] = useState(props.classData[0]?.assetName);
     const [toggleAsset, setToggleAsset] = useState(false);
     const [actions, setActions] = useState(false);
     const [actionCount, setActionCount] = useState(1);
@@ -32,6 +33,15 @@ export default function ObjectManagement(props: any) {
 
     // All class reducer states
     const classSelector = useSelector((state: any) => state.classReducer);
+    const assetsReducer = useSelector((state: any) => state.assetsReducer);
+
+    useEffect(()=>{
+        if (assetsReducer?.saveDataFlowObjectManagementReducer?.class!==undefined) {
+            setChooseAsset(assetsReducer?.saveDataFlowObjectManagementReducer?.class)
+        } else {
+            setChooseAsset(props.classData[0]?.assetName)
+        }
+    }, [assetsReducer?.saveDataFlowObjectManagementReducer, props.classData])
 
     // Close Success message after 5 second if true
     useEffect(() => {
@@ -53,10 +63,10 @@ export default function ObjectManagement(props: any) {
     // Set the choose asset on page load
     useEffect(() => {
         if (props.classData && props.classData.length > 0) {
-            setChooseAsset(props.classData[0]?.assetName);
+            // setChooseAsset(props.classData[0]?.assetName);
             dispatch(objDefaultClassSelectorFunction(props.classData[0]?.assetName))
         }
-    }, [props.classData, dispatch])
+    }, [props.classData])
 
     const toggleActions = (item: any) => {
         setActionCount(item);
@@ -67,19 +77,25 @@ export default function ObjectManagement(props: any) {
         }, 1000)
     }
     const takeMeToSubObjectComponent = (item: any) => {
+        // console.log({
+        //     item:item
+        // })
         let classObjKey = chooseAsset === 'Manufacturing Plants' ? 'PlantID' : 'VIN';
         let abc = {
             "flow": "Object Management",
             "class": chooseAsset,
             "classObjKey": classObjKey,
             "classObjValue": item,
-            "subClass": "Batteries",
+            "subClass": "",
             "subClassObjKey": "",
-            "subClassObjValue": ""
+            "subClassObjValue": "",
+            "tab":props?.tab ? props?.tab : 0,
+            "parentTab":0
         }
         dispatch(setClassBreadcrumb(abc))
         setObjID(item);
         props.handelObject(item)
+        dispatch(saveDataFlowObjectManagementAction(abc))
     }
 
 
@@ -166,8 +182,8 @@ export default function ObjectManagement(props: any) {
         }
         let classObjKey = chooseAsset === 'Manufacturing Plants' ? 'PlantID' : 'VIN';
         console.log({
-            SearchString:   e.target.value,
-            objectData:objectData
+            SearchString: e.target.value,
+            objectData: objectData
         })
         if (objectData && objectData.length > 0) {
             const filtered = objectData.filter((item: any) => {
@@ -191,8 +207,8 @@ export default function ObjectManagement(props: any) {
         setSelectedObjID(item);
     }
 
-      // Save data for eopswatch section
-      const eOpsWatchFunction = (item: any) => {
+    // Save data for eopswatch section
+    const eOpsWatchFunction = (item: any) => {
         let obj = '';
         if (chooseAsset === "Manufacturing Plants") {
             obj = item.ID
@@ -204,15 +220,15 @@ export default function ObjectManagement(props: any) {
             "subClass": "",
             "classObject": item,
             "object": "",
-            "datafor":"eopwatch"
+            "datafor": "eopwatch"
         }
         dispatch(setDataForeOpsWatchAction(eopsData));
         setTimeout(() => {
             router.push('/dashboard/aimodaldetection');
         }, 1000)
     }
-      // Save data for eopswatch section
-      const eOpsTraceFunction = (item: any) => {
+    // Save data for eopswatch section
+    const eOpsTraceFunction = (item: any) => {
         let obj = '';
         if (chooseAsset === "Manufacturing Plants") {
             obj = item.ID
@@ -224,7 +240,7 @@ export default function ObjectManagement(props: any) {
             "subClass": "",
             "classObject": item,
             "object": "",
-            "datafor":"eoptrace"
+            "datafor": "eoptrace"
         }
         dispatch(setDataForeOpsWatchAction(eopsData));
         setTimeout(() => {
@@ -254,7 +270,7 @@ export default function ObjectManagement(props: any) {
                         </div>
 
                         {toggleAsset ?
-                            <div className={`h-52 border rounded-xl border-gray-969 h-auto max-h-[250px] w-[400px]  absolute flex items-start justify-start mt-1 overflow-hidden overflow-y-auto bg-white ${styles.scroll} z-10`}>
+                            <div className={`h-52 border rounded-xl border-gray-969 max-h-[250px] w-[400px]  absolute flex items-start justify-start mt-1 overflow-hidden overflow-y-auto bg-white ${styles.scroll} z-10`}>
                                 <ul className="p-0 m-0 w-full">
                                     {
                                         props.classData.map((item: any, index: any) => (
@@ -297,7 +313,7 @@ export default function ObjectManagement(props: any) {
                     </div>
                     <div className="relative ml-3">
                         <button
-                            className={`bg-white border  rounded-xl h-[44px] transition-all duration-[400ms] h-[44px] rounded rounded-lg px-2 py-2 flex items-center justify-start ${toggleFilter === true ? 'border-black' : 'border-gray-969'}`}
+                            className={`bg-white border transition-all duration-[400ms] h-[44px] rounded-lg px-2 py-2 flex items-center justify-start ${toggleFilter === true ? 'border-black' : 'border-gray-969'}`}
                             onClick={toggleFilterFunction}
                         >
                             <Image
@@ -324,7 +340,7 @@ export default function ObjectManagement(props: any) {
             {
                 classSelector.successMessageReducer === true &&
 
-                <div className={`bg-green-957 border-green-958 text-green-959 mb-1 mt-1 border text-md px-4 py-3 rounded rounded-xl relative flex items-center justify-start`}>
+                <div className={`bg-green-957 border-green-958 text-green-959 mb-1 mt-1 border text-md px-4 py-3 rounded-xl relative flex items-center justify-start`}>
                     <Image
                         src="/img/AlertSuccess.svg"
                         alt="Alert Success"
@@ -400,7 +416,7 @@ export default function ObjectManagement(props: any) {
                                                             </button>
                                                     }
                                                     {(actions && actionCount === index + 1) &&
-                                                        <div ref={wrapperRef} className="bg-black text-white border overflow-hidden border-black rounded rounded-lg w-[200px] flex flex-col flex-wrap items-start justify-start shadow-sm absolute top-[100%] right-[calc(100%-15px)] z-[1]">
+                                                        <div ref={wrapperRef} className="bg-black text-white border overflow-hidden border-black rounded-lg w-[200px] flex flex-col flex-wrap items-start justify-start shadow-sm absolute top-[100%] right-[calc(100%-15px)] z-[1]">
                                                             <button
                                                                 onClick={() => editObjectFunction(items.subObjectID)}
                                                                 className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
@@ -412,7 +428,7 @@ export default function ObjectManagement(props: any) {
                                                                 <span>Delete</span>
                                                             </button>
                                                             <button
-                                                                onClick={()=>eOpsWatchFunction(items.subObjectID)}
+                                                                onClick={() => eOpsWatchFunction(items.subObjectID)}
                                                                 className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
                                                                 <span>eOps Watch</span>
                                                             </button>

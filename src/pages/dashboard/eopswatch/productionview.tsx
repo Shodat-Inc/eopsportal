@@ -81,11 +81,6 @@ export default function ProductionView() {
             return parseInt(item.performance) >= parseInt(e.target.value)
         })
         setPlotData(filtered)
-        // console.log({
-        //     "T-VALUE": e.target.value,
-        //     "filter":filtered,
-        //     plots:plots
-        // })
     }
 
     useEffect(() => {
@@ -397,8 +392,8 @@ export default function ProductionView() {
                         }
 
                         <div className="flex justify-center items-center">
-                            <button className="bg-yellow-951 text-black rounded rounded-xl border b order-yellow-951 flex justify-center items-center px-3 h-[44px] ml-2 transition-all duration-[400ms] mr-3 transition-opacity duration-300 outline-none transform active:scale-75 transition-transform">Generate RCA</button>
-                            <button className="bg-yellow-951 text-black rounded rounded-xl border b order-yellow-951 flex justify-center items-center px-3 h-[44px] ml-2 transition-all duration-[400ms] mr-3 transition-opacity duration-300 outline-none transform active:scale-75 transition-transform">Track Issue</button>
+                            <button className="bg-yellow-951 text-black rounded-xl border b order-yellow-951 flex justify-center items-center px-3 h-[44px] ml-2 mr-3  duration-300 outline-none transform active:scale-75 transition-transform">Generate RCA</button>
+                            <button className="bg-yellow-951 text-black rounded-xl border b order-yellow-951 flex justify-center items-center px-3 h-[44px] ml-2  mr-3 duration-300 outline-none transform active:scale-75 transition-transform">Track Issue</button>
                         </div>
                     </div>
 
@@ -417,7 +412,7 @@ export default function ProductionView() {
                                 />
                             </div>
                             :
-                            <div className="relative mt-10 rounded overflow-hidden rounded-xl">
+                            <div className="relative mt-10 overflow-hidden rounded-xl">
                                 {
                                     parentAsset.result ?
                                         <div>
@@ -425,7 +420,7 @@ export default function ProductionView() {
                                                 parentAsset.objectID && parentAsset.model === "Tire Wear Detection" && parentAsset.subObject === "Tire" ?
                                                     <div className="relative mt-0 w-full flex flex-wrap justify-start items-start">
                                                         <div className="relative w-[45%]">
-                                                            <div className="bg-gray-951 flex justify-center items-center rounded rounded-xl overflow-hidden">
+                                                            <div className="bg-gray-951 flex justify-center items-center rounded-xl overflow-hidden">
                                                                 <Image
                                                                     src={data ? data[0].resultImage : parentAsset?.result?.toString()}
                                                                     alt="Result"
@@ -521,14 +516,6 @@ export default function ProductionView() {
                                                                                 />
                                                                             </div>
                                                                         </div>
-
-                                                                        {/* <Image
-                                                                            src={data[0].threshold}
-                                                                            alt="Result"
-                                                                            height={70}
-                                                                            width={290}
-                                                                            className="mb-2 h-auto w-auto"
-                                                                        /> */}
                                                                     </>
                                                                     : null
                                                             }
@@ -537,9 +524,9 @@ export default function ProductionView() {
 
                                                             {
                                                                 data ?
-                                                                    <div className={`relative h-[160px] overflow-y-auto rounded rounded-xl ${styles.viewTableWrap}`}>
-                                                                        <table className={`table-auto min-w-full text-left rounded rounded-xl ${styles.viewTable}`}>
-                                                                            <thead className="bg-orange-951 text-black rounded rounded-xl h-10 text-sm font-normal">
+                                                                    <div className={`relative h-[160px] overflow-y-auto rounded-xl ${styles.viewTableWrap}`}>
+                                                                        <table className={`table-auto min-w-full text-left rounded-xl ${styles.viewTable}`}>
+                                                                            <thead className="bg-orange-951 text-black rounded-xl h-10 text-sm font-normal">
                                                                                 <tr className="">
                                                                                     <th>Tag</th>
                                                                                     <th>Probability</th>
@@ -550,7 +537,7 @@ export default function ProductionView() {
                                                                                     data[0]?.thresholdTags.map((item: any, index: any) => (
                                                                                         <tr key={index}>
                                                                                             <td className="text-black text-lg font-semibold">Crack</td>
-                                                                                            <td><span className="text-black rounded rounded-xl bg-yellow-951 py-1 px-3">{item.Crack}%</span></td>
+                                                                                            <td><span className="text-black rounded-xl bg-yellow-951 py-1 px-3">{item.Crack}%</span></td>
                                                                                         </tr>
                                                                                     ))
                                                                                 }

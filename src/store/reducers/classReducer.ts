@@ -15,6 +15,7 @@ import { DATA_FOR_EOPSTRACE_ERROR, DATA_FOR_EOPSTRACE_SUCCESS } from "../types";
 import { DATA_FROM_RESULT_PAGE_ERROR, DATA_FROM_RESULT_PAGE_SUCCESS } from "../types";
 import { DATA_FOR_ALERTS_ERROR, DATA_FOR_ALERTS_SUCCESS } from "../types";
 
+
 const initialState = {
   selectedClass: '',
   toggleAddObject: false,
@@ -31,11 +32,12 @@ const initialState = {
   editSubObjectModalReducer: false,
   dataforeopstraceReducer: {},
   datafromresulteopswatchReducer: {},
-  dataforalertsReducer: {},
+  dataforalertsReducer: {}  
 };
 
 const classReducer = (state = initialState, action: any) => {
-  switch (action.type) {
+  switch (action.type) {    
+
     case SET_CLASS_SUCCESS:
       return {
         ...state,

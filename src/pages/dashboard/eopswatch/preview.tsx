@@ -115,8 +115,7 @@ export default function Preview() {
     };
     useEffect(() => {
         fetchClassData();
-        if (fetchClassData.length) return;
-    }, [routerParams])
+    })
 
     const filteredDataTest = data.filter((item: any) => {
         return item.folder === "Test"

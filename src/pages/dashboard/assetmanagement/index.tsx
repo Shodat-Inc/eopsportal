@@ -9,6 +9,7 @@ import ObjectManagement from "./objectmanagement";
 import SubObjectManagement from "./subobjectmanagement";
 import SubClassManagement from "./subclassmanagement";
 import { setSelectedClass, toggleAddNewObjectModel, getSingleUser, toggleAddNewClassObjectModel } from "@/store/actions/classAction";
+import { setDataForeOpsWatchAction } from "@/store/actions/classAction";
 
 export default function AssetManagement() {
     const dispatch = useDispatch<any>();
@@ -21,6 +22,11 @@ export default function AssetManagement() {
 
     const classSelector = useSelector((state: any) => state.classReducer);
 
+    console.log({
+        "___classSelector":classSelector
+    })
+
+    
     useEffect(()=>{
         if(classSelector?.datafromresulteopswatchReducer?.comingFrom === "result") {
             setTab(3)
@@ -139,6 +145,27 @@ export default function AssetManagement() {
     }
 
 
+    useEffect(()=>{
+        console.log({
+            "HERE":classSelector?.dataforeopswatchReducer?.tab
+        })
+        if(classSelector?.dataforeopswatchReducer?.tab===0 || classSelector?.dataforeopswatchReducer?.tab===undefined) {
+            // setTab(1)
+            
+        } else {
+            setTab(classSelector?.dataforeopswatchReducer?.tab)
+            setTimeout(()=>{
+                dispatch(setDataForeOpsWatchAction({}))
+            }, 1000)
+        }
+
+    }, [classSelector])
+
+    console.log({
+        "___TAB":tab
+    })
+
+
     return (
         <div className="flex font-OpenSans">
 
@@ -195,7 +222,7 @@ export default function AssetManagement() {
 
                 {/* Breadcrumb */}
                 {nav && tab === 3 ?
-                    <div className="flex relative bg-white rounded rounded-lg px-3 py-1 inline-flex border border-[#E3E3E3] mb-5">
+                    <div className="relative bg-white rounded-lg px-3 py-1 inline-flex border border-[#E3E3E3] mb-5">
                         <ul className="flex justify-start items-center text-sm">
                             <li className="flex justify-start items-center">
                                 <Link
@@ -285,7 +312,7 @@ export default function AssetManagement() {
                         tab === 1 &&
                         <div className="flex justify-start items-center">
                             <button
-                                className="rounded rounded-xl bg-black h-[44px] px-4 flex justify-center items-center text-white text-sm hover:bg-[#303030] transition-all duration-[100ms] transition-opacity duration-100 outline-none transform active:scale-75 transition-transform "
+                                className="rounded-xl bg-black h-[44px] px-4 flex justify-center items-center text-white text-sm hover:bg-[#303030] duration-100 outline-none transform active:scale-75 transition-transform "
                                 onClick={openAddClassModal}
                             >
                                 <Image
@@ -298,7 +325,7 @@ export default function AssetManagement() {
                                 <span>Add Class</span>
                             </button>
                             <button
-                                className="rounded rounded-xl bg-black h-[44px] px-4 flex justify-center items-center text-white text-sm hover:bg-[#303030] transition-all duration-[100ms] transition-opacity duration-100 outline-none transform active:scale-75 transition-transform ml-4"
+                                className="rounded-xl bg-black h-[44px] px-4 flex justify-center items-center text-white text-sm hover:bg-[#303030] duration-100 outline-none transform active:scale-75 transition-transform ml-4"
                             >
                                 <Image
                                     src="/img/download.svg"
@@ -316,7 +343,7 @@ export default function AssetManagement() {
                         tab === 4 &&
                         <div className="flex justify-start items-center">
                             <button
-                                className="rounded rounded-xl bg-black h-[44px] px-4 flex justify-center items-center text-white text-sm hover:bg-[#303030] transition-all duration-[100ms] transition-opacity duration-100 outline-none transform active:scale-75 transition-transform"
+                                className="rounded-xl bg-black h-[44px] px-4 flex justify-center items-center text-white text-sm hover:bg-[#303030] duration-100 outline-none transform active:scale-75 transition-transform"
                                 onClick={openAddSubClassModal}
                             >
                                 <Image
@@ -334,7 +361,7 @@ export default function AssetManagement() {
                     {tab === 3 &&
                         <div className="flex justify-start items-center">
                             <button
-                                className="rounded rounded-xl bg-black h-[44px] px-4 flex justify-center items-center text-white text-sm hover:bg-[#303030] transition-all duration-[100ms] transition-opacity duration-100 outline-none transform active:scale-75 transition-transform"
+                                className="rounded-xl bg-black h-[44px] px-4 flex justify-center items-center text-white text-sm hover:bg-[#303030]  duration-100 outline-none transform active:scale-75 transition-transform"
                                 onClick={openAddObjectModal}
                             >
                                 <Image
@@ -353,7 +380,7 @@ export default function AssetManagement() {
                     {tab === 2 &&
                         <div className="flex justify-start items-center">
                             <button
-                                className="rounded rounded-xl bg-black h-[44px] px-4 flex justify-center items-center text-white text-sm hover:bg-[#303030] transition-all duration-[400ms] transition-opacity duration-300 outline-none transform active:scale-75 transition-transform"
+                                className="rounded-xl bg-black h-[44px] px-4 flex justify-center items-center text-white text-sm hover:bg-[#303030] duration-300 outline-none transform active:scale-75 transition-transform"
                                 onClick={openAddClassObjectModal}
                             >
                                 <Image
@@ -378,6 +405,7 @@ export default function AssetManagement() {
                                 addClassModal={addClassModal}
                                 classData={classData && classData.length > 0 ? classData : []}
                                 handelsubClass={handelsubClass}
+                                tab={1}
                             />
                         }
                         {
@@ -387,6 +415,7 @@ export default function AssetManagement() {
                                 addSubClassModal={addSubClassModal}
                                 classData={classData && classData.length > 0 ? classData : []}
                                 selectedParentClass={defaultClass ? defaultClass : getSelClass.selectedClass}
+                                tab={4}
                             />
                         }
                         {tab === 2 &&
@@ -394,6 +423,7 @@ export default function AssetManagement() {
                                 handelObject={handelObject}
                                 classData={classData && classData.length > 0 ? classData : []}
                                 defaultClass={defaultClass ? defaultClass : getSelClass.selectedClass}
+                                tab={2}
                             />
                         }
                         {tab === 3 &&
@@ -401,6 +431,8 @@ export default function AssetManagement() {
                                 handleSubObject={handleSubObject}
                                 defaultClass={getSelClass.objDefaultClassSelector}
                                 objectKey={objectKey}
+                                tab={3}
+                                parentTab={2}
                             />
                         }
                     </div>
