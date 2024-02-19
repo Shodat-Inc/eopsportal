@@ -1,13 +1,11 @@
 import React, { useState, useRef, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styles from "../../../styles/Common.module.css";
 import Image from "next/image";
 import {
-  openCloseNewClassModalAction,
-  successMessageAction,
-  successMessagAdvancedAction
+  openCloseNewClassModalAction
 } from "@/store/actions/classAction";
-import { getClassDataAction } from "@/store/actions/apiAction";
+import { getClassDataAction, getDataTypeAction } from "@/store/actions/apiAction";
 import axios from "axios";
 
 export default function AddNewClass(props: any) {
@@ -29,36 +27,15 @@ export default function AddNewClass(props: any) {
     access_token = localStorage.getItem("authToken");
   }
 
-  // GET ALL DATATYPES
-  async function fetchData() {
-    try {
-      await axios({
-        method: "GET",
-        url: `/api/getDataType`,
-        headers: {
-          Authorization: `Bearer ${access_token}`,
-          "Content-Type": "application/json",
-        },
-      })
-        .then(function (response) {
-          if (response) {
-            setAllDataTypes(response.data?.data);
-          }
-        })
-        .catch(function (error) {
-          console.log({
-            "ERROR IN AXIOS CATCH (GET DT)": error,
-          });
-        });
-    } catch (err) {
-      console.log({
-        "ERROR IN TRY CATCH (GET DT)": err,
-      });
-    }
-  }
+  const apiSelector = useSelector((state: any) => state.apiReducer);
+  useEffect(()=>{
+    dispatch(getDataTypeAction())
+}, [dispatch])
+
+  // Get all data type API
   useEffect(() => {
-    fetchData();
-  }, [access_token]);
+    setAllDataTypes(apiSelector?.getDataTypeReducer?.rows);
+  }, [apiSelector?.getDataTypeReducer]);
 
   const closeModal = () => {
     // props.handleClick(false);
@@ -195,13 +172,13 @@ export default function AddNewClass(props: any) {
     }
   };
 
-  useEffect(() => {
-    setPrimaryKey(allTags)
-  }, [allTags])
+  // useEffect(() => {
+  //   setPrimaryKey(allTags)
+  // }, [allTags])
 
-  const handlePrimaryKey = (e: any) => {
-    setSelectedPK(e.target.value)
-  }
+  // const handlePrimaryKey = (e: any) => {
+  //   setSelectedPK(e.target.value)
+  // }
 
   return (
     <>
@@ -370,17 +347,25 @@ export default function AddNewClass(props: any) {
                               </div>
                               <label
                                 htmlFor={item.type}
-                                className="text-black font-semibold"
+                                className="text-black font-semibold capitalize"
                               >
                                 {item.name}
-                                <span className="text-gray-500 font-normal text-[14px] ml-2">
+                                <span className="text-gray-500 font-normal text-[14px] ml-2 capitalize">
                                   {item.description}
                                 </span>
                               </label>
                             </div>
                           </div>
                         ))
-                        : null}
+                        :
+                        <div role="status">
+                          <svg aria-hidden="true" className="inline w-12 h-12 text-gray-200 animate-spin dark:text-gray-600 fill-yellow-951" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor" />
+                            <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill" />
+                          </svg>
+                          <span className="sr-only">Loading...</span>
+                        </div>
+                      }
 
                       <div className="flex justify-end items-center w-full">
                         <button
@@ -408,35 +393,6 @@ export default function AddNewClass(props: any) {
                   ) : null}
                 </div>
               </div>
-
-
-              {/* <div className="mb-6 relative flex justify-end items-center w-full">
-                <div className={`mb-5 lg:w-full small:w-full ${styles.form__wrap}`}>
-                  <div className={`relative ${styles.form__group} font-OpenSans`}>
-                    <select
-                      id="primaryKeySelection"
-                      name="primaryKeySelection"
-                      className={`border border-gray-961 ${styles.form__field}`}
-                      placeholder="Primary Key"
-                      value={selectedPK}
-                      required
-                      onChange={handlePrimaryKey}
-                    >
-                      <option value="">-Select-</option>
-                      {
-                        primaryKey && primaryKey.length > 0 ?
-                          primaryKey?.map((item: any, index: any) => (
-                            <option key={index} value={item}>{item}</option>
-                          ))
-                          : null
-                      }
-
-                    </select>
-                    <label htmlFor="parentJoinKey" className={`${styles.form__label}`}>Select Primary Key</label>
-                  </div>
-                </div>
-              </div> */}
-
 
               <div className="mb-0 relative flex justify-end items-center w-full">
                 <button

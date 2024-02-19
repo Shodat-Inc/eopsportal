@@ -11,14 +11,11 @@ import SubClassManagement from "./subclassmanagement";
 import {
     setSelectedClass,
     toggleAddNewObjectModel,
-    getSingleUser,
     toggleAddNewClassObjectModel,
     openCloseNewClassModalAction,
-    successMessageAction,
-    successMessagAdvancedAction
 } from "@/store/actions/classAction";
 
-import { getClassDataAction } from "@/store/actions/apiAction";
+import { getClassDataAction, getDataTypeAction } from "@/store/actions/apiAction";
 
 export default function AssetManagement() {
     const dispatch = useDispatch<any>();
@@ -36,9 +33,13 @@ export default function AssetManagement() {
     // All class reducer states
     const apiSelector = useSelector((state: any) => state.apiReducer);
 
+    // Call datatype api
+    // useEffect(()=>{
+    //     dispatch(getDataTypeAction())
+    // }, [dispatch])
 
     useEffect(() => {
-        dispatch(getClassDataAction())
+        dispatch(getClassDataAction())        
     }, [access_token])
 
     useEffect(() => {

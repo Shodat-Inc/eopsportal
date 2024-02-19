@@ -4,7 +4,7 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
-  reactStrictMode: false,
+  reactStrictMode: true,
   serverRuntimeConfig: {
     dbConfig: {
       host: process.env.DB_HOST,
@@ -15,7 +15,7 @@ const nextConfig = {
     },
     secret: "97IoST9Ec8s5scvy49AMzT0TYArIInGZ",
     env: process.env.ENV,
-    isDBSync: false,
+    isDBSync: true,
   },
   publicRuntimeConfig: {
     apiUrl:

@@ -60,7 +60,7 @@ export default function AddNewObject(props: any) {
         const objectValue = [] as any;
         Object.values(form_values).map((item: any) => {
             objectValue.push({
-                "values": item
+                "value": item
             })
         })
 

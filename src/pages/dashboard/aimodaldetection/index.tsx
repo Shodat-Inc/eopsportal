@@ -48,6 +48,9 @@ export default function AiModelDetection() {
     const [subObjectData, setSubObjectData] = useState([] as any);
 
     const [allModelData, setAllModelData] = useState([] as any);
+    const [searchData, setSearchData] = useState([] as any)
+    const [searchDropdownData, setSearchDropdownData] = useState([] as any)
+    const [showSearchDropdown, setShowSearchDropdown] = useState(false)
 
 
     let access_token = "" as any;
@@ -201,11 +204,107 @@ export default function AiModelDetection() {
         if (e.target.value === "") {
             setDisable(0)
             setSearch('');
+            setShowSearchDropdown(false)
             return;
+        } else {
+            setShowSearchDropdown(true)
         }
         setSearch(e.target.value)
+        getObjectValuesClassAPI(e.target.value)
         setDisable(2);
+    }
 
+    // Search API
+    async function getObjectValuesClassAPI(keyword: any) {
+        try {
+            await axios({
+                method: 'GET',
+                url: `/api/getObjectValuesClass?keyword=${keyword}`,
+                headers: {
+                    "Authorization": `Bearer ${access_token}`,
+                    "Content-Type": "application/json"
+                }
+
+            }).then(function (response) {
+                if (response) {
+                    console.log({
+                        response: response
+                    })
+                    setSearchData(response?.data?.data)
+                }
+            }).catch(function (error) {
+                console.log({
+                    "ERROR IN AXIOS CATCH": error
+                })
+            })
+        } catch (err) {
+            console.log({
+                "ERROR IN TRY CATCH": err
+            })
+        }
+    }
+
+    const getSearchedResponseData = () => {
+        let arrData = [] as any;
+        if (searchData && searchData?.classResult?.length > 0) {
+            arrData = searchData?.classResult
+        } else if (searchData && searchData?.objResult?.length > 0) {
+            arrData = searchData?.objResult
+        } else {
+            arrData = []
+        }
+        return arrData;
+    }
+
+    console.log({
+        searchData: searchData,
+        condition: searchData?.classResult?.length > 0 ? searchData?.classResult : searchData?.objResult,
+        arrData: getSearchedResponseData()
+    })
+
+    const searchedData = getSearchedResponseData();
+
+    // API to get data when selection of search items from dropdown
+    async function getObjectsValuesAPI(id: any) {
+        try {
+            await axios({
+                method: 'GET',
+                url: `/api/getObjectValues?objectId=${id}`,
+                headers: {
+                    "Authorization": `Bearer ${access_token}`,
+                    "Content-Type": "application/json"
+                }
+
+            }).then(function (response) {
+                if (response) {
+                    console.log({
+                        "RES_ITEMS": response
+                    })
+                    // setSearchData(response?.data?.data)
+
+                    setTableHeader(response?.data?.objects?.data?.rows)
+                    setClassObject(response?.data?.objects?.data?.rows);
+
+                    setShowSubClass(true)
+                }
+            }).catch(function (error) {
+                console.log({
+                    "ERROR IN AXIOS CATCH": error
+                })
+            })
+        } catch (err) {
+            console.log({
+                "ERROR IN TRY CATCH": err
+            })
+        }
+    }
+
+    const handleSearchOption = (id: any) => {
+        setShowSearchDropdown(false)
+        console.log({
+            "__ID": id
+        })
+        getObjectsValuesAPI(id)
     }
 
     // ============= Reset button on click function =============
@@ -570,7 +669,7 @@ export default function AiModelDetection() {
 
             <div className="border border-yellow-951 min-h-[120px] bg-white rounded-lg w-full p-4 flex justify-start items-start mb-6 flex-wrap flex-row">
                 {/* Searchbar */}
-                <div className="w-[25%] pr-5">
+                <div className="w-[25%] pr-5 relative">
                     <div className="flex relative">
                         <Image
                             src="/img/search-icon-gray.svg"
@@ -591,6 +690,27 @@ export default function AiModelDetection() {
                             disabled={disable === 1}
                         />
                     </div>
+                    {showSearchDropdown &&
+                        <div className="mt-1 h-[200px] w-full p-1 border border-[#A7A7A7] rounded absolute z-[2] bg-white flex justify-start items-start flex-wrap1 flex-col overflow-auto">
+                            {
+                                searchedData && searchedData?.length > 0 ?
+                                    searchedData?.map((item: any, index: any) => (
+                                        <button onClick={() => handleSearchOption(item.id)} className="bg-gray-100 w-full text-left px-2 py-1 border-b-1 border-[#A7A7A7] mb-1 hover:bg-yellow-951">{item.className || item.values}</button>
+                                    ))
+                                    :
+                                    <div>
+                                        <div role="status">
+                                            <svg aria-hidden="true" className="w-12 h-12 text-gray-200 animate-spin dark:text-gray-600 fill-yellow-951" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor" />
+                                                <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill" />
+                                            </svg>
+                                            <span className="sr-only">Loading...</span>
+                                        </div>
+                                        <div className="font-semibold p-2">No Data!</div>
+                                    </div>
+                            }
+                        </div>
+                    }
                 </div>
 
                 {/* Or Selection */}
@@ -668,7 +788,7 @@ export default function AiModelDetection() {
                                                 <span className="text-lg text-black pl-2">
                                                     {/* {showObjectsIDFromID(chooseObject)} */}
                                                     {chooseObject === 0 ? '-Select-' : showObjectsIDFromID(chooseObject)}
-                                                    </span>
+                                                </span>
                                             </div>
 
                                             {toggleObject ?
@@ -738,7 +858,7 @@ export default function AiModelDetection() {
                                                 <span className="text-lg text-black pl-2">
                                                     {/* {showSubClassNameFromID(chooseSubClass)} */}
                                                     {chooseSubClass === 0 ? '-Select-' : showSubClassNameFromID(chooseSubClass)}
-                                                    </span>
+                                                </span>
                                             </div>
 
                                             {toggleSubClass ?
@@ -777,7 +897,7 @@ export default function AiModelDetection() {
                                                 <span className="text-lg text-black pl-2">
                                                     {/* {showSubObjectsIDFromID(chooseSubObject)} */}
                                                     {chooseSubObject === 0 ? '-Select-' : showSubObjectsIDFromID(chooseSubObject)}
-                                                    </span>
+                                                </span>
                                             </div>
 
                                             {toggleSubObject ?

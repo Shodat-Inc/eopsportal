@@ -183,6 +183,7 @@ export default function EditSubObject(props: any) {
                     >
 
                         {
+                        objectsData && objectsData[0]?.ObjectValues.length > 0 &&
                             objectsData[0]?.ObjectValues.map((items: any, index: any) => {
                                 const linkContent = objectsData[0]?.Class?.ClassTags[index];
                                 const linkContentVal = objectsData[0]?.ObjectValues[index];
@@ -217,8 +218,8 @@ export default function EditSubObject(props: any) {
                                 <div className={`relative ${styles.form__group} font-OpenSans`}>
                                     <input
                                         type="text"
-                                        id={`${objectsData[0]?.Class?.ParentJoinKeys[0]?.parentTagId}`}
-                                        name={`${parentJoinKey}_${objectsData[0]?.Class?.ParentJoinKeys[0]?.parentTagId}`}
+                                        id={`${objectsData && objectsData[0]?.Class?.ParentJoinKeys[0]?.parentTagId}`}
+                                        name={`${parentJoinKey}_${objectsData && objectsData[0]?.Class?.ParentJoinKeys[0]?.parentTagId}`}
                                         className={`border border-gray-961 ${styles.form__field} ${styles.form__field__disabled}`}
                                         placeholder=""
                                         value={`${parentJoinValue}`}
