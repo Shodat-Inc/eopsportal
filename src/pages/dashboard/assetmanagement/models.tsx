@@ -1,15 +1,12 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import styles from '../../../styles/Common.module.css';
 import Layout from "../../../components/Layout";
 import Image from "next/image";
 import Link from "next/link";
-import EopsWatch from "../aimodaldetection/eopswatch";
-import EopsTrace from "../aimodaldetection/eopswatch";
-import EopsWatchModel from "../aimodaldetection/eopswatchModel";
-import EopsTraceModel from "../aimodaldetection/eopstracemodel";
-import axios from "axios";
-import { setClassBreadcrumb,setDataForeOpsWatchAction } from "@/store/actions/classAction";
+import EopsWatch from "./eopswatch";
+import EopsTrace from "./eopstrace";
+import { setClassBreadcrumb, setDataForeOpsWatchAction } from "@/store/actions/classAction";
 import Router from 'next/router'
 import { useRouter } from 'next/router'
 
@@ -32,12 +29,12 @@ export default function Models() {
     const classSelector = useSelector((state: any) => state.classReducer);
 
     const nextDataProps = {
-        objectID: "",
-        industryID: "",
-        id: "",
-        subObject: "",
-        key: "",
-        model: "Crack Detection"
+        objectID: nav.class,
+        industryID: nav.classObjValue,
+        id: nav.classObjValue,
+        subObject: nav.subClass,
+        key: nav.subClassObjValue,
+        model: ''
     }
 
     const goBacktoHome = () => {
@@ -50,12 +47,13 @@ export default function Models() {
             "subClass": classSelector?.classBreadcrumbs?.subClass,
             "subClassObjKey": "",
             "subClassObjValue": "",
-            "tab":2,
-            "parentTab":0
+            "tab": 2,
+            "parentTab": 0,
+            "model":classSelector?.dataforeopswatchReducer?.model
         }
         dispatch(setClassBreadcrumb(abc))
         dispatch(setDataForeOpsWatchAction(abc))
-        
+
         setTimeout(() => {
             router.push('/dashboard/assetmanagement');
         }, 100)
@@ -70,8 +68,9 @@ export default function Models() {
             "subClass": classSelector?.classBreadcrumbs?.subClass,
             "subClassObjKey": "",
             "subClassObjValue": "",
-            "tab":2,
-            "parentTab":0
+            "tab": 2,
+            "parentTab": 0,
+            "model":classSelector?.dataforeopswatchReducer?.model
         }
         dispatch(setClassBreadcrumb(abc))
         dispatch(setDataForeOpsWatchAction(abc))
@@ -79,7 +78,7 @@ export default function Models() {
             router.push('/dashboard/assetmanagement');
         }, 100)
     }
-    
+
     const backtoSubObjectManagementLevel = () => {
         let abc = {
             "flow": "Object Management",
@@ -87,10 +86,11 @@ export default function Models() {
             "classObjKey": classSelector?.classBreadcrumbs?.classObjKey,
             "classObjValue": classSelector?.classBreadcrumbs?.classObjValue,
             "subClass": classSelector?.classBreadcrumbs?.subClass,
-            "subClassObjKey": "",
-            "subClassObjValue": "",
-            "tab":3,
-            "parentTab":2
+            "subClassObjKey": classSelector?.classBreadcrumbs?.subClassObjKey,
+            "subClassObjValue": classSelector?.classBreadcrumbs?.subClassObjValue,
+            "tab": 3,
+            "parentTab": 2,
+            "model":classSelector?.dataforeopswatchReducer?.model
         }
         dispatch(setClassBreadcrumb(abc))
         dispatch(setDataForeOpsWatchAction(abc))
@@ -209,29 +209,19 @@ export default function Models() {
                 <div className="bg-white w-full h-full rounded-tr-xl rounded-br-xl rounded-bl-xl overflow-hidden">
                     {tab === 1 &&
                         <>
-                            {
-                                (classSelector?.dataforeopswatchReducer && Object.keys(classSelector?.dataforeopswatchReducer).length) !== 0 || (selectClass !== "")
-                                    ?
-                                    <EopsWatch
-                                        nextDataProps={nextDataProps}
-                                        active={chooseSubObject !== "Select" ? true : false}
-                                    />
-                                    :
-                                    <EopsWatchModel />
-                            }
+
+                            <EopsWatch
+                                nextDataProps={nextDataProps}
+                                active={true}
+                            />
                         </>
                     }
                     {tab === 2 &&
                         <>
-                            {
-                                (classSelector?.dataforeopswatchReducer && Object.keys(classSelector?.dataforeopswatchReducer).length) !== 0 || (selectClass !== "")
-                                    ?
-                                    <EopsTrace
-                                        nextDataProps={nextDataProps}
-                                    />
-                                    :
-                                    <EopsTraceModel />
-                            }
+                            <EopsTrace
+                                nextDataProps={nextDataProps}
+                                active={true}
+                            />
                         </>
                     }
                 </div>

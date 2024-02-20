@@ -10,134 +10,160 @@ import { useRouter } from 'next/router'
 const jsonData = [
     {
         "name": "Crack Detection",
-        "description": "",
+        "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
         "image": "crack-detection-large.svg",
         "planExpire": "08.31.2023",
         "benifits": [
-            "Camera based image processing techniques",
-            "IR-based image processing techniques",
-            "Ultrasonic image based processing techniques",
-            "Laser image based processing technique",
-            "TOFD image based processing techniques",
-            "Electroluminescence image",
-            "UAV camera image",
-            "Data set based analysis"
+            "Typesetting industry",
+            "Text of the printing",
+            "Lorem Ipsum is simply dummy",
+            "Lorem Ipsum is simply dummy",
+            "Typesetting industry",
+            "Text of the printing"
         ],
         "activePlan": true
     },
     {
         "name": "Part Detection",
-        "description": "",
+        "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
         "image": "parts-detection-large.svg",
         "planExpire": "04.25.2024",
         "benifits": [
-
+            "Typesetting industry",
+            "Text of the printing",
+            "Lorem Ipsum is simply dummy",
+            "Typesetting industry",
+            "Lorem Ipsum is simply dummy",
+            "Text of the printing"
         ],
-        "activePlan": true
+        "activePlan": false
     },
     {
         "name": "Workplace Safety Detection",
-        "description": "",
+        "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
         "image": "workplace-safert-detection-large.svg",
         "planExpire": "11.22.2024",
         "benifits": [
-
+            "Lorem Ipsum is simply dummy",
+            "Text of the printing",
+            "Typesetting industry",
+            "Lorem Ipsum is simply dummy",
+            "Text of the printing",
+            "Typesetting industry"
         ],
-        "activePlan": true
+        "activePlan": false
     },
     {
         "name": "Crystallization Detection",
-        "description": "",
+        "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
         "image": "crystallizatiod-detection.png",
         "planExpire": "08.31.2023",
         "benifits": [
-            "Low temperature rise at low power input",
-            "Baffling allows slurry density control",
-            "Growing crystals are brought to the boiling surface where supersaturation is most intense, and growth is most rapid",
-            "The baffle permits separation of unwanted fine crystals from the suspension of growing crystals, thereby affecting control of the product size",
-            "Sufficient seed surface is maintained at the boiling surface to minimize harmful salt deposits on the equipment surfaces.",
-            "Low head loss in the internal circulation paths makes large flows at low power requirements feasible"
+            "Typesetting industry",
+            "Text of the printing",
+            "Lorem Ipsum is simply dummy",
+            "Lorem Ipsum is simply dummy",
+            "Typesetting industry",
+            "Text of the printing"
         ],
         "activePlan": true
     },
     {
         "name": "Battery Life Prediction",
-        "description": "",
+        "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
         "image": "Battery-Life-Prediction.png",
         "planExpire": "04.25.2024",
         "benifits": [
-            "Cloud platform-based in-situ prediction of battery life",
-            "Data generation",
-            "Feature extraction",
-            "Regression algorithm",
-            "Remaining useful life prediction"
+            "Typesetting industry",
+            "Text of the printing",
+            "Lorem Ipsum is simply dummy",
+            "Typesetting industry",
+            "Lorem Ipsum is simply dummy",
+            "Text of the printing"
         ],
-        "activePlan": true
+        "activePlan": false
     },
     {
         "name": "Tire Wear Detection",
-        "description": "",
+        "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
         "image": "tyre-wear-modal-catalog.png",
         "planExpire": "11.22.2024",
         "benifits": [
-            "Rough/abrasive road surface",
-            "Paved road",
-            "Straight road",
-            "Broken up roads",
-            "Hilly windings roads",
-            "Unmade country roads"
+            "Lorem Ipsum is simply dummy",
+            "Text of the printing",
+            "Typesetting industry",
+            "Lorem Ipsum is simply dummy",
+            "Text of the printing",
+            "Typesetting industry"
         ],
-        "activePlan": true
+        "activePlan": false
     }
 ]
 
 const jsonDataVehicles = [
     {
         "name": "Crystallization Detection",
-        "description": "",
+        "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
         "image": "crystallizatiod-detection.png",
         "planExpire": "08.31.2023",
         "benifits": [
-
+            "Typesetting industry",
+            "Text of the printing",
+            "Lorem Ipsum is simply dummy",
+            "Lorem Ipsum is simply dummy",
+            "Typesetting industry",
+            "Text of the printing"
         ],
         "activePlan": true
     },
     {
         "name": "Battery Life Prediction",
-        "description": "",
+        "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
         "image": "Battery-Life-Prediction.png",
         "planExpire": "04.25.2024",
         "benifits": [
-
+            "Typesetting industry",
+            "Text of the printing",
+            "Lorem Ipsum is simply dummy",
+            "Typesetting industry",
+            "Lorem Ipsum is simply dummy",
+            "Text of the printing"
         ],
-        "activePlan": true
+        "activePlan": false
     },
     {
         "name": "Tire Wear Detection",
-        "description": "",
+        "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
         "image": "tyre-wear-modal-catalog.png",
         "planExpire": "11.22.2024",
         "benifits": [
-
+            "Lorem Ipsum is simply dummy",
+            "Text of the printing",
+            "Typesetting industry",
+            "Lorem Ipsum is simply dummy",
+            "Text of the printing",
+            "Typesetting industry"
         ],
-        "activePlan": true
+        "activePlan": false
     },
     {
         "name": "Parts Detection",
-        "description": "",
+        "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
         "image": "Parts-Detection.png",
         "planExpire": "11.22.2024",
         "benifits": [
-
+            "Lorem Ipsum is simply dummy",
+            "Text of the printing",
+            "Typesetting industry",
+            "Lorem Ipsum is simply dummy",
+            "Text of the printing",
+            "Typesetting industry"
         ],
-        "activePlan": true
+        "activePlan": false
     }
 ]
-export default function EopsWatch(props: any) {
+export default function EopsTrace(props: any) {
 
-    console.log({
-        "___PROPS HERE":props
-    })
     const router = useRouter();
     const routerParams = router.query;
     const [data, setData] = useState(jsonData[0]);
@@ -159,8 +185,9 @@ export default function EopsWatch(props: any) {
 
 
     const redirectToNext = () => {
+        // https://eops-portal.vercel.app/dashboard/eopstrace/testmodel?objectID=Vehicles&key=LI7481&model=Battery+Life+Prediction&id=5PVBE7AJ8R5T50001&subObject=Battery
         Router.push({
-            pathname: '/dashboard/eopswatch/preview',
+            pathname: '/dashboard/eopstrace/testmodel',
             query: {
                 objectID: props?.nextDataProps?.objectID,
                 subObject: props?.nextDataProps?.subObject,
@@ -168,7 +195,7 @@ export default function EopsWatch(props: any) {
                 id: props?.nextDataProps?.id,
                 model: data.name ? data.name : props?.nextDataProps?.model,
                 industryID: props?.nextDataProps?.industryID,
-                from: "eopswatch"
+                from:"eopstrace"
             }
         })
     }
@@ -258,23 +285,12 @@ export default function EopsWatch(props: any) {
             <div className="w-[80%] px-8 py-5 rounded-r-xl rounded-bl-xl border border-[#E3E3E3] border-l-2 border-t-0 border-b-2 border-r-0 bg-white min-h-[500px]">
                 <div className='relative'>
                     <div className="flex justify-start items-start mb-4">
-                        {
-                            props.active ?
-
-                                <button
-                                    className="h-[44px]  py-1 px-3 flex justify-center items-center bg-yellow-951 border border-yellow-951 text-sm text-black rounded-xl mr-6"
-                                    onClick={redirectToNext}
-                                >
-                                    <span>Run this model</span>
-                                </button>
-                                :
-                                <button
-                                    className="h-[44px]  py-1 px-3 flex justify-center items-center bg-[#474B52] border border-[#474B52] text-sm text-white rounded-xl mr-6"
-                                >
-                                    <span>Run this model</span>
-                                </button>
-                        }
-
+                        <button
+                            className="h-[44px] py-1 px-3 flex justify-center items-center bg-yellow-951 border border-yellow-951 text-sm text-black rounded-xl mr-6"
+                            onClick={redirectToNext}
+                        >
+                            <span>Run this model</span>
+                        </button>
                         <button className="flex justify-center items-center rounded-xl h-[44px] px-1 py-1 bg-[#404040] border border-[#404040] text-white text-sm">
                             <Image
                                 src="/img/activity-white.svg"
@@ -332,7 +348,7 @@ export default function EopsWatch(props: any) {
                             <div className="flex justify-start items-start font-semibold mt-3 text-[13px] text-[#666666]">Your model will be expire on : {data.planExpire}</div>
                         </div>
                         :
-                        <div className="ffont-semibold mt-3 text-[13px] bg-[#F2F2F2] min-w-[290px] h-[104px] flex justify-start items-center p-3 flex-wrap flex-row rounded-lg absolute top-[-12px] right-[-20px]">
+                        <div className="font-semibold mt-3 text-[13px] bg-[#F2F2F2] min-w-[290px] h-[104px] flex justify-start items-center p-3 flex-wrap flex-row rounded-lg absolute top-[-12px] right-[-20px]">
                             <button className="mr-5 flex justify-center items-center rounded-xl h-[44px] px-3 py-1 bg-yellow-951 border border-yellow-951">
                                 <Image
                                     src="/img/shopping-cart.svg"

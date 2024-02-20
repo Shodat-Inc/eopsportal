@@ -90,7 +90,8 @@ export default function ObjectManagement(props: any) {
             "subClassObjKey": "",
             "subClassObjValue": "",
             "tab":props?.tab ? props?.tab : 0,
-            "parentTab":0
+            "parentTab":0,
+            "model":""
         }
         dispatch(setClassBreadcrumb(abc))
         setObjID(item);

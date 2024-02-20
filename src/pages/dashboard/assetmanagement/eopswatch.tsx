@@ -7,6 +7,7 @@ import axios from 'axios';
 import Link from 'next/dist/client/link';
 import Router from 'next/router'
 import { useRouter } from 'next/router'
+import { setClassBreadcrumb, setDataForeOpsWatchAction } from "@/store/actions/classAction";
 const jsonData = [
     {
         "name": "Crack Detection",
@@ -139,6 +140,7 @@ export default function EopsWatch(props: any) {
         "___PROPS HERE":props
     })
     const router = useRouter();
+    const dispatch = useDispatch<any>()
     const routerParams = router.query;
     const [data, setData] = useState(jsonData[0]);
     const setModelInformation = (model: any) => {
@@ -157,10 +159,26 @@ export default function EopsWatch(props: any) {
 
     }, [props.nextDataProps])
 
-
+    const classSelector = useSelector((state: any) => state.classReducer);
     const redirectToNext = () => {
+
+        let abc = {
+            "flow": "Object Management",
+            "class": classSelector?.classBreadcrumbs?.class,
+            "classObjKey": classSelector?.classBreadcrumbs?.classObjKey,
+            "classObjValue": classSelector?.classBreadcrumbs?.classObjValue,
+            "subClass": classSelector?.classBreadcrumbs?.subClass,
+            "subClassObjKey": classSelector?.classBreadcrumbs?.subClassObjKey,
+            "subClassObjValue": classSelector?.classBreadcrumbs?.subClassObjValue,
+            "tab": 2,
+            "parentTab": 0,
+            "model":data.name ? data.name : props?.nextDataProps?.model
+        }
+        dispatch(setDataForeOpsWatchAction(abc))
+
+
         Router.push({
-            pathname: '/dashboard/eopswatch/preview',
+            pathname: '/dashboard/assetmanagement/preview',
             query: {
                 objectID: props?.nextDataProps?.objectID,
                 subObject: props?.nextDataProps?.subObject,
