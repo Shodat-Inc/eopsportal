@@ -17,7 +17,7 @@ async function allhandler(req: any, res: any) {
     loggerInfo.info("GET Enterprise User");
     try {
         // Retrieve all models using the Model Repo.
-        const model = await modelRepo.getAllModel();
+        const model = await modelRepo.getAllModel(req);
         // If Models are successfully retrieved, send back a 200 OK response with the Models data.
         res.status(200).json({ message: model });
     } catch (error: any) {
