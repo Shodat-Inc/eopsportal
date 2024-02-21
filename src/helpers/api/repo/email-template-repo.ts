@@ -1,6 +1,7 @@
 import { db } from "../db";
 import sendResponseData from "../../constant";
 import { loggerInfo, loggerError } from "@/logger";
+import { paginateQuery } from "../constant/pagination";
 import message from "@/util/responseMessage";
 
 export const mailTemplateRepo = {
@@ -20,17 +21,31 @@ async function create(params: any) {
     }
 }
 
-async function getAll() {
+async function getAll(params: any) {
     loggerInfo.info("Get All Email Templates")
     try {
+        const page = params.query.page || 1;
+        const pageSize = params.query.pageSize || 10;
 
-        const data = await db.EmailTemplate.findAll({
-            attributes: ["emailSubject", "emailContent"]
+        let sortOrder = 'DESC'; // Default sorting order is DESC
+        let sortField = "id";
+
+        // Check if sortBy parameter is provided and valid
+        if (params.query.sortBy && ['ASC', 'DESC'].includes(params.query.sortBy.toUpperCase())) {
+            sortOrder = params.query.sortBy.toUpperCase();
+        }
+        if (params.query.sort && ['id', 'emailSubject', 'emailContent'].includes(params.query.sort)) {
+            sortField = params.query.sort;
+        }
+
+        const result = await paginateQuery(db.EmailTemplate, page, pageSize, {
+            attributes: ["emailSubject", "emailContent"],
+            order: [[sortField, sortOrder]],
         })
-        if (!data) {
+        if (!result.rows.length) {
             return sendResponseData(false, "Data doesn't Exists", {})
         }
-        return sendResponseData(true, "Data Fetched Successfully", data)
+        return sendResponseData(true, "Data Fetched Successfully", result)
     } catch (error) {
         loggerError.error("Error in email template repo while getting All Email Templates", error)
         return sendResponseData(false, "Error in email template while getting ALl Email Templates", error)

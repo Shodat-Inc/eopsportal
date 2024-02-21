@@ -12,8 +12,6 @@ export default apiHandler({
 async function handler(req: any, res: any) {
     try {
         // Extract update data from the request body.
-        // const reqAuth = req.auth
-        const reqAuth=req.query
         const updateData = req.body;
         const validation = updateAlertValidation(updateData);
         if (validation.error) {
@@ -25,7 +23,7 @@ async function handler(req: any, res: any) {
             });
             return;
         }
-        const updatedData = await alertRepo.update(validation.value, reqAuth);
+        const updatedData = await alertRepo.update(validation.value, req);
 
         res.status(200).json({ message: updatedData });
     } catch (error: any) {
