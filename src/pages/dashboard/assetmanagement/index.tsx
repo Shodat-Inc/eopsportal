@@ -146,9 +146,9 @@ export default function AssetManagement() {
 
 
     useEffect(()=>{
-        console.log({
-            "HERE":classSelector?.dataforeopswatchReducer?.tab
-        })
+        // console.log({
+        //     "HERE":classSelector?.dataforeopswatchReducer?.tab
+        // })
         if(classSelector?.dataforeopswatchReducer?.tab===0 || classSelector?.dataforeopswatchReducer?.tab===undefined) {
             // setTab(1)
             

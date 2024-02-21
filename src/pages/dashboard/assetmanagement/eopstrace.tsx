@@ -6,6 +6,7 @@ import CustomDrop from '@/common/customdrop';
 import axios from 'axios';
 import Link from 'next/dist/client/link';
 import Router from 'next/router'
+import { setClassBreadcrumb, setDataForeOpsWatchAction } from "@/store/actions/classAction";
 import { useRouter } from 'next/router'
 const jsonData = [
     {
@@ -166,7 +167,10 @@ export default function EopsTrace(props: any) {
 
     const router = useRouter();
     const routerParams = router.query;
+    const dispatch = useDispatch<any>()
     const [data, setData] = useState(jsonData[0]);
+    const classSelector = useSelector((state: any) => state.classReducer);
+
     const setModelInformation = (model: any) => {
         const filterData = jsonData.filter((item: any) => {
             return item.name === model
@@ -186,8 +190,36 @@ export default function EopsTrace(props: any) {
 
     const redirectToNext = () => {
         // https://eops-portal.vercel.app/dashboard/eopstrace/testmodel?objectID=Vehicles&key=LI7481&model=Battery+Life+Prediction&id=5PVBE7AJ8R5T50001&subObject=Battery
+        // Router.push({
+        //     pathname: '/dashboard/eopstrace/testmodel',
+        //     query: {
+        //         objectID: props?.nextDataProps?.objectID,
+        //         subObject: props?.nextDataProps?.subObject,
+        //         key: props?.nextDataProps?.key,
+        //         id: props?.nextDataProps?.id,
+        //         model: data.name ? data.name : props?.nextDataProps?.model,
+        //         industryID: props?.nextDataProps?.industryID,
+        //         from:"eopstrace"
+        //     }
+        // })
+
+        let abc = {
+            "flow": "Object Management",
+            "class": classSelector?.classBreadcrumbs?.class,
+            "classObjKey": classSelector?.classBreadcrumbs?.classObjKey,
+            "classObjValue": classSelector?.classBreadcrumbs?.classObjValue,
+            "subClass": classSelector?.classBreadcrumbs?.subClass,
+            "subClassObjKey": classSelector?.classBreadcrumbs?.subClassObjKey,
+            "subClassObjValue": classSelector?.classBreadcrumbs?.subClassObjValue,
+            "tab": 2,
+            "parentTab": 0,
+            "model":data.name ? data.name : props?.nextDataProps?.model
+        }
+        dispatch(setDataForeOpsWatchAction(abc))
+
+
         Router.push({
-            pathname: '/dashboard/eopstrace/testmodel',
+            pathname: '/dashboard/assetmanagement/eopstracepreview',
             query: {
                 objectID: props?.nextDataProps?.objectID,
                 subObject: props?.nextDataProps?.subObject,
@@ -195,7 +227,7 @@ export default function EopsTrace(props: any) {
                 id: props?.nextDataProps?.id,
                 model: data.name ? data.name : props?.nextDataProps?.model,
                 industryID: props?.nextDataProps?.industryID,
-                from:"eopstrace"
+                from: "eopswatch"
             }
         })
     }

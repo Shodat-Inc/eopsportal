@@ -11,6 +11,7 @@ import { successMessageAction, setClassBreadcrumb, setDataForeOpsWatchAction } f
 import { setTimeout } from 'timers';
 import EditSubObject from './editsubobject';
 import { editSubObjectModalAction } from '@/store/actions/classAction';
+import { setDataFromAction } from '@/store/actions/assetsAction';
 
 export default function SubObjectManagement(props: any) {
 
@@ -33,15 +34,6 @@ export default function SubObjectManagement(props: any) {
 
     // All class reducer states
     const classSelector = useSelector((state: any) => state.classReducer);
-
-    // useEffect(() => {
-    //     setTimeout(()=>{
-    //         if(classSelector?.dataforeopswatchReducer?.subClass!=="") {
-    //             setChooseAsset(classSelector?.dataforeopswatchReducer?.subClass)
-    //         }
-    //     }, 1000)
-
-    // }, [classSelector?.dataforeopswatchReducer?.subClass])
 
     // Close Success message after 5 second if true
     useEffect(() => {
@@ -75,25 +67,12 @@ export default function SubObjectManagement(props: any) {
 
             }).then(function (response) {
                 if (response) {
-                    // let defaultClass = "";
-                    // if(classSelector?.dataforeopswatchReducer?.class!=="") {
-                    //     defaultClass = classSelector?.dataforeopswatchReducer?.class;
-                    // } else {
-                    //     defaultClass = props.defaultClass
-                    // }
-
-                    // let defaultClass = classSelector?.dataforeopswatchReducer?.class ? classSelector?.dataforeopswatchReducer?.class : props.defaultClass
                     let defaultClass = props.defaultClass
                     let filtered = response.data.filter((item: any) => {
                         return item.parentAssetID === defaultClass
                     })
                     if (filtered) {
-                        // let chooseAsset = "";
-                        // if (classSelector?.dataforeopswatchReducer?.subClass !== "") {
-                        //     chooseAsset = classSelector?.dataforeopswatchReducer?.subClass
-                        // } else {
-                        //     chooseAsset = filtered[0].assetName
-                        // }
+
                         let chooseAsset = filtered[0].assetName
                         setChooseAsset(chooseAsset);
                         dispatch(objDefaultSubClassSelectorFunction(chooseAsset))
@@ -116,9 +95,6 @@ export default function SubObjectManagement(props: any) {
         if (fetchData.length) return;
     }, [props.defaultClass])
 
-    const handleDropDown = (item: any) => {
-        setChooseAsset(item)
-    }
     const toggleActions = (item: any) => {
         setActionCount(item);
         setActions(!actions);
@@ -127,13 +103,6 @@ export default function SubObjectManagement(props: any) {
             setActionsToggle(false);
         }, 1000)
     }
-    const selectedAction = (item: any) => {
-        setActions(false);
-    }
-    const backToObect = () => {
-        props.handleSubObject("Vehicles")
-    }
-
 
     const deleteModalFunction = () => {
         setDeleteModal(true);
@@ -180,7 +149,6 @@ export default function SubObjectManagement(props: any) {
 
             }).then(function (response) {
                 if (response) {
-                    let headArray = response.data[0]?.subObjects;
                     let filtered = response.data.filter((item: any) => {
                         return item.object === chooseAsset
                     })
@@ -239,8 +207,8 @@ export default function SubObjectManagement(props: any) {
             "subClass": chooseAsset,
             "subClassObjKey": "",
             "subClassObjValue": "",
-            "tab":props?.tab,
-            "parentTab":props?.parentTab
+            "tab": props?.tab,
+            "parentTab": props?.parentTab
         }
         dispatch(setClassBreadcrumb(abc));
 
@@ -252,31 +220,30 @@ export default function SubObjectManagement(props: any) {
     const eOpsWatchFunction = (item: any) => {
         let obj = '';
         let type = "";
-        // if (classSelector?.dataforeopswatchReducer?.class ? classSelector?.dataforeopswatchReducer?.class : props.defaultClass === "Manufacturing Plants") {
         if (props.defaultClass === "Manufacturing Plants") {
             obj = item.ID
-            type="ID"
+            type = "ID"
         } else {
-            if(chooseAsset === "Battery") {
+            if (chooseAsset === "Battery") {
                 obj = item.SerialNo;
-                type="SerialNo"
+                type = "SerialNo"
             } else {
                 obj = item.SerialID;
-                type="SerialID"
+                type = "SerialID"
             }
         }
         const eopsData = {
-            // "class": classSelector?.dataforeopswatchReducer?.class ? classSelector?.dataforeopswatchReducer?.class : props.defaultClass,
-            "class":props.defaultClass,
+            "class": props.defaultClass,
             "subClass": chooseAsset,
             "classObject": props.objectKey,
             "object": obj,
-            "datafor":"eopswatch",
-            "type":type,
-            "tab":props?.tab ? props?.tab : 0,
-            "parentTab":props?.parentTab ? props?.parentTab : 0
+            "datafor": "eopswatch",
+            "type": type,
+            "tab": props?.tab ? props?.tab : 0,
+            "parentTab": props?.parentTab ? props?.parentTab : 0
         }
         dispatch(setDataForeOpsWatchAction(eopsData));
+        dispatch(setDataFromAction(eopsData))
 
         let abc = {
             "flow": "Object Management",
@@ -286,8 +253,8 @@ export default function SubObjectManagement(props: any) {
             "subClass": chooseAsset,
             "subClassObjKey": type,
             "subClassObjValue": obj,
-            "tab":props?.tab,
-            "parentTab":props?.parentTab
+            "tab": props?.tab,
+            "parentTab": props?.parentTab
         }
         dispatch(setClassBreadcrumb(abc));
 
@@ -299,41 +266,78 @@ export default function SubObjectManagement(props: any) {
 
     // Save Date for Eopswatch Section
     const eOpsTraceFunction = (item: any) => {
+        // let obj = '';
+        // let type = "";
+        // let defaultClass = props.defaultClass
+
+        // if (defaultClass === "Manufacturing Plants") {
+        //     obj = item.ID
+        //     type = "ID"
+        // } else {
+        //     if (chooseAsset === "Battery") {
+        //         obj = item.SerialNo;
+        //         type = "SerialNo"
+        //     } else {
+        //         obj = item.SerialID;
+        //         type = "SerialID"
+        //     }
+        // }
+        // const eopsTraceData = {
+        //     "class": props.defaultClass,
+        //     "subClass": chooseAsset,
+        //     "classObject": props.objectKey,
+        //     "object": obj,
+        //     "datafor": "eopstrace",
+        //     "type": type
+        // }
+        // dispatch(setDataForeOpsWatchAction(eopsTraceData));
+        // setTimeout(() => {
+        //     router.push('/dashboard/aimodaldetection');
+        // }, 1000)
+
         let obj = '';
         let type = "";
-        // let defaultClass = "";
-        // if(classSelector?.dataforeopswatchReducer?.class!=="") {
-        //     defaultClass = classSelector?.dataforeopswatchReducer?.class
-        // } else {
-        //     defaultClass = props.defaultClass
-        // }
-        // let defaultClass = classSelector?.dataforeopswatchReducer?.class ? classSelector?.dataforeopswatchReducer?.class : props.defaultClass
-        let defaultClass = props.defaultClass
-        
-        if (defaultClass === "Manufacturing Plants") {
+        if (props.defaultClass === "Manufacturing Plants") {
             obj = item.ID
-            type="ID"
+            type = "ID"
         } else {
-            if(chooseAsset === "Battery") {
+            if (chooseAsset === "Battery") {
                 obj = item.SerialNo;
-                type="SerialNo"
+                type = "SerialNo"
             } else {
                 obj = item.SerialID;
-                type="SerialID"
+                type = "SerialID"
             }
         }
-        const eopsTraceData = {
-            // "class": classSelector?.dataforeopswatchReducer?.class ? classSelector?.dataforeopswatchReducer?.class : props.defaultClass,
-            "class":props.defaultClass,
+        const eopsData = {
+            "class": props.defaultClass,
             "subClass": chooseAsset,
             "classObject": props.objectKey,
             "object": obj,
-            "datafor":"eopstrace",
-            "type":type
+            "datafor": "eopstrace",
+            "type": type,
+            "tab": props?.tab ? props?.tab : 0,
+            "parentTab": props?.parentTab ? props?.parentTab : 0
         }
-        dispatch(setDataForeOpsWatchAction(eopsTraceData));
+        dispatch(setDataForeOpsWatchAction(eopsData));
+        dispatch(setDataFromAction(eopsData))
+
+        let abc = {
+            "flow": "Object Management",
+            "class": classSelector?.classBreadcrumbs?.class,
+            "classObjKey": classSelector?.classBreadcrumbs?.classObjKey,
+            "classObjValue": classSelector?.classBreadcrumbs?.classObjValue,
+            "subClass": chooseAsset,
+            "subClassObjKey": type,
+            "subClassObjValue": obj,
+            "tab": props?.tab,
+            "parentTab": props?.parentTab
+        }
+        dispatch(setClassBreadcrumb(abc));
+
+
         setTimeout(() => {
-            router.push('/dashboard/aimodaldetection');
+            router.push('/dashboard/assetmanagement/models');
         }, 1000)
     }
 
@@ -345,18 +349,11 @@ export default function SubObjectManagement(props: any) {
         setSelectedObjectID(item)
     }
 
-    useEffect(()=>{
-        console.log({
-            "HERE":classSelector?.dataforeopswatchReducer?.subClass
-        })
-        if(classSelector?.dataforeopswatchReducer?.subClass==='' || classSelector?.dataforeopswatchReducer?.subClass===undefined) {
-            // setChooseAsset('')
-            
+    useEffect(() => {
+        if (classSelector?.dataforeopswatchReducer?.subClass === '' || classSelector?.dataforeopswatchReducer?.subClass === undefined) {
+
         } else {
             setChooseAsset(classSelector?.dataforeopswatchReducer?.subClass)
-            // setTimeout(()=>{
-            //     dispatch(setDataForeOpsWatchAction({}))
-            // }, 1000)
         }
 
     }, [classSelector])
@@ -451,12 +448,6 @@ export default function SubObjectManagement(props: any) {
                 </div>
             </div>
 
-            {/* <button
-                onClick={backToObect}
-                className='text-sm mt-10 mb-10 px-10'>
-                Back To Object Management Component
-            </button> */}
-
             {/* Response Messages */}
             {
                 classSelector.successMessageReducer === true &&
@@ -504,9 +495,7 @@ export default function SubObjectManagement(props: any) {
                                             {
                                                 Object.values(items?.tags).map((item: any, i: any) => (
                                                     <td key={i}>
-                                                        <button
-                                                        // onClick={() => takeMeToSubObjectComponent(items.subObjectID)}
-                                                        >
+                                                        <button>
                                                             <span>{item ? item : '-'}</span>
                                                         </button>
                                                     </td>
@@ -551,13 +540,13 @@ export default function SubObjectManagement(props: any) {
                                                             <button
                                                                 onClick={() => eOpsWatchFunction(items?.tags)}
                                                                 className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
-                                                                <span>eOps Watch</span>
+                                                                <span>AI Detection Modal</span>
                                                             </button>
-                                                            <button
+                                                            {/* <button
                                                                 onClick={() => eOpsTraceFunction(items?.tags)}
                                                                 className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
                                                                 <span>eOps Trace</span>
-                                                            </button>
+                                                            </button> */}
                                                             <Link
                                                                 href="#"
                                                                 className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
@@ -577,66 +566,8 @@ export default function SubObjectManagement(props: any) {
                                     ))
                                     : null
                             }
-
                         </tbody>
-
-                        {/* <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>1S223</td>
-                                <td>5PVBE7AJ8R5T50001</td>
-                                <td>Cummins</td>
-                                <td>48</td>
-                                <td>12</td>
-                                <td>
-                                    <div className="flex justify-start items-center relative">
-                                        <button onClick={() => toggleActions(1)}>
-                                            <Image
-                                                src="/img/more-vertical.svg"
-                                                alt="more-vertical"
-                                                height={24}
-                                                width={24}
-                                            />
-                                        </button>
-                                        {(actions && actionCount === 1) &&
-                                            <div className="bg-black text-white border overflow-hidden border-black rounded rounded-lg w-[200px] flex flex-col flex-wrap items-start justify-start shadow-sm absolute top-[30px] right-[75px] z-[1]">
-                                                <Link
-                                                    href="#"
-                                                    className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
-                                                    <span>Edit</span>
-                                                </Link>
-                                                <button
-                                                    onClick={deleteModalFunction}
-                                                    className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
-                                                    <span>Delete</span>
-                                                </button>
-                                                <Link
-                                                    href="#"
-                                                    className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
-                                                    <span>eOps Watch</span>
-                                                </Link>
-                                                <Link
-                                                    href="#"
-                                                    className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
-                                                    <span>eOps Trace</span>
-                                                </Link>
-                                                <Link
-                                                    href="#"
-                                                    className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
-                                                    <span>eOps Prosense</span>
-                                                </Link>
-                                                <Link
-                                                    href="#"
-                                                    className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
-                                                    <span>eOps Insights/Reports</span>
-                                                </Link>
-                                            </div>
-                                        }
-                                    </div>
-
-                                </td>
-                            </tr>
-                        </tbody> */}
+                        
                     </table>
                     :
                     <div className="flex justify-center items-center flex-wrap flex-col font-OpenSans mt-20">
@@ -662,7 +593,6 @@ export default function SubObjectManagement(props: any) {
                 show={addNewObject.toggleAddObject && addNewObject.toggleAddObject}
                 selectedSubClass={chooseAsset}
                 subClassData={subClassData}
-                // parentClass={props.defaultClass ? props.defaultClass : classSelector?.dataforeopswatchReducer?.class}
                 parentClass={props.defaultClass}
                 objID={props.objID}
             />

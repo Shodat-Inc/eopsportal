@@ -28,6 +28,7 @@ export default function Preview() {
     const [data, setData] = useState([] as any);
     const [enabled, setEnabled] = useState(false);
     const [nav, setNav] = useState({} as any)
+    const [expend, setExpend] = useState(false);
 
     const getSelClass = useSelector((state: any) => state.classReducer);
     const classSelector = useSelector((state: any) => state.classReducer);
@@ -35,10 +36,12 @@ export default function Preview() {
         setNav(getSelClass.classBreadcrumbs)
     }, [getSelClass.classBreadcrumbs])
 
-
+    const toggleExpend = () => {
+        setExpend(!expend)
+    }
     console.log({
-        getSelClass:getSelClass,
-        classSelector:classSelector
+        getSelClass: getSelClass,
+        classSelector: classSelector
     })
 
     const authenticationType = [
@@ -48,9 +51,9 @@ export default function Preview() {
     useEffect(() => {
         if (routerParams?.tab && routerParams?.tab !== "") {
             setDefaultTab(routerParams?.tab as any)
-            console.log({
-                "____TAB": routerParams?.tab
-            })
+            // console.log({
+            //     "____TAB": routerParams?.tab
+            // })
         }
     }, [routerParams?.tab])
     const [defaultAuthType, setDefaultAuthType] = useState(authenticationType[0]);
@@ -118,10 +121,10 @@ export default function Preview() {
         axios.get("/api/geteopsWatch").then((response) => {
             if (response.data) {
                 const filtered = response.data.filter((item: any) => {
-                    if (item.class === (routerParams.objectID || classSelector?.dataforeopswatchReducer?.class) && 
-                        item.ID === (routerParams.key || classSelector?.dataforeopswatchReducer?.subClassObjValue) && 
+                    if (item.class === (routerParams.objectID || classSelector?.dataforeopswatchReducer?.class) &&
+                        item.ID === (routerParams.key || classSelector?.dataforeopswatchReducer?.subClassObjValue) &&
                         item.modal === (routerParams.model || classSelector?.dataforeopswatchReducer?.model)
-                        ) {
+                    ) {
                         return item;
                     }
                 });
@@ -173,7 +176,7 @@ export default function Preview() {
             "subClassObjValue": classSelector?.classBreadcrumbs?.subClassObjValue,
             "tab": 2,
             "parentTab": 0,
-            "model":classSelector?.dataforeopswatchReducer?.model
+            "model": classSelector?.dataforeopswatchReducer?.model
         }
         dispatch(setClassBreadcrumb(abc))
         dispatch(setDataForeOpsWatchAction(abc))
@@ -194,7 +197,7 @@ export default function Preview() {
             "subClassObjValue": classSelector?.classBreadcrumbs?.subClassObjValue,
             "tab": 2,
             "parentTab": 0,
-            "model":classSelector?.dataforeopswatchReducer?.model
+            "model": classSelector?.dataforeopswatchReducer?.model
         }
         dispatch(setClassBreadcrumb(abc))
         dispatch(setDataForeOpsWatchAction(abc))
@@ -203,7 +206,7 @@ export default function Preview() {
         }, 100)
     }
 
-    
+
     const backtoSubObjectManagementLevel = () => {
         let abc = {
             "flow": "Object Management",
@@ -215,7 +218,7 @@ export default function Preview() {
             "subClassObjValue": classSelector?.classBreadcrumbs?.subClassObjValue,
             "tab": 3,
             "parentTab": 2,
-            "model":classSelector?.dataforeopswatchReducer?.model
+            "model": classSelector?.dataforeopswatchReducer?.model
         }
         dispatch(setClassBreadcrumb(abc))
         dispatch(setDataForeOpsWatchAction(abc))
@@ -235,7 +238,7 @@ export default function Preview() {
             "subClassObjValue": classSelector?.classBreadcrumbs?.subClassObjValue,
             "tab": 3,
             "parentTab": 2,
-            "model":classSelector?.dataforeopswatchReducer?.model
+            "model": classSelector?.dataforeopswatchReducer?.model
         }
         dispatch(setClassBreadcrumb(abc))
         dispatch(setDataForeOpsWatchAction(abc))
@@ -251,110 +254,152 @@ export default function Preview() {
     return (
         <div className="w-full h-full font-OpenSans">
             <p className="text-black mb-4 font-semibold text-xl">eOps Watch</p>
-            {/* Breadcrumb */}
-            {nav ?
-                <div className="relative bg-white rounded-lg px-3 py-1 inline-flex border border-[#E3E3E3] mb-5">
-                    <ul className="flex justify-start items-center text-sm">
-                        <li className="flex justify-start items-center">
-                            <Link
-                                href="/dashboard/assetmanagement"
-                                className="font-semibold"
-                            >
-                                {nav.flow}
-                            </Link>
-                        </li>
 
-                        <li className="flex justify-start items-center">
-                            <Image
-                                src="/img/chevron-right.svg"
-                                alt="chevron-right"
-                                height={28}
-                                width={28}
-                            />
-                            <button
-                                onClick={goBacktoHome}
-                                className="font-semibold"
-                            >
-                                <span>Class name: {nav.class}</span>
-                            </button>
-                        </li>
+            <div className="mb-5 flex justify-start items-center">
+                {/* Breadcrumb */}
+                {nav ?
+                    <>
+                        <div className="relative bg-white rounded-lg px-3 py-1 inline-flex border border-[#E3E3E3]">
+                            <ul className="flex justify-start items-center text-sm">
+                                <li className="flex justify-start items-center">
+                                    <Link
+                                        href="/dashboard/assetmanagement"
+                                        className="font-semibold"
+                                    >
+                                        {nav.flow}
+                                    </Link>
+                                </li>
 
-                        <li className="flex justify-start items-center">
-                            <Image
-                                src="/img/chevron-right.svg"
-                                alt="chevron-right"
-                                height={28}
-                                width={28}
-                            />
-                            <button
-                                onClick={backtoObjectManagementLevel}
-                                className="font-semibold"
-                            >
-                                <span>{nav.classObjKey}: {nav.classObjValue}</span>
-                            </button>
-                        </li>
+                                {
+                                    !expend &&
+                                    <li className=" flex justify-start items-center">
+                                        <Image
+                                            src="/img/chevron-right.svg"
+                                            alt="chevron-right"
+                                            height={28}
+                                            width={28}
+                                        />
+                                        <span className=" ">[......]</span>
+                                    </li>
+                                }
+                                {expend &&
+                                    <>
+                                        <li className="flex justify-start items-center">
+                                            <Image
+                                                src="/img/chevron-right.svg"
+                                                alt="chevron-right"
+                                                height={28}
+                                                width={28}
+                                            />
+                                            <button
+                                                onClick={goBacktoHome}
+                                                className="font-semibold"
+                                            >
+                                                <span>Class name: {nav.class}</span>
+                                            </button>
+                                        </li>
+                                        <li className="flex justify-start items-center">
+                                            <Image
+                                                src="/img/chevron-right.svg"
+                                                alt="chevron-right"
+                                                height={28}
+                                                width={28}
+                                            />
+                                            <button
+                                                onClick={backtoObjectManagementLevel}
+                                                className="font-semibold"
+                                            >
+                                                <span>{nav.classObjKey}: {nav.classObjValue}</span>
+                                            </button>
+                                        </li>
 
-                        <li className="flex justify-start items-center">
-                            <Image
-                                src="/img/chevron-right.svg"
-                                alt="chevron-right"
-                                height={28}
-                                width={28}
-                            />
-                            <button
-                                onClick={backtoSubObjectManagementLevel}
-                                className="font-semibold"
-                            >
-                                <span>
-                                    Sub Class: {nav.subClass}
-                                </span>
-                            </button>
-                        </li>
+                                        <li className="flex justify-start items-center">
+                                            <Image
+                                                src="/img/chevron-right.svg"
+                                                alt="chevron-right"
+                                                height={28}
+                                                width={28}
+                                            />
+                                            <button
+                                                onClick={backtoSubObjectManagementLevel}
+                                                className="font-semibold"
+                                            >
+                                                <span>
+                                                    Sub Class: {nav.subClass}
+                                                </span>
+                                            </button>
+                                        </li>
 
-                        <li className="flex justify-start items-center">
-                            <Image
-                                src="/img/chevron-right.svg"
-                                alt="chevron-right"
-                                height={28}
-                                width={28}
-                            />
-                            <button
-                                onClick={backtoSubObjectManagementLevel}
-                                className="font-semibold"
-                            >
-                                <span>{nav.subClassObjKey}: {nav.subClassObjValue}</span>
-                            </button>
-                        </li>
+                                        <li className="flex justify-start items-center">
+                                            <Image
+                                                src="/img/chevron-right.svg"
+                                                alt="chevron-right"
+                                                height={28}
+                                                width={28}
+                                            />
+                                            <button
+                                                onClick={backtoSubObjectManagementLevel}
+                                                className="font-semibold"
+                                            >
+                                                <span>{nav.subClassObjKey}: {nav.subClassObjValue}</span>
+                                            </button>
+                                        </li>
+                                    </>
+                                }
 
-                        <li className="flex justify-start items-center">
-                            <Image
-                                src="/img/chevron-right.svg"
-                                alt="chevron-right"
-                                height={28}
-                                width={28}
-                            />
-                            <button
-                                onClick={backtoModelPage}
-                                className="font-semibold"
-                            >
-                                <span>{classSelector?.dataforeopswatchReducer?.model}</span>
-                            </button>
-                        </li>
+                                <li className="flex justify-start items-center">
+                                    <Image
+                                        src="/img/chevron-right.svg"
+                                        alt="chevron-right"
+                                        height={28}
+                                        width={28}
+                                    />
+                                    <button
+                                        onClick={backtoModelPage}
+                                        className="font-semibold"
+                                    >
+                                        <span>{classSelector?.dataforeopswatchReducer?.model}</span>
+                                    </button>
+                                </li>
 
-                        <li className="flex justify-start items-center">
-                            <Image
-                                src="/img/chevron-right.svg"
-                                alt="chevron-right"
-                                height={28}
-                                width={28}
-                            />
-                            <span className="text-gray-967 capitalize">{defaultTab}</span>
-                        </li>
+                                <li className="flex justify-start items-center">
+                                    <Image
+                                        src="/img/chevron-right.svg"
+                                        alt="chevron-right"
+                                        height={28}
+                                        width={28}
+                                    />
+                                    <span className="text-gray-967 capitalize">{defaultTab}</span>
+                                </li>
 
-                    </ul>
-                </div>
-                : null
-            }
+                            </ul>
+                        </div>
+                        <button
+                            onClick={toggleExpend}
+                            className="bg-yellow-951 h-[22px] w-[22px] rounded-full inline-flex justify-center items-center cursor-pointer ml-1"
+                        >
+                            {
+                                expend ?
+                                    <Image
+                                        src="/img/arrow-left-black.svg"
+                                        alt="arrow"
+                                        height={20}
+                                        width={20}
+                                    />
+                                    :
+                                    <Image
+                                        src="/img/arrow-right-black.svg"
+                                        alt="arrow"
+                                        height={20}
+                                        width={20}
+                                    />
+                            }
+
+                        </button>
+                    </>
+                    : null
+                }
+            </div>
 
             {/* content */}
             <div className="flex relative justify-start items-start h-[54px] mt-5">

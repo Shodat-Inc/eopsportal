@@ -27,6 +27,16 @@ export default function Models() {
     }, [getSelClass.classBreadcrumbs])
     // All class reducer states
     const classSelector = useSelector((state: any) => state.classReducer);
+    const assetsReducer = useSelector((state: any) => state.assetsReducer);
+
+    useEffect(()=>{
+        if(assetsReducer?.setDataFromReducer?.datafor==="eopstrace") {
+            setTab(2)
+        } else {
+            setTab(1)
+        }
+
+    }, [assetsReducer?.setDataFromReducer])
 
     const nextDataProps = {
         objectID: nav.class,

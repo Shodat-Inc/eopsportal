@@ -136,9 +136,9 @@ const jsonDataVehicles = [
 ]
 export default function EopsWatch(props: any) {
 
-    console.log({
-        "___PROPS HERE":props
-    })
+    // console.log({
+    //     "___PROPS HERE":props
+    // })
     const router = useRouter();
     const dispatch = useDispatch<any>()
     const routerParams = router.query;
