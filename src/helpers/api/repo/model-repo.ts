@@ -1,6 +1,7 @@
 import { db } from "../db";
 import sendResponseData from "../../constant";
 import { loggerInfo, loggerError } from "@/logger";
+import { paginateQuery } from "../constant/pagination";
 
 /**
  * Repository for handling Model related operations.
@@ -45,13 +46,28 @@ async function create(params: any) {
   }
 }
 
-async function getAllModel() {
+async function getAllModel(params:any) {
   try {
     // Log an information message using the 'loggerInfo' instance
     loggerInfo.info("Get All the Models");
+    
+    const page = params.query.page || 1;
+    const pageSize = params.query.pageSize || 10;
+    let sortOrder = 'DESC'; // Default sorting order is DESC
+    let sortField = "id";
+
+    // Check if sortBy parameter is provided and valid
+    if (params.query.sortBy && ['ASC', 'DESC'].includes(params.query.sortBy.toUpperCase())) {
+      sortOrder = params.query.sortBy.toUpperCase();
+    }
+    if (params.query.sort && ['id', 'modelName',].includes(params.query.sort)) {
+      sortField = params.query.sort;
+    }
+
+    const result = await paginateQuery(db.Model, page, pageSize, {
 
     // Fetch all Model records with specific attributes
-    const getData = await db.Model.findAll({
+    // const getData = await db.Model.findAll({
       attributes: [
         "id",
         "modelName",
@@ -60,15 +76,16 @@ async function getAllModel() {
         "howItWorks",
         "benefits",
       ],
+      order: [[sortField, sortOrder]],
     });
 
     // If no data is found, return an error response
-    if (!getData) {
+    if (!result.rows.length) {
       return sendResponseData(false, "Data Doesn't Exist", {});
     }
 
     // Return a successful response with the fetched data
-    return sendResponseData(true, "Data Fetched Successfully", getData);
+    return sendResponseData(true, "Data Fetched Successfully", result);
   } catch (error: any) {
     // Log an error message using the 'loggerError' instance
     loggerError.error("Error in Get Models", error);

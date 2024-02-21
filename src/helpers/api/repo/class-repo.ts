@@ -102,10 +102,14 @@ async function getClassData(params: any) {
     const page = params.query.page || 1;
     const pageSize = params.query.pageSize || 10;
     let sortOrder = 'DESC'; // Default sorting order is DESC
+    let sortField = "id";
 
     // Check if sortBy parameter is provided and valid
     if (params.query.sortBy && ['ASC', 'DESC'].includes(params.query.sortBy.toUpperCase())) {
       sortOrder = params.query.sortBy.toUpperCase();
+    }
+    if (params.query.sort && ['id', 'className',].includes(params.query.sort)) {
+      sortField = params.query.sort;
     }
 
     const result = await paginateQuery(db.AddClasses, page, pageSize, {
@@ -113,13 +117,12 @@ async function getClassData(params: any) {
         userId: params.userId,
         parentId: null,
       },
-      order: [['createdAt', sortOrder]],
+      order: [[sortField, sortOrder]],
       attributes: ["id", "className", "serialId", "createdAt", "updatedAt"],
       include: [
         {
           model: db.classTag,
           attributes: ["id", "tagName", "dataTypeId", "createdAt", "updatedAt"],
-          order: [['createdAt', sortOrder]],
           include: [
             {
               model: db.tagDataType,
@@ -128,7 +131,6 @@ async function getClassData(params: any) {
               where: {
                 id: Sequelize.col("dataTypeId"),
               },
-              order: [['createdAt', sortOrder]],
             },
           ],
         },
@@ -162,10 +164,14 @@ async function getClassDataByID(params: any) {
       throw "NO ID exist";
     }
     let sortOrder = 'DESC'; // Default sorting order is DESC
+    let sortField = "id";
 
     // Check if sortBy parameter is provided and valid
     if (params.query.sortBy && ['ASC', 'DESC'].includes(params.query.sortBy.toUpperCase())) {
       sortOrder = params.query.sortBy.toUpperCase();
+    }
+    if (params.query.sort && ['id', 'className',].includes(params.query.sort)) {
+      sortField = params.query.sort;
     }
 
     const page = params.query.page || 1; // Default to page 1 if not provided
@@ -177,13 +183,12 @@ async function getClassDataByID(params: any) {
         parentId: null,
         userId: params.auth.sub
       },
-      order: [['createdAt', sortOrder]],
+      order: [[sortField, sortOrder]],
       attributes: ["id", "className", "serialId", "userId", "enterpriseId", "createdAt", "updatedAt"],
       include: [
         {
           model: db.classTag,
           attributes: ["id", "tagName", "dataTypeId", "createdAt", "updatedAt"],
-          order: [['createdAt', sortOrder]],
           // required: true, // Makes it an INNER JOIN
           include: [
             {
@@ -193,7 +198,6 @@ async function getClassDataByID(params: any) {
               where: {
                 id: Sequelize.col("dataTypeId"),
               },
-              order: [['createdAt', sortOrder]],
             },
           ],
         },
@@ -225,10 +229,14 @@ async function getSubClass(param: any) {
     loggerInfo.info("Fetching all subclass and subclassTags data");
 
     let sortOrder = 'DESC'; // Default sorting order is DESC
+    let sortField = "id";
 
     // Check if sortBy parameter is provided and valid
     if (param.query.sortBy && ['ASC', 'DESC'].includes(param.query.sortBy.toUpperCase())) {
       sortOrder = param.query.sortBy.toUpperCase();
+    }
+    if (param.query.sort && ['id', 'className',].includes(param.query.sort)) {
+      sortField = param.query.sort;
     }
     const page = param.query.page || 1; // Default to page 1 if not provided
     const pageSize = param.query.pageSize || 10; // Default page size to 10 if not provided
@@ -239,12 +247,11 @@ async function getSubClass(param: any) {
         parentId: param.query.id,
       },
       attributes: ["id", "className", "serialId", "userId", "enterpriseId", "createdAt", "updatedAt"],
-      order: [['createdAt', sortOrder]],
+      order: [[sortField, sortOrder]],
       include: [
         {
           model: db.classTag,
           attributes: ["id", "tagName", "dataTypeId", "createdAt", "updatedAt"],
-          order: [['createdAt', sortOrder]],
           // required: true, // Makes it an INNER JOIN
           include: [
             {
@@ -254,7 +261,6 @@ async function getSubClass(param: any) {
               where: {
                 id: Sequelize.col("dataTypeId"),
               },
-              order: [['createdAt', sortOrder]],
             },
           ],
         },
@@ -301,10 +307,14 @@ async function getSubClassByID(param: any) {
     loggerInfo.info("Fetching subclass and subclassTags data by ID");
 
     let sortOrder = 'DESC'; // Default sorting order is DESC
+    let sortField = "id";
 
     // Check if sortBy parameter is provided and valid
     if (param.query.sortBy && ['ASC', 'DESC'].includes(param.query.sortBy.toUpperCase())) {
       sortOrder = param.query.sortBy.toUpperCase();
+    }
+    if (param.query.sort && ['id', 'className',].includes(param.query.sort)) {
+      sortField = param.query.sort;
     }
     const page = param.query.page || 1; // Default to page 1 if not provided
     const pageSize = param.query.pageSize || 10; // Default page size to 10 if not provided
@@ -316,12 +326,11 @@ async function getSubClassByID(param: any) {
         userId: param.auth.sub
       },
       attributes: ["id", "className", "serialId", "createdAt", "updatedAt"],
-      order: [['createdAt', sortOrder]],
+      order: [[sortField, sortOrder]],
       include: [
         {
           model: db.classTag,
           attributes: ["id", "tagName", "dataTypeId", "createdAt", "updatedAt"],
-          order: [['createdAt', sortOrder]],
           // required: true, // Makes it an INNER JOIN
           include: [
             {
@@ -331,7 +340,6 @@ async function getSubClassByID(param: any) {
               where: {
                 id: Sequelize.col("dataTypeId"),
               },
-              order: [['createdAt', sortOrder]],
             },
           ],
         },
@@ -339,7 +347,6 @@ async function getSubClassByID(param: any) {
           model: db.parentJoinKey,
           attributes: ["parentTagId"],
           required: false, // Makes it an INNER JOI
-          order: [['createdAt', sortOrder]],
         },
       ],
     });

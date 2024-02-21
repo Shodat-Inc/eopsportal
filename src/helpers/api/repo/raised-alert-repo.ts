@@ -28,32 +28,32 @@ async function get(params: any) {
   loggerInfo.info("Get API of Raised Alert Data");
   try {
     const alertDetails = await db.RaisedAlert.findAll({
-      attributes: ['tags'],
-      include: [
-        {
-          model: db.Image,
-          attributes: ['url'],
-          where: {
-            id: Sequelize.col('RaisedAlert.modelObjectImageId')
-          },
-        },
-        // {
-        //   model: db.ModelData,
-        //   attributes: ['objectValueId'],
-        //   where: {
-        //     id: Sequelize.col('RaisedAlert.modelDataId')
-        //   },
-        //   include: [
-        //     {
-        //       model: db.AddValues,
-        //       attributes: ['values'],
-        //       where: {
-        //         id: Sequelize.col('ModelDatum.ObjectValue.id')
-        //       },
-        //     },
-        //   ],
-        // },
-      ],
+      attributes: ['modelObjectImageId', 'modelId', 'userId', 'classId', 'objectId', 'alertId'],
+      // include: [
+      //   {
+      //     model: db.Image,
+      //     attributes: ['url'],
+      //     where: {
+      //       id: Sequelize.col('RaisedAlert.modelObjectImageId')
+      //     },
+      //   },
+      // {
+      //   model: db.ModelData,
+      //   attributes: ['objectValueId'],
+      //   where: {
+      //     id: Sequelize.col('RaisedAlert.modelDataId')
+      //   },
+      //   include: [
+      //     {
+      //       model: db.AddValues,
+      //       attributes: ['values'],
+      //       where: {
+      //         id: Sequelize.col('ModelDatum.ObjectValue.id')
+      //       },
+      //     },
+      //   ],
+      // },
+      // ],
     });
 
     return sendResponseData(true, "Data fetched Successfully", alertDetails)

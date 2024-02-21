@@ -1,6 +1,7 @@
 import { loggerError, loggerInfo } from "@/logger";
 import { db } from "../db";
 import sendResponseData from "@/helpers/constant";
+import { paginateQuery } from "../constant/pagination";
 
 /**
  * Repository for handling Model Data related operations.
@@ -32,15 +33,18 @@ async function create(params: any, transaction: any) {
   }
 }
 
-async function get(modelId: any, userId: any, type: string) {
+async function get(modelId: any, userId: any, type: any) {
   // Log an information message using the 'loggerInfo' instance
   loggerInfo.info("Get Images");
 
   try {
+    const page = type.page || 1;
+    const pageSize = type.pageSize || 10;
+
     // Fetch all Image records with specific attributes and associated ModelData
-    const data = await db.Image.findAll({
+    const result = await paginateQuery(db.Image, page, pageSize, {
       attributes: [["id", "modelObjectImageId"], "url", "type"],
-      where: { type: type },
+      where: { type: type.type },
       include: [
         {
           // Specify the association with the ModelData model
@@ -52,12 +56,12 @@ async function get(modelId: any, userId: any, type: string) {
     });
 
     // If no data is found, return an error response
-    if (!data.length) {
+    if (!result.rows.length) {
       return sendResponseData(false, "No data Found", []);
     }
 
     // Return a successful response with the fetched data
-    return sendResponseData(true, "Data Fetched Successfully", data);
+    return sendResponseData(true, "Data Fetched Successfully", result);
   } catch (error: any) {
     // Log an error message using the 'loggerError' instance
     loggerError.error("Error");

@@ -16,7 +16,7 @@ export default apiHandler({
 async function allhandler(req: any, res: any) {
     loggerInfo.info("GET All Alerts");
     try {
-        const alert = await alertRepo.getAllAlert();
+        const alert = await alertRepo.getAllAlert(req);
         res.status(200).json({ message: alert });
     } catch (error: any) {
         // If there's an error during the retrieval, log the error and send back a 500 Internal Server Error response with the error message.

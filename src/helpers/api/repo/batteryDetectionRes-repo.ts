@@ -77,9 +77,8 @@ async function getResponse(params: any) {
                 modelObjectImageId: params.modelObjectImageId
             },
             // Specify the attributes to be included in the response
-            attributes: ["tag", "batteryLifeResponse", "modelObjectImageId"]
+            attributes: ["response", "tag", "modelObjectImageId"]
         });
-        console.log(data,"==kkk")
 
         // If no response data is found
         if (!data) {
