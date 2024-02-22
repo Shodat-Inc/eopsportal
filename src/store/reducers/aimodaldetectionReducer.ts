@@ -4,6 +4,7 @@ import { GET_SUB_CLASS_FROM_ID_ERROR, GET_SUB_CLASS_FROM_ID_SUCCESS } from "../t
 import { GET_OBJECT_FROM_ID_ERROR, GET_OBJECT_FROM_ID_SUCCESS } from "../types";
 import { GET_SUB_OBJECT_FROM_ID_ERROR, GET_SUB_OBJECT_FROM_ID_SUCCESS } from "../types";
 import { GET_MODEL_IMAGES_ERROR, GET_MODEL_IMAGES_SUCCESS } from "../types";
+import { GET_ALL_MODEL_SUCCESS, GET_ALL_MODEL_ERROR } from "../types";
 
 const initialState = {
     dataForModalReducer: {},
@@ -11,11 +12,19 @@ const initialState = {
     getSubClassFromIDReducer: [],
     getObjectFromIDReducer: [],
     getSubObjectFromIDReducer: [],
-    getImageUrlDataReducer: []
+    getImageUrlDataReducer: [],
+    getAllModelsReducer: []
 };
 
 const aimodaldetectionReducer = (state = initialState, action: any) => {
     switch (action.type) {
+
+        // Get All Model
+        case GET_ALL_MODEL_SUCCESS:
+            return { ...state, getAllModelsReducer: action.payload, loading: false }
+
+        case GET_ALL_MODEL_ERROR:
+            return { loading: false, error: action.payload }
 
         // Data for modal
         case DATA_FOR_MODEL_SUCCESS:

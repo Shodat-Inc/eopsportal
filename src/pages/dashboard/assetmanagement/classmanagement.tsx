@@ -164,10 +164,10 @@ export default function ClassManagement(props: any) {
             };
         }, [ref]);
     }
-
     const wrapperRef = useRef(null);
     useOutsideAlerter(wrapperRef);
 
+    // Handle add Class Success message
     const handleAddSuccessMessage = (msg: any) => {
         setSuccessMessage(msg);
         setTimeout(() => {
@@ -175,18 +175,13 @@ export default function ClassManagement(props: any) {
         }, 4000)
     }
 
+    // Handle Edit Success Message
     const handleEditSuccessMessage = (msg: any) => {
         setEditMessage(msg);
         setTimeout(() => {
             setEditMessage(false);
         }, 4000)
     }
-
-
-    // console.log({
-    //     "__allData":allData?.rows
-    // })
-
 
     return (
         <div className='px-0 py-3 font-OpenSans'>

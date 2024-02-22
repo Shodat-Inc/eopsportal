@@ -4,7 +4,38 @@ import { GET_SUB_CLASS_FROM_ID_ERROR, GET_SUB_CLASS_FROM_ID_SUCCESS } from "../t
 import { GET_OBJECT_FROM_ID_ERROR, GET_OBJECT_FROM_ID_SUCCESS } from "../types";
 import { GET_SUB_OBJECT_FROM_ID_ERROR, GET_SUB_OBJECT_FROM_ID_SUCCESS } from "../types";
 import { GET_MODEL_IMAGES_ERROR, GET_MODEL_IMAGES_SUCCESS } from "../types";
+import { GET_ALL_MODEL_SUCCESS, GET_ALL_MODEL_ERROR } from "../types";
 import axios from "axios";
+
+// Get all Modals
+export const getAllModelAction = () => async (dispatch: any) => {
+    let access_token = "" as any;
+    if (typeof window !== 'undefined') {
+        access_token = localStorage.getItem('authToken')
+    }
+    try {
+        await axios({
+            method: 'GET',
+            url: `/api/getModel`,
+            headers: {
+                "Authorization": `Bearer ${access_token}`,
+                "Content-Type": "application/json"
+            }
+        }).then(function (response) {
+            dispatch({
+                type: GET_ALL_MODEL_SUCCESS,
+                payload: response?.data?.message?.data,
+            });
+        }).catch(function (error) {
+            dispatch({
+                type: GET_ALL_MODEL_ERROR,
+                payload: error,
+            });
+        })
+    } catch (err) {
+        console.log("err in action:", err)
+    }
+}
 
 // storing data to transfer to modals
 export const dataForModalAction = (data: any) => async (dispatch: any) => {

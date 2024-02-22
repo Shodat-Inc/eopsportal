@@ -201,7 +201,7 @@ export default function SubObjectManagement(props: any) {
         setActions(false);
         dispatch(setDataForeOpsWatchAction(eopsData));
         setTimeout(() => {
-            router.push('/dashboard/aimodaldetection');
+            router.push('/dashboard/assetmanagement/aimodaldetection');
         }, 50)
     }
 
