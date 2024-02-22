@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import Layout from "../../../components/Layout";
 import Image from "next/image";
 import Link from "next/link";
-import axios from "axios";
 import ClassManagement from "./classmanagement";
 import ObjectManagement from "./objectmanagement";
 import SubObjectManagement from "./subobjectmanagement";
@@ -33,19 +32,23 @@ export default function AssetManagement() {
     // All class reducer states
     const apiSelector = useSelector((state: any) => state.apiReducer);
 
+    // Dispatch get class and get data type API's
     useEffect(() => {
         dispatch(getClassDataAction());
         dispatch(getDataTypeAction())        
     }, [access_token])
 
+    // Setting all class in component state
     useEffect(() => {
         setClassData(apiSelector?.classDataReducer);
     }, [apiSelector?.classDataReducer])
 
+    // Setting breadcrumbs
     useEffect(() => {
         setNav(getSelClass.classBreadcrumbs)
     }, [getSelClass.classBreadcrumbs])
 
+    // Setting default class
     useEffect(() => {
         if (classData && classData.length > 0) {
             setDefaultClass(classData[0]?.id)
@@ -53,19 +56,24 @@ export default function AssetManagement() {
         }
     }, [classData])
 
+    // Toggle tab function 
     const toggleTab = (item: any) => {
         setTab(item)
     }
+
+    // Open Add new class modal
     const [addClassModal, setAddClassModal] = useState(false);
     const openAddClassModal = () => {
         dispatch(openCloseNewClassModalAction(true))
     }
 
+    // Open Add new sub class modal
     const [addSubClassModal, setAddSubClassModal] = useState(false);
     const openAddSubClassModal = () => {
         setAddSubClassModal(!addSubClassModal)
     }
 
+    // Add Class Modal
     const handleaddClassModal = (item: any) => {
         setAddClassModal(item)
     }
@@ -104,6 +112,7 @@ export default function AssetManagement() {
         }
     }
 
+    // Open add objectt modal
     const openAddObjectModal = () => {
         dispatch(toggleAddNewObjectModel(true));
     }

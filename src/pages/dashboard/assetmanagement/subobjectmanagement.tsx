@@ -173,9 +173,19 @@ export default function SubObjectManagement(props: any) {
         }, 250)
     }, [chooseAsset, classSelector])
 
+    const router = useRouter();
+    // Save data for eopswatch section
+    const eOpsWatchFunction = (item: any, objID:any) => {
+        const eopsData = {
+            "class": classSelector?.setDataForSubObjectReducer?.parentClass,
+            "subClass": chooseAsset,
+            "object": item,
+            "classObject": props.objectKey
+        }
+        setSelectedObjectID(item)
+        setActions(false);
+        dispatch(setDataForeOpsWatchAction(eopsData));
 
-    // Set Sub Class in Breadcrumb
-    useEffect(() => {
         let abc = {
             "flow": "Object Management",
             "class": classSelector?.classBreadcrumbs?.class,
@@ -183,25 +193,12 @@ export default function SubObjectManagement(props: any) {
             "classObjValue": classSelector?.classBreadcrumbs?.classObjValue,
             "subClass": showClassNameFromID(chooseAsset),
             "subClassObjKey": "",
-            "subClassObjValue": ""
+            "subClassObjValue": objID
         }
         dispatch(setClassBreadcrumb(abc));
 
-    }, [chooseAsset])
-
-    const router = useRouter();
-    // Save data for eopswatch section
-    const eOpsWatchFunction = (item: any) => {
-        const eopsData = {
-            "class": classSelector?.setDataForSubObjectReducer?.parentClass,
-            "subClass": chooseAsset,
-            "object": item,
-            "classObject": props.objectKey
-        }
-        setActions(false);
-        dispatch(setDataForeOpsWatchAction(eopsData));
         setTimeout(() => {
-            router.push('/dashboard/assetmanagement/aimodaldetection');
+            router.push('/dashboard/assetmanagement/aimodalsdetection');
         }, 50)
     }
 
@@ -475,7 +472,7 @@ export default function SubObjectManagement(props: any) {
                                                                 <span>Delete</span>
                                                             </button>
                                                             <button
-                                                                onClick={() => eOpsWatchFunction(items?.id)}
+                                                                onClick={() => eOpsWatchFunction(items?.id, items?.ObjectValues[0]?.values)}
                                                                 className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
                                                                 <span>AI Detection Modal</span>
                                                             </button>

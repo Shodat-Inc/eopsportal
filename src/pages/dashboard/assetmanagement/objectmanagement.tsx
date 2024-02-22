@@ -80,13 +80,12 @@ export default function ObjectManagement(props: any) {
         }, 1000)
     }
     const takeMeToSubObjectComponent = (item: any, objID: any) => {
-        let classObjKey = chooseAsset === 1 ? 'PlantID' : 'VIN';
         let abc = {
             "flow": "Object Management",
             "class": showClassNameFromID(chooseAsset),
             "classObjKey": "",
             "classObjValue": objID,
-            "subClass": "Batteries",
+            "subClass": "",
             "subClassObjKey": "",
             "subClassObjValue": ""
         }
