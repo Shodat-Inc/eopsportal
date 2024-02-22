@@ -12,7 +12,6 @@ export default apiHandler({
 
             // Extract data from the request body
             const data = { data: req.query, auth: req.auth.sub };
-            console.log(data,"==data")
 
             const batteryAlert = await batteryAlertRepo.get(data);
 

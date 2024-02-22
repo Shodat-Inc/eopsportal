@@ -357,6 +357,9 @@ export const createAlertValidation = (data) => {
     modelObjectImageId: Joi.number(),
     userId: Joi.number(),
     enterpriseId: Joi.number(),
+    recommendation: Joi.string(),
+    distanceRange: Joi.string(),
+    value: Joi.number()
   });
   return schema.validate(data);
 };
@@ -372,6 +375,9 @@ export const updateAlertValidation = (data) => {
     modelObjectImageId: Joi.number(),
     userId: Joi.number(),
     enterpriseId: Joi.number(),
+    recommendation: Joi.string(),
+    distanceRange: Joi.string(),
+    value: Joi.number()
     // enterpriseUserId: Joi.number(),
   });
   return schema.validate(data);

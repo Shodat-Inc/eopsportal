@@ -8,13 +8,13 @@ export const batteryDetectionResponse = {
                 totalCycle: 168
             },
         },
-        {
-            batteryLifeResponse: {
-                batteryUtilization: "15%",
-                remainingCyclesLeft: 107,
-                totalCycle: 120
-            },
-        },
+        // {
+        //     batteryLifeResponse: {
+        //         batteryUtilization: "15%",
+        //         remainingCyclesLeft: 107,
+        //         totalCycle: 120
+        //     },
+        // },
     ],
 };
   
