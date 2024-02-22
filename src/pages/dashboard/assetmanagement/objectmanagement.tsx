@@ -7,19 +7,13 @@ import Link from 'next/dist/client/link';
 import { 
     setClassBreadcrumb, 
     objDefaultClassSelectorFunction,
-    successMessageAction,
     editObjectModalAction,
-    setDataForSubObjectCompAction,
-    successMessagAdvancedAction
+    setDataForSubObjectCompAction
  } from '@/store/actions/classAction';
 import AddNewClassObject from './addnewclassobject';
 import EditObject from './editobject';
 
 export default function ObjectManagement(props: any) {
-
-    // console.log({
-    //     "___AMIT":props
-    // })
 
     const dispatch = useDispatch<any>();
     const [toggleFilter, setToggleFilter] = useState(false);
@@ -70,11 +64,6 @@ export default function ObjectManagement(props: any) {
             let filter = props?.classData?.rows?.filter((item: any) => {
                 return item.id === id
             })
-            // console.log({
-            //     "___id":id,
-            //     "___filter":filter,
-            //     "___classData":props?.classData?.rows
-            // })
             if (filter) {
                 return filter[0]?.className
             }
@@ -164,10 +153,6 @@ export default function ObjectManagement(props: any) {
                     "Content-Type": "application/json"
                 }
             }).then(function (response) {
-
-                // console.log({
-                //     "__RESPONSE":response?.data
-                // })
                 if (response) {
                     setTableHeader(response?.data?.objects?.data?.rows[0]?.Class?.ClassTags)
                     setObjectData(response?.data?.objects?.data?.rows);
@@ -481,13 +466,9 @@ export default function ObjectManagement(props: any) {
                                                             <Link
                                                                 href="#"
                                                                 className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
-                                                                <span>eOps Watch</span>
+                                                                <span>AI Detection Modal</span>
                                                             </Link>
-                                                            <Link
-                                                                href="#"
-                                                                className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
-                                                                <span>eOps Trace</span>
-                                                            </Link>
+                                                            
                                                             <Link
                                                                 href="#"
                                                                 className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">

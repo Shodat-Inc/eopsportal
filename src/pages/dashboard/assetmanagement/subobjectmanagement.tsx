@@ -22,7 +22,6 @@ export default function SubObjectManagement(props: any) {
     const [toggleAsset, setToggleAsset] = useState(false);
     const [actions, setActions] = useState(false);
     const [actionCount, setActionCount] = useState(1);
-    const [showModal, setShowModal] = useState(false);
     const [deleteModal, setDeleteModal] = useState(false);
     const [tableHeader, setTableHeader] = useState([] as any);
     const [objectData, setObjectData] = useState([] as any);
@@ -44,19 +43,11 @@ export default function SubObjectManagement(props: any) {
     const classSelector = useSelector((state: any) => state.classReducer);
     const addNewObject = useSelector((state: any) => state.classReducer);
 
-    // console.log({
-    //     "AMIT":classSelector?.setDataForSubObjectReducer?.parentClass
-    // })
-
     const toggleFilterFunction = () => {
         setToggleArrow(!toggleArrow);
         setToggleFilter(!toggleFilter);
     }
 
-
-    useEffect(() => {
-        setShowModal(addNewObject.toggleAddObject)
-    }, [addNewObject.toggleAddObject])
 
     // Get all sub class
     async function fetchData() {
@@ -69,10 +60,6 @@ export default function SubObjectManagement(props: any) {
                     "Content-Type": "application/json"
                 }
             }).then(function (response) {
-
-                // console.log({
-                //     "__response":response
-                // })
 
                 if (response.data.success === true) {
                     setSubClassData(response?.data?.data?.rows);
@@ -97,10 +84,6 @@ export default function SubObjectManagement(props: any) {
 
     // convert selected id to classname
     const showClassNameFromID = (id: any) => {
-        // console.log({
-        //     "__ID":id,
-        //     "__subClassData":subClassData
-        // })
         if (subClassData && subClassData?.length > 0) {
             let filter = subClassData?.filter((item: any) => {
                 return item.id === id
@@ -494,13 +477,8 @@ export default function SubObjectManagement(props: any) {
                                                             <button
                                                                 onClick={() => eOpsWatchFunction(items?.id)}
                                                                 className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
-                                                                <span>eOps Watch</span>
+                                                                <span>AI Detection Modal</span>
                                                             </button>
-                                                            <Link
-                                                                href="#"
-                                                                className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
-                                                                <span>eOps Trace</span>
-                                                            </Link>
                                                             <Link
                                                                 href="#"
                                                                 className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
