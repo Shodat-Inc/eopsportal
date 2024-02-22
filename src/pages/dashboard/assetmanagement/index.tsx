@@ -33,13 +33,9 @@ export default function AssetManagement() {
     // All class reducer states
     const apiSelector = useSelector((state: any) => state.apiReducer);
 
-    // Call datatype api
-    // useEffect(()=>{
-    //     dispatch(getDataTypeAction())
-    // }, [dispatch])
-
     useEffect(() => {
-        dispatch(getClassDataAction())        
+        dispatch(getClassDataAction());
+        dispatch(getDataTypeAction())        
     }, [access_token])
 
     useEffect(() => {
@@ -62,7 +58,6 @@ export default function AssetManagement() {
     }
     const [addClassModal, setAddClassModal] = useState(false);
     const openAddClassModal = () => {
-        // setAddClassModal(!addClassModal);
         dispatch(openCloseNewClassModalAction(true))
     }
 

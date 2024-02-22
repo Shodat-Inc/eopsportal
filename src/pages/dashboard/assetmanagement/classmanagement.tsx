@@ -5,10 +5,9 @@ import Image from "next/image";
 import moment from 'moment';
 import AddNewClass from './addnewclass';
 import {
-    editClassModalAction,
-    // selectedClassAction
+    editClassModalAction
 } from '@/store/actions/classAction';
-import { selectedClassAction } from '@/store/actions/apiAction';
+import { selectedClassAction, setSelectedClassAction } from '@/store/actions/apiAction';
 import {
     getClassDataAction
 } from '@/store/actions/apiAction';
@@ -114,6 +113,7 @@ export default function ClassManagement(props: any) {
     // Open Edit class modal
     const openEditClassModal = (item: any) => {
         setSelectedClass(item)
+        dispatch(setSelectedClassAction(item))
         dispatch(selectedClassAction(item))
         dispatch(editClassModalAction(true));
         setActions(false);
@@ -405,7 +405,7 @@ export default function ClassManagement(props: any) {
 
             {/* Add Edit Class */}
             <EditClass
-                selectedClass={selectedClass}
+                selectedClass={selectedClass || apiSelector?.setSelectedClass}
                 allClassData={allData}
                 show={allClassSelector?.editClassModalReducer}
                 message={handleEditSuccessMessage}

@@ -1,12 +1,15 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
 import styles from "../../../styles/Common.module.css";
 import Image from "next/image";
 import {
   openCloseNewClassModalAction
 } from "@/store/actions/classAction";
-import { getClassDataAction, getDataTypeAction } from "@/store/actions/apiAction";
-import axios from "axios";
+import {
+  getClassDataAction,
+  getDataTypeAction
+} from "@/store/actions/apiAction";
 
 export default function AddNewClass(props: any) {
   const dispatch = useDispatch<any>();
@@ -20,25 +23,23 @@ export default function AddNewClass(props: any) {
   const [assetDataType, setAssetDataType] = useState<any[]>([]);
   const [dtObject, setDtObject] = useState<any[]>([]);
   const [allDataTypes, setAllDataTypes] = useState([] as any);
-  const [primaryKey, setPrimaryKey] = useState([] as any);
-  const [selectedPK, setSelectedPK] = useState()
+
+  // Get Acess Token
   let access_token = "" as any;
   if (typeof window !== "undefined") {
     access_token = localStorage.getItem("authToken");
   }
 
+  // Get all States from store
   const apiSelector = useSelector((state: any) => state.apiReducer);
-  useEffect(()=>{
-    dispatch(getDataTypeAction())
-}, [dispatch])
 
   // Get all data type API
   useEffect(() => {
     setAllDataTypes(apiSelector?.getDataTypeReducer?.rows);
   }, [apiSelector?.getDataTypeReducer]);
 
+  // Close add new class modal
   const closeModal = () => {
-    // props.handleClick(false);
     dispatch(openCloseNewClassModalAction(false));
     setShowInput(false);
     setShowHideAddTagButton(false);
@@ -47,8 +48,9 @@ export default function AddNewClass(props: any) {
     setAllTags([]);
     setNewTag("");
   };
+
+  // Cancel button for add modal
   const cancelModal = () => {
-    // props.handleClick(false);
     dispatch(openCloseNewClassModalAction(false));
     setAllTags([]);
   };
@@ -59,6 +61,8 @@ export default function AddNewClass(props: any) {
     setShowHideAddTagButton(true);
     setToggleDT(true);
   };
+
+  // Close all tag function
   const closeAddTags = () => {
     setShowInput(!showInput);
     setShowHideAddTagButton(!showHideAddTagButton);
@@ -138,7 +142,7 @@ export default function AddNewClass(props: any) {
     setNewTag("");
   };
 
-  // Store Data into API
+  // Store Data into API (Create class api)
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     var formData = new FormData(e.target);
@@ -171,14 +175,6 @@ export default function AddNewClass(props: any) {
       console.log("ERROR IN TRY CATCH (CREATE CLASS):", err);
     }
   };
-
-  // useEffect(() => {
-  //   setPrimaryKey(allTags)
-  // }, [allTags])
-
-  // const handlePrimaryKey = (e: any) => {
-  //   setSelectedPK(e.target.value)
-  // }
 
   return (
     <>

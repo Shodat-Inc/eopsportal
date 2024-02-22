@@ -2,6 +2,7 @@ import { GET_CLASS_API_SUCCESS, GET_CLASS_API_ERROR } from "../types";
 import { GET_DATA_TYPE_SUCCESS, GET_DATA_TYPE_ERROR } from "../types";
 import { SELECTED_CLASS_ERROR, SELECTED_CLASS_SUCCESS } from "../types";
 import { GET_SUB_CLASS_API_SUCCESS, GET_SUB_CLASS_API_ERROR } from "../types";
+import { SET_SELECTED_CLASS_SUCCESS, SET_SELECTED_CLASS_ERROR } from "../types";
 import axios from "axios";
 
 // Get All Class
@@ -110,6 +111,25 @@ export const getSubClassDataAction = (id:any) => async (dispatch: any) => {
                 payload: error,
             });
         })
+    } catch (err) {
+        console.log("err in action:", err)
+    }
+};
+
+// Set Selected Class for Edit/Add classes
+export const setSelectedClassAction = (classID: any) => async (dispatch: any) => {
+    try {
+        if (classID) {
+            dispatch({
+                type: SET_SELECTED_CLASS_SUCCESS,
+                payload: classID
+            });
+        } else {
+            dispatch({
+                type: SET_SELECTED_CLASS_ERROR,
+                payload: "No Selected Class"
+            });
+        }
     } catch (err) {
         console.log("err in action:", err)
     }

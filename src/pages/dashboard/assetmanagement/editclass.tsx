@@ -1,5 +1,5 @@
-import React, { useState, useRef, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from 'react-redux';
 import styles from "../../../styles/Common.module.css";
 import axios from "axios";
 import Image from "next/image";
@@ -10,7 +10,6 @@ import { getClassDataAction } from "@/store/actions/apiAction";
 
 export default function EditClass(props: any) {
     const dispatch = useDispatch<any>();
-    const assetname = useRef("");
     const [allTags, setAllTags] = useState([] as any);
     const [newTag, setNewTag] = useState<string>("");
     const [showInput, setShowInput] = useState(false);
@@ -25,45 +24,24 @@ export default function EditClass(props: any) {
     const [addNewTag, setAddNewTag] = useState([] as any);
     const [newlyAddedTag, setNewlyAddedTag] = useState([] as any);
     const [className, setClassName] = useState('' as any);
-    const [tagMessage, setTagMessage] = useState(false);
     let access_token = "" as any;
     if (typeof window !== "undefined") {
         access_token = localStorage.getItem("authToken");
     }
 
-    // GET ALL DATATYPES
-    async function fetchData() {
-        try {
-            await axios({
-                method: "GET",
-                url: `/api/getDataType`,
-                headers: {
-                    Authorization: `Bearer ${access_token}`,
-                    "Content-Type": "application/json",
-                },
-            }).then(function (response) {
-                if (response) {
-                    setAllDataTypes(response.data?.data);
-                }
-            }).catch(function (error) {
-                console.log({
-                    "ERROR IN AXIOS CATCH (GET DT)": error,
-                });
-            });
-        } catch (err) {
-            console.log({
-                "ERROR IN TRY CATCH (GET DT)": err,
-            });
-        }
-    }
+    // All State
+    const apiSelector = useSelector((state: any) => state.apiReducer);
+
+    // Get all Datatype
     useEffect(() => {
-        fetchData();
-    }, [access_token]);
+        setAllDataTypes(apiSelector?.getDataTypeReducer?.rows)
+    }, [apiSelector?.getDataTypeReducer])
+
 
     // Get Selected Class Data
     useEffect(() => {
-        if (props.allClassData && props.allClassData.length > 0) {
-            const filtered = props.allClassData.filter((item: any) => {
+        if (props?.allClassData && props?.allClassData?.rows?.length > 0) {
+            const filtered = props.allClassData.rows.filter((item: any) => {
                 return item.id === props.selectedClass;
             });
             setClassData(filtered);
@@ -76,6 +54,7 @@ export default function EditClass(props: any) {
         }
     }, [props]);
 
+    // Close Modal Function
     const closeModal = () => {
         setShowInput(false);
         setShowHideAddTagButton(false);
@@ -156,19 +135,6 @@ export default function EditClass(props: any) {
         });
         setAllTags(filteredArray);
 
-        // if(filteredArray.length > 1) {
-        //     setAllTags(filteredArray);
-        // } else {
-        //     setTagMessage(true);
-        //     return
-        // }
-
-        // Check if all tags array contains one value atleast
-        // if (filteredArray.length === 1) {
-        //     console.log("you are here")
-        //     setTagMessage(true)
-        // }
-
         let deletedList = deleteTagIDS.slice();
         deletedList.push(item);
         setDeleteTagIDS(deletedList);
@@ -216,7 +182,6 @@ export default function EditClass(props: any) {
             addTag: dtObject,
         };
 
-
         let tokenStr = access_token;
         try {
             await axios({
@@ -249,42 +214,6 @@ export default function EditClass(props: any) {
         setClassName(e.target.value)
     }
 
-
-    const updateButton = () => {
-        if (allTags?.length === 0 && newlyAddedTag?.length > 0) {
-            return (
-                <button
-                    className="border border-black rounded-lg bg-black text-white w-20 h-12 mr-5 hover:bg-yellow-951 hover:text-white hover:border-yellow-951 ease-in-out disabled:bg-gray-951 disabled:hover:border-gray-951 disabled:border-gray-951 duration-100 outline-none transform active:scale-75 transition-transform"
-                    disabled
-                >
-                    Update
-                </button>
-            )
-        } else if (newlyAddedTag?.length === 0 && allTags?.length > 0 ) {
-            return (
-                <button
-                    className="border border-black rounded-lg bg-black text-white w-20 h-12 mr-5 hover:bg-yellow-951 hover:text-white hover:border-yellow-951 ease-in-out disabled:bg-gray-951 disabled:hover:border-gray-951 disabled:border-gray-951 duration-100 outline-none transform active:scale-75 transition-transform"
-                    disabled
-                >
-                    Update
-                </button>
-            )
-        } else if (newlyAddedTag?.length === 0 && allTags?.length === 0) {
-            <button
-                className="border border-black rounded-lg bg-black text-white w-20 h-12 mr-5 hover:bg-yellow-951 hover:text-white hover:border-yellow-951 ease-in-out disabled:bg-gray-951 disabled:hover:border-gray-951 disabled:border-gray-951 duration-100 outline-none transform active:scale-75 transition-transform"
-                disabled
-            >
-                Update
-            </button>
-        } else {
-            <button
-                className="border border-black rounded-lg bg-black text-white w-20 h-12 mr-5 hover:bg-yellow-951 hover:text-white hover:border-yellow-951 ease-in-out disabled:bg-gray-951 disabled:hover:border-gray-951 disabled:border-gray-951 duration-100 outline-none transform active:scale-75 transition-transform"
-            >
-                Update
-            </button>
-        }
-
-    }
 
     return (
         <>
@@ -342,10 +271,7 @@ export default function EditClass(props: any) {
                                 </div>
                             </div>
 
-                            {
-                                tagMessage &&
-                                <div className="text-red-500">Must Add new tag before delete all existing tags</div>
-                            }
+
                             <div className="mb-7 relative column-2 flex justify-start items-center sm:w-full small:w-full">
                                 <div className="lg:w-full small:w-full sm:w-full relative">
                                     <span className="text-[13px] bg-white px-[2px] absolute top-[-10px] left-[10px]">
@@ -505,7 +431,7 @@ export default function EditClass(props: any) {
                                                             </div>
                                                             <label
                                                                 htmlFor={item.type}
-                                                                className="text-black font-semibold"
+                                                                className="text-black font-semibold capitalize"
                                                             >
                                                                 {item.name}
                                                                 <span className="text-gray-500 font-normal text-[14px] ml-2">
@@ -544,41 +470,12 @@ export default function EditClass(props: any) {
                                 </div>
                             </div>
 
-                            {/* <div className="mb-6 relative flex justify-end items-center w-full">
-                                <div className={`mb-5 lg:w-full small:w-full ${styles.form__wrap}`}>
-                                    <div className={`relative ${styles.form__group} font-OpenSans`}>
-                                        <select
-                                            id="primaryKeySelection"
-                                            name="primaryKeySelection"
-                                            className={`border border-gray-961 ${styles.form__field}`}
-                                            placeholder="Primary Key"
-                                            // value={selectedPK}
-                                            required
-                                            // onChange={handlePrimaryKey}
-                                        >
-                                            <option value="">-Select-</option>
-                                            {
-                                                primaryKey && primaryKey.length > 0 ?
-                                                    primaryKey?.map((item: any, index: any) => (
-                                                        <option key={index} value={item}>{item}</option>
-                                                    ))
-                                                    : null
-                                            }
-
-                                        </select>
-                                        <label htmlFor="parentJoinKey" className={`${styles.form__label}`}>Select Primary Key</label>
-                                    </div>
-                                </div>
-                            </div> */}
-
                             <div className="mb-0 relative flex justify-end items-center w-full">
                                 <button
                                     className="border border-black rounded-lg bg-black text-white w-20 h-12 mr-5 hover:bg-yellow-951 hover:text-white hover:border-yellow-951 ease-in-out disabled:bg-gray-951 disabled:hover:border-gray-951 disabled:border-gray-951 duration-100 outline-none transform active:scale-75 transition-transform"
-                                    // disabled={(allTags && allTags.length > 0) || (newlyAddedTag && newlyAddedTag > 0) ? false : true}
                                 >
                                     Update
                                 </button>
-                                {/* {updateButton()} */}
                                 <div
                                     className="cursor-pointer flex justify-center items-center border border-black rounded-lg bg-white text-black w-24 h-12 hover:text-white hover:bg-yellow-951 hover:border-yellow-951 ease-in-out duration-100 outline-none transform active:scale-75 transition-transform"
                                     onClick={closeModal}
