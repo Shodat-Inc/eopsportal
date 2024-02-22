@@ -2,6 +2,7 @@ import { db } from "../db";
 import sendResponseData from "../../constant";
 import { loggerInfo, loggerError } from "@/logger";
 import message from "@/util/responseMessage";
+import { paginateQuery } from "../constant/pagination";
 
 export const ticketRepo = {
     create,
@@ -71,13 +72,28 @@ async function create(params: any, transaction: any) {
 async function getTicketByAlertId(params: any) {
     loggerInfo.info("Get Ticket Comments and Attachments on the basis of Raised Alert Id")
     try {
+        const page = params.page || 1;
+        const pageSize = params.pageSize || 10;
+        let sortOrder = 'DESC'; // Default sorting order is DESC
+        let sortField = "id";
 
-        const data = await db.Link.findOne({
+        // Check if sortBy parameter is provided and valid
+        if (params.sortBy && ['ASC', 'DESC'].includes(params.sortBy.toUpperCase())) {
+            sortOrder = params.sortBy.toUpperCase();
+        }
+        if (params.sort && ['id', 'subject', 'status', 'createdAt', 'priority', 'assignedTo'].includes(params.sort)) {
+            sortField = params.sort;
+        }
+
+        const result = await paginateQuery(db.Link, page, pageSize, {
+
+            // const data = await db.Link.findOne({
             where: { raisedAlertId: params.raisedAlertId },
             attributes: [], // Exclude unnecessary attributes from the result
             include: [{
                 model: db.Ticket,
                 attributes: ['id', 'subject', 'status', 'updatedAt', 'priority', 'assignedTo'],
+                order: [[sortField, sortOrder]],
                 include: [
                     {
                         model: db.Comment,
@@ -85,7 +101,6 @@ async function getTicketByAlertId(params: any) {
                         required: false,
                         attributes: ['id', 'comment', 'parentId', 'ticketId', 'userId'],
                         where: { parentId: null },
-                        order: [['parentId', 'ASC'], ['createdAt', 'ASC']], // Order comments by parentId and creation time
                         include: [
                             {
                                 model: db.CommentAttachment,
@@ -95,7 +110,6 @@ async function getTicketByAlertId(params: any) {
                                 model: db.Comment,
                                 as: 'replies', // Include replies as nested comments
                                 attributes: ['id', 'comment', 'parentId', 'ticketId', 'userId'],
-                                order: [['createdAt', 'ASC']], // Order replies by creation time if needed
                                 include: [
                                     {
                                         model: db.CommentAttachment,
@@ -115,13 +129,13 @@ async function getTicketByAlertId(params: any) {
             }]
         });
 
-        if (!data) {
+        if (!result.rows.length) {
             // Return response if no data is found
-            return sendResponseData(false, "Data Doesn't Exist", data);
+            return sendResponseData(false, "Data Doesn't Exist", result);
         }
 
         // Return success response with the fetched data
-        return sendResponseData(true, "Data fetched Successfully", data);
+        return sendResponseData(true, "Data fetched Successfully", result);
     } catch (error) {
         // Log an error if there's an issue during the retrieval of tickets
         loggerError.error("Error in getting tickets", error);
