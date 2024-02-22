@@ -2,6 +2,7 @@ import { db } from "../db";
 import sendResponseData from "../../constant";
 import { loggerInfo, loggerError } from "@/logger";
 import message from "@/util/responseMessage";
+import { paginateQuery } from "../constant/pagination";
 
 export const commentAttachmentRepo = {
     create,
@@ -32,21 +33,35 @@ async function get(params: any) {
         if (!params || !params.params || !params.params.commentId) {
             return sendResponseData(false, "Invalid parameters", {});
         }
-        const getData = await db.CommentAttachment.findAll({
+        const page = params.params.page || 1;
+        const pageSize = params.params.pageSize || 10;
+        let sortOrder = 'DESC'; // Default sorting order is DESC
+        let sortField = "id";
+
+        // Check if sortBy parameter is provided and valid
+        if (params.params.sortBy && ['ASC', 'DESC'].includes(params.params.sortBy.toUpperCase())) {
+            sortOrder = params.params.sortBy.toUpperCase();
+        }
+        if (params.params.sort && ['id', 'fileName', 'fileUrl', 'fileType', 'ticketId', 'userId', 'enterpriseId', 'createdAt'].includes(params.params.sort)) {
+            sortField = params.params.sort;
+        }
+
+        const result = await paginateQuery(db.CommentAttachment, page, pageSize, {
             where: {
                 commentId: params.params.commentId,
                 userId: params.userId
             },
+            order: [[sortField, sortOrder]],
             include: [
                 {
                     model: db.Comment
                 }
             ]
         })
-        if (!getData.length) {
+        if (!result.rows.length) {
             return sendResponseData(false, "Data Not Found", {})
         }
-        return sendResponseData(true, "Comment and it's Attachment fetched successfully", getData)
+        return sendResponseData(true, "Comment and it's Attachment fetched successfully", result)
     } catch (error) {
         loggerError.error("Error in getting Comments Attachment", error)
         return sendResponseData(false, "Error in getting Comments Attachment", error)
