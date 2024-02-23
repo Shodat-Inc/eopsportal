@@ -9,7 +9,6 @@ export const batteryAlertRepo = {
     create,
     get,
     getAllAlert,
-    getAlertById,
     update,
     delete: _delete
 };
@@ -84,6 +83,11 @@ async function getAllAlert(params: any) {
         const pageSize = params.query.pageSize || 10;
         let sortOrder = 'DESC'; // Default sorting order is DESC
         let sortField = "id";
+        let whereClause;
+        
+        if (params.query.id) {
+            whereClause = { id: params.query.id };
+        }
 
         // Check if sortBy parameter is provided and valid
         if (params.query.sortBy && ['ASC', 'DESC'].includes(params.query.sortBy.toUpperCase())) {
@@ -94,6 +98,7 @@ async function getAllAlert(params: any) {
         }
         const result = await paginateQuery(db.BatteryAlert, page, pageSize, {
             order: [[sortField, sortOrder]],
+            where: whereClause
         });
         if (!result.rows.length) {
             return sendResponseData(false, "Data doesn't Exists", {});
@@ -102,25 +107,6 @@ async function getAllAlert(params: any) {
     } catch (error) {
         loggerError.error("Error in getting all the alerts", error);
         return sendResponseData(false, "Error in getting all the alerts", error);
-    }
-}
-
-async function getAlertById(params: any) {
-    loggerInfo.info("Get ALert Data By Id");
-    try {
-        if (!params.id) {
-            return sendResponseData(false, "Data is not provided in params", {});
-        }
-        const data = await db.BatteryAlert.findOne({
-            where: { id: params.id },
-        });
-        if (!data) {
-            return sendResponseData(false, "Data doesn't Exists", {});
-        }
-        return sendResponseData(true, "Data fetched successfully", data);
-    } catch (error) {
-        loggerError.error("Error in Alert Repo", error);
-        return sendResponseData(false, "Error in Alert Repo", error);
     }
 }
 

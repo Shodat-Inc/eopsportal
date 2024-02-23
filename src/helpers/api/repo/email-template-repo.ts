@@ -29,6 +29,11 @@ async function getAll(params: any) {
 
         let sortOrder = 'DESC'; // Default sorting order is DESC
         let sortField = "id";
+        let whereClause;
+
+        if (params.query.id) {
+            whereClause = { id: params.query.id };
+        }
 
         // Check if sortBy parameter is provided and valid
         if (params.query.sortBy && ['ASC', 'DESC'].includes(params.query.sortBy.toUpperCase())) {
@@ -40,6 +45,7 @@ async function getAll(params: any) {
 
         const result = await paginateQuery(db.EmailTemplate, page, pageSize, {
             order: [[sortField, sortOrder]],
+            where: whereClause
         })
         if (!result.rows.length) {
             return sendResponseData(false, "Data doesn't Exists", {})
