@@ -5,7 +5,7 @@ import message from "@/util/responseMessage";
 import { generateRandomAlphaNumeric } from "../../../util/helper";
 import { classTagRepo } from "./classTag-repo";
 import { paginateQuery } from "../constant/pagination";
-import { Sequelize } from "sequelize";
+import { Op, Sequelize } from "sequelize";
 
 /**
  * Repository for handling object related operations.
@@ -130,8 +130,11 @@ async function get(params: any) {
         page,
         pageSize,
         {
-          where: { values: params.query.keyword },
-          order: [[sortField, sortOrder]],
+          where: {
+            values: {
+              [Op.like]: `%${params.query.keyword}%`
+            }
+          },
           required: true,
           include: [
             {
@@ -147,6 +150,7 @@ async function get(params: any) {
               ],
             },
           ],
+          order: [[sortField, sortOrder]],
         }
       );
 
@@ -356,7 +360,9 @@ async function getObjectValues(params: any) {
 
     const objResult = await db.AddValues.findAll({
       where: {
-        values: keyword,
+        values: {
+          [Op.like]: `%${keyword}%`
+        }
       },
       order: [[sortField, sortOrder]],
       include: [
