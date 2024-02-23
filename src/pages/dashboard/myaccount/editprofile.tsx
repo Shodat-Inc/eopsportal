@@ -5,9 +5,6 @@ import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router'
 
-import { getSingleUser } from '@/store/actions/usersAction';
-import { updateUser } from '@/store/actions/usersAction';
-
 export default function EditProfile(props: any) {
     const { push } = useRouter();
     const dispatch = useDispatch();
@@ -29,7 +26,7 @@ export default function EditProfile(props: any) {
     }
     const editPersonalDetail = () => {
         setPersonalDetail(false);
-        dispatch(updateUser(personalData, userData.username) as any);
+        // dispatch(updateUser(personalData, userData.username) as any);
 
     }
     const toggleAuthContactInfo = () => {
@@ -44,25 +41,6 @@ export default function EditProfile(props: any) {
     const editContactInfo = () => {
         setContactInfo(false);
     }
-    let user = {} as any
-    // useEffect(() => {
-    //     // dispatch(getSingleUser() as any);
-    //     user = localStorage.getItem("user")
-    // }, []);
-
-    // useEffect(() => {
-    //     let users  = [] as any;
-    //     (async () => {
-    //      users  = await dispatch(getSingleUser() as any);
-          
-    //     })();
-      
-    //     return () => {
-    //         users
-
-    //     };
-    //   }, []);
-
 
     useEffect(() => {
         if (sampleListData) {
@@ -81,12 +59,12 @@ export default function EditProfile(props: any) {
             })
         }
     }, [userData])
-    console.log({
-        // userData: userData,
-        // authInfo:authInfo,
-        sampleListData: sampleListData,
-        // user:user
-    })
+    // console.log({
+    //     // userData: userData,
+    //     // authInfo:authInfo,
+    //     sampleListData: sampleListData,
+    //     // user:user
+    // })
     const handleInputField = (evt: any) => {
         let targetName = evt.target.name;
         let targetValue = evt.target.value;
@@ -101,7 +79,7 @@ export default function EditProfile(props: any) {
 
             <div className='w-full flex justify-start items-center mb-10'>
                 <div className='relative inline-block'>
-                    <div className='w-[120px] h-[120px] rounded rounded-full border border-[#5B5A59] bg-[#5B5A59] inline-flex justify-center items-center text-6xl text-white font-semibold'>{userData && userData.username && userData.username.charAt(0).toUpperCase()}</div>
+                    <div className='w-[120px] h-[120px] rounded-full border border-[#5B5A59] bg-[#5B5A59] inline-flex justify-center items-center text-6xl text-white font-semibold'>{userData && userData.username && userData.username.charAt(0).toUpperCase()}</div>
                     <button
                         className="rounded-full bg-white h-[24px] w-[24px] flex items-center justify-center absolute right-[-2px] bottom-[9px]"
                     >
@@ -115,7 +93,7 @@ export default function EditProfile(props: any) {
                 </div>
                 <div className='ml-8'>
                     <p className='font-semibold text-2xl text-black mb-2'>{userData && userData.firstName && userData.firstName} {userData && userData.lastName && userData.lastName}</p>
-                    <span className='text-[12px] bg-[#E7E6E2] inline-flex px-2 py-1 justify-center items-center text-black rounded rounded-xl'>Admin</span>
+                    <span className='text-[12px] bg-[#E7E6E2] inline-flex px-2 py-1 justify-center items-center text-black rounded-xl'>Admin</span>
                 </div>
             </div>
 
@@ -259,105 +237,103 @@ export default function EditProfile(props: any) {
                                 </>
                             }
                         </div>
-                        {
-                            !contactInfo
-                                ?
-                                <div className='w-full'>
-                                    <div className='relative flex justify-start items-center mb-2'>
-                                        <p className='w-[30%] text-[#666666]'>Address:</p>
-                                        <p className='w-[70%] text-black'>2443 Sierra Nevada Road</p>
-                                    </div>
-                                    <div className='relative flex justify-start items-center mb-2'>
-                                        <p className='w-[30%] text-[#666666]'>City:</p>
-                                        <p className='w-[70%] text-black'>Mammoth Lakes</p>
-                                    </div>
-                                    <div className='relative flex justify-start items-center mb-2'>
-                                        <p className='w-[30%] text-[#666666]'>State:</p>
-                                        <p className='w-[70%] text-black'>California</p>
-                                    </div>
-                                    <div className='relative flex justify-start items-center mb-2'>
-                                        <p className='w-[30%] text-[#666666]'>Zip Code:</p>
-                                        <p className='w-[70%] text-black'>93546</p>
-                                    </div>
-                                    <div className='relative flex justify-start items-center mb-2'>
-                                        <p className='w-[30%] text-[#666666]'>Country:</p>
-                                        <p className='w-[70%] text-black'>United States</p>
-                                    </div>
+                        {!contactInfo ?
+                            <div className='w-full'>
+                                <div className='relative flex justify-start items-center mb-2'>
+                                    <p className='w-[30%] text-[#666666]'>Address:</p>
+                                    <p className='w-[70%] text-black'>2443 Sierra Nevada Road</p>
                                 </div>
-                                :
-                                <div className='w-full'>
-                                    <div className={`mb-5 ${styles.form__wrap} w-full`}>
-                                        <div className={`relative ${styles.form__group} font-OpenSans`}>
-                                            <input
-                                                type="text"
-                                                id="address"
-                                                name="address"
-                                                className={`${styles.form__field} border border-[#A7A7A7] bg-white`}
-                                                placeholder="Address"
-                                                value="2443 Sierra Nevada Road"
+                                <div className='relative flex justify-start items-center mb-2'>
+                                    <p className='w-[30%] text-[#666666]'>City:</p>
+                                    <p className='w-[70%] text-black'>Mammoth Lakes</p>
+                                </div>
+                                <div className='relative flex justify-start items-center mb-2'>
+                                    <p className='w-[30%] text-[#666666]'>State:</p>
+                                    <p className='w-[70%] text-black'>California</p>
+                                </div>
+                                <div className='relative flex justify-start items-center mb-2'>
+                                    <p className='w-[30%] text-[#666666]'>Zip Code:</p>
+                                    <p className='w-[70%] text-black'>93546</p>
+                                </div>
+                                <div className='relative flex justify-start items-center mb-2'>
+                                    <p className='w-[30%] text-[#666666]'>Country:</p>
+                                    <p className='w-[70%] text-black'>United States</p>
+                                </div>
+                            </div>
+                            :
+                            <div className='w-full'>
+                                <div className={`mb-5 ${styles.form__wrap} w-full`}>
+                                    <div className={`relative ${styles.form__group} font-OpenSans`}>
+                                        <input
+                                            type="text"
+                                            id="address"
+                                            name="address"
+                                            className={`${styles.form__field} border border-[#A7A7A7] bg-white`}
+                                            placeholder="Address"
+                                            value="2443 Sierra Nevada Road"
 
-                                            />
-                                            <label htmlFor="address" className={`${styles.form__label}`}>Address</label>
-                                        </div>
-                                        <span className='text-red-952 text-sm flex items-center justify-start'></span>
+                                        />
+                                        <label htmlFor="address" className={`${styles.form__label}`}>Address</label>
                                     </div>
-                                    <div className={`mb-5 ${styles.form__wrap} w-full`}>
-                                        <div className={`relative ${styles.form__group} font-OpenSans`}>
-                                            <input
-                                                type="text"
-                                                id="city"
-                                                name="city"
-                                                className={`${styles.form__field} border border-[#A7A7A7] bg-white}`}
-                                                placeholder="City"
-                                                value="Mammoth Lakes"
-                                            />
-                                            <label htmlFor="city" className={`${styles.form__label}`}>City</label>
-                                        </div>
-                                        <span className='text-red-952 text-sm flex items-center justify-start'></span>
-                                    </div>
-                                    <div className={`mb-5 ${styles.form__wrap} w-full`}>
-                                        <div className={`relative ${styles.form__group} font-OpenSans`}>
-                                            <input
-                                                type="text"
-                                                id="state"
-                                                name="state"
-                                                className={`${styles.form__field} border border-[#A7A7A7] bg-white}`}
-                                                placeholder="State"
-                                                value="California"
-                                            />
-                                            <label htmlFor="state" className={`${styles.form__label}`}>State</label>
-                                        </div>
-                                        <span className='text-red-952 text-sm flex items-center justify-start'></span>
-                                    </div>
-                                    <div className={`mb-5 ${styles.form__wrap} w-full`}>
-                                        <div className={`relative ${styles.form__group} font-OpenSans`}>
-                                            <input
-                                                type="text"
-                                                id="zipCode"
-                                                name="zipCode"
-                                                className={`${styles.form__field} border border-[#A7A7A7] bg-white}`}
-                                                placeholder="Zip Code"
-                                                value="93546"
-                                            />
-                                            <label htmlFor="zipCode" className={`${styles.form__label}`}>Zip Code</label>
-                                        </div>
-                                        <span className='text-red-952 text-sm flex items-center justify-start'></span>
-                                    </div>
-                                    <div className={`mb-5 ${styles.form__wrap} w-full`}>
-                                        <div className={`relative ${styles.form__group} font-OpenSans`}>
-                                            <input
-                                                type="text"
-                                                id="country"
-                                                name="country"
-                                                className={`${styles.form__field} border border-[#A7A7A7] bg-white}`}
-                                                placeholder="Country"
-                                                value="United States"
-                                            />
-                                            <label htmlFor="country" className={`${styles.form__label}`}>Country</label>
-                                        </div>
-                                        <span className='text-red-952 text-sm flex items-center justify-start'></span>
-                                    </div>
+                                    <span className='text-red-952 text-sm flex items-center justify-start'></span>
                                 </div>
+                                <div className={`mb-5 ${styles.form__wrap} w-full`}>
+                                    <div className={`relative ${styles.form__group} font-OpenSans`}>
+                                        <input
+                                            type="text"
+                                            id="city"
+                                            name="city"
+                                            className={`${styles.form__field} border border-[#A7A7A7] bg-white}`}
+                                            placeholder="City"
+                                            value="Mammoth Lakes"
+                                        />
+                                        <label htmlFor="city" className={`${styles.form__label}`}>City</label>
+                                    </div>
+                                    <span className='text-red-952 text-sm flex items-center justify-start'></span>
+                                </div>
+                                <div className={`mb-5 ${styles.form__wrap} w-full`}>
+                                    <div className={`relative ${styles.form__group} font-OpenSans`}>
+                                        <input
+                                            type="text"
+                                            id="state"
+                                            name="state"
+                                            className={`${styles.form__field} border border-[#A7A7A7] bg-white}`}
+                                            placeholder="State"
+                                            value="California"
+                                        />
+                                        <label htmlFor="state" className={`${styles.form__label}`}>State</label>
+                                    </div>
+                                    <span className='text-red-952 text-sm flex items-center justify-start'></span>
+                                </div>
+                                <div className={`mb-5 ${styles.form__wrap} w-full`}>
+                                    <div className={`relative ${styles.form__group} font-OpenSans`}>
+                                        <input
+                                            type="text"
+                                            id="zipCode"
+                                            name="zipCode"
+                                            className={`${styles.form__field} border border-[#A7A7A7] bg-white}`}
+                                            placeholder="Zip Code"
+                                            value="93546"
+                                        />
+                                        <label htmlFor="zipCode" className={`${styles.form__label}`}>Zip Code</label>
+                                    </div>
+                                    <span className='text-red-952 text-sm flex items-center justify-start'></span>
+                                </div>
+                                <div className={`mb-5 ${styles.form__wrap} w-full`}>
+                                    <div className={`relative ${styles.form__group} font-OpenSans`}>
+                                        <input
+                                            type="text"
+                                            id="country"
+                                            name="country"
+                                            className={`${styles.form__field} border border-[#A7A7A7] bg-white}`}
+                                            placeholder="Country"
+                                            value="United States"
+                                        />
+                                        <label htmlFor="country" className={`${styles.form__label}`}>Country</label>
+                                    </div>
+                                    <span className='text-red-952 text-sm flex items-center justify-start'></span>
+                                </div>
+                            </div>
                         }
                     </div>
                 </div>

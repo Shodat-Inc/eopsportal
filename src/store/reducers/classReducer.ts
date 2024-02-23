@@ -36,11 +36,13 @@ const initialState = {
   editSubObjectModalReducer: false,
   newClassModalReducer: false,
   setDataForSubObjectReducer: {},
-  selectedClassReducer:0
+  selectedClassReducer:0,
 };
 
 const classReducer = (state = initialState, action: any) => {
   switch (action.type) {
+
+    // Set All Classes 
     case SET_CLASS_SUCCESS:
       return {
         ...state,

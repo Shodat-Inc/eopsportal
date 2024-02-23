@@ -1,1 +1,1 @@
-export const API_BASE_URL = process.env.NODE_ENV == 'development' ? "http://localhost:3000" : "https://portalshodat.vercel.app"
+export const API_BASE_URL = process.env.NODE_ENV == 'development' ? "http://localhost:3000" : "http://20.232.178.134:3000"

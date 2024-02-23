@@ -1,13 +1,14 @@
 import React, { Fragment, useState, useEffect } from "react";
-import { useDispatch, useSelector } from 'react-redux';
-import { useRouter } from 'next/router'
+import { useDispatch, useSelector } from "react-redux";
+import { useRouter } from "next/router";
 import { PencilIcon } from "@heroicons/react/24/solid";
 import { CheckIcon } from "@heroicons/react/24/outline";
 import { Menu, Transition, Popover } from "@headlessui/react";
 import Link from "next/link";
-import styles from './TopBar.module.css';
+import styles from "./TopBar.module.css";
 import Image from "next/image";
 import axios from "axios";
+import { getUserByIdAction } from "@/store/actions/userAction";
 
 export default function TopBar({ showNav, setShowNav }) {
   const { push } = useRouter();
@@ -15,20 +16,28 @@ export default function TopBar({ showNav, setShowNav }) {
   const router = useRouter();
   const [username, setUsername] = useState("Amit");
   const [user, setUser] = useState({
-    firstName: "Amit",
-    lastName: "Pandey"
-  })
-  const [userToken, setUserToken] = useState('');
+    firstName: "User",
+    lastName: "User",
+  });
+  const [userToken, setUserToken] = useState("");
   const [userData, setUserData] = useState([]);
 
+  // All class reducer states
+  const userReducer = useSelector((state) => state.userReducer);
+
+  let access_token = "";
+  if (typeof window !== "undefined") {
+    access_token = localStorage.getItem("authToken");
+  }
+
   useEffect(() => {
-    let access_token = localStorage.getItem('authToken');
+    let access_token = localStorage.getItem("authToken");
     if (!access_token) {
       push("/authentication/signin");
     } else {
-      setUserToken(access_token)
+      setUserToken(access_token);
     }
-  }, [])
+  }, []);
 
   const logMeOut = () => {
     sessionStorage.clear();
@@ -36,52 +45,32 @@ export default function TopBar({ showNav, setShowNav }) {
     setTimeout(() => {
       push("/authentication/signin");
     }, 200);
-  }
+  };
 
   const arr = router.pathname.split("/");
-  const splitPathName = arr.filter(n => n);
+  const splitPathName = arr.filter((n) => n);
   useEffect(() => {
-    if (router.pathname == "dashboard/pricing" || splitPathName.includes("pricing")) {
-      setShowNav(false)
+    if (
+      router.pathname == "dashboard/pricing" ||
+      splitPathName.includes("pricing")
+    ) {
+      setShowNav(false);
     }
-  }, [])
+  }, []);
 
-  // Get Logged In User Info
-  async function fetchData() {
-    let access_token = localStorage.getItem('authToken');
-    try {
-      await axios({
-        method: 'GET',
-        // url: `http://20.232.178.134:3000/api/getUsers`,
-        url: `/api/getUsers`,
-        headers: {
-          "Authorization": `Bearer ${access_token}`,
-          "Content-Type": "application/json"
-        }
-      }).then(function (response) {
-        if(response) {
-          setUserData(response.data?.data);
-        }
-      }).catch(function (error) {
-        console.log({
-          "ERROR IN AXIOS CATCH": error
-        })
-      })
-    } catch (err) {
-      console.log({
-        "ERROR IN TRY CATCH": err
-      })
-    }
-  }
+  // Get user API
   useEffect(() => {
-    let access_token = localStorage.getItem('authToken');
-    fetchData();
-  }, [])
+    dispatch(getUserByIdAction());
+  }, [access_token]);
 
+  // Set User Data from Store state
+  useEffect(() => {
+    setUserData(userReducer?.getUserByIdReducer);
+  }, [userReducer?.getUserByIdReducer]);
 
   return (
     <div
-      className={`font-OpenSans h-20 fixed z-[9] w-full h-16 flex justify-between items-center transition-all duration-[400ms] ${showNav ? "pl-48" : ""
+      className={`font-OpenSans fixed z-[9] w-full h-16 flex justify-between items-center transition-all duration-[400ms] ${showNav ? "pl-48" : ""
         }`}
     >
       <div className="flex justify-between items-center w-full bg-white">
@@ -96,31 +85,40 @@ export default function TopBar({ showNav, setShowNav }) {
               className="relative top-1 cursor-pointer"
             />
           </div>
-          {
-            router.pathname === "/dashboard/eopswatch" ||
-              router.pathname === "/dashboard/eopstrace" ?
-              null :
-              <div className="pl-9 relative pt-2 hidden">
-                <Image
-                  src="/img/search.svg"
-                  alt="company logo"
-                  className={`absolute left-12 top-[32px]`}
-                  width={24}
-                  height={24}
-                />
-                <input
-                  type="text"
-                  className={`block w-full mt-2 pl-12 w-96 ${styles.searchbox}`}
-                  placeholder="Search..."
-                  name="globalsearch"
-                />
-              </div>}
+          {router.pathname === "/dashboard/eopswatch" ||
+            router.pathname === "/dashboard/eopstrace" ? null : (
+            <div className="pl-9 relative pt-2 hidden">
+              <Image
+                src="/img/search.svg"
+                alt="company logo"
+                className={`absolute left-12 top-[32px]`}
+                width={24}
+                height={24}
+              />
+              <input
+                type="text"
+                className={`block mt-2 pl-12 w-96 ${styles.searchbox}`}
+                placeholder="Search..."
+                name="globalsearch"
+              />
+            </div>
+          )}
         </div>
 
         <div className="flex items-center pr-4 md:pr-10 h-20">
-          <Link href="/dashboard/pricing" className="mr-6 text-sm px-3 py-2 bg-yellow-951 rounded rounded-lg relative top-[-4px] font-semibold">Plans and pricing</Link>
+          <Link
+            href="/dashboard/pricing"
+            className="mr-6 text-sm px-3 py-2 bg-yellow-951 rounded-lg relative top-[-4px] font-semibold"
+          >
+            Plans and pricing
+          </Link>
 
-          <Link href="/dashboard/pricing" className="mr-6 text-sm px-3 py-2 bg-white rounded rounded-lg relative top-[-4px] font-semibold">Help</Link>
+          <Link
+            href="/dashboard/pricing"
+            className="mr-6 text-sm px-3 py-2 bg-white rounded-lg relative top-[-4px] font-semibold"
+          >
+            Help
+          </Link>
 
           <Popover className="relative">
             <Popover.Button className="relative outline-none mr-5 md:mr-8 cursor-pointer text-gray-700">
@@ -132,7 +130,9 @@ export default function TopBar({ showNav, setShowNav }) {
               />
               <span>
                 <span className="animate-ping bg-red-400 w-[19px] h-[19px] absolute top-[-8px] right-[-6px] rounded-full"></span>
-                <span className="bg-red-500 text-white text-sm rounded-full flex items-center justify-center w-[19px] h-[19px] absolute top-[-8px] right-[-6px]">5</span>
+                <span className="bg-red-500 text-white text-sm rounded-full flex items-center justify-center w-[19px] h-[19px] absolute top-[-8px] right-[-6px]">
+                  5
+                </span>
               </span>
             </Popover.Button>
             <Transition
@@ -214,26 +214,31 @@ export default function TopBar({ showNav, setShowNav }) {
           <Menu as="div" className="relative inline-block text-left">
             <div>
               <Menu.Button className="inline-flex w-full justify-center items-center">
-                {
-                  username ?
-                    <div className="flex justify-start items-start">
-                      <span className="bg-[#5B5A59] rounded rounded-full flex justify-center items-center text-white text-lg font-semiboild h-[40px] w-[40px] relative">{user.firstName.charAt(0).toUpperCase()}{user.lastName.charAt(0).toUpperCase()}</span>
-                      <div className="flex justify-start items-start flex-wrap flex-col ml-3">
-                        <span className="text-sm font-semibold mb-1">Amit Pandey</span>
-                        <span className="bg-[#E7E6E2] text-[#666666] text-[11px] rounded rounded-md flex justify-center items-center py-[2px] w-[60px]">Admin</span>
-                      </div>
+                {username ? (
+                  <div className="flex justify-start items-start">
+                    <span className="bg-[#5B5A59] rounded-full flex justify-center items-center text-white text-lg font-semiboild h-[40px] w-[40px] relative">
+                      {userData?.firstName?.charAt(0).toUpperCase()}
+                      {userData?.lastName?.charAt(0).toUpperCase()}
+                    </span>
+                    <div className="flex justify-start items-start flex-wrap flex-col ml-3">
+                      <span className="text-sm font-semibold mb-1">
+                        {userData && userData?.firstName ? userData?.firstName : user.firstName}{" "}   {userData && userData?.lastName ? userData?.lastName : user.lastName}
+                      </span>
+                      <span className="bg-[#E7E6E2] text-[#666666] text-[11px] rounded-md flex justify-center items-center py-[2px] w-[60px]">
+                        Admin
+                      </span>
                     </div>
-                    :
-
-                    <picture>
-                      <Image
-                        src="/img/user.svg"
-                        alt="profile picture"
-                        height={25}
-                        width={25}
-                      />
-                    </picture>
-                }
+                  </div>
+                ) : (
+                  <picture>
+                    <Image
+                      src="/img/user.svg"
+                      alt="profile picture"
+                      height={25}
+                      width={25}
+                    />
+                  </picture>
+                )}
               </Menu.Button>
             </div>
             <Transition
@@ -245,12 +250,15 @@ export default function TopBar({ showNav, setShowNav }) {
               leaveFrom="transform scale-100"
               leaveTo="transform scale-95"
             >
-              <Menu.Items className="absolute right-0 w-60 rounded rounded-xl z-150 mt-2 origin-top-right bg-white rounded shadow-xl border">
+              <Menu.Items className="absolute right-0 w-60 rounded-xl z-150 mt-2 origin-top-right bg-white shadow-xl border">
                 <div className="p-6">
                   <div className="flex justify-center items-center flex-wrap flex-row text-center">
                     <div className="relative w-[55px] mb-4">
-                      <span className="bg-blue-961 text-xl rounded rounded-full flex justify-center items-center text-white font-semiboild h-[50px] w-[50px]">{user.firstName.charAt(0).toUpperCase()}{user.lastName.charAt(0).toUpperCase()}</span>
-                      <button className="bg-white rounded rounded-full h-[21px] w-[21px] absolute right-[-3px] top-[25px] flex justify-center items-center">
+                      <span className="bg-blue-961 text-xl rounded-full flex justify-center items-center text-white font-semiboild h-[50px] w-[50px]">
+                        {userData && userData?.firstName?.charAt(0).toUpperCase()}
+                        {userData && userData?.lastName?.charAt(0).toUpperCase()}
+                      </span>
+                      <button className="bg-white rounded-full h-[21px] w-[21px] absolute right-[-3px] top-[25px] flex justify-center items-center">
                         <Image
                           src="/img/editpencil.svg"
                           alt="profile picture"
@@ -260,10 +268,11 @@ export default function TopBar({ showNav, setShowNav }) {
                       </button>
                     </div>
                     <div className="text-sm text-black w-full">
-                      {userData && userData.firstName ? userData.firstName : ''} {userData && userData.lastName ? userData.lastName : ''}
+                      {userData && userData?.firstName ? userData?.firstName : ""}{" "}
+                      {userData && userData?.lastName ? userData?.lastName : ""}
                     </div>
                     <div className="text-gray-968 text-[13px] w-full">
-                      {userData && userData.email ? userData.email : ''}
+                      {userData && userData?.email ? userData?.email : ""}
                     </div>
                   </div>
 
@@ -305,48 +314,8 @@ export default function TopBar({ showNav, setShowNav }) {
               </Menu.Items>
             </Transition>
           </Menu>
-
-          <Menu as="div" className="relative inline-block text-left ml-8 hidden">
-            <div>
-              <Menu.Button className="inline-flex w-full justify-center items-center">
-                <picture>
-                  <Image
-                    src="/img/settings.svg"
-                    alt="profile picture"
-                    height={25}
-                    width={25}
-                  />
-                </picture>
-              </Menu.Button>
-            </div>
-            <Transition
-              as={Fragment}
-              enter="transition ease-out duration-100"
-              enterFrom="transform scale-95"
-              enterTo="transform scale-100"
-              leave="transition ease-in duration=75"
-              leaveFrom="transform scale-100"
-              leaveTo="transform scale-95"
-            >
-              <Menu.Items className="absolute right-0 w-56 z-50 mt-2 origin-top-right bg-white rounded border shadow-lg">
-                <div className="p-1">
-                  <Menu.Item>
-                    <Link
-                      href="#"
-                      className="flex hover:bg-yellow-950 hover:text-white text-gray-700 rounded p-2 text-sm group transition-colors items-center"
-                    >
-                      <PencilIcon className="h-4 w-4 mr-2" />
-                      Settings
-                    </Link>
-                  </Menu.Item>
-                </div>
-              </Menu.Items>
-            </Transition>
-          </Menu>
-
         </div>
       </div>
-
     </div>
   );
 }
