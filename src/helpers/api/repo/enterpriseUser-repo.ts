@@ -10,6 +10,8 @@ import {
   inviteEnterpriseUserMail,
   enterpriseAdminMail,
 } from "../constant/nodemailer";
+import { Op } from "sequelize";
+import { paginateQuery } from "../constant/pagination";
 
 const { serverRuntimeConfig } = getConfig();
 
@@ -65,7 +67,7 @@ async function authenticate(data: any) {
       return sendResponseData(false, message.error.incorrectPassword, {});
     }
     //uer.ent id = null
- // user.parentid = null 
+    // user.parentid = null 
     // Create a JWT token that is valid for 7 days
     const token = jwt.sign(
       {
@@ -149,12 +151,26 @@ async function create(params: any) {
  *
  * @returns {Promise<Array<object>>} A promise that resolves with an array of retrieved enterprise user data.
  */
-async function getAllEnterpriseUser() {
+async function getAllEnterpriseUser(param: any) {
   // Log information about the function execution
   loggerInfo.info("GET all the Enterprise Users");
+  let sortOrder = 'DESC'; // Default sorting order is DESC
 
-  // Fetch all enterprise user data from the database using Sequelize findAll method
-  return await db.EnterpriseUser.findAll({
+  // Check if sortBy parameter is provided and valid
+  if (param.sortBy && ['ASC', 'DESC'].includes(param.sortBy.toUpperCase())) {
+    sortOrder = param.sortBy.toUpperCase();
+  }
+  const page = param.page || 1; // Default to page 1 if not provided
+  const pageSize = param.pageSize || 10; // Default page size to 10 if not provided
+
+  const result = await paginateQuery(db.User, page, pageSize, {
+
+    // // Fetch all enterprise user data from the database using Sequelize findAll method
+    where: {
+      enterpriseId: {
+        [Op.not]: null   // to get all the Enterprise User whose enterpriseId is not null
+      }
+    },
     attributes: [
       "username",
       "email",
@@ -163,8 +179,14 @@ async function getAllEnterpriseUser() {
       "parentId",
       "enterpriseId",
       "roleId",
+      "createdAt",
+      "updatedAt"
     ],
   });
+  if (!result.rows.length) {
+    return sendResponseData(false, "Enterprise Users Not Found", {})
+  }
+  return sendResponseData(true, "Enterprise Users fetched Successfully", result)
 }
 
 /**
@@ -326,12 +348,12 @@ async function updateProfile(params: any, reqData: any) {
 
 async function inviteEnterpriseUser(params: any, reqData: any) {
   try {
-    loggerError.info("Inviting Enterprise User");
+    loggerInfo.info("Inviting Enterprise User");
     if (reqData.role !== 4) {
       return sendResponseData(false, message.error.enterpriseAdminAccess, {});
     }
     // To identify that the user sending invitation is Admin
-    const adminData = await db.EnterpriseUser.findOne({
+    const adminData = await db.User.findOne({
       where: { roleId: reqData.role },
     });
 
@@ -371,20 +393,26 @@ async function cancelInvite(params: any, reqData: any) {
     loggerInfo.info("Cancel Invite of Enterprise User");
     //check if the enterprise user email exist in invite table
     const user = await db.Invite.findOne({
-      where: { email: params.email },
+      where: {
+        email: params.email,
+        enterpriseId: reqData.enterpriseId
+      },
     });
     if (!user) {
       return sendResponseData(false, message.error.userNotFoundForMail, {});
     }
 
-    // check if the enterprise user exist in enterpriseUser table too
-    const check = await db.EnterpriseUser.findOne({
-      where: { email: user.dataValues.email },
+    // check if the enterprise user exist in User table too
+    const check = await db.User.findOne({
+      where: {
+        email: user.dataValues.email,
+        enterpriseId: reqData.enterpriseId
+      },
     });
 
     //fetching admin email
-    const adminMail = await db.EnterpriseUser.findOne({
-      where: { id: reqData.enterpriseUserId },
+    const adminMail = await db.User.findOne({
+      where: { id: reqData.sub },
     });
 
     if (check) {
@@ -397,6 +425,9 @@ async function cancelInvite(params: any, reqData: any) {
           email: null,
           userRole: null,
           status: null,
+          enterpriseId: null,
+          createdAt: null,
+          updatedAt: null
         },
         {
           where: { email: params.email },

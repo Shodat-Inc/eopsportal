@@ -2,6 +2,7 @@ import { db } from "../db";
 import sendResponseData from "../../constant";
 import { loggerInfo, loggerError } from "@/logger";
 import message from "@/util/responseMessage";
+import { paginateQuery } from "../constant/pagination";
 
 export const commentRepo = {
     create,
@@ -30,17 +31,31 @@ async function create(params: any, reqData: any) {
 async function get(params: any) {
     loggerInfo.info("Get comment")
     try {
-        const data = await db.Comment.findAll({
+        const page = params.page || 1;
+        const pageSize = params.pageSize || 10;
+        let sortOrder = 'DESC'; // Default sorting order is DESC
+        let sortField = "id";
+
+        // Check if sortBy parameter is provided and valid
+        if (params.sortBy && ['ASC', 'DESC'].includes(params.sortBy.toUpperCase())) {
+            sortOrder = params.sortBy.toUpperCase();
+        }
+        if (params.sort && ['id', 'comment', 'parentId', 'ticketId', 'userId', 'enterpriseId', 'createdAt'].includes(params.sort)) {
+            sortField = params.sort;
+        }
+
+        const result = await paginateQuery(db.Comment, page, pageSize, {
             where: { ticketId: params.ticketId },
-            attributes: ['comment', 'parentId', 'ticketId', 'userId'],
+            attributes: ['comment', 'parentId', 'ticketId', 'userId', 'enterpriseId'],
+            order: [[sortField, sortOrder]],
             include: [{
                 model: db.Ticket,
             }]
         })
-        if (!data.length) {
+        if (!result.rows.length) {
             return sendResponseData(false, "No comments are avaiable for requested Ticket Id", {})
         }
-        return sendResponseData(true, "Comments fetched Sucessfully", data)
+        return sendResponseData(true, "Comments fetched Sucessfully", result)
     } catch (error) {
         loggerError.error("Error in getting comment", error)
         return sendResponseData(false, "Error in getting Comment", error)

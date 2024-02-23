@@ -1,4 +1,4 @@
-import { apiHandler, alertRepo } from "@/helpers/api";
+import { apiHandler, tyreAlertRepo } from "@/helpers/api";
 import { loggerError, loggerInfo } from "@/logger";
 
 
@@ -16,11 +16,11 @@ export default apiHandler({
 async function allhandler(req: any, res: any) {
     loggerInfo.info("GET All Alerts");
     try {
-        const alert = await alertRepo.getAllAlert(req);
+        const alert = await tyreAlertRepo.getAllAlert(req);
         res.status(200).json({ message: alert });
     } catch (error: any) {
         // If there's an error during the retrieval, log the error and send back a 500 Internal Server Error response with the error message.
-        loggerError.error("Cant fetch User(s)", error);
+        loggerError.error("Cant fetch Tyre Alert(s)", error);
         res.status(500).send({ message: error.message });
     }
 }

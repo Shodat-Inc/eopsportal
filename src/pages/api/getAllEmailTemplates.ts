@@ -9,7 +9,7 @@ export default apiHandler({
 async function getAllEmailTemplates(req: any, res: any) {
   try {
 
-    const mail = await mailTemplateRepo.getAll();
+    const mail = await mailTemplateRepo.getAll(req);
 
     res.status(200).json(mail);
   } catch (error: any) {

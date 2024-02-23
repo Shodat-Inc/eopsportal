@@ -2,6 +2,7 @@ import { db } from "../db";
 import sendResponseData from "../../constant";
 import { loggerInfo, loggerError } from "@/logger";
 import message from "@/util/responseMessage";
+import { paginateQuery } from "../constant/pagination";
 
 export const ticketAttachmentRepo = {
     create,
@@ -31,11 +32,25 @@ async function get(params: any) {
         if (!params || !params.params || !params.params.ticketId) {
             return sendResponseData(false, "Invalid parameters", {});
         }
-        const getData = await db.Attachment.findAll({
+        const page = params.params.page || 1;
+        const pageSize = params.params.pageSize || 10;
+        let sortOrder = 'DESC'; // Default sorting order is DESC
+        let sortField = "id";
+
+        // Check if sortBy parameter is provided and valid
+        if (params.params.sortBy && ['ASC', 'DESC'].includes(params.params.sortBy.toUpperCase())) {
+            sortOrder = params.params.sortBy.toUpperCase();
+        }
+        if (params.params.sort && ['id', 'fileName', 'fileUrl', 'fileType', 'ticketId', 'userId', 'enterpriseId', 'createdAt'].includes(params.params.sort)) {
+            sortField = params.params.sort;
+        }
+
+        const result = await paginateQuery(db.Attachment, page, pageSize, {
             where: {
                 ticketId: params.params.ticketId,
                 userId: params.userId
             },
+            order: [[sortField, sortOrder]],
             include: [
                 {
                     model: db.Ticket,
@@ -43,10 +58,10 @@ async function get(params: any) {
                 },
             ]
         })
-        if (!getData.length) {
+        if (!result.rows.length) {
             return sendResponseData(false, "Data Not Found", {})
         }
-        return sendResponseData(true, "Data Fetched Successfully", getData)
+        return sendResponseData(true, "Data Fetched Successfully", result)
     } catch (error) {
         loggerError.error("Error in getting Attachment Data", error)
         return sendResponseData(false, "Error in getting Attachment Data of Ticket and Comment", error)

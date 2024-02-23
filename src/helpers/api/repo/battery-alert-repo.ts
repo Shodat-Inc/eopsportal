@@ -6,7 +6,9 @@ import { Sequelize } from "sequelize";
 
 export const batteryAlertRepo = {
     create,
-    get
+    get,
+    update,
+    delete: _delete
 };
 
 async function create(params: any) {
@@ -39,7 +41,8 @@ async function get(params: any) {
     try {
         const data = await db.RaisedAlert.findOne({
             where: { userId: params.auth },
-            attributes: ['triggeredProbability'],
+            // attributes: ['triggeredProbability'],
+            attributes: [],
             include: [
                 {
                     model: db.Model,
@@ -72,4 +75,60 @@ async function get(params: any) {
         return sendResponseData(false, "Error in getting alert based on filter className, objectId, modelName, userId", error)
     }
 
+}
+
+async function update(params: any, reqAuth: any) {
+    loggerInfo.info("Update Alert");
+    try {
+        const data = await db.BatteryAlert.findOne({
+            where: {
+                id: reqAuth.query.id,
+                userId: reqAuth.auth.sub
+            },
+        });
+
+        params["updatedAt"] = new Date();
+
+        // Define the properties to update
+        const propertiesToUpdate = [
+            "id",
+            "alertName",
+            "rangeValue",
+            "thresholdValue",
+            "receiverEmailAddresses",
+            "isEnabled",
+            "createdAt",
+            "updatedAt",
+        ];
+
+        propertiesToUpdate.forEach((property) => {
+            if (params[property] !== undefined) {
+                // Check if the property is an array and update accordingly
+                if (
+                    property === "receiverEmailAddresses" &&
+                    Array.isArray(params[property])
+                ) {
+                    data.setDataValue(property, params[property]);
+                } else {
+                    data[property] = params[property];
+                }
+            }
+        });
+
+        const response = await data.save();
+
+        return sendResponseData(true, "Data Updated Successfully", response);
+    } catch (error) {
+        loggerError.error("Error in Alert", error);
+        return sendResponseData(false, "Error in Alert Repo", error);
+    }
+}
+
+async function _delete(id: number) {
+    const alert = await db.BatteryAlert.findByPk(id);
+    if (!alert) {
+        return sendResponseData(false, "Battery Alert not found", {});
+    }
+    const response = await alert.destroy();
+    return sendResponseData(true, "Battery Alert Deleted Successfuly", response);
 }

@@ -16,7 +16,7 @@ async function handler(req: any, res: any) {
       res.status(405).send("Only GET method allowed");
       return;
     }
-    const type = req.query.type;
+    const type = req.query;
 
     // Extract the user ID and model ID from the request
     const userId = req.id;

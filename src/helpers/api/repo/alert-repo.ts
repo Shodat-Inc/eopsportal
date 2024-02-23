@@ -1,6 +1,7 @@
 import { db } from "../db";
 import sendResponseData from "../../constant";
 import { loggerInfo, loggerError } from "@/logger";
+import { paginateQuery } from "../constant/pagination";
 
 export const alertRepo = {
   create,
@@ -36,10 +37,22 @@ async function create(params: any) {
   }
 }
 
-async function getAllAlert() {
+async function getAllAlert(params: any) {
   loggerInfo.info("Get all Alerts");
   try {
-    const data = await db.CrackAlert.findAll({
+    const page = params.query.page || 1;
+    const pageSize = params.query.pageSize || 10;
+    let sortOrder = 'DESC'; // Default sorting order is DESC
+    let sortField = "id";
+
+    // Check if sortBy parameter is provided and valid
+    if (params.query.sortBy && ['ASC', 'DESC'].includes(params.query.sortBy.toUpperCase())) {
+      sortOrder = params.query.sortBy.toUpperCase();
+    }
+    if (params.query.sort && ['id', 'className',].includes(params.query.sort)) {
+      sortField = params.query.sort;
+    }
+    const result = await paginateQuery(db.CrackAlert, page, pageSize, {
       attributes: [
         "id",
         "alertName",
@@ -50,11 +63,12 @@ async function getAllAlert() {
         "createdAt",
         "updatedAt",
       ],
+      order: [[sortField, sortOrder]],
     });
-    if (!data.length) {
+    if (!result.rows.length) {
       return sendResponseData(false, "Data doesn't Exists", {});
     }
-    return sendResponseData(true, "Alert Data fetched successfully", data);
+    return sendResponseData(true, "Alert Data fetched successfully", result);
   } catch (error) {
     loggerError.error("Error in getting all the alerts", error);
     return sendResponseData(false, "Error in getting all the alerts", error);
@@ -84,11 +98,11 @@ async function update(params: any, reqAuth: any) {
   loggerInfo.info("Update Alert");
   try {
     const data = await db.CrackAlert.findOne({
-      where: { id: reqAuth.id },
+      where: {
+        id: reqAuth.query.id,
+        userId: reqAuth.auth.sub
+      },
     });
-    if (!data.length) {
-      return sendResponseData(false, "Data doesn't exist", []);
-    }
 
     params["updatedAt"] = new Date();
 

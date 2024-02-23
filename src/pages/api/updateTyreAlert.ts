@@ -1,7 +1,6 @@
-import { apiHandler } from "@/helpers/api";
+import { apiHandler, tyreAlertRepo } from "@/helpers/api";
 import { loggerError, loggerInfo } from "@/logger";
 import { updateAlertValidation } from "../../../validateSchema";
-import { alertRepo } from "@/helpers/api/repo/alert-repo";
 
 
 // Default API handler for the PUT method to handle alert update operations.
@@ -23,7 +22,7 @@ async function handler(req: any, res: any) {
             });
             return;
         }
-        const updatedData = await alertRepo.update(validation.value, req);
+        const updatedData = await tyreAlertRepo.update(validation.value, req);
 
         res.status(200).json({ message: updatedData });
     } catch (error: any) {

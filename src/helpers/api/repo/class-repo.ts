@@ -101,23 +101,33 @@ async function getClassData(params: any) {
 
     const page = params.query.page || 1;
     const pageSize = params.query.pageSize || 10;
+    let sortOrder = 'DESC'; // Default sorting order is DESC
+    let sortField = "id";
+
+    // Check if sortBy parameter is provided and valid
+    if (params.query.sortBy && ['ASC', 'DESC'].includes(params.query.sortBy.toUpperCase())) {
+      sortOrder = params.query.sortBy.toUpperCase();
+    }
+    if (params.query.sort && ['id', 'className',].includes(params.query.sort)) {
+      sortField = params.query.sort;
+    }
 
     const result = await paginateQuery(db.AddClasses, page, pageSize, {
       where: {
         userId: params.userId,
         parentId: null,
       },
+      order: [[sortField, sortOrder]],
       attributes: ["id", "className", "serialId", "createdAt", "updatedAt"],
       include: [
         {
           model: db.classTag,
           attributes: ["id", "tagName", "dataTypeId", "createdAt", "updatedAt"],
-          // required: true, // Makes it an INNER JOIN
           include: [
             {
               model: db.tagDataType,
               attributes: ["name"],
-              required: true, // Makes it an INNER JOIN
+              required: true,
               where: {
                 id: Sequelize.col("dataTypeId"),
               },
@@ -153,6 +163,16 @@ async function getClassDataByID(params: any) {
     if (!params.id) {
       throw "NO ID exist";
     }
+    let sortOrder = 'DESC'; // Default sorting order is DESC
+    let sortField = "id";
+
+    // Check if sortBy parameter is provided and valid
+    if (params.query.sortBy && ['ASC', 'DESC'].includes(params.query.sortBy.toUpperCase())) {
+      sortOrder = params.query.sortBy.toUpperCase();
+    }
+    if (params.query.sort && ['id', 'className',].includes(params.query.sort)) {
+      sortField = params.query.sort;
+    }
 
     const page = params.query.page || 1; // Default to page 1 if not provided
     const pageSize = params.query.pageSize || 10; // Default page size to 10 if not provided
@@ -163,6 +183,7 @@ async function getClassDataByID(params: any) {
         parentId: null,
         userId: params.auth.sub
       },
+      order: [[sortField, sortOrder]],
       attributes: ["id", "className", "serialId", "userId", "enterpriseId", "createdAt", "updatedAt"],
       include: [
         {
@@ -207,6 +228,16 @@ async function getSubClass(param: any) {
     // Log the initiation of fetching subclasses and tags.
     loggerInfo.info("Fetching all subclass and subclassTags data");
 
+    let sortOrder = 'DESC'; // Default sorting order is DESC
+    let sortField = "id";
+
+    // Check if sortBy parameter is provided and valid
+    if (param.query.sortBy && ['ASC', 'DESC'].includes(param.query.sortBy.toUpperCase())) {
+      sortOrder = param.query.sortBy.toUpperCase();
+    }
+    if (param.query.sort && ['id', 'className',].includes(param.query.sort)) {
+      sortField = param.query.sort;
+    }
     const page = param.query.page || 1; // Default to page 1 if not provided
     const pageSize = param.query.pageSize || 10; // Default page size to 10 if not provided
 
@@ -216,6 +247,7 @@ async function getSubClass(param: any) {
         parentId: param.query.id,
       },
       attributes: ["id", "className", "serialId", "userId", "enterpriseId", "createdAt", "updatedAt"],
+      order: [[sortField, sortOrder]],
       include: [
         {
           model: db.classTag,
@@ -235,6 +267,7 @@ async function getSubClass(param: any) {
         {
           model: db.parentJoinKey,
           attributes: ["parentTagId"],
+          order: [['createdAt', sortOrder]],
           required: false, // Makes it an INNER JOI
         },
       ],
@@ -273,6 +306,16 @@ async function getSubClassByID(param: any) {
     // Log the initiation of fetching subclasses and tags.
     loggerInfo.info("Fetching subclass and subclassTags data by ID");
 
+    let sortOrder = 'DESC'; // Default sorting order is DESC
+    let sortField = "id";
+
+    // Check if sortBy parameter is provided and valid
+    if (param.query.sortBy && ['ASC', 'DESC'].includes(param.query.sortBy.toUpperCase())) {
+      sortOrder = param.query.sortBy.toUpperCase();
+    }
+    if (param.query.sort && ['id', 'className',].includes(param.query.sort)) {
+      sortField = param.query.sort;
+    }
     const page = param.query.page || 1; // Default to page 1 if not provided
     const pageSize = param.query.pageSize || 10; // Default page size to 10 if not provided
 
@@ -283,6 +326,7 @@ async function getSubClassByID(param: any) {
         userId: param.auth.sub
       },
       attributes: ["id", "className", "serialId", "createdAt", "updatedAt"],
+      order: [[sortField, sortOrder]],
       include: [
         {
           model: db.classTag,

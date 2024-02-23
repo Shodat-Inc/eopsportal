@@ -21,10 +21,22 @@ export default apiHandler({
       data.userId = req.id;
 
       // Validate the data using a validation module
+      const validation = createAlertValidation(data);
+
+      // Check for validation errors
+      if (validation.error) {
+        // Handle validation errors
+        res.status(400).json({
+          success: false,
+          message: "Validation error",
+          errors: validation.error.details.map((detail) => detail.message),
+        });
+        return;
+      }
 
       // Check for validation errors
 
-      const alert = await tyreAlertRepo.create(data);
+      const alert = await tyreAlertRepo.create(validation.value);
 
       // Send a success response
       res.status(200).json(alert);
