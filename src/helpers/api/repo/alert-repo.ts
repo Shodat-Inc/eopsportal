@@ -49,7 +49,7 @@ async function getAllAlert(params: any) {
     if (params.query.sortBy && ['ASC', 'DESC'].includes(params.query.sortBy.toUpperCase())) {
       sortOrder = params.query.sortBy.toUpperCase();
     }
-    if (params.query.sort && ['id', 'className',].includes(params.query.sort)) {
+    if (params.query.sort && ['id', 'alertName', 'rangeValue', 'thresholdValue', 'receiverEmailAddresses', 'isEnabled', 'createdAt'].includes(params.query.sort)) {
       sortField = params.query.sort;
     }
     const result = await paginateQuery(db.CrackAlert, page, pageSize, {

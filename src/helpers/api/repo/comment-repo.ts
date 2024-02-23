@@ -66,14 +66,24 @@ async function update(params: any, reqData: any, reqParams: any) {
     loggerInfo.info("Update Comment")
     try {
 
+        const parentId = reqParams.parentId === "NULL" || "null" || "Null" ? null : reqParams.parentId;
+
+        // Construct the where clause dynamically
+        const whereClause: any = {
+            ticketId: reqParams.ticketId,
+            id: reqParams.id,
+            userId: reqData,
+        };
+
+        // Include parentId in where clause if it exists
+        if (parentId !== undefined && parentId !== null) {
+            whereClause.parentId = parentId;
+        }
+
         const data = await db.Comment.findOne({
-            where: {
-                ticketId: reqParams.ticketId,
-                parentId: reqParams.parentId,
-                id: reqParams.id,
-                userId: reqData,
-            },
-        })
+            where: whereClause,
+        });
+
         if (!data) {
             return sendResponseData(false, "Comment not found for update", {});
         }
