@@ -36,7 +36,6 @@ export async function checkCrackAlert(exportData: {
 
     for (const alert of exportData.alertData) {
       const alertId = alert.id;
-
       dt.alertId = alertId;
 
       const rangeValue = alert.rangeValue;
@@ -60,8 +59,8 @@ export async function checkCrackAlert(exportData: {
           }
         }
       }
-      return finalResult;
     }
+    return finalResult;
   } catch (error) {
     return error;
   }
@@ -127,8 +126,8 @@ export async function checkBatteryAlert(exportData: {
           }
         }
       }
-      return finalResult;
     }
+    return finalResult;
   } catch (error) {
     return error;
   }
@@ -220,8 +219,8 @@ export async function checkTyreAlert(exportData: {
         }
       }
 
-      return finalResult;
     }
+    return finalResult;
   } catch (error) {
     return error;
   }

@@ -34,12 +34,11 @@ async function getAll(params: any) {
         if (params.query.sortBy && ['ASC', 'DESC'].includes(params.query.sortBy.toUpperCase())) {
             sortOrder = params.query.sortBy.toUpperCase();
         }
-        if (params.query.sort && ['id', 'emailSubject', 'emailContent'].includes(params.query.sort)) {
+        if (params.query.sort && ['id', 'emailSubject', 'emailContent', 'createdAt'].includes(params.query.sort)) {
             sortField = params.query.sort;
         }
 
         const result = await paginateQuery(db.EmailTemplate, page, pageSize, {
-            attributes: ["emailSubject", "emailContent"],
             order: [[sortField, sortOrder]],
         })
         if (!result.rows.length) {
