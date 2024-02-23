@@ -3,11 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import styles from '../../../styles/Common.module.css';
 import Image from "next/image";
 import { toggleAddNewObjectModel } from "@/store/actions/classAction";
-import { successMessageAction, successMessagAdvancedAction } from '@/store/actions/classAction';
 import axios from 'axios';
 
 export default function AddNewObject(props: any) {
-
+    const dispatch = useDispatch<any>();
     const [selectedObjectData, setSelectedObjectData] = useState([] as any);
     const [objectData, setObjectData] = useState([] as any)
     const formData = useRef("");
@@ -20,12 +19,9 @@ export default function AddNewObject(props: any) {
     }
 
     useEffect(() => {
-        if (props.subClassData && props.subClassData.length > 0) {
-            // console.log({
-            //    "__props.subClassData":props.subClassData 
-            // })
-            let filtered = props.subClassData.filter((item: any) => {
-                return item.id === props.selectedSubClass
+        if (props?.subClassData && props?.subClassData.length > 0) {
+            let filtered = props?.subClassData.filter((item: any) => {
+                return item.id === props?.selectedSubClass
             })
             if (filtered) {
                 setSelectedObjectData(filtered[0].ClassTags)
@@ -34,7 +30,7 @@ export default function AddNewObject(props: any) {
         }
     }, [props])
 
-    const dispatch = useDispatch<any>();
+    
     const closeModel = () => {
         dispatch(toggleAddNewObjectModel(false));
     }

@@ -3,6 +3,7 @@ import { GET_DATA_TYPE_SUCCESS, GET_DATA_TYPE_ERROR } from "../types";
 import { SELECTED_CLASS_ERROR, SELECTED_CLASS_SUCCESS } from "../types";
 import { GET_SUB_CLASS_API_SUCCESS, GET_SUB_CLASS_API_ERROR } from "../types";
 import { SET_SELECTED_CLASS_SUCCESS, SET_SELECTED_CLASS_ERROR } from "../types";
+import { GET_OBJECTS_SUCCESS, GET_OBJECTS_ERROR } from "../types";
 
 const initialState = {
     classDataReducer: [],
@@ -10,15 +11,21 @@ const initialState = {
     selectedClassReducer: 0,
     subClassDataReducer: [],
     setSelectedClass:0,
+    getObjectReducer:[]
 };
 
 const apiReducer = (state = initialState, action: any) => {
     switch (action.type) {
 
+        // Get Objects 
+        case GET_OBJECTS_SUCCESS:
+            return {...state, getObjectReducer:action.payload, loading: false}
+        case GET_OBJECTS_ERROR:
+            return {loading: false, error: action.payload,}
+
         // Set Selected class for edit/add class management
         case SET_SELECTED_CLASS_SUCCESS:
             return {...state, setSelectedClass:action.payload, loading: false}
-
         case SET_SELECTED_CLASS_ERROR:
             return {loading: false, error: action.payload,}
 

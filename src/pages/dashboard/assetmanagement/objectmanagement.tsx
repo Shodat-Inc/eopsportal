@@ -4,12 +4,13 @@ import styles from '../../../styles/Common.module.css';
 import Image from "next/image";
 import axios from 'axios';
 import Link from 'next/dist/client/link';
-import { 
-    setClassBreadcrumb, 
+import {
+    setClassBreadcrumb,
     objDefaultClassSelectorFunction,
     editObjectModalAction,
     setDataForSubObjectCompAction
- } from '@/store/actions/classAction';
+} from '@/store/actions/classAction';
+import { getObjectsAction } from '@/store/actions/apiAction';
 import AddNewClassObject from './addnewclassobject';
 import EditObject from './editobject';
 
@@ -30,7 +31,7 @@ export default function ObjectManagement(props: any) {
     const [selectedObjID, setSelectedObjID] = useState('');
     const [deleteID, setDeleteID] = useState(0);
     const [actionsToggle, setActionsToggle] = useState(false);
-    
+
     const [deleteMessage, setDeleteMessage] = useState(false);
     const [successMessage, setSuccessMessage] = useState(false);
     const [editMessage, setEditMessage] = useState(false);
@@ -42,6 +43,7 @@ export default function ObjectManagement(props: any) {
 
     // All class reducer states
     const classSelector = useSelector((state: any) => state.classReducer);
+    const apiReducer = useSelector((state: any) => state.apiReducer);
 
     // Toggle the filters dropdown
     const toggleFilterFunction = () => {
@@ -142,43 +144,23 @@ export default function ObjectManagement(props: any) {
 
 
     // Get objected based on selected class
-    async function fetchData() {
-        try {
-            await axios({
-                method: 'GET',
-                url: `/api/getObjects?id=${chooseAsset}`,
-                headers: {
-                    "Authorization": `Bearer ${access_token}`,
-                    "Content-Type": "application/json"
-                }
-            }).then(function (response) {
-                if (response) {
-                    setTableHeader(response?.data?.objects?.data?.rows[0]?.Class?.ClassTags)
-                    setObjectData(response?.data?.objects?.data?.rows);
-                }
-            }).catch(function (error) {
-                console.log({
-                    "ERROR IN AXIOS CATCH": error
-                })
-            })
-        } catch (err) {
-            console.log({
-                "ERROR IN TRY CATCH": err
-            })
-        }
-    }
     useEffect(() => {
-        if(chooseAsset) {
-            fetchData();
-        }
-    }, [access_token, chooseAsset, classSelector])
+        dispatch(getObjectsAction(chooseAsset))
+    }, [access_token, chooseAsset])
+
+    // Set Data
+    useEffect(() => {
+        let tblHeader = apiReducer?.getObjectReducer?.rows && apiReducer?.getObjectReducer?.rows?.length > 0 ? apiReducer?.getObjectReducer?.rows[0]?.Class?.ClassTags : [];
+        setTableHeader(tblHeader)
+        setObjectData(apiReducer?.getObjectReducer?.rows || []);
+    }, [apiReducer?.getObjectReducer])
 
 
     // function for searching
     const handleSearchFUnction = (e: any) => {
         setSearch(e.target.value);
         if (e.target.value === "" || e.target.value.length <= 0) {
-            fetchData();
+            dispatch(getObjectsAction(chooseAsset))
             setSearch('');
             return;
         }
@@ -192,7 +174,7 @@ export default function ObjectManagement(props: any) {
             })
             setObjectData(filtered)
         } else {
-            fetchData();
+            dispatch(getObjectsAction(chooseAsset))
         }
     }
 
@@ -218,7 +200,7 @@ export default function ObjectManagement(props: any) {
                 }
             }).then(function (response) {
                 setDeleteMessage(true);
-                setTimeout(()=>{
+                setTimeout(() => {
                     setDeleteMessage(false);
                 }, 4000)
             }).catch(function (error) {
@@ -233,16 +215,16 @@ export default function ObjectManagement(props: any) {
         }
     }
 
-    const handleAddSuccessMessage = (msg:any) => {
+    const handleAddSuccessMessage = (msg: any) => {
         setSuccessMessage(msg);
-        setTimeout(()=>{
+        setTimeout(() => {
             setSuccessMessage(false);
         }, 4000)
     }
 
-    const handleEditSuccessMessage = (msg:any) => {
+    const handleEditSuccessMessage = (msg: any) => {
         setEditMessage(msg);
-        setTimeout(()=>{
+        setTimeout(() => {
             setEditMessage(false);
         }, 4000)
     }
@@ -467,7 +449,7 @@ export default function ObjectManagement(props: any) {
                                                                 className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
                                                                 <span>AI Detection Modal</span>
                                                             </Link>
-                                                            
+
                                                             <Link
                                                                 href="#"
                                                                 className="text-white text-[14px] hover:bg-yellow-951 hover:text-black h-[40px] px-4 border-b border-gray-900 w-full text-left flex items-center justify-start">
