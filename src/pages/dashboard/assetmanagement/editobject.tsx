@@ -32,20 +32,27 @@ export default function EditObject(props: any) {
             }).then(function (response) {
                 if (response) {
 
+                    console.log({
+                        "RESPONSE": response?.data?.data?.rows
+                    })
+
                     let arr1 = [] as any;
                     let arr2 = [] as any;
                     let arr3 = [] as any;
 
-                    setObjectsData(response?.data?.data);
+                    setObjectsData(response?.data?.data?.rows);
 
-                    response?.data?.data[0]?.Class?.ClassTags.map((item: any, index: any) => {
-                        const linkContentVal = response?.data?.data[0]?.ObjectValues[index];
+                    response?.data?.data?.rows[0]?.Class?.ClassTags.map((item: any, index: any) => {
+                        const linkContentVal = response?.data?.data?.rows[0]?.ObjectValues[index];
+                        console.log({
+                            "linkContentVal": linkContentVal
+                        })
                         let tagWithID = item?.tagName + "_" + linkContentVal?.id
                         arr1.push(tagWithID);
                         arr3.push(item?.tagName)
                     })
 
-                    response?.data?.data[0]?.ObjectValues.map((item: any) => {
+                    response?.data?.data?.rows[0]?.ObjectValues.map((item: any) => {
                         arr2.push(item.values);
                     })
 
@@ -53,11 +60,6 @@ export default function EditObject(props: any) {
 
                     setJson(arr3)
                     setData(arr5)
-
-                    // console.log({
-                    //     arr3:arr3,
-                    //     arr5:arr5
-                    // })
                 }
             }).catch(function (error) {
                 console.log({
@@ -70,11 +72,19 @@ export default function EditObject(props: any) {
             })
         }
     }
+
+
     useEffect(() => {
         setTimeout(() => {
             fetchObjectData();
         }, 100)
-    }, [access_token, props.selectedObjID, props.selectedParentClass])
+    }, [access_token, props.selectedObjID, props.selectedParentClass, success===true])
+
+    useEffect(()=>{
+        setTimeout(()=>{
+            setSuccess(false)
+        }, 3000)
+    }, [success])
 
 
     // Close the modal
@@ -94,7 +104,7 @@ export default function EditObject(props: any) {
             let tagID = item.split("_")[1];
             let tagName = item.split("_")[0];
             objectKey.push({
-                "id": tagID
+                "classTagId": tagID
             })
             objVal.push({
                 tagName: tagName
@@ -128,6 +138,7 @@ export default function EditObject(props: any) {
                 if (response) {
                     dispatch(editObjectModalAction(false));
                     props.message(true)
+                    setSuccess(true)
                 }
             }).catch(function (error) {
                 console.log("ERROR IN AXIOS CATCH (CREATE CLASS OBJECT):", error)
@@ -171,7 +182,7 @@ export default function EditObject(props: any) {
                     >
 
                         {
-                            objectsData[0]?.ObjectValues.map((items: any, index: any) => {
+                            objectsData && objectsData[0]?.ObjectValues.map((items: any, index: any) => {
                                 const linkContent = objectsData[0]?.Class?.ClassTags[index];
                                 const linkContentVal = objectsData[0]?.ObjectValues[index];
                                 const stateVal = Object.values(data)[index];

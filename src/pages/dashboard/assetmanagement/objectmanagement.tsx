@@ -153,7 +153,7 @@ export default function ObjectManagement(props: any) {
         let tblHeader = apiReducer?.getObjectReducer?.rows && apiReducer?.getObjectReducer?.rows?.length > 0 ? apiReducer?.getObjectReducer?.rows[0]?.Class?.ClassTags : [];
         setTableHeader(tblHeader)
         setObjectData(apiReducer?.getObjectReducer?.rows || []);
-    }, [apiReducer?.getObjectReducer])
+    }, [apiReducer?.getObjectReducer, ])
 
 
     // function for searching
@@ -224,6 +224,7 @@ export default function ObjectManagement(props: any) {
 
     const handleEditSuccessMessage = (msg: any) => {
         setEditMessage(msg);
+        dispatch(getObjectsAction(chooseAsset))
         setTimeout(() => {
             setEditMessage(false);
         }, 4000)
