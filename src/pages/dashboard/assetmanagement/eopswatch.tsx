@@ -78,12 +78,15 @@ export default function EopsWatch(props: any) {
             "model": selectedModel,
             "modelID": selectedModelID
         }
+        console.log({
+            nextData:nextData
+        })
         dispatch(dataForModalAction(nextData))
-        // setTimeout(() => {
-        //     Router.push({
-        //         pathname: '/dashboard/aimodaldetection/preview',
-        //     })
-        // }, 50)
+        setTimeout(() => {
+            Router.push({
+                pathname: '/dashboard/assetmanagement/preview',
+            })
+        }, 50)
     }
     return (
         <div className="flex w-full h-full mt-1">

@@ -1,253 +1,155 @@
-// import React, { useState, useRef, useEffect } from "react";
-// import { useDispatch } from 'react-redux';
-// import styles from '../../../styles/Common.module.css';
-// import Image from "next/image";
-// import { editSubObjectModalAction } from '@/store/actions/classAction';
-// import axios from "axios";
-// import TextInput from "@/common/textInput";
-
-// export default function Test(props: any) {
-//     const data2 = ["TPC3305-01", "3861 Scenic Hwy", "Baton Rouge", "Louisana", "70805"];
-//     const arr = [
-//         {
-//             "tagName": "PlantID",
-//             "value": 'TPC3305-01'
-//         },
-//         {
-//             "tagName": "Street",
-//             "value": '3861 Scenic Hwy'
-//         },
-//         {
-//             "tagName": "City",
-//             "value": 'Baton Rouge'
-//         },
-//         {
-//             "tagName": "State",
-//             "value": 'Louisana'
-//         },
-//         {
-//             "tagName": "Zipcode",
-//             "value": '70805'
-//         },
-//         {
-//             "tagName": "Country",
-//             "value": 'United States'
-//         },
-//         {
-//             "tagName": "Name",
-//             "value": 'Tepco Petroleum'
-//         },
-//         {
-//             "tagName": "Description",
-//             "value": 'Description'
-//         }
-//     ]
-//     const [inputs, setInputs] = useState('');
-//     const [fields, setFields] = useState(arr);
-//     const [inputValue, setInputValue] = useState({});
-//     const fieldRef = useRef("" as any);
-//     const [data, setData] = useState({
-//         PlantID: '',
-//         Street: '',
-//         City: '',
-//         State: '',
-//         Zipcode: '',
-//         Country: '',
-//         Name: '',
-//         Description: '',
-//     })
-//     function handleChange(e: any) {
-//         setData({
-//             ...data,
-//             [e.target.name]: e.target.value,
-//         })
-
-//         // Do soemthing with the updated data, for now I'll just console.log
-//         console.log(data);
-//     }
-
-//     return (
-//         <>
-//             <div className="p-5">
-//                 {
-//                     arr.map((item: any, index: any) => {
-//                         let a = `${data}.${item.tagName}`
-//                         return (
-//                             <div className="mb-4" key={index}>
-//                                 <div className="relative">
-//                                     <span className="absolute bg-white text-sm top-[-11px] left-[8px] font-semibold">{item.tagName}</span>
-//                                     <input
-//                                         ref={fieldRef}
-//                                         type="text"
-//                                         value={item.value}
-//                                         placeholder={item.tagName}
-//                                         name={item.tagName}
-//                                         onChange={(e) => e.target.name = e.target.value}
-//                                         className="border border-yellow-951 rounded h-12 w-[300px] pl-2 pr-2"
-//                                     />
-//                                 </div>
-
-//                                 {/* <TextInput
-//                                 type="text"
-//                                 value={item.value}
-//                                 placeholder={item.tagName}
-//                                 label={item.tagName}
-//                                 name={item.tagName}
-//                                 // onChange={handleChange}
-//                                 onChange={(e:any) => (formData.current = e.target.value)}
-//                             /> */}
-//                             </div>
-//                         )
-//                     })
-//                 }
-//             </div>
-//         </>
-//     )
-// }
-
-
-
 import React, { useState, useRef, useEffect } from "react";
-export default function Test() {
-    
+import Image from "next/image";
+import NoDataFound from "../../../common/nodatafound";
+import Link from "next/dist/client/link";
 
-    var obj = {};
-    Object.assign(obj, { "PlantID": "10011001", "Street": "ABC" })
-    // console.log(obj)
-
-
-    const arr1 = [
-        {
-            "id": 1,
-            "tagName": "PlantID"
-        },
-        {
-            "id": 2,
-            "tagName": "Street"
-        },
-        {
-            "id": 3,
-            "tagName": "City"
-        },
-        {
-            "id": 4,
-            "tagName": "State"
-        },
-        {
-            "id": 5,
-            "tagName": "Zipcode"
-        },
-        {
-            "id": 6,
-            "tagName": "Country"
-        },
-        {
-            "id": 7,
-            "tagName": "Name"
-        },
-        {
-            "id": 8,
-            "tagName": "Description"
-        }
-    ];
-
-    let arr3 = [] as any;
-    let arr4 = [] as any;
-    arr1.map((item)=>{
-        arr3.push(item.tagName)
-    })
-    
-
-    const arr2 = [
-        {
-            "id": 1,
-            "values": "TPC3305-01",
-            "createdAt": "2024-01-04T16:04:19.000Z"
-        },
-        {
-            "id": 2,
-            "values": "3861 Scenic Hwy1",
-            "createdAt": "2024-01-04T16:04:19.000Z"
-        },
-        {
-            "id": 3,
-            "values": "Baton Rouge",
-            "createdAt": "2024-01-04T16:04:19.000Z"
-        },
-        {
-            "id": 4,
-            "values": "Louisana",
-            "createdAt": "2024-01-04T16:04:19.000Z"
-        },
-        {
-            "id": 5,
-            "values": "70805",
-            "createdAt": "2024-01-04T16:04:19.000Z"
-        },
-        {
-            "id": 6,
-            "values": "United States",
-            "createdAt": "2024-01-04T16:04:19.000Z"
-        },
-        {
-            "id": 7,
-            "values": "Tepco Petroleum",
-            "createdAt": "2024-01-04T16:04:19.000Z"
-        },
-        {
-            "id": 8,
-            "values": "Description",
-            "createdAt": "2024-01-04T16:04:19.000Z"
-        }
-    ]
-
-    arr2.map((item)=>{
-        arr4.push(item.values)
-    })
-
-
-    let arr5 = Object.fromEntries(arr3.map((v:any, i:any) => [v, arr4[i]]));
-
+export default function Test(props: any) {
+    const { data, routerParams } = props;
     // console.log({
-    //     "ARRAY_1":arr3,
-    //     "ARRAY_2":arr4,
-    //     "ARRAY_3": arr5
+    //     "HERE PROPS":props
     // })
-
-    const [data, setData] = useState(arr5)
-
-    const handleChange = (e: any) => {
-        setData({
-            ...data,
-            [e.target.name]: e.target.value,
-        })
-        
+    const [showImageModal, setShowImageModal] = useState(false);
+    const [resImage, setResImage] = useState("");
+    const imageModalFunction = (image: any) => {
+        setShowImageModal(true);
+        setResImage(image);
     }
-
-    // console.log({
-    //     "DATA": data
-    // })
-
-    return (
-        <div className="p-5">
-            {
-                Object.keys(data).map((key, index) => {
-                    const linkContent = Object.values(data)[index];
-                    return (
-                        <div className="mb-5">
-                            <input
-                            type="text"
-                            value={linkContent}
-                            name={key}
-                            placeholder={key}
-                            className="border border-yellow-951 rounded h-12 w-[300px] pl-2 pr-2"
-                            onChange={(e) => handleChange(e)}
-                        />
-                        </div>
-                    )
-                })
+    // Hook that alerts clicks outside of the passed ref
+    function useOutsideAlerter(ref: any) {
+        useEffect(() => {
+            function handleClickOutside(event: any) {
+                if (ref.current && !ref.current.contains(event.target)) {
+                    setShowImageModal(false)
+                }
             }
+            document.addEventListener("mousedown", handleClickOutside);
+            return () => {
+                document.removeEventListener("mousedown", handleClickOutside);
+            };
+        }, [ref]);
+    }
+    const wrapperRef = useRef(null);
+    useOutsideAlerter(wrapperRef);
+    return (
+        <div className="w-full">
+            <div className="mt-5 relative flex flex-wrap justify-start items-start w-full h-full p-3">
 
+                {
+                    data && data.length > 0 ?
+                        data.map((item: any, index: any) => (
+                            <div className="w-[246px] overflow-hidden rounded rounded-xl mr-4 mb-4 relative" key={index}>
+                                <div className="h-[200px] w-[246px] overflow-hidden rounded rounded-xl relative">
+                                    <div className="flex justify-start items-center absolute top-0 right-0">
+                                        <Link
+                                            href={{
+                                                pathname: "/dashboard/eopswatch/trainingview",
+                                                query: {
+                                                    objectID: routerParams.objectID,
+                                                    key: routerParams.key,
+                                                    model: routerParams.model,
+                                                    id: routerParams.id,
+                                                    subObject: routerParams.subObject,
+                                                    result: item.resultImage ? item.resultImage : '',
+                                                    imageID: item.imageID,
+                                                    from:"eopswatch"
+                                                }
+                                            }}
+                                            className={`text-sm font-semibold h-[32px] px-2 rounded rounded-lg inline-flex justify-center items-center mr-4 ${item.resultImage==="" ? 'pointer-events-none cursor-not-allowed bg-gray-951' : ' bg-yellow-951'}`}>
+                                            <Image
+                                                src="/img/test-icon.svg"
+                                                alt="Test Icon"
+                                                height={20}
+                                                width={20}
+                                            />
+                                            <span className="pl-2">Test</span>
+                                        </Link>
+                                        <button
+                                            onClick={() => imageModalFunction(item.path)}
+                                            className="text-sm font-semibold h-[32px] px-1 rounded rounded-lg inline-flex justify-center items-center bg-[#333333]">
+                                            <Image
+                                                src="/img/external-link-white.svg"
+                                                alt="Test Icon"
+                                                height={26}
+                                                width={26}
+                                            />
+                                        </button>
+                                    </div>
+                                    <Image
+                                        src={item.path}
+                                        alt="Crack Detection"
+                                        height={200}
+                                        width={246}
+                                        className="object-cover h-full w-full"
+                                    />
+                                </div>
+                                <p className="mt-1 text-[13px] text-[#666666]">Uploaded Date: {item.dateUploaded}</p>
+                            </div>
+                        ))
+                        :
+                        <div className="h-48 flex justify-center items-center flex-wrap flex-col mt-8 w-full">
+                            <NoDataFound
+                                titleText="No Data Found!"
+                                messageText="No image are found for TEST folder"
+                                createText={''}
+                            />
+                        </div>
+                }
+
+            </div>
+
+            {/* Image Modal */}
+            {showImageModal &&
+                <div ref={wrapperRef}>
+                    <div
+                        className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
+                    >
+                        <div className="relative my-0 w-[450px] bg-transparent border border-yellow-951 rounded rounded-xl">
+                            <div className="border-0 shadow-lg-1 relative flex flex-col w-full bg-white outline-none focus:outline-none w-[450px] h-[420px] overflow-hidden-1 bg-transparent rounded rounded-xl">
+                                {/*header*/}
+                                <div className="flex items-start justify-between p-0">
+                                    <button
+                                        className="bg-transparent border border-white hover:border-yellow-951 text-black float-right leading-none font-semibold outline-none focus:outline-none bg-white absolute right-[-40px] top-[-40px] rounded rounded-full p-1 hover:bg-yellow-951"
+                                        onClick={() => setShowImageModal(false)}
+                                    >
+                                        <Image
+                                            src="/img/close.svg"
+                                            alt="close"
+                                            className="h-6 h-[24px] w-[24px]"
+                                            height={24}
+                                            width={24}
+                                        />
+                                    </button>
+                                </div>
+                                {/*body*/}
+                                <div className="relative p-0 flex items-center jusifiy-center h-full w-full">
+                                    {
+                                        resImage ?
+                                            <Image
+                                                src={resImage}
+                                                alt="result"
+                                                className="h-[100%] w-[100%] object-cover rounded rounded-xl"
+                                                height={420}
+                                                width={450}
+                                            />
+                                            :
+                                            <div className="text-xl font-semibold w-full text-center flex flex-wrap flex-col items-center justify-center">
+                                                <Image
+                                                    src="/img/no_image_icon.svg"
+                                                    alt="no image"
+                                                    height={100}
+                                                    width={100}
+                                                    className="h-[100%] w-[100%] object-cover rounded rounded-xl"
+                                                />
+                                                <span className="mt-3">No Image Found!! </span>
+                                            </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
+                </div>
+            }
         </div>
     )
 }

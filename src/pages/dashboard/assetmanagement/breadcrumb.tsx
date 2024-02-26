@@ -5,9 +5,9 @@ import Image from "next/image";
 import Link from 'next/link';
 
 export default function Breadcrumb(props: any) {
-    console.log({
-        "__PROPS_IN_BREADCRUMBS": props
-    })
+    // console.log({
+    //     "__PROPS_IN_BREADCRUMBS": props
+    // })
     const [nav, setNav] = useState({} as any);
 
     const getSelClass = useSelector((state: any) => state.classReducer);

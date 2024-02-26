@@ -18,7 +18,10 @@ export default function AiModelDetection() {
     const getSelClass = useSelector((state: any) => state.classReducer);
 
     console.log({
-        aimodaldetectionReducer: aimodaldetectionReducer
+        aimodaldetectionReducer: aimodaldetectionReducer,
+        getSelClass:getSelClass?.dataforeopswatchReducer
+        
+        
     })
 
     // Calling the get all modal api
@@ -36,6 +39,8 @@ export default function AiModelDetection() {
         setNav(getSelClass?.classBreadcrumbs)
     }, [getSelClass?.classBreadcrumbs])
 
+    // https://eops.vercel.app/dashboard/eopswatch/preview?objectID=Manufacturing+Plants&subObject=Walls&key=TPC71810-01-012&id=TPC3305-02&model=Crack+Detection&industryID=TPC3305-02&from=eopswatch
+
     // Sending data to next page
     const nextDataProps = {
         objectID: "",
@@ -46,10 +51,10 @@ export default function AiModelDetection() {
         model: ""
     }
     const nextData = {
-        "class": "",
-        "subClass": "",
-        "object": "",
-        "subObject": "",
+        "class": getSelClass?.dataforeopswatchReducer?.class,
+        "subClass": getSelClass?.dataforeopswatchReducer?.subClass,
+        "object": getSelClass?.dataforeopswatchReducer?.object,
+        "subObject": getSelClass?.dataforeopswatchReducer?.classObject,
         "model": '',
     }
 
