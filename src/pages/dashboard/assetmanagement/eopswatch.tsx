@@ -21,7 +21,10 @@ const modelLogo = [
     }
 ]
 export default function EopsWatch(props: any) {
-
+    let modelData = props?.modelData?.rows;
+    // console.log({
+    //     "PROPS IN EOPSWATCH":modelData?.rows
+    // })
     const dispatch = useDispatch<any>()
     const [data, setData] = useState([] as any);
     const [singleModel, setSingleModel] = useState([] as any);
@@ -30,20 +33,20 @@ export default function EopsWatch(props: any) {
 
     // ===== Setting initial values based on props =====
     useEffect(() => {
-        if (props?.modelData && props?.modelData.length > 0) {
-            let dta = JSON.parse(props?.modelData[0]?.benefits);
+        if (modelData && modelData.length > 0) {
+            let dta = JSON.parse(modelData[0]?.benefits);
             let arr = [] as any;
             Object.values(dta).map((item: any, index: any) => {
                 arr.push(item)
             })
             setSingleModel(arr);
-            setSelectedModelID(props?.modelData[0]?.id)
+            setSelectedModelID(modelData[0]?.id)
         }
-    }, [props?.modelData])
+    }, [modelData])
 
     // ===== Update state based on selection of modal =====
     const setModelInformation = (model: any, id: any) => {
-        const filterData = props?.modelData.filter((item: any) => {
+        const filterData = modelData.filter((item: any) => {
             return item.modelName === model
         })
         if (filterData && filterData.length > 0) {
@@ -61,8 +64,8 @@ export default function EopsWatch(props: any) {
 
     // ===== Initial loading of data =====
     useEffect(() => {
-        setSelectedModel(props?.modelData[0]?.modelName)
-        setData(props?.modelData[0])
+        setSelectedModel(modelData[0]?.modelName)
+        setData(modelData[0])
     }, [props?.modelDatal])
 
 
@@ -87,8 +90,8 @@ export default function EopsWatch(props: any) {
             <div className="w-[20%] bg-[#F2F2F2]">
                 <div className="flex flex-wrap flex-row">
                     {
-                        props?.modelData && props?.modelData.length > 0 ?
-                            props?.modelData?.map((item: any, index: any) => {
+                        modelData && modelData.length > 0 ?
+                            modelData?.map((item: any, index: any) => {
                                 let logo = '';
                                 let obj = modelLogo.find(o => o.model === item?.modelName);
                                 if (obj) {

@@ -79,7 +79,7 @@ export default function EditSubObject(props: any) {
     }
     useEffect(() => {
         fetchObjectData();
-    }, [access_token, props])
+    }, [access_token, props.objID, props.selectedSubClass])
 
     const dispatch = useDispatch<any>();
     const closeModel = () => {

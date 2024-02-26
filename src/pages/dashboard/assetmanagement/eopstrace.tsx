@@ -21,6 +21,10 @@ const modelLogo = [
     }
 ]
 export default function EopsTrace(props: any) {
+    let modelData = props?.modelData?.rows;
+    // console.log({
+    //     "PROPS IN EOPSWATCH":modelData?.rows
+    // })
     const dispatch = useDispatch<any>()
     const [data, setData] = useState([] as any);
     const [singleModel, setSingleModel] = useState([] as any);
@@ -29,20 +33,20 @@ export default function EopsTrace(props: any) {
 
     // ===== Setting initial values based on props =====
     useEffect(() => {
-        if (props?.modelData && props?.modelData.length > 0) {
-            let dta = JSON.parse(props?.modelData[0]?.benefits);
+        if (modelData && modelData.length > 0) {
+            let dta = JSON.parse(modelData[0]?.benefits);
             let arr = [] as any;
             Object.values(dta).map((item: any, index: any) => {
                 arr.push(item)
             })
             setSingleModel(arr);
-            setSelectedModelID(props?.modelData[0]?.id)
+            setSelectedModelID(modelData[0]?.id)
         }
-    }, [props?.modelData])
+    }, [modelData])
 
     // ===== Update state based on selection of modal =====
-    const setModelInformation = (model: any, id:any) => {
-        const filterData = props?.modelData.filter((item: any) => {
+    const setModelInformation = (model: any, id: any) => {
+        const filterData = modelData.filter((item: any) => {
             return item.modelName === model
         })
         if (filterData && filterData.length > 0) {
@@ -60,8 +64,8 @@ export default function EopsTrace(props: any) {
 
     // ===== Initial loading of data =====
     useEffect(() => {
-        setSelectedModel(props?.modelData[0]?.modelName)
-        setData(props?.modelData[0])
+        setSelectedModel(modelData[0]?.modelName)
+        setData(modelData[0])
     }, [props?.modelDatal])
 
 
@@ -72,7 +76,7 @@ export default function EopsTrace(props: any) {
             "subClass": props?.nextData?.subClass,
             "subClassObject": props?.nextData?.subObject,
             "model": selectedModel,
-            "modelID":selectedModelID
+            "modelID": selectedModelID
         }
         dispatch(dataForModalAction(nextData))
         // setTimeout(() => {
@@ -86,32 +90,30 @@ export default function EopsTrace(props: any) {
             <div className="w-[20%] bg-[#F2F2F2]">
                 <div className="flex flex-wrap flex-row">
                     {
-                        props?.modelData && props?.modelData.length > 0 ?
-                            props?.modelData?.map((item: any, index: any) => {
+                        modelData && modelData.length > 0 ?
+                            modelData?.map((item: any, index: any) => {
                                 let logo = '';
                                 let obj = modelLogo.find(o => o.model === item?.modelName);
                                 if (obj) {
                                     logo = obj?.logo
                                 }
                                 return (
-                                    <>
-                                        <button
-                                            key={index}
-                                            onClick={() => setModelInformation(item?.modelName, item?.id)}
-                                            className={`flex items-center justify-between rounded-l-xl-1 p-4 h-[106px] w-full bg-white relative text-left ${item?.modelName === selectedModel ? 'border-t-0 border-b-2 border-l-0 border-[#E3E3E3] left-[2px]' : 'border-b-2 border-t-2 border-l-0 border-[#E3E3E3] left-[0px]'}`}>
-                                            <span className="text-gray-967 text-sm font-semibold w-full">
-                                                {
-                                                    item?.modelName
-                                                }
-                                            </span>
-                                            <Image
-                                                src={logo}
-                                                alt={item?.modelName}
-                                                height={54}
-                                                width={54}
-                                            />
-                                        </button>
-                                    </>
+                                    <button
+                                        key={index}
+                                        onClick={() => setModelInformation(item?.modelName, item?.id)}
+                                        className={`flex items-center justify-between rounded-l-xl-1 p-4 h-[106px] w-full bg-white relative text-left ${item?.modelName === selectedModel ? 'border-t-0 border-b-2 border-l-0 border-[#E3E3E3] left-[2px]' : 'border-b-2 border-t-2 border-l-0 border-[#E3E3E3] left-[0px]'}`}>
+                                        <span className="text-gray-967 text-sm font-semibold w-full">
+                                            {
+                                                item?.modelName
+                                            }
+                                        </span>
+                                        <Image
+                                            src={logo}
+                                            alt={item?.modelName}
+                                            height={54}
+                                            width={54}
+                                        />
+                                    </button>
                                 )
                             })
                             :

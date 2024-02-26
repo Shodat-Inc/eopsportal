@@ -22,9 +22,13 @@ export const getAllModelAction = () => async (dispatch: any) => {
                 "Content-Type": "application/json"
             }
         }).then(function (response) {
+
+            console.log({
+                "response in getmodal": response?.data
+            })
             dispatch({
                 type: GET_ALL_MODEL_SUCCESS,
-                payload: response?.data?.message?.data,
+                payload: response?.data?.message?.data
             });
         }).catch(function (error) {
             dispatch({
