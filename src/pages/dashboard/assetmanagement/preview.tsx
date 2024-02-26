@@ -10,11 +10,12 @@ import { useRouter } from 'next/router'
 import axios from "axios";
 import ImageConfig from "./imageconfig";
 import PreviewFilter from "./previewfilter";
+import { getClassNameFromClassID, getSubClassNameFromClassID, getObjectValueFromObjectID, getSubObjectValueFromObjectID } from "@/store/actions/aimodaldetectionAction";
 
 export default function Preview() {
     const router = useRouter();
     const routerParams = router.query;
-
+    const dispatch = useDispatch<any>()
     const [defaultTab, setDefaultTab] = useState("Test");
     const [toggleDrop, setToggleDrop] = useState(false);
     const [data, setData] = useState([] as any);
@@ -25,7 +26,28 @@ export default function Preview() {
     let navData = aimodaldetectionReducer?.dataForModalReducer
 
     console.log({
-        classSelector: classSelector?.dataforeopswatchReducer,
+        navData:navData, 
+        aimodaldetectionReducer:aimodaldetectionReducer
+    })
+
+    useEffect(()=>{
+        dispatch(getClassNameFromClassID(navData?.class))
+    }, [navData?.class])
+
+    useEffect(()=>{
+        dispatch(getSubClassNameFromClassID(navData?.subClass, navData?.class))
+    }, [navData?.class, navData?.subClass])
+
+    useEffect(()=>{
+        dispatch(getObjectValueFromObjectID(navData?.classObject, navData?.class))
+    }, [navData?.classObject, navData?.class])
+
+    useEffect(()=>{
+        dispatch(getSubObjectValueFromObjectID(navData?.subClassObject, navData?.subClass))
+    }, [navData?.subClassObject, navData?.subClass])
+
+    console.log({
+        classSelector: classSelector,
         aimodaldetectionReducer: aimodaldetectionReducer,
         navData: navData
     })
@@ -40,26 +62,26 @@ export default function Preview() {
 
 
     // Fetch the JSON data of sub Asset
-    const fetchClassData = () => {
-        axios.get("/api/geteopsWatch").then((response) => {
-            if (response.data) {
-                const filtered = response.data.filter((item: any) => {
-                    if (item.class === routerParams.objectID && item.ID === routerParams.key && item.modal === routerParams.model) {
-                        return item;
-                    }
-                });
-                if (filtered && filtered.length > 0) {
-                    if (filtered[0].images) {
-                        setData(filtered[0].images);
-                    }
-                }
-            }
-        });
-    };
-    useEffect(() => {
-        fetchClassData();
-        if (fetchClassData.length) return;
-    }, [routerParams])
+    // const fetchClassData = () => {
+    //     axios.get("/api/geteopsWatch").then((response) => {
+    //         if (response.data) {
+    //             const filtered = response.data.filter((item: any) => {
+    //                 if (item.class === routerParams.objectID && item.ID === routerParams.key && item.modal === routerParams.model) {
+    //                     return item;
+    //                 }
+    //             });
+    //             if (filtered && filtered.length > 0) {
+    //                 if (filtered[0].images) {
+    //                     setData(filtered[0].images);
+    //                 }
+    //             }
+    //         }
+    //     });
+    // };
+    // useEffect(() => {
+    //     fetchClassData();
+    //     if (fetchClassData.length) return;
+    // }, [routerParams])
 
 
     const filteredDataTest = data.filter((item: any) => {
@@ -95,7 +117,7 @@ export default function Preview() {
                 <ul className="flex justify-start items-center text-sm">
                     <li className="flex justify-start items-center">
                         <Link
-                            href="/dashboard/eopswatch"
+                            href="/dashboard/assetmanagement"
                             className="font-semibold"
                         >
                             Object Management
@@ -110,14 +132,15 @@ export default function Preview() {
                         />
                         <Link
                             href={{
-                                // pathname: '/dashboard/eopswatch/',
+                                pathname: '/dashboard/assetmanagement/',
                                 // query:{
                                 //     objectID:routerParams.objectID
                                 // }
                             }}
                             className="font-semibold"
                         >
-                            {navData.class}
+                            {/* {navData.class} */}
+                            {aimodaldetectionReducer?.getClassNameFromIDReducer}
                         </Link>
                     </li>
                     <li className="flex justify-start items-center">
@@ -129,7 +152,7 @@ export default function Preview() {
                         />
                         <Link
                             href={{
-                                // pathname: '/dashboard/eopswatch/',
+                                pathname: '/dashboard/assetmanagement/',
                             }}
                             className="font-semibold"
                         >
@@ -141,7 +164,8 @@ export default function Preview() {
                                 <span>VIN : {routerParams.id}</span>
                             } */}
 
-                            {navData.classObject}
+                            {/* {navData?.classObject} */}
+                            {aimodaldetectionReducer?.getObjetValueFromIDReducer}
 
                         </Link>
                     </li>
@@ -154,7 +178,7 @@ export default function Preview() {
                         />
                         <Link
                             href={{
-                                pathname: '/dashboard/eopswatch/models',
+                                pathname: '/dashboard/assetmanagement',
                                 // query: {
                                 //     objectID: routerParams.objectID,
                                 //     subObject: routerParams.subObject,
@@ -165,7 +189,7 @@ export default function Preview() {
                             }}
                             className="font-semibold"
                         >
-                            <span>{navData.subClass}</span> : <span>{navData.subClassObject}</span>
+                            <span>{aimodaldetectionReducer?.getSubClassNameFromIDReducer}</span> : <span>{aimodaldetectionReducer?.getSubObjectValueFromIDReducer}</span>
                         </Link>
                     </li>
                     <li className="flex justify-start items-center">
@@ -177,7 +201,7 @@ export default function Preview() {
                         />
                         <Link
                             href={{
-                                // pathname: '/dashboard/eopswatch/models',
+                                pathname: '/dashboard/aimodalsdetection',
                                 // query: {
                                 //     objectID: routerParams.objectID,
                                 //     subObject: routerParams.subObject,
@@ -188,7 +212,7 @@ export default function Preview() {
                             }}
                             className="font-semibold"
                         >
-                            {navData.model}
+                            {navData?.model}
                         </Link>
                     </li>
                     <li className="flex justify-start items-center">

@@ -22,9 +22,9 @@ const modelLogo = [
 ]
 export default function EopsWatch(props: any) {
     let modelData = props?.modelData?.rows;
-    // console.log({
-    //     "PROPS IN EOPSWATCH":modelData?.rows
-    // })
+    console.log({
+        "PROPS IN EOPSWATCH": modelData?.rows
+    })
     const dispatch = useDispatch<any>()
     const [data, setData] = useState([] as any);
     const [singleModel, setSingleModel] = useState([] as any);
@@ -64,22 +64,24 @@ export default function EopsWatch(props: any) {
 
     // ===== Initial loading of data =====
     useEffect(() => {
-        setSelectedModel(modelData[0]?.modelName)
-        setData(modelData[0])
+        if (props?.modelDatal && props?.modelDatal?.length > 0) {
+            setSelectedModel(modelData[0]?.modelName)
+            setData(modelData[0])
+        }
     }, [props?.modelDatal])
 
 
     const redirectToNext = () => {
         const nextData = {
             "class": props?.nextData?.class,
-            "classObject": props?.nextData?.object,
+            "classObject": props?.nextData?.subObject,
             "subClass": props?.nextData?.subClass,
-            "subClassObject": props?.nextData?.subObject,
+            "subClassObject": props?.nextData?.object,
             "model": selectedModel,
             "modelID": selectedModelID
         }
         console.log({
-            nextData:nextData
+            nextData: nextData
         })
         dispatch(dataForModalAction(nextData))
         setTimeout(() => {

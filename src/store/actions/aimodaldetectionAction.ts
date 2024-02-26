@@ -5,6 +5,10 @@ import { GET_OBJECT_FROM_ID_ERROR, GET_OBJECT_FROM_ID_SUCCESS } from "../types";
 import { GET_SUB_OBJECT_FROM_ID_ERROR, GET_SUB_OBJECT_FROM_ID_SUCCESS } from "../types";
 import { GET_MODEL_IMAGES_ERROR, GET_MODEL_IMAGES_SUCCESS } from "../types";
 import { GET_ALL_MODEL_SUCCESS, GET_ALL_MODEL_ERROR } from "../types";
+import {GET_CLASSNAME_FROM_CLASS_ID_SUCCESS, GET_CLASSNAME_FROM_CLASS_ID_ERROR} from '../types'
+import {GET_OBJECT_FROM_OBJECT_ID_SUCCESS, GET_OBJECT_FROM_OBJECT_ID_ERROR} from '../types'
+import {GET_SUB_CLASSNAME_FROM_SUB_CLASS_ID_SUCCESS, GET_SUB_CLASSNAME_FROM_SUB_CLASS_ID_ERROR} from '../types'
+import {GET_SUB_OBJECT_FROM_SUB_OBJECT_ID_SUCCESS, GET_SUB_OBJECT_FROM_SUB_OBJECT_ID_ERROR} from '../types'
 import axios from "axios";
 
 // Get all Modals
@@ -183,7 +187,7 @@ export const getSubObjectFromIDAction = (objectID: any, classID: any) => async (
 
 
 // Get Image URL data
-export const getImageUrlDataAction = (modelID: any, type:any) => async (dispatch: any) => {
+export const getImageUrlDataAction = (modelID: any, type: any) => async (dispatch: any) => {
     let access_token = "" as any;
     if (typeof window !== 'undefined') {
         access_token = localStorage.getItem('authToken')
@@ -204,6 +208,141 @@ export const getImageUrlDataAction = (modelID: any, type:any) => async (dispatch
         }).catch(function (error) {
             dispatch({
                 type: GET_MODEL_IMAGES_ERROR,
+                payload: error,
+            });
+        })
+    } catch (err) {
+        console.log("err in action:", err)
+    }
+}
+
+
+// Get class name from class ID
+export const getClassNameFromClassID = (id: any) => async (dispatch: any) => {
+    let access_token = "" as any;
+    if (typeof window !== 'undefined') {
+        access_token = localStorage.getItem('authToken')
+    }
+    try {
+        await axios({
+            method: 'GET',
+            url: `/api/getAssetById?id=${id}`,
+            headers: {
+                "Authorization": `Bearer ${access_token}`,
+                "Content-Type": "application/json"
+            }
+        }).then(function (response) {
+            let className = '';
+            let data = response?.data?.data?.rows;
+            if (data && data.length > 0) {
+                className = data[0].className
+            }
+            dispatch({
+                type: GET_CLASSNAME_FROM_CLASS_ID_SUCCESS,
+                payload: className,
+            });
+        }).catch(function (error) {
+            dispatch({
+                type: GET_CLASSNAME_FROM_CLASS_ID_ERROR,
+                payload: error,
+            });
+        })
+    } catch (err) {
+        console.log("err in action:", err)
+    }
+}
+
+// Get Sub class name from class ID
+export const getSubClassNameFromClassID = (subClassId: any, parentClassID:any) => async (dispatch: any) => {
+    let access_token = "" as any;
+    if (typeof window !== 'undefined') {
+        access_token = localStorage.getItem('authToken')
+    }
+    try {
+        await axios({
+            method: 'GET',
+            url: `/api/getChildAssetById?classId=${subClassId}&parentId=${parentClassID}`,
+            headers: {
+                "Authorization": `Bearer ${access_token}`,
+                "Content-Type": "application/json"
+            }
+        }).then(function (response) {
+            let className = '';
+            let data = response?.data?.data?.rows;
+            if (data && data.length > 0) {
+                className = data[0].className
+            }
+            dispatch({
+                type: GET_SUB_CLASSNAME_FROM_SUB_CLASS_ID_SUCCESS,
+                payload: className,
+            });
+        }).catch(function (error) {
+            dispatch({
+                type: GET_SUB_CLASSNAME_FROM_SUB_CLASS_ID_ERROR,
+                payload: error,
+            });
+        })
+    } catch (err) {
+        console.log("err in action:", err)
+    }
+}
+
+// Get OBJECT FROM OBJECT ID
+export const getObjectValueFromObjectID = (objectID: any, classID:any) => async (dispatch: any) => {
+    let access_token = "" as any;
+    if (typeof window !== 'undefined') {
+        access_token = localStorage.getItem('authToken')
+    }
+    try {
+        await axios({
+            method: 'GET',
+            url: `/api/getObjectById?objectId=${objectID}&classId=${classID}`,
+            headers: {
+                "Authorization": `Bearer ${access_token}`,
+                "Content-Type": "application/json"
+            }
+        }).then(function (response) {
+            let data = response?.data?.data?.rows;
+            let objectVal = response?.data?.data?.rows[0]?.ObjectValues[0]?.values
+            dispatch({
+                type: GET_OBJECT_FROM_OBJECT_ID_SUCCESS,
+                payload: objectVal,
+            });
+        }).catch(function (error) {
+            dispatch({
+                type: GET_OBJECT_FROM_OBJECT_ID_ERROR,
+                payload: error,
+            });
+        })
+    } catch (err) {
+        console.log("err in action:", err)
+    }
+}
+
+// Get SUB OBJECT FROM OBJECT ID
+export const getSubObjectValueFromObjectID = (objectID: any, classID:any) => async (dispatch: any) => {
+    let access_token = "" as any;
+    if (typeof window !== 'undefined') {
+        access_token = localStorage.getItem('authToken')
+    }
+    try {
+        await axios({
+            method: 'GET',
+            url: `/api/getObjectById?objectId=${objectID}&classId=${classID}`,
+            headers: {
+                "Authorization": `Bearer ${access_token}`,
+                "Content-Type": "application/json"
+            }
+        }).then(function (response) {
+            let data = response?.data?.data?.rows;
+            let objectVal = response?.data?.data?.rows[0]?.ObjectValues[0]?.values
+            dispatch({
+                type: GET_SUB_OBJECT_FROM_SUB_OBJECT_ID_SUCCESS,
+                payload: objectVal,
+            });
+        }).catch(function (error) {
+            dispatch({
+                type: GET_SUB_OBJECT_FROM_SUB_OBJECT_ID_ERROR,
                 payload: error,
             });
         })

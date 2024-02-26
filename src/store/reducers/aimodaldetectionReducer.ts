@@ -5,6 +5,10 @@ import { GET_OBJECT_FROM_ID_ERROR, GET_OBJECT_FROM_ID_SUCCESS } from "../types";
 import { GET_SUB_OBJECT_FROM_ID_ERROR, GET_SUB_OBJECT_FROM_ID_SUCCESS } from "../types";
 import { GET_MODEL_IMAGES_ERROR, GET_MODEL_IMAGES_SUCCESS } from "../types";
 import { GET_ALL_MODEL_SUCCESS, GET_ALL_MODEL_ERROR } from "../types";
+import {GET_CLASSNAME_FROM_CLASS_ID_SUCCESS, GET_CLASSNAME_FROM_CLASS_ID_ERROR} from '../types'
+import {GET_OBJECT_FROM_OBJECT_ID_SUCCESS, GET_OBJECT_FROM_OBJECT_ID_ERROR} from '../types'
+import {GET_SUB_CLASSNAME_FROM_SUB_CLASS_ID_SUCCESS, GET_SUB_CLASSNAME_FROM_SUB_CLASS_ID_ERROR} from '../types'
+import {GET_SUB_OBJECT_FROM_SUB_OBJECT_ID_SUCCESS, GET_SUB_OBJECT_FROM_SUB_OBJECT_ID_ERROR} from '../types'
 
 const initialState = {
     dataForModalReducer: {},
@@ -13,11 +17,39 @@ const initialState = {
     getObjectFromIDReducer: [],
     getSubObjectFromIDReducer: [],
     getImageUrlDataReducer: [],
-    getAllModelsReducer: []
+    getAllModelsReducer: [],
+    getClassNameFromIDReducer:"",
+    getSubClassNameFromIDReducer:"",
+    getObjetValueFromIDReducer:"",
+    getSubObjectValueFromIDReducer:"",
 };
 
 const aimodaldetectionReducer = (state = initialState, action: any) => {
     switch (action.type) {
+
+        // Get Class Name from ID
+        case GET_CLASSNAME_FROM_CLASS_ID_SUCCESS:
+            return { ...state, getClassNameFromIDReducer: action.payload, loading: false }
+        case GET_CLASSNAME_FROM_CLASS_ID_ERROR:
+            return { loading: false, error: action.payload }
+
+        // Get Sub Class name from ID
+        case GET_SUB_CLASSNAME_FROM_SUB_CLASS_ID_SUCCESS:
+            return { ...state, getSubClassNameFromIDReducer: action.payload, loading: false }
+        case GET_SUB_CLASSNAME_FROM_SUB_CLASS_ID_ERROR:
+            return { loading: false, error: action.payload }
+        
+        // Get Object Value from ID
+        case GET_OBJECT_FROM_OBJECT_ID_SUCCESS:
+            return { ...state, getObjetValueFromIDReducer: action.payload, loading: false }
+        case GET_OBJECT_FROM_OBJECT_ID_ERROR:
+            return { loading: false, error: action.payload }
+
+        // Get sub Object Value from ID
+        case GET_SUB_OBJECT_FROM_SUB_OBJECT_ID_SUCCESS:
+            return { ...state, getSubObjectValueFromIDReducer: action.payload, loading: false }
+        case GET_SUB_OBJECT_FROM_SUB_OBJECT_ID_ERROR:
+            return { loading: false, error: action.payload }
 
         // Get All Model
         case GET_ALL_MODEL_SUCCESS:
