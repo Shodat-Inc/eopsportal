@@ -6,6 +6,7 @@ import { Sequelize } from "sequelize";
 import { classTagRepo } from "./classTag-repo";
 import { generateRandomAlphaNumeric } from "../../../util/helper"
 import { paginateQuery } from "../constant/pagination";
+import { parentJoinKeyRepo } from "./parentJoinRepo";
 
 
 // Repository for Class-related operations.
@@ -26,34 +27,29 @@ export const classRepo = {
  * @returns {Object} - Response object indicating the success or failure of the operation.
  */
 async function create(params: any, transaction: any) {
-  // Log the initiation of class creation.
   loggerInfo.info("Create Class Repo:");
 
   try {
     // Validate that the class name doesn't already exist.
+    let classData;
     if (params.enterpriseId) {
-      let class_data = await db.AddClasses.findOne(
-        {
-          where: {
-            className: params.className,
-            enterpriseId: params.enterpriseId,
-          },
+      classData = await db.AddClasses.findOne({
+        where: {
+          className: params.className,
+          enterpriseId: params.enterpriseId,
         },
-        { transaction }
-      );
-      if (class_data) {
-        return sendResponseData(false, message.error.classExist, {});
-      }
+      },
+        { transaction });
     } else {
-      let class_data = await db.AddClasses.findOne(
-        {
-          where: { className: params.className, enterpriseId: null },
-        },
-        { transaction }
-      );
-      if (class_data) {
-        return sendResponseData(false, message.error.classExist, {});
-      }
+      classData = await db.AddClasses.findOne({
+        where: { className: params.className, enterpriseId: null },
+      },
+        { transaction });
+    }
+
+    if (classData) {
+      // Class with the same name already exists.
+      return sendResponseData(false, message.error.classExist, {});
     }
 
     let serialId: string = "";
@@ -77,9 +73,50 @@ async function create(params: any, transaction: any) {
     };
 
     // Create and save the new class instance.
-    const classes = new db.AddClasses(updatedData, { transaction });
-    const data = await classes.save({ transaction });
-    return sendResponseData(true, message.success.classAdded, data);
+    const newClass = new db.AddClasses(updatedData, { transaction });
+    const savedClass = await newClass.save({ transaction });
+
+    const classId = savedClass.id;
+
+    // Create tags for the class.
+    const tagData = params.tags.map((tag: any) => ({
+      tagName: tag.tagName,
+      dataTypeId: tag.dataTypeId,
+      classId: classId,
+    }));
+
+    const createdTags = await classTagRepo.bulkCreate(tagData, classId, transaction);
+
+    // Handle primary keys if provided.
+    const primaryKeys = params.primaryKeys;
+    if (primaryKeys) {
+      for (const primaryKey of primaryKeys) {
+        for (const createdTag of createdTags.data) {
+          if (createdTag.dataValues.tagName === primaryKey) {
+            const primaryKeyData = {
+              classTagId: createdTag.dataValues.id,
+              classId: classId,
+              userId: params.userId, // Assuming userId is available in params
+            };
+            const newPrimaryKey = new db.PrimaryKey(primaryKeyData);
+            await newPrimaryKey.save({ transaction });
+          }
+        }
+      }
+    }
+
+    // Handle parent join keys if provided.
+    if (params.parentJoinKey && params.parentJoinKey.length) {
+      const parentJoinKeys = await classTagRepo.getClassTags(params.parentJoinKey, transaction);
+      const parentJoinKeyData = parentJoinKeys.data.map((element: any) => ({
+        classId,
+        parentTagId: element.id,
+      }));
+      await parentJoinKeyRepo.bulkCreate(parentJoinKeyData, classId, transaction);
+    }
+
+    // Return both classData and classTags.
+    return { classData: savedClass, classTags: createdTags };
   } catch (error) {
     // Log the error if there's an issue with the class creation.
     loggerError.error("Error in class repo", error);

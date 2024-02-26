@@ -41,30 +41,21 @@ async function handler(req: any, res: any) {
 
     await db.sequelize.transaction(async (transaction: any) => {
       // Create a new object entry using the provided data.
-      const objData = await objectRepo.create(validation.value, transaction);
-      const objectId = objData.data.id;
+      const objectId = await objectRepo.create(validation.value, transaction);
 
-      // Create an array to store values for the object.
-      let valueData = [];
-
-      // Populate the value data from the request.
-      for (let key of reqData.values) {
-        valueData.push({
-          objectId: objectId,
-          classTagId: key.classTagId,
-          values: key.value,
-        });
+      if ('objData' in objectId && 'value' in objectId) {
+        const { objData, value } = objectId;
+        res.send({ objData, value });
+      } else {
+        // Handle the case when the result is of the form { success: boolean; message: string; data: any; }
+        const { success, message, data } = objectId;
+        if (success) {
+          res.send({ objData: data });
+        } else {
+          res.status(404).json({ message });
+        }
       }
-
-      // Bulk create values using the populated value data.
-      const value = await valueRepo.bulkCreate(valueData, objectId, transaction);
-
-      // Send back a successful response with the object and value data.
-      res.send({ objData, value });
-    })
-
-    // Alternate response could be sent back to confirm data storage.
-    // res.status(200).json({ message: "Data stored successfully" });
+    });
   } catch (error: any) {
     // If there's an error during the object and value creation process, log the error and send back an error response.
     loggerError.error(error);

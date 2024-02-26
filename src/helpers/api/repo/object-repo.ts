@@ -6,6 +6,7 @@ import { generateRandomAlphaNumeric } from "../../../util/helper";
 import { classTagRepo } from "./classTag-repo";
 import { paginateQuery } from "../constant/pagination";
 import { Op, Sequelize } from "sequelize";
+import { valueRepo } from "./value-repo";
 
 /**
  * Repository for handling object related operations.
@@ -34,7 +35,6 @@ async function create(params: any, transaction: any) {
     loggerError.error("No Class id Provided");
     return sendResponseData(false, message.error.noClassID, {});
   }
-
   try {
     const serialId = await generateRandomAlphaNumeric({
       model: db.Object,
@@ -51,8 +51,22 @@ async function create(params: any, transaction: any) {
     // Save the new object to the database.
     const data = await object.save({ transaction });
 
-    // Return a successful response indicating the object was added.
-    return sendResponseData(true, message.success.objectAdded, data);
+    // Create an array to store values for the object.
+    let valueData = [];
+
+    // Populate the value data.
+    for (let key of params.values) {
+      valueData.push({
+        objectId: data.id, // Use data instead of objData
+        classTagId: key.classTagId,
+        values: key.value,
+      });
+    }
+
+    // Bulk create values using the populated value data.
+    const value = await valueRepo.bulkCreate(valueData, data.id, transaction);
+
+    return { objData: data.dataValues, value: value };
   } catch (error) {
     // Log the error if there's an issue with the object creation.
     loggerError.error("Error in Object Repo", error);
