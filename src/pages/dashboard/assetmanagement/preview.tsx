@@ -113,7 +113,7 @@ export default function Preview() {
                         />
                         <Link
                             href={{
-                                pathname: '/dashboard/assetmanagement/',
+                                pathname: '/dashboard/assetmanagement',
                                 // query:{
                                 //     objectID:routerParams.objectID
                                 // }
@@ -133,7 +133,7 @@ export default function Preview() {
                         />
                         <Link
                             href={{
-                                pathname: '/dashboard/assetmanagement/',
+                                pathname: '/dashboard/assetmanagement',
                             }}
                             className="font-semibold"
                         >
@@ -182,7 +182,7 @@ export default function Preview() {
                         />
                         <Link
                             href={{
-                                pathname: '/dashboard/aimodalsdetection',
+                                pathname: '/dashboard/assetmanagement/aimodalsdetection',
                                 // query: {
                                 //     objectID: routerParams.objectID,
                                 //     subObject: routerParams.subObject,

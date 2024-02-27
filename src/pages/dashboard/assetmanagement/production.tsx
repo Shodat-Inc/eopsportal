@@ -64,7 +64,7 @@ export default function Production(props: any) {
     const redirectToResultPage = () => {
         setTimeout(() => {
             Router.push({
-                pathname: '/dashboard/aimodaldetection/result',
+                pathname: '/dashboard/assetmanagement/result',
             })
         }, 50)
     }
