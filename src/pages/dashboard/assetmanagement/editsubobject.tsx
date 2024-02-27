@@ -35,8 +35,9 @@ export default function EditSubObject(props: any) {
                     let arr2 = [] as any;
                     let arr3 = [] as any;
 
-                    setObjectsData(response.data?.data?.rows)
-                    let objectsData = response.data?.data?.rows;
+                    let data = response.data?.data?.rows || [] as any
+                    setObjectsData(data)
+                    let objectsData = data || [];
 
                     let key = Object.keys(objectsData[0]?.parentJoinValues);
                     let val = Object.values(objectsData[0]?.parentJoinValues)
@@ -46,14 +47,14 @@ export default function EditSubObject(props: any) {
                     // })
                     setParentJoinValue(val[0])
 
-                    response?.data?.data?.rows[0]?.Class?.ClassTags.map((item: any, index: any) => {
-                        const linkContentVal = response?.data?.data?.rows[0]?.ObjectValues[index];
+                    data[0]?.Class?.ClassTags.map((item: any, index: any) => {
+                        const linkContentVal = data[0]?.ObjectValues[index];
                         let tagWithID = item?.tagName + "_" + linkContentVal?.id
                         arr1.push(tagWithID);
                         arr3.push(item?.tagName)
                     })
 
-                    response?.data?.data?.rows[0]?.ObjectValues.map((item: any) => {
+                    data[0]?.ObjectValues.map((item: any) => {
                         arr2.push(item.values);
                     })
 
@@ -68,12 +69,12 @@ export default function EditSubObject(props: any) {
                 }
             }).catch(function (error) {
                 console.log({
-                    "ERROR IN AXIOS CATCH": error
+                    "ERROR IN AXIOS CATCH ESO": error
                 })
             })
         } catch (err) {
             console.log({
-                "ERROR IN TRY CATCH": err
+                "ERROR IN TRY CATCH ESO": err
             })
         }
     }

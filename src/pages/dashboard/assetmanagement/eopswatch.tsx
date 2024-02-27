@@ -22,9 +22,9 @@ const modelLogo = [
 ]
 export default function EopsWatch(props: any) {
     let modelData = props?.modelData?.rows;
-    console.log({
-        "PROPS IN EOPSWATCH": modelData?.rows
-    })
+    // console.log({
+    //     "PROPS IN EOPSWATCH": modelData?.rows
+    // })
     const dispatch = useDispatch<any>()
     const [data, setData] = useState([] as any);
     const [singleModel, setSingleModel] = useState([] as any);
@@ -33,6 +33,7 @@ export default function EopsWatch(props: any) {
 
     // ===== Setting initial values based on props =====
     useEffect(() => {
+        let modelData = props?.modelData?.rows;
         if (modelData && modelData.length > 0) {
             let dta = JSON.parse(modelData[0]?.benefits);
             let arr = [] as any;
@@ -41,8 +42,9 @@ export default function EopsWatch(props: any) {
             })
             setSingleModel(arr);
             setSelectedModelID(modelData[0]?.id)
+            setSelectedModel(modelData[0]?.modelName)
         }
-    }, [modelData])
+    }, [props?.modelData])
 
     // ===== Update state based on selection of modal =====
     const setModelInformation = (model: any, id: any) => {

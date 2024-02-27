@@ -195,7 +195,7 @@ export const getImageUrlDataAction = (modelID: any, type: any) => async (dispatc
     try {
         await axios({
             method: 'GET',
-            url: `/api/getImageUrl?type=test&modelId=${modelID}`,
+            url: `/api/getImageUrl?type=${type}&modelId=${modelID}`,
             headers: {
                 "Authorization": `Bearer ${access_token}`,
                 "Content-Type": "application/json"

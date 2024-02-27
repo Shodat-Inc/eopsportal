@@ -130,7 +130,6 @@ export default function AssetManagement() {
         }
     }
 
-
     return (
         <div className="flex font-OpenSans">
 

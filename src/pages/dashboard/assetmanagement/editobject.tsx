@@ -32,9 +32,9 @@ export default function EditObject(props: any) {
             }).then(function (response) {
                 if (response) {
 
-                    console.log({
-                        "RESPONSE": response?.data?.data?.rows
-                    })
+                    // console.log({
+                    //     "RESPONSE": response?.data?.data?.rows
+                    // })
 
                     let arr1 = [] as any;
                     let arr2 = [] as any;
@@ -42,17 +42,19 @@ export default function EditObject(props: any) {
 
                     setObjectsData(response?.data?.data?.rows);
 
-                    response?.data?.data?.rows[0]?.Class?.ClassTags.map((item: any, index: any) => {
-                        const linkContentVal = response?.data?.data?.rows[0]?.ObjectValues[index];
-                        console.log({
-                            "linkContentVal": linkContentVal
-                        })
+                    let data = response?.data?.data?.rows || []
+
+                    data[0]?.Class?.ClassTags.map((item: any, index: any) => {
+                        const linkContentVal = data[0]?.ObjectValues[index];
+                        // console.log({
+                        //     "linkContentVal": linkContentVal
+                        // })
                         let tagWithID = item?.tagName + "_" + linkContentVal?.id
                         arr1.push(tagWithID);
                         arr3.push(item?.tagName)
                     })
 
-                    response?.data?.data?.rows[0]?.ObjectValues.map((item: any) => {
+                    data[0]?.ObjectValues.map((item: any) => {
                         arr2.push(item.values);
                     })
 

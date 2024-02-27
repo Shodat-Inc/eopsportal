@@ -10,7 +10,12 @@ import { useRouter } from 'next/router'
 import axios from "axios";
 import ImageConfig from "./imageconfig";
 import PreviewFilter from "./previewfilter";
-import { getClassNameFromClassID, getSubClassNameFromClassID, getObjectValueFromObjectID, getSubObjectValueFromObjectID } from "@/store/actions/aimodaldetectionAction";
+import {
+    getClassNameFromClassID,
+    getSubClassNameFromClassID,
+    getObjectValueFromObjectID,
+    getSubObjectValueFromObjectID
+} from "@/store/actions/aimodaldetectionAction";
 
 export default function Preview() {
     const router = useRouter();
@@ -25,24 +30,24 @@ export default function Preview() {
     const aimodaldetectionReducer = useSelector((state: any) => state.aimodaldetectionReducer);
     let navData = aimodaldetectionReducer?.dataForModalReducer
 
-    console.log({
-        navData:navData, 
-        aimodaldetectionReducer:aimodaldetectionReducer
-    })
+    // console.log({
+    //     navData:navData, 
+    //     aimodaldetectionReducer:aimodaldetectionReducer
+    // })
 
-    useEffect(()=>{
+    useEffect(() => {
         dispatch(getClassNameFromClassID(navData?.class))
     }, [navData?.class])
 
-    useEffect(()=>{
+    useEffect(() => {
         dispatch(getSubClassNameFromClassID(navData?.subClass, navData?.class))
     }, [navData?.class, navData?.subClass])
 
-    useEffect(()=>{
+    useEffect(() => {
         dispatch(getObjectValueFromObjectID(navData?.classObject, navData?.class))
     }, [navData?.classObject, navData?.class])
 
-    useEffect(()=>{
+    useEffect(() => {
         dispatch(getSubObjectValueFromObjectID(navData?.subClassObject, navData?.subClass))
     }, [navData?.subClassObject, navData?.subClass])
 
@@ -59,30 +64,6 @@ export default function Preview() {
     const toggleDropFunction = () => {
         setToggleDrop(!toggleDrop);
     }
-
-
-    // Fetch the JSON data of sub Asset
-    // const fetchClassData = () => {
-    //     axios.get("/api/geteopsWatch").then((response) => {
-    //         if (response.data) {
-    //             const filtered = response.data.filter((item: any) => {
-    //                 if (item.class === routerParams.objectID && item.ID === routerParams.key && item.modal === routerParams.model) {
-    //                     return item;
-    //                 }
-    //             });
-    //             if (filtered && filtered.length > 0) {
-    //                 if (filtered[0].images) {
-    //                     setData(filtered[0].images);
-    //                 }
-    //             }
-    //         }
-    //     });
-    // };
-    // useEffect(() => {
-    //     fetchClassData();
-    //     if (fetchClassData.length) return;
-    // }, [routerParams])
-
 
     const filteredDataTest = data.filter((item: any) => {
         return item.folder === "Test"
@@ -317,8 +298,8 @@ export default function Preview() {
 
                 {/* Tab Contents */}
                 <>
-                    {defaultTab === "Test" && <Test data={filteredDataTest} routerParams={routerParams} />}
-                    {defaultTab === "Production" && <Production data={filteredDataProduction} routerParams={routerParams} />}
+                    {defaultTab === "Test" && <Test data={aimodaldetectionReducer?.dataForModalReducer} tab={"test"} />}
+                    {defaultTab === "Production" && <Production data={aimodaldetectionReducer?.dataForModalReducer} tab={"production"} />}
                 </>
 
             </div>

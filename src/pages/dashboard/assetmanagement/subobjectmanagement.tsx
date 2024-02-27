@@ -29,6 +29,7 @@ export default function SubObjectManagement(props: any) {
     const [selectedObjectID, setSelectedObjectID] = useState("");
     const [deleteID, setDeleteID] = useState(0);
     const [actionsToggle, setActionsToggle] = useState(false);
+    const [setObjID, setSetObjID] = useState();
 
     const [deleteMessage, setDeleteMessage] = useState(false);
     const [successMessage, setSuccessMessage] = useState(false);
@@ -94,6 +95,12 @@ export default function SubObjectManagement(props: any) {
         }
     }
 
+    // console.log({
+    //     "__HERE":chooseAsset, 
+    //     "__SUBCLASSDAATA":subClassData,
+    //     "___NAME":showClassNameFromID(chooseAsset)
+    // })
+
     const toggleActions = (item: any) => {
         setActionCount(item);
         setActions(!actions);
@@ -153,8 +160,9 @@ export default function SubObjectManagement(props: any) {
                 }
             }).then(function (response) {
                 if (response) {
-                    setObjectData(response?.data?.objects?.data?.rows)
-                    setTableHeader(response?.data?.objects?.data?.rows[0]?.Class?.ClassTags)
+                    let data = response?.data?.objects?.data?.rows || []
+                    setObjectData(data)
+                    setTableHeader(data[0]?.Class?.ClassTags)
                 }
             }).catch(function (error) {
                 console.log({
@@ -195,6 +203,7 @@ export default function SubObjectManagement(props: any) {
             "subClassObjKey": "",
             "subClassObjValue": objID
         }
+        setSetObjID(objID)
         dispatch(setClassBreadcrumb(abc));
 
         setTimeout(() => {
@@ -202,6 +211,19 @@ export default function SubObjectManagement(props: any) {
         }, 50)
     }
 
+    useEffect(()=>{
+        let abc = {
+            "flow": "Object Management",
+            "class": classSelector?.classBreadcrumbs?.class,
+            "classObjKey": classSelector?.classBreadcrumbs?.classObjKey,
+            "classObjValue": classSelector?.classBreadcrumbs?.classObjValue,
+            "subClass": showClassNameFromID(chooseAsset),
+            "subClassObjKey": "",
+            "subClassObjValue": setObjID
+        }
+        dispatch(setClassBreadcrumb(abc));
+
+    }, [chooseAsset])
 
     // Edit Sub Object
     const editSubObjectFunction = (item: any) => {
