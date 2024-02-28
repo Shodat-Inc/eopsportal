@@ -28,6 +28,7 @@ const SideBar = forwardRef(({ showNav, setShowNav }, ref) => {
             alt="company logo"
             height={35}
             width={134}
+            className="h-auto w-auto"
           />
         </picture>
         <div className="pl-24 md:pl-24 mt-0 z-[400]">

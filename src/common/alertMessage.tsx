@@ -24,7 +24,7 @@ const AlertMessage = (props: any) => {
     }, [props])
 
     return (
-        <div className={`${alertClass} mb-1 mt-1 border text-md px-4 py-3 rounded rounded-xl relative flex items-center justify-start`}>
+        <div className={`${alertClass} mb-1 mt-1 border text-md px-4 py-3 rounded-xl relative flex items-center justify-start`}>
             <Image
                 src={alertIcon}
                 alt="Alert Success"

@@ -4,9 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import Head from 'next/head'
 import Header from './header';
-import BgInfo from './bginfo';
-import PhoneInput from 'react-phone-number-input'
-import 'react-phone-number-input/style.css'
+import axios from 'axios';
+import { useRouter } from 'next/router';
 
 export default function Enterprise() {
     const [formData, setFormData] = useState({
@@ -29,9 +28,9 @@ export default function Enterprise() {
         phoneNumber: "",
         CIN: "",
     });
+    const router = useRouter();
     const [formIsValid, setFormIsValid] = useState(true);
-    const [userData, setUserData] = useState([] as any);
-    const [success, setSuccess] = useState(false);
+    const [resMessage, setResMessage] = useState(false);
     const handleInput = (evt: any) => {
         evt.preventDefault()
         let targetName = evt.target.name;
@@ -119,20 +118,63 @@ export default function Enterprise() {
     }
 
 
-    const submitForm = (evt: any) => {
+    const submitForm = async (evt: any) => {
         evt.preventDefault();
         if (handleValidation()) {
-            // Storing data to Users JSON  
+            let fromData = {
+                "email": formData.workEmail,
+                "firstName": formData.firstName,
+                "lastName": formData.lastName,
+                "message": formData.message,
+                "companyName": formData.companyName,
+                "CIN": formData.CIN,
+                "numOfEmployee": formData.numberOfEmp,
+                "phoneNumber": formData.phoneNumber
+            }
+            try {
+                await axios({
+                    method: 'POST',
+                    url: `/api/contactSales`,
+                    withCredentials: false,
+                    data: fromData,
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded"
+                    }
+                }).then(function (response) {
+                    if (response && response?.data?.success === true) {
+                        setTimeout(() => {
+                            router.push('/authentication/thankyou');
+                        }, 1000)
+                    } else {
+                        setResMessage(true)
+                    }
+
+                }).catch(function (error) {
+                    console.log({
+                        ERROR_IN_AXIOS_CATCH: error
+                    })
+                })
+            } catch (err) {
+                console.log({
+                    ERROR_IN_TRY_CATCH: err
+                })
+            }
         } else {
             console.log("SOMETHING WENT WRONG !")
         }
     }
 
+    useEffect(()=>{
+        setTimeout(()=>{
+            setResMessage(false)
+        }, 7000)
+    }, [resMessage===true])
+
     return (
         <>
             {/* Head Information */}
             <Head>
-                <title>eOps Fabric - Login</title>
+                <title>eOps Fabric - Contact Sales</title>
                 <meta name="viewport" content="initial-scale=1.0, width=device-width" />
             </Head>
 
@@ -151,13 +193,28 @@ export default function Enterprise() {
                             alt='contact-sales-image'
                             height={320}
                             width={320}
-                            className='inline-block'
+                            priority
+                            className='inline-block h-auto w-auto'
                         />
                     </div>
 
                     {/* Content section */}
                     <div className='w-full mt-20 flex justify-center items-start'>
-                        <div className='border border-[#D9D9D9] rounded rounded-lg w-[70%] mb-10'>
+                        <div className='border border-[#D9D9D9] rounded-lg w-[70%] mb-10'>
+
+                            {resMessage &&
+                                <div className={`bg-blue-957 border-blue-958 text-blue-959 mb-1 mt-1 border text-md px-4 py-3 rounded-xl relative flex items-center justify-start`}>
+                                    <Image
+                                        src="/img/AlertInfo.svg"
+                                        alt="Alert Info"
+                                        height={32}
+                                        width={32}
+                                        className='mr-2'
+                                    />
+                                    <span className="block sm:inline ml-2">Already registered! Please Wait Sales Team will contact Soon.</span>
+                                </div>
+                            }
+
                             <div className='p-6 w-full'>
                                 <h2 className='text-2xl font-semibold mb-2'>Contact Sales</h2>
                                 <div className='text-[#8692A6] mb-4'>Lets get this conversation started. Tell us a bit about yourself, and we will get in touch as soon as we can</div>
@@ -325,12 +382,16 @@ export default function Enterprise() {
 
 
                                     <div className='flex justify-between items-center'>
-                                        <Link href="/authentication/complete-individual" className='bg-white border border-black min-w-[111px] flex justify-center items-center rounded rounded-xl py-4 px-2 font-semibold'>
+                                        <Link href="/authentication/complete-individual" className='bg-white border border-black min-w-[111px] flex justify-center items-center rounded-xl py-4 px-2 font-semibold'>
                                             <span>Talk to us</span>
                                         </Link>
-                                        <Link href="/authentication/thankyou" className='bg-yellow-951 border-yellow-951 min-w-[111px] flex justify-center items-center rounded rounded-xl py-4 px-2 font-semibold'>
+                                        <button
+                                            // onClick={handleSubmitFunction}
+                                            // href="/authentication/thankyou" 
+                                            className='bg-yellow-951 border-yellow-951 min-w-[111px] flex justify-center items-center rounded-xl py-4 px-2 font-semibold'
+                                        >
                                             <span>Submit</span>
-                                        </Link>
+                                        </button>
                                     </div>
 
                                 </form>

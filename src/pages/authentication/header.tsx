@@ -12,13 +12,14 @@ export default function Header() {
                     alt="logo"
                     height={50}
                     width={140}
+                    className="h-auto w-auto"
                 />
             </Link>
             <ul className="flex justify-start items-center space-x-9">
                 <li>
                     <Link
                         href="/"
-                        className="text-black h-[37px] px-4 bg-yellow-951 flex justify-center items-center rounded rounded-lg"
+                        className="text-black h-[37px] px-4 bg-yellow-951 flex justify-center items-center rounded-lg"
                     >
                         <span>Plans and pricing</span>
                     </Link>
