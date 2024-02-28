@@ -18,7 +18,7 @@ export default function ObjectManagement(props: any) {
     const dispatch = useDispatch<any>();
     const [toggleFilter, setToggleFilter] = useState(false);
     const [toggleArrow, setToggleArrow] = useState(false);
-    const [chooseAsset, setChooseAsset] = useState(props?.classData[0]?.assetName || "");
+    const [chooseAsset, setChooseAsset] = useState(props?.classData && props?.classData?.length > 0 ? props?.classData[0]?.assetName : "");
     const [toggleAsset, setToggleAsset] = useState(false);
     const [actions, setActions] = useState(false);
     const [actionCount, setActionCount] = useState(1);
@@ -39,7 +39,8 @@ export default function ObjectManagement(props: any) {
         if (assetsReducer?.saveDataFlowObjectManagementReducer?.class!==undefined) {
             setChooseAsset(assetsReducer?.saveDataFlowObjectManagementReducer?.class || "")
         } else {
-            setChooseAsset(props?.classData[0]?.assetName || "")
+            let data = props?.classData && props?.classData.length > 0 ? props?.classData[0]?.assetName : '';
+            setChooseAsset(data)
         }
     }, [assetsReducer?.saveDataFlowObjectManagementReducer, props.classData])
 
@@ -63,7 +64,6 @@ export default function ObjectManagement(props: any) {
     // Set the choose asset on page load
     useEffect(() => {
         if (props?.classData && props?.classData?.length > 0) {
-            // setChooseAsset(props.classData[0]?.assetName);
             dispatch(objDefaultClassSelectorFunction(props?.classData[0]?.assetName || ""))
         }
     }, [props?.classData])
