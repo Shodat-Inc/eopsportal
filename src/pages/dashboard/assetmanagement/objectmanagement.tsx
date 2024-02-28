@@ -18,7 +18,7 @@ export default function ObjectManagement(props: any) {
     const dispatch = useDispatch<any>();
     const [toggleFilter, setToggleFilter] = useState(false);
     const [toggleArrow, setToggleArrow] = useState(false);
-    const [chooseAsset, setChooseAsset] = useState(props.classData[0]?.assetName);
+    const [chooseAsset, setChooseAsset] = useState(props?.classData[0]?.assetName || "");
     const [toggleAsset, setToggleAsset] = useState(false);
     const [actions, setActions] = useState(false);
     const [actionCount, setActionCount] = useState(1);
@@ -39,13 +39,13 @@ export default function ObjectManagement(props: any) {
         if (assetsReducer?.saveDataFlowObjectManagementReducer?.class!==undefined) {
             setChooseAsset(assetsReducer?.saveDataFlowObjectManagementReducer?.class)
         } else {
-            setChooseAsset(props.classData[0]?.assetName)
+            setChooseAsset(props?.classData[0]?.assetName || "")
         }
     }, [assetsReducer?.saveDataFlowObjectManagementReducer, props.classData])
 
     // Close Success message after 5 second if true
     useEffect(() => {
-        if (classSelector && classSelector.successMessageReducer === true) {
+        if (classSelector && classSelector?.successMessageReducer === true) {
             setTimeout(() => {
                 dispatch(successMessageAction(false))
             }, 5000)
@@ -62,11 +62,11 @@ export default function ObjectManagement(props: any) {
 
     // Set the choose asset on page load
     useEffect(() => {
-        if (props.classData && props.classData.length > 0) {
+        if (props?.classData && props?.classData?.length > 0) {
             // setChooseAsset(props.classData[0]?.assetName);
-            dispatch(objDefaultClassSelectorFunction(props.classData[0]?.assetName))
+            dispatch(objDefaultClassSelectorFunction(props?.classData[0]?.assetName))
         }
-    }, [props.classData])
+    }, [props?.classData])
 
     const toggleActions = (item: any) => {
         setActionCount(item);
@@ -150,7 +150,7 @@ export default function ObjectManagement(props: any) {
                     let filtered = response.data.filter((item: any) => {
                         return item.parentAssetName === chooseAsset
                     })
-                    if (filtered && filtered.length >= 0) {
+                    if (filtered && filtered?.length >= 0) {
                         let headArray = filtered[0]?.subObjects;
                         setTableHeader(headArray)
                         setObjectData(filtered);

@@ -47,7 +47,7 @@ export default function AssetManagement() {
 
             }).then(function (response) {
                 if (response) {
-                    setClassData(response.data)
+                    setClassData(response?.data)
                 }
             }).catch(function (error) {
                 console.log({
@@ -71,8 +71,8 @@ export default function AssetManagement() {
 
     useEffect(() => {
         if (classData && classData.length > 0) {
-            setDefaultClass(classData[0]?.assetName)
-            dispatch(setSelectedClass(classData[0]?.assetName))
+            setDefaultClass(classData[0]?.assetName || "")
+            dispatch(setSelectedClass(classData[0]?.assetName || ""))
         }
     }, [classData, dispatch])
 
@@ -403,7 +403,7 @@ export default function AssetManagement() {
                             <ClassManagement
                                 handleaddClassModal={handleaddClassModal}
                                 addClassModal={addClassModal}
-                                classData={classData && classData.length > 0 ? classData : []}
+                                classData={classData && classData?.length > 0 ? classData : []}
                                 handelsubClass={handelsubClass}
                                 tab={1}
                             />
@@ -413,8 +413,8 @@ export default function AssetManagement() {
                             <SubClassManagement
                                 handleaddSubClassModal={handleaddSubClassModal}
                                 addSubClassModal={addSubClassModal}
-                                classData={classData && classData.length > 0 ? classData : []}
-                                selectedParentClass={defaultClass ? defaultClass : getSelClass.selectedClass}
+                                classData={classData && classData?.length > 0 ? classData : []}
+                                selectedParentClass={defaultClass ? defaultClass : getSelClass?.selectedClass}
                                 tab={4}
                             />
                         }
