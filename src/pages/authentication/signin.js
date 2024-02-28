@@ -367,7 +367,7 @@ export default function SignIn() {
 
                     {/* Content section */}
                     <div className='w-full mt-20 flex justify-center items-start'>
-                        <div className='border border-[#D9D9D9] rounded rounded-lg p-6 w-[70%] mb-10'>
+                        <div className='border border-[#D9D9D9] rounded-lg p-6 w-[70%] mb-10'>
 
                             {
                                 otpScreen ?
@@ -403,7 +403,7 @@ export default function SignIn() {
                             {
                                 !otpScreen ?
                                     <form method='post' onSubmit={submitForm}>
-                                        <div className={`mb-5 lg:w-full small:w-full small:w-full ${styles.form__wrap}`}>
+                                        <div className={`mb-5 lg:w-full small:w-full ${styles.form__wrap}`}>
                                             <div className={`relative ${styles.form__group} font-OpenSans`}>
                                                 <input
                                                     type="text"
@@ -433,7 +433,7 @@ export default function SignIn() {
                                             </span>
                                         </div>
 
-                                        <div className={`mb-2 lg:w-full small:w-full small:w-full ${styles.form__wrap}`}>
+                                        <div className={`mb-2 lg:w-full small:w-full ${styles.form__wrap}`}>
                                             <div className={`relative ${styles.form__group} font-OpenSans`}>
                                                 <input
                                                     type={showPass ? 'text' : 'currentPassword'}
@@ -495,7 +495,7 @@ export default function SignIn() {
                                             </div>
                                             <button
                                                 // href="/authentication/complete-individual" 
-                                                className='bg-yellow-951 min-w-[111px] flex justify-center items-center rounded rounded-xl py-4 px-2 font-semibold'
+                                                className='bg-yellow-951 min-w-[111px] flex justify-center items-center rounded-xl py-4 px-2 font-semibold'
                                                 // disabled={success ? true : false}
                                             >
                                                 {/* <span>Next</span> */}
@@ -513,7 +513,7 @@ export default function SignIn() {
                                                     return (
                                                         <input
                                                             type="text"
-                                                            className="rounded rounded-lg border border-gray-972 shadow shadow-lg h-[46px] pl-1 pr-1 w-[55px] text-center mr-4 text-xl font-semibold"
+                                                            className="rounded-lg border border-gray-972 shadow-lg h-[46px] pl-1 pr-1 w-[55px] text-center mr-4 text-xl font-semibold"
                                                             name="otp"
                                                             maxLength={1}
                                                             key={index}
@@ -559,7 +559,7 @@ export default function SignIn() {
                                         <div className='relative justify-start items-start flex flex-wrap flex-col w-full mb-2'>
                                             <button
                                                 onClick={verifyOtpFunction}
-                                                className="bg-yellow-951 min-w-[111px] flex justify-center items-center rounded rounded-xl py-4 px-2 font-semibold"
+                                                className="bg-yellow-951 min-w-[111px] flex justify-center items-center rounded-xl py-4 px-2 font-semibold"
                                             >
                                                 <span className='flex justify-center items-center'>
                                                     <span>Verify OTP</span>

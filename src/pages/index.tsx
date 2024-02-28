@@ -38,7 +38,7 @@ export default function Home() {
               <Link href="">Help</Link>
             </li>
             <li>
-              <Link href="">Sign in</Link>
+              <Link href="/authentication/signin">Sign in</Link>
             </li>
           </ul>
         </div>

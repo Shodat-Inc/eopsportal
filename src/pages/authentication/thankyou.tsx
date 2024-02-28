@@ -8,7 +8,7 @@ export default function Enterprise() {
     const router = useRouter();
     const goBackToHome = () => {
         setTimeout(() => {
-            router.push('/authentication/thankyou');
+            router.push('/');
         }, 10)
     }
 

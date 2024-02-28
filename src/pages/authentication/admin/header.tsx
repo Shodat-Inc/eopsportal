@@ -17,10 +17,10 @@ export default function Header() {
             </Link>
             <ul className='flex justify-between items-center min-w-[250px]'>
                 <li>
-                    <button className='h-[37px] text-black bg-yellow-951 px-3 text-sm flex justify-center items-center rounded rounded-xl'>Plans and pricing</button>
+                    <button className='h-[37px] text-black bg-yellow-951 px-3 text-sm flex justify-center items-center rounded-xl'>Plans and pricing</button>
                 </li>
                 <li><Link href="#">Help</Link></li>
-                <li><Link href="#">Sign In</Link></li>
+                <li><Link href="/authentication/signin">Sign In</Link></li>
             </ul>
         </div>
     )
