@@ -37,7 +37,7 @@ export default function ObjectManagement(props: any) {
 
     useEffect(()=>{
         if (assetsReducer?.saveDataFlowObjectManagementReducer?.class!==undefined) {
-            setChooseAsset(assetsReducer?.saveDataFlowObjectManagementReducer?.class)
+            setChooseAsset(assetsReducer?.saveDataFlowObjectManagementReducer?.class || "")
         } else {
             setChooseAsset(props?.classData[0]?.assetName || "")
         }
@@ -64,7 +64,7 @@ export default function ObjectManagement(props: any) {
     useEffect(() => {
         if (props?.classData && props?.classData?.length > 0) {
             // setChooseAsset(props.classData[0]?.assetName);
-            dispatch(objDefaultClassSelectorFunction(props?.classData[0]?.assetName))
+            dispatch(objDefaultClassSelectorFunction(props?.classData[0]?.assetName || ""))
         }
     }, [props?.classData])
 
