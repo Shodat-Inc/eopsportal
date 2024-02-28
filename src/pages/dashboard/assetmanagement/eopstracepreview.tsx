@@ -117,9 +117,9 @@ export default function EopsTracePreview() {
         axios.get("/api/getBattery").then((response) => {
             if (response.data) {
 
-                console.log({
-                    response: response.data
-                })
+                // console.log({
+                //     response: response.data
+                // })
 
                 const filtered = response.data.filter((item: any) => {
 
@@ -137,14 +137,14 @@ export default function EopsTracePreview() {
 
                 });
 
-                console.log({
-                    consition1: routerParams.objectID || classSelector?.dataforeopswatchReducer?.class,
-                    consition2: routerParams.key || classSelector?.dataforeopswatchReducer?.subClassObjValue,
-                    consition3: routerParams.model || classSelector?.dataforeopswatchReducer?.model,
+                // console.log({
+                //     consition1: routerParams.objectID || classSelector?.dataforeopswatchReducer?.class,
+                //     consition2: routerParams.key || classSelector?.dataforeopswatchReducer?.subClassObjValue,
+                //     consition3: routerParams.model || classSelector?.dataforeopswatchReducer?.model,
 
-                    response: response.data,
-                    filtered: filtered
-                })
+                //     response: response.data,
+                //     filtered: filtered
+                // })
 
                 if (filtered && filtered.length > 0) {
                     setObjdata(filtered);

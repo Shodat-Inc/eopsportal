@@ -39,10 +39,10 @@ export default function Preview() {
     const toggleExpend = () => {
         setExpend(!expend)
     }
-    console.log({
-        getSelClass: getSelClass,
-        classSelector: classSelector
-    })
+    // console.log({
+    //     getSelClass: getSelClass,
+    //     classSelector: classSelector
+    // })
 
     const authenticationType = [
         "Basic", "Client Certificate", "Active Directory OAuth", "Raw", "Managed Identity"
@@ -147,11 +147,11 @@ export default function Preview() {
         return item.folder === "Production"
     })
 
-    console.log({
-        data: data,
-        filteredDataTest: filteredDataTest,
-        filteredDataProduction: filteredDataProduction
-    })
+    // console.log({
+    //     data: data,
+    //     filteredDataTest: filteredDataTest,
+    //     filteredDataProduction: filteredDataProduction
+    // })
 
     const hasParams = routerParams.hasOwnProperty("PlantID");
     const hasObjectParams = routerParams.hasOwnProperty("subObject")

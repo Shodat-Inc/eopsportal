@@ -94,9 +94,9 @@ export default function AddAlerts(localData: any) {
         const filtered = templates.filter((item: any) => {
             return item.templateName === targetValue;
         });
-        console.log({
-            filtered: filtered
-        })
+        // console.log({
+        //     filtered: filtered
+        // })
         setEmailTemplate(filtered[0]?.templateName)
         setSelectTemplate(filtered[0])
     }
@@ -109,10 +109,10 @@ export default function AddAlerts(localData: any) {
         let currentDate = new Date().toISOString().split('T')[0];
         let currentTime = new Date().toISOString().split('T')[1];
         let currentDateTime = currentDate + " " + currentTime.split(".")[0];
-        console.log({
-            formData: formData,
-            currentDateTime: currentDateTime
-        })
+        // console.log({
+        //     formData: formData,
+        //     currentDateTime: currentDateTime
+        // })
         axios.post('/api/addAlerts', {
 
             ID: parseInt(getLastID) + 1,

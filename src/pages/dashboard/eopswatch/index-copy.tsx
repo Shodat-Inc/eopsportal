@@ -163,10 +163,10 @@ export default function EopsWatch() {
                     setObjectData(filtered);
                 }
 
-                console.log({
-                    filteredData:filteredData,
-                    filtered:filtered
-                })
+                // console.log({
+                //     filteredData:filteredData,
+                //     filtered:filtered
+                // })
 
             }
         });

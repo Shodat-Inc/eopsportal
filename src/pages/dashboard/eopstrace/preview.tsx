@@ -121,12 +121,12 @@ export default function Preview() {
         return item.folder === "Production"
     })
 
-    console.log({
-        // data:data,
-        // filteredDataTest:filteredDataTest,
-        // filteredDataProduction:filteredDataProduction
-        "___routerParams": routerParams
-    })
+    // console.log({
+    //     // data:data,
+    //     // filteredDataTest:filteredDataTest,
+    //     // filteredDataProduction:filteredDataProduction
+    //     // "___routerParams": routerParams
+    // })
 
     const goToRaisedAlertComponent = () => {
         let data = {

@@ -182,10 +182,10 @@ export default function ObjectManagement(props: any) {
             return;
         }
         let classObjKey = chooseAsset === 'Manufacturing Plants' ? 'PlantID' : 'VIN';
-        console.log({
-            SearchString: e.target.value,
-            objectData: objectData
-        })
+        // console.log({
+        //     SearchString: e.target.value,
+        //     objectData: objectData
+        // })
         if (objectData && objectData.length > 0) {
             const filtered = objectData.filter((item: any) => {
                 if (item.hasOwnProperty("subObjectName")) {

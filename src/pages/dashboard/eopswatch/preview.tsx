@@ -32,9 +32,9 @@ export default function Preview() {
     useEffect(()=>{
         if(routerParams?.tab && routerParams?.tab!=="") {
             setDefaultTab(routerParams?.tab as any)
-            console.log({
-                "____TAB":routerParams?.tab
-            })
+            // console.log({
+            //     "____TAB":routerParams?.tab
+            // })
         }
     }, [routerParams?.tab])
     const [defaultAuthType, setDefaultAuthType] = useState(authenticationType[0]);
@@ -124,11 +124,11 @@ export default function Preview() {
         return item.folder === "Production"
     })
 
-    console.log({
-        data: data,
-        filteredDataTest: filteredDataTest,
-        filteredDataProduction: filteredDataProduction
-    })
+    // console.log({
+    //     data: data,
+    //     filteredDataTest: filteredDataTest,
+    //     filteredDataProduction: filteredDataProduction
+    // })
 
     const hasParams = routerParams.hasOwnProperty("PlantID");
     const hasObjectParams = routerParams.hasOwnProperty("subObject")

@@ -511,10 +511,10 @@ export default function AiModelDetection() {
         }
     }, [classSelector?.dataforeopswatchReducer?.datafor])
 
-    console.log({
-        "__showSubClassTABLE":showSubClass,
-        "__showSubObjTableTABLE":showSubObjTable
-    })
+    // console.log({
+    //     "__showSubClassTABLE":showSubClass,
+    //     "__showSubObjTableTABLE":showSubObjTable
+    // })
 
     return (
         <div className="font-OpenSans w-full">

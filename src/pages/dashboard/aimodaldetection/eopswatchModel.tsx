@@ -189,8 +189,8 @@ export default function EopsWatchModel() {
                             >
 
                                 {
-                                    splitEvery(automotiveModels, 3).map((itemsChunk: any) => (
-                                        <div className="flex justify-start items-center mb-5 pt-3 pl-2">
+                                    splitEvery(automotiveModels, 3).map((itemsChunk: any, index:any) => (
+                                        <div className="flex justify-start items-center mb-5 pt-3 pl-2" key={index}>
                                             {itemsChunk.map((item: any, i: any) => (
                                                 <div key={i} className={`h-[422px] w-[320px] overflow-hidden rounded rounded-xl relative bg-white p-3 shadow ${i % 3 === 0 ? 'ml-0' : 'ml-5'}`}>
                                                     <Image

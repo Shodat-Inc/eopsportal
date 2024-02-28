@@ -397,7 +397,7 @@ export default function ChildObject(localData: any) {
                                                                 <td>{index + 1}</td>
                                                                 {
                                                                     Object.values(items?.tags).map((item: any, i: any) => (
-                                                                        <td className="">
+                                                                        <td className="" key={i}>
                                                                             <Link
                                                                                 key={i}
                                                                                 href={{

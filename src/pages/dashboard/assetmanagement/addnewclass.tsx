@@ -171,13 +171,13 @@ export default function AddNewClass(props: any) {
 
     return (
         <>
-            <div className={`bg-white h-full z-[11] fixed top-0 right-0 p-5 shadow shadow-lg ${props.show === true ? `${styles.objectContainer} ${styles.sliderShow}` : `${styles.objectContainer}`}`}>
+            <div className={`bg-white h-full z-[11] fixed top-0 right-0 p-5 shadow-lg ${props.show === true ? `${styles.objectContainer} ${styles.sliderShow}` : `${styles.objectContainer}`}`}>
 
                 <div className="flex justify-between items-center w-full mb-3">
                     <h2 className="font-semibold text-lg">Add New Class</h2>
                     <button 
                     onClick={closeModal}
-                    className="transition-all duration-[100ms] transition-opacity duration-100 outline-none transform active:scale-75 transition-transform"
+                    className="outline-none transform active:scale-75 transition-transform"
                     >
                         <Image
                             src="/img/x.svg"
@@ -205,7 +205,7 @@ export default function AddNewClass(props: any) {
                                         value={1}
                                     />
 
-                                    <div className={`mb-5 lg:w-full small:w-full small:w-full ${styles.form__wrap}`}>
+                                    <div className={`mb-5 lg:w-full small:w-full ${styles.form__wrap}`}>
                                         <div className={`relative ${styles.form__group} font-OpenSans`}>
                                             <input
                                                 type="text"
@@ -236,7 +236,7 @@ export default function AddNewClass(props: any) {
                                                             className="rounded-lg inline-flex justify-center items-center h-8 pl-2 pr-2 bg-[#F2F1F1] text-black text-[14px] mr-2 mb-2">
                                                             {items}
                                                             <button
-                                                                className="rounded-full border-2 border-white h-[24px] w-[24px] inline-flex justify-center items-center ml-3 transition-all duration-[100ms] transition-opacity duration-100 outline-none transform active:scale-75 transition-transform"
+                                                                className="rounded-full border-2 border-white h-[24px] w-[24px] inline-flex justify-center items-center ml-3 outline-none transform active:scale-75 transition-transform"
                                                                 onClick={() => removeElement(items)}
                                                             >
                                                                 <Image
@@ -253,7 +253,7 @@ export default function AddNewClass(props: any) {
 
                                         {
                                             showInput ?
-                                                <span className="flex justify-center items-center mb-2 hidden">
+                                                <span className="justify-center items-center mb-2 hidden">
                                                     <input
                                                         type="text"
                                                         placeholder="Tag Name"
@@ -263,14 +263,14 @@ export default function AddNewClass(props: any) {
                                                         required
                                                     />
                                                     <button
-                                                        className={`transition-all duration-[100ms] transition-opacity duration-100 outline-none transform active:scale-75 transition-transform text-black border border-transparent rounded inline-flex justify-center items-center text-sm h-8 px-2 ml-1 bg-yellow-951 ${dataType && (dataType != null || dataType != "") ? 'okay' : 'disabled disabled:bg-gray-300'}`}
+                                                        className={`outline-none transform active:scale-75 transition-transform text-black border border-transparent rounded inline-flex justify-center items-center text-sm h-8 px-2 ml-1 bg-yellow-951 ${dataType && (dataType != null || dataType != "") ? 'okay' : 'disabled disabled:bg-gray-300'}`}
                                                         onClick={saveNewTag}
                                                         disabled={dataType && (dataType != null || dataType != "") ? false : true}
                                                     >
                                                         Add
                                                     </button>
                                                     <button
-                                                        className="transition-all duration-[100ms] transition-opacity duration-100 outline-none transform active:scale-75 transition-transform text-white border border-transparent rounded inline-flex justify-center items-center text-sm h-8 px-2 ml-1 bg-red-600"
+                                                        className="outline-none transform active:scale-75 transition-transform text-white border border-transparent rounded inline-flex justify-center items-center text-sm h-8 px-2 ml-1 bg-red-600"
                                                         onClick={cancelAddingTag}
                                                     >
                                                         Cancel
@@ -282,7 +282,7 @@ export default function AddNewClass(props: any) {
 
 
                                         <button
-                                            className={`transition-all duration-[100ms] transition-opacity duration-100 outline-none transform active:scale-75 transition-transform text-black text-sm inline-flex justify-center items-center text-lg h-8 mb-2 px-2 mt-0 rounded rounded-lg font-semibold ${showHideAddTagButton ? 'bg-gray-951' : 'bg-yellow-951'}`}
+                                            className={` outline-none transform active:scale-75 transition-transform text-black inline-flex justify-center items-center text-lg h-8 mb-2 px-2 mt-0 rounded-lg font-semibold ${showHideAddTagButton ? 'bg-gray-951' : 'bg-yellow-951'}`}
                                             onClick={addTags}
                                             disabled={showHideAddTagButton}
                                         >
@@ -297,7 +297,7 @@ export default function AddNewClass(props: any) {
 
 
                                         <button
-                                            className={`transition-all duration-[100ms] transition-opacity duration-100 outline-none transform active:scale-75 transition-transform absolute right-1 top-5 ${allTags && allTags.length > 0 ? 'hidden' : ''} `}
+                                            className={`outline-none transform active:scale-75 transition-transform absolute right-1 top-5 ${allTags && allTags.length > 0 ? 'hidden' : ''} `}
                                             onClick={addTags}
                                         >
                                             <Image
@@ -310,13 +310,13 @@ export default function AddNewClass(props: any) {
                                     </div>
 
                                     {toggleDT ?
-                                        <div className="rounded rounded-lg border border-gray-500 min-h-[150px] mt-[1px] pl-2 pr-2 w-full pt-2 pb-2 bg-white absolute top-[100%] right-0 z-10">
+                                        <div className="rounded-lg border border-gray-500 min-h-[150px] mt-[1px] pl-2 pr-2 w-full pt-2 pb-2 bg-white absolute top-[100%] right-0 z-10">
 
                                             <span className="flex justify-center items-center mb-3">
                                                 <input
                                                     type="text"
                                                     placeholder="Enter tag name"
-                                                    className="border border-gray-951 rounded rounded-lg py-[5px] px-[5px] w-full mr-2 h-12 text-sm"
+                                                    className="border border-gray-951 rounded-lg py-[5px] px-[5px] w-full mr-2 h-12 text-sm"
                                                     value={newTag}
                                                     onChange={(e) => setNewTag(e.target.value)}
 
@@ -444,13 +444,13 @@ export default function AddNewClass(props: any) {
 
                             <div className="mb-0 relative flex justify-end items-center w-full">
                                 <button
-                                    className="border border-black rounded-lg bg-black text-white text-lg w-20 h-12 mr-5 hover:bg-yellow-951 hover:text-white hover:border-yellow-951 ease-in-out duration-300 disabled:bg-gray-951 disabled:hover:border-gray-951 disabled:border-gray-951 transition-all duration-[100ms] transition-opacity duration-100 outline-none transform active:scale-75 transition-transform"
+                                    className="border border-black rounded-lg bg-black text-white text-lg w-20 h-12 mr-5 hover:bg-yellow-951 hover:text-white hover:border-yellow-951 ease-in-out  disabled:bg-gray-951 disabled:hover:border-gray-951 disabled:border-gray-951  duration-100 outline-none transform active:scale-75 transition-transform"
                                     disabled={(allTags && allTags.length > 0) ? false : true}
                                 >
                                     Save
                                 </button>
                                 <button
-                                    className="border border-black rounded-lg bg-white text-black text-lg w-24 h-12 hover:text-white hover:bg-yellow-951 hover:border-yellow-951 ease-in-out duration-300 transition-all duration-[100ms] transition-opacity duration-100 outline-none transform active:scale-75 transition-transform"
+                                    className="border border-black rounded-lg bg-white text-black text-lg w-24 h-12 hover:text-white hover:bg-yellow-951 hover:border-yellow-951 ease-in-out duration-100 outline-none transform active:scale-75 transition-transform"
                                     onClick={cancelModal}
                                 >
                                     Cancel

@@ -39,9 +39,9 @@ export default function Alerts() {
 
     const sortData = () => {
         setSortIcon(!sortIcon)
-        console.log({
-            data: data
-        })
+        // console.log({
+        //     data: data
+        // })
 
         let newArr = sortIcon === false ? data.sort((a: any, b: any) => a.alertName.localeCompare(b.alertName)) : data.sort((a: any, b: any) => b.alertName.localeCompare(a.alertName))
         setData(newArr);

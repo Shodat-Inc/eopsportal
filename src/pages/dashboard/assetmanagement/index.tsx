@@ -22,9 +22,9 @@ export default function AssetManagement() {
 
     const classSelector = useSelector((state: any) => state.classReducer);
 
-    console.log({
-        "___classSelector":classSelector
-    })
+    // console.log({
+    //     "___classSelector":classSelector
+    // })
 
     
     useEffect(()=>{
@@ -161,9 +161,9 @@ export default function AssetManagement() {
 
     }, [classSelector])
 
-    console.log({
-        "___TAB":tab
-    })
+    // console.log({
+    //     "___TAB":tab
+    // })
 
 
     return (

@@ -17,9 +17,9 @@ export async function getServerSideProps() {
     }
 }
 export default function EopsWatch(props: any) {
-    console.log({
-        props: props
-    })
+    // console.log({
+    //     props: props
+    // })
     const [value, setValue] = useState("");
     const [data, setData] = useState([] as any);
     const [subObj, setSebObj] = useState({} as any);
@@ -134,11 +134,11 @@ export default function EopsWatch(props: any) {
     }
     // New Array after removing duplicate items
     const arr = removeDuplicates(filteredData)
-    console.log({
-        subClassData: subClassData,
-        filteredData: filteredData,
-        arr: arr
-    })
+    // console.log({
+    //     subClassData: subClassData,
+    //     filteredData: filteredData,
+    //     arr: arr
+    // })
 
 
 
@@ -156,9 +156,9 @@ export default function EopsWatch(props: any) {
         setShowHideTab(true);
     }
 
-    console.log({
-        chooseAsset: chooseAsset
-    })
+    // console.log({
+    //     chooseAsset: chooseAsset
+    // })
     // Hook that alerts clicks outside of the passed ref
     function useOutsideAlerter(ref: any) {
         useEffect(() => {

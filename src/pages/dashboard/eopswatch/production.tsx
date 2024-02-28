@@ -5,9 +5,9 @@ import Link from "next/dist/client/link";
 
 export default function Production(props: any) {
 
-    console.log({
-        "HERE PROPS PRODUCTION":props
-    })
+    // console.log({
+    //     "HERE PROPS PRODUCTION":props
+    // })
 
     const { data, routerParams } = props;
     const [showImageModal, setShowImageModal] = useState(false);
