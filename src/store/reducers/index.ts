@@ -5,6 +5,7 @@ import classReducer from "./classReducer";
 import apiReducer from "./apiReducer";
 import aimodaldetectionReducer from "./aimodaldetectionReducer";
 import userReducer from "./userReducer";
+import authenticationReducer from "./authenticationReducer";
 
 export default combineReducers({
   sampleData: sampleReducer,
@@ -12,5 +13,6 @@ export default combineReducers({
   classReducer: classReducer,
   apiReducer: apiReducer,
   aimodaldetectionReducer: aimodaldetectionReducer,
-  userReducer: userReducer
+  userReducer: userReducer,
+  authenticationReducer:authenticationReducer
 });
