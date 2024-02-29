@@ -80,7 +80,7 @@ export default function VerifyIndividual() {
         })
         let data = {
             "email": prevData?.email,
-            "otp": 34531
+            "otp": 59679
         }
         try {
             await axios({
@@ -135,7 +135,7 @@ export default function VerifyIndividual() {
                     {/* Content section */}
                     <div className="flex justify-center items-start w-full mt-10">
                         <div className="relative w-[70%]">
-                            <Link href="/" className="flex justify-start items-center font-semibold mb-5">
+                            <Link href="/authentication/individual" className="flex justify-start items-center font-semibold mb-5">
                                 <Image
                                     src="/img/auth/arrow-left-black.svg"
                                     alt="arrow-left-black"
@@ -143,7 +143,7 @@ export default function VerifyIndividual() {
                                     width={24}
                                     className='mr-2'
                                 />
-                                <span>Back to Sign in</span>
+                                <span>Back</span>
                             </Link>
 
                             {/* Form Fields */}
