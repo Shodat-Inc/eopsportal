@@ -42,6 +42,7 @@ export default async function runTest(params: any) {
     }
 
     // Increase the count of testRanCount
+    result.dataValues.image_url = image_url;
     const ranCount = await db.Image.findByPk(imageid);
 
     ranCount.testRanCount += 1;
