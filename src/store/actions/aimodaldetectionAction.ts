@@ -9,7 +9,27 @@ import {GET_CLASSNAME_FROM_CLASS_ID_SUCCESS, GET_CLASSNAME_FROM_CLASS_ID_ERROR} 
 import {GET_OBJECT_FROM_OBJECT_ID_SUCCESS, GET_OBJECT_FROM_OBJECT_ID_ERROR} from '../types'
 import {GET_SUB_CLASSNAME_FROM_SUB_CLASS_ID_SUCCESS, GET_SUB_CLASSNAME_FROM_SUB_CLASS_ID_ERROR} from '../types'
 import {GET_SUB_OBJECT_FROM_SUB_OBJECT_ID_SUCCESS, GET_SUB_OBJECT_FROM_SUB_OBJECT_ID_ERROR} from '../types'
+import { SAVE_RESPONSE_FROM_TEST_SUCCESS, SAVE_RESPONSE_FROM_TEST_ERROR } from '../types'
 import axios from "axios";
+
+// Save Response From Test
+export const saveResponseFromTestAction = (data: any) => async (dispatch: any) => {
+    try {
+        if (data) {
+            dispatch({
+                type: SAVE_RESPONSE_FROM_TEST_SUCCESS,
+                payload: data
+            });
+        } else {
+            dispatch({
+                type: SAVE_RESPONSE_FROM_TEST_ERROR,
+                payload: "ERROR"
+            });
+        }
+    } catch (err) {
+        console.log("ERROR IN ACTION:", err)
+    }
+};
 
 // Get all Modals
 export const getAllModelAction = () => async (dispatch: any) => {

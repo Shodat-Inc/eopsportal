@@ -22,6 +22,7 @@ export default function Result() {
     const parentAsset = router.query;
     const [loader, setLoader] = useState(true);
     const [data, setData] = useState([] as any);
+    const [alldata, setAllData] = useState([] as any);
     const classSelector = useSelector((state: any) => state.classReducer);
     const aimodaldetectionReducer = useSelector((state: any) => state.aimodaldetectionReducer);
     let navData = aimodaldetectionReducer?.dataForModalReducer
@@ -42,11 +43,11 @@ export default function Result() {
         dispatch(getSubObjectValueFromObjectID(navData?.subClassObject, navData?.subClass))
     }, [navData?.subClassObject, navData?.subClass])
 
-    console.log({
-        classSelector: classSelector,
-        aimodaldetectionReducer: aimodaldetectionReducer,
-        navData: navData
-    })
+    // console.log({
+    //     classSelector: classSelector,
+    //     aimodaldetectionReducer: aimodaldetectionReducer,
+    //     navData: navData
+    // })
 
     useEffect(() => {
         setTimeout(() => {
@@ -140,11 +141,7 @@ export default function Result() {
             return parseInt(item.performance) >= parseInt(e.target.value)
         })
         setPlotData(filtered)
-        // console.log({
-        //     "T-VALUE": e.target.value,
-        //     "filter":filtered,
-        //     plots:plots
-        // })
+
     }
 
     useEffect(() => {
@@ -157,11 +154,59 @@ export default function Result() {
 
     }, [value])
 
-    // console.log({
-    //     "VALUE": value,
-    //     plotData: plotData
-    // })
+    // GET DATA FROM modelObjectImageId
+    const getImageUrl = async () => {
+        let access_token = "" as any;
+        if (typeof window !== 'undefined') {
+            access_token = localStorage.getItem('authToken')
+        }
+        let modelID = aimodaldetectionReducer?.saveResponseFromTestReducer?.modelObjectImageId
+        console.log({
+            "modelID": modelID
+        })
+        try {
+            await axios({
+                method: 'GET',
+                url: `/api/getImageUrl?type=test&modelId=${modelID}`,
+                headers: {
+                    "Authorization": `Bearer ${access_token}`,
+                    "Content-Type": "application/json"
+                }
+            }).then(function (response) {
 
+                console.log({
+                    "response in getmodal": response?.data
+                })
+
+                if(response) {
+                    const filtered = response?.data?.data?.rows?.filter((item:any)=>{
+                        return item.modelObjectImageId === modelID
+                    })
+
+                    console.log({
+                        filtered:filtered
+                    })
+
+                    setAllData(filtered[0])
+                }                
+
+            }).catch(function (error) {
+                console.log({
+                    "ERROR": error
+                })
+            })
+        } catch (err) {
+            console.log("err in action:", err)
+        }
+    }
+    useEffect(()=>{
+        getImageUrl()
+    }, [aimodaldetectionReducer?.saveResponseFromTestReducer])
+
+
+    console.log({
+        "saveResponseFromTestReducer":aimodaldetectionReducer?.saveResponseFromTestReducer
+    })
 
     return (
         <div className="flex font-OpenSans">
@@ -320,186 +365,124 @@ export default function Result() {
 
                     {/* Images */}
 
-                    {
-                        loader ?
-                            <div className="relative w-full flex justify-center items-center h-96">
-                                <Image
-                                    src="/img/loading-gif.gif"
-                                    alt="loader"
-                                    height={124}
-                                    width={124}
-                                    className=""
-                                />
-                            </div>
-                            :
-                            <div className="relative mt-10 overflow-hidden rounded-xl">
-                                {
-                                    parentAsset.result ?
-                                        <div>
-                                            {
-                                                parentAsset.objectID && parentAsset.model === "Tire Wear Detection" && parentAsset.subObject === "Tire" ?
-                                                    <div className="relative mt-0 w-full flex flex-wrap justify-start items-start">
-                                                        <div className="relative w-[45%]">
-                                                            <div className="bg-gray-951 flex justify-center items-center rounded-xl overflow-hidden relative">
-                                                                <Image
-                                                                    src={data ? data[0]?.resultImage : parentAsset?.result?.toString()}
-                                                                    alt="Result"
-                                                                    height={700}
-                                                                    width={500}
-                                                                    className="h-auto w-auto"
-                                                                />
-                                                            </div>
-                                                        </div>
-                                                        <div className="relative pl-10 w-[55%]">
-                                                            <p className="mb-2 p-0 text-black text-xl font-semibold">Predictions </p>
-                                                            {
-                                                                data ?
-                                                                    <>
-                                                                        <Image
-                                                                            src={data[0]?.threshold}
-                                                                            alt="Result"
-                                                                            height={300}
-                                                                            width={300}
-                                                                        // className="mb-2 h-auto w-auto"
-                                                                        />
-                                                                    </>
-                                                                    : null
-                                                            }
-                                                        </div>
+
+                    <div className="relative mt-10 overflow-hidden rounded-xl">
+                        {
+                            <div className="relative mt-0 w-full flex flex-wrap justify-start items-start">
+                                <div className="relative w-[45%]">
+                                    <Image
+                                        // src="/img/CrackDetection/TPC3305-01-011/Test/PipeTest2ResultNew.png"
+                                        src={alldata ? alldata?.url : '/img/CrackDetection/TPC3305-01-011/Test/PipeTest2ResultNew.png'}
+                                        alt="Result"
+                                        height={700}
+                                        width={500}
+                                        className="h-auto w-auto"
+                                    />
+                                    <div className="absolute h-full w-full top-0 left-0">
+                                        {
+                                            // plotData.map((item: any, index: any) => (
+                                            //     <svg
+                                            //         width={item.w + 30}
+                                            //         height={item.h + 30}
+                                            //         key={index}
+                                            //         className={`${styles.svgRect}`}
+                                            //     >
+                                            //         <rect
+                                            //             x={item.x}
+                                            //             y={item.y}
+                                            //             width={item.w}
+                                            //             height={item.h}
+                                            //         />
+                                            //     </svg>
+                                            // ))
+                                        }
+                                    </div>
+                                </div>
+                                <div className="relative pl-10 w-[55%]">
+                                    <p className="mb-2 p-0 text-black text-xl font-semibold">My Objects</p>
+                                    <Image
+                                        src="/img/Crop.png"
+                                        alt="Result"
+                                        height={87}
+                                        width={131}
+                                        className="mb-2"
+                                    />
+                                    <p className="mb-4 p-0 text-black text-normal font-normal">To create an object, hover and select the region in the image</p>
+
+                                    <p className="mb-0 p-0 text-black text-xl font-semibold">Predictions </p>
+                                    <p className="mb-4 p-0 text-normal font-normal"><span className="text-gray-951">Predictions are shown in </span><span className="text-red-500">red</span></p>
+
+                                    {
+                                        data ?
+                                            <>
+                                                <p className="mb-2 p-0 text-black text-xl font-semibold">Threshold Value</p>
+
+                                                <div className="mb-3">
+                                                    <div className="relative mb-1 h-[20px] w-[380px] inline-block">
+                                                        <span className={`absolute left-0 top-0 font-bold text-xl`}>{value}%</span>
                                                     </div>
 
-                                                    :
-                                                    <div className="relative mt-0 w-full flex flex-wrap justify-start items-start">
-                                                        <div className="relative w-[45%]">
-                                                            <Image
-                                                                // src="/img/CrackDetection/TPC3305-01-011/Test/PipeTest2ResultNew.png"
-                                                                src={data ? data[0]?.resultImage : parentAsset?.result?.toString()}
-                                                                alt="Result"
-                                                                height={700}
-                                                                width={500}
-                                                                className="h-auto w-auto"
-                                                            />
-                                                            <div className="absolute h-full w-full top-0 left-0">
-                                                                {
-                                                                    plotData.map((item: any, index: any) => (
-                                                                        <svg
-                                                                            width={item.w + 30}
-                                                                            height={item.h + 30}
-                                                                            key={index}
-                                                                            className={`${styles.svgRect}`}
-                                                                        >
-                                                                            <rect
-                                                                                x={item.x}
-                                                                                y={item.y}
-                                                                                width={item.w}
-                                                                                height={item.h}
-                                                                            />
-                                                                        </svg>
-                                                                    ))
-                                                                }
-                                                            </div>
-                                                        </div>
-                                                        <div className="relative pl-10 w-[55%]">
-                                                            <p className="mb-2 p-0 text-black text-xl font-semibold">My Objects</p>
-                                                            <Image
-                                                                src="/img/Crop.png"
-                                                                alt="Result"
-                                                                height={87}
-                                                                width={131}
-                                                                className="mb-2"
-                                                            />
-                                                            <p className="mb-4 p-0 text-black text-normal font-normal">To create an object, hover and select the region in the image</p>
+                                                    {/*<div className={`${styles.rangeSlider}`}>
+                                                        <input
+                                                            type="range"
+                                                            max={100}
+                                                            min={0}
+                                                            step={1}
+                                                            value={value}
+                                                            defaultValue={data[0]?.thresholdValue}
+                                                            onChange={handleRange}
+                                                            title={data[0]?.thresholdValue.toString()}
+                                                        />
+                                                    </div>*/}
 
-                                                            <p className="mb-0 p-0 text-black text-xl font-semibold">Predictions </p>
-                                                            <p className="mb-4 p-0 text-normal font-normal"><span className="text-gray-951">Predictions are shown in </span><span className="text-red-500">red</span></p>
+                                                </div>
 
-                                                            {
-                                                                data ?
-                                                                    <>
-                                                                        <p className="mb-2 p-0 text-black text-xl font-semibold">Threshold Value</p>
+                                                {/* <Image
+                                                    src={data[0]?.threshold}
+                                                    alt="Result"
+                                                    height={70}
+                                                    width={290}
+                                                    className="mb-2 h-auto w-auto"
+                                                /> */}
+                                            </>
+                                            : null
+                                    }
 
-                                                                        <div className="mb-3">
-                                                                            <div className="relative mb-1 h-[20px] w-[380px] inline-block">
-                                                                                <span className={`absolute left-0 top-0 font-bold text-xl`}>{value}%</span>
-                                                                            </div>
+                                    <p className="mb-4 p-0 text-black text-normal font-normal">Only show suggested objects if the probability is above the selected threshold</p>
 
-                                                                            <div className={`${styles.rangeSlider}`}>
-                                                                                <input
-                                                                                    type="range"
-                                                                                    max={100}
-                                                                                    min={0}
-                                                                                    step={1}
-                                                                                    value={value}
-                                                                                    defaultValue={data[0]?.thresholdValue}
-                                                                                    onChange={handleRange}
-                                                                                    title={data[0]?.thresholdValue.toString()}
-                                                                                />
-                                                                            </div>
-                                                                        </div>
+                                    {
+                                        data ?
+                                            <div className={`relative h-[160px] overflow-y-auto rounded-xl ${styles.viewTableWrap}`}>
+                                                <table className={`table-auto min-w-full text-left rounded-xl ${styles.viewTable}`}>
+                                                    <thead className="bg-orange-951 text-black rounded-xl h-10 text-sm font-normal">
+                                                        <tr className="">
+                                                            <th>Tag</th>
+                                                            <th>Probability</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody className="cursor-pointer">
+                                                        {
+                                                            // data[0]?.thresholdTags.map((item: any, index: any) => (
+                                                            //     <tr>
+                                                            //         <td className="text-black text-lg font-semibold">Crack</td>
+                                                            //         <td><span className="text-black rounded-xl bg-yellow-951 py-1 px-3">{item.Crack}%</span></td>
+                                                            //     </tr>
+                                                            // ))
+                                                        }
 
-                                                                        {/* <Image
-                                                                            src={data[0]?.threshold}
-                                                                            alt="Result"
-                                                                            height={70}
-                                                                            width={290}
-                                                                            className="mb-2 h-auto w-auto"
-                                                                        /> */}
-                                                                    </>
-                                                                    : null
-                                                            }
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            : null
+                                    }
+                                </div>
 
-                                                            <p className="mb-4 p-0 text-black text-normal font-normal">Only show suggested objects if the probability is above the selected threshold</p>
-
-                                                            {
-                                                                data ?
-                                                                    <div className={`relative h-[160px] overflow-y-auto rounded-xl ${styles.viewTableWrap}`}>
-                                                                        <table className={`table-auto min-w-full text-left rounded-xl ${styles.viewTable}`}>
-                                                                            <thead className="bg-orange-951 text-black rounded-xl h-10 text-sm font-normal">
-                                                                                <tr className="">
-                                                                                    <th>Tag</th>
-                                                                                    <th>Probability</th>
-                                                                                </tr>
-                                                                            </thead>
-                                                                            <tbody className="cursor-pointer">
-                                                                                {
-                                                                                    data[0]?.thresholdTags.map((item: any, index: any) => (
-                                                                                        <tr>
-                                                                                            <td className="text-black text-lg font-semibold">Crack</td>
-                                                                                            <td><span className="text-black rounded-xl bg-yellow-951 py-1 px-3">{item.Crack}%</span></td>
-                                                                                        </tr>
-                                                                                    ))
-                                                                                }
-
-                                                                            </tbody>
-                                                                        </table>
-                                                                    </div>
-                                                                    : null
-                                                            }
-                                                        </div>
-
-                                                    </div>
-                                            }
-                                        </div>
-                                        :
-                                        <div className="text-xl font-semibold w-full text-center flex flex-wrap flex-col items-center justify-center">
-                                            <Image
-                                                src="/img/no_image_icon.svg"
-                                                alt="no image"
-                                                height={100}
-                                                width={100}
-                                                className="inline-block"
-                                            />
-                                            <span className="mt-3">No Image Found!! </span>
-                                        </div>
-                                }
                             </div>
-                    }
+                        }
+                    </div>
+
 
                 </div>
-            </div>
-
-            <div className="w-[16%] pl-5 hidden">
-                <Template />
             </div>
 
         </div>

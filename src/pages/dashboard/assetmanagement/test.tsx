@@ -5,12 +5,13 @@ import NoDataFound from "../../../common/nodatafound";
 import Link from "next/dist/client/link";
 import Router from 'next/router'
 import moment from 'moment';
-import { getImageUrlDataAction } from "@/store/actions/aimodaldetectionAction";
+import axios from "axios";
+import { getImageUrlDataAction, saveResponseFromTestAction } from "@/store/actions/aimodaldetectionAction";
 
 export default function Test(props: any) {
-    console.log({
-        "HERE PROPS": props
-    })
+    // console.log({
+    //     "HERE PROPS": props
+    // })
     const dispatch = useDispatch<any>()
     const [showImageModal, setShowImageModal] = useState(false);
     const [resImage, setResImage] = useState("");
@@ -28,16 +29,9 @@ export default function Test(props: any) {
 
     // Dispatch Action for get model images
     useEffect(() => {
-        // let type = props?.tab;
-        // console.log({
-        //     "TYPE":props?.tab
-        // })
         dispatch(getImageUrlDataAction(aimodaldetectionReducer?.dataForModalReducer?.modelID, props?.tab))
     }, [aimodaldetectionReducer?.dataForModalReducer?.modelIDm, props?.tab])
 
-    // console.log({
-    //     "_____AAA___": aimodaldetectionReducer
-    // })
 
     useEffect(() => {
         setData(aimodaldetectionReducer?.getImageUrlDataReducer?.rows)
@@ -60,21 +54,55 @@ export default function Test(props: any) {
     const wrapperRef = useRef(null);
     useOutsideAlerter(wrapperRef);
 
-
-    const redirectToResultPage = () => {
-        setTimeout(() => {
-            Router.push({
-                pathname: '/dashboard/assetmanagement/result',
+    const redirectToResultPage = async (item: any) => {
+        var modelName = aimodaldetectionReducer?.dataForModalReducer?.model
+        var res = modelName.replace(/\s+/g, "");
+        const dataToPost = {
+            "modelName": res,
+            "modelObjectImageId": item?.modelObjectImageId,
+            "image_url": item?.url,
+        }
+        let access_token = "" as any;
+        if (typeof window !== 'undefined') {
+            access_token = localStorage.getItem('authToken')
+        }
+        try {
+            await axios({
+                method: 'POST',
+                url: `/api/test`,
+                data: dataToPost,
+                headers: {
+                    "Authorization": `Bearer ${access_token}`,
+                    "Content-Type": "application/json"
+                }
+            }).then(function (response) {
+                console.log({
+                    "RESPONSE_IN_TEST": response?.data?.data?.result
+                })
+                if (response?.data?.success === true) {
+                    dispatch(saveResponseFromTestAction(response?.data?.data?.result));
+                    setTimeout(() => {
+                        Router.push({
+                            pathname: '/dashboard/assetmanagement/result',
+                        })
+                    }, 50)
+                }
+            }).catch(function (error) {
+                console.log({
+                    "ERROR IN AXIOS CATCH": error
+                })
             })
-        }, 50)
+        } catch (err) {
+            console.log({
+                "ERROR IN TRY CATCH ": err
+            })
+        }
     }
 
 
     return (
         <div className="w-full">
             <div className="mt-5 relative flex flex-wrap justify-start items-start w-full h-full p-3">
-
-
 
                 {
                     data && data.length > 0 ?
@@ -93,7 +121,7 @@ export default function Test(props: any) {
                                         <div className="h-[200px] w-[246px] overflow-hidden rounded-xl relative">
                                             <div className="flex justify-start items-center absolute top-0 right-0">
                                                 <button
-                                                    onClick={redirectToResultPage}
+                                                    onClick={() => redirectToResultPage(item)}
                                                     className={`text-sm font-semibold h-[32px] px-2 rounded-lg inline-flex justify-center items-center mr-4 ${item.url === "" ? 'pointer-events-none cursor-not-allowed bg-gray-951' : ' bg-yellow-951'}`}>
                                                     <Image
                                                         src="/img/test-icon.svg"
