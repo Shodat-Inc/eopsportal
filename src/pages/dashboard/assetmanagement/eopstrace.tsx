@@ -64,8 +64,11 @@ export default function EopsTrace(props: any) {
 
     // ===== Initial loading of data =====
     useEffect(() => {
-        setSelectedModel(modelData[0]?.modelName)
-        setData(modelData[0])
+        if(modelData[0]?.modelName) {
+            setSelectedModel(modelData[0]?.modelName)
+            setData(modelData[0])
+        }
+        
     }, [props?.modelDatal])
 
 

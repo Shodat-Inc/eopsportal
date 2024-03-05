@@ -31,6 +31,22 @@ export default function AssetManagement() {
 
     // All class reducer states
     const apiSelector = useSelector((state: any) => state.apiReducer);
+    const aimodaldetectionReducer = useSelector((state: any) => state.aimodaldetectionReducer);
+    // console.log({
+    //     aimodaldetectionReducer:aimodaldetectionReducer?.breadCrumbNavigationReducer
+    // })
+
+    // useEffect(()=>{
+    //     if(aimodaldetectionReducer?.breadCrumbNavigationReducer && aimodaldetectionReducer?.breadCrumbNavigationReducer?.classTab) {
+    //         setTab(aimodaldetectionReducer?.breadCrumbNavigationReducer?.classTab)
+    //     } 
+
+    //     if(aimodaldetectionReducer?.breadCrumbNavigationReducer && aimodaldetectionReducer?.breadCrumbNavigationReducer?.subObjectTab) {
+    //         setTab(aimodaldetectionReducer?.breadCrumbNavigationReducer?.subObjectTab)
+    //     }
+    // }, [aimodaldetectionReducer?.breadCrumbNavigationReducer])
+
+    
 
     // Dispatch get class and get data type API's
     useEffect(() => {

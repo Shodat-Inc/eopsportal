@@ -44,6 +44,19 @@ export default function ObjectManagement(props: any) {
     // All class reducer states
     const classSelector = useSelector((state: any) => state.classReducer);
     const apiReducer = useSelector((state: any) => state.apiReducer);
+    const aimodaldetectionReducer = useSelector((state: any) => state.aimodaldetectionReducer);
+    // console.log({
+    //     aimodaldetectionReducer:aimodaldetectionReducer?.breadCrumbNavigationReducer
+    // })
+
+    // useEffect(()=>{
+    //     if(aimodaldetectionReducer?.breadCrumbNavigationReducer && aimodaldetectionReducer?.breadCrumbNavigationReducer?.classID) {
+    //         setChooseAsset(aimodaldetectionReducer?.breadCrumbNavigationReducer?.classID)
+    //     } else {
+    //         setChooseAsset(props.classData && props.classData?.rows?.length > 0 ? props.classData?.rows[0]?.id : '')
+    //     }
+
+    // }, [aimodaldetectionReducer?.breadCrumbNavigationReducer])
 
     // Toggle the filters dropdown
     const toggleFilterFunction = () => {

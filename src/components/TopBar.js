@@ -70,7 +70,7 @@ export default function TopBar({ showNav, setShowNav }) {
 
   return (
     <div
-      className={`font-OpenSans fixed z-[9] w-full h-16 flex justify-between items-center transition-all duration-[400ms] ${showNav ? "pl-48" : ""
+      className={`h-[80px] font-OpenSans fixed z-[9] w-full flex justify-between items-center transition-all duration-[400ms] ${showNav ? "pl-48" : ""
         }`}
     >
       <div className="flex justify-between items-center w-full bg-white">

@@ -10,6 +10,7 @@ import { GET_OBJECT_FROM_OBJECT_ID_SUCCESS, GET_OBJECT_FROM_OBJECT_ID_ERROR } fr
 import { GET_SUB_CLASSNAME_FROM_SUB_CLASS_ID_SUCCESS, GET_SUB_CLASSNAME_FROM_SUB_CLASS_ID_ERROR } from '../types'
 import { GET_SUB_OBJECT_FROM_SUB_OBJECT_ID_SUCCESS, GET_SUB_OBJECT_FROM_SUB_OBJECT_ID_ERROR } from '../types'
 import { SAVE_RESPONSE_FROM_TEST_SUCCESS, SAVE_RESPONSE_FROM_TEST_ERROR } from '../types'
+import { BREADCRUMB_NAVIGATION_SUCCESS, BREADCRUMB_NAVIGATION_ERROR } from '../types'
 
 const initialState = {
     dataForModalReducer: {},
@@ -24,10 +25,17 @@ const initialState = {
     getObjetValueFromIDReducer: "",
     getSubObjectValueFromIDReducer: "",
     saveResponseFromTestReducer:{},
+    breadCrumbNavigationReducer:{}
 };
 
 const aimodaldetectionReducer = (state = initialState, action: any) => {
     switch (action.type) {
+
+        // Save Breadcrumb Navigation
+        case BREADCRUMB_NAVIGATION_SUCCESS:
+            return { ...state, breadCrumbNavigationReducer: action.payload, loading: false }
+        case BREADCRUMB_NAVIGATION_ERROR:
+            return { loading: false, error: action.payload }
 
         // Save response from test
         case SAVE_RESPONSE_FROM_TEST_SUCCESS:

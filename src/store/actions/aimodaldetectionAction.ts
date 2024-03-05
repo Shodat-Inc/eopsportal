@@ -5,12 +5,32 @@ import { GET_OBJECT_FROM_ID_ERROR, GET_OBJECT_FROM_ID_SUCCESS } from "../types";
 import { GET_SUB_OBJECT_FROM_ID_ERROR, GET_SUB_OBJECT_FROM_ID_SUCCESS } from "../types";
 import { GET_MODEL_IMAGES_ERROR, GET_MODEL_IMAGES_SUCCESS } from "../types";
 import { GET_ALL_MODEL_SUCCESS, GET_ALL_MODEL_ERROR } from "../types";
-import {GET_CLASSNAME_FROM_CLASS_ID_SUCCESS, GET_CLASSNAME_FROM_CLASS_ID_ERROR} from '../types'
-import {GET_OBJECT_FROM_OBJECT_ID_SUCCESS, GET_OBJECT_FROM_OBJECT_ID_ERROR} from '../types'
-import {GET_SUB_CLASSNAME_FROM_SUB_CLASS_ID_SUCCESS, GET_SUB_CLASSNAME_FROM_SUB_CLASS_ID_ERROR} from '../types'
-import {GET_SUB_OBJECT_FROM_SUB_OBJECT_ID_SUCCESS, GET_SUB_OBJECT_FROM_SUB_OBJECT_ID_ERROR} from '../types'
+import { GET_CLASSNAME_FROM_CLASS_ID_SUCCESS, GET_CLASSNAME_FROM_CLASS_ID_ERROR } from '../types'
+import { GET_OBJECT_FROM_OBJECT_ID_SUCCESS, GET_OBJECT_FROM_OBJECT_ID_ERROR } from '../types'
+import { GET_SUB_CLASSNAME_FROM_SUB_CLASS_ID_SUCCESS, GET_SUB_CLASSNAME_FROM_SUB_CLASS_ID_ERROR } from '../types'
+import { GET_SUB_OBJECT_FROM_SUB_OBJECT_ID_SUCCESS, GET_SUB_OBJECT_FROM_SUB_OBJECT_ID_ERROR } from '../types'
 import { SAVE_RESPONSE_FROM_TEST_SUCCESS, SAVE_RESPONSE_FROM_TEST_ERROR } from '../types'
+import { BREADCRUMB_NAVIGATION_SUCCESS, BREADCRUMB_NAVIGATION_ERROR } from '../types'
 import axios from "axios";
+
+// Save Breadcrumb Navigation
+export const breadCrumbNavigationAction = (data: any) => async (dispatch: any) => {
+    try {
+        if (data) {
+            dispatch({
+                type: BREADCRUMB_NAVIGATION_SUCCESS,
+                payload: data
+            });
+        } else {
+            dispatch({
+                type: BREADCRUMB_NAVIGATION_ERROR,
+                payload: "ERROR"
+            });
+        }
+    } catch (err) {
+        console.log("ERROR IN ACTION:", err)
+    }
+}
 
 // Save Response From Test
 export const saveResponseFromTestAction = (data: any) => async (dispatch: any) => {
@@ -273,7 +293,7 @@ export const getClassNameFromClassID = (id: any) => async (dispatch: any) => {
 }
 
 // Get Sub class name from class ID
-export const getSubClassNameFromClassID = (subClassId: any, parentClassID:any) => async (dispatch: any) => {
+export const getSubClassNameFromClassID = (subClassId: any, parentClassID: any) => async (dispatch: any) => {
     let access_token = "" as any;
     if (typeof window !== 'undefined') {
         access_token = localStorage.getItem('authToken')
@@ -308,7 +328,7 @@ export const getSubClassNameFromClassID = (subClassId: any, parentClassID:any) =
 }
 
 // Get OBJECT FROM OBJECT ID
-export const getObjectValueFromObjectID = (objectID: any, classID:any) => async (dispatch: any) => {
+export const getObjectValueFromObjectID = (objectID: any, classID: any) => async (dispatch: any) => {
     let access_token = "" as any;
     if (typeof window !== 'undefined') {
         access_token = localStorage.getItem('authToken')
@@ -340,7 +360,7 @@ export const getObjectValueFromObjectID = (objectID: any, classID:any) => async 
 }
 
 // Get SUB OBJECT FROM OBJECT ID
-export const getSubObjectValueFromObjectID = (objectID: any, classID:any) => async (dispatch: any) => {
+export const getSubObjectValueFromObjectID = (objectID: any, classID: any) => async (dispatch: any) => {
     let access_token = "" as any;
     if (typeof window !== 'undefined') {
         access_token = localStorage.getItem('authToken')

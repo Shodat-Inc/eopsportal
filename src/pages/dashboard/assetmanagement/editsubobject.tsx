@@ -18,8 +18,18 @@ export default function EditSubObject(props: any) {
         access_token = localStorage.getItem('authToken')
     }
 
+    // console.log({
+    //     access_token: access_token, 
+    //     objID: props.objID, 
+    //     selectedSubClass: props.selectedSubClass
+    // })
+
     // GET ALL DATATYPES
     async function fetchObjectData() {
+        let access_token = "" as any;
+        if (typeof window !== 'undefined') {
+            access_token = localStorage.getItem('authToken')
+        }
         try {
             await axios({
                 method: 'GET',
@@ -79,7 +89,10 @@ export default function EditSubObject(props: any) {
         }
     }
     useEffect(() => {
-        fetchObjectData();
+        if(props.objID!=="" && (props.selectedSubClass!=="" || props.selectedSubClass===0)) {
+            fetchObjectData();
+        }
+            
     }, [access_token, props.objID, props.selectedSubClass])
 
     const dispatch = useDispatch<any>();
@@ -160,8 +173,8 @@ export default function EditSubObject(props: any) {
         <>
             <div className={`bg-white h-full z-[11] fixed top-0 right-0 p-5 shadow-lg ${props.show === true ? `${styles.objectContainer} ${styles.sliderShow}` : `${styles.objectContainer}`}`}>
                 <div className="flex justify-between items-center w-full mb-3">
-                    <h2 className="font-semibold text-lg">Edit Sub Object 
-                    <span className="hidden pl-2 text-sm text-gray-800">({props.parentClass} / {props.selectedSubClass} / <strong>{props.objID}</strong>)</span>
+                    <h2 className="font-semibold text-lg">Edit Sub Object
+                        <span className="hidden pl-2 text-sm text-gray-800">({props.parentClass} / {props.selectedSubClass} / <strong>{props.objID}</strong>)</span>
                     </h2>
                     <button onClick={closeModel} className="duration-100 outline-none transform active:scale-75 transition-transform">
                         <Image
@@ -184,7 +197,7 @@ export default function EditSubObject(props: any) {
                     >
 
                         {
-                        objectsData && objectsData[0]?.ObjectValues.length > 0 &&
+                            objectsData && objectsData[0]?.ObjectValues.length > 0 &&
                             objectsData[0]?.ObjectValues.map((items: any, index: any) => {
                                 const linkContent = objectsData[0]?.Class?.ClassTags[index];
                                 const linkContentVal = objectsData[0]?.ObjectValues[index];

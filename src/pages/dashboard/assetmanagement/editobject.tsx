@@ -77,13 +77,16 @@ export default function EditObject(props: any) {
 
 
     useEffect(() => {
-        setTimeout(() => {
-            fetchObjectData();
-        }, 100)
-    }, [access_token, props.selectedObjID, props.selectedParentClass, success===true])
+        if (props.selectedObjID && props.selectedParentClass) {
+            setTimeout(() => {
+                fetchObjectData();
+            }, 100)
+        }
 
-    useEffect(()=>{
-        setTimeout(()=>{
+    }, [access_token, props.selectedObjID, props.selectedParentClass, success === true])
+
+    useEffect(() => {
+        setTimeout(() => {
             setSuccess(false)
         }, 3000)
     }, [success])
