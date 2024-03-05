@@ -98,8 +98,7 @@ export default function Result() {
         },
         {
             "performance": 25,
-            "x": 160,
-            "y": 250,
+            "x": 160,            "y": 250,
             "h": 80,
             "w": 130,
         },

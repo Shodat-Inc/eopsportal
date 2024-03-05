@@ -74,7 +74,7 @@ async function getTicketByAlertId(params: any) {
     try {
         const page = params.page || 1;
         const pageSize = params.pageSize || 10;
-        let sortOrder = 'DESC'; // Default sorting order is DESC
+        let sortOrder = 'ASC'; // Default sorting order is ASC
         let sortField = "id";
 
         // Check if sortBy parameter is provided and valid

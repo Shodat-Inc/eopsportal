@@ -154,7 +154,7 @@ async function create(params: any) {
 async function getAllEnterpriseUser(param: any) {
   // Log information about the function execution
   loggerInfo.info("GET all the Enterprise Users");
-  let sortOrder = 'DESC'; // Default sorting order is DESC
+  let sortOrder = 'ASC'; // Default sorting order is ASC
 
   // Check if sortBy parameter is provided and valid
   if (param.sortBy && ['ASC', 'DESC'].includes(param.sortBy.toUpperCase())) {

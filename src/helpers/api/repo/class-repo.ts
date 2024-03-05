@@ -138,7 +138,7 @@ async function getClassData(params: any) {
 
     const page = params.query.page || 1;
     const pageSize = params.query.pageSize || 10;
-    let sortOrder = 'DESC'; // Default sorting order is DESC
+    let sortOrder = 'ASC'; // Default sorting order is DESC
     let sortField = "id";
 
     // Check if sortBy parameter is provided and valid
@@ -200,7 +200,7 @@ async function getClassDataByID(params: any) {
     if (!params.id) {
       throw "NO ID exist";
     }
-    let sortOrder = 'DESC'; // Default sorting order is DESC
+    let sortOrder = 'ASC'; // Default sorting order is DESC
     let sortField = "id";
 
     // Check if sortBy parameter is provided and valid
@@ -265,7 +265,7 @@ async function getSubClass(param: any) {
     // Log the initiation of fetching subclasses and tags.
     loggerInfo.info("Fetching all subclass and subclassTags data");
 
-    let sortOrder = 'DESC'; // Default sorting order is DESC
+    let sortOrder = 'ASC'; // Default sorting order is DESC
     let sortField = "id";
 
     // Check if sortBy parameter is provided and valid
@@ -343,7 +343,7 @@ async function getSubClassByID(param: any) {
     // Log the initiation of fetching subclasses and tags.
     loggerInfo.info("Fetching subclass and subclassTags data by ID");
 
-    let sortOrder = 'DESC'; // Default sorting order is DESC
+    let sortOrder = 'ASC'; // Default sorting order is DESC
     let sortField = "id";
 
     // Check if sortBy parameter is provided and valid

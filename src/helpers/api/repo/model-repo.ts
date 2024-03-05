@@ -55,7 +55,7 @@ async function getAllModel(params: any) {
 
     const page = params.query.page || 1;
     const pageSize = params.query.pageSize || 10;
-    let sortOrder = 'DESC'; // Default sorting order is DESC
+    let sortOrder = 'ASC'; // Default sorting order is ASC
     let sortField = "id";
 
     // Check if sortBy parameter is provided and valid

@@ -89,7 +89,7 @@ async function get(params: any) {
     let result;
     let obj = {};
 
-    let sortOrder = "DESC"; // Default sorting order is DESC
+    let sortOrder = "ASC"; // Default sorting order is ASC
     let sortField = "id";
 
     // Check if sortBy parameter is provided and valid
@@ -273,7 +273,7 @@ async function getObjectById(params: any) {
   }
 
   try {
-    let sortOrder = "DESC"; // Default sorting order is DESC
+    let sortOrder = "ASC"; // Default sorting order is ASC
 
     // Check if sortBy parameter is provided and valid
     if (
@@ -383,7 +383,7 @@ async function getObjectValues(params: any) {
   try {
     // Convert keyword to lowercase for case-insensitive comparison
     const keyword = params.query.keyword.toLowerCase();
-    let sortOrder = "DESC"; // Default sorting order is DESC
+    let sortOrder = "ASC"; // Default sorting order is ASC
     let sortField = "id";
 
     // Check if sortBy parameter is provided and valid
@@ -481,7 +481,7 @@ async function getObjectValuesOnValues(params: any) {
     let result;
     const page = params.query.page || 1;
     const pageSize = params.query.pageSize || 10;
-    let sortOrder = "DESC"; // Default sorting order is DESC
+    let sortOrder = "ASC"; // Default sorting order is ASC
     let sortField = "id";
 
     // Check if sortBy parameter is provided and valid
