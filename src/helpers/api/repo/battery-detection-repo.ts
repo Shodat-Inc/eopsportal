@@ -13,16 +13,11 @@ export default async function runTest(params: any) {
     const userId = params.userId;
 
     const apiResponse = batteryDetectionResponse;
-    const formattedData: any = {};
-
-    apiResponse.response.forEach((resp, index) => {
-      formattedData[`BatteryTestResponse${index + 1}`] = resp;
-    });
 
     const tag = apiResponse.tag;
     const workData = {
       modelObjectImageId: imageid,
-      response: formattedData,
+      response: apiResponse,
       tag,
     };
 
@@ -35,7 +30,7 @@ export default async function runTest(params: any) {
     const responseId = result.dataValues.id;
 
     // Increase the count of testRanCount
-
+    result.dataValues.image_url = image_url;
     const ranCount = await db.Image.findByPk(imageid);
     ranCount.testRanCount += 1;
     await ranCount.save();

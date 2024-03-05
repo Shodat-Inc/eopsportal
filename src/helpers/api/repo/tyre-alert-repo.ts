@@ -6,7 +6,6 @@ import { paginateQuery } from "../constant/pagination";
 export const tyreAlertRepo = {
   create,
   getAllAlert,
-  getTyreAlertById,
   update,
   delete: _delete
 };
@@ -44,12 +43,17 @@ async function getAllAlert(params: any) {
     const pageSize = params.query.pageSize || 10;
     let sortOrder = 'DESC'; // Default sorting order is DESC
     let sortField = "id";
+    let whereClause;
+
+    if (params.query.id) {
+      whereClause = { id: params.query.id };
+    }
 
     // Check if sortBy parameter is provided and valid
     if (params.query.sortBy && ['ASC', 'DESC'].includes(params.query.sortBy.toUpperCase())) {
       sortOrder = params.query.sortBy.toUpperCase();
     }
-    if (params.query.sort && ['id', 'alertName',].includes(params.query.sort)) {
+    if (params.query.sort && ['id', 'alertName', 'recommendation', 'distanceRange', 'value', 'isEnabled', 'receiverEmailAddresses', 'emailTemplateId', 'createdAt'].includes(params.query.sort)) {
       sortField = params.query.sort;
     }
     const result = await paginateQuery(db.TyreAlerts, page, pageSize, {
@@ -69,6 +73,7 @@ async function getAllAlert(params: any) {
         "updatedAt",
       ],
       order: [[sortField, sortOrder]],
+      where: whereClause
     });
     if (!result.rows.length) {
       return sendResponseData(false, "Data doesn't Exists", {});
@@ -77,25 +82,6 @@ async function getAllAlert(params: any) {
   } catch (error) {
     loggerError.error("Error in getting all the alerts", error);
     return sendResponseData(false, "Error in getting all the alerts", error);
-  }
-}
-
-async function getTyreAlertById(params: any) {
-  loggerInfo.info("Get Tyre Alert Data By Id");
-  try {
-    if (!params.id) {
-      return sendResponseData(false, "Id is not provided in params", {});
-    }
-    const data = await db.CrackAlert.findOne({
-      where: { id: params.id },
-    });
-    if (!data) {
-      return sendResponseData(false, "Data doesn't Exists", {});
-    }
-    return sendResponseData(true, "Data fetched successfully", data);
-  } catch (error) {
-    loggerError.error("Error in Tyre Alert Repo", error);
-    return sendResponseData(false, "Error in Tyre Alert Repo", error);
   }
 }
 

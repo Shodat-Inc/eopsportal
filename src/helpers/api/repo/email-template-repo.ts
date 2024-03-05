@@ -29,18 +29,23 @@ async function getAll(params: any) {
 
         let sortOrder = 'DESC'; // Default sorting order is DESC
         let sortField = "id";
+        let whereClause;
+
+        if (params.query.id) {
+            whereClause = { id: params.query.id };
+        }
 
         // Check if sortBy parameter is provided and valid
         if (params.query.sortBy && ['ASC', 'DESC'].includes(params.query.sortBy.toUpperCase())) {
             sortOrder = params.query.sortBy.toUpperCase();
         }
-        if (params.query.sort && ['id', 'emailSubject', 'emailContent'].includes(params.query.sort)) {
+        if (params.query.sort && ['id', 'emailSubject', 'emailContent', 'createdAt'].includes(params.query.sort)) {
             sortField = params.query.sort;
         }
 
         const result = await paginateQuery(db.EmailTemplate, page, pageSize, {
-            attributes: ["emailSubject", "emailContent"],
             order: [[sortField, sortOrder]],
+            where: whereClause
         })
         if (!result.rows.length) {
             return sendResponseData(false, "Data doesn't Exists", {})

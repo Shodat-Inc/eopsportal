@@ -3,19 +3,19 @@ export const crackDetectionResponse = {
   coordinates: [
     {
       responseCoordinates: {
-        "coord-topLeft": [112, 31],
-        "coord-topRight": [154, 32],
-        "coord-bottomLeft": [104, 239],
-        "coord-bottomRight": [146, 241],
+        "coord-topLeft": [200,0],
+        "coord-topRight": [200, 100],
+        "coord-bottomLeft": [0, 100],
+        "coord-bottomRight": [0, 0],
         probablity: "55%",
       },
     },
     {
       responseCoordinates: {
-        "coord-topLeft": [102, 131],
-        "coord-topRight": [154, 132],
-        "coord-bottomLeft": [44, 39],
-        "coord-bottomRight": [14, 41],
+        "coord-topLeft": [50, 0],
+        "coord-topRight": [50, 50],
+        "coord-bottomLeft": [0, 50],
+        "coord-bottomRight": [0, 0],
         probablity: "78%",
       },
     },

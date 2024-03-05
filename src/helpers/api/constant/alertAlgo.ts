@@ -36,7 +36,6 @@ export async function checkCrackAlert(exportData: {
 
     for (const alert of exportData.alertData) {
       const alertId = alert.id;
-
       dt.alertId = alertId;
 
       const rangeValue = alert.rangeValue;
@@ -60,8 +59,8 @@ export async function checkCrackAlert(exportData: {
           }
         }
       }
-      return finalResult;
     }
+    return finalResult;
   } catch (error) {
     return error;
   }
@@ -83,14 +82,9 @@ export async function checkBatteryAlert(exportData: {
 
     const responseId = exportData.apiResponse.dataValues.id;
 
-    const outputProbablity: number[] = [];
-
-    for (const key in exportData.apiResponse.dataValues.response) {
-      const coords =
-        exportData.apiResponse.dataValues.response[key].batteryLifeResponse;
-      const utilization = parseInt(coords.batteryUtilization);
-      outputProbablity.push(utilization);
-    }
+    const outputProbablity: number = parseInt(
+      exportData.apiResponse.response.data.batteryUtilization
+    );
 
     const dt: any = {
       imageData: exportData.imageData,
@@ -112,23 +106,21 @@ export async function checkBatteryAlert(exportData: {
 
       const checkRange = isGreater(rangeValue);
 
-      for (const probability of outputProbablity) {
-        if (checkRange) {
-          if (probability > thresholdValue) {
-            console.log("Notification Send On Threshold", probability);
-            const result = await saveRaisedAlert(dt);
-            finalResult.push(result);
-          }
-        } else {
-          if (probability < thresholdValue) {
-            console.log("Notification Send On Threshold", probability);
-            const result = await saveRaisedAlert(dt);
-            finalResult.push(result);
-          }
+      if (checkRange) {
+        if (outputProbablity > thresholdValue) {
+          console.log("Notification Send On Threshold", outputProbablity);
+          const result = await saveRaisedAlert(dt);
+          finalResult.push(result);
+        }
+      } else {
+        if (outputProbablity < thresholdValue) {
+          console.log("Notification Send On Threshold", outputProbablity);
+          const result = await saveRaisedAlert(dt);
+          finalResult.push(result);
         }
       }
-      return finalResult;
     }
+    return finalResult;
   } catch (error) {
     return error;
   }
@@ -219,9 +211,8 @@ export async function checkTyreAlert(exportData: {
           }
         }
       }
-
-      return finalResult;
     }
+    return finalResult;
   } catch (error) {
     return error;
   }

@@ -65,15 +65,12 @@ async function get(params: any) {
 async function update(params: any, reqData: any, reqParams: any) {
     loggerInfo.info("Update Comment")
     try {
-
         const data = await db.Comment.findOne({
-            where: {
-                ticketId: reqParams.ticketId,
-                parentId: reqParams.parentId,
-                id: reqParams.id,
-                userId: reqData,
-            },
-        })
+            ticketId: reqParams.ticketId,
+            id: reqParams.id,
+            userId: reqData,
+        });
+
         if (!data) {
             return sendResponseData(false, "Comment not found for update", {});
         }

@@ -5,7 +5,8 @@ import message from "@/util/responseMessage";
 import { generateRandomAlphaNumeric } from "../../../util/helper";
 import { classTagRepo } from "./classTag-repo";
 import { paginateQuery } from "../constant/pagination";
-import { Sequelize } from "sequelize";
+import { Op, Sequelize } from "sequelize";
+import { valueRepo } from "./value-repo";
 
 /**
  * Repository for handling object related operations.
@@ -34,7 +35,6 @@ async function create(params: any, transaction: any) {
     loggerError.error("No Class id Provided");
     return sendResponseData(false, message.error.noClassID, {});
   }
-
   try {
     const serialId = await generateRandomAlphaNumeric({
       model: db.Object,
@@ -51,8 +51,22 @@ async function create(params: any, transaction: any) {
     // Save the new object to the database.
     const data = await object.save({ transaction });
 
-    // Return a successful response indicating the object was added.
-    return sendResponseData(true, message.success.objectAdded, data);
+    // Create an array to store values for the object.
+    let valueData = [];
+
+    // Populate the value data.
+    for (let key of params.values) {
+      valueData.push({
+        objectId: data.id, // Use data instead of objData
+        classTagId: key.classTagId,
+        values: key.value,
+      });
+    }
+
+    // Bulk create values using the populated value data.
+    const value = await valueRepo.bulkCreate(valueData, data.id, transaction);
+
+    return { objData: data.dataValues, value: value };
   } catch (error) {
     // Log the error if there's an issue with the object creation.
     loggerError.error("Error in Object Repo", error);
@@ -75,14 +89,20 @@ async function get(params: any) {
     let result;
     let obj = {};
 
-    let sortOrder = 'DESC'; // Default sorting order is DESC
+    let sortOrder = "DESC"; // Default sorting order is DESC
     let sortField = "id";
 
     // Check if sortBy parameter is provided and valid
-    if (params.query.sortBy && ['ASC', 'DESC'].includes(params.query.sortBy.toUpperCase())) {
+    if (
+      params.query.sortBy &&
+      ["ASC", "DESC"].includes(params.query.sortBy.toUpperCase())
+    ) {
       sortOrder = params.query.sortBy.toUpperCase();
     }
-    if (params.query.sort && ['id', 'className', 'values'].includes(params.query.sort)) {
+    if (
+      params.query.sort &&
+      ["id", "className", "values"].includes(params.query.sort)
+    ) {
       sortField = params.query.sort;
     }
 
@@ -99,7 +119,13 @@ async function get(params: any) {
             {
               model: db.AddClasses,
               where: { id: params.query.id }, // This will filter by classId
-              attributes: ["id", "superParentId", "parentId", "serialId", "createdAt",],
+              attributes: [
+                "id",
+                "superParentId",
+                "parentId",
+                "serialId",
+                "createdAt",
+              ],
               order: [[sortField, sortOrder]],
               include: [
                 {
@@ -130,8 +156,11 @@ async function get(params: any) {
         page,
         pageSize,
         {
-          where: { values: params.query.keyword },
-          order: [[sortField, sortOrder]],
+          where: {
+            values: {
+              [Op.like]: `%${params.query.keyword}%`,
+            },
+          },
           required: true,
           include: [
             {
@@ -147,27 +176,32 @@ async function get(params: any) {
               ],
             },
           ],
+          order: [[sortField, sortOrder]],
+          raw: true,
         }
       );
 
-      const modifiedData = rows.map((item: any) => ({
-        Class: {
-          id: item.classTag?.classId,
-          serialId: item.classTag?.Class?.serialId,
-          className: item.classTag?.Class?.className,
-          userId: item.classTag?.Class?.userId,
-          createdAt: item.classTag?.Class?.createdAt,
-          updatedAt: item.classTag?.Class?.updatedAt,
-          ClassTags: [
-            {
-              tagName: item.classTag?.tagName,
-              dataTypeId: item.classTag?.dataTypeId,
-              classId: item.classTag?.classId,
-            },
-          ],
-        },
-        ObjectValues: [
-          {
+      const modifiedData = rows.map((item: any) => {
+        return {
+          Class: {
+            id: item["ClassTag.Class.id"],
+            serialId: item["ClassTag.Class.serialId"],
+            className: item["ClassTag.Class.className"],
+            superParentId: item["ClassTag.Class.superParentId"],
+            parentId: item["ClassTag.Class.parentId"],
+            enterpriseId: item["ClassTag.Class.enterpriseId"],
+            userId: item["ClassTag.Class.userId"],
+            createdAt: item["ClassTag.Class.createdAt"],
+            updatedAt: item["ClassTag.Class.updatedAt"],
+            ClassTags: [
+              {
+                tagName: item["ClassTag.tagName"],
+                dataTypeId: item["ClassTag.dataTypeId"],
+                classId: item["ClassTag.classId"],
+              },
+            ],
+          },
+          ObjectValues: {
             id: item.id,
             values: item.values,
             classTagId: item.classTagId,
@@ -175,8 +209,8 @@ async function get(params: any) {
             createdAt: item.createdAt,
             updatedAt: item.updatedAt,
           },
-        ],
-      }));
+        };
+      });
 
       if (!modifiedData.length) {
         return sendResponseData(false, "Data Not Found", {});
@@ -239,14 +273,20 @@ async function getObjectById(params: any) {
   }
 
   try {
-    let sortOrder = 'DESC'; // Default sorting order is DESC
+    let sortOrder = "DESC"; // Default sorting order is DESC
 
     // Check if sortBy parameter is provided and valid
-    if (params.query.sortBy && ['ASC', 'DESC'].includes(params.query.sortBy.toUpperCase())) {
+    if (
+      params.query.sortBy &&
+      ["ASC", "DESC"].includes(params.query.sortBy.toUpperCase())
+    ) {
       sortOrder = params.query.sortBy.toUpperCase();
     }
     let sortField = "id";
-    if (params.query.sort && ['id', 'className', 'values', 'objectName'].includes(params.query.sort)) {
+    if (
+      params.query.sort &&
+      ["id", "className", "values", "objectName"].includes(params.query.sort)
+    ) {
       sortField = params.query.sort;
     }
     // Fetch data from the database based on ObjectId and ClassId
@@ -343,20 +383,28 @@ async function getObjectValues(params: any) {
   try {
     // Convert keyword to lowercase for case-insensitive comparison
     const keyword = params.query.keyword.toLowerCase();
-    let sortOrder = 'DESC'; // Default sorting order is DESC
+    let sortOrder = "DESC"; // Default sorting order is DESC
     let sortField = "id";
 
     // Check if sortBy parameter is provided and valid
-    if (params.query.sortBy && ['ASC', 'DESC'].includes(params.query.sortBy.toUpperCase())) {
+    if (
+      params.query.sortBy &&
+      ["ASC", "DESC"].includes(params.query.sortBy.toUpperCase())
+    ) {
       sortOrder = params.query.sortBy.toUpperCase();
     }
-    if (params.query.sort && ['id', 'className', 'values'].includes(params.query.sort)) {
+    if (
+      params.query.sort &&
+      ["id", "className", "values"].includes(params.query.sort)
+    ) {
       sortField = params.query.sort;
     }
 
     const objResult = await db.AddValues.findAll({
       where: {
-        values: keyword,
+        values: {
+          [Op.like]: `%${keyword}%`,
+        },
       },
       order: [[sortField, sortOrder]],
       include: [
@@ -369,8 +417,8 @@ async function getObjectValues(params: any) {
               model: db.AddClasses,
               where: { userId: params.auth.sub },
               attributes: [],
-            }
-          ]
+            },
+          ],
         },
       ],
     });
@@ -433,14 +481,17 @@ async function getObjectValuesOnValues(params: any) {
     let result;
     const page = params.query.page || 1;
     const pageSize = params.query.pageSize || 10;
-    let sortOrder = 'DESC'; // Default sorting order is DESC
+    let sortOrder = "DESC"; // Default sorting order is DESC
     let sortField = "id";
 
     // Check if sortBy parameter is provided and valid
-    if (params.query.sortBy && ['ASC', 'DESC'].includes(params.query.sortBy.toUpperCase())) {
+    if (
+      params.query.sortBy &&
+      ["ASC", "DESC"].includes(params.query.sortBy.toUpperCase())
+    ) {
       sortOrder = params.query.sortBy.toUpperCase();
     }
-    if (params.query.sort && ['id', 'values'].includes(params.query.sort)) {
+    if (params.query.sort && ["id", "values"].includes(params.query.sort)) {
       sortField = params.query.sort;
     }
 

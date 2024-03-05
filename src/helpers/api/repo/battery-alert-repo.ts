@@ -3,10 +3,12 @@ import sendResponseData from "../../constant";
 import { loggerInfo, loggerError } from "@/logger";
 import message from "@/util/responseMessage";
 import { Sequelize } from "sequelize";
+import { paginateQuery } from "../constant/pagination";
 
 export const batteryAlertRepo = {
     create,
     get,
+    getAllAlert,
     update,
     delete: _delete
 };
@@ -63,18 +65,49 @@ async function get(params: any) {
                     attributes: ['className']
                 }
             ],
-
         });
-
+        if (!data.length) {
+            return sendResponseData(false, "Data not found", {})
+        }
         return sendResponseData(true, "Data fetched Successfully", data)
-
-        // return sendResponseData(false,"Data not found",{})
-
     } catch (error) {
         loggerError.error("Error in getting alert based on filter className, objectId, modelName, userId", error)
         return sendResponseData(false, "Error in getting alert based on filter className, objectId, modelName, userId", error)
     }
+}
 
+async function getAllAlert(params: any) {
+    loggerInfo.info("Get all Alerts");
+    try {
+        const page = params.query.page || 1;
+        const pageSize = params.query.pageSize || 10;
+        let sortOrder = 'DESC'; // Default sorting order is DESC
+        let sortField = "id";
+        let whereClause;
+        
+        if (params.query.id) {
+            whereClause = { id: params.query.id };
+        }
+
+        // Check if sortBy parameter is provided and valid
+        if (params.query.sortBy && ['ASC', 'DESC'].includes(params.query.sortBy.toUpperCase())) {
+            sortOrder = params.query.sortBy.toUpperCase();
+        }
+        if (params.query.sort && ['id', 'alertName', 'rangeValue', 'thresholdValue', 'receiverEmailAddresses', 'isEnabled', 'createdAt'].includes(params.query.sort)) {
+            sortField = params.query.sort;
+        }
+        const result = await paginateQuery(db.BatteryAlert, page, pageSize, {
+            order: [[sortField, sortOrder]],
+            where: whereClause
+        });
+        if (!result.rows.length) {
+            return sendResponseData(false, "Data doesn't Exists", {});
+        }
+        return sendResponseData(true, "Alert Data fetched successfully", result);
+    } catch (error) {
+        loggerError.error("Error in getting all the alerts", error);
+        return sendResponseData(false, "Error in getting all the alerts", error);
+    }
 }
 
 async function update(params: any, reqAuth: any) {

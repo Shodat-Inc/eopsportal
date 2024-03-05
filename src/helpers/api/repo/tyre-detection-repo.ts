@@ -18,10 +18,6 @@ export default async function runTest(params: any) {
     if (!apiResponse) {
       return sendResponseData(false, "Error In External Service", error);
     }
-    // const formatted: any = {};
-    // for (let i = 0; i < apiResponse.response.length; i++) {
-    //   formatted[`tyreDetectionData:${i + 1}`] = apiResponse.response[i];
-    // }
 
     const tag = apiResponse.tag;
     const workData = {
@@ -35,6 +31,7 @@ export default async function runTest(params: any) {
     if (!saveResponse) {
       return sendResponseData(false, "Error In Saving Data", error);
     }
+    saveResponse.dataValues.image_url = image_url;
     const ranCount = await db.Image.findByPk(imageid);
     ranCount.testRanCount += 1;
     await ranCount.save();

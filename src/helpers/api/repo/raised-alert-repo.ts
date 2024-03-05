@@ -3,60 +3,49 @@ import sendResponseData from "../../constant";
 import { loggerInfo, loggerError } from "@/logger";
 import { Sequelize } from "sequelize";
 import message from "@/util/responseMessage";
+import { paginateQuery } from "../constant/pagination";
 
 export const raisedAlertRepo = {
-  create,
   get
-}
-
-async function create(params: any) {
-  try {
-
-    const newAlertRaised = new db.RaisedAlert(params);
-
-    const save = await newAlertRaised.save();
-
-    return sendResponseData(true, "Alert Raised Created Successfully", save);
-  } catch (error) {
-    loggerError.error("Error in creating Raised Alert API", error)
-    return sendResponseData(false, "Error in creating Raised Alert Repo", error)
-  }
-
 }
 
 async function get(params: any) {
   loggerInfo.info("Get API of Raised Alert Data");
   try {
-    const alertDetails = await db.RaisedAlert.findAll({
-      attributes: ['modelObjectImageId', 'modelId', 'userId', 'classId', 'objectId', 'alertId'],
-      // include: [
-      //   {
-      //     model: db.Image,
-      //     attributes: ['url'],
-      //     where: {
-      //       id: Sequelize.col('RaisedAlert.modelObjectImageId')
-      //     },
-      //   },
-      // {
-      //   model: db.ModelData,
-      //   attributes: ['objectValueId'],
-      //   where: {
-      //     id: Sequelize.col('RaisedAlert.modelDataId')
-      //   },
-      //   include: [
-      //     {
-      //       model: db.AddValues,
-      //       attributes: ['values'],
-      //       where: {
-      //         id: Sequelize.col('ModelDatum.ObjectValue.id')
-      //       },
-      //     },
-      //   ],
-      // },
-      // ],
-    });
+    const page = params.query.page || 1;
+    const pageSize = params.query.pageSize || 10;
+    let sortOrder = 'DESC'; // Default sorting order is DESC
+    let sortField = "id";
 
-    return sendResponseData(true, "Data fetched Successfully", alertDetails)
+    // Check if sortBy parameter is provided and valid
+    if (params.query.sortBy && ['ASC', 'DESC'].includes(params.query.sortBy.toUpperCase())) {
+      sortOrder = params.query.sortBy.toUpperCase();
+    }
+    if (params.query.sort && ['id', 'alertTableName', 'tableName', 'createdAt'].includes(params.query.sort)) {
+      sortField = params.query.sort;
+    }
+
+    const result = await paginateQuery(db.RaisedAlert, page, pageSize, {
+      where: { userId: params.auth.sub },
+      include: [
+        {
+          model: db.Image,
+          attributes: ['url'],
+          where: {
+            id: Sequelize.col('RaisedAlert.modelObjectImageId')
+          },
+        },
+        {
+          model: db.AddClasses,
+          attributes: ['id', 'className', 'userId']
+        },
+      ],
+    });
+    if (!result.rows.length) {
+      return sendResponseData(false, "Data Not Found", {})
+    }
+
+    return sendResponseData(true, "Data fetched Successfully", result)
   } catch (error) {
     loggerError.error("Error in Raised Alert Repo", error);
     return sendResponseData(false, "Error in Raised Alert Repo", error);
