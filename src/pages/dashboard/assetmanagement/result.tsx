@@ -23,6 +23,7 @@ export default function Result() {
     const [loader, setLoader] = useState(true);
     const [data, setData] = useState([] as any);
     const [alldata, setAllData] = useState([] as any);
+    const [cords, setCords] = useState({} as any);
     const classSelector = useSelector((state: any) => state.classReducer);
     const aimodaldetectionReducer = useSelector((state: any) => state.aimodaldetectionReducer);
     let navData = aimodaldetectionReducer?.dataForModalReducer
@@ -98,7 +99,7 @@ export default function Result() {
         },
         {
             "performance": 25,
-            "x": 160,            "y": 250,
+            "x": 160, "y": 250,
             "h": 80,
             "w": 130,
         },
@@ -177,17 +178,18 @@ export default function Result() {
                     "response in getmodal": response?.data
                 })
 
-                if(response) {
-                    const filtered = response?.data?.data?.rows?.filter((item:any)=>{
+                if (response) {
+                    const filtered = response?.data?.data?.rows?.filter((item: any) => {
                         return item.modelObjectImageId === modelID
                     })
 
                     console.log({
-                        filtered:filtered
+                        filtered: filtered
                     })
 
                     setAllData(filtered[0])
-                }                
+
+                }
 
             }).catch(function (error) {
                 console.log({
@@ -198,13 +200,73 @@ export default function Result() {
             console.log("err in action:", err)
         }
     }
-    useEffect(()=>{
+    useEffect(() => {
         getImageUrl()
     }, [aimodaldetectionReducer?.saveResponseFromTestReducer])
 
 
     console.log({
-        "saveResponseFromTestReducer":aimodaldetectionReducer?.saveResponseFromTestReducer
+        "saveResponseFromTestReducer": aimodaldetectionReducer?.saveResponseFromTestReducer
+    })
+
+    useEffect(() => {
+
+        // let cordsData = aimodaldetectionReducer?.saveResponseFromTestReducer?.coordinates
+        let cordsData = [
+            {
+                "crackAreaCoordinates": {
+                    "responseCoordinates": {
+                        "coordTopLeft": [
+                            200,
+                            0
+                        ],
+                        "coordTopRight": [
+                            200,
+                            100
+                        ],
+                        "coordBottomLeft": [
+                            0,
+                            100
+                        ],
+                        "coordBottomRight": [
+                            0,
+                            0
+                        ],
+                        "probablity": "55%"
+                    }
+                }
+            },
+            {
+                "crackAreaCoordinates": {
+                    "responseCoordinates": {
+                        "coordTopLeft": [
+                            50,
+                            0
+                        ],
+                        "coordTopRight": [
+                            50,
+                            50
+                        ],
+                        "coordBottomLeft": [
+                            0,
+                            50
+                        ],
+                        "coordBottomRight": [
+                            0,
+                            0
+                        ],
+                        "probablity": "78%"
+                    }
+                }
+            }
+        ]
+
+        setCords(cordsData)
+
+    }, [aimodaldetectionReducer?.saveResponseFromTestReducer])
+
+    console.log({
+        "cordsData": cords
     })
 
     return (
@@ -379,6 +441,21 @@ export default function Result() {
                                     />
                                     <div className="absolute h-full w-full top-0 left-0">
                                         {
+                                            // cords?.crackAreaCoordinates1 &&
+                                            <>
+                                                <svg height="100" width="200" xmlns="http://www.w3.org/2000/svg" style={{ "background": "transparent" }}>
+                                                    <path d="M50 0 L200 00 L200 100 L50 100 L50 50 Z" style={{ "fill": "none", "stroke": "red", "strokeWidth": 3 }} />
+                                                    Sorry, your browser does not support inline SVG.
+                                                </svg>
+
+                                                <svg height="100" width="200" xmlns="http://www.w3.org/2000/svg" style={{ "background": "transparent" }}>
+                                                    <path d="M0 0 L200 00 L200 100 L0 100 L0 0 Z" style={{ "fill": "none", "stroke": "red", "strokeWidth": 3 }} />
+                                                    Sorry, your browser does not support inline SVG.
+                                                </svg>
+                                            </>
+                                            // cords?.crackAreaCoordinates1?.responseCoordinates?.coordTopLeft[0]
+                                        }
+                                        {
                                             // plotData.map((item: any, index: any) => (
                                             //     <svg
                                             //         width={item.w + 30}
@@ -461,12 +538,16 @@ export default function Result() {
                                                     </thead>
                                                     <tbody className="cursor-pointer">
                                                         {
-                                                            // data[0]?.thresholdTags.map((item: any, index: any) => (
-                                                            //     <tr>
-                                                            //         <td className="text-black text-lg font-semibold">Crack</td>
-                                                            //         <td><span className="text-black rounded-xl bg-yellow-951 py-1 px-3">{item.Crack}%</span></td>
-                                                            //     </tr>
-                                                            // ))
+                                                            cords?.map((item: any, index: any) => (
+                                                                <tr key={index}>
+                                                                    <td className="text-black text-lg font-semibold">Crack</td>
+                                                                    <td>
+                                                                        <span className="text-black rounded-xl bg-yellow-951 py-1 px-3">
+                                                                            {item?.crackAreaCoordinates?.responseCoordinates?.probablity}
+                                                                        </span>
+                                                                    </td>
+                                                                </tr>
+                                                            ))
                                                         }
 
                                                     </tbody>

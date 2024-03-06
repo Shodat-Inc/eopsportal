@@ -137,31 +137,33 @@ export const setSelectedClassAction = (classID: any) => async (dispatch: any) =>
 };
 
 // Get Objects of a class
-export const getObjectsAction = (classID:any) => async (dispatch: any) => {
+export const getObjectsAction = (classID: any) => async (dispatch: any) => {
     let access_token = "" as any;
     if (typeof window !== 'undefined') {
         access_token = localStorage.getItem('authToken')
     }
-    try {
-        await axios({
-            method: 'GET',
-            url: `/api/getObjects?id=${classID}`,
-            headers: {
-                "Authorization": `Bearer ${access_token}`,
-                "Content-Type": "application/json"
-            }
-        }).then(function (response) {
-            dispatch({
-                type: GET_OBJECTS_SUCCESS,
-                payload: response?.data?.objects?.data,
-            });
-        }).catch(function (error) {
-            dispatch({
-                type: GET_OBJECTS_ERROR,
-                payload: error,
-            });
-        })
-    } catch (err) {
-        console.log("err in action:", err)
+    if (classID !== undefined) {
+        try {
+            await axios({
+                method: 'GET',
+                url: `/api/getObjects?id=${classID}`,
+                headers: {
+                    "Authorization": `Bearer ${access_token}`,
+                    "Content-Type": "application/json"
+                }
+            }).then(function (response) {
+                dispatch({
+                    type: GET_OBJECTS_SUCCESS,
+                    payload: response?.data?.objects?.data,
+                });
+            }).catch(function (error) {
+                dispatch({
+                    type: GET_OBJECTS_ERROR,
+                    payload: error,
+                });
+            })
+        } catch (err) {
+            console.log("err in action:", err)
+        }
     }
 };

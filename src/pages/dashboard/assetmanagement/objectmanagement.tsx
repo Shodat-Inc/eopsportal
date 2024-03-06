@@ -19,7 +19,7 @@ export default function ObjectManagement(props: any) {
     const dispatch = useDispatch<any>();
     const [toggleFilter, setToggleFilter] = useState(false);
     const [toggleArrow, setToggleArrow] = useState(false);
-    const [chooseAsset, setChooseAsset] = useState(props.classData && props.classData?.rows?.length > 0 ? props.classData?.rows[0]?.id : '');
+    const [chooseAsset, setChooseAsset] = useState();
     const [toggleAsset, setToggleAsset] = useState(false);
     const [actions, setActions] = useState(false);
     const [actionCount, setActionCount] = useState(1);
@@ -45,18 +45,26 @@ export default function ObjectManagement(props: any) {
     const classSelector = useSelector((state: any) => state.classReducer);
     const apiReducer = useSelector((state: any) => state.apiReducer);
     const aimodaldetectionReducer = useSelector((state: any) => state.aimodaldetectionReducer);
-    // console.log({
-    //     aimodaldetectionReducer:aimodaldetectionReducer?.breadCrumbNavigationReducer
-    // })
+    console.log({
+        aimodaldetectionReducer:aimodaldetectionReducer?.breadCrumbNavigationReducer
+    })
 
     // useEffect(()=>{
-    //     if(aimodaldetectionReducer?.breadCrumbNavigationReducer && aimodaldetectionReducer?.breadCrumbNavigationReducer?.classID) {
-    //         setChooseAsset(aimodaldetectionReducer?.breadCrumbNavigationReducer?.classID)
-    //     } else {
-    //         setChooseAsset(props.classData && props.classData?.rows?.length > 0 ? props.classData?.rows[0]?.id : '')
-    //     }
+    //     setChooseAsset(props.classData && props.classData?.rows?.length > 0 ? props.classData?.rows[0]?.id : '')
+    // }, [props.classData])
 
-    // }, [aimodaldetectionReducer?.breadCrumbNavigationReducer])
+    useEffect(()=>{
+        if(aimodaldetectionReducer?.breadCrumbNavigationReducer?.classID) {
+            setChooseAsset(aimodaldetectionReducer?.breadCrumbNavigationReducer?.classID)
+        } else {
+            setChooseAsset(props.classData && props.classData?.rows?.length > 0 ? props.classData?.rows[0]?.id : '')
+        }
+
+    }, [aimodaldetectionReducer?.breadCrumbNavigationReducer, props.classData])
+
+    console.log({
+        chooseAsset:chooseAsset
+    })
 
     // Toggle the filters dropdown
     const toggleFilterFunction = () => {
@@ -190,6 +198,10 @@ export default function ObjectManagement(props: any) {
             dispatch(getObjectsAction(chooseAsset))
         }
     }
+
+    console.log({
+        objectData:objectData
+    })
 
 
     // Edit Object Show/Hide

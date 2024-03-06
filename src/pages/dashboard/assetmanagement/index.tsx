@@ -16,6 +16,8 @@ import {
 
 import { getClassDataAction, getDataTypeAction } from "@/store/actions/apiAction";
 
+import { breadCrumbNavigationAction } from "@/store/actions/aimodaldetectionAction";
+
 export default function AssetManagement() {
     const dispatch = useDispatch<any>();
     const [tab, setTab] = useState(1);
@@ -36,15 +38,21 @@ export default function AssetManagement() {
     //     aimodaldetectionReducer:aimodaldetectionReducer?.breadCrumbNavigationReducer
     // })
 
-    // useEffect(()=>{
-    //     if(aimodaldetectionReducer?.breadCrumbNavigationReducer && aimodaldetectionReducer?.breadCrumbNavigationReducer?.classTab) {
-    //         setTab(aimodaldetectionReducer?.breadCrumbNavigationReducer?.classTab)
-    //     } 
+    useEffect(()=>{
+        if(aimodaldetectionReducer?.breadCrumbNavigationReducer && aimodaldetectionReducer?.breadCrumbNavigationReducer?.classTab) {
+            // console.log({
+            //     "HERE":aimodaldetectionReducer?.breadCrumbNavigationReducer?.classTab
+            // })
+            setTab(aimodaldetectionReducer?.breadCrumbNavigationReducer?.classTab)
+        } 
 
-    //     if(aimodaldetectionReducer?.breadCrumbNavigationReducer && aimodaldetectionReducer?.breadCrumbNavigationReducer?.subObjectTab) {
-    //         setTab(aimodaldetectionReducer?.breadCrumbNavigationReducer?.subObjectTab)
-    //     }
-    // }, [aimodaldetectionReducer?.breadCrumbNavigationReducer])
+        if(aimodaldetectionReducer?.breadCrumbNavigationReducer && aimodaldetectionReducer?.breadCrumbNavigationReducer?.subObjectTab) {
+            // console.log({
+            //     "HERE 1":aimodaldetectionReducer?.breadCrumbNavigationReducer?.subObjectTab
+            // })
+            setTab(aimodaldetectionReducer?.breadCrumbNavigationReducer?.subObjectTab)
+        } 
+    }, [aimodaldetectionReducer?.breadCrumbNavigationReducer])
 
     
 
@@ -74,6 +82,22 @@ export default function AssetManagement() {
 
     // Toggle tab function 
     const toggleTab = (item: any) => {
+        const navData = {
+            "className": "",
+            "classID": 0,
+            "classTab": 0,
+            "subClassName": "",
+            "subClassID": "",
+            "subClassTab": 0,
+            "object": "",
+            "objectID": 0,
+            "objectTab": 0,
+            "subObject": "",
+            "subObjectID": "",
+            "subObjectTab": 0
+        }
+        dispatch(breadCrumbNavigationAction(navData))
+
         setTab(item)
     }
 

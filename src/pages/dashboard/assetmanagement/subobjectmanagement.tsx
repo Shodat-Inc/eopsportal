@@ -43,6 +43,10 @@ export default function SubObjectManagement(props: any) {
     // All class reducer states
     const classSelector = useSelector((state: any) => state.classReducer);
     const addNewObject = useSelector((state: any) => state.classReducer);
+    const aimodaldetectionReducer = useSelector((state: any) => state.aimodaldetectionReducer);
+    console.log({
+        aimodaldetectionReducer:aimodaldetectionReducer?.breadCrumbNavigationReducer
+    })
 
     const toggleFilterFunction = () => {
         setToggleArrow(!toggleArrow);
@@ -94,6 +98,17 @@ export default function SubObjectManagement(props: any) {
             }
         }
     }
+
+    useEffect(()=>{
+        if(aimodaldetectionReducer?.breadCrumbNavigationReducer?.subClassID) {
+            setChooseAsset(aimodaldetectionReducer?.breadCrumbNavigationReducer?.subClassID)
+        } 
+
+    }, [aimodaldetectionReducer?.breadCrumbNavigationReducer, props.classData])
+
+    console.log({
+        chooseAsset:chooseAsset
+    })
 
     // console.log({
     //     "__HERE":chooseAsset, 
