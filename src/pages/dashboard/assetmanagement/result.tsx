@@ -538,7 +538,7 @@ export default function Result() {
                                                     </thead>
                                                     <tbody className="cursor-pointer">
                                                         {
-                                                            cords?.map((item: any, index: any) => (
+                                                            cords && cords.length > 0 && cords?.map((item: any, index: any) => (
                                                                 <tr key={index}>
                                                                     <td className="text-black text-lg font-semibold">Crack</td>
                                                                     <td>
